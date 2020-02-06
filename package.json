@@ -1,6 +1,7 @@
 {
   "name": "asb-app-frontend",
   "version": "0.0.1",
+  "author": "Sergey Abramov and Boytsov Alex",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --project asb-app --open --configuration=local --port 4201",
