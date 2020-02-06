@@ -14,6 +14,7 @@ import {AsbPageNotFoundModule} from "./modules/page-not-found/page-not-found.mod
 import {AsbSharedPageModule} from "./modules/page-template/page-template.module";
 import { AboutUsComponent } from './modules/about-us/about-us.component';
 import {AsbAboutUsPageModule} from "./modules/about-us/about-us.module";
+import {AsbAppIconsModule} from "./helpers/svgIcon";
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {AsbAboutUsPageModule} from "./modules/about-us/about-us.module";
         AsbPageNotFoundModule,
         AsbSharedPageModule,
         AsbAboutUsPageModule,
+        AsbAppIconsModule,
     ],
     providers: [
         // here will be services

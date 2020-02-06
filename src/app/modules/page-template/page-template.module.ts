@@ -10,6 +10,7 @@ import {AsbFooterComponent} from "./footer/footer.component";
 import {AsbHeaderComponent} from "./header/header.component";
 import { PageTemplateComponent } from './page-template.component';
 import {RouterModule} from "@angular/router";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
     imports: [
@@ -21,11 +22,13 @@ import {RouterModule} from "@angular/router";
         MatCheckboxModule,
         MatToolbarModule,
         RouterModule,
+        MatIconModule,
     ],
     declarations: [AsbFooterComponent, AsbHeaderComponent, PageTemplateComponent],
     exports: [
-        PageTemplateComponent,
+        PageTemplateComponent
     ]
 })
 export class AsbSharedPageModule {
+
 }

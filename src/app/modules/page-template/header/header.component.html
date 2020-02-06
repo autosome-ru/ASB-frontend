@@ -2,29 +2,32 @@
 
     <a class="app-header__item"
         [routerLink]="'/'"
-        routerLinkActive="active"
+        [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{exact:true}"
         mat-button
-        style="height:100% !important; margin-left: 0;"
+        style="height:100%"
+
     >
-        <div class="app-header__wrap">
-            <div class="app-header__item">TASBAD</div>
+        <div class="app-header__wrap active">
+            <div class="app-header__item" >
+                <mat-icon svgIcon="face" style="transform: scale(1.3); vertical-align: middle;"></mat-icon>
+                <span style="font-size: 20px; vertical-align:middle;"> BADAS database</span>
+            </div>
         </div>
     </a>
     <div class="app-header__items">
         <a
             [routerLink]="'about-us'"
-            routerLinkActive="active"
-            style="text-decoration:none"
+            [routerLinkActive]="['active']"
             mat-button
         >
             <div class="app-header__wrap">
                 <div class="app-header__item">about us</div>
             </div>
         </a>
-        <a class="item"
+        <a
            [routerLink]="'smth'"
-           routerLinkActive="active"
+           [routerLinkActive]="['active']"
            mat-button
         >
             <div class="app-header__wrap">

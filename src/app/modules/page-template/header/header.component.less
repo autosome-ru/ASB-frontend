@@ -4,6 +4,8 @@
     margin-top: 0;
     margin-left: 0;
     margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
     position: fixed;
     top: 0;
     z-index: 5;
@@ -12,17 +14,18 @@
 
     &__wrap {
         display:table;
-        float:left;
+        float: left;
         height:100%;
         min-width: 80px;
-        text-align:center;
-
+        text-align: center;
+        .active {
+            background-color: transparent;
+        }
     }
     &__item {
         display:table-cell;
         vertical-align:middle;
         text-align:center;
-        margin:0;
     }
 
 
@@ -35,3 +38,4 @@
     }
 
 }
+
