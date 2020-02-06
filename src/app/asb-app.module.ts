@@ -11,11 +11,13 @@ import {environment} from "../environments/environment";
 import {MatSnackBarModule} from "@angular/material";
 import {AsbHomePageModule} from "./modules/home-page/home-page.module";
 import {AsbPageNotFoundModule} from "./modules/page-not-found/page-not-found.module";
+import {AsbSharedPageModule} from "./modules/page-template/page-template.module";
+import { AboutUsComponent } from './modules/about-us/about-us.component';
+import {AsbAboutUsPageModule} from "./modules/about-us/about-us.module";
 
 @NgModule({
     declarations: [
         AsbAppComponent,
-
     ],
     imports: [
         BrowserAnimationsModule,
@@ -27,6 +29,8 @@ import {AsbPageNotFoundModule} from "./modules/page-not-found/page-not-found.mod
         AsbAppRoutingModule,
         AsbHomePageModule,
         AsbPageNotFoundModule,
+        AsbSharedPageModule,
+        AsbAboutUsPageModule,
     ],
     providers: [
         // here will be services

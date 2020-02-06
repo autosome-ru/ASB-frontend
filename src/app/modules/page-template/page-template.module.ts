@@ -1,13 +1,15 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AsbHomePageComponent} from "./home-page.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import { SearchComponent } from './search/search.component';
+import {AsbFooterComponent} from "./footer/footer.component";
+import {AsbHeaderComponent} from "./header/header.component";
+import { PageTemplateComponent } from './page-template.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
@@ -18,9 +20,12 @@ import { SearchComponent } from './search/search.component';
         MatButtonModule,
         MatCheckboxModule,
         MatToolbarModule,
+        RouterModule,
     ],
-    declarations: [AsbHomePageComponent, SearchComponent],
-    exports: [AsbHomePageComponent],
+    declarations: [AsbFooterComponent, AsbHeaderComponent, PageTemplateComponent],
+    exports: [
+        PageTemplateComponent,
+    ]
 })
-export class AsbHomePageModule {
+export class AsbSharedPageModule {
 }
