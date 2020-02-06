@@ -12,9 +12,10 @@ import {MatSnackBarModule} from "@angular/material";
 import {AsbHomePageModule} from "./modules/home-page/home-page.module";
 import {AsbPageNotFoundModule} from "./modules/page-not-found/page-not-found.module";
 import {AsbSharedPageModule} from "./modules/page-template/page-template.module";
-import { AboutUsComponent } from './modules/about-us/about-us.component';
 import {AsbAboutUsPageModule} from "./modules/about-us/about-us.module";
 import {AsbAppIconsModule} from "./helpers/svgIcon";
+import {AsbHelpersModule} from "./modules/helpers/helpers.module";
+
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import {AsbAppIconsModule} from "./helpers/svgIcon";
         AsbSharedPageModule,
         AsbAboutUsPageModule,
         AsbAppIconsModule,
+        AsbHelpersModule,
     ],
     providers: [
         // here will be services
