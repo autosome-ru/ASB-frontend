@@ -6,7 +6,7 @@ export class AsbAppNavigationService {
 
     public navigationLinks: AsbAppNavigationModel = [
         {
-            caption: "Главная", children: [
+            caption: "Home", children: [
                 {url: "/", caption: "", icon: "history"},
             ]
         },
