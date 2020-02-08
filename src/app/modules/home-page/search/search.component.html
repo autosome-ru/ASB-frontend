@@ -12,16 +12,18 @@
                         >
                     </label>
                     <mat-autocomplete #auto="matAutocomplete">
-                            <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
-                                <mat-option *ngFor="let option of searchOptions$ " [value]="option">
-                                    {{option}}
-                                </mat-option>
-                            </ng-container>
-                            <mat-spinner *ngIf="searchOptionsLoading$"
-                                         matSuffix
+                        <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
+                            <mat-option *ngFor="let option of searchOptions$ " [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </ng-container>
+
+                        <mat-option  *ngIf="searchOptionsLoading$ && !!searchForm.get('searchInput').value">
+                            <mat-spinner
                                          color="accent"
-                                         [diameter]="12">
+                                         [diameter]="20">
                             </mat-spinner>
+                        </mat-option>
                         </mat-autocomplete>
                 </mat-form-field>
                 <button mat-icon-button
@@ -63,6 +65,5 @@
             </div>
         </div>
     </form>
-    <div> {{this.searchForm.get("searchInput").value}}</div>
     <div>Click = {{click}}</div>
 </mat-card>
