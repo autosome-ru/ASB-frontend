@@ -10,8 +10,19 @@
                            placeholder="Search"
                            [matAutocomplete]="auto"
                            formControlName="searchInput"
+                           (keydown.enter)="_navigateToSearch();"
+
                     >
                 </label>
+                <button type="submit" style="display:none">hidden submit</button>
+                <button
+                    *ngIf="!!searchForm.get('searchInput').value"
+                    mat-icon-button
+                    matSuffix
+                    (click)="_clearSearchField()"
+                >
+                    <mat-icon svgIcon="clear"></mat-icon>
+                </button>
                 <mat-autocomplete #auto="matAutocomplete">
                     <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
                         <mat-option *ngFor="let option of searchOptions$ " [value]="option">

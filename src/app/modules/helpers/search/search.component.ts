@@ -4,9 +4,9 @@ import {Store} from "@ngrx/store";
 import {AppState} from "@app/store";
 import * as fromSelectors from "@app/store/selector";
 import * as fromActions from "@app/store/action";
-import {map} from "rxjs/operators";
 import {SearchModel} from "@app/models/search.model";
 import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'asb-search',
@@ -18,13 +18,15 @@ export class SearchComponent implements OnInit {
     public searchForm: FormGroup;
     public searchOptions$: string[];
     public searchOptionsLoading$: boolean;
+    private readonly nullValue: SearchModel = {searchInput: ""};
     @Input()
     public align: "max" | "full";
     private input: Observable<SearchModel>;
 
     constructor(
         private formBuilder: FormBuilder,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private router: Router
     ) {}
 
   ngOnInit() {
@@ -40,5 +42,19 @@ export class SearchComponent implements OnInit {
       this.searchForm.valueChanges.subscribe(val =>
               this.store.dispatch(new fromActions.search.SetFilterAction(val as SearchModel))
           );
+    }
+    _clearSearchField() {
+        this.searchForm.patchValue(this.nullValue);
+    }
+    _navigateToSearch() {
+        if (!!this.searchForm.get('searchInput').value) {
+            if (!this.router.isActive("search", false)) {
+                console.log("im not in search");
+                this.router.navigate(["/search"]);
+            }
+            else {
+                this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+            }
+        }
     }
 }
