@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'asb-search',
@@ -7,9 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
-  constructor() { }
+    public searchForm: FormGroup;
+    public click: boolean = false;
+    public searchOptions$: string[];
+    public searchOptionsLoading$: boolean;
+
+    constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+      this.searchForm = this.formBuilder.group({
+          searchInput: null,
+      });
+      this.searchOptions$ = ["one", "two", "three"];
+      this.searchOptionsLoading$ = false;
+
   }
+  _changeClick() {
+        this.click = !this.click
+    }
 
 }

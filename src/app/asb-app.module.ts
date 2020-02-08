@@ -13,7 +13,6 @@ import {AsbPageNotFoundModule} from "./modules/page-not-found/page-not-found.mod
 import {AsbSharedPageModule} from "./modules/page-template/page-template.module";
 import {AsbAboutUsPageModule} from "./modules/about-us/about-us.module";
 import {AsbAppIconsModule} from "./helpers/svgIcon";
-import {AsbHelpersModule} from "./modules/helpers/helpers.module";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
@@ -34,7 +33,6 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         AsbSharedPageModule,
         AsbAboutUsPageModule,
         AsbAppIconsModule,
-        AsbHelpersModule,
     ],
     providers: [
         // here will be services
