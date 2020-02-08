@@ -1,68 +1,66 @@
 <mat-card class="example-card">
     <mat-card-title>Search</mat-card-title>
     <form [formGroup]="searchForm">
-        <div>
-            <div style="display: flex; flex-direction: row">
-                <mat-form-field style="width: 100%">
-                    <label>
-                        <input matInput
-                               placeholder="Search"
-                               [matAutocomplete]="auto"
-                               formControlName="searchInput"
-                        >
-                    </label>
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
-                            <mat-option *ngFor="let option of searchOptions$ " [value]="option">
-                                {{option}}
-                            </mat-option>
-                        </ng-container>
-
-                        <mat-option  *ngIf="searchOptionsLoading$ && !!searchForm.get('searchInput').value">
-                            <mat-spinner
-                                         color="accent"
-                                         [diameter]="20">
-                            </mat-spinner>
+        <div style="display: flex; flex-direction: row">
+            <mat-form-field style="width: 100%">
+                <label>
+                    <input matInput
+                           placeholder="Search"
+                           [matAutocomplete]="auto"
+                           formControlName="searchInput"
+                    >
+                </label>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
+                        <mat-option *ngFor="let option of searchOptions$ " [value]="option">
+                            {{option}}
                         </mat-option>
-                        </mat-autocomplete>
-                </mat-form-field>
-                <button mat-icon-button
-                        [disabled]="!searchForm.get('searchInput').value"
-                        class="asb-search__search-button"
-                        (click)="_changeClick()">
-                    <mat-icon svgIcon="search"></mat-icon>
-                </button>
+                    </ng-container>
 
-            </div>
+                    <mat-option  *ngIf="searchOptionsLoading$ && !!searchForm.get('searchInput').value">
+                        <mat-spinner
+                                     color="accent"
+                                     [diameter]="20">
+                        </mat-spinner>
+                    </mat-option>
+                    </mat-autocomplete>
+            </mat-form-field>
+            <button mat-icon-button
+                    [disabled]="!searchForm.get('searchInput').value"
+                    class="asb-search__search-button"
+                    (click)="_changeClick()">
+                <mat-icon svgIcon="search"></mat-icon>
+            </button>
 
-            <div class="form-checkboxes">
-                <mat-checkbox class="checkbox"
-                              [checked]="true"
-                >
-                    Good boyz
-                </mat-checkbox>
-                <mat-checkbox class="checkbox"
+        </div>
 
-                >
-                    BAD boyz
-                </mat-checkbox>
-                <mat-checkbox class="checkbox"
-                              [checked]="true"
-                >
-                    Not So bad boyz
-                </mat-checkbox>
-                <mat-checkbox class="checkbox"
-                              [checked]="true"
-                >
-                    Cell lines???
-                </mat-checkbox>
-                <button
-                    class="checkbox"
-                    mat-raised-button
-                >
-                    advanced search
-                </button>
-            </div>
+        <div class="form-checkboxes">
+            <mat-checkbox class="checkbox"
+                          [checked]="true"
+            >
+                Good boyz
+            </mat-checkbox>
+            <mat-checkbox class="checkbox"
+
+            >
+                BAD boyz
+            </mat-checkbox>
+            <mat-checkbox class="checkbox"
+                          [checked]="true"
+            >
+                Not So bad boyz
+            </mat-checkbox>
+            <mat-checkbox class="checkbox"
+                          [checked]="true"
+            >
+                Cell lines???
+            </mat-checkbox>
+            <button
+                class="checkbox"
+                mat-raised-button
+            >
+                advanced search
+            </button>
         </div>
     </form>
     <div>Click = {{click}}</div>
