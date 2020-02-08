@@ -20,7 +20,7 @@ export class SearchComponent implements OnInit {
           searchInput: null,
       });
       this.searchOptions$ = ["one", "two", "three"];
-      this.searchOptionsLoading$ = false;
+      this.searchOptionsLoading$ = true;
 
   }
   _changeClick() {

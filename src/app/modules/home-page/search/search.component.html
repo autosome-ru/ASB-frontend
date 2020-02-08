@@ -2,8 +2,8 @@
     <mat-card-title>Search</mat-card-title>
     <form [formGroup]="searchForm">
         <div>
-            <div style="display: flex; flex-direction: row; vertical-align: center">
-                <mat-form-field style="width: 100%; vertical-align: bottom">
+            <div style="display: flex; flex-direction: row">
+                <mat-form-field style="width: 100%">
                     <label>
                         <input matInput
                                placeholder="Search"
@@ -12,21 +12,25 @@
                         >
                     </label>
                     <mat-autocomplete #auto="matAutocomplete">
-                            <ng-container *ngIf="!(searchOptionsLoading$ )">
+                            <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
                                 <mat-option *ngFor="let option of searchOptions$ " [value]="option">
                                     {{option}}
                                 </mat-option>
                             </ng-container>
-                            <mat-spinner *ngIf="searchOptionsLoading$ " matSuffix color="accent" [diameter]="12"></mat-spinner>
+                            <mat-spinner *ngIf="searchOptionsLoading$"
+                                         matSuffix
+                                         color="accent"
+                                         [diameter]="12">
+                            </mat-spinner>
                         </mat-autocomplete>
                 </mat-form-field>
-                <div style="display: flex">
-                    <button mat-icon-button
-                            style="vertical-align:bottom; padding-bottom: 0; margin: 0"
-                            (click)="_changeClick()">
-                        <mat-icon svgIcon="search"></mat-icon>
-                    </button>
-                </div>
+                <button mat-icon-button
+                        [disabled]="!searchForm.get('searchInput').value"
+                        class="asb-search__search-button"
+                        (click)="_changeClick()">
+                    <mat-icon svgIcon="search"></mat-icon>
+                </button>
+
             </div>
 
             <div class="form-checkboxes">
