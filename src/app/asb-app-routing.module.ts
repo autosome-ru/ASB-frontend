@@ -14,11 +14,11 @@ const routes: Routes = [
         path: "about-us",
         component: AsbAboutUsComponent,
     },
-    // {
-    //     path: "search",
-    //     component: AsbSearchPageComponent,
-    //
-    // },
+    {
+        path: "search",
+        component: AsbSearchPageComponent,
+
+    },
     {
         path: "**",
         component: AsbPageNotFoundComponent,

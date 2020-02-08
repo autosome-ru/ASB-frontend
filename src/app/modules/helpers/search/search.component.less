@@ -19,7 +19,12 @@
     align-items: center;
 }
 .example-card {
-    max-width: 500px;
+    &._max {
+        max-width: 500px;
+    }
+    &._full {
+        width: 100%;
+    }
 }
 button:active, button:focus {
     outline: none !important;

@@ -1,4 +1,6 @@
-<mat-card class="example-card">
+<mat-card class="example-card"
+          [class._max]="align === 'max'"
+          [class._full]="align === 'full'">
     <mat-card-title>Search</mat-card-title>
     <form [formGroup]="searchForm">
         <div style="display: flex; flex-direction: row">
