@@ -11,6 +11,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import {MatIconModule} from "@angular/material/icon";
         ReactiveFormsModule,
         MatProgressSpinnerModule,
         MatIconModule,
+        RouterModule,
     ],
     declarations: [SearchComponent],
     exports: [SearchComponent],

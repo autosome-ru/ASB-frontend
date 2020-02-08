@@ -14,6 +14,7 @@ import {AsbSharedPageModule} from "./modules/page-template/page-template.module"
 import {AsbAboutUsPageModule} from "./modules/about-us/about-us.module";
 import {AsbAppIconsModule} from "./helpers/svgIcon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {AsbSearchPageModule} from "@app/modules/search-page/search-page.module";
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         AsbSharedPageModule,
         AsbAboutUsPageModule,
         AsbAppIconsModule,
+        AsbSearchPageModule,
     ],
     providers: [
         // here will be services

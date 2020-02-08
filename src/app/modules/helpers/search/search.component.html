@@ -25,12 +25,14 @@
                     </mat-option>
                     </mat-autocomplete>
             </mat-form-field>
-            <button mat-icon-button
-                    [disabled]="!searchForm.get('searchInput').value"
-                    class="asb-search__search-button"
-                    (click)="_changeClick()">
+            <a
+                class="asb-search__search-button"
+                mat-icon-button
+                [disabled]="!searchForm.get('searchInput').value"
+                [routerLink]="searchForm.get('searchInput').value ? '/search' : null"
+                [routerLinkActive]="['active']">
                 <mat-icon svgIcon="search"></mat-icon>
-            </button>
+            </a>
 
         </div>
 
@@ -55,13 +57,14 @@
             >
                 Cell lines???
             </mat-checkbox>
-            <button
+            <a
                 class="checkbox"
                 mat-raised-button
+                [routerLink]="'/search'"
+                [routerLinkActive]="['active']"
             >
                 advanced search
-            </button>
+            </a>
         </div>
     </form>
-    <div>Click = {{click}}</div>
 </mat-card>

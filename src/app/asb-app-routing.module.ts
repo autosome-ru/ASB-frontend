@@ -2,7 +2,8 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import {AsbPageNotFoundComponent} from "./modules/page-not-found/page-not-found.component";
 import {AsbHomePageComponent} from "./modules/home-page/home-page.component";
-import {AboutUsComponent} from "./modules/about-us/about-us.component";
+import {AsbAboutUsComponent} from "./modules/about-us/asb-about-us.component";
+import {AsbSearchPageComponent} from "@app/modules/search-page/asb-search-page.component";
 
 const routes: Routes = [
     {
@@ -11,8 +12,13 @@ const routes: Routes = [
     },
     {
         path: "about-us",
-        component: AboutUsComponent,
+        component: AsbAboutUsComponent,
     },
+    // {
+    //     path: "search",
+    //     component: AsbSearchPageComponent,
+    //
+    // },
     {
         path: "**",
         component: AsbPageNotFoundComponent,

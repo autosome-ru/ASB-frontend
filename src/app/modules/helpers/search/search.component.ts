@@ -23,8 +23,5 @@ export class SearchComponent implements OnInit {
       this.searchOptionsLoading$ = false;
 
   }
-  _changeClick() {
-        this.click = !this.click
-    }
 
 }
