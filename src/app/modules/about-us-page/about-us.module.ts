@@ -1,15 +1,15 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {AsbAboutUsComponent} from "./asb-about-us.component";
+import {AboutUsComponent} from "./about-us.component";
 
 @NgModule({
     imports: [
         CommonModule,
 
     ],
-    declarations: [AsbAboutUsComponent],
-    exports: [AsbAboutUsComponent],
+    declarations: [AboutUsComponent],
+    exports: [AboutUsComponent],
 })
 export class AsbAboutUsPageModule {
 }

@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 
 @Component({
-    selector: 'home-page',
-    templateUrl: "./home-page.component.html",
-    styleUrls: [ './home-page.component.less' ]
+    selector: 'not-found-app',
+    template: `<h3>Page not found sry :((</h3>`,
+    styles: [`.app-not-found`],
 })
-export class HomePageComponent implements OnInit {
+export class PageNotFoundComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private titleService: Title) {}
     ngOnInit() {

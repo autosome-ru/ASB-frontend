@@ -1,5 +1,5 @@
 import {Action} from "@ngrx/store";
-import {SearchModel} from "@app/models/search.model";
+import {SearchModel} from "src/app/models/search.model";
 
 export enum ActionTypes {
     SetFilter = "[Search] filter set",

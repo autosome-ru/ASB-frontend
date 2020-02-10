@@ -1,8 +1,8 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {AsbSearchPageComponent} from "@app/modules/search-page/asb-search-page.component";
-import {AsbHelpersModule} from "@app/modules/helpers/helpers.module";
+import {SearchPageComponent} from "src/app/modules/search-page/search-page.component";
+import {AsbHelpersModule} from "src/app/modules/helpers/helpers.module";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatCheckboxModule} from "@angular/material/checkbox";
@@ -16,8 +16,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatExpansionModule,
         MatCheckboxModule,
     ],
-    declarations: [AsbSearchPageComponent],
-    exports: [AsbSearchPageComponent],
+    declarations: [SearchPageComponent],
+    exports: [SearchPageComponent],
 })
 export class AsbSearchPageModule {
 }

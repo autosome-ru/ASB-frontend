@@ -12,6 +12,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 import {RouterModule} from "@angular/router";
+import {PageTemplateComponent} from "./page-template/page-template.component";
+import {AsbFooterComponent} from "./page-template/footer/footer.component";
+import {AsbHeaderComponent} from "./page-template/header/header.component";
 
 @NgModule({
     imports: [
@@ -28,8 +31,8 @@ import {RouterModule} from "@angular/router";
         MatIconModule,
         RouterModule,
     ],
-    declarations: [SearchComponent],
-    exports: [SearchComponent],
+    declarations: [SearchComponent, AsbFooterComponent, AsbHeaderComponent, PageTemplateComponent],
+    exports: [SearchComponent, PageTemplateComponent],
 })
 export class AsbHelpersModule {
 }

@@ -1,7 +1,6 @@
 import {NgModule} from "@angular/core";
 import {DomSanitizer} from "@angular/platform-browser";
 import {HttpClientModule} from "@angular/common/http";
-import {environment} from "../../environments/environment";
 import {MatIconRegistry} from "@angular/material/icon";
 
 const ICONS = [
@@ -61,7 +60,7 @@ export class AsbAppIconsModule {
         for (const icon of ICONS) {
             iconRegistry.addSvgIcon(
                 icon,
-                sanitizer.bypassSecurityTrustResourceUrl(`${environment.deployUrl}/assets/icons/${icon}.svg`)
+                sanitizer.bypassSecurityTrustResourceUrl(`assets/icons/${icon}.svg`)
             );
         }
     }

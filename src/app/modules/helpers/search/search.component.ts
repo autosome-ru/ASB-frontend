@@ -1,12 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
-import {AppState} from "@app/store";
-import * as fromSelectors from "@app/store/selector";
-import * as fromActions from "@app/store/action";
-import {SearchModel} from "@app/models/search.model";
+import {AppState} from "src/app/store";
+import * as fromSelectors from "src/app/store/selector";
+import * as fromActions from "src/app/store/action";
+import {SearchModel} from "src/app/models/search.model";
 import {Observable} from "rxjs";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'asb-search',
@@ -20,41 +21,45 @@ export class SearchComponent implements OnInit {
     public searchOptionsLoading$: boolean;
     private readonly nullValue: SearchModel = {searchInput: ""};
     @Input()
-    public align: "max" | "full";
+    public align: "restricted" | "full";
     private input: Observable<SearchModel>;
 
     constructor(
         private formBuilder: FormBuilder,
         private store: Store<AppState>,
-        private router: Router
+        private router: Router,
+        private route: ActivatedRoute,
+        private titleService: Title,
     ) {}
 
-  ngOnInit() {
-      this.searchForm = this.formBuilder.group({
-          searchInput: "",
-      });
-      this.searchOptions$ = ["one", "two", "three"];
-      this.searchOptionsLoading$ = false;
-      this.input = this.store.select(fromSelectors.selectCurrentSearchQuery);
-      this.input.subscribe(s => this.searchForm.setValue({searchInput: s.searchInput},
-          {emitEvent: false}));
+    ngOnInit() {
+        this.titleService.setTitle(this.route.snapshot.data.title);
 
-      this.searchForm.valueChanges.subscribe(val =>
-              this.store.dispatch(new fromActions.search.SetFilterAction(val as SearchModel))
-          );
-    }
-    _clearSearchField() {
-        this.searchForm.patchValue(this.nullValue);
-    }
-    _navigateToSearch() {
-        if (!!this.searchForm.get('searchInput').value) {
-            if (!this.router.isActive("search", false)) {
-                console.log("im not in search");
-                this.router.navigate(["/search"]);
-            }
-            else {
-                this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+        this.searchForm = this.formBuilder.group({
+            searchInput: "",
+        });
+        this.searchOptions$ = ["one", "two", "three"];
+        this.searchOptionsLoading$ = false;
+        this.input = this.store.select(fromSelectors.selectCurrentSearchQuery);
+        this.input.subscribe(s => this.searchForm.setValue({searchInput: s.searchInput},
+            {emitEvent: false}));
+
+        this.searchForm.valueChanges.subscribe(val =>
+            this.store.dispatch(new fromActions.search.SetFilterAction(val as SearchModel)));
+        }
+
+        _clearSearchField() {
+            this.searchForm.patchValue(this.nullValue);
+        }
+        _navigateToSearch() {
+            if (!!this.searchForm.get('searchInput').value) {
+                if (!this.router.isActive("search", false)) {
+                    console.log("im not in search");
+                    this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
+                }
+                else {
+                    this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+                }
             }
         }
-    }
 }

@@ -6,18 +6,18 @@ import {
 } from "@angular/core";
 
 @Component({
-    selector: "asb-app",
-    templateUrl: "./asb-app.component.html",
-    styleUrls: ["./asb-app.component.less"],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.less'],
     encapsulation: ViewEncapsulation.None,
 })
-export class AsbAppComponent implements  OnInit {
-
+export class AppComponent  implements  OnInit {
     @HostBinding("class.asb-app")
     private cssClass = true;
 
-    constructor( ) {}
+    constructor() {}
 
     ngOnInit() {
     }
+
 }

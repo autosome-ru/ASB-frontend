@@ -1,5 +1,5 @@
-import * as fromActions from "@app/store/action/search.action";
-import {SearchModel} from "@app/models/search.model";
+import * as fromActions from "src/app/store/action/search.action";
+import {SearchModel} from "src/app/models/search.model";
 
 export interface SearchState {
     search: SearchModel

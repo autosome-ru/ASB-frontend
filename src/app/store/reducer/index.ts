@@ -1,4 +1,4 @@
-import {searchReducer, SearchState} from "@app/store/reducer/search.reducer";
+import {searchReducer, SearchState} from "src/app/store/reducer/search.reducer";
 
 export interface AppState {
     search: SearchState,

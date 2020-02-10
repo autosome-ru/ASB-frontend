@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {AsbHomePageComponent} from "./home-page.component";
+import {HomePageComponent} from "./home-page.component";
 import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -11,7 +11,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
-import {AsbHelpersModule} from "@app/modules/helpers/helpers.module";
+import {AsbHelpersModule} from "../helpers/helpers.module";
 
 @NgModule({
     imports: [
@@ -28,8 +28,8 @@ import {AsbHelpersModule} from "@app/modules/helpers/helpers.module";
         MatIconModule,
         AsbHelpersModule,
     ],
-    declarations: [AsbHomePageComponent],
-    exports: [AsbHomePageComponent],
+    declarations: [HomePageComponent],
+    exports: [HomePageComponent],
 })
 export class AsbHomePageModule {
 }
