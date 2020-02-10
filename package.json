@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -11,7 +11,9 @@
     "dev:ssr": "ng run ad-astra:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "build:ssr": "ng build --prod && ng run ad-astra:server:production",
-    "prerender": "ng run ad-astra:prerender"
+    "prerender": "ng run ad-astra:prerender",
+    "mock:server": "tsc-watch --skipLibCheck ./server/server.ts --lib es6 --outDir ./dist_server --onSuccess \"node ./dist_server/server.js\" --onFailure \"echo Beep! Compilation Failed\" --compiler typescript/bin/tsc"
+
   },
   "private": true,
   "dependencies": {

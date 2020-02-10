@@ -13,9 +13,11 @@ import {AsbAppIconsModule} from "./helpers/svgIcon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {AsbSearchPageModule} from "src/app/modules/search-page/search-page.module";
 import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "./app-routing.module";
+import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";
 import {AsbHelpersModule} from "./modules/helpers/helpers.module";
+import {AsbSnpPageModule} from "./modules/snp-page/snp-page.module";
+import {DataService} from "./services/data.service";
 
 @NgModule({
   declarations: [
@@ -29,16 +31,23 @@ import {AsbHelpersModule} from "./modules/helpers/helpers.module";
       ToastrModule.forRoot(),
       BrowserModule.withServerTransition({ appId: 'serverApp' }),
       MatSnackBarModule,
+      AsbRoutingModule,
+
+      AsbAppIconsModule,
+
+      AsbHelpersModule,
+      // Pages components
       AsbHomePageModule,
       AsbPageNotFoundModule,
-
+      AsbSnpPageModule,
       AsbAboutUsPageModule,
-      AsbAppIconsModule,
       AsbSearchPageModule,
-      AppRoutingModule,
-      AsbHelpersModule,
+
+
   ],
-  providers: [],
+  providers: [
+      DataService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

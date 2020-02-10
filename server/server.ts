@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import appRouter from "./app.router";
 
 const app = express(),
       port = process.env.NODEJS_PORT || 3000,
@@ -15,7 +16,10 @@ const allowCrossDomain = (req, res, next) => {
 
 // Add your mock router here
 const routers = [
-
+    {
+        url: "",
+        middleware: appRouter
+    },
 ];
 
 app.use(allowCrossDomain);

@@ -4,6 +4,7 @@ import {SearchPageComponent} from "./modules/search-page/search-page.component";
 import {HomePageComponent} from "./modules/home-page/home-page.component";
 import {AboutUsComponent} from "./modules/about-us-page/about-us.component";
 import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component";
+import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 
 
 const routes: Routes = [
@@ -37,6 +38,13 @@ const routes: Routes = [
         }
     },
     {
+        path: "data/snp/:id",
+        component: SnpPageComponent,
+        data: {
+            title: "ASB snp page ID "
+        }
+    },
+    {
         path: "**",
         component: PageNotFoundComponent,
         data: {
@@ -52,4 +60,4 @@ const routes: Routes = [
 })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AsbRoutingModule { }

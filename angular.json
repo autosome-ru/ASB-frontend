@@ -5,10 +5,14 @@
   "projects": {
     "ad-astra": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "less"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "asb",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -91,7 +95,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.less"
             ],
             "scripts": []
           }

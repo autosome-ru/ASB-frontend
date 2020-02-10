@@ -11,8 +11,6 @@ export class SetFilterAction implements Action {
     constructor(public payload: SearchModel) {}
 }
 
-
-
 export type ActionUnion =
     | SetFilterAction
     ;
