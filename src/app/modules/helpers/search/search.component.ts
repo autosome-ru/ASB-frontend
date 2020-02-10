@@ -17,8 +17,8 @@ import {Title} from "@angular/platform-browser";
 export class SearchComponent implements OnInit {
 
     public searchForm: FormGroup;
-    public searchOptions$: string[];
-    public searchOptionsLoading$: boolean;
+    public searchOptions$: Observable<string[]>;
+    public searchOptionsLoading$: Observable<boolean>;
     private readonly nullValue: SearchModel = {searchInput: ""};
     @Input()
     public align: "restricted" | "full";
@@ -38,14 +38,17 @@ export class SearchComponent implements OnInit {
         this.searchForm = this.formBuilder.group({
             searchInput: "",
         });
-        this.searchOptions$ = ["one", "two", "three"];
-        this.searchOptionsLoading$ = false;
+        this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
+        this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
         this.input = this.store.select(fromSelectors.selectCurrentSearchQuery);
         this.input.subscribe(s => this.searchForm.setValue({searchInput: s.searchInput},
             {emitEvent: false}));
 
-        this.searchForm.valueChanges.subscribe(val =>
-            this.store.dispatch(new fromActions.search.SetFilterAction(val as SearchModel)));
+        this.searchForm.valueChanges.subscribe(val => {
+                this.store.dispatch(new fromActions.search.SetFilterAction(val as SearchModel));
+                this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(val as SearchModel))
+            }
+        );
         }
 
         _clearSearchField() {
@@ -53,12 +56,10 @@ export class SearchComponent implements OnInit {
         }
         _navigateToSearch() {
             if (!!this.searchForm.get('searchInput').value) {
-                if (!this.router.isActive("search", false)) {
-                    console.log("im not in search");
-                    this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
-                }
-                else {
+                if (this.router.isActive("search", false)) {
                     this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+                } else {
+                    this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
                 }
             }
         }

@@ -18,7 +18,7 @@ const allowCrossDomain = (req, res, next) => {
 const routers = [
     {
         url: "",
-        middleware: appRouter
+        middleware: appRouter,
     },
 ];
 

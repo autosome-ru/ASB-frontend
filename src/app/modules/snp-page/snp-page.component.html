@@ -1,10 +1,22 @@
 <ng-container *ngIf="!(snpDataLoading$ | async)">
-    <p>snp-page for <span>{{(this.snpData$ | async)?.rsId}}</span> works!</p>
-    <mat-list>
-        <mat-list-item *ngFor="let tf of (this.snpData$ | async)?.transFactors">
-            <span>{{tf}}</span>
-        </mat-list-item>
-    </mat-list>
+    <div style="width: inherit">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Transcription factors for snp {{(snpData$ | async)?.rsId }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+                <mat-list>
+                <mat-list-item *ngFor="let tf of (this.snpData$ | async)?.transFactors; last as last">
+                     {{tf}}
+                    <span style="flex: 1 1 auto"></span>
+                    <span style="color: #666666">Здесь будет описание и ссыль наверное </span>
+
+                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+    </div>
 </ng-container>
 <ng-container *ngIf="(snpDataLoading$ | async)">
     <p>Loading...</p>

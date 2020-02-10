@@ -19,8 +19,6 @@ export class LoadSnpInfoSuccessAction implements Action {
 }
 export class LoadSnpInfoFailAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoFail;
-
-    constructor(public payload: {id: string}) {}
 }
 
 

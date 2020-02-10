@@ -18,6 +18,7 @@ import {AppComponent} from "./app.component";
 import {AsbHelpersModule} from "./modules/helpers/helpers.module";
 import {AsbSnpPageModule} from "./modules/snp-page/snp-page.module";
 import {DataService} from "./services/data.service";
+import {SearchService} from "./services/search.service";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {DataService} from "./services/data.service";
   ],
   providers: [
       DataService,
+      SearchService,
   ],
   bootstrap: [AppComponent]
 })

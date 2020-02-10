@@ -1,13 +1,15 @@
 <mat-card class="example-card"
           [class._restricted]="align === 'restricted'"
           [class._full]="align === 'full'">
-    <mat-card-title>Search</mat-card-title>
+    <mat-card-title>Bla Bla</mat-card-title>
     <form [formGroup]="searchForm">
         <div style="display: flex; flex-direction: row">
-            <mat-form-field style="width: 100%">
+            <mat-form-field style="width: 100%" >
+                <mat-label>Search</mat-label>
                 <label>
+
                     <input matInput
-                           placeholder="Search"
+                           placeholder="e.g. rs1, HCT-116"
                            [matAutocomplete]="auto"
                            formControlName="searchInput"
                            (keydown.enter)="_navigateToSearch();"
@@ -24,13 +26,13 @@
                     <mat-icon svgIcon="clear"></mat-icon>
                 </button>
                 <mat-autocomplete #auto="matAutocomplete">
-                    <ng-container *ngIf="!(searchOptionsLoading$ ) && !!searchForm.get('searchInput').value">
-                        <mat-option *ngFor="let option of searchOptions$ " [value]="option">
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async) && !!searchForm.get('searchInput').value">
+                        <mat-option *ngFor="let option of searchOptions$ | async" [value]="option">
                             {{option}}
                         </mat-option>
                     </ng-container>
 
-                    <mat-option  *ngIf="searchOptionsLoading$ && !!searchForm.get('searchInput').value">
+                    <mat-option  *ngIf="(searchOptionsLoading$ | async) && !!searchForm.get('searchInput').value">
                         <mat-spinner
                                      color="accent"
                                      [diameter]="20">
