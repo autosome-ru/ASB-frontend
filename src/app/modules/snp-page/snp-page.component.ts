@@ -38,6 +38,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
     public tableColumnModel: AsbTableColumnModel<TfSnpModel>;
     public columnsFormControl: FormControl;
+    public nonStickyColumnsModel: Partial<AsbTableColumnModel<TfSnpModel>> = {};
+    public stickyColumns: string[];
 
     constructor(
         private store: Store<AppState>,
@@ -53,12 +55,19 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.tableColumnModel = {
-            name: {view: "TF name"},
+            name: {view: "TF name", sticky: true, valueConverter: v => v},
             effectSize: {view: "Effect size", valueConverter: v=> v.toFixed(2)},
             pValue: {view: "p-value ASB", valueConverter: v=> v.toFixed(2)},
             meanBad: {view: "mean BAD", valueConverter: v=> v.toFixed(2)}
         };
-        this.columnsFormControl = this.formBuilder.control(this.tableDisplayedColumns);
+        this.stickyColumns = [];
+        Object.keys(this.tableColumnModel).forEach(
+            key => !this.tableColumnModel[key].hasOwnProperty('sticky') ?
+                this.nonStickyColumnsModel[key] = this.tableColumnModel[key] : this.stickyColumns.push(key)
+        );
+
+
+        this.columnsFormControl = this.formBuilder.control(Object.keys(this.nonStickyColumnsModel));
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoData);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoading);
         this.id = this.route.snapshot.paramMap.get("id");
@@ -70,7 +79,12 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         return 0;
     };
     _changeColumns(event: MatSelectChange) {
-        this.tableDisplayedColumns = event.value
+        this.tableDisplayedColumns = [
+            ...this.stickyColumns,
+            ...event.value
+        ]
+
+
     }
     _changeView() {
         this.viewStatisticsAsTable = !this.viewStatisticsAsTable

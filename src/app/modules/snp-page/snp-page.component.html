@@ -14,7 +14,7 @@
                 </asb-snp-card>
             </div>
 
-            <div class="row border-bottom border-info">
+            <div class="row border-bottom border-info" style="margin-bottom: 0">
                 <h2 class="col-auto">Statistics</h2>
                 <button
                     mat-icon-button
@@ -39,7 +39,10 @@
             <div style="margin-bottom: 20px !important;">
                 <span >Здесь могло быть больше рекламы</span>
             </div>
-            <mat-tab-group style="padding-bottom: 20px">
+            <mat-tab-group
+                style="padding-bottom: 20px"
+                animationDuration="0ms"
+            >
                 <mat-tab >
                     <ng-template mat-tab-label>
                         <span>Transcription factors</span>
@@ -61,19 +64,17 @@
                                     </span>
                                 </mat-select-trigger>
                                 <mat-option
-                                    *ngFor="let column of tableColumnModel| keyvalue: originalOrder" [value]="column.key"
+                                    *ngFor="let column of nonStickyColumnsModel | keyvalue: originalOrder" [value]="column.key"
                                 >
                                     {{column.value.view}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-
-                        <asb-table class="row"
+                        <asb-table
                             #tableView
                             [columnModel]="tableColumnModel"
                             [displayedColumns]="tableDisplayedColumns"
                             [data]="(snpData$ | async).transFactors"
-                            [loading]="snpDataLoading$ | async"
                         >
                         </asb-table>
                     </div>
@@ -102,5 +103,10 @@
 
 </ng-container>
 <ng-container *ngIf="(snpDataLoading$ | async)">
-    <p style="padding-bottom: 0; margin-bottom: 0">Loading...</p>
+    <div class="snp-page__spinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+    </div>
+    <div style="padding-top:calc(100% - 120px)">
+
+    </div>
 </ng-container>

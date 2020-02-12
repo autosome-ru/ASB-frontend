@@ -45,9 +45,6 @@ export class AsbTableComponent<T>  {
     }
 
     @Input()
-    public loading: boolean;
-
-    @Input()
     public selectable: boolean;
 
     @Input()
