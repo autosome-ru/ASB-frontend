@@ -7,7 +7,7 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {AsbTableComponent} from "src/app/modules/helpers/asb-table/asb-table.component";
+import {AsbTableComponent} from "src/app/modules/helpers/table-template/table.component";
 import {
     AsbTableColumnModel,
     AsbTableDisplayedColumns} from "src/app/models/table.model";

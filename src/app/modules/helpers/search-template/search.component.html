@@ -1,7 +1,9 @@
-<mat-card class="example-card"
-          [class._restricted]="align === 'restricted'"
-          [class._full]="align === 'full'">
-    <mat-card-title>Bla Bla</mat-card-title>
+<div
+    class="asb-search"
+    style="background-color: white"
+    [class._restricted]="align === 'restricted'"
+    [class._full]="align === 'full'">
+    <h3>Bla Bla</h3>
     <form [formGroup]="searchForm">
         <div style="display: flex; flex-direction: row">
             <div class="input-group mb-3">
@@ -19,7 +21,7 @@
                 <input placeholder="e.g. rs1, 11:80422458"
                        type="text"
                        class="form-control"
-                       aria-label="Sizing example input"
+                       aria-label="search"
                        formControlName="searchInput"
                        (keydown.enter)="_navigateToSearch();"
                 >
@@ -46,4 +48,4 @@
             </a>
         </div>
     </form>
-</mat-card>
+</div>

@@ -6,6 +6,7 @@ import {AsbHelpersModule} from "src/app/modules/helpers/helpers.module";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatRippleModule} from "@angular/material/core";
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatCardModule,
         MatExpansionModule,
         MatCheckboxModule,
+        MatRippleModule,
     ],
     declarations: [SearchPageComponent],
     exports: [SearchPageComponent],

@@ -1,0 +1,27 @@
+<dl class="row">
+    <dt class="col-auto snp-card__tag">Variant Id</dt>
+    <dd class="col-sm-8 col-lg-10">{{this.snpData.rsId}}</dd>
+
+    <dt class="col-auto snp-card__tag">Alleles</dt>
+    <dd  class="col-sm-8 col-lg-10">
+        <span>{{this.snpData.refBase}}>{{snpData?.altBase}}</span>
+    </dd>
+    <dt class="col-auto snp-card__tag" style="">Chromosome</dt>
+    <dd class="col-sm-8 col-lg-10">
+        <span>{{this.snpData?.chr}}:{{snpData?.pos}}</span>
+    </dd>
+    <dt class="col-auto snp-card__tag" style="">Cell-lines</dt>
+    <dd class="col-sm-8 col-lg-10">
+        <ng-container *ngFor="let cl of snpData.cellLines; let first=first">
+            <button *ngIf="first" type="button" class="btn btn-outline-primary">{{cl.name}}</button>
+            <button *ngIf="!first" type="button" class="btn btn-outline-primary snp-card__button">{{cl.name}}</button>
+        </ng-container>
+    </dd>
+    <dt class="col-auto snp-card__tag" style="">Transcription factors</dt>
+    <dd class="col-sm-8 col-lg-10">
+        <ng-container *ngFor="let tf of this.snpData.transFactors; let first=first">
+            <button *ngIf="first" type="button" class="btn btn-outline-secondary">{{tf.name}}</button>
+            <button *ngIf="!first" type="button" class="btn btn-outline-secondary snp-card__button">{{tf.name}}</button>
+        </ng-container>
+    </dd>
+</dl>

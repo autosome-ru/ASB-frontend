@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
@@ -17,12 +17,13 @@ import {Title} from "@angular/platform-browser";
 export class SearchComponent implements OnInit {
 
     public searchForm: FormGroup;
-    public searchOptions$: Observable<string[]>;
-    public searchOptionsLoading$: Observable<boolean>;
     private readonly nullValue: SearchModel = {searchInput: ""};
     @Input()
     public align: "restricted" | "full";
-    private input: Observable<SearchModel>;
+    private input$: Observable<SearchModel>;
+
+    @Output ()
+    public searchQuery: EventEmitter<SearchModel>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -38,17 +39,10 @@ export class SearchComponent implements OnInit {
         this.searchForm = this.formBuilder.group({
             searchInput: "",
         });
-        this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
-        this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
-        this.input = this.store.select(fromSelectors.selectCurrentSearchQuery);
-        this.input.subscribe(s => this.searchForm.setValue({searchInput: s.searchInput},
+        this.input$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
+        this.input$.subscribe(s => this.searchForm.setValue({searchInput: s.searchInput},
             {emitEvent: false}));
 
-        this.searchForm.valueChanges.subscribe(val => {
-                this.store.dispatch(new fromActions.search.SetFilterAction(val as SearchModel));
-                this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(val as SearchModel))
-            }
-        );
         }
 
     _clearSearchField() {
@@ -56,9 +50,10 @@ export class SearchComponent implements OnInit {
     }
     _navigateToSearch() {
         if (!!this.searchForm.get('searchInput').value) {
-            if (this.router.isActive("search", false)) {
-                this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
-            } else {
+            const currentFilter = this.searchForm.value as SearchModel;
+            this.store.dispatch(new fromActions.search.SetFilterAction(currentFilter));
+            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(currentFilter));
+            if (!this.router.isActive("search", false)) {
                 this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
             }
         }
@@ -66,7 +61,8 @@ export class SearchComponent implements OnInit {
     }
     _navigateToAdvancedSearch() {
         if (this.router.isActive("search", false)) {
-            this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+                this.searchForm.get('searchInput').value as SearchModel));
         } else {
             this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
         }

@@ -5,7 +5,7 @@ import {AppState} from "../reducer";
 import {SearchService} from "src/app/services/search.service";
 import * as fromActions from "src/app/store/action/search.action";
 import {catchError, map, mergeMap} from "rxjs/operators";
-import {of} from "rxjs";
+import {EMPTY, of} from "rxjs";
 
 @Injectable()
 export class SearchEffect {
@@ -24,6 +24,26 @@ export class SearchEffect {
                 catchError(() => of(new fromActions.LoadSearchOptionsSuccessAction([]))),
             )
         )
+    );
+
+    @Effect()
+    loadSearchResults$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadSearchResults),
+        mergeMap((action: fromActions.LoadSearchResultsAction) =>
+            this.searchService.getSearchResult(action.payload).pipe(
+                map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
+                catchError(() => of(new fromActions.LoadSearchResultsSuccessAction([]))),
+            )
+        )
+    );
+
+    @Effect()
+    loadSearchResultsFail$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadSearchResultsFail),
+        mergeMap((action: fromActions.LoadSearchResultsFailAction) => {
+            console.log("Something went wrong with " + action.payload.searchInput);
+            return EMPTY;
+        }),
     );
 
 }

@@ -1,4 +1,27 @@
-<asb-search [align]="'full'"></asb-search>
+<div class="container-fluid">
+    <asb-search [align]="'full'"></asb-search>
+    <div class="jumbotron" style="background-color: white" *ngFor="let snp of searchSnpResults$ | async">
+        <div>
+        <mat-card
+            appMaterialElevation
+            mat-ripple
+            role="group"
+            [routerLink] = "'/data/snp/' + snp.rsId"
+        >
+            <mat-card-header>
+                <mat-card-title>
+                    SNP
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <asb-snp-card
+                    [snpData]="snp"
+                >
+                </asb-snp-card>
+            </mat-card-content>
+        </mat-card>
+        </div>
+    </div>
+</div>
 
-<mat-card style="width: 100%">Here will be some content about {{filter}}!</mat-card>
 

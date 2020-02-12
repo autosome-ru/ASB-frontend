@@ -14,8 +14,8 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
     selector: "asb-table",
-    templateUrl: "./asb-table.component.html",
-    styleUrls: ["./asb-table.component.less"],
+    templateUrl: "./table.component.html",
+    styleUrls: ["./table.component.less"],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
@@ -28,7 +28,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 })
 
 export class AsbTableComponent<T>  {
-    @HostBinding("class.asb-table")
+    @HostBinding("class.table-template")
     private readonly cssClass = true;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
 

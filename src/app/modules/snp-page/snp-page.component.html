@@ -1,7 +1,6 @@
 <ng-container *ngIf="!(snpDataLoading$ | async)">
-
-    <div class="container snp-list">
-        <div class="jumbotron snp-list">
+    <div class="container snp-page">
+        <div class="jumbotron snp-page">
             <div class="border-bottom border-info">
                 <h2>Overview</h2>
             </div>
@@ -9,33 +8,10 @@
                 <span >Здесь могла быть ваша реклама</span>
             </div>
             <div style="margin-left: 20px">
-            <dl class="row">
-                <dt class="col-auto snp-list__tag">Variant Id</dt>
-                <dd class="col-sm-8 col-lg-9">{{(this.snpData$ | async)?.rsId}}</dd>
-
-                <dt class="col-auto snp-list__tag">Alleles</dt>
-                <dd  class="col-sm-8 col-lg-9">
-                    <span>{{(this.snpData$ | async)?.refBase}}>{{(this.snpData$ | async)?.altBase}}</span>
-                </dd>
-                <dt class="col-auto snp-list__tag" style="">Chromosome</dt>
-                <dd class="col-sm-8 col-lg-9">
-                    <span>{{(this.snpData$ | async)?.chr}}:{{(this.snpData$ | async)?.pos}}</span>
-                </dd>
-                <dt class="col-auto snp-list__tag" style="">Cell-lines</dt>
-                <dd class="col-sm-8 col-lg-9">
-                    <ng-container *ngFor="let cl of (this.snpData$ | async)?.cellLines; let first=first">
-                        <button *ngIf="first" type="button" class="btn btn-outline-primary">{{cl.name}}</button>
-                        <button *ngIf="!first" type="button" class="btn btn-outline-primary snp-list__button">{{cl.name}}</button>
-                    </ng-container>
-                </dd>
-                <dt class="col-auto snp-list__tag" style="">Transcription factors</dt>
-                <dd class="col-sm-8 col-lg-9">
-                    <ng-container *ngFor="let tf of (this.snpData$ | async)?.transFactors; let first=first">
-                        <button *ngIf="first" type="button" class="btn btn-outline-secondary">{{tf.name}}</button>
-                        <button *ngIf="!first" type="button" class="btn btn-outline-secondary snp-list__button">{{tf.name}}</button>
-                    </ng-container>
-                </dd>
-            </dl>
+                <asb-snp-card
+                    [snpData]="snpData$ | async"
+                >
+                </asb-snp-card>
             </div>
 
             <div class="row border-bottom border-info">
@@ -78,7 +54,7 @@
                                 <mat-select-trigger>
                                     {{columnsFormControl.value ? tableColumnModel[columnsFormControl.value[0]]?.view : ''}}
                                     <span *ngIf="columnsFormControl.value?.length > 1"
-                                          class="snp-list__additional-selection"
+                                          class="snp-page__additional-selection"
                                     >
                                         (+{{columnsFormControl.value.length - 1}}
                                         {{columnsFormControl.value?.length === 2 ? 'other' : 'others'}})
@@ -117,9 +93,8 @@
                 <h2>Download</h2>
             </div>
             <div style="padding-bottom: 10px">
-                <span >Здесь могло быть больше рекламы</span>
+                <span >Здесь могло быть ещё что-то</span>
             </div>
-
 
         </div>
     </div>
