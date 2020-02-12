@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostBinding, OnInit} from '@angular/core';
 
 @Component({
   selector: 'asb-header',
@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class AsbHeaderComponent implements OnInit {
+    @HostBinding("class.asb-header")
+    private readonly cssClass = true;
+    constructor( ) {}
 
-  constructor( ) {}
+    ngOnInit() {
 
-  ngOnInit() {
   }
+
 
 }

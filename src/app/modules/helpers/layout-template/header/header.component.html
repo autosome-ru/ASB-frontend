@@ -1,0 +1,30 @@
+<nav class="navbar sticky-top navbar-dark bg-dark mb-5 asb-header">
+    <a
+        class="navbar-brand"
+        [routerLink]="'/'"
+        [routerLinkActive]="['active']"
+        [routerLinkActiveOptions]="{exact:true}"
+    >
+        AD ASTRA database
+    </a>
+    <div class="navbar-expand ml-auto p-2">
+        <div class="navbar-nav">
+            <a
+                class="nav-item nav-link"
+                [routerLink]="'/about-us-page'"
+                [routerLinkActive]="['active']"
+            >
+                about
+            </a>
+            <a class="nav-item nav-link"
+               [routerLink]="'/data/snp/rs1'"
+               [routerLinkActive]="['active']"
+            >
+                test
+            </a>
+        </div>
+    </div>
+</nav>
+
+
+

@@ -4,77 +4,43 @@
     <mat-card-title>Bla Bla</mat-card-title>
     <form [formGroup]="searchForm">
         <div style="display: flex; flex-direction: row">
-            <mat-form-field style="width: 100%" >
-                <mat-label>Search</mat-label>
-                <label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <a
+                        class="input-group-text"
+                        id="inputGroup-sizing-md"
+                        mat-button
+                        [disabled]="!searchForm.get('searchInput').value"
+                        (click)="_navigateToSearch()"
+                    > Search
 
-                    <input matInput
-                           placeholder="e.g. rs1, HCT-116"
-                           [matAutocomplete]="auto"
-                           formControlName="searchInput"
-                           (keydown.enter)="_navigateToSearch();"
-
-                    >
-                </label>
-                <button type="submit" style="display:none">hidden submit</button>
-                <button
-                    *ngIf="!!searchForm.get('searchInput').value"
-                    mat-icon-button
-                    matSuffix
-                    (click)="_clearSearchField()"
+                    </a>
+                </div>
+                <input placeholder="e.g. rs1, 11:80422458"
+                       type="text"
+                       class="form-control"
+                       aria-label="Sizing example input"
+                       formControlName="searchInput"
+                       (keydown.enter)="_navigateToSearch();"
                 >
-                    <mat-icon svgIcon="clear"></mat-icon>
-                </button>
-                <mat-autocomplete #auto="matAutocomplete">
-                    <ng-container *ngIf="!(searchOptionsLoading$ | async) && !!searchForm.get('searchInput').value">
-                        <mat-option *ngFor="let option of searchOptions$ | async" [value]="option">
-                            {{option}}
-                        </mat-option>
-                    </ng-container>
-
-                    <mat-option  *ngIf="(searchOptionsLoading$ | async) && !!searchForm.get('searchInput').value">
-                        <mat-spinner
-                                     color="accent"
-                                     [diameter]="20">
-                        </mat-spinner>
-                    </mat-option>
-                    </mat-autocomplete>
-            </mat-form-field>
-            <a
-                class="asb-search__search-button"
-                mat-icon-button
-                [disabled]="!searchForm.get('searchInput').value"
-                (click)="_navigateToSearch()">
-                <mat-icon svgIcon="search"></mat-icon>
-            </a>
-
+                <span class="input-group-btn">
+                    <button type="submit" style="display:none">hidden submit</button>
+                    <button
+                        mat-icon-button
+                        matSuffix
+                        (click)="_clearSearchField()"
+                    >
+                        <mat-icon svgIcon="clear"></mat-icon>
+                    </button>
+                </span>
+            </div>
         </div>
 
         <div class="form-checkboxes">
-            <mat-checkbox class="checkbox"
-                          [checked]="true"
-            >
-                Good boyz
-            </mat-checkbox>
-            <mat-checkbox class="checkbox"
-
-            >
-                BAD boyz
-            </mat-checkbox>
-            <mat-checkbox class="checkbox"
-                          [checked]="true"
-            >
-                Not So bad boyz
-            </mat-checkbox>
-            <mat-checkbox class="checkbox"
-                          [checked]="true"
-            >
-                Cell lines???
-            </mat-checkbox>
             <a
                 class="checkbox"
                 mat-raised-button
-                (click)="_navigateToSearch()"
+                (click)="_navigateToAdvancedSearch()"
             >
                 advanced search
             </a>

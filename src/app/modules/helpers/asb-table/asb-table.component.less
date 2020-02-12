@@ -1,0 +1,75 @@
+@import "../../../../styles/shared/colors.less";
+
+@toolbar-height: 64px;
+@paginator-height: 56px;
+
+.asb-table{
+    position: relative;
+    display: flex;
+    & .mat-icon-button {
+        & > svg {
+            fill: @black;
+        }
+    }
+
+    &__table {
+        min-width: 100%;
+
+        &._hidden {
+            display: none;
+        }
+
+        td, th {
+            &:not(:first-of-type) {
+                padding-left: 16px
+            }
+
+            &:not(:last-of-type) {
+                padding-right: 16px
+            }
+
+            &._actions:last-of-type {
+                padding: 0 4px;
+                border-left: 1px solid @primary_theme_color_100
+            }
+        }
+
+        &-expand {
+            tr&-row > td:first-of-type {
+                padding-left: 0;
+            }
+
+            tr&-row > td:last-of-type {
+                padding-right: 0;
+            }
+
+            &-inner {
+                overflow: hidden;
+                display: flex;
+            }
+
+            tr&-row.mat-row {
+                height: 0;
+            }
+        }
+
+        &-row {
+            &._clickable {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: tint(@accent_theme_color_50, 60%);
+                }
+
+                &:active {
+                    background-color: tint(@accent_theme_color_50, 30%);
+                }
+            }
+
+            &._borderless > td {
+                border-bottom-width: 0;
+            }
+        }
+    }
+
+}

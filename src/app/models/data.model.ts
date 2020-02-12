@@ -5,7 +5,17 @@ export interface SnpInfoModel {
     refBase: string;
     altBase: string;
     dbId: number;
-    cellLines: string[];
-    transFactors: string[];
+    transFactors: TfSnpModel[];
+    cellLines: {
+        name: string;
 
+    }[];
+
+}
+
+export interface TfSnpModel {
+    name: string;
+    pValue: number;
+    meanBad: number;
+    effectSize: number;
 }

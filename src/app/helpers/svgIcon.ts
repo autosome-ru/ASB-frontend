@@ -8,6 +8,7 @@ const ICONS = [
     "add",
     "done",
     "like",
+    "list",
     "videocam",
     "purchase-history",
     "double-arrow-left",

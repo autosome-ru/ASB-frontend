@@ -12,9 +12,13 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 import {RouterModule} from "@angular/router";
-import {PageTemplateComponent} from "./page-template/page-template.component";
-import {AsbFooterComponent} from "./page-template/footer/footer.component";
-import {AsbHeaderComponent} from "./page-template/header/header.component";
+import {LayoutComponent} from "./layout-template/layout.component";
+import {AsbFooterComponent} from "./layout-template/footer/footer.component";
+import {AsbHeaderComponent} from "./layout-template/header/header.component";
+import { AsbTableComponent } from './asb-table/asb-table.component';
+import {NgbDropdownModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
+
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
     imports: [
@@ -30,9 +34,12 @@ import {AsbHeaderComponent} from "./page-template/header/header.component";
         MatProgressSpinnerModule,
         MatIconModule,
         RouterModule,
+        NgbNavModule,
+        NgbDropdownModule,
+        MatTableModule,
     ],
-    declarations: [SearchComponent, AsbFooterComponent, AsbHeaderComponent, PageTemplateComponent],
-    exports: [SearchComponent, PageTemplateComponent],
+    declarations: [SearchComponent, AsbFooterComponent, AsbHeaderComponent, LayoutComponent, AsbTableComponent],
+    exports: [SearchComponent, LayoutComponent, AsbTableComponent],
 })
 export class AsbHelpersModule {
 }

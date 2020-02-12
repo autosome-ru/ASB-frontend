@@ -1,5 +1,5 @@
 import { enableProdMode } from '@angular/core';
-
+import '@angular/localize/init';
 import { environment } from './environments/environment';
 
 if (environment.production) {

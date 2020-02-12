@@ -1,23 +1,131 @@
 <ng-container *ngIf="!(snpDataLoading$ | async)">
-    <div style="width: inherit">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Transcription factors for snp {{(snpData$ | async)?.rsId }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-                <mat-list>
-                <mat-list-item *ngFor="let tf of (this.snpData$ | async)?.transFactors; last as last">
-                     {{tf}}
-                    <span style="flex: 1 1 auto"></span>
-                    <span style="color: #666666">Здесь будет описание и ссыль наверное </span>
 
-                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-                </mat-list-item>
-            </mat-list>
-        </mat-card-content>
-    </mat-card>
+    <div class="container snp-list">
+        <div class="jumbotron snp-list">
+            <div class="border-bottom border-info">
+                <h2>Overview</h2>
+            </div>
+            <div style="margin-bottom: 20px !important;">
+                <span >Здесь могла быть ваша реклама</span>
+            </div>
+            <div style="margin-left: 20px">
+            <dl class="row">
+                <dt class="col-auto snp-list__tag">Variant Id</dt>
+                <dd class="col-sm-8 col-lg-9">{{(this.snpData$ | async)?.rsId}}</dd>
+
+                <dt class="col-auto snp-list__tag">Alleles</dt>
+                <dd  class="col-sm-8 col-lg-9">
+                    <span>{{(this.snpData$ | async)?.refBase}}>{{(this.snpData$ | async)?.altBase}}</span>
+                </dd>
+                <dt class="col-auto snp-list__tag" style="">Chromosome</dt>
+                <dd class="col-sm-8 col-lg-9">
+                    <span>{{(this.snpData$ | async)?.chr}}:{{(this.snpData$ | async)?.pos}}</span>
+                </dd>
+                <dt class="col-auto snp-list__tag" style="">Cell-lines</dt>
+                <dd class="col-sm-8 col-lg-9">
+                    <ng-container *ngFor="let cl of (this.snpData$ | async)?.cellLines; let first=first">
+                        <button *ngIf="first" type="button" class="btn btn-outline-primary">{{cl.name}}</button>
+                        <button *ngIf="!first" type="button" class="btn btn-outline-primary snp-list__button">{{cl.name}}</button>
+                    </ng-container>
+                </dd>
+                <dt class="col-auto snp-list__tag" style="">Transcription factors</dt>
+                <dd class="col-sm-8 col-lg-9">
+                    <ng-container *ngFor="let tf of (this.snpData$ | async)?.transFactors; let first=first">
+                        <button *ngIf="first" type="button" class="btn btn-outline-secondary">{{tf.name}}</button>
+                        <button *ngIf="!first" type="button" class="btn btn-outline-secondary snp-list__button">{{tf.name}}</button>
+                    </ng-container>
+                </dd>
+            </dl>
+            </div>
+
+            <div class="row border-bottom border-info">
+                <h2 class="col-auto">Statistics</h2>
+                <button
+                    mat-icon-button
+                    class="col-auto ml-auto"
+                    style="vertical-align: center"
+                    aria-label="change to "
+                    [disabled]="viewStatisticsAsTable === true"
+                    (click)="_changeView()"
+                >
+                    <mat-icon svgIcon="list" aria-hidden="true"></mat-icon>
+                </button>
+                <button
+                    mat-icon-button
+                    class="col-auto ml"
+                    style="vertical-align: center"
+                    [disabled]="viewStatisticsAsTable === false"
+                    (click)="_changeView()"
+                >
+                    <mat-icon svgIcon="list" aria-hidden="true"></mat-icon>
+                </button>
+            </div>
+            <div style="margin-bottom: 20px !important;">
+                <span >Здесь могло быть больше рекламы</span>
+            </div>
+            <mat-tab-group style="padding-bottom: 20px">
+                <mat-tab >
+                    <ng-template mat-tab-label>
+                        <span>Transcription factors</span>
+                    </ng-template>
+                    <div class="container" style="padding-top: 10px">
+                        <mat-form-field>
+                            <mat-label>Selected columns</mat-label>
+                            <mat-select [formControl]="columnsFormControl"
+                                        multiple
+                                        (selectionChange)="_changeColumns($event)"
+                            >
+                                <mat-select-trigger>
+                                    {{columnsFormControl.value ? tableColumnModel[columnsFormControl.value[0]]?.view : ''}}
+                                    <span *ngIf="columnsFormControl.value?.length > 1"
+                                          class="snp-list__additional-selection"
+                                    >
+                                        (+{{columnsFormControl.value.length - 1}}
+                                        {{columnsFormControl.value?.length === 2 ? 'other' : 'others'}})
+                                    </span>
+                                </mat-select-trigger>
+                                <mat-option
+                                    *ngFor="let column of tableColumnModel| keyvalue: originalOrder" [value]="column.key"
+                                >
+                                    {{column.value.view}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <asb-table class="row"
+                            #tableView
+                            [columnModel]="tableColumnModel"
+                            [displayedColumns]="tableDisplayedColumns"
+                            [data]="(snpData$ | async).transFactors"
+                            [loading]="snpDataLoading$ | async"
+                        >
+                        </asb-table>
+                    </div>
+
+
+                </mat-tab>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <span>Cell lines</span>
+                    </ng-template>
+
+                    Content 2
+                </mat-tab>
+            </mat-tab-group>
+
+            <div class="border-bottom border-info">
+                <h2>Download</h2>
+            </div>
+            <div style="padding-bottom: 10px">
+                <span >Здесь могло быть больше рекламы</span>
+            </div>
+
+
+        </div>
     </div>
+
+
 </ng-container>
 <ng-container *ngIf="(snpDataLoading$ | async)">
-    <p>Loading...</p>
+    <p style="padding-bottom: 0; margin-bottom: 0">Loading...</p>
 </ng-container>

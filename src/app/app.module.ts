@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ToastrModule } from "ngx-toastr";
 import {StoreModule} from "@ngrx/store";
 import {asbAppReducer, asbAppEffects} from "./store";
 import {EffectsModule} from "@ngrx/effects";
@@ -29,10 +28,10 @@ import {SearchService} from "./services/search.service";
       StoreModule.forRoot(asbAppReducer),
       EffectsModule.forRoot(asbAppEffects),
       environment.production ? [] : StoreDevtoolsModule.instrument(),
-      ToastrModule.forRoot(),
       BrowserModule.withServerTransition({ appId: 'serverApp' }),
       MatSnackBarModule,
       AsbRoutingModule,
+
 
       AsbAppIconsModule,
 
@@ -43,6 +42,7 @@ import {SearchService} from "./services/search.service";
       AsbSnpPageModule,
       AsbAboutUsPageModule,
       AsbSearchPageModule,
+
 
 
   ],

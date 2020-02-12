@@ -1,0 +1,61 @@
+<table
+    *ngIf="_getDisplayedColumns().length > 0"
+    #table
+    mat-table
+    [dataSource]="_dataSource"
+    class="asb-table__table mat-elevation-z8"
+>
+    <!-- Expanded Content Column -->
+    <ng-container matColumnDef="__expand__">
+        <td mat-cell
+            *matCellDef="let row"
+            [attr.colspan]="_getDisplayedColumns().length"
+            class="asb-table__table-expand-cell"
+        >
+            <div class="asb-table__table-expand-inner"
+                 [@expand]="row == _expandedRow ? 'expanded' : 'collapsed'"
+            >
+                <ng-template
+                    [ngTemplateOutlet]="expandCellContentTemplate"
+                    [ngTemplateOutletContext]="{row: row}"
+                ></ng-template>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container
+        *ngFor="let column of columnModel | keyvalue"
+        [matColumnDef]="column.key"
+    >
+        <th mat-header-cell *matHeaderCellDef>{{column.value.view}}</th>
+        <td mat-cell *matCellDef="let row">
+            <ng-template
+                *ngIf="column.value.template; else valueConverterTemplate"
+                [ngTemplateOutlet]="column.value.template"
+                [ngTemplateOutletContext]="{value: row[column.key], row: row}"
+            ></ng-template>
+            <ng-template #valueConverterTemplate>
+                {{column.value.valueConverter
+                ? column.value.valueConverter(row[column.key])
+                : row[column.key]
+                }}
+            </ng-template>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="_getDisplayedColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: _getDisplayedColumns();"
+        class="asb-table__table-row"
+        [class._borderless]="expandCellContentTemplate"
+        [class._clickable]="expandCellContentTemplate || selectable"
+        (click)="_handleRowClick(row)"
+    ></tr>
+    <ng-container *ngIf="expandCellContentTemplate">
+        <tr mat-row *matRowDef="let row; columns: ['__expand__']"
+            class="asb-table__table-expand-row"
+        ></tr>
+    </ng-container>
+</table>
+<span *ngIf="_getDisplayedColumns().length === 0" class="row">
+    No columns selected
+</span>

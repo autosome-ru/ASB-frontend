@@ -51,16 +51,26 @@ export class SearchComponent implements OnInit {
         );
         }
 
-        _clearSearchField() {
-            this.searchForm.patchValue(this.nullValue);
-        }
-        _navigateToSearch() {
-            if (!!this.searchForm.get('searchInput').value) {
-                if (this.router.isActive("search", false)) {
-                    this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
-                } else {
-                    this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
-                }
+    _clearSearchField() {
+        this.searchForm.patchValue(this.nullValue);
+    }
+    _navigateToSearch() {
+        if (!!this.searchForm.get('searchInput').value) {
+            if (this.router.isActive("search", false)) {
+                this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+            } else {
+                this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
             }
         }
+
+    }
+    _navigateToAdvancedSearch() {
+        if (this.router.isActive("search", false)) {
+            this.store.dispatch(new fromActions.search.SetFilterAction({searchInput: "Input Accepted"}))
+        } else {
+            this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
+        }
+    }
+
+
 }
