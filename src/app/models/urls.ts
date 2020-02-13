@@ -1,4 +1,4 @@
-const serverUrl = "http://localhost:3000";
-export const snpInfoUrl = serverUrl + "/api/data/snp_info";
-export const searchOptionsUrl = serverUrl + "/api/search/options";
-export const searchResultsUrl = serverUrl + "/api/search";
+const serverUrl = "https://asbserver.localtunnel.me" + "/api/v1";
+export const snpInfoUrl = serverUrl + "/snps";
+export const searchOptionsUrl = serverUrl + "/search/options";
+export const searchResultsUrl = serverUrl + "/search/";

@@ -15,6 +15,6 @@ const routesApi = [
     },
 ];
 
-routesApi.forEach(router => appRouter.use("/api/" + router.url, router.middleware));
+routesApi.forEach(router => appRouter.use("/api/v1/" + router.url, router.middleware));
 
 export default appRouter;
