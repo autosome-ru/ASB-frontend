@@ -36,6 +36,9 @@ export class AsbTableComponent<T>  {
     public columnModel: AsbTableColumnModel<T>;
 
     @Input()
+    public stickyColumnModel: AsbTableColumnModel<T>;
+
+    @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
 
     public _dataSource: MatTableDataSource<T>;

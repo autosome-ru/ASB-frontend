@@ -1,6 +1,7 @@
 import * as fromActions from "src/app/store/action/search.action";
 import {SearchModel} from "src/app/models/search.model";
 import {SnpInfoModel} from "../../models/data.model";
+import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/search.converter";
 
 export interface SearchState {
     searchFilter: SearchModel,
@@ -58,7 +59,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
             return {
                 ...state,
-                searchResults: action.payload,
+                searchResults: <any>action.payload.map(convertSnpInfoBackendModelToSnpInfoModel),
                 searchResultsLoading: false,
             }
         }

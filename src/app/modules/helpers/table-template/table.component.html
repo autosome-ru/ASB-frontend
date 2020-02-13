@@ -1,8 +1,8 @@
-<mat-table
+<table
     #table
     mat-table
     [dataSource]="_dataSource"
-    class="asb-table__table mat-elevation-z8"
+    class="asb-table__table col-md-12 mat-elevation-z8"
 >
     <!-- Expanded Content Column -->
     <ng-container matColumnDef="__expand__">
@@ -21,10 +21,29 @@
             </div>
         </td>
     </ng-container>
+    <ng-container
+        *ngFor="let column of stickyColumnModel | keyvalue"
+        [matColumnDef]="column.key"
+    >
+        <th mat-header-cell *matHeaderCellDef>{{column.value.view}}</th>
+        <td mat-cell *matCellDef="let row">
+            <ng-template
+                *ngIf="column.value.template; else valueConverterTemplate"
+                [ngTemplateOutlet]="column.value.template"
+                [ngTemplateOutletContext]="{value: row[column.key], row: row}"
+            ></ng-template>
+            <ng-template #valueConverterTemplate>
+                {{column.value.valueConverter
+                ? column.value.valueConverter(row[column.key])
+                : row[column.key]
+                }}
+            </ng-template>
+        </td>
+    </ng-container>
 
     <ng-container
         *ngFor="let column of columnModel | keyvalue"
-        [matColumnDef]="column.key" [sticky]="column.value.hasOwnProperty('sticky')"
+        [matColumnDef]="column.key"
     >
         <th mat-header-cell *matHeaderCellDef>{{column.value.view}}</th>
         <td mat-cell *matCellDef="let row">
@@ -55,4 +74,4 @@
             class="asb-table__table-expand-row"
         ></tr>
     </ng-container>
-</mat-table>
+</table>

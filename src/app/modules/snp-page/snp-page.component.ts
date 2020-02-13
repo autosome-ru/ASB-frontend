@@ -21,7 +21,7 @@ import {MatSelectChange} from "@angular/material/select";
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
     @ViewChild("tableView", {static: true})
-    public tableView: AsbTableComponent<TfSnpModel>;
+    public tableView: AsbTableComponent<Partial<TfSnpModel>>;
 
 
     public id: string = "";
@@ -32,14 +32,16 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         "name",
-        "effectSize",
-        "pValue",
+        "effectSizeRef",
+        "effectSizeAlt",
+        "pValueRef",
+        "pValueAlt",
         "meanBad",
     ];
     public tableColumnModel: AsbTableColumnModel<TfSnpModel>;
     public columnsFormControl: FormControl;
-    public nonStickyColumnsModel: Partial<AsbTableColumnModel<TfSnpModel>> = {};
-    public stickyColumns: string[];
+    public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel>> = {};
+    public stickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel>> = {};
 
     constructor(
         private store: Store<AppState>,
@@ -55,19 +57,21 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.tableColumnModel = {
-            name: {view: "TF name", sticky: true, valueConverter: v => v},
-            effectSize: {view: "Effect size", valueConverter: v=> v.toFixed(2)},
-            pValue: {view: "p-value ASB", valueConverter: v=> v.toFixed(2)},
-            meanBad: {view: "mean BAD", valueConverter: v=> v.toFixed(2)}
+            name: {view: "TF name", valueConverter: v => v},
+            effectSizeRef: {view: "Effect size ref", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
+            effectSizeAlt: {view: "Effect size alt", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
+            pValueRef: {view: "p-value ASB", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
+            pValueAlt: {view: "p-value ASB", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
+            meanBad: {view: "mean BAD", valueConverter: v => v ? v.toFixed(2) : 'NaN'}
         };
-        this.stickyColumns = [];
         Object.keys(this.tableColumnModel).forEach(
-            key => !this.tableColumnModel[key].hasOwnProperty('sticky') ?
-                this.nonStickyColumnsModel[key] = this.tableColumnModel[key] : this.stickyColumns.push(key)
+            key => key !== "name" ?
+                this.nonStickyColumnModel[key] = this.tableColumnModel[key]
+                : this.stickyColumnModel[key] = this.tableColumnModel[key]
         );
 
 
-        this.columnsFormControl = this.formBuilder.control(Object.keys(this.nonStickyColumnsModel));
+        this.columnsFormControl = this.formBuilder.control(Object.keys(this.nonStickyColumnModel));
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoData);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoading);
         this.id = this.route.snapshot.paramMap.get("id");
@@ -80,7 +84,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     };
     _changeColumns(event: MatSelectChange) {
         this.tableDisplayedColumns = [
-            ...this.stickyColumns,
+            ...Object.keys(this.stickyColumnModel),
             ...event.value
         ]
 

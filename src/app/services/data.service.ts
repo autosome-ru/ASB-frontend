@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SnpInfoModel} from "src/app/models/data.model";
+import {SnpInfoBackendModel} from "src/app/models/data.model";
 import {snpInfoUrl} from "../models/urls";
 
 
@@ -11,7 +11,7 @@ export class DataService {
     constructor(private http: HttpClient) {
     }
 
-    public getSnpInfoById(id: string): Observable<SnpInfoModel> {
-        return this.http.get<SnpInfoModel>(`${snpInfoUrl}/${id}`);
+    public getSnpInfoById(id: string): Observable<SnpInfoBackendModel> {
+        return this.http.get<SnpInfoBackendModel>(`${snpInfoUrl}/${id}`);
     }
 }

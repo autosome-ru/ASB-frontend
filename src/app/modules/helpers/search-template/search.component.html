@@ -1,46 +1,47 @@
 <div
-    class="asb-search"
+    class="container-fluid asb-search py-3"
     style="background-color: white"
     [class._restricted]="align === 'restricted'"
     [class._full]="align === 'full'">
-    <h3>Bla Bla</h3>
+    <h3>Search</h3>
     <form [formGroup]="searchForm">
-        <div style="display: flex; flex-direction: row">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <a
-                        class="input-group-text"
-                        id="inputGroup-sizing-md"
-                        mat-button
-                        [disabled]="!searchForm.get('searchInput').value"
-                        (click)="_navigateToSearch()"
-                    > Search
+        <mat-form-field floatLabel="always" style="width: 100%; padding: 0" appearance="outline">
 
-                    </a>
-                </div>
-                <input placeholder="e.g. rs1, 11:80422458"
-                       type="text"
-                       class="form-control"
-                       aria-label="search"
-                       formControlName="searchInput"
-                       (keydown.enter)="_navigateToSearch();"
-                >
-                <span class="input-group-btn">
-                    <button type="submit" style="display:none">hidden submit</button>
-                    <button
-                        mat-icon-button
-                        matSuffix
-                        (click)="_clearSearchField()"
-                    >
-                        <mat-icon svgIcon="clear"></mat-icon>
-                    </button>
-                </span>
-            </div>
-        </div>
+            <input placeholder="e.g. rs11260841, 11:80422458"
+                   matInput
+                   name="Search SNPs"
+                   formGroupName="searchInput"
+                   aria-label="search"
+                   formControlName="searchInput"
+                   (keydown.enter)="_navigateToSearch();"
+            >
 
-        <div class="form-checkboxes">
+            <button type="submit" style="display:none">hidden submit</button>
             <a
-                class="checkbox"
+                mat-icon-button
+                [hidden]="!searchForm.get('searchInput').value"
+                style="height: 100%"
+                matSuffix
+                (click)="_clearSearchField()"
+            >
+                <mat-icon svgIcon="clear"></mat-icon>
+            </a>
+
+        </mat-form-field>
+
+
+        <div class="flex justify-content-end">
+            <a
+                mat-raised-button
+                style="margin-right: 5px"
+                [disabled]="!searchForm.get('searchInput').value"
+                (click)="_navigateToSearch()"
+            >
+                Search
+            </a>
+            <a
+                class="mr-auto"
+
                 mat-raised-button
                 (click)="_navigateToAdvancedSearch()"
             >

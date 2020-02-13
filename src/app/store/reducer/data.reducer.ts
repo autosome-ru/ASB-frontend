@@ -1,5 +1,6 @@
 import * as fromActions from "src/app/store/action/data.action";
 import {SnpInfoModel} from "src/app/models/data.model";
+import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/search.converter";
 
 export interface DataState {
     snpData: SnpInfoModel,
@@ -12,7 +13,6 @@ export const initialState: DataState = {
     snpDataLoading: true,
     snpData: {
         rsId: null,
-        dbId: null,
         cellLines: [],
         pos: null,
         chr: null,
@@ -32,7 +32,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
         case fromActions.ActionTypes.LoadSnpInfoSuccess: {
             return {
                 ...state,
-                snpData: action.payload,
+                snpData: convertSnpInfoBackendModelToSnpInfoModel(action.payload),
                 snpDataLoading: false,
             };
         }

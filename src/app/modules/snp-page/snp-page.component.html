@@ -14,8 +14,8 @@
                 </asb-snp-card>
             </div>
 
-            <div class="row border-bottom border-info" style="margin-bottom: 0">
-                <h2 class="col-auto">Statistics</h2>
+            <div class="row border-bottom border-info mx-0 mb-0">
+                <h2 class="col-auto pl-0 ml-0">Statistics</h2>
                 <button
                     mat-icon-button
                     class="col-auto ml-auto"
@@ -40,14 +40,13 @@
                 <span >Здесь могло быть больше рекламы</span>
             </div>
             <mat-tab-group
-                style="padding-bottom: 20px"
                 animationDuration="0ms"
             >
                 <mat-tab >
                     <ng-template mat-tab-label>
                         <span>Transcription factors</span>
                     </ng-template>
-                    <div class="container" style="padding-top: 10px">
+                    <div class="container" style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px">
                         <mat-form-field>
                             <mat-label>Selected columns</mat-label>
                             <mat-select [formControl]="columnsFormControl"
@@ -64,7 +63,8 @@
                                     </span>
                                 </mat-select-trigger>
                                 <mat-option
-                                    *ngFor="let column of nonStickyColumnsModel | keyvalue: originalOrder" [value]="column.key"
+                                    *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
+                                    [value]="column.key"
                                 >
                                     {{column.value.view}}
                                 </mat-option>
@@ -72,7 +72,8 @@
                         </mat-form-field>
                         <asb-table
                             #tableView
-                            [columnModel]="tableColumnModel"
+                            [stickyColumnModel]="stickyColumnModel"
+                            [columnModel]="nonStickyColumnModel"
                             [displayedColumns]="tableDisplayedColumns"
                             [data]="(snpData$ | async).transFactors"
                         >

@@ -1,5 +1,5 @@
 import {Component, HostBinding, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
 import {SnpInfoModel} from "../../models/data.model";
@@ -18,10 +18,10 @@ export class SearchPageComponent implements OnInit {
     public filter: string = "";
     public searchSnpResults$: Observable<SnpInfoModel[]>;
     public searchSnpResultsLoading$: Observable<boolean>;
-    public hover: boolean = false;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
+                private router: Router,
                 private titleService: Title) {}
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
@@ -29,9 +29,23 @@ export class SearchPageComponent implements OnInit {
 
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
-  }
+    }
 
-  _changeHover() {
-        this.hover = !this.hover;
-  }
+    _navigateToSnp(id: string) {
+        this.router.navigate(["/data/snp/" + id]);
+    }
+
+    getPhrase(n: number): string {
+        switch (n) {
+            case 0: {
+                return "No results found"
+            }
+            case 1: {
+                return "1 result"
+            }
+            default: {
+                return `${n} results`
+            }
+        }
+    }
 }

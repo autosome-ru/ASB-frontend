@@ -1,5 +1,5 @@
 import {Action} from "@ngrx/store";
-import {SnpInfoModel} from "src/app/models/data.model";
+import {SnpInfoBackendModel} from "src/app/models/data.model";
 
 export enum ActionTypes {
     LoadSnpInfo = "[Data] load info model",
@@ -15,7 +15,7 @@ export class LoadSnpInfoAction implements Action {
 export class LoadSnpInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoSuccess;
 
-    constructor(public payload: SnpInfoModel) {}
+    constructor(public payload: SnpInfoBackendModel) {}
 }
 export class LoadSnpInfoFailAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoFail;

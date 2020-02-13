@@ -1,41 +1,6 @@
 @import "../../../../styles/shared/colors.less";
 
 
-
-
-
-@toolbar-height: 64px;
-@paginator-height: 56px;
-
-
-td, th {
-    &:nth-of-type(1) {
-        min-width: 120px;
-        border-right: 1px solid #e0e0e0;
-    }
-
-    &:nth-of-type(2) {
-        min-width: 120px;
-    }
-
-    &:nth-of-type(3) {
-        min-width: 120px;
-    }
-
-
-    &:nth-of-type(4) {
-        min-width: 120px;
-    }
-
-    &:nth-of-type(5) {
-        min-width: 120px;
-    }
-    &:nth-of-type(6) {
-        min-width: 120px;
-    }
-}
-
-
 .asb-table{
     position: relative;
     display: flex;
@@ -44,8 +9,6 @@ td, th {
 
     &__table {
         min-width: 100%;
-
-
 
         &._hidden {
             display: none;
@@ -58,11 +21,6 @@ td, th {
 
             &:not(:last-of-type) {
                 padding-right: 16px
-            }
-
-            &._actions:last-of-type {
-                padding: 0 4px;
-                border-left: 1px solid @primary_theme_color_100
             }
         }
 

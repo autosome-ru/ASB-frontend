@@ -1,24 +1,40 @@
-<div class="container-fluid">
+<div class="container flex-grow-1 mx-auto pb-3">
+
     <asb-search [align]="'full'"></asb-search>
-    <div class="jumbotron" style="background-color: white" *ngFor="let snp of searchSnpResults$ | async">
-        <div>
-        <mat-card
-            appMaterialElevation
-            role="group"
-            [routerLink] = "'/data/snp/' + snp.rsId"
-        >
-            <mat-card-header>
-                <mat-card-title>
-                    Горячий пирожок {{snp.rsId}}
-                </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <asb-snp-card
-                    [snpData]="snp"
-                >
-                </asb-snp-card>
-            </mat-card-content>
-        </mat-card>
+
+    <hr class="v-divider" style="margin:0">
+    <div style="background: #f8f8f8;" class="d-flex">
+        <div class="container-fluid mx-auto" style="padding-bottom: 5px; padding-top: 5px">
+            <div class="flex text-xs-right xs-12">
+                <div class="text-xs-left">
+                    <h4 class="headline text--bold-300">
+                        {{getPhrase((searchSnpResults$ | async).length)}}</h4>
+                </div>
+            </div>
+            <div class="layout pb-2"
+                     *ngFor="let snp of searchSnpResults$ | async">
+                    <mat-card
+                        appMaterialElevation
+                        role="group"
+                        (click)="_navigateToSnp(snp.rsId)"
+
+                    >
+                        <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
+                            <mat-card-title>
+                                Горячий пирожок {{snp.rsId}} и инфа сколько там тфов датасетов и тд заодно
+                            </mat-card-title>
+                            <mat-card-subtitle>
+
+                            </mat-card-subtitle>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <asb-snp-card
+                                [snpData]="snp"
+                            >
+                            </asb-snp-card>
+                        </mat-card-content>
+                    </mat-card>
+            </div>
         </div>
     </div>
 </div>
