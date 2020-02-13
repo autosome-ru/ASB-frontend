@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
@@ -15,13 +15,15 @@ import {FormBuilder, FormControl} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
 
 @Component({
-  selector: 'asb-snp-page',
-  templateUrl: './snp-page.component.html',
-  styleUrls: ['./snp-page.component.less']
+    selector: 'asb-snp-page',
+    templateUrl: './snp-page.component.html',
+    styleUrls: ['./snp-page.component.less'],
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
     @ViewChild("tableView", {static: true})
-    public tableView: AsbTableComponent<Partial<TfSnpModel>>;
+    public tableView: AsbTableComponent<TfSnpModel>;
 
 
     public id: string = "";
@@ -87,10 +89,5 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             ...Object.keys(this.stickyColumnModel),
             ...event.value
         ]
-
-
-    }
-    _changeView() {
-        this.viewStatisticsAsTable = !this.viewStatisticsAsTable
     }
 }

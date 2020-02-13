@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit {
     public searchForm: FormGroup;
     private readonly nullValue: SearchModel = {searchInput: ""};
     @Input()
-    public align: "restricted" | "full";
+    public width: "restricted" | "full";
     private input$: Observable<SearchModel>;
 
     @Output ()

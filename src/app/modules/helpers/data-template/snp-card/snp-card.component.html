@@ -1,63 +1,35 @@
 <dl class="row">
-    <dt class="col-auto snp-card__tag">Variant Id</dt>
-    <dd class="col-sm-7 col-lg-9 col-xl-10">{{this.snpData.rsId}}</dd>
-
-    <dt class="col-auto snp-card__tag">Alleles</dt>
-    <dd  class="col-sm-7 col-lg-9 col-xl-10">
-        <span>{{this.snpData.refBase}}>{{snpData?.altBase}}</span>
-    </dd>
-    <dt class="col-auto snp-card__tag" style="">Chromosome</dt>
-    <dd class="col-sm-7 col-lg-9 col-xl-10">
-        <span>{{this.snpData?.chr}}:{{snpData?.pos}}</span>
-    </dd>
-    <dt class="col-auto snp-card__tag" style="">Cell types</dt>
-    <dd class="col-sm-7 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-between">
-        <ng-container *ngFor="let cl of snpData.cellLines; let last = last; let i = index;">
-            <button
-                *ngIf="i < maxButtons || snpData.cellLines.length < maxButtons || showMoreCellLines"
-                 type="button" class="btn btn-outline-primary" style="margin-right: 10px"
-            >
-                {{cl.name}}
-            </button>
-            <button
-                *ngIf="(i == maxButtons && snpData.cellLines.length
-                - maxButtons > 1 && !showMoreCellLines) || last && showMoreCellLines"
-                type="button"
-                class="btn btn-outline-primary"
-                (click)="_showMoreCellLines()"
-            >
-                {{showMoreCellLines ? 'Show less' : 'Show more'}}
-                <span *ngIf="!showMoreCellLines"
-                    class="snp-page__additional-selection"
-                >
-                    (+{{snpData.cellLines.length - maxButtons}} others)
-                </span>
-            </button>
-        </ng-container>
-    </dd>
-    <dt class="col-auto snp-card__tag" style="">Transcription factors</dt>
-    <dd class="col-sm-7 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center">
-        <ng-container *ngFor="let tf of snpData.transFactors; let last = last; let i = index;">
-            <button
-                *ngIf="i < maxButtons || snpData.transFactors.length < maxButtons || showMoreTfs"
-                type="button" class="btn btn-outline-secondary" style="margin-right: 10px"
-            >
-                {{tf.name}}
-            </button>
-            <button
-                *ngIf="(i == maxButtons && snpData.transFactors.length
-                - maxButtons > 1 && !showMoreTfs) || last && showMoreTfs"
-                type="button"
-                class="btn btn-outline-secondary"
-                (click)="_showMoreTfs()"
-            >
-                {{showMoreTfs ? 'Show less' : 'Show more'}}
-                <span *ngIf="!showMoreTfs"
-                      class="snp-page__additional-selection"
-                >
-                    (+{{snpData.transFactors.length - maxButtons}} others)
-                </span>
-            </button>
-        </ng-container>
-    </dd>
+    <dt
+        *ngIf="snpData.cellLines.length != 0"
+        class="col-auto snp-card__tag align-self-start"
+        style="vertical-align: center"
+    >
+        ASB in cell types
+    </dt>
+    <asb-snp-buttons
+        class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
+        [data]="snpData.cellLines"
+        [maxObjects]="4"
+        [noButtons]="noButtons"
+        [showMoreObjects]="showMoreCellLines"
+        (objectsQualChanged)="_showMoreCellLines($event)"
+        [buttonsClass]="'btn btn-outline-primary'"
+    >
+    </asb-snp-buttons>
+    <dt
+        *ngIf="snpData.cellLines.length != 0"
+        class="col-auto snp-card__tag align-self-start"
+    >
+        ASB in transcription factors
+    </dt>
+    <asb-snp-buttons
+        class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
+        [data]="snpData.transFactors"
+        [noButtons]="noButtons"
+        [maxObjects]="4"
+        [showMoreObjects]="showMoreTfs"
+        (objectsQualChanged)="_showMoreTfs($event)"
+        [buttonsClass]="'btn btn-outline-secondary'"
+    >
+    </asb-snp-buttons>
 </dl>

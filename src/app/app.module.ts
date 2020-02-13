@@ -24,17 +24,15 @@ import {SearchService} from "./services/search.service";
     AppComponent
   ],
   imports: [
+      BrowserModule.withServerTransition({ appId: 'serverApp' }),
       BrowserAnimationsModule,
       StoreModule.forRoot(asbAppReducer),
       EffectsModule.forRoot(asbAppEffects),
       environment.production ? [] : StoreDevtoolsModule.instrument(),
-      BrowserModule.withServerTransition({ appId: 'serverApp' }),
       MatSnackBarModule,
       AsbRoutingModule,
 
-
       AsbAppIconsModule,
-
       AsbHelpersModule,
       // Pages components
       AsbHomePageModule,
@@ -42,8 +40,6 @@ import {SearchService} from "./services/search.service";
       AsbSnpPageModule,
       AsbAboutUsPageModule,
       AsbSearchPageModule,
-
-
 
   ],
   providers: [

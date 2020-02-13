@@ -1,108 +1,126 @@
 <ng-container *ngIf="!(snpDataLoading$ | async)">
-    <div class="container snp-page">
-        <div class="jumbotron snp-page">
-            <div class="border-bottom border-info">
-                <h2>Overview</h2>
-            </div>
-            <div style="margin-bottom: 20px !important;">
-                <span >Здесь могла быть ваша реклама</span>
-            </div>
-            <div style="margin-left: 20px">
-                <asb-snp-card
-                    [snpData]="snpData$ | async"
-                >
-                </asb-snp-card>
-            </div>
+    <div class="container snp-page px-0">
 
-            <div class="row border-bottom border-info mx-0 mb-0">
-                <h2 class="col-auto pl-0 ml-0">Statistics</h2>
-                <button
-                    mat-icon-button
-                    class="col-auto ml-auto"
-                    style="vertical-align: center"
-                    aria-label="change to "
-                    [disabled]="viewStatisticsAsTable === true"
-                    (click)="_changeView()"
-                >
-                    <mat-icon svgIcon="list" aria-hidden="true"></mat-icon>
-                </button>
-                <button
-                    mat-icon-button
-                    class="col-auto ml"
-                    style="vertical-align: center"
-                    [disabled]="viewStatisticsAsTable === false"
-                    (click)="_changeView()"
-                >
-                    <mat-icon svgIcon="list" aria-hidden="true"></mat-icon>
-                </button>
-            </div>
-            <div style="margin-bottom: 20px !important;">
-                <span >Здесь могло быть больше рекламы</span>
-            </div>
-            <mat-tab-group
-                animationDuration="0ms"
+        <div class="border-bottom border-info" style="padding-left: 20px">
+            <h2><a href="#">rs{{(snpData$ | async).rsId}}</a>
+                {{(snpData$ | async).chr}}:{{(snpData$ | async).pos }}
+                {{(snpData$ | async).refBase}}>{{(snpData$ | async).altBase}}
+            </h2>
+        </div>
+        <div style="margin-left: 20px; padding-top: 10px">
+            <asb-snp-card
+                [snpData]="snpData$ | async"
             >
-                <mat-tab >
-                    <ng-template mat-tab-label>
-                        <span>Transcription factors</span>
-                    </ng-template>
-                    <div class="container" style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px">
-                        <mat-form-field>
-                            <mat-label>Selected columns</mat-label>
-                            <mat-select [formControl]="columnsFormControl"
-                                        multiple
-                                        (selectionChange)="_changeColumns($event)"
-                            >
-                                <mat-select-trigger>
-                                    {{columnsFormControl.value ? tableColumnModel[columnsFormControl.value[0]]?.view : ''}}
-                                    <span *ngIf="columnsFormControl.value?.length > 1"
-                                          class="snp-page__additional-selection"
-                                    >
-                                        (+{{columnsFormControl.value.length - 1}}
-                                        {{columnsFormControl.value?.length === 2 ? 'other' : 'others'}})
-                                    </span>
-                                </mat-select-trigger>
-                                <mat-option
-                                    *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
-                                    [value]="column.key"
+            </asb-snp-card>
+        </div>
+        <mat-accordion hideToggle multi displayMode="flat" class="mat-elevation-z0 py-5"
+                       style="padding-left: 20px !important">
+            <mat-expansion-panel  class="py-0">
+
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h2 class="col-auto pl-0 ml-0">Название раздела(не Statistics)</h2>
+                    </mat-panel-title>
+
+                </mat-expansion-panel-header>
+
+                <mat-tab-group
+                    *ngIf="(snpData$ | async).transFactors.length !== 0 &&
+                    (snpData$ | async).cellLines.length !== 0"
+                    animationDuration="0ms"
+                >
+                    <mat-tab >
+                        <ng-template mat-tab-label>
+                            <h4 class="col-auto pl-0 ml-0">Transcription factors</h4>
+                        </ng-template>
+                        <div class="container" style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px">
+                            <mat-form-field>
+                                <mat-label>Selected columns</mat-label>
+                                <mat-select [formControl]="columnsFormControl"
+                                            multiple
+                                            (selectionChange)="_changeColumns($event)"
                                 >
-                                    {{column.value.view}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <asb-table
-                            #tableView
-                            [stickyColumnModel]="stickyColumnModel"
-                            [columnModel]="nonStickyColumnModel"
-                            [displayedColumns]="tableDisplayedColumns"
-                            [data]="(snpData$ | async).transFactors"
-                        >
-                        </asb-table>
-                    </div>
+                                    <mat-select-trigger>
+                                        {{columnsFormControl.value ? tableColumnModel[columnsFormControl.value[0]]?.view : ''}}
+                                        <span *ngIf="columnsFormControl.value?.length > 1"
+                                              class="snp-page__additional-selection"
+                                        >
+                                            (+{{columnsFormControl.value.length - 1}}
+                                            {{columnsFormControl.value?.length === 2 ? 'other' : 'others'}})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option
+                                        *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
+                                        [value]="column.key"
+                                    >
+                                        {{column.value.view}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <asb-table
+                                #tableView
+                                [stickyColumnModel]="stickyColumnModel"
+                                [columnModel]="nonStickyColumnModel"
+                                [displayedColumns]="tableDisplayedColumns"
+                                [data]="(snpData$ | async).transFactors"
+                            >
+                            </asb-table>
+                        </div>
 
 
-                </mat-tab>
-                <mat-tab>
-                    <ng-template mat-tab-label>
-                        <span>Cell lines</span>
-                    </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <h4 class="col-auto pl-0 ml-0">Cell types</h4>
+                        </ng-template>
 
-                    Content 2
-                </mat-tab>
-            </mat-tab-group>
+                        Content 2
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-expansion-panel>
 
-            <div class="border-bottom border-info">
-                <h2>Download</h2>
-            </div>
+            <mat-expansion-panel expanded="true" class="py-0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="border-bottom border-info">
+                            <h2 class="col-auto pl-0 ml-0">PhenoData)</h2>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
             <div style="padding-bottom: 10px">
                 <span >Здесь могло быть ещё что-то</span>
             </div>
+            </mat-expansion-panel>
 
-        </div>
+            <mat-expansion-panel expanded="true" class="py-0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="border-bottom border-info">
+                            <h2 class="col-auto pl-0 ml-0">External links</h2>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div style="padding-bottom: 10px">
+                    <span >Здесь могло быть ещё что-то</span>
+                </div>
+            </mat-expansion-panel>
+            <mat-expansion-panel expanded="true" class="pb-5">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="border-bottom border-info">
+                            <h2 class="col-auto pl-0 ml-0">Download</h2>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div style="padding-bottom: 10px">
+                    <span >Здесь могло быть ещё что-то</span>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
-
-
 </ng-container>
+
+
 <ng-container *ngIf="(snpDataLoading$ | async)">
     <div class="snp-page__spinner">
         <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
@@ -111,3 +129,9 @@
 
     </div>
 </ng-container>
+
+<ng-template #expandCellContentTemplate let-row="row">
+    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+         alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail">
+    <span> expanded row works {{row.name}}</span>
+</ng-template>

@@ -1,0 +1,56 @@
+<ng-container *ngIf="!noButtons">
+    <dd >
+        <ng-container *ngFor="let obj of data; let last = last; let i = index;">
+            <button
+                *ngIf="i < maxObjects || data.length < maxObjects || showMoreObjects"
+                type="button" [className]="buttonsClass" style="margin-right: 10px; margin-top: 5px"
+            >
+                {{obj.name}}
+            </button>
+            <button
+                *ngIf="(i == maxObjects && data.length
+                    - maxObjects > 1 && !showMoreObjects) || last && showMoreObjects"
+                type="button"
+                style="margin-top: 5px"
+                [className]="buttonsClass"
+                (click)="_showMoreObjects()"
+            >
+                {{showMoreObjects ? 'Show less' : 'Show more'}}
+                <span *ngIf="!showMoreObjects"
+                      class="snp-page__additional-selection"
+                >
+                        (+{{data.length - maxObjects}} others)
+                    </span>
+            </button>
+        </ng-container>
+    </dd>
+</ng-container>
+<ng-container *ngIf="noButtons">
+    <dd style="vertical-align: center">
+        <h5 style="margin-right: 10px; margin-top: 5px">Total: {{data.length}}</h5>
+        <ng-container *ngIf="data.length > 0">
+            <div style="flex-wrap: wrap">
+                <h6 style="margin-right: 10px; margin-top: 5px" class="col-auto"
+                >
+                    Top {{data.length >= maxObjects ? maxObjects : data.length}}:
+                </h6>
+                <mat-chip-list *ngFor="let obj of data; let i = index;">
+                    <mat-chip
+                        class="col-auto"
+                        *ngIf="i < maxObjects || data.length < maxObjects"
+                        style="margin-right: 10px; margin-top: 5px; overflow: hidden"
+                    >
+                        {{obj.name}}
+                    </mat-chip>
+                    <span
+                        *ngIf="i == maxObjects && data.length
+                            - maxObjects > 1"
+                        style="margin-top: 5px"
+                    >
+
+                    </span>
+                </mat-chip-list>
+                </div>
+        </ng-container>
+    </dd>
+</ng-container>

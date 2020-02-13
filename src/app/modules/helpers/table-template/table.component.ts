@@ -8,7 +8,6 @@ import {
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {MatTableDataSource, PageEvent} from "@angular/material";
-import { SelectionModel } from "@angular/cdk/collections";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 
@@ -21,14 +20,14 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
     animations: [
         trigger("expand", [
             state("collapsed", style({height: "0px", minHeight: "0"})),
-            state("expanded", style({height: "*"})),
+            state("expanded", style({height: "20px"})),
             transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
         ]),
     ],
 })
 
 export class AsbTableComponent<T>  {
-    @HostBinding("class.table-template")
+    @HostBinding("class.asb-table")
     private readonly cssClass = true;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
 
@@ -46,9 +45,6 @@ export class AsbTableComponent<T>  {
     set data(value: Array<T>) {
         this._dataSource = new MatTableDataSource<T>(value);
     }
-
-    @Input()
-    public selectable: boolean;
 
     @Input()
     public mobile: boolean;
@@ -71,25 +67,13 @@ export class AsbTableComponent<T>  {
     @Output()
     public changePage = new EventEmitter<PageEvent>();
 
-    public _selection: SelectionModel<T>;
     public _expandedRow: T | null;
 
-
-    _getDisplayedColumns(): string[] {
-        const result = [];
-        if (this.selectable) {
-            result.push("__select__");
-        }
-        result.push(...this.displayedColumns);
-        return result;
-    }
 
 
     public _handleRowClick(row: T): void {
         if (this.expandCellContentTemplate) {
             this._expandedRow = this._expandedRow === row ? null : row;
-        } else if (this.selectable) {
-            this._selection.toggle(row);
         }
     }
 }

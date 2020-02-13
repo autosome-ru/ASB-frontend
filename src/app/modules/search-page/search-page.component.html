@@ -1,6 +1,6 @@
 <div class="container flex-grow-1 mx-auto pb-3">
 
-    <asb-search [align]="'full'"></asb-search>
+    <asb-search [width]="'full'"></asb-search>
 
     <hr class="v-divider" style="margin:0">
     <div style="background: #f8f8f8;" class="d-flex">
@@ -21,7 +21,10 @@
                     >
                         <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
                             <mat-card-title>
-                                Горячий пирожок {{snp.rsId}} и инфа сколько там тфов датасетов и тд заодно
+                                <h2>rs{{snp.rsId}}
+                                    {{snp.chr}}:{{snp.pos }}
+                                    {{snp.refBase}}>{{snp.altBase}}
+                                </h2>
                             </mat-card-title>
                             <mat-card-subtitle>
 

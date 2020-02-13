@@ -6,7 +6,7 @@ const appRouter = express.Router();
 
 const routesApi = [
     {
-        url: "data",
+        url: "",
         middleware: routers.dataRouter
     },
     {

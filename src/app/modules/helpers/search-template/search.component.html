@@ -1,8 +1,8 @@
 <div
     class="container-fluid asb-search py-3"
     style="background-color: white"
-    [class._restricted]="align === 'restricted'"
-    [class._full]="align === 'full'">
+    [class._restricted]="width === 'restricted'"
+    [class._full]="width === 'full'">
     <h3>Search</h3>
     <form [formGroup]="searchForm">
         <mat-form-field floatLabel="always" style="width: 100%; padding: 0" appearance="outline">

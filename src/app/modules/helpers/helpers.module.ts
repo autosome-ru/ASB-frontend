@@ -21,6 +21,8 @@ import {NgbDropdownModule, NgbNavModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatTableModule} from "@angular/material/table";
 import { AsbSnpCardComponent } from './data-template/snp-card/snp-card.component';
 import {AsbElevationDirective} from "./elevation.directive";
+import {SnpButtonsComponent} from "./data-template/snp-card/snp-buttons/snp-buttons.component";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
     imports: [
@@ -39,6 +41,7 @@ import {AsbElevationDirective} from "./elevation.directive";
         NgbNavModule,
         NgbDropdownModule,
         MatTableModule,
+        MatChipsModule,
     ],
     declarations: [
         SearchComponent,
@@ -48,6 +51,7 @@ import {AsbElevationDirective} from "./elevation.directive";
         AsbTableComponent,
         AsbSnpCardComponent,
         AsbElevationDirective,
+        SnpButtonsComponent,
     ],
     exports: [SearchComponent, LayoutComponent, AsbTableComponent, AsbSnpCardComponent, AsbElevationDirective],
 })
