@@ -6,6 +6,6 @@ export const searchRouter = express.Router();
 searchRouter.get("/snps/options/rs1", (req, res) => {
     res.status(200).json(search.searchOptions);
 });
-searchRouter.get("/11260841", (req, res) => {
+searchRouter.get("/rs11260841", (req, res) => {
     res.status(200).json(search.searchResults);
 });

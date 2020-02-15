@@ -1,0 +1,13 @@
+<h2 *ngIf="snpCard">
+    <a
+        style="cursor: pointer; color: #0071bc"
+        (click)="_goToURL(data.rsId)"
+    >
+        {{data.rsId}}
+    </a>
+    {{data.chr}}:{{data.pos }}
+    {{data.refBase}}>{{data.altBase}}
+</h2>
+<h2 *ngIf="!snpCard">
+    {{data.rsId}} {{data.chr}}:{{data.pos }} {{data.refBase}}>{{data.altBase}}
+</h2>

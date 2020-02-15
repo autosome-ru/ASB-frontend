@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatIconModule,
         MatButtonModule,
         MatProgressSpinnerModule,
+        MatInputModule,
     ],
     declarations: [SnpPageComponent],
     exports: [SnpPageComponent],

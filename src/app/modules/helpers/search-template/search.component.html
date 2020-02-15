@@ -5,7 +5,12 @@
     [class._full]="width === 'full'">
     <h3>Search</h3>
     <form [formGroup]="searchForm">
-        <mat-form-field floatLabel="always" style="width: 100%; padding: 0" appearance="outline">
+        <mat-form-field
+            floatLabel="always"
+            style="width: 100%;
+            padding: 0"
+            appearance="outline"
+            class="my-custom-component-small">
 
             <input placeholder="e.g. rs11260841, 11:80422458"
                    matInput
@@ -17,18 +22,17 @@
             >
 
             <button type="submit" style="display:none">hidden submit</button>
-            <a
+            <button
                 mat-icon-button
                 [hidden]="!searchForm.get('searchInput').value"
-                style="height: 100%"
                 matSuffix
+                style="height: 100%; width: 100%"
                 (click)="_clearSearchField()"
             >
                 <mat-icon svgIcon="clear"></mat-icon>
-            </a>
+            </button>
 
         </mat-form-field>
-
 
         <div class="flex justify-content-end">
             <a

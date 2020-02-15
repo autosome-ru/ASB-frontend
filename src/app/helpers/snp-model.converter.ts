@@ -13,7 +13,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
     const result: Partial<SnpInfoModel> = {};
     result.chr = model.chromosome;
     result.pos = model.position;
-    result.rsId = "" + model.rs_id;
+    result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;
     result.altBase = model.alt;
     result.cellLines = model.cl_aggregated_snps.map(s =>

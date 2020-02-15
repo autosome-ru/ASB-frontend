@@ -2,10 +2,10 @@
     <div class="container snp-page px-0">
 
         <div class="border-bottom border-info" style="padding-left: 20px">
-            <h2><a href="#">rs{{(snpData$ | async).rsId}}</a>
-                {{(snpData$ | async).chr}}:{{(snpData$ | async).pos }}
-                {{(snpData$ | async).refBase}}>{{(snpData$ | async).altBase}}
-            </h2>
+            <asb-snp-header
+                [data]="snpData$ | async"
+            >
+            </asb-snp-header>
         </div>
         <div style="margin-left: 20px; padding-top: 10px">
             <asb-snp-card
@@ -34,35 +34,65 @@
                             <h4 class="col-auto pl-0 ml-0">Transcription factors</h4>
                         </ng-template>
                         <div class="container" style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px">
-                            <mat-form-field>
-                                <mat-label>Selected columns</mat-label>
-                                <mat-select [formControl]="columnsFormControl"
-                                            multiple
-                                            (selectionChange)="_changeColumns($event)"
-                                >
-                                    <mat-select-trigger>
-                                        {{columnsFormControl.value ? tableColumnModel[columnsFormControl.value[0]]?.view : ''}}
-                                        <span *ngIf="columnsFormControl.value?.length > 1"
-                                              class="snp-page__additional-selection"
+                            <div class="row">
+                                <form [formGroup]="tableFormGroup">
+                                    <mat-form-field class="col-auto">
+                                        <mat-label>Selected columns</mat-label>
+                                        <mat-select formControlName="columns"
+                                                    multiple
+                                                    (selectionChange)="_changeColumns($event)"
                                         >
-                                            (+{{columnsFormControl.value.length - 1}}
-                                            {{columnsFormControl.value?.length === 2 ? 'other' : 'others'}})
-                                        </span>
-                                    </mat-select-trigger>
-                                    <mat-option
-                                        *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
-                                        [value]="column.key"
+                                            <mat-select-trigger>
+                                                {{tableFormGroup.value ?
+                                                tableColumnModel[tableFormGroup.get('columns').value[0]]?.view : ''}}
+                                                <span *ngIf="tableFormGroup.value?.length > 1"
+                                                      class="snp-page__additional-selection"
+                                                >
+                                                    (+{{tableFormGroup.get('columns').value.length - 1}}
+                                                    {{tableFormGroup.get('columns').value?.length === 2 ? 'other' : 'others'}})
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option
+                                                *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
+                                                [value]="column.key"
+                                            >
+                                                {{column.value.view}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field>
+                                        <mat-label>Filter</mat-label>
+                                        <input
+                                            matInput
+                                            type="text"
+                                            formControlName="filter"
+                                            (keydown.enter)="_applyFilter();"
+                                        >
+                                        <button type="submit" style="display:none">hidden submit</button>
+                                        <button
+                                            mat-icon-button
+                                            [hidden]="!tableFormGroup.get('filter').value"
+                                            style="margin-left: 5px"
+                                            matSuffix
+                                            (click)="_clearFilterField()"
+                                        >
+                                            <mat-icon svgIcon="clear"></mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                    <button
+                                        mat-raised-button
+                                        (click)="_applyFilter()"
                                     >
-                                        {{column.value.view}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
+                                        Apply filter
+                                    </button>
+                                </form>
+                            </div>
                             <asb-table
-                                #tableView
-                                [stickyColumnModel]="stickyColumnModel"
-                                [columnModel]="nonStickyColumnModel"
+                                [columnModel]="tableColumnModel"
                                 [displayedColumns]="tableDisplayedColumns"
-                                [data]="(snpData$ | async).transFactors"
+                                [data]="filteredTfData$ | async"
+                                [expandCellContentTemplate]="expandCellContentTemplate"
+                                [paginatorOptions]="[5, 10, 25, 50, 100]"
                             >
                             </asb-table>
                         </div>
@@ -132,6 +162,6 @@
 
 <ng-template #expandCellContentTemplate let-row="row">
     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-         alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail">
-    <span> expanded row works {{row.name}}</span>
+         alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail" style="max-width: 500px">
+    <span class="ml-2"> expanded row works {{row.name}}</span>
 </ng-template>

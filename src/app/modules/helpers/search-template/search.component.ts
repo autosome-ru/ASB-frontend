@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
@@ -10,12 +10,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 
 @Component({
-  selector: 'asb-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.less']
+    selector: 'asb-search',
+    templateUrl: './search.component.html',
+    styleUrls: ['./search.component.less'],
 })
 export class SearchComponent implements OnInit {
-
+    @HostBinding("class.asb-search")
+    private readonly cssClass = true;
     public searchForm: FormGroup;
     private readonly nullValue: SearchModel = {searchInput: ""};
     @Input()

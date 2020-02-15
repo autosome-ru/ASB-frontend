@@ -1,79 +1,71 @@
 import {
-    ChangeDetectionStrategy,
-    Component, ElementRef, EventEmitter,
+    AfterViewInit,
+    Component, ElementRef,
     HostBinding,
     Input,
-    Output, TemplateRef, ViewChild,
-    ViewEncapsulation
+    TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
-import {MatTableDataSource, PageEvent} from "@angular/material";
+import {MatTableDataSource} from "@angular/material";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {MatSort} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 @Component({
     selector: "asb-table",
     templateUrl: "./table.component.html",
     styleUrls: ["./table.component.less"],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
-        trigger("expand", [
-            state("collapsed", style({height: "0px", minHeight: "0"})),
-            state("expanded", style({height: "20px"})),
-            transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+        trigger('detailExpand', [
+            state('collapsed', style({height: '0px', minHeight: '0'})),
+            state('expanded', style({height: '*'})),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
         ]),
     ],
 })
 
-export class AsbTableComponent<T>  {
+export class AsbTableComponent<T> implements AfterViewInit {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
+    @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+    @ViewChild(MatSort, {static: false}) sort: MatSort;
 
     @Input()
     public columnModel: AsbTableColumnModel<T>;
 
-    @Input()
-    public stickyColumnModel: AsbTableColumnModel<T>;
 
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
-
     public _dataSource: MatTableDataSource<T>;
     @Input()
     set data(value: Array<T>) {
         this._dataSource = new MatTableDataSource<T>(value);
+        this._dataSource.sort = this.sort;
+        if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
     }
 
-    @Input()
-    public mobile: boolean;
-
-    @Input()
-    public emptyContentTemplate: TemplateRef<any>;
-
-    @Input()
-    public expandCellContentTemplate: TemplateRef<{row: T}>;
-
+    @HostBinding("class._paginator")
     @Input()
     public paginatorOptions: number[];
 
     @Input()
-    public customContentBottomTemplate: TemplateRef<void>;
+    public expandCellContentTemplate: TemplateRef<{row: T}>;
 
-
-    @Input()
-    public serverPaginationCount: number;
-    @Output()
-    public changePage = new EventEmitter<PageEvent>();
 
     public _expandedRow: T | null;
 
-
+    ngAfterViewInit() {
+        if (this._dataSource) {
+            this._dataSource.sort = this.sort;
+            if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+        }
+    }
 
     public _handleRowClick(row: T): void {
         if (this.expandCellContentTemplate) {
-            this._expandedRow = this._expandedRow === row ? null : row;
+            this._expandedRow = this._expandedRow == row ? null : row;
         }
     }
 }

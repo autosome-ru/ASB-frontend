@@ -23,6 +23,10 @@ import { AsbSnpCardComponent } from './data-template/snp-card/snp-card.component
 import {AsbElevationDirective} from "./elevation.directive";
 import {SnpButtonsComponent} from "./data-template/snp-card/snp-buttons/snp-buttons.component";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatBadgeModule} from "@angular/material/badge";
+import {SnpHeaderComponent} from "./data-template/snp-card/snp-header/snp-header.component";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     imports: [
@@ -42,6 +46,9 @@ import {MatChipsModule} from "@angular/material/chips";
         NgbDropdownModule,
         MatTableModule,
         MatChipsModule,
+        MatBadgeModule,
+        MatSortModule,
+        MatPaginatorModule,
     ],
     declarations: [
         SearchComponent,
@@ -52,8 +59,16 @@ import {MatChipsModule} from "@angular/material/chips";
         AsbSnpCardComponent,
         AsbElevationDirective,
         SnpButtonsComponent,
+        SnpHeaderComponent,
     ],
-    exports: [SearchComponent, LayoutComponent, AsbTableComponent, AsbSnpCardComponent, AsbElevationDirective],
+    exports: [
+        SearchComponent,
+        LayoutComponent,
+        AsbTableComponent,
+        AsbSnpCardComponent,
+        AsbElevationDirective,
+        SnpHeaderComponent
+    ],
 })
 export class AsbHelpersModule {
 }

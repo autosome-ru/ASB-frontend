@@ -1,6 +1,6 @@
 import * as fromActions from "src/app/store/action/data.action";
 import {SnpInfoModel} from "src/app/models/data.model";
-import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/search.converter";
+import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
 
 export interface DataState {
     snpData: SnpInfoModel,

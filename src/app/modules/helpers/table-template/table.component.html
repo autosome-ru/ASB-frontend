@@ -1,84 +1,70 @@
-<table
-    #table
-    mat-table
-    [dataSource]="_dataSource"
-    class="asb-table__table col-md-12 mat-elevation-z8"
-    [multiTemplateDataRows]="!!expandCellContentTemplate"
->
-    <!-- Expanded Content Column -->
+<div class="mat-elevation-z8">
+    <table
+        #table
+        mat-table
+        matSort
+        [dataSource]="_dataSource"
+        class="asb-table__table col-12"
+        [multiTemplateDataRows]="!!expandCellContentTemplate"
+    >
+        <!-- Expanded Content Column -->
 
-    <ng-container matColumnDef="__expand__">
-        <td
-            mat-cell
-            *matCellDef="let row"
-            [attr.colspan]="displayedColumns.length"
-        >
-            <div class="asb-table__table-expand-inner"
-                 [@expand]="row == _expandedRow ? 'expanded' : 'collapsed'"
+        <ng-container matColumnDef="__expanded__">>
+            <td
+                mat-cell
+                *matCellDef="let row"
+                [attr.colspan]="displayedColumns.length"
             >
-                <div style="height: 50px">
-                <span > -- Wikipedia </span>
+                <div class="asb-table__table-expand-inner"
+                     [@detailExpand]="row == _expandedRow ? 'expanded' : 'collapsed'"
+                >
+                    <ng-template
+                        [ngTemplateOutlet]="expandCellContentTemplate"
+                        [ngTemplateOutletContext]="{row: row}"
+                    ></ng-template>
                 </div>
+            </td>
+        </ng-container>
+
+        <ng-container
+            *ngFor="let column of columnModel | keyvalue"
+            [matColumnDef]="column.key"
+        >
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>{{column.value.view}}</th>
+            <td mat-cell *matCellDef="let row">
                 <ng-template
-                    [ngTemplateOutlet]="expandCellContentTemplate"
-                    [ngTemplateOutletContext]="{row: row}"
+                    *ngIf="column.value.template; else valueConverterTemplate"
+                    [ngTemplateOutlet]="column.value.template"
+                    [ngTemplateOutletContext]="{value: row[column.key], row: row}"
                 ></ng-template>
-            </div>
-        </td>
-    </ng-container>
-    <ng-container
-        *ngFor="let column of stickyColumnModel | keyvalue"
-        [matColumnDef]="column.key"
-    >
-        <th mat-header-cell *matHeaderCellDef>{{column.value.view}}</th>
-        <td mat-cell *matCellDef="let row">
-            <ng-template
-                *ngIf="column.value.template; else valueConverterTemplate"
-                [ngTemplateOutlet]="column.value.template"
-                [ngTemplateOutletContext]="{value: row[column.key], row: row}"
-            ></ng-template>
-            <ng-template #valueConverterTemplate>
-                {{column.value.valueConverter
-                ? column.value.valueConverter(row[column.key])
-                : row[column.key]
-                }}
-            </ng-template>
-        </td>
-    </ng-container>
-
-    <ng-container
-        *ngFor="let column of columnModel | keyvalue"
-        [matColumnDef]="column.key"
-    >
-        <th mat-header-cell *matHeaderCellDef>{{column.value.view}}</th>
-        <td mat-cell *matCellDef="let row">
-            <ng-template
-                *ngIf="column.value.template; else valueConverterTemplate"
-                [ngTemplateOutlet]="column.value.template"
-                [ngTemplateOutletContext]="{value: row[column.key], row: row}"
-            ></ng-template>
-            <ng-template #valueConverterTemplate>
-                {{column.value.valueConverter
-                ? column.value.valueConverter(row[column.key])
-                : row[column.key]
-                }}
-            </ng-template>
-        </td>
-    </ng-container>
+                <ng-template #valueConverterTemplate>
+                    {{column.value.valueConverter
+                    ? column.value.valueConverter(row[column.key])
+                    : row[column.key]
+                    }}
+                </ng-template>
+            </td>
+        </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
-        class="asb-table__table-row"
-        [class._clickable]="expandCellContentTemplate"
-        [class._borderless]="expandCellContentTemplate"
-        (click)="_handleRowClick(row)"
-    ></tr>
-    <ng-container *ngIf="expandCellContentTemplate">
-        <tr mat-row *matRowDef="let row; columns: ['__expand__']"
-            class="asb-table__table-expand-row"
-
+        <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
+            class="asb-table__table-row"
+            [class._clickable]="expandCellContentTemplate"
+            [class._borderless]="expandCellContentTemplate"
+            (click)="_handleRowClick(row)"
         ></tr>
-    </ng-container>
+        <tr
+            mat-row *matRowDef="let row; columns: ['__expanded__']"
+            class="asb-table__table-expand-row"
+        ></tr>
 
-</table>
+
+    </table>
+    <mat-paginator
+        *ngIf="paginatorOptions"
+        [pageSizeOptions]="paginatorOptions"
+        showFirstLastButtons
+        class="mat-elevation-z8 asb-table__paginator"
+    ></mat-paginator>
+</div>
