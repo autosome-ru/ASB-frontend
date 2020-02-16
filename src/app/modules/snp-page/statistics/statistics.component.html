@@ -1,7 +1,7 @@
 <div class="container" style="padding-top: 5px; padding-bottom: 10px">
     <div class="row">
         <form [formGroup]="tableFormGroup">
-            <mat-form-field>
+            <mat-form-field style="margin-left: 20px">
                 <mat-label>Selected columns</mat-label>
                 <mat-select formControlName="columns"
                             multiple
@@ -47,8 +47,15 @@
             <button
                 mat-raised-button
                 (click)="_applyFilter()"
+                color="primary"
             >
                 Apply filter
+            </button>
+            <button
+                mat-raised-button
+                (click)="_resetFilters()"
+            >
+                Reset
             </button>
             <button
                 mat-raised-button
@@ -62,8 +69,8 @@
         [displayedColumns]="tableDisplayedColumns"
         [data]="filteredObjectData"
         [expandCellContentTemplate]="expandCellContentTemplate"
-        [paginatorOptions]="[5, 10, 25, 50, 100]"
-        [colorClass]="colorClass"
+        [paginatorOptions]="[10, 25, 50, 100]"
+        [colorStyle]="colorClass"
     >
     </asb-table>
 </div>

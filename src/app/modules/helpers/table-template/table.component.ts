@@ -35,7 +35,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
     @Input()
     public columnModel: AsbTableColumnModel<T>;
     @Input()
-    public colorClass;
+    public colorStyle;
 
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;

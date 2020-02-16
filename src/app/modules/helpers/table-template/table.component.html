@@ -52,7 +52,7 @@
             class="asb-table__table-row"
             [class._clickable]="expandCellContentTemplate"
             [class._borderless]="expandCellContentTemplate"
-            [ngClass]="colorClass(row)"
+            [ngStyle]="colorStyle(row)"
             (click)="_handleRowClick(row)"
         ></tr>
         <tr

@@ -17,14 +17,15 @@ export class AsbStatisticsComponent implements OnInit {
     @Input()
     public objectData: TfSnpModel[] | ClSnpModel[];
 
-    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
+    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         "name",
-        "effectSizeRef",
-        "effectSizeAlt",
-        "pValueRef",
-        "pValueAlt",
-        "meanBad",
-    ];
+    "effectSizeRef",
+    "effectSizeAlt",
+    "pValueRef",
+    "pValueAlt",
+    "meanBad",
+];
+    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel>;
     public tableColumnModel: AsbTableColumnModel<TfSnpModel | ClSnpModel>;
     public tableFormGroup: FormGroup;
     public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
@@ -33,6 +34,7 @@ export class AsbStatisticsComponent implements OnInit {
     constructor(private formBuilder: FormBuilder,) { }
 
     ngOnInit(): void {
+        this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
         this.tableColumnModel = {
             name: {view: "TF name", valueConverter: v => v},
@@ -52,7 +54,6 @@ export class AsbStatisticsComponent implements OnInit {
         this.tableFormGroup = this.formBuilder.group({
             columns: [Object.keys(this.nonStickyColumnModel), null],
             filter: null,
-
         });
     }
 
@@ -81,12 +82,21 @@ export class AsbStatisticsComponent implements OnInit {
             result = result && Object.keys(row).some(key => {
                 const converter = (this.tableColumnModel[key] && this.tableColumnModel[key].valueConverter)
                     || (v => String(v));
-                return converter(row[key]).toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
+                return converter(row[key]).toLowerCase().startsWith(search.trim().toLowerCase());
             });
         }
         return result
     }
     colorClass(row: TfSnpModel | ClSnpModel) {
-        return {'background-color: blue': row.name.indexOf("AF") !== -1}
+        return {'background-color': row.name.startsWith("AR") ? 'gold' : 'white'}
+    }
+
+    _resetFilters() {
+        this.tableDisplayedColumns = this.initialDisplayedColumns;
+        this.filteredObjectData = this.objectData;
+        this.tableFormGroup.patchValue({
+            columns: Object.keys(this.nonStickyColumnModel),
+            filter: null,
+        })
     }
 }
