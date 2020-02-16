@@ -1,13 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ClSnpModel, SnpInfoModel, TfSnpModel} from "../../../../../models/data.model";
-import {OpenNewTabHelper} from "../../../../../helpers/open-new-tab.helper";
+import {Component, Input, OnInit,} from '@angular/core';
+import {SnpInfoModel} from "src/app/models/data.model";
 
 @Component({
     selector: 'asb-snp-header',
     templateUrl: './snp-header.component.html',
     styleUrls: ['../snp-card.component.less']
 })
-export class SnpHeaderComponent implements OnInit {
+export class AsbSnpHeaderComponent implements OnInit {
 
     @Input()
     public data: SnpInfoModel;
@@ -17,9 +16,5 @@ export class SnpHeaderComponent implements OnInit {
     constructor() {}
     ngOnInit() {
 
-    }
-
-    _goToURL(id: string) {
-        OpenNewTabHelper.openNewTab("https://www.ncbi.nlm.nih.gov/snp/" + id)
     }
 }

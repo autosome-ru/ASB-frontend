@@ -1,7 +1,7 @@
 <h2 *ngIf="snpCard">
     <a
-        style="cursor: pointer; color: #0071bc"
-        (click)="_goToURL(data.rsId)"
+        target="_blank" rel="noopener noreferrer"
+        [href]="'https://www.ncbi.nlm.nih.gov/snp/' + data.rsId"
     >
         {{data.rsId}}
     </a>

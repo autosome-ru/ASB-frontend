@@ -4,7 +4,6 @@ import {RouterModule} from "@angular/router";
 import {AsbHelpersModule} from "src/app/modules/helpers/helpers.module";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {MatCheckboxModule} from "@angular/material/checkbox";
 import {SnpPageComponent} from "./snp-page.component";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatSelectModule} from "@angular/material/select";
@@ -13,15 +12,15 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
+import {AsbStatisticsComponent} from "./statistics/statistics.component";
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        AsbHelpersModule,
         MatCardModule,
         MatExpansionModule,
-        MatCheckboxModule,
+        MatSelectModule,
         MatTabsModule,
         MatSelectModule,
         ReactiveFormsModule,
@@ -29,8 +28,9 @@ import {MatInputModule} from "@angular/material/input";
         MatButtonModule,
         MatProgressSpinnerModule,
         MatInputModule,
+        AsbHelpersModule,
     ],
-    declarations: [SnpPageComponent],
+    declarations: [SnpPageComponent, AsbStatisticsComponent],
     exports: [SnpPageComponent],
 })
 export class AsbSnpPageModule {

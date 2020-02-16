@@ -5,8 +5,11 @@ import {SearchPageComponent} from "src/app/modules/search-page/search-page.compo
 import {AsbHelpersModule} from "src/app/modules/helpers/helpers.module";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatRippleModule} from "@angular/material/core";
+import {SearchComponent} from "../helpers/search-template/search.component";
+import {MatInputModule} from "@angular/material/input";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
     imports: [
@@ -15,11 +18,16 @@ import {MatRippleModule} from "@angular/material/core";
         AsbHelpersModule,
         MatCardModule,
         MatExpansionModule,
-        MatCheckboxModule,
-        MatRippleModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        MatIconModule,
     ],
-    declarations: [SearchPageComponent],
-    exports: [SearchPageComponent],
+    declarations: [
+        SearchPageComponent,
+        SearchComponent,
+    ],
+    exports: [SearchPageComponent, SearchComponent],
 })
 export class AsbSearchPageModule {
 }

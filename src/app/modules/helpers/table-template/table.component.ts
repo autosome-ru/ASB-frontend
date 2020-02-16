@@ -6,10 +6,10 @@ import {
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
-import {MatTableDataSource} from "@angular/material";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 
 @Component({

@@ -33,70 +33,11 @@
                         <ng-template mat-tab-label>
                             <h4 class="col-auto pl-0 ml-0">Transcription factors</h4>
                         </ng-template>
-                        <div class="container" style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px">
-                            <div class="row">
-                                <form [formGroup]="tableFormGroup">
-                                    <mat-form-field class="col-auto">
-                                        <mat-label>Selected columns</mat-label>
-                                        <mat-select formControlName="columns"
-                                                    multiple
-                                                    (selectionChange)="_changeColumns($event)"
-                                        >
-                                            <mat-select-trigger>
-                                                {{tableFormGroup.value ?
-                                                tableColumnModel[tableFormGroup.get('columns').value[0]]?.view : ''}}
-                                                <span *ngIf="tableFormGroup.value?.length > 1"
-                                                      class="snp-page__additional-selection"
-                                                >
-                                                    (+{{tableFormGroup.get('columns').value.length - 1}}
-                                                    {{tableFormGroup.get('columns').value?.length === 2 ? 'other' : 'others'}})
-                                                </span>
-                                            </mat-select-trigger>
-                                            <mat-option
-                                                *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
-                                                [value]="column.key"
-                                            >
-                                                {{column.value.view}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field>
-                                        <mat-label>Filter</mat-label>
-                                        <input
-                                            matInput
-                                            type="text"
-                                            formControlName="filter"
-                                            (keydown.enter)="_applyFilter();"
-                                        >
-                                        <button type="submit" style="display:none">hidden submit</button>
-                                        <button
-                                            mat-icon-button
-                                            [hidden]="!tableFormGroup.get('filter').value"
-                                            style="margin-left: 5px"
-                                            matSuffix
-                                            (click)="_clearFilterField()"
-                                        >
-                                            <mat-icon svgIcon="clear"></mat-icon>
-                                        </button>
-                                    </mat-form-field>
-                                    <button
-                                        mat-raised-button
-                                        (click)="_applyFilter()"
-                                    >
-                                        Apply filter
-                                    </button>
-                                </form>
-                            </div>
-                            <asb-table
-                                [columnModel]="tableColumnModel"
-                                [displayedColumns]="tableDisplayedColumns"
-                                [data]="filteredTfData$ | async"
-                                [expandCellContentTemplate]="expandCellContentTemplate"
-                                [paginatorOptions]="[5, 10, 25, 50, 100]"
-                            >
-                            </asb-table>
-                        </div>
 
+                        <asb-statistics
+                            [objectData]="(snpData$ | async).transFactors"
+                        >
+                        </asb-statistics>
 
                     </mat-tab>
                     <mat-tab>
@@ -104,7 +45,10 @@
                             <h4 class="col-auto pl-0 ml-0">Cell types</h4>
                         </ng-template>
 
-                        Content 2
+                        <asb-statistics
+                            [objectData]="(snpData$ | async).cellLines"
+                        >
+                        </asb-statistics>
                     </mat-tab>
                 </mat-tab-group>
             </mat-expansion-panel>
@@ -160,8 +104,4 @@
     </div>
 </ng-container>
 
-<ng-template #expandCellContentTemplate let-row="row">
-    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-         alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail" style="max-width: 500px">
-    <span class="ml-2"> expanded row works {{row.name}}</span>
-</ng-template>
+
