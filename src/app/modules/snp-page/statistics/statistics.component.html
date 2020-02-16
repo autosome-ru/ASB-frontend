@@ -50,6 +50,11 @@
             >
                 Apply filter
             </button>
+            <button
+                mat-raised-button
+            >
+                Get CSV
+            </button>
         </form>
     </div>
     <asb-table
@@ -58,6 +63,7 @@
         [data]="filteredObjectData"
         [expandCellContentTemplate]="expandCellContentTemplate"
         [paginatorOptions]="[5, 10, 25, 50, 100]"
+        [colorClass]="colorClass"
     >
     </asb-table>
 </div>
@@ -65,6 +71,6 @@
 <ng-template #expandCellContentTemplate let-row="row">
     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
          alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail" style="max-width: 500px">
+    <h5> Здесь мог быть ваш мотив, а не собака</h5>
     <span class="ml-2"> expanded row works {{row?.name}}</span>
-    <h5> Здесь мог быть ваш мотив, а не собака<h5>
 </ng-template>

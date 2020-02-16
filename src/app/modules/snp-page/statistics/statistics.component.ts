@@ -38,8 +38,8 @@ export class AsbStatisticsComponent implements OnInit {
             name: {view: "TF name", valueConverter: v => v},
             effectSizeRef: {view: "Effect size ref", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
             effectSizeAlt: {view: "Effect size alt", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
-            pValueRef: {view: "p-value ASB", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
-            pValueAlt: {view: "p-value ASB", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
+            pValueRef: {view: "p-value ASB ref", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
+            pValueAlt: {view: "p-value ASB alt", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
             meanBad: {view: "mean BAD", valueConverter: v => v ? v.toFixed(2) : 'NaN'}
         };
         Object.keys(this.tableColumnModel).forEach(
@@ -75,7 +75,7 @@ export class AsbStatisticsComponent implements OnInit {
         this.tableFormGroup.patchValue({filter: null})
     }
 
-    filterData(row: TfSnpModel, search: string) {
+    filterData(row: TfSnpModel | ClSnpModel, search: string) {
         let result = true;
         if (search) {
             result = result && Object.keys(row).some(key => {
@@ -86,5 +86,7 @@ export class AsbStatisticsComponent implements OnInit {
         }
         return result
     }
-
+    colorClass(row: TfSnpModel | ClSnpModel) {
+        return {'background-color: blue': row.name.indexOf("AF") !== -1}
+    }
 }
