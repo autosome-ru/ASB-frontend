@@ -5,7 +5,6 @@ import {SearchPageComponent} from "src/app/modules/search-page/search-page.compo
 import {AsbHelpersModule} from "src/app/modules/helpers/helpers.module";
 import {MatCardModule} from "@angular/material/card";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {SearchComponent} from "../helpers/search-template/search.component";
 import {MatInputModule} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
@@ -25,9 +24,8 @@ import {MatIconModule} from "@angular/material/icon";
     ],
     declarations: [
         SearchPageComponent,
-        SearchComponent,
     ],
-    exports: [SearchPageComponent, SearchComponent],
+    exports: [SearchPageComponent],
 })
 export class AsbSearchPageModule {
 }

@@ -8,17 +8,18 @@
     justify-content: center;
 
     &__paginator {
-        position: relative;
+        width: 100%;
+        height: @paginator-height;
         bottom: 0;
         z-index: 2;
         left: 0;
-        right: 0;
+        position: relative;
     }
 
 
     &__table {
         min-width: 100%;
-        padding-bottom: @paginator-height;
+
 
         &._hidden {
             display: none;

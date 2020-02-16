@@ -1,15 +1,15 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8 asb-table__table">
     <table
         #table
         mat-table
         matSort
         [dataSource]="_dataSource"
-        class="asb-table__table col-12"
+
         [multiTemplateDataRows]="!!expandCellContentTemplate"
     >
         <!-- Expanded Content Column -->
 
-        <ng-container matColumnDef="__expanded__">>
+        <ng-container matColumnDef="__expanded__">
             <td
                 mat-cell
                 *matCellDef="let row"
@@ -62,9 +62,10 @@
 
     </table>
     <mat-paginator
+        id="fixed"
         *ngIf="paginatorOptions"
         [pageSizeOptions]="paginatorOptions"
         showFirstLastButtons
-        class="mat-elevation-z8 asb-table__paginator"
+        class="asb-table__paginator"
     ></mat-paginator>
 </div>

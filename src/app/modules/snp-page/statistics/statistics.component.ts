@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 
 import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";

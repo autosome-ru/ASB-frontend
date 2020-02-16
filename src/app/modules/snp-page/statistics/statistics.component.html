@@ -1,7 +1,7 @@
-<div class="container" style="padding-top: 10px; padding-bottom: 10px; padding-right: 10px">
+<div class="container" style="padding-top: 5px; padding-bottom: 10px">
     <div class="row">
         <form [formGroup]="tableFormGroup">
-            <mat-form-field class="col-auto">
+            <mat-form-field>
                 <mat-label>Selected columns</mat-label>
                 <mat-select formControlName="columns"
                             multiple
@@ -25,16 +25,14 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field>
-                <mat-label>Filter</mat-label>
-                <label>
+            <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
                     <input
+                        placeholder="Filter"
                         matInput
                         type="text"
                         formControlName="filter"
                         (keydown.enter)="_applyFilter();"
                     >
-                </label>
                 <button type="submit" style="display:none">hidden submit</button>
                 <button
                     mat-icon-button
@@ -68,4 +66,5 @@
     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
          alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail" style="max-width: 500px">
     <span class="ml-2"> expanded row works {{row?.name}}</span>
+    <h5> Здесь мог быть ваш мотив, а не собака<h5>
 </ng-template>

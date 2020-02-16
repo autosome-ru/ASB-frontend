@@ -7,10 +7,10 @@
     <form [formGroup]="searchForm">
         <mat-form-field
             floatLabel="always"
-            style="width: 100%;
-            padding: 0"
+            style="width: 100%; padding: 0"
             appearance="outline"
-            class="my-custom-component-small">
+            class="my-custom-component-small"
+        >
 
             <input placeholder="e.g. rs11260841, 11:80422458"
                    matInput
@@ -18,10 +18,9 @@
                    formGroupName="searchInput"
                    aria-label="search"
                    formControlName="searchInput"
-                   (keydown.enter)="_navigateToSearch();"
             >
 
-            <button type="submit" style="display:none">hidden submit</button>
+            <button type="submit" style="display:none" (click)="_navigateToSearch()">hidden submit</button>
             <button
                 mat-icon-button
                 [hidden]="!searchForm.get('searchInput').value"
