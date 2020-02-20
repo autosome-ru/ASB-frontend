@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ClSnpModel, TfSnpModel} from "../../../../../models/data.model";
+import {calculateColor} from "src/app/helpers/colors.helper";
 
 @Component({
     selector: 'asb-snp-buttons',
@@ -25,6 +26,13 @@ export class SnpButtonsComponent implements OnInit {
     constructor() {}
     ngOnInit() {
 
+    }
+    _calculateColor(i: number) {
+        if (this.data[i].pValueRef < this.data[i].pValueAlt) {
+            return calculateColor(this.data[i].pValueRef, true)
+        } else {
+            return calculateColor(this.data[i].pValueAlt, false)
+        }
     }
 
     _showMoreObjects() {

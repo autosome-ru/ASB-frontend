@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, Input, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
-    selector: '[appMaterialElevation]'
+    selector: '[asbElevation]'
 })
 export class AsbElevationDirective implements OnChanges {
 

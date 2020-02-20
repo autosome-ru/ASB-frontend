@@ -13,6 +13,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
 import {AsbStatisticsComponent} from "./statistics/statistics.component";
+import { PhenotypesComponent } from './phenotypes/phenotypes.component';
 
 @NgModule({
     imports: [
@@ -30,7 +31,7 @@ import {AsbStatisticsComponent} from "./statistics/statistics.component";
         MatInputModule,
         AsbHelpersModule,
     ],
-    declarations: [SnpPageComponent, AsbStatisticsComponent],
+    declarations: [SnpPageComponent, AsbStatisticsComponent, PhenotypesComponent],
     exports: [SnpPageComponent],
 })
 export class AsbSnpPageModule {

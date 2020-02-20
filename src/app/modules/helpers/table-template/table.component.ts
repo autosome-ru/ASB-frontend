@@ -69,4 +69,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
             this._expandedRow = this._expandedRow == row ? null : row;
         }
     }
+    _calculateColor(row: T) {
+        return this.colorStyle(row)
+    }
 }

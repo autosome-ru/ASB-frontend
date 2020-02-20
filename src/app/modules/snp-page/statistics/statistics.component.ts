@@ -4,6 +4,7 @@ import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
+import {calculateColor} from "../../../helpers/colors.helper";
 
 @Component({
     selector: 'asb-statistics',
@@ -87,8 +88,8 @@ export class AsbStatisticsComponent implements OnInit {
         }
         return result
     }
-    colorClass(row: TfSnpModel | ClSnpModel) {
-        return {'background-color': row.name.startsWith("AR") ? 'gold' : 'white'}
+    _calculateColor(row: TfSnpModel | ClSnpModel) {
+        return {'background-color': calculateColor(row.pValueRef, row.pValueAlt)}
     }
 
     _resetFilters() {

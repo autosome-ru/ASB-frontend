@@ -4,8 +4,10 @@
             *ngIf="i < maxObjects || data.length < maxObjects || showMoreObjects"
             tabindex="-1"
             aria-disabled="true"
-            disabled [className]="buttonsClass"
-            style="margin-right: 10px; margin-top: 5px; opacity: 1!important; pointer-events: none;"
+            disabled
+            [className]="buttonsClass"
+            style="margin-top: 8px; opacity: 1!important; pointer-events: none; margin-right: 8px"
+            [ngStyle]="{'background-color':  _calculateColor(i)}"
         >
             {{obj.name}}
         </button>
@@ -14,9 +16,10 @@
                 *ngIf="(i == maxObjects && data.length
                     - maxObjects > 1 && !showMoreObjects) || last && showMoreObjects"
                 type="button"
-                style="margin-top: 5px"
+                style="margin-top: 8px"
                 [className]="buttonsClass"
                 (click)="_showMoreObjects()"
+
             >
                 {{showMoreObjects ? 'Show less' : 'Show more'}}
                 <span *ngIf="!showMoreObjects"
@@ -33,7 +36,7 @@
                 *ngIf="i == maxObjects && data.length
                     - maxObjects > 1"
                 aria-disabled="true"
-                style="margin-top: 5px; opacity: 1!important; pointer-events: none"
+                style="margin-top: 8px; opacity: 1!important; pointer-events: none"
                 [className]="buttonsClass"
             >
 

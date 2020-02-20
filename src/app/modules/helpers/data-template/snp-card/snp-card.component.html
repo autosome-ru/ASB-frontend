@@ -2,7 +2,7 @@
     <dt
         *ngIf="snpData.cellLines.length != 0"
         class="col-auto snp-card__tag align-self-start"
-        style="vertical-align: center"
+        style="vertical-align: center; margin-top: 5px"
     >
         ASB in cell types
     </dt>
@@ -13,12 +13,13 @@
         [noButtons]="noButtons"
         [showMoreObjects]="showMoreCellLines"
         (objectsQualChanged)="_showMoreCellLines($event)"
-        [buttonsClass]="'btn btn-outline-primary'"
+        [buttonsClass]="'btn btn-outline-secondary'"
     >
     </asb-snp-buttons>
     <dt
         *ngIf="snpData.cellLines.length != 0"
         class="col-auto snp-card__tag align-self-start"
+        style="vertical-align: center; margin-top: 5px"
     >
         ASB for transcription factors
     </dt>

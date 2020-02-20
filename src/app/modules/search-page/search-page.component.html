@@ -14,7 +14,7 @@
             <div class="layout pb-2"
                      *ngFor="let snp of searchSnpResults$ | async">
                     <mat-card
-                        appMaterialElevation
+                            asbElevation
                         role="group"
                         (click)="_navigateToSnp(snp.rsId)"
 

@@ -1,3 +1,4 @@
+<ng-content></ng-content>
 <div class="container-fluid" style="padding-top: 5px;">
     <div class="row">
         <form [formGroup]="tableFormGroup">
@@ -70,7 +71,7 @@
         [data]="filteredObjectData"
         [expandCellContentTemplate]="expandCellContentTemplate"
         [paginatorOptions]="[10, 25, 50, 100]"
-        [colorStyle]="colorClass"
+        [colorStyle]="_calculateColor"
     >
     </asb-table>
 </div>
