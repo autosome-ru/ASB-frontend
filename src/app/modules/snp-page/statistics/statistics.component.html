@@ -70,7 +70,7 @@
         [displayedColumns]="tableDisplayedColumns"
         [data]="filteredObjectData"
         [expandCellContentTemplate]="expandCellContentTemplate"
-        [paginatorOptions]="[10, 25, 50, 100]"
+        [paginatorOptions]="_getPaginatorOptions()"
         [colorStyle]="_calculateColor"
     >
     </asb-table>

@@ -28,11 +28,7 @@ export class SnpButtonsComponent implements OnInit {
 
     }
     _calculateColor(i: number) {
-        if (this.data[i].pValueRef < this.data[i].pValueAlt) {
-            return calculateColor(this.data[i].pValueRef, true)
-        } else {
-            return calculateColor(this.data[i].pValueAlt, false)
-        }
+        return calculateColor(this.data[i].pValueRef, this.data[i].pValueAlt)
     }
 
     _showMoreObjects() {

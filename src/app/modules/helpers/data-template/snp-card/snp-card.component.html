@@ -7,6 +7,7 @@
         ASB in cell types
     </dt>
     <asb-snp-buttons
+        *ngIf="snpData.cellLines.length != 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.cellLines"
         [maxObjects]="4"
@@ -17,13 +18,14 @@
     >
     </asb-snp-buttons>
     <dt
-        *ngIf="snpData.cellLines.length != 0"
+        *ngIf="snpData.transFactors.length != 0"
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
     >
         ASB for transcription factors
     </dt>
     <asb-snp-buttons
+        *ngIf="snpData.transFactors.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.transFactors"
         [noButtons]="noButtons"

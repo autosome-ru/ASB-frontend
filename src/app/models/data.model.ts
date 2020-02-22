@@ -8,57 +8,100 @@ export interface SnpInfoModel {
     cellLines: ClSnpModel[];
 
 }
-export  interface  SnpInfoBackendModel {
+export interface SnpSearchModel {
+    rsId: string;
+    chr: string;
+    pos: number;
+    refBase: string;
+    altBase: string;
+    transFactors: TfSnpCutModel[];
+    cellLines: ClSnpCutModel[];
+
+}
+export interface SnpInfoBackendModel {
     chromosome: string,
-    "position": number,
-    "ref": string,
-    "alt": string,
-    "rs_id": number,
-    "tf_aggregated_snps": TfSnpBackendModel[],
-    "cl_aggregated_snps": ClSnpBackendModel[],
+    position: number,
+    ref: string,
+    alt: string,
+    rs_id: number,
+    tf_aggregated_snps: TfSnpBackendModel[],
+    cl_aggregated_snps: ClSnpBackendModel[],
 
 }
-export interface ClSnpBackendModel {
-    "cl_snp_id": number,
-    "cell_line": {
-        "cl_id": number,
-        "name": string
+export interface SnpSearchBackendModel {
+    chromosome: string,
+    position: number,
+    ref: string,
+    alt: string,
+    rs_id: number,
+    tf_aggregated_snps: TfSnpBackendCutModel[],
+    cl_aggregated_snps: ClSnpBackendCutModel[],
+}
+
+export interface ClSnpBackendCutModel {
+    cl_snp_id: number,
+    cell_line: {
+        cl_id: number,
+        name: string
     },
-    "p_value_ref": number,
-    "p_value_alt": number,
-    "is_asb": boolean,
-    "es_ref": number,
-    "es_alt": number
+    log_p_value_ref: number,
+    log_p_value_alt: number,
+    mean_bad: number,
+    is_asb: boolean,
+}
+
+export interface ClSnpBackendModel extends ClSnpBackendCutModel{
+    es_ref: number,
+    es_alt: number
 
 }
-export interface TfSnpBackendModel {
-    "tf_snp_id": number,
+export interface TfSnpBackendCutModel {
+    tf_snp_id: number,
     transcription_factor: {
-        "tf_id": number,
-        "name": string
+        tf_id: number,
+        name: string
     },
-    "p_value_ref": number,
-    "p_value_alt": number,
-    "is_asb": boolean,
-    "es_ref": number,
-    "es_alt": number
+    log_p_value_ref: number,
+    log_p_value_alt: number,
+    is_asb: boolean,
+}
+export interface TfSnpBackendModel extends TfSnpBackendCutModel{
+    mean_bad: number,
+    es_ref: number,
+    es_alt: number,
+    motif_log_p_ref: number,
+    motif_log_p_alt: number,
+    motif_log_2_fc: number,
+    motif_orientation: boolean,
+    motif_position: number,
+    motif_concordance: boolean,
 
 }
-
-export interface TfSnpModel {
+interface AbstractSnpCutModel {
     name: string;
     pValueRef: number;
     pValueAlt: number;
+}
+interface AbstractSnpModel extends AbstractSnpCutModel{
     meanBad: number;
     effectSizeRef: number;
     effectSizeAlt: number;
 }
+export interface TfSnpCutModel extends AbstractSnpCutModel{
+}
 
-export interface ClSnpModel {
-    name: string;
-    pValueRef: number;
-    pValueAlt: number;
-    meanBad: number;
-    effectSizeRef: number;
-    effectSizeAlt: number;
+export interface ClSnpCutModel extends AbstractSnpCutModel{
+
+}
+export interface TfSnpModel extends AbstractSnpModel{
+    motifPRef: number,
+    motifPAlt: number,
+    motifFc: number,
+    motifOrientation: boolean,
+    motifPosition: number,
+    motifConcordance: boolean,
+}
+
+export interface ClSnpModel extends AbstractSnpModel{
+
 }

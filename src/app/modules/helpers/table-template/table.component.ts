@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 
@@ -18,9 +18,12 @@ import {MatTableDataSource} from "@angular/material/table";
     styleUrls: ["./table.component.less"],
     animations: [
         trigger('detailExpand', [
-            state('collapsed', style({height: '0px', minHeight: '0'})),
+            state('collapsed, void', style({height: '0px', minHeight: '0', display: 'none'})),
             state('expanded', style({height: '*'})),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+            transition('expanded <=> collapsed',
+                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+            transition('expanded <=> void',
+                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
         ]),
     ],
 })
@@ -40,10 +43,16 @@ export class AsbTableComponent<T> implements AfterViewInit {
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
     public _dataSource: MatTableDataSource<T>;
+    public sortDirection: SortDirection = '';
+    public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
+        ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
+            1000 * (this.sortDirection !== 'desc' ? 1 : -1));
+
     @Input()
     set data(value: Array<T>) {
         this._dataSource = new MatTableDataSource<T>(value);
         this._dataSource.sort = this.sort;
+        this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
         if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
     }
 
@@ -57,19 +66,28 @@ export class AsbTableComponent<T> implements AfterViewInit {
 
     public _expandedRow: T | null;
 
+
+
+
     ngAfterViewInit() {
         if (this._dataSource) {
             this._dataSource.sort = this.sort;
+            this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
             if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
         }
     }
-
     public _handleRowClick(row: T): void {
-        if (this.expandCellContentTemplate) {
-            this._expandedRow = this._expandedRow == row ? null : row;
+        if (row != undefined) {
+            this._expandedRow = this._expandedRow === row ? null : row;
         }
     }
     _calculateColor(row: T) {
         return this.colorStyle(row)
+    }
+
+    _changeCurrentSortDirection(currentSort: MatSort) {
+        console.log(this.sortDirection !== 'desc' ? -1000 : 1000);
+        this.sortDirection = currentSort.direction;
+        console.log(this.sortDirection !== 'desc' ? -1000 : 1000);
     }
 }

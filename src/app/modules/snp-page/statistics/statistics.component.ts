@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 
 import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
 import {calculateColor} from "../../../helpers/colors.helper";
+import {Subject} from "rxjs";
 
 @Component({
     selector: 'asb-statistics',
@@ -13,47 +14,48 @@ import {calculateColor} from "../../../helpers/colors.helper";
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class AsbStatisticsComponent implements OnInit {
+export class AsbStatisticsComponent implements OnInit, OnDestroy {
 
     @Input()
     public objectData: TfSnpModel[] | ClSnpModel[];
 
-    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
-        "name",
-    "effectSizeRef",
-    "effectSizeAlt",
-    "pValueRef",
-    "pValueAlt",
-    "meanBad",
-];
-    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel>;
+    @Input()
     public tableColumnModel: AsbTableColumnModel<TfSnpModel | ClSnpModel>;
+
+    @Input()
+    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel | ClSnpModel> = [
+        "name",
+        "effectSizeRef",
+        "effectSizeAlt",
+        "pValueRef",
+        "pValueAlt",
+        "meanBad",
+    ];
+
+    private destroy$ = new Subject<void>();
+    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel | ClSnpModel>;
     public tableFormGroup: FormGroup;
     public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
     public filteredObjectData: TfSnpModel[] | ClSnpModel[];
 
     constructor(private formBuilder: FormBuilder,) { }
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+        this.destroy$ = null;
+    }
 
     ngOnInit(): void {
         this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
-        this.tableColumnModel = {
-            name: {view: "TF name", valueConverter: v => v},
-            effectSizeRef: {view: "Effect size ref", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
-            effectSizeAlt: {view: "Effect size alt", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
-            pValueRef: {view: "p-value ASB ref", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
-            pValueAlt: {view: "p-value ASB alt", valueConverter: v => v ? v.toFixed(2) : 'NaN'},
-            meanBad: {view: "mean BAD", valueConverter: v => v ? v.toFixed(2) : 'NaN'}
-        };
         Object.keys(this.tableColumnModel).forEach(
             key => key !== "name" ?
                 this.nonStickyColumnModel[key] = this.tableColumnModel[key]
                 : null
         );
 
-
         this.tableFormGroup = this.formBuilder.group({
-            columns: [Object.keys(this.nonStickyColumnModel), null],
+            columns: [this.initialDisplayedColumns.filter(s => s !== "name"), null],
             filter: null,
         });
     }
@@ -80,11 +82,8 @@ export class AsbStatisticsComponent implements OnInit {
     filterData(row: TfSnpModel | ClSnpModel, search: string) {
         let result = true;
         if (search) {
-            result = result && Object.keys(row).some(key => {
-                const converter = (this.tableColumnModel[key] && this.tableColumnModel[key].valueConverter)
-                    || (v => String(v));
-                return converter(row[key]).toLowerCase().startsWith(search.trim().toLowerCase());
-            });
+            result = result &&
+                row.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
         }
         return result
     }
@@ -99,5 +98,10 @@ export class AsbStatisticsComponent implements OnInit {
             columns: Object.keys(this.nonStickyColumnModel),
             filter: null,
         })
+    }
+    _getPaginatorOptions(): number[] {
+        return this.filteredObjectData.length > 20 ?
+            [5, 10, 25, 50, this.filteredObjectData.length] :
+            [5, 10, 25, 50]
     }
 }

@@ -14,9 +14,10 @@
             <div class="layout pb-2"
                      *ngFor="let snp of searchSnpResults$ | async">
                     <mat-card
-                            asbElevation
+                        asbElevation
                         role="group"
-                        (click)="_navigateToSnp(snp.rsId)"
+                        (click)="_navigateToSnp({rsId: snp.rsId,
+                        alt: snp.altBase})"
 
                     >
                         <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">

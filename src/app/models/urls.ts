@@ -1,4 +1,4 @@
-const serverUrl = "http://localhost:3000" + "/api/v1";
-export const snpInfoUrl = serverUrl + "/snps";
+const serverUrl = "http://localhost:5000" + "/api/v1";
+export const snpsInfoUrl = serverUrl + "/snps";
 export const searchOptionsUrl = serverUrl + "/search/options";
-export const searchResultsUrl = serverUrl + "/search/";
+export const searchResultsUrl = serverUrl + "/search";

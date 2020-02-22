@@ -31,14 +31,7 @@ const routes: Routes = [
 
     },
     {
-        path: "search/:id",
-        component: SearchPageComponent,
-        data: {
-            title: "ASB-search"
-        }
-    },
-    {
-        path: "data/snp/:id",
+        path: "snps/:rsId/:alt",
         component: SnpPageComponent,
         data: {
             title: "ASB snp page ID "

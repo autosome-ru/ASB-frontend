@@ -1,6 +1,6 @@
 import {Action} from "@ngrx/store";
-import {SearchModel} from "src/app/models/search.model";
-import {SnpInfoBackendModel} from "../../models/data.model";
+import {SearchQueryModel} from "src/app/models/searchQueryModel";
+import {SnpSearchBackendModel} from "../../models/data.model";
 
 export enum ActionTypes {
     SetFilter = "[Search] filter set",
@@ -16,12 +16,12 @@ export enum ActionTypes {
 export class SetFilterAction implements Action {
     readonly type = ActionTypes.SetFilter;
 
-    constructor(public payload: SearchModel) {}
+    constructor(public payload: SearchQueryModel) {}
 }
 export class LoadSearchOptionsAction implements Action {
     readonly type = ActionTypes.LoadSearchOptions;
 
-    constructor(public payload: SearchModel) {}
+    constructor(public payload: SearchQueryModel) {}
 }
 export class LoadSearchOptionsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchOptionsSuccess;
@@ -32,17 +32,17 @@ export class LoadSearchOptionsSuccessAction implements Action {
 export class LoadSearchResultsAction implements Action {
     readonly type = ActionTypes.LoadSearchResults;
 
-    constructor(public payload: SearchModel) {}
+    constructor(public payload: SearchQueryModel) {}
 }
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;
 
-    constructor(public payload: SnpInfoBackendModel[]) {}
+    constructor(public payload: SnpSearchBackendModel[]) {}
 }
 export class LoadSearchResultsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsFail;
 
-    constructor(public payload: SearchModel) {}
+    constructor(public payload: SearchQueryModel) {}
 }
 
 

@@ -10,7 +10,7 @@ export enum ActionTypes {
 export class LoadSnpInfoAction implements Action {
     readonly type = ActionTypes.LoadSnpInfo;
 
-    constructor(public payload: {id: string}) {}
+    constructor(public payload: {rsId: string, alt: string}) {}
 }
 export class LoadSnpInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoSuccess;

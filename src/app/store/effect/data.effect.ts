@@ -22,7 +22,7 @@ export class DataEffect {
     loadSnpStats$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSnpInfo),
         mergeMap((action: fromActions.LoadSnpInfoAction) =>
-            this.dataService.getSnpInfoById(action.payload.id).pipe(
+            this.dataService.getSnpInfoById(action.payload).pipe(
                 map(info => new fromActions.LoadSnpInfoSuccessAction(info)),
                 catchError(() => of(new fromActions.LoadSnpInfoFailAction())),
             )

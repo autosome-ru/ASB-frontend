@@ -1,10 +1,10 @@
-import {Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {SearchModel} from "src/app/models/search.model";
+import {SearchQueryModel} from "src/app/models/searchQueryModel";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
@@ -18,13 +18,13 @@ export class SearchComponent implements OnInit {
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
     public searchForm: FormGroup;
-    private readonly nullValue: SearchModel = {searchInput: ""};
+    private readonly nullValue: SearchQueryModel = {searchInput: ""};
     @Input()
     public width: "restricted" | "full";
-    private input$: Observable<SearchModel>;
+    private input$: Observable<SearchQueryModel>;
 
     @Output ()
-    public searchQuery: EventEmitter<SearchModel>;
+    public searchQuery: EventEmitter<SearchQueryModel>;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -51,11 +51,11 @@ export class SearchComponent implements OnInit {
     }
     _navigateToSearch() {
         if (!!this.searchForm.get('searchInput').value) {
-            const currentFilter = this.searchForm.value as SearchModel;
+            const currentFilter = this.searchForm.value as SearchQueryModel;
             this.store.dispatch(new fromActions.search.SetFilterAction(currentFilter));
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(currentFilter));
-            if (!this.router.isActive("search", false)) {
-                this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
+            if (!this.router.isActive("/search", true)) {
+                this.router.navigate(["/search"]);
             }
         }
 
@@ -63,9 +63,9 @@ export class SearchComponent implements OnInit {
     _navigateToAdvancedSearch() {
         if (this.router.isActive("search", false)) {
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                this.searchForm.get('searchInput').value as SearchModel));
+                this.searchForm.get('searchInput').value as SearchQueryModel));
         } else {
-            this.router.navigate(["/search/" + this.searchForm.get('searchInput').value]);
+            this.router.navigate(["/search"]);
         }
     }
 

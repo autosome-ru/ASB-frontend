@@ -1,14 +1,16 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {SearchModel} from "src/app/models/search.model";
-import {SnpInfoModel} from "../../models/data.model";
-import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
+import {SearchQueryModel} from "src/app/models/searchQueryModel";
+import {SnpSearchModel} from "../../models/data.model";
+import {
+    convertSnpSearchBackendModelToSnpSearchModel
+} from "../../helpers/snp-model.converter";
 
 export interface SearchState {
-    searchFilter: SearchModel,
+    searchFilter: SearchQueryModel,
     searchOptions: string[],
     searchOptionsLoading: boolean,
 
-    searchResults: SnpInfoModel[];
+    searchResults: SnpSearchModel[];
     searchResultsLoading: boolean;
 }
 export const selectSearchQuery = (state: SearchState) => state.searchFilter;
@@ -59,7 +61,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
             return {
                 ...state,
-                searchResults: <any>action.payload.map(convertSnpInfoBackendModelToSnpInfoModel),
+                searchResults: <any>action.payload.map(convertSnpSearchBackendModelToSnpSearchModel),
                 searchResultsLoading: false,
             }
         }
