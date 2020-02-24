@@ -36,7 +36,7 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
     public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel | ClSnpModel>;
     public tableFormGroup: FormGroup;
     public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
-    public filteredObjectData: TfSnpModel[] | ClSnpModel[];
+    public filteredObjectData: (TfSnpModel | ClSnpModel)[];
 
     constructor(private formBuilder: FormBuilder,) { }
     ngOnDestroy(): void {

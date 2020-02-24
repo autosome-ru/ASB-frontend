@@ -10,9 +10,11 @@ export class PhenotypesComponent implements OnInit {
 
     @Input()
     public snpData: SnpInfoModel;
+    public phenotypesDb: string[];
     constructor() { }
 
     ngOnInit(): void {
+        this.phenotypesDb = Object.keys(this.snpData.phenotypes)
     }
 
 }

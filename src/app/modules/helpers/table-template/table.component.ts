@@ -7,7 +7,7 @@ import {
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {MatSort, SortDirection} from "@angular/material/sort";
+import {MatSort, Sort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 
@@ -85,9 +85,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
         return this.colorStyle(row)
     }
 
-    _changeCurrentSortDirection(currentSort: MatSort) {
-        console.log(this.sortDirection !== 'desc' ? -1000 : 1000);
+    _changeCurrentSortDirection(currentSort: Sort) {
         this.sortDirection = currentSort.direction;
-        console.log(this.sortDirection !== 'desc' ? -1000 : 1000);
     }
 }

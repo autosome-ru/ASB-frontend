@@ -1,1 +1,8 @@
-<p>phenotypes works!</p>
+<dl *ngFor="let db of phenotypesDb">
+    <dt>{{db}}</dt>
+    <dd
+        *ngFor="let phenotype of snpData.phenotypes[db]"
+    >
+        {{phenotype}},
+    </dd>
+</dl>

@@ -27,6 +27,7 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
+                <label>
                     <input
                         placeholder="Filter"
                         matInput
@@ -34,6 +35,7 @@
                         formControlName="filter"
                         (keydown.enter)="_applyFilter();"
                     >
+                </label>
                 <button type="submit" style="display:none">hidden submit</button>
                 <button
                     mat-icon-button

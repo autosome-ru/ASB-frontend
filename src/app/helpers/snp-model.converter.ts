@@ -17,13 +17,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 export function convertSnpInfoBackendModelToSnpInfoModel(
     model: Partial<SnpInfoBackendModel>
 ): Partial<SnpInfoModel> {
-    const result: Partial<SnpInfoModel> = {};
-    console.log(model);
-    result.chr = model.chromosome;
-    result.pos = model.position;
-    result.rsId = "rs" + model.rs_id;
-    result.refBase = model.ref;
-    result.altBase = model.alt;
+    const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
     result.cellLines = model.cl_aggregated_snps.map(convertClAggregatedBackendSnp);
     result.transFactors = model.tf_aggregated_snps.map(convertTfAggregatedBackendSnp);
     return result;
@@ -38,15 +32,21 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
 export function convertSnpSearchBackendModelToSnpSearchModel(
     model: Partial<SnpSearchBackendModel>
 ): Partial<SnpSearchModel> {
-    const result: Partial<SnpSearchModel> = {};
+    const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
+    result.cellLines = model.cl_aggregated_snps.map(convertClAggregatedBackendCutSnp);
+    result.transFactors = model.tf_aggregated_snps.map(convertTfAggregatedBackendCutSnp);
+    return result;
+}
+
+function convertSnpModel(model: Partial<SnpInfoBackendModel | SnpSearchBackendModel>):
+    Partial<SnpInfoModel | SnpSearchBackendModel> {
+    const result: Partial<SnpInfoModel> = {};
     result.chr = model.chromosome;
     result.pos = model.position;
     result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;
     result.altBase = model.alt;
-    result.cellLines = model.cl_aggregated_snps.map(convertClAggregatedBackendCutSnp);
-    result.transFactors = model.tf_aggregated_snps.map(convertTfAggregatedBackendCutSnp);
-    return result;
+    return result
 }
 
 function convertClAggregatedBackendSnp(s: ClSnpBackendModel): ClSnpModel {

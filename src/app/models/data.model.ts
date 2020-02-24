@@ -6,7 +6,16 @@ export interface SnpInfoModel {
     altBase: string;
     transFactors: TfSnpModel[];
     cellLines: ClSnpModel[];
+    phenotypes: phenotypesModel
 
+}
+export interface phenotypesModel {
+    ebi: string[],
+    grasp: string[],
+    clinvar: string[],
+    phewas: string[],
+    finemapping: string[],
+    qtl: string[],
 }
 export interface SnpSearchModel {
     rsId: string;
@@ -26,7 +35,11 @@ export interface SnpInfoBackendModel {
     rs_id: number,
     tf_aggregated_snps: TfSnpBackendModel[],
     cl_aggregated_snps: ClSnpBackendModel[],
-
+    phenotypes: phenotypesBackendModel[]
+}
+export interface phenotypesBackendModel {
+    db_name: string,
+    phenotype_string: string,
 }
 export interface SnpSearchBackendModel {
     chromosome: string,
@@ -103,5 +116,4 @@ export interface TfSnpModel extends AbstractSnpModel{
 }
 
 export interface ClSnpModel extends AbstractSnpModel{
-
 }

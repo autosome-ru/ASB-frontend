@@ -1,5 +1,5 @@
 import * as fromActions from "src/app/store/action/data.action";
-import {SnpInfoModel} from "src/app/models/data.model";
+import {phenotypesBackendModel, phenotypesModel, SnpInfoModel} from "src/app/models/data.model";
 import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
 
 export interface DataState {
@@ -18,7 +18,15 @@ export const initialState: DataState = {
         chr: null,
         transFactors: [],
         refBase: null,
-        altBase: null
+        altBase: null,
+        phenotypes: {
+            clinvar: [],
+            ebi: [],
+            grasp: [],
+            finemapping: [],
+            qtl: [],
+            phewas: [],
+        }
     }
 };
 export function dataReducer(state: DataState = initialState, action: fromActions.ActionUnion): DataState {
@@ -30,9 +38,24 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
         }
         case fromActions.ActionTypes.LoadSnpInfoSuccess: {
+            let newPhenotypes: phenotypesModel = {
+                ebi: [],
+                phewas: [],
+                grasp: [],
+                finemapping: [],
+                clinvar: [],
+                qtl: [],
+            };
+            Object.keys(state.snpData.phenotypes).forEach(
+                s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
+            );
             return {
                 ...state,
-                snpData: convertSnpInfoBackendModelToSnpInfoModel(action.payload),
+                snpData: {
+                    ...convertSnpInfoBackendModelToSnpInfoModel(action.payload),
+                    phenotypes: newPhenotypes
+                },
+
                 snpDataLoading: false,
             };
         }
@@ -46,4 +69,8 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             return state;
         }
     }
+}
+
+function reduceToDb(dbName: string, phenotypes: phenotypesBackendModel[]): string[] {
+    return phenotypes.filter(s => s.db_name === dbName).map(s => s.phenotype_string)
 }
