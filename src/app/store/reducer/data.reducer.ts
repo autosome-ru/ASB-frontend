@@ -49,7 +49,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             Object.keys(state.snpData.phenotypes).forEach(
                 s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
             );
-            console.log(action.payload);
+            console.log(newPhenotypes);
             return {
                 ...state,
                 snpData: {

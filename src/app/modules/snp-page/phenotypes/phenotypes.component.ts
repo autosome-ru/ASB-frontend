@@ -10,7 +10,7 @@ export class PhenotypesComponent implements OnInit {
 
     @Input()
     public snpData: SnpInfoModel;
-    public phenotypesDb: string[];
+    public phenotypesDb: string[] = ['grasp', 'ebi', 'clinvar', 'phewas', 'finemapping', 'QTL'];
     constructor() { }
 
     ngOnInit(): void {
