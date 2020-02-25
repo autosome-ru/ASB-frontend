@@ -39,7 +39,7 @@ export interface SnpInfoBackendModel {
 }
 export interface phenotypesBackendModel {
     db_name: string,
-    phenotype_string: string,
+    phenotype_name: string,
 }
 export interface SnpSearchBackendModel {
     chromosome: string,

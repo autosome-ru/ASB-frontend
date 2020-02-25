@@ -72,5 +72,5 @@ export function dataReducer(state: DataState = initialState, action: fromActions
 }
 
 function reduceToDb(dbName: string, phenotypes: phenotypesBackendModel[]): string[] {
-    return phenotypes.filter(s => s.db_name === dbName).map(s => s.phenotype_string)
+    return phenotypes.filter(s => s.db_name === dbName).map(s => s.phenotype_name)
 }
