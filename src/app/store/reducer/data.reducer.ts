@@ -24,7 +24,7 @@ export const initialState: DataState = {
             ebi: [],
             grasp: [],
             finemapping: [],
-            qtl: [],
+            QTL: [],
             phewas: [],
         }
     }
@@ -44,11 +44,12 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 grasp: [],
                 finemapping: [],
                 clinvar: [],
-                qtl: [],
+                QTL: [],
             };
             Object.keys(state.snpData.phenotypes).forEach(
                 s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
             );
+            console.log(action.payload);
             return {
                 ...state,
                 snpData: {

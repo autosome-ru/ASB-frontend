@@ -15,7 +15,7 @@ export interface phenotypesModel {
     clinvar: string[],
     phewas: string[],
     finemapping: string[],
-    qtl: string[],
+    QTL: string[],
 }
 export interface SnpSearchModel {
     rsId: string;
