@@ -60,8 +60,9 @@
 
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <asb-phenotypes>
-
+                <asb-phenotypes
+                    [snpData]="snpData$ | async"
+                >
                 </asb-phenotypes>
             </mat-expansion-panel>
 
