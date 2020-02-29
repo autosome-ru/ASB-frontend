@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 
 import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
 import {calculateColor} from "../../../helpers/colors.helper";
 import {Subject} from "rxjs";
+import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 
 @Component({
     selector: 'asb-statistics',
@@ -31,7 +32,6 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         "pValueAlt",
         "meanBad",
     ];
-
     private destroy$ = new Subject<void>();
     public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel | ClSnpModel>;
     public tableFormGroup: FormGroup;
@@ -100,8 +100,6 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         })
     }
     _getPaginatorOptions(): number[] {
-        return this.filteredObjectData.length > 20 ?
-            [5, 10, 25, 50, this.filteredObjectData.length] :
-            [5, 10, 25, 50]
+        return getPaginatorOptions(this.filteredObjectData.length)
     }
 }

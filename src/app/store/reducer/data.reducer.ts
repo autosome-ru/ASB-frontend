@@ -1,5 +1,5 @@
 import * as fromActions from "src/app/store/action/data.action";
-import {phenotypesBackendModel, phenotypesModel, SnpInfoModel} from "src/app/models/data.model";
+import {phenotypesBackendModel, PhenotypesModel, SnpInfoModel} from "src/app/models/data.model";
 import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
 
 export interface DataState {
@@ -38,7 +38,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
         }
         case fromActions.ActionTypes.LoadSnpInfoSuccess: {
-            let newPhenotypes: phenotypesModel = {
+            let newPhenotypes: PhenotypesModel = {
                 ebi: [],
                 phewas: [],
                 grasp: [],

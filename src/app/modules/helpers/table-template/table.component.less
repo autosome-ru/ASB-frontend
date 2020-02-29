@@ -2,35 +2,25 @@
 
 @paginator-height: 56px;
 .asb-table{
-    padding-bottom: @paginator-height;
-    margin-bottom: 10px;
+    margin-bottom: 16px;
 
     &__paginator {
         align-content: center;
         justify-content: flex-end;
-        height: @paginator-height;
-        bottom: 10px;
         z-index: 2;
         max-width: 100%;
-        right:25px;
         margin-top: 0;
         margin-bottom: 0;
-        margin-left: 20px;
-        position: absolute;
+        position: relative;
         display: flex;
         flex-wrap: wrap;
 
     }
-
-
     &__table {
         display: flex;
         flex-wrap: wrap;
         overflow: auto;
         margin-right: 0;
-
-
-
         &._hidden {
             display: none;
         }
@@ -75,7 +65,6 @@
 }
 @media only screen and (max-width: 563px) {
     .asb-table {
-        padding-bottom: 2 * @paginator-height;
         margin-bottom: 10px;
 
         &__paginator {

@@ -73,7 +73,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(new fromActions.data.LoadSnpInfoAction(
             {rsId: this.id.slice(2), alt: this.alt}))
     }
-
 }
 
 const commonColumnModel:

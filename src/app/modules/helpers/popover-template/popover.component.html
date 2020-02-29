@@ -1,0 +1,37 @@
+<ng-template
+    cdkPortal
+>
+    <div class="asb-popover__background"
+         [class._top]="align === 'top'"
+         [class._bottom]="align === 'bottom'"
+         [class._center]="align === 'center'"
+    >
+        <mat-card class="asb-popover__card"
+                  [ngClass]="cardClass"
+        >
+            <mat-card-header
+                *ngIf="!noHeader"
+                class="asb-popover__card-header"
+            >
+                <mat-card-title class="asb-popover__card-header-title">
+                    {{title}}
+                </mat-card-title>
+                <button
+                    mat-icon-button
+                    class="asb-popover__card-header-button"
+                    (click)="close()"
+                >
+                    <mat-icon
+                        svgIcon="clear"
+                        aria-label="Close button"
+                    >
+                        Close
+                    </mat-icon>
+                </button>
+            </mat-card-header>
+            <ng-content></ng-content>
+        </mat-card>
+    </div>
+</ng-template>
+
+

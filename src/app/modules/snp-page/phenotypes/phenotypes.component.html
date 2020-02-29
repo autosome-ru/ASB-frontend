@@ -1,8 +1,12 @@
-<dl *ngFor="let db of phenotypesDb">
-    <dt>{{db}}</dt>
+<dl class="row px-0 mx-0"
+    *ngFor="let db of phenotypesDb"
+>
+    <dt class="col-auto">{{db}}</dt>
     <dd
-        *ngFor="let phenotype of snpData.phenotypes[db]"
+        *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
+        style="display: flex; flex-wrap: wrap"
     >
-        {{phenotype}},
+        {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
     </dd>
 </dl>
+

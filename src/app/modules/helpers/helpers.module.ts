@@ -21,6 +21,9 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSelectModule} from "@angular/material/select";
 import {SearchComponent} from "./search-template/search.component";
+import {AsbPopoverComponent} from "./popover-template/popover.component";
+import {PortalModule} from "@angular/cdk/portal";
+import {FullscreenOverlayContainer, OverlayContainer} from "@angular/cdk/overlay";
 
 @NgModule({
     imports: [
@@ -37,6 +40,7 @@ import {SearchComponent} from "./search-template/search.component";
         MatSortModule,
         MatPaginatorModule,
         MatSelectModule,
+        PortalModule,
     ],
     declarations: [
         SearchComponent,
@@ -48,6 +52,7 @@ import {SearchComponent} from "./search-template/search.component";
         AsbElevationDirective,
         SnpButtonsComponent,
         AsbSnpHeaderComponent,
+        AsbPopoverComponent,
     ],
     exports: [
         SearchComponent,
@@ -56,7 +61,9 @@ import {SearchComponent} from "./search-template/search.component";
         AsbElevationDirective,
         AsbSnpHeaderComponent,
         AsbTableComponent,
+        AsbPopoverComponent
     ],
+    providers: [{provide: OverlayContainer, useClass: FullscreenOverlayContainer}],
 })
 export class AsbHelpersModule {
 }

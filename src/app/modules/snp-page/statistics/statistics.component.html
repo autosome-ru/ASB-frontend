@@ -27,15 +27,13 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
-                <label>
-                    <input
-                        placeholder="Filter"
-                        matInput
-                        type="text"
-                        formControlName="filter"
-                        (keydown.enter)="_applyFilter();"
-                    >
-                </label>
+                <input
+                    placeholder="Filter"
+                    matInput
+                    type="text"
+                    formControlName="filter"
+                    (keydown.enter)="_applyFilter();"
+                >
                 <button type="submit" style="display:none">hidden submit</button>
                 <button
                     mat-icon-button
@@ -67,20 +65,26 @@
             </button>
         </form>
     </div>
-    <asb-table
-        [columnModel]="tableColumnModel"
-        [displayedColumns]="tableDisplayedColumns"
-        [data]="filteredObjectData"
-        [expandCellContentTemplate]="expandCellContentTemplate"
-        [paginatorOptions]="_getPaginatorOptions()"
-        [colorStyle]="_calculateColor"
-    >
-    </asb-table>
+    <div class="mat-elevation-z8">
+        <asb-table
+            [columnModel]="tableColumnModel"
+            [displayedColumns]="tableDisplayedColumns"
+            [data]="filteredObjectData"
+            [popoverContentTemplate]="popoverContentTemplate"
+            [paginatorOptions]="_getPaginatorOptions()"
+            [colorStyle]="_calculateColor"
+        >
+        </asb-table>
+    </div>
 </div>
 
 <ng-template #expandCellContentTemplate let-row="row">
     <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
          alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail" style="max-width: 500px">
     <h5> Здесь мог быть ваш мотив, а не собака</h5>
-    <span class="ml-2"> expanded row works {{row?.name}}</span>
+</ng-template>
+<ng-template #popoverContentTemplate let-row="row">
+    <asb-inner-table
+        [innerTableData]="row ? row.expSnps : []"
+    ></asb-inner-table>
 </ng-template>

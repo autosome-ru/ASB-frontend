@@ -1,0 +1,18 @@
+<asb-table
+    [data]="innerTableData"
+    [displayedColumns]="displayedColumns"
+    [columnModel]="columnModel"
+    [paginatorOptions]="_getPaginatorOptions()"
+>
+</asb-table>
+
+<ng-template #alignViewTemplate let-value="value">
+    <a
+        *ngIf="value"
+        target="_blank"
+        rel="noopener noreferrer"
+        [href]="'http://gtrd.biouml.org/'"
+    >
+        EXP0{{value}}
+    </a>
+</ng-template>

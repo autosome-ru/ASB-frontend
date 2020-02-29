@@ -10,6 +10,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatSort, Sort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {AsbPopoverComponent} from "../popover-template/popover.component";
 
 
 @Component({
@@ -31,6 +32,8 @@ import {MatTableDataSource} from "@angular/material/table";
 export class AsbTableComponent<T> implements AfterViewInit {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
+    @ViewChild("popover", {static: true})
+    public popover: AsbPopoverComponent;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: false}) sort: MatSort;
@@ -38,7 +41,10 @@ export class AsbTableComponent<T> implements AfterViewInit {
     @Input()
     public columnModel: AsbTableColumnModel<T>;
     @Input()
-    public colorStyle;
+    public colorStyle = null;
+
+    @Input()
+    public popoverContentTemplate: TemplateRef<{row: T}> = null ;
 
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
@@ -47,6 +53,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
         ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
             1000 * (this.sortDirection !== 'desc' ? 1 : -1));
+    public popoverRow: T;
 
     @Input()
     set data(value: Array<T>) {
@@ -66,9 +73,6 @@ export class AsbTableComponent<T> implements AfterViewInit {
 
     public _expandedRow: T | null;
 
-
-
-
     ngAfterViewInit() {
         if (this._dataSource) {
             this._dataSource.sort = this.sort;
@@ -77,12 +81,23 @@ export class AsbTableComponent<T> implements AfterViewInit {
         }
     }
     public _handleRowClick(row: T): void {
-        if (row != undefined) {
-            this._expandedRow = this._expandedRow === row ? null : row;
+        if (this.popoverContentTemplate) {
+            this.popover.open();
+            this.popover.title = `Additional statistics`;
+            this.popoverRow = row;
         }
+        // if (this.expandCellContentTemplate) {
+        //     if (row != undefined) {
+        //         this._expandedRow = this._expandedRow === row ? null : row;
+        //     }
+        // }
+    }
+
+    _onAdditionalStatisticsClose(): void {
+        this.popoverRow = null
     }
     _calculateColor(row: T) {
-        return this.colorStyle(row)
+        return this.colorStyle ? this.colorStyle(row) : null
     }
 
     _changeCurrentSortDirection(currentSort: Sort) {

@@ -14,6 +14,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
 import {AsbStatisticsComponent} from "./statistics/statistics.component";
 import { PhenotypesComponent } from './phenotypes/phenotypes.component';
+import { InnerTableComponent } from './inner-table/inner-table.component';
 
 @NgModule({
     imports: [
@@ -31,8 +32,8 @@ import { PhenotypesComponent } from './phenotypes/phenotypes.component';
         MatInputModule,
         AsbHelpersModule,
     ],
-    declarations: [SnpPageComponent, AsbStatisticsComponent, PhenotypesComponent],
-    exports: [SnpPageComponent],
+    declarations: [SnpPageComponent, AsbStatisticsComponent, PhenotypesComponent, InnerTableComponent],
+    exports: [SnpPageComponent, InnerTableComponent],
 })
 export class AsbSnpPageModule {
 }

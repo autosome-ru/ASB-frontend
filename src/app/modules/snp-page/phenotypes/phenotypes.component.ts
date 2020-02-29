@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {SnpInfoModel} from "../../../models/data.model";
 
 @Component({
     selector: 'asb-phenotypes',
     templateUrl: './phenotypes.component.html',
-    styleUrls: ['./phenotypes.component.less']
+    styleUrls: ['./phenotypes.component.less'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhenotypesComponent implements OnInit {
 

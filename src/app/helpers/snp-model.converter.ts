@@ -1,6 +1,6 @@
 import {
     ClSnpBackendCutModel,
-    ClSnpBackendModel, ClSnpCutModel, ClSnpModel,
+    ClSnpBackendModel, ClSnpCutModel, ClSnpModel, ExpSnpBackendModel, ExpSnpModel,
     SnpInfoBackendModel,
     SnpInfoModel,
     SnpSearchBackendModel,
@@ -57,6 +57,7 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel): ClSnpModel {
         pValueAlt: s.log_p_value_alt,
         name: s.cell_line.name,
         meanBad: s.mean_bad,
+        expSnps: s.exp_snps.map(convertBackendExpSnp)
     }
 }
 function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): TfSnpModel {
@@ -73,6 +74,7 @@ function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): TfSnpModel {
         motifPAlt: s.motif_log_p_alt,
         motifPRef: s.motif_log_p_ref,
         motifPosition: s.motif_position,
+        expSnps: s.exp_snps.map(convertBackendExpSnp)
     }
 }
 
@@ -88,5 +90,19 @@ function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): TfSnpCutMode
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
         name: s.transcription_factor.name,
+    }
+}
+
+function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
+    return {
+        pValueAlt: s.p_value_alt,
+        pValueRef: s.p_value_ref,
+        bad: s.bad,
+        altReadCount: s.alt_readcount,
+        refReadCount: s.ref_readcount,
+        align: s.experiment.align,
+        expId: s.experiment.exp_id,
+        clName: s.experiment.cl_name,
+        tfName: s.experiment.tf_name,
     }
 }
