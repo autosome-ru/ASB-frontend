@@ -1,5 +1,5 @@
 import {
-    AfterViewInit,
+    AfterViewInit, ChangeDetectionStrategy,
     Component, ElementRef,
     HostBinding,
     Input,
@@ -17,14 +17,15 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
     selector: "asb-table",
     templateUrl: "./table.component.html",
     styleUrls: ["./table.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
-        trigger('detailExpand', [
-            state('collapsed, void', style({height: '0px', minHeight: '0', display: 'none'})),
-            state('expanded', style({height: '*'})),
-            transition('expanded <=> collapsed',
-                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-            transition('expanded <=> void',
-                animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
+        trigger("detailExpand", [
+            state("collapsed, void", style({height: "0px", minHeight: "0", display: "none"})),
+            state("expanded", style({height: "*"})),
+            transition("expanded <=> collapsed",
+                animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+            transition("expanded <=> void",
+                animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
         ]),
     ],
 })
@@ -42,6 +43,8 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public columnModel: AsbTableColumnModel<T>;
     @Input()
     public colorStyle = null;
+    @Input()
+    public getTitle: (row: T) => string = null;
 
     @Input()
     public popoverContentTemplate: TemplateRef<{row: T}> = null ;
@@ -49,10 +52,10 @@ export class AsbTableComponent<T> implements AfterViewInit {
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
     public _dataSource: MatTableDataSource<T>;
-    public sortDirection: SortDirection = '';
+    public sortDirection: SortDirection = "";
     public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
         ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
-            1000 * (this.sortDirection !== 'desc' ? 1 : -1));
+            1000 * (this.sortDirection !== "desc" ? 1 : -1));
     public popoverRow: T;
 
     @Input()
@@ -83,7 +86,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public _handleRowClick(row: T): void {
         if (this.popoverContentTemplate) {
             this.popover.open();
-            this.popover.title = `Additional statistics`;
+            this.popover.title = this.getTitle ? this.getTitle(row) : null;
             this.popoverRow = row;
         }
         // if (this.expandCellContentTemplate) {
@@ -94,10 +97,10 @@ export class AsbTableComponent<T> implements AfterViewInit {
     }
 
     _onAdditionalStatisticsClose(): void {
-        this.popoverRow = null
+        this.popoverRow = null;
     }
     _calculateColor(row: T) {
-        return this.colorStyle ? this.colorStyle(row) : null
+        return this.colorStyle ? this.colorStyle(row) : null;
     }
 
     _changeCurrentSortDirection(currentSort: Sort) {

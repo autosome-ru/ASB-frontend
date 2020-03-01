@@ -81,7 +81,7 @@
     #popover
     align="center"
     [title]="'Additional statistics'"
-    (onClose)="_onAdditionalStatisticsClose()"
+    (popoverClosed)="_onAdditionalStatisticsClose()"
 >
     <ng-template
         [ngTemplateOutlet]="popoverContentTemplate"

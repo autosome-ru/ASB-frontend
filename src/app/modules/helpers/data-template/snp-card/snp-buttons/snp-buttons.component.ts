@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {ClSnpModel, TfSnpModel} from "../../../../../models/data.model";
 import {calculateColor} from "src/app/helpers/colors.helper";
 
 @Component({
-    selector: 'asb-snp-buttons',
-    templateUrl: './snp-buttons.component.html',
-    styleUrls: ['../snp-card.component.less']
+    selector: "asb-snp-buttons",
+    templateUrl: "./snp-buttons.component.html",
+    styleUrls: ["../snp-card.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SnpButtonsComponent implements OnInit {
 
@@ -28,7 +29,7 @@ export class SnpButtonsComponent implements OnInit {
 
     }
     _calculateColor(i: number) {
-        return calculateColor(this.data[i].pValueRef, this.data[i].pValueAlt)
+        return calculateColor(this.data[i].pValueRef, this.data[i].pValueAlt);
     }
 
     _showMoreObjects() {

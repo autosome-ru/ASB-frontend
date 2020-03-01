@@ -6,11 +6,11 @@ import {
     Input,
     Output,
     ViewChild,
-    ViewEncapsulation
 } from "@angular/core";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
-    Overlay, OverlayConfig,
+    Overlay,
+    // OverlayConfig,
     OverlayRef,
     ScrollStrategy,
     ScrollStrategyOptions
@@ -20,7 +20,6 @@ import {
     selector: "asb-popover",
     templateUrl: "./popover.component.html",
     styleUrls: ["./popover.component.less"],
-    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AsbPopoverComponent {
@@ -40,11 +39,8 @@ export class AsbPopoverComponent {
     @Input()
     public align: "center" | "top" | "bottom";
 
-    @Input()
-    public noHeader: boolean = false;
-
     @Output()
-    public onClose = new EventEmitter<void>();
+    public popoverClosed = new EventEmitter<void>();
 
     private overlayRef: OverlayRef;
 
@@ -63,8 +59,8 @@ export class AsbPopoverComponent {
             console.warn("Tried to popover, but portal is absent");
             return;
         }
-        let config = new OverlayConfig({
-            scrollStrategy: this.scrollStrategy});
+        // const config = new OverlayConfig({
+        //     scrollStrategy: this.scrollStrategy});
         this.overlayRef = this.overlay.create();
         this.overlayRef.attach(this.portal);
     }
@@ -72,7 +68,7 @@ export class AsbPopoverComponent {
     public close(): void {
         this.overlayRef.dispose();
         this.overlayRef = null;
-        this.onClose.emit();
+        this.popoverClosed.emit();
     }
 
 }

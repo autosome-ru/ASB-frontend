@@ -67,10 +67,12 @@
     </div>
     <div class="mat-elevation-z8">
         <asb-table
+            #tableView
             [columnModel]="tableColumnModel"
             [displayedColumns]="tableDisplayedColumns"
             [data]="filteredObjectData"
             [popoverContentTemplate]="popoverContentTemplate"
+            [getTitle]="_getTitle"
             [paginatorOptions]="_getPaginatorOptions()"
             [colorStyle]="_calculateColor"
         >

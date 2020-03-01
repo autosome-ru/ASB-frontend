@@ -1,21 +1,26 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
 
-import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
+import {ClSnpModel, ExpSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
 import {calculateColor} from "../../../helpers/colors.helper";
 import {Subject} from "rxjs";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
+import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
 @Component({
-    selector: 'asb-statistics',
-    templateUrl: './statistics.component.html',
-    styleUrls: ['../snp-page.component.less'],
+    selector: "asb-statistics",
+    templateUrl: "./statistics.component.html",
+    styleUrls: ["../snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
 export class AsbStatisticsComponent implements OnInit, OnDestroy {
+
+    constructor(private formBuilder: FormBuilder, ) { }
+    @ViewChild("tableView", {static: true})
+    public tableView: AsbTableComponent<TfSnpModel | ClSnpModel>;
 
     @Input()
     public objectData: TfSnpModel[] | ClSnpModel[];
@@ -38,7 +43,9 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
     public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
     public filteredObjectData: (TfSnpModel | ClSnpModel)[];
 
-    constructor(private formBuilder: FormBuilder,) { }
+    originalOrder = ((): number => {
+        return 0;
+    });
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
@@ -60,23 +67,20 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         });
     }
 
-    originalOrder = (): number => {
-        return 0;
-    };
     _changeColumns(event: MatSelectChange) {
         this.tableDisplayedColumns = [
             "name",
             ...event.value
-        ]
+        ];
     }
 
     _applyFilter() {
         this.filteredObjectData =
-            this.objectData.filter(s => this.filterData(s, this.tableFormGroup.get('filter').value));
+            this.objectData.filter(s => this.filterData(s, this.tableFormGroup.get("filter").value));
 
     }
     _clearFilterField() {
-        this.tableFormGroup.patchValue({filter: null})
+        this.tableFormGroup.patchValue({filter: null});
     }
 
     filterData(row: TfSnpModel | ClSnpModel, search: string) {
@@ -85,10 +89,10 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
             result = result &&
                 row.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
         }
-        return result
+        return result;
     }
     _calculateColor(row: TfSnpModel | ClSnpModel) {
-        return {'background-color': calculateColor(row.pValueRef, row.pValueAlt)}
+        return {"background-color": calculateColor(row.pValueRef, row.pValueAlt)};
     }
 
     _resetFilters() {
@@ -97,9 +101,13 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         this.tableFormGroup.patchValue({
             columns: Object.keys(this.nonStickyColumnModel),
             filter: null,
-        })
+        });
     }
     _getPaginatorOptions(): number[] {
-        return getPaginatorOptions(this.filteredObjectData.length)
+        return getPaginatorOptions(this.filteredObjectData.length);
+    }
+
+    _getTitle(row: ExpSnpModel): string {
+        return "Additional statistics";
     }
 }

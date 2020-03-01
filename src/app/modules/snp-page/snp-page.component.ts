@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
@@ -12,15 +12,13 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
 
 
 @Component({
-    selector: 'asb-snp-page',
-    templateUrl: './snp-page.component.html',
-    styleUrls: ['./snp-page.component.less'],
+    selector: "asb-snp-page",
+    templateUrl: "./snp-page.component.html",
+    styleUrls: ["./snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.Emulated,
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
-    @ViewChild("tableView", {static: true})
-    public tableView: AsbTableComponent<TfSnpModel | ClSnpModel>;
 
     public id: string;
     public alt: string;
@@ -40,13 +38,13 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public tfColumnModel: AsbTableColumnModel<Partial<TfSnpModel>> = {
         name: {view: "TF name", valueConverter: v => v},
         ...commonColumnModel,
-        motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : 'No info'},
+        motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No info"},
         motifConcordance: {view: "Concordance", valueConverter:
-                    v => v !== null ? v ? "concordant" : "discordant"  : 'NaN'},
+                    v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
     };
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         ...commonInitialDisplayedColumns,
-        'motifFc',
+        "motifFc",
     ];
 
 
@@ -55,7 +53,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private titleService: Title) {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false}
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false; }
 
     ngOnDestroy(): void {
         this.destroy$.next();
@@ -71,17 +69,17 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoData);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoading);
         this.store.dispatch(new fromActions.data.LoadSnpInfoAction(
-            {rsId: this.id.slice(2), alt: this.alt}))
+            {rsId: this.id.slice(2), alt: this.alt}));
     }
 }
 
 const commonColumnModel:
     AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {
-    effectSizeRef: {view: "Effect size ref", valueConverter: v => v !== null ? v.toFixed(2) : 'NaN'},
-    effectSizeAlt: {view: "Effect size alt", valueConverter: v => v !== null ? v.toFixed(2) : 'NaN'},
-    pValueRef: {view: "p-value ASB ref", valueConverter: v => v !== null ? v.toFixed(2) : 'NaN'},
-    pValueAlt: {view: "p-value ASB alt", valueConverter: v => v !== null ? v.toFixed(2) : 'NaN'},
-    meanBad: {view: "mean BAD", valueConverter: v =>v.toFixed(2)}
+    effectSizeRef: {view: "Effect size ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    effectSizeAlt: {view: "Effect size alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    pValueRef: {view: "p-value ASB ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    pValueAlt: {view: "p-value ASB alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    meanBad: {view: "mean BAD", valueConverter: v => v.toFixed(2)}
 };
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [
     "name",

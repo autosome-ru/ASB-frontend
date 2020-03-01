@@ -1,17 +1,20 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ExpSnpModel} from "../../../models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
+import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
 @Component({
-    selector: 'asb-inner-table',
-    templateUrl: './inner-table.component.html',
-    styleUrls: ['./inner-table.component.less'],
+    selector: "asb-inner-table",
+    templateUrl: "./inner-table.component.html",
+    styleUrls: ["./inner-table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InnerTableComponent implements OnInit {
     @ViewChild("alignViewTemplate", {static: true})
     public alignViewTemplate: TemplateRef<{value: number}>;
+    @ViewChild("tableView", {static: true})
+    public tableView: AsbTableComponent<ExpSnpModel>;
 
     constructor() { }
 
@@ -39,6 +42,6 @@ export class InnerTableComponent implements OnInit {
     }
 
     _getPaginatorOptions(): number[] {
-        return getPaginatorOptions(this.innerTableData.length)
+        return getPaginatorOptions(this.innerTableData.length);
     }
 }
