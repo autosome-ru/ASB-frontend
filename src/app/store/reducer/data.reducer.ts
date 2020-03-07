@@ -3,42 +3,36 @@ import {phenotypesBackendModel, PhenotypesModel, SnpInfoModel} from "src/app/mod
 import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
 
 export interface DataState {
-    snpData: SnpInfoModel,
-    snpDataLoading: boolean
+    snps: {
+        [snpId: string]: {
+            loading: boolean,
+            snpData?: SnpInfoModel,
+        },
+    };
 }
-export const selectSnpData = (state: DataState) => state.snpData;
-export const selectSnpDataLoading = (state: DataState) => state.snpDataLoading;
+export const selectSnps = (state: DataState) => state.snps;
 
 export const initialState: DataState = {
-    snpDataLoading: true,
-    snpData: {
-        rsId: null,
-        cellLines: [],
-        pos: null,
-        chr: null,
-        transFactors: [],
-        refBase: null,
-        altBase: null,
-        phenotypes: {
-            clinvar: [],
-            ebi: [],
-            grasp: [],
-            finemapping: [],
-            QTL: [],
-            phewas: [],
-        }
-    }
+    snps: {}
 };
+
 export function dataReducer(state: DataState = initialState, action: fromActions.ActionUnion): DataState {
     switch (action.type) {
         case fromActions.ActionTypes.LoadSnpInfo: {
+            const snpId: string = action.payload.rsId + action.payload.alt;
             return {
                 ...state,
-                snpDataLoading: true,
+                snps: {
+                    ...state.snps,
+                    [snpId]: {
+                        loading: true,
+                    },
+                }
+
             };
         }
         case fromActions.ActionTypes.LoadSnpInfoSuccess: {
-            let newPhenotypes: PhenotypesModel = {
+            const newPhenotypes: PhenotypesModel = {
                 ebi: [],
                 phewas: [],
                 grasp: [],
@@ -46,24 +40,34 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 clinvar: [],
                 QTL: [],
             };
-            Object.keys(state.snpData.phenotypes).forEach(
+            const snpId: string = `rs${action.payload.rs_id}${action.payload.alt}`;
+            Object.keys(newPhenotypes).forEach(
                 s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
             );
             console.log(newPhenotypes);
             return {
                 ...state,
-                snpData: {
-                    ...convertSnpInfoBackendModelToSnpInfoModel(action.payload),
-                    phenotypes: newPhenotypes
+                snps: {
+                    ...state.snps,
+                    [snpId]: {
+                        snpData: {
+                            ...convertSnpInfoBackendModelToSnpInfoModel(action.payload),
+                            phenotypes: newPhenotypes,
+                        },
+                        loading: false,
+                    },
                 },
-
-                snpDataLoading: false,
             };
         }
         case fromActions.ActionTypes.LoadSnpInfoFail: {
             return {
                 ...state,
-                snpDataLoading: false,
+                snps: {
+                    ...state.snps,
+                    [action.payload.rsId + action.payload.alt]: {
+                        loading: true,
+                    },
+                }
             };
         }
         default: {
@@ -73,5 +77,5 @@ export function dataReducer(state: DataState = initialState, action: fromActions
 }
 
 function reduceToDb(dbName: string, phenotypes: phenotypesBackendModel[]): string[] {
-    return phenotypes.filter(s => s.db_name === dbName).map(s => s.phenotype_name)
+    return phenotypes.filter(s => s.db_name === dbName).map(s => s.phenotype_name);
 }

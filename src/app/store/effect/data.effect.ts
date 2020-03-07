@@ -24,7 +24,7 @@ export class DataEffect {
         mergeMap((action: fromActions.LoadSnpInfoAction) =>
             this.dataService.getSnpInfoById(action.payload).pipe(
                 map(info => new fromActions.LoadSnpInfoSuccessAction(info)),
-                catchError(() => of(new fromActions.LoadSnpInfoFailAction())),
+                catchError(() => of(new fromActions.LoadSnpInfoFailAction(action.payload))),
             )
         )
     );

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
@@ -7,7 +7,6 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {AsbTableComponent} from "src/app/modules/helpers/table-template/table.component";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 
 
@@ -16,7 +15,6 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
     templateUrl: "./snp-page.component.html",
     styleUrls: ["./snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.Emulated,
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
 
@@ -66,8 +64,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.alt = this.route.snapshot.paramMap.get("alt");
         this.titleService.setTitle(this.route.snapshot.data.title + this.id);
 
-        this.snpData$ = this.store.select(fromSelectors.selectSnpInfoData);
-        this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoading);
+        this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
+        this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.store.dispatch(new fromActions.data.LoadSnpInfoAction(
             {rsId: this.id.slice(2), alt: this.alt}));
     }

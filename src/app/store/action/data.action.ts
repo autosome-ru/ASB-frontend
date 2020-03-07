@@ -4,7 +4,7 @@ import {SnpInfoBackendModel} from "src/app/models/data.model";
 export enum ActionTypes {
     LoadSnpInfo = "[Data] load info model",
     LoadSnpInfoSuccess = "[Data] info model loaded successfully",
-    LoadSnpInfoFail = "[Data] load info model failes",
+    LoadSnpInfoFail = "[Data] load info model failed",
 }
 
 export class LoadSnpInfoAction implements Action {
@@ -19,6 +19,8 @@ export class LoadSnpInfoSuccessAction implements Action {
 }
 export class LoadSnpInfoFailAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoFail;
+
+    constructor(public payload: {rsId: string, alt: string}) {}
 }
 
 
