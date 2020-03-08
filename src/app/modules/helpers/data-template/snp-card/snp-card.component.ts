@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, HostBinding, Input, OnInit} from "@angular/core";
-import {SnpInfoModel} from "../../../../models/data.model";
+import {SnpSearchModel} from "src/app/models/data.model";
 
 @Component({
     selector: "asb-snp-card",
@@ -11,7 +11,7 @@ export class AsbSnpCardComponent implements OnInit {
     @HostBinding("class.snp-card")
     private readonly cssClass = true;
     @Input()
-    public snpData: SnpInfoModel;
+    public snpData: SnpSearchModel;
     @Input()
     public noButtons: boolean = false;
 

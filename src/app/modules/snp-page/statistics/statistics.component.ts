@@ -29,7 +29,7 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
     public tableColumnModel: AsbTableColumnModel<TfSnpModel | ClSnpModel>;
 
     @Input()
-    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel | ClSnpModel> = [
+    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> | AsbTableDisplayedColumns<ClSnpModel> = [
         "name",
         "effectSizeRef",
         "effectSizeAlt",
@@ -38,7 +38,7 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         "meanBad",
     ];
     private destroy$ = new Subject<void>();
-    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel | ClSnpModel>;
+    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> | AsbTableDisplayedColumns<ClSnpModel>;
     public tableFormGroup: FormGroup;
     public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
     public filteredObjectData: (TfSnpModel | ClSnpModel)[];
@@ -108,6 +108,6 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
     }
 
     _getTitle(row: ExpSnpModel): string {
-        return "Additional statistics";
+        return "Additional statistics" ;
     }
 }

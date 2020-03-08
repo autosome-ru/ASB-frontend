@@ -13,6 +13,6 @@ export class DataService {
 
     public getSnpInfoById({rsId: id, alt: altBase}:
                               {rsId: string, alt: string}): Observable<SnpInfoBackendModel> {
-        return this.http.get<SnpInfoBackendModel>(`${snpsInfoUrl}/${id}/${altBase}`);
+        return this.http.get<SnpInfoBackendModel>(`${snpsInfoUrl}/${id.slice(2)}/${altBase}`);
     }
 }

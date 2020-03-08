@@ -19,7 +19,7 @@ export const initialState: DataState = {
 export function dataReducer(state: DataState = initialState, action: fromActions.ActionUnion): DataState {
     switch (action.type) {
         case fromActions.ActionTypes.LoadSnpInfo: {
-            const snpId: string = action.payload.rsId + action.payload.alt;
+            const snpId: string = `${action.payload.rsId}${action.payload.alt}`;
             return {
                 ...state,
                 snps: {
@@ -44,7 +44,6 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             Object.keys(newPhenotypes).forEach(
                 s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
             );
-            console.log(newPhenotypes);
             return {
                 ...state,
                 snps: {
@@ -65,7 +64,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 snps: {
                     ...state.snps,
                     [action.payload.rsId + action.payload.alt]: {
-                        loading: true,
+                        loading: false,
                     },
                 }
             };

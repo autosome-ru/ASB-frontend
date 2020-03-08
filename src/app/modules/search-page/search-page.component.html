@@ -8,7 +8,8 @@
             <div class="flex text-xs-right xs-12">
                 <div class="text-xs-left">
                     <h4 class="headline text--bold-300">
-                        {{getPhrase((searchSnpResults$ | async).length)}}</h4>
+                        {{getPhrase((searchSnpResults$ | async).length)}}
+                    </h4>
                 </div>
             </div>
             <div class="layout pb-2"
@@ -16,8 +17,7 @@
                     <mat-card
                         asbElevation
                         role="group"
-                        (click)="_navigateToSnp({rsId: snp.rsId,
-                        alt: snp.altBase})"
+                        (click)="_navigateToSnp({rsId: snp.rsId, alt: snp.altBase})"
 
                     >
                         <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
