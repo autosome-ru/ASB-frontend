@@ -71,6 +71,9 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public paginatorOptions: number[];
 
     @Input()
+    public disabledToolTips: boolean;
+
+    @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;
 
 
@@ -106,4 +109,10 @@ export class AsbTableComponent<T> implements AfterViewInit {
     _changeCurrentSortDirection(currentSort: Sort) {
         this.sortDirection = currentSort.direction;
     }
+
+    _getTooltipMessage(helpMessage: string) {
+        return helpMessage && this.disabledToolTips ? helpMessage : null;
+    }
 }
+
+

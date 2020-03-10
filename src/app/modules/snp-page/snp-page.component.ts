@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable, Subject} from "rxjs";
@@ -16,13 +16,12 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
     styleUrls: ["./snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SnpPageComponent implements OnInit, OnDestroy {
+export class SnpPageComponent implements OnInit {
 
     public id: string;
     public alt: string;
     public snpData$: Observable<SnpInfoModel>;
     public snpDataLoading$: Observable<boolean>;
-    private destroy$ = new Subject<void>();
 
     public clColumnModel: AsbTableColumnModel<Partial<ClSnpModel>> = {
         name: {view: "CL name", valueConverter: v => v},
@@ -44,6 +43,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         ...commonInitialDisplayedColumns,
         "motifFc",
     ];
+    public phenotypesEmpty: boolean;
 
 
     constructor(
@@ -52,12 +52,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private router: Router,
         private titleService: Title) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false; }
-
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-        this.destroy$ = null;
-    }
 
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get("rsId");
@@ -77,7 +71,7 @@ const commonColumnModel:
     effectSizeAlt: {view: "Effect size alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
     pValueRef: {view: "p-value ASB ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
     pValueAlt: {view: "p-value ASB alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    meanBad: {view: "mean BAD", valueConverter: v => v.toFixed(2)}
+    meanBad: {view: "mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}
 };
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [
     "name",

@@ -35,6 +35,7 @@
             >
                 <th mat-header-cell
                     mat-sort-header
+                    [matTooltip]="_getTooltipMessage(column.value.helpMessage)"
                     *matHeaderCellDef>{{column.value.view}}</th>
                 <td mat-cell *matCellDef="let row">
                     <ng-template

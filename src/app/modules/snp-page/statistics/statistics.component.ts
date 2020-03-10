@@ -20,13 +20,13 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
 
     constructor(private formBuilder: FormBuilder, ) { }
     @ViewChild("tableView", {static: true})
-    public tableView: AsbTableComponent<TfSnpModel | ClSnpModel>;
+    public tableView: AsbTableComponent<TfSnpModel> | AsbTableComponent<ClSnpModel>;
 
     @Input()
     public objectData: TfSnpModel[] | ClSnpModel[];
 
     @Input()
-    public tableColumnModel: AsbTableColumnModel<TfSnpModel | ClSnpModel>;
+    public tableColumnModel: AsbTableColumnModel<TfSnpModel> | AsbTableColumnModel<ClSnpModel> ;
 
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> | AsbTableDisplayedColumns<ClSnpModel> = [
@@ -41,11 +41,13 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
     public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> | AsbTableDisplayedColumns<ClSnpModel>;
     public tableFormGroup: FormGroup;
     public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
-    public filteredObjectData: (TfSnpModel | ClSnpModel)[];
+    public filteredObjectData: TfSnpModel[] | ClSnpModel[];
+    public disabledToolTips: boolean = true;
 
     originalOrder = ((): number => {
         return 0;
     });
+
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();

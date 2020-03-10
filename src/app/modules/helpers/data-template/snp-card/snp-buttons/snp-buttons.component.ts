@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {ClSnpModel, TfSnpModel} from "../../../../../models/data.model";
+import {ClSnpCutModel, ClSnpModel, TfSnpCutModel, TfSnpModel} from "src/app/models/data.model";
 import {calculateColor} from "src/app/helpers/colors.helper";
 
 @Component({
@@ -13,7 +13,7 @@ export class SnpButtonsComponent implements OnInit {
     @Input()
     public maxObjects: number;
     @Input()
-    public data: TfSnpModel[] | ClSnpModel[];
+    public data: TfSnpModel[] | ClSnpModel[] | TfSnpCutModel[] | ClSnpCutModel[];
 
     @Input()
     public showMoreObjects: boolean = false;

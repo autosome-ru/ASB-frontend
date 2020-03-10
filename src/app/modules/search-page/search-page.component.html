@@ -1,4 +1,4 @@
-<div class="container flex-grow-1 mx-auto pb-3">
+<div class="container flex-grow-1 mx-md-auto mx-sm-0 pb-3 px-sm-0 px-md-auto">
 
     <asb-search [width]="'full'"></asb-search>
 
@@ -8,11 +8,13 @@
             <div class="flex text-xs-right xs-12">
                 <div class="text-xs-left">
                     <h4 class="headline text--bold-300">
-                        {{getPhrase((searchSnpResults$ | async).length)}}
+                        {{getPhrase((searchSnpResults$ | async).length,
+                        (searchSnpResultsLoading$ | async))}}
                     </h4>
                 </div>
             </div>
-            <div class="layout pb-2"
+            <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
+                <div class="layout pb-2"
                      *ngFor="let snp of searchSnpResults$ | async">
                     <mat-card
                         asbElevation
@@ -40,9 +42,18 @@
                             </asb-snp-card>
                         </mat-card-content>
                     </mat-card>
-            </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>
+
+<ng-template #loadingTemplate>
+    <div style="height: 294px">
+        <div class="search-page__spinner">
+            <mat-progress-spinner mode="indeterminate" color="accent" [diameter]="120"></mat-progress-spinner>
+        </div>
+    </div>
+</ng-template>
 
 

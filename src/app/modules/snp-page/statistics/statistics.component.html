@@ -63,6 +63,13 @@
             >
                 Get CSV
             </button>
+            <button
+                mat-raised-button
+                (click)="disabledToolTips=!disabledToolTips"
+            >
+                {{disabledToolTips ? 'Disable' : 'Enable'}} tooltips
+
+            </button>
         </form>
     </div>
     <div class="mat-elevation-z8">
@@ -75,6 +82,7 @@
             [getTitle]="_getTitle"
             [paginatorOptions]="_getPaginatorOptions()"
             [colorStyle]="_calculateColor"
+            [disabledToolTips]="disabledToolTips"
         >
         </asb-table>
     </div>

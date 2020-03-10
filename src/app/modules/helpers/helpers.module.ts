@@ -24,6 +24,7 @@ import {SearchComponent} from "./search-template/search.component";
 import {AsbPopoverComponent} from "./popover-template/popover.component";
 import {PortalModule} from "@angular/cdk/portal";
 import {FullscreenOverlayContainer, OverlayContainer} from "@angular/cdk/overlay";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import {FullscreenOverlayContainer, OverlayContainer} from "@angular/cdk/overlay
         MatPaginatorModule,
         MatSelectModule,
         PortalModule,
+        MatTooltipModule,
     ],
     declarations: [
         SearchComponent,

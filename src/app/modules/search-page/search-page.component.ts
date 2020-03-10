@@ -33,7 +33,10 @@ export class SearchPageComponent implements OnInit {
         this.router.navigate(["snps/" + id + "/" + base]);
     }
 
-    getPhrase(n: number): string {
+    getPhrase(n: number, loading: boolean): string {
+        if (loading) {
+            return "Searching...";
+        }
         switch (n) {
             case 0: {
                 return "No results found";
