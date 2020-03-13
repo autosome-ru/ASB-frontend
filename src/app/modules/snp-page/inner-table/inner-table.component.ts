@@ -11,10 +11,11 @@ import {AsbTableComponent} from "../../helpers/table-template/table.component";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InnerTableComponent implements OnInit {
-    @ViewChild("alignViewTemplate", {static: true})
-    public alignViewTemplate: TemplateRef<{value: number}>;
     @ViewChild("tableView", {static: true})
     public tableView: AsbTableComponent<ExpSnpModel>;
+
+    @ViewChild("alignViewTemplate", {static: true})
+    public alignViewTemplate: TemplateRef<{value: number}>;
 
     constructor() { }
 
@@ -22,7 +23,7 @@ export class InnerTableComponent implements OnInit {
         bad: {view: "Bad", valueConverter: v => v},
         refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
         altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
-        align: {view: "GTRD align", template: this.alignViewTemplate},
+        align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
         clName: {view: "Cell line name", valueConverter: v => "" + v},
         tfName: {view: "Transcription factor name", valueConverter: v => "" + v},
     };

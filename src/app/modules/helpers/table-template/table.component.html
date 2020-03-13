@@ -38,16 +38,15 @@
                     [matTooltip]="_getTooltipMessage(column.value.helpMessage)"
                     *matHeaderCellDef>{{column.value.view}}</th>
                 <td mat-cell *matCellDef="let row">
-                    <ng-template
-                        *ngIf="column.value.template; else valueConverterTemplate"
-                        [ngTemplateOutlet]="column.value.template"
+                    <ng-container
+                        *ngIf="column.value.columnTemplate; else valueConverterTemplate"
+                        [ngTemplateOutlet]="column.value.columnTemplate"
                         [ngTemplateOutletContext]="{value: row[column.key], row: row}"
-                    ></ng-template>
+                    ></ng-container>
                     <ng-template #valueConverterTemplate>
                         {{column.value.valueConverter
                         ? column.value.valueConverter(row[column.key])
-                        : row[column.key]
-                        }}
+                        : row[column.key]}}
                     </ng-template>
                 </td>
             </ng-container>

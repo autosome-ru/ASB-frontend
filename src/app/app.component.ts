@@ -6,9 +6,9 @@ import {
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.less'],
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.less"],
 })
 export class AppComponent  implements  OnInit {
     @HostBinding("class.asb-app")
@@ -21,7 +21,7 @@ export class AppComponent  implements  OnInit {
             if (!(evt instanceof NavigationEnd)) {
                 return;
             }
-            window.scrollTo(0, 0)
+            window.scrollTo(0, 0);
         });
     }
 

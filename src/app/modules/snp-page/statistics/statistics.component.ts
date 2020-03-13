@@ -19,7 +19,7 @@ import {AsbTableComponent} from "../../helpers/table-template/table.component";
 export class AsbStatisticsComponent implements OnInit, OnDestroy {
 
     constructor(private formBuilder: FormBuilder, ) { }
-    @ViewChild("tableView", {static: true})
+    @ViewChild("tableViewTFCL", {static: true})
     public tableView: AsbTableComponent<TfSnpModel> | AsbTableComponent<ClSnpModel>;
 
     @Input()
