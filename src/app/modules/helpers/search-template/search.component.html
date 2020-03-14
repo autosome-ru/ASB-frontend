@@ -3,35 +3,84 @@
     style="background-color: white"
     [class._restricted]="width === 'restricted'"
     [class._full]="width === 'full'">
-    <h3>Search</h3>
     <form [formGroup]="searchForm">
-        <mat-form-field
-            floatLabel="always"
-            style="width: 100%; padding: 0"
-            appearance="outline"
-            class="my-custom-component-small"
-        >
-            <span matPrefix>rs&nbsp;</span>
-            <input placeholder="e.g. 11260841, 11:80422458"
-                   matInput
-                   name="Search SNPs"
-                   formGroupName="searchInput"
-                   aria-label="search"
-                   formControlName="searchInput"
-            >
+        <!--<div style="display: flex; align-items: center"> -->
+            <h3> Search</h3>
+            <mat-form-field style="margin-right: 15px">
+                <mat-label>Search by</mat-label>
+                <mat-select
+                formControlName="searchBy"
+                >
+                    <mat-option value="id">rs ID</mat-option>
+                    <mat-option value="pos">Genome position</mat-option>
+                </mat-select>
+            </mat-form-field>
+        <!--</div> -->
 
-            <button type="submit" style="display:none" (click)="_navigateToSearch()">hidden submit</button>
-            <button
-                mat-icon-button
-                [hidden]="!searchForm.get('searchInput').value"
-                matSuffix
-                style="height: 100%; width: 100%"
-                (click)="_clearSearchField()"
-            >
-                <mat-icon svgIcon="clear"></mat-icon>
-            </button>
 
+        <mat-form-field *ngIf="searchForm.get('searchBy').value === 'pos'">
+            <mat-label>Chromosome</mat-label>
+            <mat-select
+                formControlName="chromosome"
+            >
+                <mat-option *ngFor="let chr of listOfChrs" [value]="chr">chr{{chr}}</mat-option>
+            </mat-select>
         </mat-form-field>
+        <ng-container *ngIf="searchForm.get('searchBy').value === 'id'">
+            <mat-form-field
+                floatLabel="always"
+                style="width: 100%; padding: 0"
+                appearance="outline"
+                class="my-custom-component-small"
+            >
+                    <span matPrefix>rs&nbsp;</span>
+                    <input placeholder="e.g. 11260841, 62034351"
+                           matInput
+                           name="Search SNPs"
+                           aria-label="search"
+                           formControlName="searchInput"
+                    >
+                <button type="submit" style="display:none" (click)="_navigateToSearch()">hidden submit</button>
+                <button
+                    mat-icon-button
+                    [hidden]="!searchForm.get('searchInput').value"
+                    matSuffix
+                    style="height: 100%; width: 100%"
+                    (click)="_clearSearchField()"
+                >
+                    <mat-icon svgIcon="clear"></mat-icon>
+                </button>
+
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="searchForm.get('searchBy').value === 'pos'">
+            <mat-form-field
+                floatLabel="always"
+                style="width: 100%; padding: 0"
+                appearance="outline"
+                class="my-custom-component-small"
+            >
+                <span matPrefix>pos&nbsp;</span>
+                <input placeholder="e.g. 28554168:80422458"
+                       matInput
+                       name="Search SNPs"
+                       aria-label="search"
+                       formControlName="searchInput"
+                >
+                <button type="submit" style="display:none" (click)="_navigateToSearch()">hidden submit</button>
+                <button
+                    mat-icon-button
+                    [hidden]="!searchForm.get('searchInput').value"
+                    matSuffix
+                    style="height: 100%; width: 100%"
+                    (click)="_clearSearchField()"
+                >
+                    <mat-icon svgIcon="clear"></mat-icon>
+                </button>
+
+            </mat-form-field>
+        </ng-container>
 
         <div class="flex justify-content-end">
             <a
@@ -53,3 +102,4 @@
         </div>
     </form>
 </div>
+

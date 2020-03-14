@@ -18,13 +18,14 @@ export class SearchComponent implements OnInit {
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
     public searchForm: FormGroup;
-    private readonly nullValue: SearchQueryModel = {searchInput: ""};
+    private readonly nullValue: {searchInput: string} = {searchInput: ""};
     @Input()
     public width: "restricted" | "full";
     private input$: Observable<SearchQueryModel>;
 
     @Output ()
     public searchQuery: EventEmitter<SearchQueryModel>;
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -34,14 +35,18 @@ export class SearchComponent implements OnInit {
         private titleService: Title,
     ) {}
 
+    public listOfChrs: string[] = ["1", "3", "4", "6"];
+
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
 
         this.searchForm = this.formBuilder.group({
             searchInput: "",
+            searchBy: "id",
+            chromosome: "1"
         });
         this.input$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
-        this.input$.subscribe(s => this.searchForm.setValue({searchInput: s.searchInput},
+        this.input$.subscribe(s => this.searchForm.setValue(s,
             {emitEvent: false}));
 
         }
@@ -50,7 +55,7 @@ export class SearchComponent implements OnInit {
         this.searchForm.patchValue(this.nullValue);
     }
     _navigateToSearch() {
-        if (!!this.searchForm.get("searchInput").value) {
+        if (this.searchForm.get("searchInput").value) {
             const currentFilter = this.searchForm.value as SearchQueryModel;
             this.store.dispatch(new fromActions.search.SetFilterAction(currentFilter));
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(currentFilter));

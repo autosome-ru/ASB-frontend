@@ -1,8 +1,8 @@
 import {
     AfterViewInit, ChangeDetectionStrategy,
-    Component, ElementRef,
+    Component, ElementRef, EventEmitter,
     HostBinding,
-    Input,
+    Input, Output,
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -41,6 +41,10 @@ export class AsbTableComponent<T> implements AfterViewInit {
 
     @Input()
     public columnModel: AsbTableColumnModel<T>;
+
+    @Input()
+    public externalPaginator: MatPaginator;
+
     @Input()
     public colorStyle = null;
     @Input()
@@ -50,7 +54,11 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public popoverContentTemplate: TemplateRef<{row: T}> = null ;
 
     @Input()
+    public clickableRow: boolean = false;
+
+    @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
+
     public _dataSource: MatTableDataSource<T>;
     public sortDirection: SortDirection = "";
     public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
@@ -64,6 +72,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
         this._dataSource.sort = this.sort;
         this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
         if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+        if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
     }
 
     @HostBinding("class._paginator")
@@ -79,6 +88,9 @@ export class AsbTableComponent<T> implements AfterViewInit {
 
     public _expandedRow: T | null;
 
+    @Output()
+    public rowClickEmitter = new EventEmitter<T>();
+
     ngAfterViewInit() {
         if (this._dataSource) {
             this._dataSource.sort = this.sort;
@@ -87,6 +99,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
         }
     }
     public _handleRowClick(row: T): void {
+        this.rowClickEmitter.emit(row);
         if (this.popoverContentTemplate) {
             this.popover.open();
             this.popover.title = this.getTitle ? this.getTitle(row) : null;

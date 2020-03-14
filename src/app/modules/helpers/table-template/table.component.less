@@ -59,6 +59,14 @@
             &._borderless > td {
                 border-bottom-width: 0;
             }
+            &._colorClick {
+                &:hover {
+                    background-color: tint(@accent_theme_color_50, 60%);
+                }
+                &:active {
+                    background-color: tint(@accent_theme_color_50, 30%);
+                }
+            }
         }
     }
 

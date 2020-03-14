@@ -3,9 +3,10 @@
     [data]="innerTableData"
     [displayedColumns]="displayedColumns"
     [columnModel]="columnModel"
-    [paginatorOptions]="_getPaginatorOptions()"
+    [externalPaginator]="paginator"
 >
 </asb-table>
+<mat-paginator #paginator [pageSizeOptions]="_getPaginatorOptions()"></mat-paginator>
 
 <ng-template #alignTemplate let-value="value">
     <a

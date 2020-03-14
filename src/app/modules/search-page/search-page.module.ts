@@ -10,6 +10,8 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
     imports: [
@@ -23,6 +25,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatButtonModule,
         MatIconModule,
         MatProgressSpinnerModule,
+        MatButtonToggleModule,
+        MatTooltipModule,
     ],
     declarations: [
         SearchPageComponent,

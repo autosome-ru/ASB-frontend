@@ -6,9 +6,9 @@ import {
 } from "../../helpers/snp-model.converter";
 
 export interface SearchState {
-    searchFilter: SearchQueryModel,
-    searchOptions: string[],
-    searchOptionsLoading: boolean,
+    searchFilter: SearchQueryModel;
+    searchOptions: string[];
+    searchOptionsLoading: boolean;
 
     searchResults: SnpSearchModel[];
     searchResultsLoading: boolean;
@@ -23,6 +23,8 @@ export const selectSearchResultsLoading = (state: SearchState) => state.searchRe
 export const initialState: SearchState = {
     searchFilter: {
         searchInput: "",
+        searchBy: "id",
+        chromosome: "1"
         // inTF: false,
         // inCL: false
     },
@@ -43,33 +45,33 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             return {
                 ...state,
                 searchOptionsLoading: true,
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchOptionsSuccess: {
             return {
                 ...state,
                 searchOptions: action.payload,
                 searchOptionsLoading: false,
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchResults: {
             return {
                 ...state,
                 searchResultsLoading: true,
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
             return {
                 ...state,
                 searchResults: <any>action.payload.map(convertSnpSearchBackendModelToSnpSearchModel),
                 searchResultsLoading: false,
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchResultsFail: {
             return {
                 ...state,
                 searchResultsLoading: false,
-            }
+            };
         }
         default: {
             return state;

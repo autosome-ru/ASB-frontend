@@ -1,5 +1,5 @@
 
-<div class="asb-table">
+<div class="asb-table" *ngIf="_dataSource.data.length >0; else emptyContentTemplate">
     <div class="asb-table__table" style="min-width: 100%">
         <table
             style="padding-left: 5px; padding-right: 5px"
@@ -35,7 +35,8 @@
             >
                 <th mat-header-cell
                     mat-sort-header
-                    [matTooltip]="_getTooltipMessage(column.value.helpMessage)"
+                    [disabled]="column.value?.disabledSort"
+                    [matTooltip]="_getTooltipMessage(column.value?.helpMessage)"
                     *matHeaderCellDef>{{column.value.view}}</th>
                 <td mat-cell *matCellDef="let row">
                     <ng-container
@@ -55,8 +56,9 @@
             <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
                 class="asb-table__table-row"
-                [class._clickable]="expandCellContentTemplate || popoverContentTemplate"
-                [class._borderless]="expandCellContentTemplate || popoverContentTemplate"
+                [class._clickable]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
+                [class._borderless]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
+                [class._colorClick]="!expandCellContentTemplate && !popoverContentTemplate && clickableRow"
                 [ngStyle] = "_calculateColor(row)"
                 (click)="_handleRowClick(row)"
             ></tr>
@@ -88,3 +90,7 @@
         [ngTemplateOutletContext]="{row: popoverRow}"
     ></ng-template>
 </asb-popover>
+
+<ng-template #emptyContentTemplate>
+
+</ng-template>
