@@ -14,19 +14,12 @@ export class InnerTableComponent implements OnInit {
     @ViewChild("tableView", {static: true})
     public tableView: AsbTableComponent<ExpSnpModel>;
 
-    @ViewChild("alignViewTemplate", {static: true})
+    @ViewChild("alignTemplate", {static: true})
     public alignViewTemplate: TemplateRef<{value: number}>;
 
     constructor() { }
 
-    public columnModel: AsbTableColumnModel<ExpSnpModel> = {
-        bad: {view: "Bad", valueConverter: v => v},
-        refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
-        altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
-        align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
-        clName: {view: "Cell line name", valueConverter: v => "" + v},
-        tfName: {view: "Transcription factor name", valueConverter: v => "" + v},
-    };
+    public columnModel: AsbTableColumnModel<ExpSnpModel>;
     public displayedColumns: AsbTableDisplayedColumns<ExpSnpModel> = [
         "refReadCount",
         "altReadCount",
@@ -40,6 +33,14 @@ export class InnerTableComponent implements OnInit {
     public innerTableData: ExpSnpModel[];
 
     ngOnInit(): void {
+        this.columnModel = {
+            bad: {view: "Bad", valueConverter: v => v},
+            refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
+            altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
+            align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
+            clName: {view: "Cell line name", valueConverter: v => "" + v},
+            tfName: {view: "Transcription factor name", valueConverter: v => "" + v},
+        };
     }
 
     _getPaginatorOptions(): number[] {

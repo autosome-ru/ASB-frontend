@@ -7,13 +7,13 @@
 >
 </asb-table>
 
-<ng-template #alignViewTemplate let-value="value">
+<ng-template #alignTemplate let-value="value">
     <a
         *ngIf="value"
         target="_blank"
         rel="noopener noreferrer"
         [href]="'http://gtrd.biouml.org/'"
     >
-        EXP0{{value}}
+        {{value}}
     </a>
 </ng-template>

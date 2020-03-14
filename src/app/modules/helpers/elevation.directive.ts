@@ -1,7 +1,7 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, Renderer2, OnChanges, SimpleChanges } from "@angular/core";
 
 @Directive({
-    selector: '[asbElevation]'
+    selector: "[asbElevation]"
 })
 export class AsbElevationDirective implements OnChanges {
 
@@ -22,19 +22,19 @@ export class AsbElevationDirective implements OnChanges {
         this.setElevation(this.defaultElevation);
     }
 
-    @HostListener('mouseenter')
+    @HostListener("mouseenter")
     onMouseEnter() {
         this.setElevation(this.raisedElevation);
     }
 
-    @HostListener('mouseleave')
+    @HostListener("mouseleave")
     onMouseLeave() {
         this.setElevation(this.defaultElevation);
     }
 
     setElevation(amount: number) {
         // remove all elevation classes
-        const classesToRemove = Array.from((<HTMLElement>this.element.nativeElement).classList).filter(c => c.startsWith('mat-elevation-z'));
+        const classesToRemove = Array.from((<HTMLElement>this.element.nativeElement).classList).filter(c => c.startsWith("mat-elevation-z"));
         classesToRemove.forEach((c) => {
             this.renderer.removeClass(this.element.nativeElement, c);
         });
