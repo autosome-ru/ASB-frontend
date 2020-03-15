@@ -10,3 +10,5 @@ export const selectCurrentSearchOptionsLoading = createSelector(fromRoot.selectS
 export const selectCurrentSearchResults = createSelector(fromRoot.selectSearch, fromSearch.selectSearchResults);
 export const selectCurrentSearchResultsLoading = createSelector(fromRoot.selectSearch,
     fromSearch.selectSearchResultsLoading);
+export const selectCurrentSearchResultsErrorCode = createSelector(fromRoot.selectSearch,
+    fromSearch.selectSearchErrorCode);

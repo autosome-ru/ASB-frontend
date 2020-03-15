@@ -11,7 +11,9 @@
                         {{getPhrase((searchSnpResults$ | async).length,
                         (searchSnpResultsLoading$ | async))}}
 
-                        <mat-button-toggle-group #group="matButtonToggleGroup" value="card">
+                        <mat-button-toggle-group
+                            #group="matButtonToggleGroup"
+                            value="card" (change)="_groupToggled($event)">
                             <mat-button-toggle
                                 value="card"
                                 matTooltip="card view"
@@ -34,7 +36,8 @@
             <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
                 <ng-container *ngIf="group.value === 'card'; else tableViewTemplate">
                     <div class="layout pb-2"
-                         *ngFor="let snp of searchSnpResults$ | async">
+                         style="margin-bottom: 20px"
+                         *ngFor="let snp of filteredSnpResults$ | async">
                         <mat-card
                             class="search-page__card"
                             asbElevation
@@ -64,13 +67,30 @@
                         </mat-card>
                     </div>
                 </ng-container>
+                <!--<ngb-pagination
+                    *ngIf="(searchSnpResults$ | async).length > 0"
+                    [collectionSize]="(searchSnpResults$ | async).length"
+                    [(page)]="page"
+                    [maxSize]="5"
+                    [rotate]="true"
+                    [boundaryLinks]="true"
+                ></ngb-pagination>-->
+                <mat-paginator
+                    *ngIf="(searchSnpResults$ | async).length > 0"
+                    showFirstLastButtons
+                    [pageSize]="pageSize"
+                    [length]="(searchSnpResults$ | async).length"
+                    [pageSizeOptions]="[3, 10, 25, 50, 100]"
+                    (page)="_handlePageChange($event)"
+                ></mat-paginator>
+
             </ng-container>
         </div>
     </div>
 </div>
 
 <ng-template #loadingTemplate>
-    <div style="height: 294px">
+    <div style="height: 370px">
         <div class="search-page__spinner">
             <mat-progress-spinner mode="indeterminate" color="accent" [diameter]="120"></mat-progress-spinner>
         </div>
@@ -93,7 +113,7 @@
         <asb-table
             #tableView
             [displayedColumns]="displayedColumns"
-            [data]="searchSnpResults$ | async"
+            [data]="filteredSnpResults$ | async"
             [columnModel]="columnModel"
             [clickableRow]="true"
             (rowClickEmitter)="_handleTableRowClick($event)"

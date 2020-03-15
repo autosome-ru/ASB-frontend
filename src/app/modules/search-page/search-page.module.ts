@@ -12,6 +12,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatProgressSpinnerModule,
         MatButtonToggleModule,
         MatTooltipModule,
+        MatPaginatorModule,
     ],
     declarations: [
         SearchPageComponent,

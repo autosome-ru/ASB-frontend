@@ -6,8 +6,10 @@
     [externalPaginator]="paginator"
 >
 </asb-table>
-<mat-paginator #paginator [pageSizeOptions]="_getPaginatorOptions()"></mat-paginator>
-
+<mat-paginator #paginator
+               [pageSizeOptions]="_getPaginatorOptions()"
+               showFirstLastButtons
+></mat-paginator>
 <ng-template #alignTemplate let-value="value">
     <a
         *ngIf="value"

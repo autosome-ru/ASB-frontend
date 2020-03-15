@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {searchOptionsUrl, searchResultsUrl} from "src/app/models/urls";
+import {searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
 import {SearchQueryModel} from "../models/searchQueryModel";
 import {SnpSearchBackendModel} from "src/app/models/data.model";
 
@@ -20,11 +20,12 @@ export class SearchService {
         switch (filter.searchBy) {
             case "id": {
                 return this.http.get<SnpSearchBackendModel[]>(
-                    `${searchResultsUrl}/snps/rs/${filter.searchInput}`);
+                    `${searchSnpsResultsUrl}/rs/${filter.searchInput}`);
             }
             case "pos": {
+                const [startPos, endPos]: string[] = filter.searchInput.split(":");
                 return this.http.get<SnpSearchBackendModel[]>(
-                    `${searchResultsUrl}/snps/rs/${filter.searchInput}`);
+                    `${searchSnpsResultsUrl}/gp/chr${filter.chromosome}/${startPos}/${endPos}`);
             }
         }
     }

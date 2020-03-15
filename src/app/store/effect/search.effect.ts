@@ -32,7 +32,18 @@ export class SearchEffect {
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
             this.searchService.getSearchResult(action.payload).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
-                catchError(() => of(new fromActions.LoadSearchResultsSuccessAction([]))),
+                catchError((s) => {
+                        console.log(s);
+                        if (s.status === 507) {
+                            return of(new fromActions.LoadSearchResultsFailAction({
+                                search: action.payload,
+                                errorCode: s.status,
+                            }));
+                        }
+                        return of(new fromActions.LoadSearchResultsFailAction(
+                            {search: action.payload}));
+                    }
+                    ),
             )
         )
     );
@@ -41,7 +52,7 @@ export class SearchEffect {
     loadSearchResultsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResultsFail),
         mergeMap((action: fromActions.LoadSearchResultsFailAction) => {
-            console.log("Something went wrong with " + action.payload.searchInput);
+            console.log("Something went wrong with " + action.payload.search.searchInput);
             return EMPTY;
         }),
     );

@@ -37,7 +37,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public popover: AsbPopoverComponent;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: false}) sort: MatSort;
+    @ViewChild(MatSort, {static: false, read: MatSort}) sort: MatSort;
 
     @Input()
     public columnModel: AsbTableColumnModel<T>;

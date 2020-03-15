@@ -8,6 +8,9 @@ import * as fromSelectors from "src/app/store/selector";
 import {Store} from "@ngrx/store";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {AsbTableComponent} from "../helpers/table-template/table.component";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {map} from "rxjs/operators";
+import {MatButtonToggleChange} from "@angular/material/button-toggle";
 
 @Component({
   selector: "asb-search-page",
@@ -18,6 +21,9 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     @ViewChild("tableView", {static: true})
     public tableView: AsbTableComponent<SnpSearchModel>;
 
+    @ViewChild(MatPaginator, {static: false})
+    public paginator: MatPaginator;
+
     @ViewChild("manyValuesViewTemplate")
     public manyValuesViewTemplate: TemplateRef<{value: TfSnpCutModel[] | ClSnpCutModel[]}>;
 
@@ -25,6 +31,8 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     private readonly cssClass = true;
 
     public searchSnpResults$: Observable<SnpSearchModel[]>;
+    public filteredSnpResults$: Observable<SnpSearchModel[]>;
+
     public searchSnpResultsLoading$: Observable<boolean>;
 
     public columnModel: AsbTableColumnModel<SnpSearchModel>;
@@ -37,6 +45,8 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         "transFactors",
         "cellLines",
     ];
+    public pageSize: number;
+
 
 
     constructor(private route: ActivatedRoute,
@@ -46,7 +56,11 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
 
+        this.pageSize = 3;
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
+        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
+            (element, index) =>
+                index < 3 && index >= 0)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
     }
 
@@ -85,5 +99,27 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     _handleTableRowClick(row: SnpSearchModel) {
         this._navigateToSnp({rsId: row.rsId, alt: row.altBase});
+    }
+
+    _handlePageChange(page: PageEvent) {
+        this._filterSnpResults(page.pageSize, page.pageIndex);
+    }
+
+    _filterSnpResults(pageSize: number, pageIndex: number): void {
+        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
+            (element, index) =>
+                index < pageSize * (pageIndex + 1) && index >= pageSize * pageIndex)));
+    }
+
+    _groupToggled(event: MatButtonToggleChange) {
+        if (event.value === "list") {
+            this.pageSize = 10;
+        } else {
+            this.pageSize = 3;
+        }
+        if (this.paginator) this.paginator.firstPage();
+        this._filterSnpResults(this.pageSize,
+            this.paginator ? this.paginator.pageIndex : 0);
+
     }
 }

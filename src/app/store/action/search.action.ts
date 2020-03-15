@@ -42,7 +42,7 @@ export class LoadSearchResultsSuccessAction implements Action {
 export class LoadSearchResultsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsFail;
 
-    constructor(public payload: SearchQueryModel) {}
+    constructor(public payload: {search: SearchQueryModel, errorCode?: number}) {}
 }
 
 
