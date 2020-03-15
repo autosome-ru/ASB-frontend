@@ -44,7 +44,10 @@ export class SearchComponent implements OnInit {
             searchInput: "",
             searchBy: "id",
             chromosome: "1"
-        });
+        }, {
+                validator: matchingPattern("searchInput", "searchBy")
+            }
+        );
         this.input$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
         this.input$.subscribe(s => this.searchForm.setValue(s,
             {emitEvent: false}));
@@ -55,7 +58,7 @@ export class SearchComponent implements OnInit {
         this.searchForm.patchValue(this.nullValue);
     }
     _navigateToSearch() {
-        if (this.searchForm.get("searchInput").value) {
+        if (this.searchForm.get("searchInput").value && !this.searchForm.invalid) {
             const currentFilter = this.searchForm.value as SearchQueryModel;
             this.store.dispatch(new fromActions.search.SetFilterAction(currentFilter));
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(currentFilter));
@@ -75,4 +78,17 @@ export class SearchComponent implements OnInit {
     }
 
 
+}
+
+function matchingPattern(searchKey: string, optionKey: string) {
+    return (group: FormGroup): {[key: string]: any} => {
+        const search = group.controls[searchKey].value;
+        const option = group.controls[optionKey].value;
+
+        if (option === "pos" && !search.match(/\d+:\d+/)) {
+            return {
+                wrongPattern: true
+            };
+        }
+    };
 }

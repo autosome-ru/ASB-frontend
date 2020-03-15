@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {searchOptionsUrl, searchResultsUrl} from "src/app/models/urls";
 import {SearchQueryModel} from "../models/searchQueryModel";
-import {SnpSearchBackendModel} from "../models/data.model";
+import {SnpSearchBackendModel} from "src/app/models/data.model";
 
 
 @Injectable()
@@ -17,6 +17,15 @@ export class SearchService {
     }
 
     public getSearchResult(filter: SearchQueryModel): Observable<SnpSearchBackendModel[]> {
-        return this.http.get<SnpSearchBackendModel[]>(`${searchResultsUrl}/snps/rs/${filter.searchInput}`);
+        switch (filter.searchBy) {
+            case "id": {
+                return this.http.get<SnpSearchBackendModel[]>(
+                    `${searchResultsUrl}/snps/rs/${filter.searchInput}`);
+            }
+            case "pos": {
+                return this.http.get<SnpSearchBackendModel[]>(
+                    `${searchResultsUrl}/snps/rs/${filter.searchInput}`);
+            }
+        }
     }
 }

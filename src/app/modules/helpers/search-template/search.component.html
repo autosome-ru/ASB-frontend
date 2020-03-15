@@ -40,7 +40,10 @@
                            aria-label="search"
                            formControlName="searchInput"
                     >
-                <button type="submit" style="display:none" (click)="_navigateToSearch()">hidden submit</button>
+                <button
+                    type="submit"
+                    style="display:none"
+                    (click)="_navigateToSearch()">hidden submit</button>
                 <button
                     mat-icon-button
                     [hidden]="!searchForm.get('searchInput').value"
@@ -78,15 +81,22 @@
                 >
                     <mat-icon svgIcon="clear"></mat-icon>
                 </button>
+                <mat-hint
+                    *ngIf="searchForm.hasError('wrongPattern')"
+                   >
+                    * must be from:to
+                </mat-hint>
 
             </mat-form-field>
+
         </ng-container>
+
 
         <div class="flex justify-content-end">
             <a
                 mat-raised-button
                 style="margin-right: 5px"
-                [disabled]="!searchForm.get('searchInput').value"
+                [disabled]="!searchForm.get('searchInput').value || searchForm.invalid"
                 (click)="_navigateToSearch()"
             >
                 Search

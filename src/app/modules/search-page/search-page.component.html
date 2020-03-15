@@ -1,4 +1,4 @@
-<div class="container flex-grow-1 mx-md-auto mx-sm-0 pb-3 px-sm-0 px-md-auto">
+<div class="container flex-grow-1 mx-md-auto pb-3 px-sm-0 px-md-auto">
 
     <asb-search [width]="'full'"></asb-search>
 
@@ -78,12 +78,14 @@
 </ng-template>
 
 <ng-template #manyValuesViewTemplate let-value="value">
-    <span *ngFor="let object of value; let last=last; let i=index">
-        <span *ngIf="i < 5">
+    <div style="max-height: 140px;">
+    <span *ngFor="let object of value; let last=last; let i=index" style="overflow: hidden">
+        <span *ngIf="i < 5" style="text-overflow: ellipsis">
             {{object?.name}}<span *ngIf="!last && i !== 4">;&nbsp;</span>
         </span>
-        <span *ngIf="i==6">...</span>
+        <span *ngIf="i==5">...</span>
     </span>
+    </div>
 </ng-template>
 
 <ng-template #tableViewTemplate>

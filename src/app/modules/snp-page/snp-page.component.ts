@@ -1,13 +1,14 @@
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {Observable, Subject} from "rxjs";
+import {Observable} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
+import {AsbStatisticsComponent} from "./statistics/statistics.component";
 
 
 @Component({
@@ -17,6 +18,11 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SnpPageComponent implements OnInit {
+
+    @ViewChild("cellLines", {static: true})
+    public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
+    @ViewChild("transcriptionFactors", {static: true})
+    public tfStats: AsbStatisticsComponent<TfSnpModel>;
 
     public id: string;
     public alt: string;
@@ -46,6 +52,7 @@ export class SnpPageComponent implements OnInit {
     public phenotypesEmpty: boolean;
 
 
+
     constructor(
         private store: Store<AppState>,
         private route: ActivatedRoute,
@@ -62,6 +69,10 @@ export class SnpPageComponent implements OnInit {
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.store.dispatch(new fromActions.data.InitSnpInfoAction(
             {rsId: this.id, alt: this.alt}));
+    }
+
+    searchFunction(data: ClSnpModel, search: string): boolean {
+        return data.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
     }
 }
 

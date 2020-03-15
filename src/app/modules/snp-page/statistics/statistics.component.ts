@@ -1,11 +1,10 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from "@angular/core";
 
-import {ClSnpModel, ExpSnpModel, TfSnpModel} from "src/app/models/data.model";
+import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
-import {calculateColor} from "../../../helpers/colors.helper";
-import {Subject} from "rxjs";
+import {calculateColor} from "src/app/helpers/colors.helper";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
@@ -16,47 +15,37 @@ import {AsbTableComponent} from "../../helpers/table-template/table.component";
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class AsbStatisticsComponent implements OnInit, OnDestroy {
-
+export class AsbStatisticsComponent<T> implements OnInit {
     constructor(private formBuilder: FormBuilder, ) { }
     @ViewChild("tableViewTFCL", {static: true})
-    public tableView: AsbTableComponent<TfSnpModel> | AsbTableComponent<ClSnpModel>;
+    public tableView: AsbTableComponent<T>;
 
     @Input()
-    public objectData: TfSnpModel[] | ClSnpModel[];
+    public objectData: T[];
 
     @Input()
-    public tableColumnModel: AsbTableColumnModel<TfSnpModel> | AsbTableColumnModel<ClSnpModel> ;
+    public tableColumnModel: AsbTableColumnModel<T>;
 
     @Input()
-    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> | AsbTableDisplayedColumns<ClSnpModel> = [
-        "name",
-        "effectSizeRef",
-        "effectSizeAlt",
-        "pValueRef",
-        "pValueAlt",
-        "meanBad",
-    ];
-    private destroy$ = new Subject<void>();
-    public tableDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> | AsbTableDisplayedColumns<ClSnpModel>;
+    public searchFunc: ((data: T, search: string) => boolean);
+
+    @Input()
+    private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
+
+    public tableDisplayedColumns: AsbTableDisplayedColumns<T>;
     public tableFormGroup: FormGroup;
-    public nonStickyColumnModel: AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {};
-    public filteredObjectData: TfSnpModel[] | ClSnpModel[];
+    public nonStickyColumnModel: Partial<AsbTableColumnModel<Partial<T>>>;
+    public filteredObjectData: T[];
     public disabledToolTips: boolean = true;
 
     originalOrder = ((): number => {
         return 0;
     });
 
-    ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
-        this.destroy$ = null;
-    }
-
     ngOnInit(): void {
         this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
+        if (!this.nonStickyColumnModel) this.nonStickyColumnModel = {};
         Object.keys(this.tableColumnModel).forEach(
             key => key !== "name" ?
                 this.nonStickyColumnModel[key] = this.tableColumnModel[key]
@@ -85,11 +74,10 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         this.tableFormGroup.patchValue({filter: null});
     }
 
-    filterData(row: TfSnpModel | ClSnpModel, search: string) {
+    filterData(row: T, search: string) {
         let result = true;
-        if (search) {
-            result = result &&
-                row.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
+        if (search && this.searchFunc) {
+            result = this.searchFunc(row, search);
         }
         return result;
     }
@@ -109,7 +97,7 @@ export class AsbStatisticsComponent implements OnInit, OnDestroy {
         return getPaginatorOptions(this.filteredObjectData.length);
     }
 
-    _getTitle(row: ExpSnpModel): string {
+    _getTitle(row: T): string {
         return "Additional statistics" ;
     }
 }

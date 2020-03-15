@@ -29,9 +29,11 @@
                 >
                     <mat-tab>
                         <asb-statistics
+                            #transcriptionFactors
                             [objectData]="(snpData$ | async)?.transFactors || []"
                             [tableColumnModel]="tfColumnModel"
                             [initialDisplayedColumns]="tfDisplayedColumns"
+                            [searchFunc]="searchFunction"
                         >
                             <ng-template mat-tab-label>
                                 <h4 class="col-auto pl-0 ml-0">Transcription factors</h4>
@@ -40,9 +42,11 @@
                     </mat-tab>
                     <mat-tab>
                         <asb-statistics
+                            #cellLines
                             [objectData]="(snpData$ | async)?.cellLines || []"
                             [tableColumnModel]="clColumnModel"
                             [initialDisplayedColumns]="clDisplayedColumns"
+                            [searchFunc]="searchFunction"
                         >
                             <ng-template mat-tab-label>
                                 <h4 class="col-auto pl-0 ml-0">Cell types</h4>
