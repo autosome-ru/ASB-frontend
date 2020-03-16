@@ -13,9 +13,12 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
 import {AsbStatisticsComponent} from "./statistics/statistics.component";
-import { PhenotypesComponent } from './phenotypes/phenotypes.component';
-import { InnerTableComponent } from './inner-table/inner-table.component';
+import { PhenotypesComponent } from "./phenotypes/phenotypes.component";
+import { InnerTableComponent } from "./inner-table/inner-table.component";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
     imports: [
@@ -33,6 +36,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         MatInputModule,
         AsbHelpersModule,
         MatPaginatorModule,
+        MatTableModule,
+        MatSortModule,
+        MatTooltipModule,
     ],
     declarations: [SnpPageComponent, AsbStatisticsComponent, PhenotypesComponent, InnerTableComponent],
     exports: [SnpPageComponent, InnerTableComponent],

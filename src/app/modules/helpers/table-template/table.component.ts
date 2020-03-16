@@ -2,7 +2,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy,
     Component, ElementRef, EventEmitter,
     HostBinding,
-    Input, Output,
+    Input, Output, QueryList,
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -37,7 +37,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public popover: AsbPopoverComponent;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: false, read: MatSort}) sort: MatSort;
+    @ViewChild("sort1", {static: false}) sort: MatSort;
 
     @Input()
     public columnModel: AsbTableColumnModel<T>;
