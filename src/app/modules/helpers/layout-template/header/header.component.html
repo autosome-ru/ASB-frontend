@@ -6,6 +6,7 @@
         *ngIf="mobileQuery.matches"
         mat-icon-button
         (click)="_changeSidenav('toggle')"
+        disableRipple
     >
         <mat-icon svgIcon="menu"></mat-icon>
     </button>
@@ -39,6 +40,7 @@
     <mat-sidenav mode="over"
                  [(opened)]="sidenavOpened"
                  (keydown.escape)="_changeSidenav('close')"
+                 style="min-width: 150px"
     >
         <mat-nav-list>
             <ng-container

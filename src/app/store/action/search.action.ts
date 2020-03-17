@@ -32,7 +32,7 @@ export class LoadSearchOptionsSuccessAction implements Action {
 export class LoadSearchResultsAction implements Action {
     readonly type = ActionTypes.LoadSearchResults;
 
-    constructor(public payload: SearchQueryModel) {}
+    constructor(public payload: {search: SearchQueryModel, isAdvanced: boolean}) {}
 }
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;
@@ -42,7 +42,10 @@ export class LoadSearchResultsSuccessAction implements Action {
 export class LoadSearchResultsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsFail;
 
-    constructor(public payload: {search: SearchQueryModel, errorCode?: number}) {}
+    constructor(public payload: {
+        search: SearchQueryModel,
+        isAdvanced: boolean,
+        errorCode?: number}) {}
 }
 
 

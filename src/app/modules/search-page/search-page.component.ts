@@ -35,6 +35,8 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     public searchSnpResultsLoading$: Observable<boolean>;
 
+    isAdvancedSearch: boolean;
+
     public columnModel: AsbTableColumnModel<SnpSearchModel>;
     public displayedColumns: AsbTableDisplayedColumns<SnpSearchModel> = [
         "chr",
@@ -56,11 +58,12 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
 
+        this.isAdvancedSearch = !this.router.isActive("/search", true);
         this.pageSize = 3;
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
             (element, index) =>
-                index < 3 && index >= 0)));
+                index < this.pageSize && index >= 0)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
     }
 

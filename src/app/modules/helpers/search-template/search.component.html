@@ -3,30 +3,31 @@
     style="background-color: white"
     [class._restricted]="width === 'restricted'"
     [class._full]="width === 'full'">
-    <form [formGroup]="searchForm">
-        <!--<div style="display: flex; align-items: center"> -->
-        <h3> Search</h3>
+    <h3> {{isAdvanced ? 'Advanced search' : 'Search'}}</h3>
+    <form
+        [formGroup]="searchForm"
+    >
         <mat-form-field style="margin-right: 15px">
             <mat-label>Search by</mat-label>
             <mat-select
-            formControlName="searchBy"
+                *ngIf="!isAdvanced"
+                formControlName="searchBy"
             >
                 <mat-option value="id">rs ID</mat-option>
                 <mat-option value="pos">Genome position</mat-option>
             </mat-select>
-        </mat-form-field>
-        <!--</div> -->
-
-
-        <mat-form-field *ngIf="searchForm.get('searchBy').value === 'pos'">
-            <mat-label>Chromosome</mat-label>
             <mat-select
-                formControlName="chromosome"
+                *ngIf="isAdvanced"
+                formControlName="searchByArray"
+                multiple
             >
-                <mat-option *ngFor="let chr of listOfChrs" [value]="chr">chr{{chr}}</mat-option>
+                <mat-option value="pos">Genome position</mat-option>
+                <mat-option value="tf">Transcription factor</mat-option>
+                <mat-option value="cl">Cell type</mat-option>
             </mat-select>
         </mat-form-field>
-        <ng-container *ngIf="searchForm.get('searchBy').value === 'id'">
+
+        <ng-container *ngIf="_checkToDisplay('id')">
             <mat-form-field
                 floatLabel="always"
                 style="width: 100%; padding: 0"
@@ -57,7 +58,15 @@
             </mat-form-field>
         </ng-container>
 
-        <ng-container *ngIf="searchForm.get('searchBy').value === 'pos'">
+        <mat-form-field *ngIf="_checkToDisplay('pos')">
+            <mat-label>Chromosome</mat-label>
+            <mat-select
+                formControlName="chromosome"
+            >
+                <mat-option *ngFor="let chr of listOfChrs" [value]="chr">chr{{chr}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <ng-container *ngIf="_checkToDisplay('pos')">
             <mat-form-field
                 floatLabel="always"
                 style="width: 100%; padding: 0"
@@ -92,28 +101,109 @@
                     * interval end coordinate must be greater than start coordinate
                 </mat-hint>
             </mat-form-field>
-
         </ng-container>
 
+        <ng-container *ngIf="_checkToDisplay('tf')">
+            <mat-form-field
+                style="width: 100%; padding: 0"
+            >
+                <mat-chip-list #chipListTf aria-label="Fruit selection">
+                    <mat-chip
+                        *ngFor="let option of searchForm.get('tfList').value"
+                        selectable
+                        removable
+                        (removed)="_removeChip(option, 'tf')"
+                    >
+                        {{option}}
+                        <mat-icon matChipRemove svgIcon="clear"></mat-icon>
+                    </mat-chip>
+                    <input
+                        #tfInput
+                        placeholder="Transcription factors"
+                        matInput
+                        name="Search CTs"
+                        aria-label="search"
+                        formControlName="searchTf"
+                        [matAutocomplete]="autoTf"
+                        [matChipInputFor]="chipListTf"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="_addChip($event, 'tf')"
+                    >
+                </mat-chip-list>
+                <mat-autocomplete #autoTf="matAutocomplete"
+                                  (optionSelected)="_selectOption($event, 'tf')"
+                >
+                    <mat-option *ngFor="let option of searchOptions" [value]="option">
+                        <span>{{option}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-container>
 
-        <div class="flex justify-content-end">
+        <ng-container *ngIf="_checkToDisplay('cl')">
+            <mat-form-field
+                style="width: 100%; padding: 0"
+
+            >
+                <mat-chip-list #chipListCl aria-label="Fruit selection">
+                    <mat-chip
+                        *ngFor="let option of searchForm.get('clList').value"
+                        selectable
+                        removable
+                        (removed)="_removeChip(option, 'cl')"
+                    >
+                        {{option}}
+                        <mat-icon matChipRemove svgIcon="clear"></mat-icon>
+                    </mat-chip>
+                    <input
+                        #clInput
+                        placeholder="Cell types"
+                        matInput
+                        name="Search CTs"
+                        aria-label="search"
+                        formControlName="searchCl"
+                        [matAutocomplete]="autoCl"
+                        [matChipInputFor]="chipListCl"
+                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        (matChipInputTokenEnd)="_addChip($event, 'cl')"
+                    >
+                </mat-chip-list>
+                <mat-autocomplete #autoCl="matAutocomplete"
+                                  (optionSelected)="_selectOption($event, 'cl')"
+                >
+                    <mat-option *ngFor="let option of searchOptions" [value]="option">
+                        <span>{{option}}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-container>
+    </form>
+
+    <div class="justify-content-between" style="display: flex;">
+        <div>
             <a
                 mat-raised-button
                 style="margin-right: 5px"
-                [disabled]="!searchForm.get('searchInput').value || searchForm.invalid"
+                [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
                 (click)="_navigateToSearch()"
             >
                 Search
             </a>
             <a
-                class="mr-auto"
-
                 mat-raised-button
-                (click)="_navigateToAdvancedSearch()"
+                [routerLink]="isAdvanced ? '/search' : '/search/advanced'"
             >
-                advanced search
+                {{isAdvanced ? 'simple search' : 'advanced search'}}
             </a>
         </div>
-    </form>
+        <button
+            *ngIf="isAdvanced"
+            mat-raised-button
+            [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
+            (click)="_getResultsInCsv()"
+        >
+            Search results in CSV
+        </button>
+    </div>
 </div>
 

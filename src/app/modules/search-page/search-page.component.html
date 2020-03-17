@@ -1,6 +1,9 @@
 <div class="container flex-grow-1 mx-md-auto pb-3 px-sm-0 px-md-auto">
 
-    <asb-search [width]="'full'"></asb-search>
+    <asb-search
+        [width]="'full'"
+        [isAdvanced]="isAdvancedSearch"
+    ></asb-search>
 
     <hr class="v-divider" style="margin:0">
     <div style="background: #f8f8f8;" class="d-flex">
@@ -42,8 +45,8 @@
                             class="search-page__card"
                             asbElevation
                             role="group"
-                            (click)="_navigateToSnp({rsId: snp.rsId, alt: snp.altBase})"
-
+                            [routerLink]="'snps/' +snp.rsId + '/' +snp.altBase"
+                            routerLinkActive="active"
                         >
                             <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
                                 <mat-card-title>

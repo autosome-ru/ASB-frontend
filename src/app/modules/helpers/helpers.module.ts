@@ -27,6 +27,8 @@ import {FullscreenOverlayContainer, OverlayContainer} from "@angular/cdk/overlay
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
     imports: [
@@ -47,6 +49,8 @@ import {MatListModule} from "@angular/material/list";
         MatTooltipModule,
         MatSidenavModule,
         MatListModule,
+        MatAutocompleteModule,
+        MatChipsModule,
     ],
     declarations: [
         SearchComponent,

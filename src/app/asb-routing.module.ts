@@ -24,7 +24,8 @@ const routes: Routes = [
     },
     {
         path: "search",
-        component: SearchPageComponent,
+        loadChildren: () => import(
+            "./modules/search-page/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
             title: "ASB-search"
         }

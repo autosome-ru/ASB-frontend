@@ -32,11 +32,11 @@ export class SearchEffect {
     loadSearchResults$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResults),
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
-            this.searchService.getSearchResult(action.payload).pipe(
+            this.searchService.getSearchResult(action.payload.search, action.payload.isAdvanced).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
                 catchError((s) => {
                         return of(new fromActions.LoadSearchResultsFailAction({
-                            search: action.payload,
+                            ...action.payload,
                             errorCode: s.status,
                         }));
                     }

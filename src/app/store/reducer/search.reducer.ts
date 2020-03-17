@@ -24,9 +24,12 @@ export const initialState: SearchState = {
     searchFilter: {
         searchInput: "",
         searchBy: "id",
-        chromosome: "1"
-        // inTF: false,
-        // inCL: false
+        chromosome: "1",
+        searchByArray: ["tf", "cl"],
+        searchCl: "",
+        searchTf: "",
+        tfList: ["K562"],
+        clList: []
     },
     searchOptions: [],
     searchOptionsLoading: false,
