@@ -1,4 +1,14 @@
-<nav class="navbar navbar-dark bg-dark mb-5 asb-header">
+<nav
+    class="navbar navbar-dark bg-dark mb-0"
+    [style.justify-content]="mobileQuery.matches ? 'flex-start' : 'space-between'"
+>
+    <button
+        *ngIf="mobileQuery.matches"
+        mat-icon-button
+        (click)="_changeSidenav('toggle')"
+    >
+        <mat-icon svgIcon="menu"></mat-icon>
+    </button>
     <a
         class="navbar-brand"
         [routerLink]="'/'"
@@ -7,30 +17,74 @@
     >
         AD ASTRA database
     </a>
-    <div class="navbar-expand ml-auto p-2">
+    <div
+        *ngIf="!mobileQuery.matches"
+        class="navbar-expand ml-auto p-2"
+    >
         <div class="navbar-nav">
-            <a
-                class="nav-item nav-link"
-                [routerLink]="'/about-us-page'"
-                [routerLinkActive]="['active']"
-            >
-                about
-            </a>
-            <a class="nav-item nav-link"
-               [routerLink]="'/snps/rs11260841/A'"
-               [routerLinkActive]="['active']"
-            >
-                test
-            </a>
-            <a class="nav-item nav-link"
-               [routerLink]="'/snps/rs62034351/A'"
-               [routerLinkActive]="['active']"
-            >
-                test2
-            </a>
+            <ng-container
+                [ngTemplateOutlet]="linksTemplate"
+            ></ng-container>
         </div>
     </div>
 </nav>
+<ng-container
+    *ngIf="!mobileQuery.matches"
+    [ngTemplateOutlet]="ngContentTemplate"
+></ng-container>
+<mat-sidenav-container
+    *ngIf="mobileQuery.matches"
+    (backdropClick)="_changeSidenav('close')"
+>
+    <mat-sidenav mode="over"
+                 [(opened)]="sidenavOpened"
+                 (keydown.escape)="_changeSidenav('close')"
+    >
+        <mat-nav-list>
+            <ng-container
+                [ngTemplateOutlet]="linksTemplate"
+            ></ng-container>
+        </mat-nav-list>
+        <mat-divider></mat-divider>
+        <button
+            class="asb-header-footer"
+            mat-button
+            (click)="_changeSidenav('toggle')"
+        >
+            <span class="asb-header-footer-text">Close</span>
+            <mat-icon class="asb-header-footer-icon" svgIcon="clear"></mat-icon>
+        </button>
+    </mat-sidenav>
 
+    <mat-sidenav-content>
+        <ng-container
+            [ngTemplateOutlet]="ngContentTemplate"
+        ></ng-container>
 
+    </mat-sidenav-content>
+</mat-sidenav-container>
 
+<ng-template #linksTemplate>
+    <a
+        class="nav-item nav-link"
+        [routerLink]="'/about-us-page'"
+        [routerLinkActive]="['active']"
+    >
+        about
+    </a>
+    <a class="nav-item nav-link"
+       [routerLink]="'/snps/rs11260841/A'"
+       [routerLinkActive]="['active']"
+    >
+        test
+    </a>
+    <a class="nav-item nav-link"
+       [routerLink]="'/snps/rs62034351/A'"
+       [routerLinkActive]="['active']"
+    >
+        test2
+    </a>
+</ng-template>
+<ng-template #ngContentTemplate>
+    <ng-content></ng-content>
+</ng-template>

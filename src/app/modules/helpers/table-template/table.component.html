@@ -83,13 +83,13 @@
 <asb-popover
     #popover
     align="center"
-    [title]="'Additional statistics'"
+    [title]="getTitle ? getTitle(popoverRow) : ''"
     (popoverClosed)="_onAdditionalStatisticsClose()"
 >
-    <ng-template
+    <ng-container
         [ngTemplateOutlet]="popoverContentTemplate"
         [ngTemplateOutletContext]="{row: popoverRow}"
-    ></ng-template>
+    ></ng-container>
 </asb-popover>
 
 <ng-template #emptyContentTemplate>

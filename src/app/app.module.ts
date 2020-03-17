@@ -18,16 +18,18 @@ import {AsbHelpersModule} from "./modules/helpers/helpers.module";
 import {AsbSnpPageModule} from "./modules/snp-page/snp-page.module";
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-      BrowserModule.withServerTransition({ appId: 'serverApp' }),
+      BrowserModule.withServerTransition({ appId: "serverApp" }),
       BrowserAnimationsModule,
       StoreModule.forRoot(asbAppReducer),
       EffectsModule.forRoot(asbAppEffects),
+      ToastrModule.forRoot(),
       environment.production ? [] : StoreDevtoolsModule.instrument(),
       MatSnackBarModule,
       AsbRoutingModule,

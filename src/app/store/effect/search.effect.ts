@@ -6,6 +6,7 @@ import {SearchService} from "src/app/services/search.service";
 import * as fromActions from "src/app/store/action/search.action";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {EMPTY, of} from "rxjs";
+import {ToastrService} from "ngx-toastr";
 
 @Injectable()
 export class SearchEffect {
@@ -13,6 +14,7 @@ export class SearchEffect {
         private actions$: Actions,
         private store: Store<AppState>,
         private searchService: SearchService,
+        private tostr: ToastrService,
     ) {
     }
     @Effect()
@@ -33,15 +35,10 @@ export class SearchEffect {
             this.searchService.getSearchResult(action.payload).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
                 catchError((s) => {
-                        console.log(s);
-                        if (s.status === 507) {
-                            return of(new fromActions.LoadSearchResultsFailAction({
-                                search: action.payload,
-                                errorCode: s.status,
-                            }));
-                        }
-                        return of(new fromActions.LoadSearchResultsFailAction(
-                            {search: action.payload}));
+                        return of(new fromActions.LoadSearchResultsFailAction({
+                            search: action.payload,
+                            errorCode: s.status,
+                        }));
                     }
                     ),
             )
@@ -52,6 +49,9 @@ export class SearchEffect {
     loadSearchResultsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResultsFail),
         mergeMap((action: fromActions.LoadSearchResultsFailAction) => {
+            action.payload.errorCode === 507 ?
+                this.tostr.warning("Try a shorter search interval",
+                    "Result too long") :
             console.log("Something went wrong with " + action.payload.search.searchInput);
             return EMPTY;
         }),

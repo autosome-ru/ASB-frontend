@@ -12,7 +12,6 @@ export interface SearchState {
 
     searchResults: SnpSearchModel[];
     searchResultsLoading: boolean;
-    errorCode?: number;
 }
 export const selectSearchQuery = (state: SearchState) => state.searchFilter;
 export const selectSearchOptions = (state: SearchState) => state.searchOptions;
@@ -20,7 +19,6 @@ export const selectSearchOptionsLoading = (state: SearchState) => state.searchOp
 
 export const selectSearchResults = (state: SearchState) => state.searchResults;
 export const selectSearchResultsLoading = (state: SearchState) => state.searchResultsLoading;
-export const selectSearchErrorCode = (state: SearchState) => state.errorCode;
 
 export const initialState: SearchState = {
     searchFilter: {
@@ -67,7 +65,6 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 ...state,
                 searchResults: <any>action.payload.map(convertSnpSearchBackendModelToSnpSearchModel),
                 searchResultsLoading: false,
-                errorCode: null,
             };
         }
         case fromActions.ActionTypes.LoadSearchResultsFail: {
@@ -76,14 +73,12 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                     ...state,
                     searchResultsLoading: false,
                     searchResults: [],
-                    errorCode: action.payload.errorCode
                 };
             }
             return {
                 ...state,
                 searchResults: [],
                 searchResultsLoading: false,
-                errorCode: null,
             };
         }
         default: {

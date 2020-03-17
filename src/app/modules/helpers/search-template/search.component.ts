@@ -22,7 +22,6 @@ export class SearchComponent implements OnInit {
     @Input()
     public width: "restricted" | "full";
     private input$: Observable<SearchQueryModel>;
-    public errorCode$: Observable<number>;
 
     @Output ()
     public searchQuery: EventEmitter<SearchQueryModel>;
@@ -53,7 +52,6 @@ export class SearchComponent implements OnInit {
             }
         );
         this.input$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
-        this.errorCode$ = this.store.select(fromSelectors.selectCurrentSearchResultsErrorCode);
         this.input$.subscribe(s => this.searchForm.setValue(s,
             {emitEvent: false}));
         }
