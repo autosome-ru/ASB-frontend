@@ -1,5 +1,8 @@
 import {Action} from "@ngrx/store";
-import {SearchQueryModel} from "src/app/models/searchQueryModel";
+import {
+    SearchHintBackendModel,
+    SearchQueryModel,
+} from "src/app/models/searchQueryModel";
 import {SnpSearchBackendModel} from "../../models/data.model";
 
 export enum ActionTypes {
@@ -27,7 +30,10 @@ export class LoadSearchOptionsAction implements Action {
 export class LoadSearchOptionsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchOptionsSuccess;
 
-    constructor(public payload: {options: string[], tfOrCl: "tf" | "cl"}) {}
+    constructor(public payload: {options:
+            SearchHintBackendModel[],
+        tfOrCl: "tf" | "cl"
+    }) {}
 }
 
 export class LoadSearchOptionsFailAction implements Action {

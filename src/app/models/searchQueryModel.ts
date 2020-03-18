@@ -10,3 +10,15 @@ export interface SearchQueryModel {
     // inCL: boolean;
     // inTF: boolean;
 }
+
+export interface SearchHintBackendModel {
+    name: string;
+    aggregated_snps_count: number;
+}
+
+export interface SearchHintModel {
+    name: string;
+    aggregatedSnpCount: number;
+}
+
+

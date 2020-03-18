@@ -2,7 +2,10 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
-import {SearchQueryModel} from "../models/searchQueryModel";
+import {
+    SearchHintBackendModel,
+    SearchQueryModel,
+} from "../models/searchQueryModel";
 import {SnpSearchBackendModel} from "src/app/models/data.model";
 
 
@@ -12,18 +15,22 @@ export class SearchService {
     constructor(private http: HttpClient) {
     }
 
-    public getSearchOptions(filter: SearchQueryModel, tfOrCl: "tf" | "cl"): Observable<string[]> {
-        if ((tfOrCl === "tf" && filter.tfList.length > 0 && filter.searchTf !== null) ||
-            (tfOrCl === "cl" && filter.clList.length > 0  && filter.searchCl !== null)) {
-            return this.http.get<string[]>(`${searchOptionsUrl(tfOrCl)}/${
-                    tfOrCl === "tf" ? filter.searchTf : filter.searchCl}`, {params: {
-                        options: tfOrCl === "tf" ? filter.tfList.join(",") : filter.clList.join(",")
-                    }});
+    public getSearchOptions(filter: SearchQueryModel, tfOrCl: "tf" | "cl"):
+        Observable<SearchHintBackendModel[]> {
+        let params: {[id: string]: string};
+
+        if (tfOrCl === "tf") {
+            params = searchOptionsParamsMake(tfOrCl, filter.tfList, filter.searchTf);
         } else {
-            return this.http.get<string[]>(`${searchOptionsUrl(tfOrCl)}/${
-                tfOrCl === "tf" ? filter.searchTf : filter.searchCl}`);
+            params = searchOptionsParamsMake(tfOrCl, filter.clList, filter.searchCl);
         }
+        return this.http.get<SearchHintBackendModel[]>(searchOptionsUrl(tfOrCl),
+            {params});
     }
+
+
+
+
 
     public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean):
         Observable<SnpSearchBackendModel[]> {
@@ -68,3 +75,15 @@ export class SearchService {
     }
 }
 
+function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
+    options: string[] | null,
+    search: string | null): {[id: string]: string} {
+    const params: { [id: string]: string } = {};
+    if (options && options.length > 0) {
+        params["options"] = options.join(",");
+    }
+    if (search !== null && search !== "") {
+        params["search"] = search.endsWith("%") ? search : search + "%";
+    }
+    return params;
+}

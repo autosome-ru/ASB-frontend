@@ -1,9 +1,9 @@
 <nav
     class="navbar navbar-dark bg-dark mb-0"
-    [style.justify-content]="mobileQuery.matches ? 'flex-start' : 'space-between'"
+    [style.justify-content]="false ? 'flex-start' : 'space-between'"
 >
     <button
-        *ngIf="mobileQuery.matches"
+        *ngIf="false"
         mat-icon-button
         (click)="_changeSidenav('toggle')"
         disableRipple
@@ -19,7 +19,7 @@
         AD ASTRA database
     </a>
     <div
-        *ngIf="!mobileQuery.matches"
+        *ngIf="true"
         class="navbar-expand ml-auto p-2"
     >
         <div class="navbar-nav">
@@ -30,11 +30,11 @@
     </div>
 </nav>
 <ng-container
-    *ngIf="!mobileQuery.matches"
+    *ngIf="true"
     [ngTemplateOutlet]="ngContentTemplate"
 ></ng-container>
 <mat-sidenav-container
-    *ngIf="mobileQuery.matches"
+    *ngIf="false"
     (backdropClick)="_changeSidenav('close')"
 >
     <mat-sidenav mode="over"

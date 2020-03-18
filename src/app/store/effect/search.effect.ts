@@ -50,10 +50,23 @@ export class SearchEffect {
     loadSearchResultsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResultsFail),
         mergeMap((action: fromActions.LoadSearchResultsFailAction) => {
-            action.payload.errorCode === 507 ?
-                this.tostr.warning("Try a shorter search interval",
-                    "Result too long") :
-            console.log("Something went wrong with " + action.payload.search.searchInput);
+            if (!action.payload.isAdvanced) {
+                action.payload.errorCode === 507 ?
+                    this.tostr.warning(
+                        "Try a shorter search interval or use advanced search",
+                        "Result too long") :
+                    console.log("Something went wrong with " + action.payload.search.searchInput);
+            } else {
+                if (action.payload.search.searchByArray.some(s => s === "pos")) {
+                    this.tostr.warning(
+                        "Try a shorter search interval or use get in csv option",
+                        "Result too long");
+                } else {
+                    this.tostr.warning(
+                        "Try search by genome position or use get in csv option",
+                        "Result too long");
+                }
+            }
             return EMPTY;
         }),
     );

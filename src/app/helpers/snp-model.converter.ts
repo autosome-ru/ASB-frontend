@@ -46,7 +46,7 @@ function convertSnpModel(model: Partial<SnpInfoBackendModel | SnpSearchBackendMo
     result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;
     result.altBase = model.alt;
-    return result
+    return result;
 }
 
 function convertClAggregatedBackendSnp(s: ClSnpBackendModel): ClSnpModel {
@@ -58,7 +58,7 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel): ClSnpModel {
         name: s.cell_line.name,
         meanBad: s.mean_bad,
         expSnps: s.exp_snps.map(convertBackendExpSnp)
-    }
+    };
 }
 function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): TfSnpModel {
     return {
@@ -75,7 +75,7 @@ function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): TfSnpModel {
         motifPRef: s.motif_log_p_ref,
         motifPosition: s.motif_position,
         expSnps: s.exp_snps.map(convertBackendExpSnp)
-    }
+    };
 }
 
 function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): ClSnpCutModel {
@@ -83,14 +83,14 @@ function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): ClSnpCutMode
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
         name: s.cell_line.name,
-    }
+    };
 }
 function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): TfSnpCutModel {
     return {
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
         name: s.transcription_factor.name,
-    }
+    };
 }
 
 function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
@@ -104,5 +104,5 @@ function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
         expId: s.experiment.exp_id,
         clName: s.experiment.cl_name,
         tfName: s.experiment.tf_name,
-    }
+    };
 }

@@ -4,7 +4,7 @@ import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {SearchQueryModel} from "src/app/models/searchQueryModel";
+import {SearchHintModel, SearchQueryModel} from "src/app/models/searchQueryModel";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
@@ -40,6 +40,13 @@ export class SearchComponent implements OnInit {
     public searchForm: FormGroup;
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
+    advancedSearchOptions: {value: string, view: string}[] = [
+        {view: "Genome position", value: "pos"},
+        {view: "Transcription factors", value: "tf"},
+        {view: "Cell types", value: "cl"},
+    ]
+    ;
+
     constructor(
         private formBuilder: FormBuilder,
         private store: Store<AppState>,
@@ -49,7 +56,7 @@ export class SearchComponent implements OnInit {
     ) { }
 
     public listOfChrs: string[] = [];
-    public searchOptions$: Observable<{ tf: string[], cl: string[] }>;
+    public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
 
@@ -184,7 +191,7 @@ export class SearchComponent implements OnInit {
             this.tfInput.nativeElement.value = "";
             this.searchForm.patchValue({searchTf: null, tfList: [
                     ...this.searchForm.value.tfList,
-                    event.option.viewValue
+                    event.option.value
                 ]
             });
         }
@@ -192,7 +199,7 @@ export class SearchComponent implements OnInit {
             this.clInput.nativeElement.value = "";
             this.searchForm.patchValue({searchCl: null, clList: [
                     ...this.searchForm.value.clList,
-                event.option.viewValue
+                event.option.value
             ]});
         }
     }
@@ -201,6 +208,14 @@ export class SearchComponent implements OnInit {
         this.searchForm.patchValue(where === "tf" ?
             {tfList: this.searchForm.value.tfList.filter(s => s !== chipName)} :
             {clList: this.searchForm.value.clList.filter(s => s !== chipName)});
+    }
+
+    _getFirstOptionValue(value: string[]): string {
+        if (!value || value.length === 0) {
+            return "";
+        } else {
+            return this.advancedSearchOptions.filter(s => s.value === value[0])[0].view;
+        }
     }
 }
 

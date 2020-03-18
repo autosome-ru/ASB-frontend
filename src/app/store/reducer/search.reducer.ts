@@ -1,15 +1,19 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {SearchQueryModel} from "src/app/models/searchQueryModel";
+import {
+    SearchHintModel,
+    SearchQueryModel,
+} from "src/app/models/searchQueryModel";
 import {SnpSearchModel} from "../../models/data.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
 } from "../../helpers/snp-model.converter";
+import {convertSearchHintBackendModelToSearchHintModel} from "../../helpers/search-model.converter";
 
 export interface SearchState {
     searchFilter: SearchQueryModel;
     searchOptions: {
-        tf: string[],
-        cl: string[],
+        tf: SearchHintModel[],
+        cl: SearchHintModel[],
     };
     searchOptionsLoading: {
         tf: boolean,
@@ -75,12 +79,12 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 ...state,
                 searchOptions: action.payload.tfOrCl === "tf" ?
                     {
-                        tf: action.payload.options,
+                        tf: <SearchHintModel[]>action.payload.options.map(convertSearchHintBackendModelToSearchHintModel),
                         cl: state.searchOptions.cl
                     } :
                     {
                         tf: state.searchOptions.tf,
-                        cl: action.payload.options
+                        cl: <SearchHintModel[]>action.payload.options.map(convertSearchHintBackendModelToSearchHintModel),
                     },
                 searchOptionsLoading: action.payload.tfOrCl === "tf" ?
                     {

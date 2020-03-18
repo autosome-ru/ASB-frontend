@@ -7,7 +7,7 @@
     <form
         [formGroup]="searchForm"
     >
-        <mat-form-field style="margin-right: 15px">
+        <mat-form-field style="margin-right: 15px" [style.width.px]="isAdvanced ? 230 : 180">
             <mat-label>Search by</mat-label>
             <mat-select
                 *ngIf="!isAdvanced"
@@ -17,13 +17,24 @@
                 <mat-option value="pos">Genome position</mat-option>
             </mat-select>
             <mat-select
+
                 *ngIf="isAdvanced"
                 formControlName="searchByArray"
                 multiple
             >
-                <mat-option value="pos">Genome position</mat-option>
-                <mat-option value="tf">Transcription factor</mat-option>
-                <mat-option value="cl">Cell type</mat-option>
+                <mat-select-trigger>
+                    {{_getFirstOptionValue(searchForm.get('searchByArray').value)}}
+                    <span *ngIf="searchForm.get('searchByArray').value?.length > 1"
+                          class="asb-search__additional-text"
+                    >
+                        (+{{searchForm.get('searchByArray').value.length - 1}}
+                        {{searchForm.get('searchByArray').value.length === 2 ?
+                        'other' : 'others'}})
+                     </span>
+                </mat-select-trigger>
+                <mat-option *ngFor="let option of advancedSearchOptions" [value]="option.value">
+                    {{option.view}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -73,6 +84,7 @@
                 appearance="outline"
                 class="my-custom-component-small"
             >
+                <!--<span matPrefix>chr{{searchForm.get("chromosome").value}}&nbsp;</span>-->
                 <span matPrefix>pos&nbsp;</span>
                 <input placeholder="e.g. 28554168:80422458"
                        matInput
@@ -80,7 +92,14 @@
                        aria-label="search"
                        formControlName="searchInput"
                 >
-                <button type="submit" style="display:none" (click)="_navigateToSearch()">hidden submit</button>
+                <button
+                    type="submit"
+                    style="display:none"
+                    (click)="_navigateToSearch()"
+                >
+                    hidden submit
+                </button>
+
                 <button
                     mat-icon-button
                     [hidden]="!searchForm.get('searchInput').value"
@@ -90,6 +109,7 @@
                 >
                     <mat-icon svgIcon="clear"></mat-icon>
                 </button>
+
                 <mat-hint
                     *ngIf="searchForm.hasError('wrongPattern')"
                    >
@@ -131,18 +151,22 @@
                     >
                 </mat-chip-list>
                 <mat-autocomplete #autoTf="matAutocomplete"
+                                  autoActiveFirstOption
                                   (optionSelected)="_selectOption($event, 'tf')"
                 >
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
-                        <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option">
-                            <span>{{option}}</span>
+                        <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option.name">
+                            <span>{{option.name + " | "}}</span>
+                            <small>Total snps: {{option.aggregatedSnpCount}}</small>
                         </mat-option>
                     </ng-container>
+                    <mat-option *ngIf="(searchOptionsLoading$ | async).tf">
                     <mat-spinner
-                        *ngIf="(searchOptionsLoading$ | async).tf"
                         matSuffix color="accent"
                         [diameter]="12"
                     ></mat-spinner>
+                        Loading...
+                    </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>
@@ -176,11 +200,13 @@
                     >
                 </mat-chip-list>
                 <mat-autocomplete #autoCl="matAutocomplete"
+                                  autoActiveFirstOption
                                   (optionSelected)="_selectOption($event, 'cl')"
                 >
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
-                        <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option">
-                            <span>{{option}}</span>
+                        <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
+                            <span>{{option.name}}</span>|
+                            <small>Total snps: {{option.aggregatedSnpCount}}</small>
                         </mat-option>
                     </ng-container>
                     <mat-spinner
@@ -216,7 +242,7 @@
             [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
             (click)="_getResultsInCsv()"
         >
-            Search results in CSV
+            Get search results in CSV
         </button>
     </div>
 </div>
