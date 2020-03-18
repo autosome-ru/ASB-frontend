@@ -2,13 +2,16 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from "@angular/co
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
-import {ClSnpModel, SnpInfoModel, TfSnpModel} from "src/app/models/data.model";
+import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {AsbStatisticsComponent} from "./statistics/statistics.component";
+import {FileSaverService} from "ngx-filesaver";
+import {DataService} from "../../services/data.service";
+import * as moment from "moment";
 
 
 @Component({
@@ -57,6 +60,8 @@ export class SnpPageComponent implements OnInit {
         private store: Store<AppState>,
         private route: ActivatedRoute,
         private router: Router,
+        private saverService: FileSaverService,
+        private dataService: DataService,
         private titleService: Title) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false; }
 
@@ -73,6 +78,23 @@ export class SnpPageComponent implements OnInit {
 
     searchFunction(data: ClSnpModel, search: string): boolean {
         return data.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
+    }
+
+    _downloadFile(options: {
+        columns: string[],
+        filter: string,
+    }, where: TfOrCl) {
+        this.dataService.getSnpInfoByIdCsv(
+            this.id, this.alt, where, options.columns, options.filter).subscribe(
+        (res) => {
+                this.saverService.save(res,
+                `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.csv`);
+            },
+        (err) => {
+                console.log("err");
+                console.log(err.text);
+            }
+        );
     }
 }
 

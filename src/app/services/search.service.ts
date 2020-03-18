@@ -47,37 +47,24 @@ export class SearchService {
                 }
             }
         } else {
-            const params: {[id: string]: string} = {};
-            filter.searchByArray.forEach(s => {
-                    switch (s) {
-                        case "cl":
-                            if (filter.clList.length > 0) {
-                                params["cell_types"] = filter.clList.join(",");
-                            }
-                            return;
-                        case "pos":
-                            params["chromosome"] = "chr" + filter.chromosome;
-                            params["start"] = filter.searchInput.split(":")[0];
-                            params["end"] = filter.searchInput.split(":")[1];
-                            return;
-                        case "tf":
-                            if (filter.tfList.length > 0) {
-                                params["transcription_factors"] =
-                                    filter.tfList.join(",");
-                            }
-                            return;
-                    }
-                }
-            );
             return this.http.get<SnpSearchBackendModel[]>(
-                `${searchSnpsResultsUrl}/advanced`, {params});
-            }
+                `${searchSnpsResultsUrl}/advanced`, {
+                    params: searchResultsParamsMakeAdvanced(filter),
+                });
+        }
+    }
+    getSearchResultsCsv(filter: SearchQueryModel): Observable<Blob> {
+        return this.http.get(
+            `${searchSnpsResultsUrl}/advanced/csv`, {
+                params: searchResultsParamsMakeAdvanced(filter),
+                responseType: "blob"
+            });
     }
 }
 
 function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
-    options: string[] | null,
-    search: string | null): {[id: string]: string} {
+                                 options: string[] | null,
+                                 search: string | null): {[id: string]: string} {
     const params: { [id: string]: string } = {};
     if (options && options.length > 0) {
         params["options"] = options.join(",");
@@ -85,5 +72,32 @@ function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
     if (search !== null && search !== "") {
         params["search"] = search.endsWith("%") ? search : search + "%";
     }
+    return params;
+}
+
+function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string]: string} {
+    const params: {[id: string]: string} = {};
+    filter.searchByArray.forEach(s => {
+            switch (s) {
+                case "cl":
+                    if (filter.clList.length > 0) {
+                        params["cell_types"] = filter.clList.join(",");
+                    }
+                    return;
+                case "pos":
+                    params["chromosome"] = "chr" + filter.chromosome;
+                    params["start"] = filter.searchInput.split(":")[0];
+                    params["end"] = filter.searchInput.split(":")[1];
+                    return;
+                case "tf":
+                    if (filter.tfList.length > 0) {
+                        params["transcription_factors"] =
+                            filter.tfList.join(",");
+                    }
+                    return;
+
+            }
+        }
+    );
     return params;
 }

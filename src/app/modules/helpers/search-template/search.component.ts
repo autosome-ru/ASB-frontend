@@ -5,12 +5,18 @@ import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {SearchHintModel, SearchQueryModel} from "src/app/models/searchQueryModel";
+import {TfOrCl} from "src/app/models/data.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
+import {FileSaverService} from "ngx-filesaver";
+import * as moment from "moment";
+import {SearchService} from "../../../services/search.service";
+import {ToastrService} from "ngx-toastr";
+
 
 @Component({
     selector: "asb-search",
@@ -53,6 +59,9 @@ export class SearchComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private titleService: Title,
+        private saverService: FileSaverService,
+        private searchService: SearchService,
+        private toastr: ToastrService,
     ) { }
 
     public listOfChrs: string[] = [];
@@ -142,11 +151,20 @@ export class SearchComponent implements OnInit {
     }
 
     _getResultsInCsv() {
-        console.log("Need results)");
+        this.toastr.info("May take some time with long results", "Info");
+        this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
+            (res) => {
+                this.saverService.save(res,
+                    "search_" + moment().format("YYYY-MM-DD_HH-mm") + ".csv");
+            },
+            (err) => {
+                console.log("err");
+                console.log(err.text);
+            });
     }
 
     _checkToDisplay(id: string) {
-        const searchBy: string[] = this.searchForm.get("searchByArray").value as string[];
+        const searchBy: string[] = this.searchForm.get("searchByArray").value  as string[];
         if (this.isAdvanced) {
 
             if (searchBy && searchBy.length &&
@@ -161,7 +179,7 @@ export class SearchComponent implements OnInit {
 
     }
 
-    _addChip(event: MatChipInputEvent, where: tfOrCl): void {
+    _addChip(event: MatChipInputEvent, where: TfOrCl): void {
         const input = event.input;
         const value = event.value;
 
@@ -186,7 +204,7 @@ export class SearchComponent implements OnInit {
         }
     }
 
-    _selectOption(event: MatAutocompleteSelectedEvent, where: tfOrCl): void {
+    _selectOption(event: MatAutocompleteSelectedEvent, where: TfOrCl): void {
         if (where === "tf") {
             this.tfInput.nativeElement.value = "";
             this.searchForm.patchValue({searchTf: null, tfList: [
@@ -204,7 +222,7 @@ export class SearchComponent implements OnInit {
         }
     }
 
-    _removeChip(chipName: string, where: tfOrCl): void {
+    _removeChip(chipName: string, where: TfOrCl): void {
         this.searchForm.patchValue(where === "tf" ?
             {tfList: this.searchForm.value.tfList.filter(s => s !== chipName)} :
             {clList: this.searchForm.value.clList.filter(s => s !== chipName)});
@@ -237,7 +255,7 @@ function matchingPattern(searchKey: string,
             const posArray: string[] = search.split(":");
             if (posArray.length === 2) {
                 const [startPos, endPos] = posArray;
-                if (!Number(startPos) || !Number(endPos)) {
+                if ((!Number(startPos) && startPos !== "0") || !Number(endPos)) {
                     return {
                         wrongPattern: true
                     };
@@ -255,4 +273,3 @@ function matchingPattern(searchKey: string,
         }
     };
 }
-declare type tfOrCl = "tf" | "cl";

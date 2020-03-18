@@ -35,9 +35,9 @@ export interface SnpSearchModel extends SnpGenPosModel {
 export interface SnpInfoBackendModel extends SnpGenPosBackendModel {
     tf_aggregated_snps: TfSnpBackendModel[];
     cl_aggregated_snps: ClSnpBackendModel[];
-    phenotypes: phenotypesBackendModel[];
+    phenotypes: PhenotypesBackendModel[];
 }
-export interface phenotypesBackendModel {
+export interface PhenotypesBackendModel {
     db_name: string;
     phenotype_name: string;
 }
@@ -141,3 +141,5 @@ export interface ExpSnpModel {
     tfName: string;
     clName: string;
 }
+
+export type TfOrCl = "tf" | "cl";

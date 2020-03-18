@@ -1,5 +1,5 @@
 import * as fromActions from "src/app/store/action/data.action";
-import {phenotypesBackendModel, PhenotypesModel, SnpInfoModel} from "src/app/models/data.model";
+import {PhenotypesBackendModel, PhenotypesModel, SnpInfoModel} from "src/app/models/data.model";
 import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
 
 export interface DataState {
@@ -75,6 +75,6 @@ export function dataReducer(state: DataState = initialState, action: fromActions
     }
 }
 
-function reduceToDb(dbName: string, phenotypes: phenotypesBackendModel[]): string[] {
+function reduceToDb(dbName: string, phenotypes: PhenotypesBackendModel[]): string[] {
     return phenotypes.filter(s => s.db_name === dbName).map(s => s.phenotype_name);
 }

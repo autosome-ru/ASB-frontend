@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
 
 import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -8,6 +8,7 @@ import {calculateColor} from "src/app/helpers/colors.helper";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
+
 @Component({
     selector: "asb-statistics",
     templateUrl: "./statistics.component.html",
@@ -16,7 +17,10 @@ import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
 })
 export class AsbStatisticsComponent<T> implements OnInit {
-    constructor(private formBuilder: FormBuilder, ) { }
+
+    constructor(
+        private formBuilder: FormBuilder,
+        ) { }
     @ViewChild("tableViewTFCL", {static: true})
     public tableView: AsbTableComponent<T>;
 
@@ -31,6 +35,12 @@ export class AsbStatisticsComponent<T> implements OnInit {
 
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
+
+    @Output()
+    private downloadSnpInfo = new EventEmitter<{
+        columns: string[],
+        filter: string,
+    }>();
 
     public tableDisplayedColumns: AsbTableDisplayedColumns<T>;
     public tableFormGroup: FormGroup;
@@ -99,5 +109,15 @@ export class AsbStatisticsComponent<T> implements OnInit {
 
     _getTitle(row: T): string {
         return "Additional statistics" ;
+    }
+
+
+    _getSnpInfoCsv() {
+        this.downloadSnpInfo.emit({
+            columns: [
+                "name",
+                ...this.tableFormGroup.value.columns],
+            filter: this.tableFormGroup.value.filter,
+        });
     }
 }
