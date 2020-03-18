@@ -7,9 +7,14 @@ import {
 
 export interface SearchState {
     searchFilter: SearchQueryModel;
-    searchOptions: string[];
-    searchOptionsLoading: boolean;
-
+    searchOptions: {
+        tf: string[],
+        cl: string[],
+    };
+    searchOptionsLoading: {
+        tf: boolean,
+        cl: boolean,
+    };
     searchResults: SnpSearchModel[];
     searchResultsLoading: boolean;
 }
@@ -28,11 +33,17 @@ export const initialState: SearchState = {
         searchByArray: ["tf", "cl"],
         searchCl: "",
         searchTf: "",
-        tfList: ["K562"],
+        tfList: ["CTCF_HUMAN"],
         clList: []
     },
-    searchOptions: [],
-    searchOptionsLoading: false,
+    searchOptions: {
+        tf: [],
+        cl: []
+    },
+    searchOptionsLoading: {
+        tf: false,
+        cl: false
+    },
     searchResults: [],
     searchResultsLoading: false,
 };
@@ -45,16 +56,64 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             };
         }
         case fromActions.ActionTypes.LoadSearchOptions: {
+
             return {
                 ...state,
-                searchOptionsLoading: true,
+                searchOptionsLoading: action.payload.tfOrCl === "tf" ?
+                    {
+                        tf: true,
+                        cl: state.searchOptionsLoading.cl
+                    } :
+                    {
+                        tf: state.searchOptionsLoading.tf,
+                        cl: true
+                    }
             };
         }
         case fromActions.ActionTypes.LoadSearchOptionsSuccess: {
             return {
                 ...state,
-                searchOptions: action.payload,
-                searchOptionsLoading: false,
+                searchOptions: action.payload.tfOrCl === "tf" ?
+                    {
+                        tf: action.payload.options,
+                        cl: state.searchOptions.cl
+                    } :
+                    {
+                        tf: state.searchOptions.tf,
+                        cl: action.payload.options
+                    },
+                searchOptionsLoading: action.payload.tfOrCl === "tf" ?
+                    {
+                        tf: false,
+                        cl: state.searchOptionsLoading.cl
+                    } :
+                    {
+                        tf: state.searchOptionsLoading.tf,
+                        cl: false
+                    }
+            };
+        }
+        case fromActions.ActionTypes.LoadSearchOptionsFail: {
+            return {
+                ...state,
+                searchOptions: action.payload.tfOrCl === "tf" ?
+                    {
+                        tf: [],
+                        cl: state.searchOptions.cl
+                    } :
+                    {
+                        tf: state.searchOptions.tf,
+                        cl: []
+                    },
+                searchOptionsLoading: action.payload.tfOrCl === "tf" ?
+                    {
+                        tf: false,
+                        cl: state.searchOptionsLoading.cl
+                    } :
+                    {
+                        tf: state.searchOptionsLoading.tf,
+                        cl: false
+                    }
             };
         }
         case fromActions.ActionTypes.LoadSearchResults: {

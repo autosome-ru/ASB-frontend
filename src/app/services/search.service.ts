@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
+import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
 import {SearchQueryModel} from "../models/searchQueryModel";
 import {SnpSearchBackendModel} from "src/app/models/data.model";
 
@@ -12,8 +12,17 @@ export class SearchService {
     constructor(private http: HttpClient) {
     }
 
-    public getSearchOptions(filter: SearchQueryModel): Observable<string[]> {
-        return this.http.get<string[]>(`${searchOptionsUrl}/${filter.searchInput}`);
+    public getSearchOptions(filter: SearchQueryModel, tfOrCl: "tf" | "cl"): Observable<string[]> {
+        if ((tfOrCl === "tf" && filter.tfList.length > 0 && filter.searchTf !== null) ||
+            (tfOrCl === "cl" && filter.clList.length > 0  && filter.searchCl !== null)) {
+            return this.http.get<string[]>(`${searchOptionsUrl(tfOrCl)}/${
+                    tfOrCl === "tf" ? filter.searchTf : filter.searchCl}`, {params: {
+                        options: tfOrCl === "tf" ? filter.tfList.join(",") : filter.clList.join(",")
+                    }});
+        } else {
+            return this.http.get<string[]>(`${searchOptionsUrl(tfOrCl)}/${
+                tfOrCl === "tf" ? filter.searchTf : filter.searchCl}`);
+        }
     }
 
     public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean):
@@ -40,7 +49,7 @@ export class SearchService {
                             }
                             return;
                         case "pos":
-                            params["chromosome"] = filter.chromosome;
+                            params["chromosome"] = "chr" + filter.chromosome;
                             params["start"] = filter.searchInput.split(":")[0];
                             params["end"] = filter.searchInput.split(":")[1];
                             return;

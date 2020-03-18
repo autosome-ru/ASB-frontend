@@ -6,6 +6,7 @@ export enum ActionTypes {
     SetFilter = "[Search] filter set",
     LoadSearchOptions = "[Search] loading search options",
     LoadSearchOptionsSuccess = "[Search] search options loading successfully",
+    LoadSearchOptionsFail = "[Search] search options loading failed",
 
     LoadSearchResults = "[Search] loading search results",
     LoadSearchResultsSuccess = "[Search] search results loading successfully",
@@ -21,12 +22,18 @@ export class SetFilterAction implements Action {
 export class LoadSearchOptionsAction implements Action {
     readonly type = ActionTypes.LoadSearchOptions;
 
-    constructor(public payload: SearchQueryModel) {}
+    constructor(public payload: {search: SearchQueryModel, tfOrCl: "tf" | "cl"}) {}
 }
 export class LoadSearchOptionsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchOptionsSuccess;
 
-    constructor(public payload: string[]) {}
+    constructor(public payload: {options: string[], tfOrCl: "tf" | "cl"}) {}
+}
+
+export class LoadSearchOptionsFailAction implements Action {
+    readonly type = ActionTypes.LoadSearchOptionsFail;
+
+    constructor(public payload: {search: SearchQueryModel, tfOrCl: "tf" | "cl"}) {}
 }
 
 export class LoadSearchResultsAction implements Action {
@@ -56,4 +63,5 @@ export type ActionUnion =
     | LoadSearchResultsAction
     | LoadSearchResultsFailAction
     | LoadSearchResultsSuccessAction
+    | LoadSearchOptionsFailAction
     ;

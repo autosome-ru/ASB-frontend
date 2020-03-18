@@ -45,8 +45,7 @@
                             class="search-page__card"
                             asbElevation
                             role="group"
-                            [routerLink]="'snps/' +snp.rsId + '/' +snp.altBase"
-                            routerLinkActive="active"
+                            (click)="_navigateToSnp({rsId: snp.rsId, alt: snp.altBase})"
                         >
                             <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
                                 <mat-card-title>

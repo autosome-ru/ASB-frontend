@@ -21,9 +21,10 @@ export class SearchEffect {
     loadSearchOptions$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchOptions),
         mergeMap((action: fromActions.LoadSearchOptionsAction) =>
-            this.searchService.getSearchOptions(action.payload).pipe(
-                map(options => new fromActions.LoadSearchOptionsSuccessAction(options)),
-                catchError(() => of(new fromActions.LoadSearchOptionsSuccessAction([]))),
+            this.searchService.getSearchOptions(action.payload.search, action.payload.tfOrCl).pipe(
+                map(options => new fromActions.LoadSearchOptionsSuccessAction(
+                    {options, tfOrCl: action.payload.tfOrCl})),
+                catchError(() => of(new fromActions.LoadSearchOptionsFailAction(action.payload))),
             )
         )
     );

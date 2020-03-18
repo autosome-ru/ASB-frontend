@@ -133,9 +133,16 @@
                 <mat-autocomplete #autoTf="matAutocomplete"
                                   (optionSelected)="_selectOption($event, 'tf')"
                 >
-                    <mat-option *ngFor="let option of searchOptions" [value]="option">
-                        <span>{{option}}</span>
-                    </mat-option>
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
+                        <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option">
+                            <span>{{option}}</span>
+                        </mat-option>
+                    </ng-container>
+                    <mat-spinner
+                        *ngIf="(searchOptionsLoading$ | async).tf"
+                        matSuffix color="accent"
+                        [diameter]="12"
+                    ></mat-spinner>
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>
@@ -171,9 +178,16 @@
                 <mat-autocomplete #autoCl="matAutocomplete"
                                   (optionSelected)="_selectOption($event, 'cl')"
                 >
-                    <mat-option *ngFor="let option of searchOptions" [value]="option">
-                        <span>{{option}}</span>
-                    </mat-option>
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
+                        <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option">
+                            <span>{{option}}</span>
+                        </mat-option>
+                    </ng-container>
+                    <mat-spinner
+                        *ngIf="(searchOptionsLoading$ | async).cl"
+                        matSuffix color="accent"
+                        [diameter]="12"
+                    ></mat-spinner>
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>

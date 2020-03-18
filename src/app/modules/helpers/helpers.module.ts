@@ -29,6 +29,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatListModule} from "@angular/material/list";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
     imports: [
@@ -51,6 +52,7 @@ import {MatChipsModule} from "@angular/material/chips";
         MatListModule,
         MatAutocompleteModule,
         MatChipsModule,
+        MatProgressSpinnerModule,
     ],
     declarations: [
         SearchComponent,

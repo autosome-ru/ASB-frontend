@@ -49,7 +49,9 @@ export class SearchComponent implements OnInit {
     ) { }
 
     public listOfChrs: string[] = [];
-    searchOptions: string[] = ["CTCF", "ANDR"];
+    public searchOptions$: Observable<{ tf: string[], cl: string[] }>;
+    public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
+
 
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
@@ -71,6 +73,8 @@ export class SearchComponent implements OnInit {
                     "searchBy", "searchByArray", this.isAdvanced),
             }
         );
+        this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
+        this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
         this.input$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
         this.input$.subscribe(s => {
             if (this.searchForm.value !== s) {
@@ -90,11 +94,26 @@ export class SearchComponent implements OnInit {
                     {emitEvent: false});
             }
         });
-        this.searchForm.valueChanges.subscribe(
-            () => this.store.dispatch(new fromActions.search.SetFilterAction(
-                this.searchForm.value as SearchQueryModel,
+        this.searchForm.get("searchCl").valueChanges.subscribe(
+            s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                {search: {
+                        ...this.searchForm.value as SearchQueryModel,
+                        searchCl: s,
+                    }, tfOrCl: "cl"}
             )));
-        }
+        this.searchForm.get("searchTf").valueChanges.subscribe(
+            s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                {search: {
+                        ...this.searchForm.value as SearchQueryModel,
+                        searchTf: s,
+                        }
+                    , tfOrCl: "tf"}
+            )));
+        this.searchForm.valueChanges.subscribe(
+            s => this.store.dispatch(new fromActions.search.SetFilterAction(
+                s as SearchQueryModel,
+            )));
+    }
 
     _clearSearchField() {
         this.searchForm.patchValue(this.nullValue);
@@ -143,17 +162,21 @@ export class SearchComponent implements OnInit {
         if (input) {
             input.value = "";
         }
-        this.searchForm.patchValue(
-            where === "tf" ?
-                {searchTf: null, tfList: [
-                    ...this.searchForm.value.tfList,
-                    value.trim()]
-                } :
-                {searchCl: null, clList: [
-                        ...this.searchForm.value.clList,
-                        value.trim()]
-                }
+        if ((value || "").trim()) {
+            this.searchForm.patchValue(
+                where === "tf" ?
+                    {
+                        searchTf: null, tfList: [
+                            ...this.searchForm.value.tfList,
+                            value.trim()]
+                    } :
+                    {
+                        searchCl: null, clList: [
+                            ...this.searchForm.value.clList,
+                            value.trim()]
+                    }
             );
+        }
     }
 
     _selectOption(event: MatAutocompleteSelectedEvent, where: tfOrCl): void {
