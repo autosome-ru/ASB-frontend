@@ -25,7 +25,10 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     public paginator: MatPaginator;
 
     @ViewChild("manyValuesViewTemplate")
-    public manyValuesViewTemplate: TemplateRef<{value: TfSnpCutModel[] | ClSnpCutModel[]}>;
+    public manyValuesViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
+
+    @ViewChild("manyCellTypesViewTemplate")
+    public manyCellTypesViewTemplate: TemplateRef<{value: ClSnpCutModel[]}>;
 
     @HostBinding("class.search-page")
     private readonly cssClass = true;
@@ -74,8 +77,10 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             rsId: {view: "rs ID"},
             refBase: {view: "ref"},
             altBase: {view: "alt"},
-            transFactors: {view: "TFs", columnTemplate: this.manyValuesViewTemplate, disabledSort: true},
-            cellLines: {view: "Cell types", columnTemplate: this.manyValuesViewTemplate, disabledSort: true},
+            transFactors: {view: "Top 5 TFs",
+                columnTemplate: this.manyValuesViewTemplate, disabledSort: true},
+            cellLines: {view: "Top 3 cell types",
+                columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true},
         };
     }
 

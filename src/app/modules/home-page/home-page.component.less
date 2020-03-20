@@ -2,7 +2,7 @@
 
 .asb-home{
     -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
+    --moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
 
 
@@ -32,6 +32,7 @@
         height: -moz-calc((100vw / 1.61) - (172px + 28px));
         height: calc((100vw / 1.61) - (172px + 28px));
         max-height: 80vh;
+        min-height: 20vh;
     }
 
     &__headline{
@@ -49,6 +50,13 @@
         }
     }
 
+    &__headline-small {
+        background-color: #fff;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
+
     &__content-wrapper{
         background-color: @grayD;
         z-index: 1;
@@ -60,5 +68,9 @@
         background-attachment: scroll;
     }
 }
-
+@media only screen and (max-device-width: 575px) {
+    .asb-home__image-container {
+        background-attachment: scroll;
+    }
+}
 

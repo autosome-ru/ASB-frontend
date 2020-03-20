@@ -219,7 +219,7 @@
         </ng-container>
     </form>
 
-    <div class="justify-content-between" style="display: flex;">
+    <div class="justify-content-between" style="display: flex; flex-wrap: wrap">
         <div>
             <a
                 mat-raised-button
@@ -242,7 +242,8 @@
             [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
             (click)="_getResultsInCsv()"
         >
-            Get search results in CSV
+            <span class="d-none d-sm-block">Get search results in CSV</span>
+            <span class="d-sm-none">Get CSV</span>
         </button>
     </div>
 </div>

@@ -15,7 +15,11 @@ export class AsbHeaderComponent implements OnInit {
 
     ngOnInit() {}
 
-    toggleNavbar() {
-        this.navbarOpen = !this.navbarOpen;
+    toggleNavbar(event: "toggle" | "close") {
+        if (event === "toggle") {
+            this.navbarOpen = !this.navbarOpen;
+        } else {
+            this.navbarOpen = false;
+        }
     }
 }

@@ -100,12 +100,35 @@
 </ng-template>
 
 <ng-template #manyValuesViewTemplate let-value="value">
-    <div style="max-height: 140px;">
+    <div style="max-height: 140px; max-width: 120px; overflow: hidden; text-overflow: ellipsis;flex: 1; display:flex; flex-wrap: wrap">
     <span *ngFor="let object of value; let last=last; let i=index" style="overflow: hidden">
         <span *ngIf="i < 5" style="text-overflow: ellipsis">
             {{object?.name}}<span *ngIf="!last && i !== 4">;&nbsp;</span>
         </span>
         <span *ngIf="i==5">...</span>
+    </span>
+    </div>
+</ng-template>
+
+<ng-template #manyCellTypesViewTemplate let-value="value">
+    <div
+        style="max-height: 140px;
+                max-width: 250px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex: 1;
+                flex-wrap: wrap;
+                display: flex;"
+    >
+    <span
+        *ngFor="let object of value; let last=last; let i=index"
+          style="white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;"
+    >
+        <span *ngIf="i < 3">
+            {{object?.name}}<span *ngIf="!last && i !== 4">;&nbsp;</span>
+        </span>
     </span>
     </div>
 </ng-template>

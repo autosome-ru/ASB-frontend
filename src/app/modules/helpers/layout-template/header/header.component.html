@@ -5,7 +5,7 @@
         class="navbar-toggler"
         aria-label="Toggle navigation"
         type="button"
-        (click)="toggleNavbar()"
+        (click)="toggleNavbar('toggle')"
     >
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,18 +26,21 @@
                 class="nav-item nav-link"
                 [routerLink]="'/about-us-page'"
                 [routerLinkActive]="['active']"
+                (click)="toggleNavbar('close')"
             >
                 about
             </a>
             <a class="nav-item nav-link"
                [routerLink]="'/snps/rs11260841/A'"
                [routerLinkActive]="['active']"
+               (click)="toggleNavbar('close')"
             >
                 test
             </a>
             <a class="nav-item nav-link"
                [routerLink]="'/snps/rs62034351/A'"
                [routerLinkActive]="['active']"
+               (click)="toggleNavbar('close')"
             >
                 test2
             </a>

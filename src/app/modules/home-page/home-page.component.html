@@ -5,20 +5,39 @@
         [lazyLoad]="'assets/images/night-sky-big.jpg'"
     >
     </div>
-    <div class="asb-home__headline">
+    <div class="asb-home__headline ">
         <div class="asb-home__headline-wrapper">
             <div [ngStyle]="{'opacity': opacity}">
-                <h1 style="color: #fff; text-align: center;">AD ASTRA</h1>
-                <h3 style="color: #fff; text-align: center;">Here must be some EPICCC description!</h3>
+                <h1
+                    style="color: #fff; text-align: center;"
+                >
+                    AD ASTRA
+                </h1>
+                <ng-container
+
+                    [ngTemplateOutlet]="descriptionTemplate"
+                    [ngTemplateOutletContext]="{value: 'd-none d-md-block text-white'}"
+                >
+
+                </ng-container>
             </div>
         </div>
     </div>
 </div>
+
 <div class="asb-home__content-wrapper">
+
     <div
         class="container justify-content-center mx-auto py-sm-3"
         style=" background-color: white"
     >
+        <ng-container
+
+            [ngTemplateOutlet]="descriptionTemplate"
+            [ngTemplateOutletContext]="{value: 'd-md-none'}"
+        >
+
+        </ng-container>
         <asb-search [width]="'full'"></asb-search>
         <h3>Some content (doge)</h3>
         <div class="row-cols-1" >
@@ -32,14 +51,15 @@
                     bred for hunting.
                 </p>
             </mat-card-content>
-            <div class="row">
-                <button mat-button>LIKE</button>
-                <button mat-button>SHARE</button>
-            </div>
         </div>
     </div>
 </div>
 
+<ng-template #descriptionTemplate let-value="value">
+    <h3
+        [class]="value"
 
-
-
+    >
+        Here must be some EPICCC description!
+    </h3>
+</ng-template>
