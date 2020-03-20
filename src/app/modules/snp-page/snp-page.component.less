@@ -14,7 +14,27 @@
         -webkit-transform: translateX(-50%) translateY(-50%);
         transform: translateX(-50%) translateY(-50%);
     }
+    &__spinner-page {
+        padding-top: calc(100vh - 128px)
+    }
+    &__table-elevation {
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),0px 8px 10px 1px rgba(0, 0, 0, 0.14),0px 3px 14px 2px rgba(0, 0, 0, 0.12)
+    }
 
 }
 
+.mat-tab-body-content {
+    overflow-x: hidden;
+}
 
+.mat-drawer-transition .mat-drawer-content {
+    transition-duration: 0s !important;
+}
+@media only screen and (max-width: 575px) {
+    .snp-page__table-elevation{
+        box-shadow: none;
+    }
+    .snp-page__spinner-page {
+        padding-top: calc(100vh - 112px)
+    }
+}

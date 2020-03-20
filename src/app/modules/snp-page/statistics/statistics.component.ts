@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild
+} from "@angular/core";
 
 import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -17,10 +25,6 @@ import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
 })
 export class AsbStatisticsComponent<T> implements OnInit {
-
-    constructor(
-        private formBuilder: FormBuilder,
-        ) { }
     @ViewChild("tableViewTFCL", {static: true})
     public tableView: AsbTableComponent<T>;
 
@@ -51,6 +55,8 @@ export class AsbStatisticsComponent<T> implements OnInit {
     originalOrder = ((): number => {
         return 0;
     });
+
+    constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
         this.tableDisplayedColumns = this.initialDisplayedColumns;

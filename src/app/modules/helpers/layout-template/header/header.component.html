@@ -1,14 +1,13 @@
 <nav
-    class="navbar navbar-dark bg-dark mb-0"
-    [style.justify-content]="false ? 'flex-start' : 'space-between'"
+    class="navbar navbar-expand-sm navbar-dark bg-dark mb-0 justify-content-start asb-header"
 >
     <button
-        *ngIf="false"
-        mat-icon-button
-        (click)="_changeSidenav('toggle')"
-        disableRipple
+        class="navbar-toggler"
+        aria-label="Toggle navigation"
+        type="button"
+        (click)="toggleNavbar()"
     >
-        <mat-icon svgIcon="menu"></mat-icon>
+        <span class="navbar-toggler-icon"></span>
     </button>
     <a
         class="navbar-brand"
@@ -19,74 +18,29 @@
         AD ASTRA database
     </a>
     <div
-        *ngIf="true"
-        class="navbar-expand ml-auto p-2"
+        class="collapse navbar-collapse  ml-auto p-2 justify-content-end"
+        [ngClass]="{'show': navbarOpen }"
     >
         <div class="navbar-nav">
-            <ng-container
-                [ngTemplateOutlet]="linksTemplate"
-            ></ng-container>
+            <a
+                class="nav-item nav-link"
+                [routerLink]="'/about-us-page'"
+                [routerLinkActive]="['active']"
+            >
+                about
+            </a>
+            <a class="nav-item nav-link"
+               [routerLink]="'/snps/rs11260841/A'"
+               [routerLinkActive]="['active']"
+            >
+                test
+            </a>
+            <a class="nav-item nav-link"
+               [routerLink]="'/snps/rs62034351/A'"
+               [routerLinkActive]="['active']"
+            >
+                test2
+            </a>
         </div>
     </div>
 </nav>
-<ng-container
-    *ngIf="true"
-    [ngTemplateOutlet]="ngContentTemplate"
-></ng-container>
-<mat-sidenav-container
-    *ngIf="false"
-    (backdropClick)="_changeSidenav('close')"
->
-    <mat-sidenav mode="over"
-                 [(opened)]="sidenavOpened"
-                 (keydown.escape)="_changeSidenav('close')"
-                 style="min-width: 150px"
-    >
-        <mat-nav-list>
-            <ng-container
-                [ngTemplateOutlet]="linksTemplate"
-            ></ng-container>
-        </mat-nav-list>
-        <mat-divider></mat-divider>
-        <button
-            class="asb-header-footer"
-            mat-button
-            (click)="_changeSidenav('toggle')"
-        >
-            <span class="asb-header-footer-text">Close</span>
-            <mat-icon class="asb-header-footer-icon" svgIcon="clear"></mat-icon>
-        </button>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-        <ng-container
-            [ngTemplateOutlet]="ngContentTemplate"
-        ></ng-container>
-
-    </mat-sidenav-content>
-</mat-sidenav-container>
-
-<ng-template #linksTemplate>
-    <a
-        class="nav-item nav-link"
-        [routerLink]="'/about-us-page'"
-        [routerLinkActive]="['active']"
-    >
-        about
-    </a>
-    <a class="nav-item nav-link"
-       [routerLink]="'/snps/rs11260841/A'"
-       [routerLinkActive]="['active']"
-    >
-        test
-    </a>
-    <a class="nav-item nav-link"
-       [routerLink]="'/snps/rs62034351/A'"
-       [routerLinkActive]="['active']"
-    >
-        test2
-    </a>
-</ng-template>
-<ng-template #ngContentTemplate>
-    <ng-content></ng-content>
-</ng-template>

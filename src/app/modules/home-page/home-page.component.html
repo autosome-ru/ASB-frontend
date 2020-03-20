@@ -1,7 +1,26 @@
-<div
-    class="container justify-content-center mx-auto py-sm-3"
-    style="max-width: 600px; background-color: white"
->
+<div class="asb-home__title-wrapper">
+    <div
+        class="asb-home__image-container"
+        [defaultImage]="'assets/images/night-sky.jpg'"
+        [lazyLoad]="'assets/images/night-sky-big.jpg'"
+    >
+    </div>
+    <div class="asb-home__headline">
+        <div class="asb-home__headline-wrapper">
+            <div [ngStyle]="{'opacity': opacity}">
+                <h1 style="color: #fff; text-align: center;">AD ASTRA</h1>
+                <h3 style="color: #fff; text-align: center;">Here must be some EPICCC description!</h3>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="asb-home__content-wrapper">
+    <div
+        class="container justify-content-center mx-auto py-sm-3"
+        style=" background-color: white"
+    >
+        <asb-search [width]="'full'"></asb-search>
+        <h3>Some content (doge)</h3>
         <div class="row-cols-1" >
             <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                  alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail">
@@ -18,6 +37,9 @@
                 <button mat-button>SHARE</button>
             </div>
         </div>
-        <asb-search [width]="'restricted'"></asb-search>
+    </div>
 </div>
+
+
+
 

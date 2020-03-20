@@ -1,32 +1,21 @@
-import {ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit} from "@angular/core";
-import {MediaMatcher} from "@angular/cdk/layout";
+import {Component, HostBinding, OnInit} from "@angular/core";
+
 
 @Component({
   selector: "asb-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.less"]
 })
-export class AsbHeaderComponent implements OnInit, OnDestroy {
+export class AsbHeaderComponent implements OnInit {
     @HostBinding("class.asb-header")
     private readonly cssClass = true;
-    // private readonly _mobileQueryListener: () => void;
-    // mobileQuery: MediaQueryList;
-    sidenavOpened: boolean = false;
+    navbarOpen: boolean = false;
 
-    constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-        // this.mobileQuery = media.matchMedia("(max-width: 567px)");
-        // this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-        // this.mobileQuery.addEventListener("change", this._mobileQueryListener);
-    }
+    constructor() {}
 
-    ngOnInit() {
-  }
-    ngOnDestroy(): void {
-        // this.mobileQuery.removeEventListener("change", this._mobileQueryListener);
-    }
+    ngOnInit() {}
 
-
-    _changeSidenav(type: "toggle" | "close") {
-        type === "toggle" ? this.sidenavOpened = !this.sidenavOpened : this.sidenavOpened = false;
+    toggleNavbar() {
+        this.navbarOpen = !this.navbarOpen;
     }
 }

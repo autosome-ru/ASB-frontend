@@ -1,79 +1,84 @@
 <ng-content></ng-content>
-<div class="container-fluid" style="padding-top: 5px;">
+<div class="container-fluid px-0 px-sm-2"
+     style="padding-top: 5px;"
+>
     <div class="row">
-        <form [formGroup]="tableFormGroup">
-            <mat-form-field style="margin-left: 20px">
-                <mat-label>Selected columns</mat-label>
-                <mat-select formControlName="columns"
-                            multiple
-                            (selectionChange)="_changeColumns($event)"
-                >
-                    <mat-select-trigger>
-                        {{tableFormGroup.get('columns').value ?
-                        tableColumnModel[tableFormGroup.get('columns').value[0]]?.view : ''}}
-                        <span *ngIf="tableFormGroup.get('columns').value?.length > 1"
-                              class="snp-page__additional-selection"
-                        >
-                                                    (+{{tableFormGroup.get('columns').value?.length - 1}}
-                            {{tableFormGroup.get('columns').value?.length === 2 ? 'other' : 'others'}})
-                                                </span>
-                    </mat-select-trigger>
-                    <mat-option
-                        *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
-                        [value]="column.key"
+        <form [formGroup]="tableFormGroup" class="container">
+            <div style="margin-bottom: 10px">
+                <mat-form-field>
+                    <mat-label>Selected columns</mat-label>
+                    <mat-select formControlName="columns"
+                                multiple
+                                (selectionChange)="_changeColumns($event)"
                     >
-                        {{column.value.view}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
-                <input
-                    placeholder="Filter"
-                    matInput
-                    type="text"
-                    formControlName="filter"
-                    (keydown.enter)="_applyFilter();"
-                >
-                <button type="submit" style="display:none">hidden submit</button>
-                <button
-                    mat-icon-button
-                    [hidden]="!tableFormGroup.get('filter').value"
-                    style="margin-left: 5px"
-                    matSuffix
-                    (click)="_clearFilterField()"
-                >
-                    <mat-icon svgIcon="clear"></mat-icon>
-                </button>
-            </mat-form-field>
-            <button
-                mat-raised-button
-                (click)="_applyFilter()"
-                color="primary"
-            >
-                Apply filter
-            </button>
-            <button
-                mat-raised-button
-                (click)="_resetFilters()"
-            >
-                Reset
-            </button>
-            <button
-                mat-raised-button
-                (click)="_getSnpInfoCsv()"
-            >
-                Get CSV
-            </button>
-            <button
-                mat-raised-button
-                (click)="disabledToolTips=!disabledToolTips"
-            >
-                {{disabledToolTips ? 'Disable' : 'Enable'}} tooltips
-
-            </button>
+                        <mat-select-trigger>
+                            {{tableFormGroup.get('columns').value ?
+                            tableColumnModel[tableFormGroup.get('columns').value[0]]?.view : ''}}
+                            <span *ngIf="tableFormGroup.get('columns').value?.length > 1"
+                                  class="snp-page__additional-selection"
+                            >
+                                                        (+{{tableFormGroup.get('columns').value?.length - 1}}
+                                {{tableFormGroup.get('columns').value?.length === 2 ? 'other' : 'others'}})
+                                                    </span>
+                        </mat-select-trigger>
+                        <mat-option
+                            *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
+                            [value]="column.key"
+                        >
+                            {{column.value.view}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
+                    <input
+                        placeholder="Filter"
+                        matInput
+                        type="text"
+                        formControlName="filter"
+                    >
+                    <button
+                        type="submit"
+                        style="display:none"
+                        (click)="_applyFilter()"
+                    >
+                        hidden submit
+                    </button>
+                    <button
+                        mat-icon-button
+                        [hidden]="!tableFormGroup.get('filter').value"
+                        style="margin-left: 5px"
+                        matSuffix
+                        (click)="_clearFilterField()"
+                    >
+                        <mat-icon svgIcon="clear"></mat-icon>
+                    </button>
+                </mat-form-field>
+                <div style="display: flex; justify-content: flex-start">
+                    <button
+                        mat-raised-button
+                        (click)="_applyFilter()"
+                        color="primary"
+                    >
+                        Apply filter
+                    </button>
+                    <button
+                        style="margin-right: 5px"
+                        mat-raised-button
+                        (click)="_resetFilters()"
+                    >
+                        Reset
+                    </button>
+                    <button
+                        mat-raised-button
+                        (click)="_getSnpInfoCsv()"
+                    >
+                        Get CSV
+                    </button>
+                </div>
+            </div>
         </form>
     </div>
-    <div class="mat-elevation-z8">
+    <div class="snp-page__table-elevation">
         <asb-table
             #tableViewTFCL
             [columnModel]="tableColumnModel"
@@ -89,11 +94,6 @@
     </div>
 </div>
 
-<ng-template #expandCellContentTemplate let-row="row">
-    <img src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-         alt="Photo of a Shiba Inu" class="img-fluid img-thumbnail" style="max-width: 500px">
-    <h5> Здесь мог быть ваш мотив, а не собака</h5>
-</ng-template>
 <ng-template #popoverContentTemplate let-row="row">
     <asb-inner-table
         [innerTableData]="row ? row.expSnps : []"

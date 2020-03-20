@@ -1,26 +1,64 @@
 @import "~src/styles/shared/colors.less";
 
-.example-card {
-  max-width: 500px;
+.asb-home{
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+
+
+
+    &__image-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        /* Create the parallax scrolling effect */
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &_parallax-image {
+
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+    }
+    &__title-wrapper{
+        background-color: transparent;
+        position: relative;
+        height: -webkit-calc((100vw / 1.61) - (172px + 28px));
+        height: -moz-calc((100vw / 1.61) - (172px + 28px));
+        height: calc((100vw / 1.61) - (172px + 28px));
+        max-height: 80vh;
+    }
+
+    &__headline{
+        position: absolute;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+
+        &-wrapper{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+    }
+
+    &__content-wrapper{
+        background-color: @grayD;
+        z-index: 1;
+    }
 }
 
-.form {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-}
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-
+@media only screen and (max-device-width: 767px) {
+    .asb-home__image-container {
+        background-attachment: scroll;
+    }
 }
 
-.itemss {
-  display: flex;
-  margin-right: 0;
 
-  height: 100%;
-}
