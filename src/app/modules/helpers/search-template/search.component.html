@@ -161,10 +161,10 @@
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).tf">
-                    <mat-spinner
-                        matSuffix color="accent"
-                        [diameter]="12"
-                    ></mat-spinner>
+                        <mat-spinner
+                            matSuffix color="accent"
+                            [diameter]="12"
+                        ></mat-spinner>
                         Loading...
                     </mat-option>
                 </mat-autocomplete>

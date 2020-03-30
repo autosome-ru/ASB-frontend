@@ -30,6 +30,16 @@ export class SearchEffect {
     );
 
     @Effect()
+    loadSearchOptionsFail$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadSearchOptionsFail),
+        mergeMap((action: fromActions.LoadSearchOptionsFailAction) => {
+            console.log("Something went wrong with get search options", action.payload);
+            return EMPTY;
+            }
+        )
+    );
+
+    @Effect()
     loadSearchResults$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResults),
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
