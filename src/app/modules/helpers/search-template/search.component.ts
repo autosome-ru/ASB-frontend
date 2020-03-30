@@ -204,23 +204,31 @@ export class SearchComponent implements OnInit {
         const sF = this.searchForm.value as SearchQueryModel;
         if (!isAdvanced) {
             if (sF && sF.searchBy) {
-                if (sF.searchInput) {
-                    return {
-                        pos: sF.searchInput,
-                        chr: sF.chromosome,
-                    };
+                if (sF.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
+                    if (sF.searchInput) {
+                        return {
+                            pos: sF.searchInput,
+                            chr: sF.chromosome,
+                        };
+                    } else {
+                        return {}
+                    }
+
                 } else {
-                    return {};
+                    return sF.searchInput ? {rs: sF.searchInput} : {};
                 }
+
             } else {
                 return sF.searchInput ? {pos: sF.searchInput, chr: sF.chromosome} : {};
             }
+
         } else {
             if (sF) {
                 const result: Partial<SearchParamsModel> = {};
                 searchBy.forEach(s => addToParams(s, sF, result));
                 return result;
-            } else return {};
+            }
+            else return {};
         }
     }
 
