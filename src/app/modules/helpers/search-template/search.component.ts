@@ -109,9 +109,9 @@ export class SearchComponent implements OnInit {
                         , tfOrCl: "tf"}
                 ));
             });
-        this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-            {search: this.searchForm.value, isAdvanced: this.isAdvanced}
-        ));
+        // this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+        //     {search: this.searchForm.value, isAdvanced: this.isAdvanced}
+        // ));
     }
 
     _clearSearchField() {
