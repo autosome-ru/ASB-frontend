@@ -38,9 +38,9 @@
         ></tr>
     </table>
 </div>
-<mat-paginator #paginator
-               [pageSizeOptions]="_getPaginatorOptions()"
-               showFirstLastButtons
+<mat-paginator
+   [pageSizeOptions]="_getPaginatorOptions()"
+   showFirstLastButtons
 ></mat-paginator>
 
 <ng-template #alignTemplate let-value="value">

@@ -1,8 +1,11 @@
+export type SearchByModel = "pos" | "cl" | "tf";
+
+
 export interface SearchQueryModel {
     searchInput: string;
     searchBy: "id" | "pos";
     chromosome: string;
-    searchByArray: ("id" | "pos" | "cl" | "tf")[];
+    searchByArray: SearchByModel[];
     searchCl: string;
     searchTf: string;
     tfList: string[];
@@ -21,4 +24,11 @@ export interface SearchHintModel {
     aggregatedSnpCount: number;
 }
 
-
+export interface SearchParamsModel {
+    pos: string;
+    rs: string;
+    chr: string;
+    by: string;
+    cl: string;
+    tf: string;
+}

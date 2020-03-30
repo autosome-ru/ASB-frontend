@@ -1,10 +1,10 @@
-import {Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, ElementRef, HostBinding, Input, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {SearchHintModel, SearchQueryModel} from "src/app/models/searchQueryModel";
+import {SearchByModel, SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/searchQueryModel";
 import {TfOrCl} from "src/app/models/data.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -16,7 +16,6 @@ import {FileSaverService} from "ngx-filesaver";
 import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
-
 
 @Component({
     selector: "asb-search",
@@ -38,10 +37,6 @@ export class SearchComponent implements OnInit {
 
     @Input()
     public isAdvanced: boolean;
-    private input$: Observable<SearchQueryModel>;
-
-    @Output ()
-    public searchQuery: EventEmitter<SearchQueryModel>;
 
     public searchForm: FormGroup;
     separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -52,6 +47,7 @@ export class SearchComponent implements OnInit {
         {view: "Cell types", value: "cl"},
     ]
     ;
+    private searchParams: SearchParamsModel;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -71,64 +67,30 @@ export class SearchComponent implements OnInit {
 
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
-        for (let i = 1; i < 22; i++ ) {
+        for (let i = 1; i < 22; i++) {
             this.listOfChrs.push(String(i));
         }
         this.listOfChrs.push("X");
         this.searchForm = this.formBuilder.group({
-            searchInput: "",
-            searchBy: "",
-            chromosome: "",
-            searchByArray: null,
-            searchTf: null,
-            searchCl: null,
-            tfList: null,
-            clList: null,
-        }, {
+                searchInput: "",
+                searchBy: "",
+                chromosome: "",
+                searchByArray: null,
+                searchTf: null,
+                searchCl: null,
+                tfList: null,
+                clList: null,
+            }, {
                 validator: matchingPattern("searchInput",
                     "searchBy", "searchByArray", this.isAdvanced),
             }
         );
+        this.searchParams = this.route.snapshot.queryParams as SearchParamsModel;
+        this.searchForm.patchValue(
+            this._convertParams(this.searchParams)
+        );
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
-        this.input$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
-        this.input$.subscribe(s => {
-            if (this.searchForm.value !== s) {
-                this.searchForm.patchValue(s,
-                    // {
-                    //     searchInput: s.searchInput,
-                    //     searchBy: s.searchByArray.indexOf("pos") !== -1 ? "pos" : s.searchBy,
-                    //     chromosome: s.chromosome,
-                    //     searchTf: s.searchTf,
-                    //     searchCl: s.searchCl,
-                    //     searchByArray:
-                    //         s.searchBy === "pos" &&
-                    //         s.searchByArray.indexOf("pos") === -1 ?
-                    //             [...s.searchByArray, "pos"] :
-                    //             s.searchByArray,
-                    // },
-                    {emitEvent: false});
-            }
-        });
-        this.searchForm.get("searchCl").valueChanges.subscribe(
-            s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
-                {search: {
-                        ...this.searchForm.value as SearchQueryModel,
-                        searchCl: s,
-                    }, tfOrCl: "cl"}
-            )));
-        this.searchForm.get("searchTf").valueChanges.subscribe(
-            s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
-                {search: {
-                        ...this.searchForm.value as SearchQueryModel,
-                        searchTf: s,
-                        }
-                    , tfOrCl: "tf"}
-            )));
-        this.searchForm.valueChanges.subscribe(
-            s => this.store.dispatch(new fromActions.search.SetFilterAction(
-                s as SearchQueryModel,
-            )));
     }
 
     _clearSearchField() {
@@ -164,7 +126,7 @@ export class SearchComponent implements OnInit {
     }
 
     _checkToDisplay(id: string) {
-        const searchBy: string[] = this.searchForm.get("searchByArray").value  as string[];
+        const searchBy: string[] = this.searchForm.get("searchByArray").value as string[];
         if (this.isAdvanced) {
 
             if (searchBy && searchBy.length &&
@@ -234,6 +196,82 @@ export class SearchComponent implements OnInit {
         } else {
             return this.advancedSearchOptions.filter(s => s.value === value[0])[0].view;
         }
+    }
+
+    _getSearchParams(): Partial<SearchParamsModel> {
+        const sF = this.searchForm.value as SearchQueryModel;
+        if (!this.isAdvanced) {
+            if (sF && sF.searchBy) {
+                if (sF.searchBy === "pos") {
+                    return {
+                        pos: sF.searchInput,
+                        chr: sF.chromosome,
+                    };
+                } else {
+                    return {
+                        rs: sF.searchInput
+                    };
+                }
+            } else return sF.searchInput ? {rs: sF.searchInput} : {};
+        } else {
+            if (sF && sF.searchByArray) {
+                const result: Partial<SearchParamsModel> = {by: sF.searchByArray.join(",")};
+                sF.searchByArray.forEach(s => addToParams(s, sF, result));
+            } else return {};
+        }
+    }
+
+    _convertParams(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
+        if (this.isAdvanced) {
+            if (searchParams && searchParams.by) {
+                const byArray: SearchByModel[] = searchParams.by.split(",") as SearchByModel[];
+                const result: Partial<SearchQueryModel> = {
+                    searchByArray: byArray,
+                };
+                byArray.forEach(s => addToResult(s, searchParams, result));
+                return result;
+            } else {
+                return {};
+            }
+        } else {
+            return searchParams && searchParams.rs ?
+                {searchBy: "id", searchInput: searchParams.rs} :
+                {
+                    searchBy: "pos",
+                    chromosome: searchParams.chr || "1",
+                    searchInput: searchParams.pos
+                };
+
+        }
+    }
+}
+
+function addToResult(s: SearchByModel, params: Partial<SearchParamsModel>, result: Partial<SearchQueryModel>) {
+    switch (s) {
+        case "cl":
+            result.clList = params.cl.split(",");
+            return;
+        case "pos":
+            result.searchInput = params.pos;
+            result.chromosome = params.chr;
+            return;
+        case "tf":
+            result.tfList = params.tf.split(",");
+            return;
+    }
+}
+function addToParams(s: SearchByModel, sF: SearchQueryModel, result: Partial<SearchParamsModel>) {
+    switch (s) {
+        case "cl":
+            result.cl = sF.clList.join(",");
+            return;
+        case "pos":
+            result.pos = sF.searchInput;
+            result.chr = sF.chromosome;
+            return;
+        case "tf":
+            result.tf = sF.tfList.join(",");
+            return;
     }
 }
 

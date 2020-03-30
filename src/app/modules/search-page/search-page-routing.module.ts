@@ -4,7 +4,7 @@ import {SearchPageComponent} from "./search-page.component";
 
 const routes: Routes = [
     {
-        path: "",
+        path: "simple",
         component: SearchPageComponent
     },
     {

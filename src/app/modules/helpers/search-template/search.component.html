@@ -231,7 +231,8 @@
             </a>
             <a
                 mat-raised-button
-                [routerLink]="isAdvanced ? '/search' : '/search/advanced'"
+                [routerLink]="isAdvanced ? '/search/simple' : '/search/advanced'"
+                [queryParams]="_getSearchParams()"
             >
                 {{isAdvanced ? 'simple search' : 'advanced search'}}
             </a>
