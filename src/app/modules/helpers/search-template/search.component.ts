@@ -99,7 +99,7 @@ export class SearchComponent implements OnInit {
                             searchTf: s,
                         }, tfOrCl: "tf"}
                 )));
-        if (Object.keys(this.searchParams).length > 0) {
+        if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
                 {search: this.searchForm.value, isAdvanced: this.isAdvanced}
             ));
