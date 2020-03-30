@@ -28,10 +28,6 @@ export class SearchService {
             {params});
     }
 
-
-
-
-
     public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean):
         Observable<SnpSearchBackendModel[]> {
         if (!isAdvanced) {
@@ -95,7 +91,6 @@ function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string
                             filter.tfList.join(",");
                     }
                     return;
-
             }
         }
     );

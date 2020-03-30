@@ -61,7 +61,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
 
-        this.isAdvancedSearch = !this.router.isActive("/search", true);
+        this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
         this.pageSize = 3;
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
