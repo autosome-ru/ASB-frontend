@@ -67,15 +67,9 @@ export class SearchEffect {
                         "Result too long") :
                     console.log("Something went wrong with " + action.payload.search.searchInput);
             } else {
-                if (action.payload.search.searchByArray.some(s => s === "pos")) {
-                    this.tostr.warning(
-                        "Try a shorter search interval or use get in csv option",
-                        "Result too long");
-                } else {
-                    this.tostr.warning(
-                        "Try search by genome position or use get in csv option",
-                        "Result too long");
-                }
+                this.tostr.warning(
+                    "Try a shorter search interval or use get in csv option",
+                    "Result too long");
             }
             return EMPTY;
         }),

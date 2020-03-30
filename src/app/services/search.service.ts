@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
 import {
+    searchBy,
     SearchHintBackendModel,
     SearchQueryModel,
 } from "../models/searchQueryModel";
@@ -73,7 +74,7 @@ function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
 
 function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string]: string} {
     const params: {[id: string]: string} = {};
-    filter.searchByArray.forEach(s => {
+    searchBy.forEach(s => {
             switch (s) {
                 case "cl":
                     if (filter.clList.length > 0) {
@@ -81,9 +82,11 @@ function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string
                     }
                     return;
                 case "pos":
-                    params["chromosome"] = "chr" + filter.chromosome;
-                    params["start"] = filter.searchInput.split(":")[0];
-                    params["end"] = filter.searchInput.split(":")[1];
+                    if (filter.searchInput) {
+                        params["chromosome"] = "chr" + filter.chromosome;
+                        params["start"] = filter.searchInput.split(":")[0];
+                        params["end"] = filter.searchInput.split(":")[1];
+                    }
                     return;
                 case "tf":
                     if (filter.tfList.length > 0) {

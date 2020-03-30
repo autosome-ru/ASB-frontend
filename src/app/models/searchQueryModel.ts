@@ -1,17 +1,14 @@
 export type SearchByModel = "pos" | "cl" | "tf";
-
+export const searchBy: SearchByModel[] = ["cl", "tf", "pos"];
 
 export interface SearchQueryModel {
     searchInput: string;
     searchBy: "id" | "pos";
     chromosome: string;
-    searchByArray: SearchByModel[];
     searchCl: string;
     searchTf: string;
     tfList: string[];
     clList: string[];
-    // inCL: boolean;
-    // inTF: boolean;
 }
 
 export interface SearchHintBackendModel {
