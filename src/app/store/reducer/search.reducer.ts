@@ -1,8 +1,5 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {
-    SearchHintModel,
-    SearchQueryModel,
-} from "src/app/models/searchQueryModel";
+import {SearchHintModel} from "src/app/models/searchQueryModel";
 import {SnpSearchModel} from "../../models/data.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
@@ -10,7 +7,6 @@ import {
 import {convertSearchHintBackendModelToSearchHintModel} from "../../helpers/search-model.converter";
 
 export interface SearchState {
-    searchFilter: SearchQueryModel;
     searchOptions: {
         tf: SearchHintModel[],
         cl: SearchHintModel[],
@@ -22,7 +18,6 @@ export interface SearchState {
     searchResults: SnpSearchModel[];
     searchResultsLoading: boolean;
 }
-export const selectSearchQuery = (state: SearchState) => state.searchFilter;
 export const selectSearchOptions = (state: SearchState) => state.searchOptions;
 export const selectSearchOptionsLoading = (state: SearchState) => state.searchOptionsLoading;
 
@@ -30,16 +25,6 @@ export const selectSearchResults = (state: SearchState) => state.searchResults;
 export const selectSearchResultsLoading = (state: SearchState) => state.searchResultsLoading;
 
 export const initialState: SearchState = {
-    searchFilter: {
-        searchInput: "",
-        searchBy: "id",
-        chromosome: "1",
-        searchByArray: ["tf", "cl"],
-        searchCl: "",
-        searchTf: "",
-        tfList: ["CTCF_HUMAN"],
-        clList: []
-    },
     searchOptions: {
         tf: [],
         cl: []
@@ -53,12 +38,6 @@ export const initialState: SearchState = {
 };
 export function searchReducer(state: SearchState = initialState, action: fromActions.ActionUnion): SearchState {
     switch (action.type) {
-        case fromActions.ActionTypes.SetFilter: {
-            return {
-                ...state,
-                searchFilter: action.payload
-            };
-        }
         case fromActions.ActionTypes.LoadSearchOptions: {
 
             return {
