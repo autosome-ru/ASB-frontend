@@ -241,7 +241,6 @@ export class SearchComponent implements OnInit {
                     searchInput: searchParams.pos
                 } :
                 {searchBy: "id", searchInput: searchParams.rs};
-
         }
     }
 }
@@ -252,8 +251,10 @@ function addToResult(s: SearchByModel, params: Partial<SearchParamsModel>, resul
             result.clList = params.cl ? params.cl.split(",") : [];
             return;
         case "pos":
-            result.searchInput = params.pos;
-            result.chromosome = params.chr;
+            if (params.pos) {
+                result.searchInput = params.pos;
+                result.chromosome = params.chr;
+            }
             return;
         case "tf":
             result.tfList = params.tf ? params.tf.split(",") : [];
