@@ -57,7 +57,7 @@ export class SearchComponent implements OnInit {
         private toastr: ToastrService,
     ) {}
 
-    listOfChrs: string[] = ["all chrs"];
+    listOfChrs: string[] = [" all"];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
@@ -208,11 +208,13 @@ export class SearchComponent implements OnInit {
             if (sF && sF.searchBy) {
                 if (sF.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
                     if (sF.searchInput) {
+                        console.log(this.searchData);
                         if (this.searchData && this.searchData.length > 0 && this.searchData.length < 4
                             && this.searchData.reduce(
                                 (a, b) =>
                                     a.pos === b.pos && a.chr === b.chr ?
                                         a : {chr: "0", pos: 0}, this.searchData[0]).pos) {
+                            console.log(this.searchData[0]);
                             return {
                                 pos: "" + this.searchData[0].pos,
                                 chr: this.searchData[0].chr,
