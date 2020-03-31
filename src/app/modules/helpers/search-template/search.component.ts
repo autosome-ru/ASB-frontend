@@ -208,23 +208,10 @@ export class SearchComponent implements OnInit {
             if (sF && sF.searchBy) {
                 if (sF.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
                     if (sF.searchInput) {
-                        console.log(this.searchData);
-                        if (this.searchData && this.searchData.length > 0 && this.searchData.length < 4
-                            && this.searchData.reduce(
-                                (a, b) =>
-                                    a.pos === b.pos && a.chr === b.chr ?
-                                        a : {chr: "0", pos: 0}, this.searchData[0]).pos) {
-                            console.log(this.searchData[0]);
-                            return {
-                                pos: "" + this.searchData[0].pos,
-                                chr: this.searchData[0].chr,
-                            };
-                        } else {
-                            return {
-                                pos: sF.searchInput,
-                                chr: sF.chromosome,
-                            };
-                        }
+                        return {
+                            pos: sF.searchInput,
+                            chr: sF.chromosome,
+                        };
                     } else return {};
 
                 } else {
@@ -293,6 +280,7 @@ function convertFormToAdvancedParam(s: SearchByModel,
             return;
         case "pos":
             if (sF.searchInput) {
+                console.log(searchData);
                 if (searchData && searchData.length > 0 && searchData.length < 4
                     && searchData.reduce(
                         (a, b) =>
