@@ -53,7 +53,12 @@
             <mat-select
                 formControlName="chromosome"
             >
-                <mat-option *ngFor="let chr of listOfChrs" [value]="chr">chr{{chr}}</mat-option>
+                <mat-option
+                    *ngFor="let chr of listOfChrs"
+                            [value]="chr"
+                >
+                    chr{{chr}}
+                </mat-option>
             </mat-select>
         </mat-form-field>
         <ng-container *ngIf="_checkToDisplay('pos')">
@@ -64,7 +69,7 @@
                 class="my-custom-component-small"
             >
                 <!--<span matPrefix>chr{{searchForm.get("chromosome").value}}&nbsp;</span>-->
-                <span matPrefix>pos&nbsp;</span>
+                <span matPrefix>chr{{searchForm.get("chromosome").value}}:</span>
                 <input placeholder="e.g. 28554168:80422458"
                        matInput
                        name="Search SNPs"
@@ -211,7 +216,7 @@
             <a
                 mat-raised-button
                 [routerLink]="isAdvanced ? '/search/simple' : '/search/advanced'"
-                [queryParams]="_getSearchParams(!isAdvanced)"
+                [queryParams]="_convertFormToParams(!isAdvanced)"
             >
                 {{isAdvanced ? 'simple search' : 'advanced search'}}
             </a>

@@ -5,7 +5,7 @@ import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {searchBy, SearchByModel, SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/searchQueryModel";
-import {TfOrCl} from "src/app/models/data.model";
+import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
@@ -38,6 +38,9 @@ export class SearchComponent implements OnInit {
     @Input()
     public isAdvanced: boolean;
 
+    @Input()
+    public searchData: SnpSearchModel[];
+
     public searchForm: FormGroup;
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -54,7 +57,7 @@ export class SearchComponent implements OnInit {
         private toastr: ToastrService,
     ) {}
 
-    public listOfChrs: string[] = [];
+    listOfChrs: string[] = ["all chrs"];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
@@ -67,7 +70,7 @@ export class SearchComponent implements OnInit {
         this.listOfChrs.push("X");
         this.searchForm = this.formBuilder.group({
             searchInput: "",
-            searchBy: "id",
+            searchBy: ["id"],
             chromosome: "1",
             searchTf: null,
             searchCl: null,
@@ -80,7 +83,7 @@ export class SearchComponent implements OnInit {
         );
         this.searchParams = this.route.snapshot.queryParams as SearchParamsModel;
         this.searchForm.patchValue(
-            this._convertParams(this.searchParams)
+            this._convertParamsToForm(this.searchParams)
         );
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
@@ -111,7 +114,6 @@ export class SearchComponent implements OnInit {
     }
 
     _navigateToSearch() {
-        console.log(this.isAdvanced);
         if ((this.searchForm.get("searchInput").value || this.isAdvanced) &&
             this.searchForm.valid) {
             const currentFilter = this.searchForm.value as SearchQueryModel;
@@ -120,10 +122,10 @@ export class SearchComponent implements OnInit {
             ));
             if (this.isAdvanced) {
                 this.router.navigate(["/search/advanced"], {
-                    queryParams: this._getSearchParams(this.isAdvanced)});
+                    queryParams: this._convertFormToParams(this.isAdvanced)});
             } else {
                 this.router.navigate(["/search/simple"], {
-                    queryParams: this._getSearchParams(this.isAdvanced)});
+                    queryParams: this._convertFormToParams(this.isAdvanced)});
             }
 
         }
@@ -200,19 +202,28 @@ export class SearchComponent implements OnInit {
             {clList: this.searchForm.value.clList.filter(s => s !== chipName)});
     }
 
-    _getSearchParams(isAdvanced: boolean): Partial<SearchParamsModel> {
+    _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
         const sF = this.searchForm.value as SearchQueryModel;
         if (!isAdvanced) {
             if (sF && sF.searchBy) {
                 if (sF.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
                     if (sF.searchInput) {
-                        return {
-                            pos: sF.searchInput,
-                            chr: sF.chromosome,
-                        };
-                    } else {
-                        return {}
-                    }
+                        if (this.searchData && this.searchData.length > 0 && this.searchData.length < 4
+                            && this.searchData.reduce(
+                                (a, b) =>
+                                    a.pos === b.pos && a.chr === b.chr ?
+                                        a : {chr: "0", pos: 0}, this.searchData[0]).pos) {
+                            return {
+                                pos: "" + this.searchData[0].pos,
+                                chr: this.searchData[0].chr,
+                            };
+                        } else {
+                            return {
+                                pos: sF.searchInput,
+                                chr: sF.chromosome,
+                            };
+                        }
+                    } else return {};
 
                 } else {
                     return sF.searchInput ? {rs: sF.searchInput} : {};
@@ -225,22 +236,20 @@ export class SearchComponent implements OnInit {
         } else {
             if (sF) {
                 const result: Partial<SearchParamsModel> = {};
-                searchBy.forEach(s => addToParams(s, sF, result));
+                searchBy.forEach(s => convertFormToAdvancedParam(s, sF, this.searchData, result));
                 return result;
-            }
-            else return {};
+            } else return {};
         }
     }
 
-    _convertParams(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
+    _convertParamsToForm(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
         if (this.isAdvanced) {
             if (searchParams) {
                 const result: Partial<SearchQueryModel> = {};
-                searchBy.forEach(s => addToResult(s, searchParams, result));
+                searchBy.forEach(s => convertAdvancedParamToForm(s, searchParams, this.searchData, result));
                 return result;
-            } else {
-                return {};
-            }
+            } else return {};
+
         } else {
             return searchParams && searchParams.hasOwnProperty("pos") ?
                 {
@@ -253,7 +262,10 @@ export class SearchComponent implements OnInit {
     }
 }
 
-function addToResult(s: SearchByModel, params: Partial<SearchParamsModel>, result: Partial<SearchQueryModel>) {
+function convertAdvancedParamToForm(s: SearchByModel,
+                     params: Partial<SearchParamsModel>,
+                     searchData: SnpSearchModel[],
+                     result: Partial<SearchQueryModel>) {
     switch (s) {
         case "cl":
             result.clList = params.cl ? params.cl.split(",") : [];
@@ -269,15 +281,29 @@ function addToResult(s: SearchByModel, params: Partial<SearchParamsModel>, resul
             return;
     }
 }
-function addToParams(s: SearchByModel, sF: SearchQueryModel, result: Partial<SearchParamsModel>) {
+function convertFormToAdvancedParam(s: SearchByModel,
+                     sF: SearchQueryModel,
+                     searchData: SnpSearchModel[],
+                     result: Partial<SearchParamsModel>) {
     switch (s) {
         case "cl":
             if (sF && sF.clList.length > 0) result.cl = sF.clList.join(",");
             return;
         case "pos":
             if (sF.searchInput) {
-                result.pos = sF.searchInput;
-                result.chr = sF.chromosome;
+                if (searchData && searchData.length > 0 && searchData.length < 4
+                    && searchData.reduce(
+                        (a, b) =>
+                            a.pos === b.pos && a.chr === b.chr ?
+                                a : {chr: "0", pos: 0}, searchData[0]).pos) {
+                    return {
+                        pos: "" + searchData[0].pos,
+                        chr: searchData[0].chr,
+                    };
+                } else {
+                    result.pos = sF.searchInput;
+                    result.chr = sF.chromosome;
+                }
             }
             return;
         case "tf":
