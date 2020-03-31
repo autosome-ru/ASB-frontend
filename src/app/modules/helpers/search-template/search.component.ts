@@ -280,15 +280,17 @@ function convertFormToAdvancedParam(s: SearchByModel,
             return;
         case "pos":
             if (sF.searchInput) {
-                console.log(searchData.reduce(
-                    (a, b) =>
-                        a.pos === b.pos && a.chr === b.chr ?
-                            a : {chr: "0", pos: 0}, searchData[0]).pos);
+                if (searchData && searchData.length > 0) {
+                    console.log(searchData.reduce(
+                        (a, b) =>
+                            a.pos === b.pos && a.chr === b.chr ?
+                                a : {chr: "0", pos: 0}, searchData[0]).pos);
+                }
                 if (searchData && searchData.length > 0 && searchData.length < 4
                     && searchData.reduce(
                         (a, b) =>
                             a.pos === b.pos && a.chr === b.chr ?
-                                a : {chr: "0", pos: 0}, searchData[0]).pos) {
+                                b : {chr: "0", pos: 0}, searchData[0]).pos) {
                     return {
                         pos: "" + searchData[0].pos,
                         chr: searchData[0].chr,
