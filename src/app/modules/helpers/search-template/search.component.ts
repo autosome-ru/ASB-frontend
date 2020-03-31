@@ -262,7 +262,7 @@ function convertAdvancedParamToForm(s: SearchByModel,
         case "pos":
             if (params.pos) {
                 result.searchInput = params.pos;
-                result.chromosome = params.chr;
+                result.chromosome = params.chr.slice(3);
             }
             return;
         case "tf":
@@ -280,12 +280,6 @@ function convertFormToAdvancedParam(s: SearchByModel,
             return;
         case "pos":
             if (sF.searchInput) {
-                if (searchData && searchData.length > 0) {
-                    console.log(searchData.reduce(
-                        (a, b) =>
-                            a.pos === b.pos && a.chr === b.chr ?
-                                a : {chr: "0", pos: 0}, searchData[0]).pos);
-                }
                 if (searchData && searchData.length > 0 && searchData.length < 4
                     && searchData.reduce(
                         (a, b) =>
@@ -293,7 +287,6 @@ function convertFormToAdvancedParam(s: SearchByModel,
                                 b : {chr: "0", pos: 0}, searchData[0]).pos) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr;
-                    return;
                 } else {
                     result.pos = sF.searchInput;
                     result.chr = sF.chromosome;
