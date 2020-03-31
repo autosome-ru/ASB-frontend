@@ -291,10 +291,9 @@ function convertFormToAdvancedParam(s: SearchByModel,
                         (a, b) =>
                             a.pos === b.pos && a.chr === b.chr ?
                                 b : {chr: "0", pos: 0}, searchData[0]).pos) {
-                    return {
-                        pos: "" + searchData[0].pos,
-                        chr: searchData[0].chr,
-                    };
+                    result.pos = "" + searchData[0].pos;
+                    result.chr = searchData[0].chr;
+                    return;
                 } else {
                     result.pos = sF.searchInput;
                     result.chr = sF.chromosome;
