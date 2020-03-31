@@ -19,6 +19,8 @@ import {AsbSnpPageModule} from "./modules/snp-page/snp-page.module";
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import { ToastrModule } from "ngx-toastr";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {ApiInterceptor} from "./interceptors/api-interceptor";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { ToastrModule } from "ngx-toastr";
 
       AsbAppIconsModule,
       AsbHelpersModule,
+
       // Pages components
       AsbHomePageModule,
       AsbPageNotFoundModule,
@@ -47,6 +50,11 @@ import { ToastrModule } from "ngx-toastr";
   providers: [
       DataService,
       SearchService,
+      {
+          provide: HTTP_INTERCEPTORS,
+          useClass: ApiInterceptor,
+          multi: true
+      }
   ],
   bootstrap: [AppComponent]
 })
