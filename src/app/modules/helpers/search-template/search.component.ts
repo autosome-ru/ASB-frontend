@@ -224,6 +224,7 @@ export class SearchComponent implements OnInit {
 
         } else {
             if (sF) {
+                console.log(this.searchData);
                 const result: Partial<SearchParamsModel> = {};
                 searchBy.forEach(s => convertFormToAdvancedParam(s, sF, this.searchData, result));
                 return result;
