@@ -90,7 +90,7 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
                     }
                     return;
                 case "pos":
-                    if (filter.chromosome !== "any chr") {
+                    if (filter.chromosome && filter.chromosome !== "any chr") {
                         if (filter.searchInput) {
                             const positions: { start: string, end: string } =
                                 getStartEndPositions(filter.searchInput);
