@@ -133,6 +133,7 @@ export class SearchComponent implements OnInit {
         this.searchForm.get("searchBy").valueChanges.subscribe(
             (s: "id" | "pos") => {
                 if (checkOneResult(this.searchData)) {
+                    console.log(this.searchData[0]);
                     this.searchForm.patchValue(
                         s === "pos" ?
                             {
@@ -140,7 +141,7 @@ export class SearchComponent implements OnInit {
                                 chromosome: this.searchData[0].chr
                             } :
                             {
-                                searchInput: this.searchData[0].rsId.slice(2),
+                                searchInput: this.searchData[0].rsId,
                             }
                     );
                 }
