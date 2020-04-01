@@ -80,9 +80,9 @@ export class SearchComponent implements OnInit {
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
-            searchInput: "",
+            searchInput: {value: "", disabled: true},
             searchBy: ["id"],
-            chromosome: {value: "any chr", disabled: true},
+            chromosome: "any chr",
             searchTf: null,
             searchCl: null,
             tfList: [[]],
@@ -132,7 +132,7 @@ export class SearchComponent implements OnInit {
 
         this.searchForm.get("searchBy").valueChanges.subscribe(
             (s: "id" | "pos") => {
-                // if (checkOneResult(this.searchData)) {
+                 if (checkOneResult(this.searchData)) {
                 //     this.searchForm.patchValue(
                 //         s === "pos" ?
                 //             {
@@ -143,7 +143,7 @@ export class SearchComponent implements OnInit {
                 //                 searchInput: this.searchData[0].rsId,
                 //             }
                 //     );
-                // }
+                 }
             });
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
