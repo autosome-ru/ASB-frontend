@@ -154,11 +154,11 @@ export class SearchComponent implements OnInit {
                     this.searchForm.patchValue(
                         s === "pos" ?
                             {
-                                searchInput: "" + this.searchData[0].pos,
-                                chromosome: this.searchData[0].chr
+                                searchInput: "" + this.searchData.results[0].pos,
+                                chromosome: this.searchData.results[0].chr
                             } :
                             {
-                                searchInput: this.searchData[0].rsId,
+                                searchInput: this.searchData.results[0].rsId,
                             }
                     );
                  }
@@ -335,8 +335,8 @@ function convertFormToAdvancedParam(s: SearchByModel,
         case "pos":
             if (sF.searchInput) {
                 if (checkOneResult(searchData)) {
-                    result.pos = "" + searchData[0].pos;
-                    result.chr = searchData[0].chr;
+                    result.pos = "" + searchData.results[0].pos;
+                    result.chr = searchData.results[0].chr;
                 } else {
                     result.pos = sF.searchInput;
                     result.chr = sF.chromosome;
@@ -355,7 +355,6 @@ function checkOneResult(searchData: SearchResultsModel): boolean {
         && searchData.results.reduce((a, b) =>
                 a.pos === b.pos && a.chr === b.chr ?
                     b : {chr: "chr0", pos: 0}, searchData.results[0]).pos);
-
 }
 
 function matchingPattern(searchKey: string,
