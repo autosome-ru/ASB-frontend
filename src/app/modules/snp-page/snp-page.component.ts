@@ -52,9 +52,6 @@ export class SnpPageComponent implements OnInit {
         ...commonInitialDisplayedColumns,
         "motifFc",
     ];
-    public phenotypesEmpty: boolean;
-
-
 
     constructor(
         private store: Store<AppState>,

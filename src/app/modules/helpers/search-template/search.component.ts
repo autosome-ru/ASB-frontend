@@ -156,6 +156,9 @@ export class SearchComponent implements OnInit {
     _navigateToSearch() {
         if ((this.searchForm.get("searchInput").value || this.isAdvanced) &&
             this.searchForm.valid) {
+            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+                {search: this.searchForm.value, isAdvanced: this.isAdvanced}
+            ));
             this.router.navigate(["/search/" +
             (this.isAdvanced ? "advanced" : "simple")], {
                 queryParams: this._convertFormToParams(this.isAdvanced)});

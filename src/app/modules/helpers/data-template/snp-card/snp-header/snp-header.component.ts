@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, } from "@angular/core";
-import {SnpSearchModel} from "src/app/models/data.model";
+import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
 
 @Component({
     selector: "asb-snp-header",
@@ -9,7 +9,7 @@ import {SnpSearchModel} from "src/app/models/data.model";
 export class AsbSnpHeaderComponent implements OnInit {
 
     @Input()
-    public data: SnpSearchModel;
+    public data: SnpSearchModel | SnpInfoModel;
     @Input()
     public snpCard: boolean = true;
 
