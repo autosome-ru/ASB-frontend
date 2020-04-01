@@ -12,7 +12,7 @@ import {
     SearchQueryModel,
     SearchResultsModel
 } from "src/app/models/searchQueryModel";
-import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
+import {TfOrCl} from "src/app/models/data.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
@@ -150,7 +150,7 @@ export class SearchComponent implements OnInit {
                             {chromosome: "any chr"});
                     }
                 }
-                 if (checkOneResult(this.searchData.results)) {
+                 if (checkOneResult(this.searchData)) {
                     this.searchForm.patchValue(
                         s === "pos" ?
                             {
@@ -278,7 +278,7 @@ export class SearchComponent implements OnInit {
             if (sF) {
                 const result: Partial<SearchParamsModel> = {};
                 searchBy.forEach(s => convertFormToAdvancedParam(s,
-                    sF, this.searchData.results, result));
+                    sF, this.searchData, result));
                 return result;
             } else return {};
         }
@@ -289,7 +289,7 @@ export class SearchComponent implements OnInit {
             if (searchParams) {
                 const result: Partial<SearchQueryModel> = {};
                 searchBy.forEach(s => convertAdvancedParamToForm(s,
-                    searchParams, this.searchData.results, result));
+                    searchParams, result));
                 return result;
             } else return {};
 
@@ -307,7 +307,6 @@ export class SearchComponent implements OnInit {
 
 function convertAdvancedParamToForm(s: SearchByModel,
                      params: Partial<SearchParamsModel>,
-                     searchData: SnpSearchModel[],
                      result: Partial<SearchQueryModel>) {
     switch (s) {
         case "cl":
@@ -327,7 +326,7 @@ function convertAdvancedParamToForm(s: SearchByModel,
 
 function convertFormToAdvancedParam(s: SearchByModel,
                      sF: SearchQueryModel,
-                     searchData: SnpSearchModel[],
+                     searchData: SearchResultsModel,
                      result: Partial<SearchParamsModel>) {
     switch (s) {
         case "cl":
@@ -350,9 +349,10 @@ function convertFormToAdvancedParam(s: SearchByModel,
     }
 }
 
-function checkOneResult(searchData: SnpSearchModel[]): boolean {
-    return !!(searchData && searchData.length > 0 && searchData.length < 4
-        && searchData.reduce((a, b) =>
+function checkOneResult(searchData: SearchResultsModel): boolean {
+    return !!(searchData && searchData.results &&
+        searchData.results.length > 0 && searchData.results.length < 4
+        && searchData.results.reduce((a, b) =>
                 a.pos === b.pos && a.chr === b.chr ?
                     b : {chr: "chr0", pos: 0}, searchData[0]).pos);
 
