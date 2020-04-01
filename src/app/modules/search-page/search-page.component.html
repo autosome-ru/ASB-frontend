@@ -40,32 +40,35 @@
                     <div class="layout pb-2"
                          style="margin-bottom: 20px"
                          *ngFor="let snp of filteredSnpResults$ | async">
-                        <mat-card
-                            class="search-page__card"
-                            asbElevation
-                            role="group"
-                            [routerLink]="'snps/' + snp.rsId + '/' + snp.altBase"
+                        <div
+                            [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
                         >
-                            <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
-                                <mat-card-title>
-                                    <asb-snp-header
-                                        [data]="snp"
-                                        [snpCard]="false"
-                                    >
-                                    </asb-snp-header>
-                                </mat-card-title>
-                                <mat-card-subtitle>
+                            <mat-card
+                                class="search-page__card"
+                                asbElevation
+                                role="group"
+                            >
+                                <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
+                                    <mat-card-title>
+                                        <asb-snp-header
+                                            [data]="snp"
+                                            [snpCard]="false"
+                                        >
+                                        </asb-snp-header>
+                                    </mat-card-title>
+                                    <mat-card-subtitle>
 
-                                </mat-card-subtitle>
-                            </mat-card-header>
-                            <mat-card-content>
-                                <asb-snp-card
-                                    [snpData]="snp"
-                                    [noButtons]="true"
-                                >
-                                </asb-snp-card>
-                            </mat-card-content>
-                        </mat-card>
+                                    </mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <asb-snp-card
+                                        [snpData]="snp"
+                                        [noButtons]="true"
+                                    >
+                                    </asb-snp-card>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
                     </div>
                 </ng-container>
 
