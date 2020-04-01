@@ -354,7 +354,7 @@ function checkOneResult(searchData: SearchResultsModel): boolean {
         searchData.results.length > 0 && searchData.results.length < 4
         && searchData.results.reduce((a, b) =>
                 a.pos === b.pos && a.chr === b.chr ?
-                    b : {chr: "chr0", pos: 0}, searchData[0]).pos);
+                    b : {chr: "chr0", pos: 0}, searchData.results[0]).pos);
 
 }
 
