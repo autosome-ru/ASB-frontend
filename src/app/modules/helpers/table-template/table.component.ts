@@ -2,7 +2,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy,
     Component, ElementRef, EventEmitter,
     HostBinding,
-    Input, Output,
+    Input, OnInit, Output,
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -30,7 +30,7 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
     ],
 })
 
-export class AsbTableComponent<T> implements AfterViewInit {
+export class AsbTableComponent<T> implements AfterViewInit, OnInit {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
     @ViewChild("popover", {static: true})
@@ -73,21 +73,7 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public popoverRow: T;
 
     @Input()
-    set data(value: Array<T>) {
-        if (this.additionalColumns && this.additionalColumns.dataAccessor) {
-            this._dataSource = new MatTableDataSource<any>(
-                value.map((s, index) => {
-                    return {...s, ...this.additionalColumns.dataAccessor(value)[index]};
-                }));
-
-        } else {
-            this._dataSource = new MatTableDataSource<T>(value);
-        }
-        this._dataSource.sort = this.sort;
-        this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
-        if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
-        if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
-    }
+    data: Array<T>;
 
     @HostBinding("class._paginator")
     @Input()
@@ -115,6 +101,22 @@ export class AsbTableComponent<T> implements AfterViewInit {
         return this.additionalColumns && this.additionalColumns.columnModel ?
             {...this.columnModel, ...this.additionalColumns.columnModel} :
             this.columnModel;
+    }
+
+    ngOnInit() {
+        if (this.additionalColumns && this.additionalColumns.dataAccessor) {
+            this._dataSource = new MatTableDataSource<any>(
+                this.data.map((s, index) => {
+                    return {...s, ...this.additionalColumns.dataAccessor(this.data)[index]};
+                }));
+
+        } else {
+            this._dataSource = new MatTableDataSource<T>(this.data);
+        }
+        this._dataSource.sort = this.sort;
+        this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
+        if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+        if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
     }
 
     ngAfterViewInit() {

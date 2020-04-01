@@ -54,7 +54,10 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     isAdvancedSearch: boolean;
 
     public columnModel: AsbTableColumnModel<SnpSearchModel>;
-    public displayedColumns: AsbTableDisplayedColumns<SnpSearchModel>;
+    public displayedColumns: AsbTableDisplayedColumns<SnpSearchModel> = [
+        "genPos",
+        "rsId",
+    ];
     public pageSize: number;
     public initialGroupValue: "list" | "card";
 
@@ -84,10 +87,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.displayedColumns = [
-            "genPos",
-            "rsId",
-        ];
+
         this.columnModel = {
             genPos: {
                 view: "Genome position",
