@@ -11,6 +11,7 @@ import {AsbTableComponent} from "../helpers/table-template/table.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {map} from "rxjs/operators";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
+import {SearchResultsModel} from "../../models/searchQueryModel";
 
 @Component({
   selector: "asb-search-page",
@@ -33,7 +34,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     @HostBinding("class.search-page")
     private readonly cssClass = true;
 
-    public searchSnpResults$: Observable<SnpSearchModel[]>;
+    public searchSnpResults$: Observable<SearchResultsModel>;
     public filteredSnpResults$: Observable<SnpSearchModel[]>;
 
     public searchSnpResultsLoading$: Observable<boolean>;
@@ -72,7 +73,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         }
 
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
-        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
+        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.results.filter(
             (_, index) =>
                 index < this.pageSize && index >= 0)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
@@ -96,11 +97,11 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         this.router.navigate(["snps/" + id + "/" + base]);
     }
 
-    getPhrase(n: number, loading: boolean): string {
+    getPhrase(searchResults: SearchResultsModel, loading: boolean): string {
         if (loading) {
             return "Searching...";
         }
-        switch (n) {
+        switch (searchResults.total) {
             case 0: {
                 return "No results found";
             }
@@ -108,7 +109,9 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
                 return "1 result";
             }
             default: {
-                return `${n} results`;
+                return `${searchResults.total} results` +
+                    (searchResults.total !== searchResults.results.length ?
+                    " use get in tsv option" : "");
             }
         }
     }
@@ -122,7 +125,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
 
     _filterSnpResults(pageSize: number, pageIndex: number): void {
-        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
+        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.results.filter(
             (element, index) =>
                 index < pageSize * (pageIndex + 1) && index >= pageSize * pageIndex)));
     }

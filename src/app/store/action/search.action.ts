@@ -1,7 +1,7 @@
 import {Action} from "@ngrx/store";
 import {
     SearchHintBackendModel,
-    SearchQueryModel,
+    SearchQueryModel, SearchResultsBackendModel,
 } from "src/app/models/searchQueryModel";
 import {SnpSearchBackendModel} from "../../models/data.model";
 
@@ -44,7 +44,7 @@ export class LoadSearchResultsAction implements Action {
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;
 
-    constructor(public payload: SnpSearchBackendModel[]) {}
+    constructor(public payload: SearchResultsBackendModel) {}
 }
 export class LoadSearchResultsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsFail;

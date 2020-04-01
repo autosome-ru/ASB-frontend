@@ -1,3 +1,5 @@
+import {SnpSearchBackendModel, SnpSearchModel} from "./data.model";
+
 export type SearchByModel = "pos" | "cl" | "tf";
 export const searchBy: SearchByModel[] = ["cl", "tf", "pos"];
 
@@ -28,4 +30,14 @@ export interface SearchParamsModel {
     by: string;
     cl: string;
     tf: string;
+}
+
+export interface SearchResultsModel {
+    results: SnpSearchModel[];
+    total: number;
+}
+
+export interface SearchResultsBackendModel {
+    results: SnpSearchBackendModel[];
+    total: number;
 }

@@ -5,9 +5,8 @@ import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
 import {
     searchBy,
     SearchHintBackendModel,
-    SearchQueryModel,
+    SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
-import {SnpSearchBackendModel} from "src/app/models/data.model";
 
 
 @Injectable()
@@ -30,22 +29,22 @@ export class SearchService {
     }
 
     public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean):
-        Observable<SnpSearchBackendModel[]> {
+        Observable<SearchResultsBackendModel> {
         if (!isAdvanced) {
             switch (filter.searchBy) {
                 case "id": {
-                    return this.http.get<SnpSearchBackendModel[]>(
+                    return this.http.get<SearchResultsBackendModel>(
                         `${searchSnpsResultsUrl}/rs/${filter.searchInput}`);
                 }
                 case "pos": {
                     const positions: {start: string, end: string} =
                         getStartEndPositions(filter.searchInput);
-                    return this.http.get<SnpSearchBackendModel[]>(
+                    return this.http.get<SearchResultsBackendModel>(
                         `${searchSnpsResultsUrl}/gp/${filter.chromosome}/${positions.start}/${positions.end}`);
                 }
             }
         } else {
-            return this.http.get<SnpSearchBackendModel[]>(
+            return this.http.get<SearchResultsBackendModel>(
                 `${searchSnpsResultsUrl}/advanced`, {
                     params: makeParamsForAdvancedSearchResults(filter),
                 });

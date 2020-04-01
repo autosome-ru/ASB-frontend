@@ -225,7 +225,8 @@
         </div>
         <button
             *ngIf="isAdvanced"
-            mat-raised-button
+            mat-stroked-button
+            [color]="searchData.total !== searchData.results.length ? 'primary' : null"
             [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
             (click)="_getResultsInCsv()"
         >

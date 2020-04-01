@@ -1,6 +1,5 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {SearchHintModel} from "src/app/models/searchQueryModel";
-import {SnpSearchModel} from "../../models/data.model";
+import {SearchHintModel, SearchResultsModel} from "src/app/models/searchQueryModel";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
 } from "../../helpers/snp-model.converter";
@@ -17,7 +16,7 @@ export interface SearchState {
         tf: boolean,
         cl: boolean,
     };
-    searchResults: SnpSearchModel[];
+    searchResults: SearchResultsModel;
     searchResultsLoading: boolean;
 }
 export const selectSearchOptions = (state: SearchState) => state.searchOptions;
@@ -35,7 +34,10 @@ export const initialState: SearchState = {
         tf: false,
         cl: false
     },
-    searchResults: [],
+    searchResults: {
+        total: null,
+        results: []
+    },
     searchResultsLoading: false,
 };
 export function searchReducer(state: SearchState = initialState, action: fromActions.ActionUnion): SearchState {
@@ -110,14 +112,17 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
             return {
                 ...state,
-                searchResults: <any>action.payload.map(convertSnpSearchBackendModelToSnpSearchModel),
+                searchResults: {
+                    total: action.payload.total,
+                    results: <any>action.payload.results.map(convertSnpSearchBackendModelToSnpSearchModel)
+                },
                 searchResultsLoading: false,
             };
         }
         case fromActions.ActionTypes.LoadSearchResultsFail: {
             return {
                 ...state,
-                searchResults: [],
+                searchResults: {results: [], total: null},
                 searchResultsLoading: false,
             };
         }

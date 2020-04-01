@@ -4,7 +4,14 @@ import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {searchBy, SearchByModel, SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/searchQueryModel";
+import {
+    searchBy,
+    SearchByModel,
+    SearchHintModel,
+    SearchParamsModel,
+    SearchQueryModel,
+    SearchResultsModel
+} from "src/app/models/searchQueryModel";
 import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -50,7 +57,7 @@ export class SearchComponent implements OnInit {
     public isAdvanced: boolean;
 
     @Input()
-    public searchData: SnpSearchModel[];
+    public searchData: SearchResultsModel;
 
     public searchForm: FormGroup;
 
@@ -143,7 +150,7 @@ export class SearchComponent implements OnInit {
                             {chromosome: "any chr"});
                     }
                 }
-                 if (checkOneResult(this.searchData)) {
+                 if (checkOneResult(this.searchData.results)) {
                     this.searchForm.patchValue(
                         s === "pos" ?
                             {
@@ -270,7 +277,8 @@ export class SearchComponent implements OnInit {
         } else {
             if (sF) {
                 const result: Partial<SearchParamsModel> = {};
-                searchBy.forEach(s => convertFormToAdvancedParam(s, sF, this.searchData, result));
+                searchBy.forEach(s => convertFormToAdvancedParam(s,
+                    sF, this.searchData.results, result));
                 return result;
             } else return {};
         }
@@ -280,7 +288,8 @@ export class SearchComponent implements OnInit {
         if (this.isAdvanced) {
             if (searchParams) {
                 const result: Partial<SearchQueryModel> = {};
-                searchBy.forEach(s => convertAdvancedParamToForm(s, searchParams, this.searchData, result));
+                searchBy.forEach(s => convertAdvancedParamToForm(s,
+                    searchParams, this.searchData.results, result));
                 return result;
             } else return {};
 
