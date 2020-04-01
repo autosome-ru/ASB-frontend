@@ -82,7 +82,7 @@ export class SearchComponent implements OnInit {
         this.searchForm = this.formBuilder.group({
             searchInput: "",
             searchBy: ["id"],
-            chromosome: null,
+            chromosome: "any chr",
             searchTf: null,
             searchCl: null,
             tfList: [[]],

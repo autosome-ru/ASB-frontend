@@ -52,8 +52,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     ];
     public pageSize: number;
 
-
-
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private router: Router,
