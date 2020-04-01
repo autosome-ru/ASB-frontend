@@ -1,4 +1,4 @@
-interface SnpGenPosModel {
+export interface SnpGenPosModel {
     rsId: string;
     chr: string;
     pos: number;
@@ -6,7 +6,7 @@ interface SnpGenPosModel {
     altBase: string;
 }
 
-interface SnpGenPosBackendModel {
+export interface SnpGenPosBackendModel {
     chromosome: string;
     position: number;
     ref: string;
@@ -29,6 +29,7 @@ export interface PhenotypesModel {
     QTL: string[];
 }
 export interface SnpSearchModel extends SnpGenPosModel {
+    genPos: SnpGenPosModel;
     transFactors: TfSnpCutModel[];
     cellLines: ClSnpCutModel[];
 }

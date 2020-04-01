@@ -44,12 +44,12 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         this.columnModel = {
-            bad: {view: "Bad", valueConverter: v => v},
+            bad: {view: "BAD", valueConverter: v => v},
             refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
             altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
             align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
-            clName: {view: "Cell line name", valueConverter: v => "" + v},
-            tfName: {view: "Transcription factor name", valueConverter: v => "" + v},
+            clName: {view: "Cell type", valueConverter: v => "" + v},
+            tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
         };
     }
 

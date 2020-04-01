@@ -45,7 +45,7 @@ export class SnpPageComponent implements OnInit {
         name: {view: "Uniprot ID", valueConverter: v => v},
         ...commonColumnModel,
         motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No info"},
-        motifConcordance: {view: "Concordance", valueConverter:
+        motifConcordance: {view: "Motif concordance", valueConverter:
                     v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
     };
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
@@ -99,9 +99,9 @@ const commonColumnModel:
     AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {
     effectSizeRef: {view: "Effect size ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
     effectSizeAlt: {view: "Effect size alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    pValueRef: {view: "p-value ASB ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    pValueAlt: {view: "p-value ASB alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    meanBad: {view: "mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}
+    pValueRef: {view: "-log10 FDR Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    pValueAlt: {view: "-log10 FDR Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}
 };
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [
     "name",

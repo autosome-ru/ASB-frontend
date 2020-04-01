@@ -111,7 +111,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             default: {
                 return `${searchResults.total} results` +
                     (searchResults.total !== searchResults.results.length ?
-                    " use get in tsv option" : "");
+                    "\nToo many to display. Use get in tsv option" : "");
             }
         }
     }

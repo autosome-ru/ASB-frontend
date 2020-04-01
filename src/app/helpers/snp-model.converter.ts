@@ -1,6 +1,6 @@
 import {
     ClSnpBackendCutModel,
-    ClSnpBackendModel, ClSnpCutModel, ClSnpModel, ExpSnpBackendModel, ExpSnpModel,
+    ClSnpBackendModel, ClSnpCutModel, ClSnpModel, ExpSnpBackendModel, ExpSnpModel, SnpGenPosBackendModel, SnpGenPosModel,
     SnpInfoBackendModel,
     SnpInfoModel,
     SnpSearchBackendModel,
@@ -33,14 +33,15 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
     model: Partial<SnpSearchBackendModel>
 ): Partial<SnpSearchModel> {
     const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
+    result.genPos = convertSnpModel(model) as SnpGenPosModel;
     result.cellLines = model.cl_aggregated_snps.map(convertClAggregatedBackendCutSnp);
     result.transFactors = model.tf_aggregated_snps.map(convertTfAggregatedBackendCutSnp);
     return result;
 }
 
-function convertSnpModel(model: Partial<SnpInfoBackendModel | SnpSearchBackendModel>):
-    Partial<SnpInfoModel | SnpSearchBackendModel> {
-    const result: Partial<SnpInfoModel> = {};
+function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
+    Partial<SnpGenPosModel> {
+    const result: Partial<SnpGenPosModel> = {};
     result.chr = model.chromosome;
     result.pos = model.position;
     result.rsId = "rs" + model.rs_id;
