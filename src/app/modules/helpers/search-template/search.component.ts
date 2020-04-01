@@ -99,18 +99,6 @@ export class SearchComponent implements OnInit {
                     "searchBy", this.isAdvanced),
             }
         );
-        this.searchParams = this.route.snapshot.queryParams as SearchParamsModel;
-        this.searchForm.patchValue(
-            this._convertParamsToForm(this.searchParams)
-        );
-
-        // Init results if form is valid after patching
-        if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
-            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                {search: this.searchForm.value, isAdvanced: this.isAdvanced}
-            ));
-        }
-
         // Search options and patching form in simple search
         this.searchForm.get("searchCl").valueChanges.subscribe(
             s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
@@ -150,7 +138,7 @@ export class SearchComponent implements OnInit {
                             {chromosome: "any chr"});
                     }
                 }
-                 if (checkOneResult(this.searchData)) {
+                if (checkOneResult(this.searchData)) {
                     this.searchForm.patchValue(
                         s === "pos" ?
                             {
@@ -161,8 +149,19 @@ export class SearchComponent implements OnInit {
                                 searchInput: this.searchData.results[0].rsId,
                             }
                     );
-                 }
+                }
             });
+        this.searchParams = this.route.snapshot.queryParams as SearchParamsModel;
+        this.searchForm.patchValue(
+            this._convertParamsToForm(this.searchParams)
+        );
+
+        // Init results if form is valid after patching
+        if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
+            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+                {search: this.searchForm.value, isAdvanced: this.isAdvanced}
+            ));
+        }
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
     }
