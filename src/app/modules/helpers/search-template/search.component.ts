@@ -82,7 +82,7 @@ export class SearchComponent implements OnInit {
         this.searchForm = this.formBuilder.group({
             searchInput: "",
             searchBy: ["id"],
-            chromosome: "any chr",
+            chromosome: {value: "any chr", disabled: true},
             searchTf: null,
             searchCl: null,
             tfList: [[]],
@@ -132,19 +132,18 @@ export class SearchComponent implements OnInit {
 
         this.searchForm.get("searchBy").valueChanges.subscribe(
             (s: "id" | "pos") => {
-                if (checkOneResult(this.searchData)) {
-                    console.log(this.searchData[0]);
-                    this.searchForm.patchValue(
-                        s === "pos" ?
-                            {
-                                searchInput: this.searchData[0].pos,
-                                chromosome: this.searchData[0].chr
-                            } :
-                            {
-                                searchInput: this.searchData[0].rsId,
-                            }
-                    );
-                }
+                // if (checkOneResult(this.searchData)) {
+                //     this.searchForm.patchValue(
+                //         s === "pos" ?
+                //             {
+                //                 searchInput: this.searchData[0].pos,
+                //                 chromosome: this.searchData[0].chr
+                //             } :
+                //             {
+                //                 searchInput: this.searchData[0].rsId,
+                //             }
+                //     );
+                // }
             });
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
