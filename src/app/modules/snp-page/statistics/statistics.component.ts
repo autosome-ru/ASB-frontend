@@ -105,7 +105,7 @@ export class AsbStatisticsComponent<T> implements OnInit {
         this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
         this.tableFormGroup.patchValue({
-            columns: Object.keys(this.nonStickyColumnModel),
+            columns: this.initialDisplayedColumns.filter(s => s !== "name"),
             filter: null,
         });
     }

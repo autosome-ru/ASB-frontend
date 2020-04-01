@@ -82,10 +82,10 @@ export class SearchComponent implements OnInit {
         this.searchForm = this.formBuilder.group({
             searchInput: "",
             searchBy: ["id"],
-            chromosome: "chr1",
+            chromosome: null,
             searchTf: null,
             searchCl: null,
-            tfList: [["CTCF_HUMAN"]],
+            tfList: [[]],
             clList: [[]],
         }, {
                 validator: matchingPattern("searchInput",
@@ -121,7 +121,7 @@ export class SearchComponent implements OnInit {
             )));
         this.searchForm.get("chromosome").valueChanges.subscribe(
             (s: string) => {
-                if (s === "all chrs") {
+                if (s === "any chr") {
                     this.searchForm.get("searchInput").disable();
                 } else if (this.searchForm.get("searchInput").disabled) {
                     this.searchForm.get("searchInput").enable();
@@ -331,7 +331,7 @@ function checkOneResult(searchData: SnpSearchModel[]): boolean {
     return !!(searchData && searchData.length > 0 && searchData.length < 4
         && searchData.reduce((a, b) =>
                 a.pos === b.pos && a.chr === b.chr ?
-                    b : {chr: "0", pos: 0}, searchData[0]).pos);
+                    b : {chr: "chr0", pos: 0}, searchData[0]).pos);
 
 }
 

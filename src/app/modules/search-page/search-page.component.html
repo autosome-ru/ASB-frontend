@@ -70,14 +70,7 @@
                         </mat-card>
                     </div>
                 </ng-container>
-                <!--<ngb-pagination
-                    *ngIf="(searchSnpResults$ | async).length > 0"
-                    [collectionSize]="(searchSnpResults$ | async).length"
-                    [(page)]="page"
-                    [maxSize]="5"
-                    [rotate]="true"
-                    [boundaryLinks]="true"
-                ></ngb-pagination>-->
+
                 <mat-paginator
                     *ngIf="(searchSnpResults$ | async).length > 0"
                     showFirstLastButtons

@@ -51,8 +51,7 @@ export class LoadSearchResultsFailAction implements Action {
 
     constructor(public payload: {
         search: SearchQueryModel,
-        isAdvanced: boolean,
-        errorCode?: number}) {}
+        isAdvanced: boolean }) {}
 }
 
 

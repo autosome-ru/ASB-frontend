@@ -14,7 +14,6 @@ export class SearchEffect {
         private actions$: Actions,
         private store: Store<AppState>,
         private searchService: SearchService,
-        private tostr: ToastrService,
     ) {
     }
     @Effect()
@@ -45,10 +44,9 @@ export class SearchEffect {
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
             this.searchService.getSearchResult(action.payload.search, action.payload.isAdvanced).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
-                catchError((s) => {
+                catchError(() => {
                         return of(new fromActions.LoadSearchResultsFailAction({
                             ...action.payload,
-                            errorCode: s.status,
                         }));
                     }
                     ),
@@ -60,17 +58,7 @@ export class SearchEffect {
     loadSearchResultsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResultsFail),
         mergeMap((action: fromActions.LoadSearchResultsFailAction) => {
-            if (!action.payload.isAdvanced) {
-                action.payload.errorCode === 507 ?
-                    this.tostr.warning(
-                        "Try a shorter search interval or use advanced search",
-                        "Result too long") :
-                    console.log("Something went wrong with " + action.payload.search.searchInput);
-            } else {
-                this.tostr.warning(
-                    "Try a shorter search interval or use get in csv option",
-                    "Result too long");
-            }
+            console.log("Something went wrong with " + action.payload.search.searchInput);
             return EMPTY;
         }),
     );
