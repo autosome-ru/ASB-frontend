@@ -6,6 +6,7 @@ import {
 import {
     convertSearchHintBackendModelToSearchHintModel
 } from "../../helpers/search-model.converter";
+import {SnpSearchModel} from "../../models/data.model";
 
 export interface SearchState {
     searchOptions: {
@@ -114,7 +115,8 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 ...state,
                 searchResults: {
                     total: action.payload.total,
-                    results: <any>action.payload.results.map(convertSnpSearchBackendModelToSnpSearchModel)
+                    results: action.payload.results.map(
+                        convertSnpSearchBackendModelToSnpSearchModel) as SnpSearchModel[]
                 },
                 searchResultsLoading: false,
             };

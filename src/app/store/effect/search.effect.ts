@@ -47,8 +47,7 @@ export class SearchEffect {
                         return of(new fromActions.LoadSearchResultsFailAction({
                             ...action.payload,
                         }));
-                    }
-                    ),
+                    }),
             )
         )
     );
