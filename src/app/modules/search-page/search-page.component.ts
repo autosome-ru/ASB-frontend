@@ -75,11 +75,11 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
                 "transFactors",
                 "cellLines",
             ];
-            this.additionalColumns = {
-                displayedColumns: this.paramsToDisplayedColumns(),
-                columnModel: this.paramsToColumnModel(),
-                dataAccessor: this.paramsToData
-            };
+            // this.additionalColumns = {
+            //     displayedColumns: this.paramsToDisplayedColumns(),
+            //     columnModel: this.paramsToColumnModel(),
+            //     dataAccessor: this.paramsToData
+            // };
         }
         this.titleService.setTitle(this.route.snapshot.data.title);
 
