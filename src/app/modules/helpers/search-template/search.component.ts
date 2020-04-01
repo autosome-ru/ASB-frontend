@@ -147,7 +147,7 @@ export class SearchComponent implements OnInit {
                     this.searchForm.patchValue(
                         s === "pos" ?
                             {
-                                searchInput: this.searchData[0].pos,
+                                searchInput: "" + this.searchData[0].pos,
                                 chromosome: this.searchData[0].chr
                             } :
                             {
