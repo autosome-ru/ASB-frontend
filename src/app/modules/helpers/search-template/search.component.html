@@ -227,7 +227,7 @@
             *ngIf="isAdvanced"
             mat-stroked-button
             [color]="searchData.total !== searchData.results.length ? 'primary' : null"
-            [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
+            [disabled]="_isSearchDisabled()"
             (click)="_getResultsInCsv()"
         >
             <span class="d-none d-sm-block">Get search results in CSV</span>

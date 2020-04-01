@@ -42,15 +42,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     isAdvancedSearch: boolean;
 
     public columnModel: AsbTableColumnModel<SnpSearchModel>;
-    public displayedColumns: AsbTableDisplayedColumns<SnpSearchModel> = [
-        "chr",
-        "pos",
-        "rsId",
-        "refBase",
-        "altBase",
-        "transFactors",
-        "cellLines",
-    ];
+    public displayedColumns: AsbTableDisplayedColumns<SnpSearchModel>;
     public pageSize: number;
     public initialGroupValue: "list" | "card";
 
@@ -88,6 +80,12 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             cellLines: {view: "Top 3 cell types",
                 columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true},
         };
+        this.displayedColumns = [
+            "genPos",
+            "rsId",
+            "transFactors",
+            "cellLines",
+        ];
     }
 
     _navigateToSnp({rsId: id, alt: base}: {rsId: string, alt: string}): void {

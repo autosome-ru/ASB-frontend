@@ -172,8 +172,7 @@ export class SearchComponent implements OnInit {
     }
 
     _navigateToSearch() {
-        if ((this.searchForm.get("searchInput").value || this.isAdvanced) &&
-            this.searchForm.valid) {
+        if (!this._isSearchDisabled()) {
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
                 {search: this.searchForm.value, isAdvanced: this.isAdvanced}
             ));
@@ -302,6 +301,16 @@ export class SearchComponent implements OnInit {
                 } :
                 {searchBy: "id", searchInput: searchParams.rs};
         }
+    }
+
+    _isSearchDisabled(): boolean {
+        return (!this.searchForm.get("searchInput").value && !this.isAdvanced) ||
+            this.searchForm.invalid || (
+                this.isAdvanced &&
+                this.searchForm.get("tfList").value === [] &&
+                this.searchForm.get("clList").value === [] &&
+                (!this.searchForm.get("chromosome").value ||
+                this.searchForm.get("chromosome").value === "any chr"));
     }
 }
 
