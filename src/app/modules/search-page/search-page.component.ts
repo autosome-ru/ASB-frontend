@@ -112,23 +112,17 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
                 disabledSort: true
             },
             rsId: {view: "rs ID"},
+            transFactors: {
+                view: "Top 5 TFs",
+                columnTemplate: this.manyTransFactorsViewTemplate,
+                disabledSort: true
+            },
+            cellLines: {
+                view: "Top 3 cell types",
+                columnTemplate: this.manyCellTypesViewTemplate,
+                disabledSort: true
+            },
         };
-        if (!this.isAdvancedSearch || (this.isAdvancedSearch &&
-            !this.route.snapshot.queryParams.tf &&
-            !this.route.snapshot.queryParams.cl)
-        ) {
-            this.columnModel = {
-                ...this.columnModel,
-                transFactors: {
-                    view: "Top 5 TFs",
-                    columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true
-                },
-                cellLines: {
-                    view: "Top 3 cell types",
-                    columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true
-                },
-            };
-        }
     }
 
     _navigateToSnp({rsId: id, alt: base}: {rsId: string, alt: string}): void {
