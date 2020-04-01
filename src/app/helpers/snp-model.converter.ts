@@ -41,7 +41,7 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
 function convertSnpModel(model: Partial<SnpInfoBackendModel | SnpSearchBackendModel>):
     Partial<SnpInfoModel | SnpSearchBackendModel> {
     const result: Partial<SnpInfoModel> = {};
-    result.chr = model.chromosome;
+    result.chr = "chr" + model.chromosome;
     result.pos = model.position;
     result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;

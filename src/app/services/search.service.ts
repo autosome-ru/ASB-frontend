@@ -38,9 +38,10 @@ export class SearchService {
                         `${searchSnpsResultsUrl}/rs/${filter.searchInput}`);
                 }
                 case "pos": {
-                    const [startPos, endPos]: string[] = filter.searchInput.split(":");
+                    const positions: {start: string, end: string} =
+                        getPositions(filter.searchInput);
                     return this.http.get<SnpSearchBackendModel[]>(
-                        `${searchSnpsResultsUrl}/gp/chr${filter.chromosome}/${startPos}/${endPos}`);
+                        `${searchSnpsResultsUrl}/gp/${filter.chromosome}/${positions.start}/${positions.end}`);
                 }
             }
         } else {
@@ -72,6 +73,13 @@ function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
     return params;
 }
 
+function getPositions(searchInput: string) {
+    return searchInput.match(/^\d*$/) ?
+        {start: searchInput, end: searchInput} :
+        {start: searchInput.split("-")[0],
+            end: searchInput.split("-")[1]};
+}
+
 function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string]: string} {
     const params: {[id: string]: string} = {};
     searchBy.forEach(s => {
@@ -83,9 +91,12 @@ function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string
                     return;
                 case "pos":
                     if (filter.searchInput) {
-                        params["chromosome"] = "chr" + filter.chromosome;
-                        params["start"] = filter.searchInput.split(":")[0];
-                        params["end"] = filter.searchInput.split(":")[1];
+                        const positions: {start: string, end: string} =
+                            getPositions(filter.searchInput);
+
+                        params["chromosome"] = filter.chromosome;
+                        params["start"] = positions.start;
+                        params["end"] = positions.end;
                     }
                     return;
                 case "tf":

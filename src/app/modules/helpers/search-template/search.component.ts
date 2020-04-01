@@ -57,7 +57,7 @@ export class SearchComponent implements OnInit {
         private toastr: ToastrService,
     ) {}
 
-    listOfChrs: string[] = [" all"];
+    listOfChrs: string[] = ["all chrs"];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
@@ -65,13 +65,13 @@ export class SearchComponent implements OnInit {
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
         for (let i = 1; i < 22; i++) {
-            this.listOfChrs.push(String(i));
+            this.listOfChrs.push("chr" + i);
         }
-        this.listOfChrs.push("X");
+        this.listOfChrs.push("chrX");
         this.searchForm = this.formBuilder.group({
             searchInput: "",
             searchBy: ["id"],
-            chromosome: "1",
+            chromosome: "chr1",
             searchTf: null,
             searchCl: null,
             tfList: [["CTCF_HUMAN"]],
@@ -102,6 +102,22 @@ export class SearchComponent implements OnInit {
                             searchTf: s,
                         }, tfOrCl: "tf"}
                 )));
+
+        this.searchForm.get("searchBy").valueChanges.subscribe(
+            (s: "id" | "pos") => {
+                if (checkOneResult(this.searchData)) {
+                    this.searchForm.patchValue(
+                        s === "pos" ?
+                            {
+                                searchInput: this.searchData[0].pos,
+                                chromosome: this.searchData[0].chr
+                            } :
+                            {
+                                searchInput: this.searchData[0].rsId,
+                            }
+                    );
+                }
+            });
         if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
                 {search: this.searchForm.value, isAdvanced: this.isAdvanced}
@@ -262,7 +278,7 @@ function convertAdvancedParamToForm(s: SearchByModel,
         case "pos":
             if (params.pos) {
                 result.searchInput = params.pos;
-                result.chromosome = params.chr.slice(3);
+                result.chromosome = params.chr;
             }
             return;
         case "tf":
@@ -280,11 +296,7 @@ function convertFormToAdvancedParam(s: SearchByModel,
             return;
         case "pos":
             if (sF.searchInput) {
-                if (searchData && searchData.length > 0 && searchData.length < 4
-                    && searchData.reduce(
-                        (a, b) =>
-                            a.pos === b.pos && a.chr === b.chr ?
-                                b : {chr: "0", pos: 0}, searchData[0]).pos) {
+                if (checkOneResult(searchData)) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr;
                 } else {
@@ -299,6 +311,14 @@ function convertFormToAdvancedParam(s: SearchByModel,
     }
 }
 
+function checkOneResult(searchData: SnpSearchModel[]): boolean {
+    return !!(searchData && searchData.length > 0 && searchData.length < 4
+        && searchData.reduce((a, b) =>
+                a.pos === b.pos && a.chr === b.chr ?
+                    b : {chr: "0", pos: 0}, searchData[0]).pos);
+
+}
+
 function matchingPattern(searchKey: string,
                          optionKey: string,
                          isAdvancedSearch: boolean) {
@@ -307,31 +327,26 @@ function matchingPattern(searchKey: string,
         const option: string = group.controls[optionKey].value;
         if ((option === "pos" && !isAdvancedSearch)
             || (isAdvancedSearch && search)) {
-            if (!search.match(/\d+:\d+/)) {
-                return {
-                    wrongPattern: true
-                };
-            }
-            const posArray: string[] = search.split(":");
-            if (posArray.length === 2) {
-                const [startPos, endPos] = posArray;
-                if ((!Number(startPos) && startPos !== "0") || !Number(endPos)) {
-                    return {
-                        wrongPattern: true
-                    };
-                }
-                if (Number(startPos) > Number(endPos)) {
-                    return {
-                        greater: true
-                    };
-                }
-            } else {
-                if (search) {
-                    return {
-                        wrongPattern: true
-                    };
+            if (search.match(/\d+-\d+/)) {
+                const posArray: string[] = search.split("-");
+                if (posArray.length === 2) {
+                    const [startPos, endPos] = posArray;
+                    if ((Number(startPos) || startPos === "0") && Number(endPos)) {
+                        if (Number(startPos) > Number(endPos)) {
+                            return {
+                                greater: true
+                            };
+                        }
+                        return;
+                    }
                 }
             }
+            if (search.match(/^\d*$/)) {
+                return;
+            }
+            return {
+                wrongPattern: true
+            };
         }
     };
 }

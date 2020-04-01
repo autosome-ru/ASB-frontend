@@ -57,7 +57,7 @@
                     *ngFor="let chr of listOfChrs"
                             [value]="chr"
                 >
-                    chr{{chr}}
+                    {{chr}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -69,8 +69,8 @@
                 class="my-custom-component-small"
             >
                 <!--<span matPrefix>chr{{searchForm.get("chromosome").value}}&nbsp;</span>-->
-                <span matPrefix>chr{{searchForm.get("chromosome").value}}:</span>
-                <input placeholder="e.g. 28554168:80422458"
+                <span matPrefix>{{searchForm.get("chromosome").value}}:</span>
+                <input placeholder="e.g. 28554168-80422458"
                        matInput
                        name="Search SNPs"
                        aria-label="search"
@@ -97,7 +97,7 @@
                 <mat-hint
                     *ngIf="searchForm.hasError('wrongPattern')"
                    >
-                    * must be from:to
+                    * must be from-to
                 </mat-hint>
                 <mat-hint
                     *ngIf="searchForm.hasError('greater')"
