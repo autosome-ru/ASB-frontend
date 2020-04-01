@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, HostBinding, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import { Component, HostBinding, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
@@ -18,7 +18,7 @@ import {SearchResultsModel} from "../../models/searchQueryModel";
   templateUrl: "./search-page.component.html",
   styleUrls: ["./search-page.component.less"]
 })
-export class SearchPageComponent implements OnInit, AfterViewInit {
+export class SearchPageComponent implements OnInit {
     @ViewChild("tableView", {static: true})
     public tableView: AsbTableComponent<SnpSearchModel>;
 
@@ -77,9 +77,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             (_, index) =>
                 index < this.pageSize && index >= 0)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
-    }
-
-    ngAfterViewInit() {
         this.columnModel = {
             genPos: {view: "Genome position",
                 columnTemplate: this.genomePositionViewTemplate,
