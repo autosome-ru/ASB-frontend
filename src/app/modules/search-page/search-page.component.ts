@@ -51,6 +51,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         "cellLines",
     ];
     public pageSize: number;
+    public initialGroupValue: "list" | "card";
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -60,10 +61,19 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         this.titleService.setTitle(this.route.snapshot.data.title);
 
         this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
-        this.pageSize = 3;
+        if (this.route.snapshot.queryParams.rs ||
+            (this.route.snapshot.queryParams.pos &&
+                this.route.snapshot.queryParams.pos.match(/^\d*$/))) {
+            this.initialGroupValue = "card";
+            this.pageSize = 3;
+        } else {
+            this.initialGroupValue = "list";
+            this.pageSize = 10;
+        }
+
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.filter(
-            (element, index) =>
+            (_, index) =>
                 index < this.pageSize && index >= 0)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
     }

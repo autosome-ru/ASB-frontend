@@ -17,7 +17,7 @@
 
                         <mat-button-toggle-group
                             #group="matButtonToggleGroup"
-                            value="card" (change)="_groupToggled($event)">
+                            [value]="initialGroupValue" (change)="_groupToggled($event)">
                             <mat-button-toggle
                                 value="card"
                                 matTooltip="card view"
@@ -33,8 +33,6 @@
                             </mat-button-toggle>
                         </mat-button-toggle-group>
                     </h4>
-
-
                 </div>
             </div>
             <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
@@ -46,7 +44,7 @@
                             class="search-page__card"
                             asbElevation
                             role="group"
-                            (click)="_navigateToSnp({rsId: snp.rsId, alt: snp.altBase})"
+                            [routerLink]="'snps/' + snp.rsId + '/' + snp.altBase"
                         >
                             <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
                                 <mat-card-title>
