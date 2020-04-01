@@ -146,7 +146,7 @@ export class SearchComponent implements OnInit {
                                 chromosome: this.searchData.results[0].chr
                             } :
                             {
-                                searchInput: this.searchData.results[0].rsId,
+                                searchInput: this.searchData.results[0].rsId.slice(2),
                             }
                     );
                 }
