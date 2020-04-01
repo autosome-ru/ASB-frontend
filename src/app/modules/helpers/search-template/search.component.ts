@@ -23,6 +23,17 @@ import {ToastrService} from "ngx-toastr";
     styleUrls: ["./search.component.less"],
 })
 export class SearchComponent implements OnInit {
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private store: Store<AppState>,
+        private router: Router,
+        private route: ActivatedRoute,
+        private titleService: Title,
+        private saverService: FileSaverService,
+        private searchService: SearchService,
+        private toastr: ToastrService,
+    ) {}
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
 
@@ -42,32 +53,32 @@ export class SearchComponent implements OnInit {
     public searchData: SnpSearchModel[];
 
     public searchForm: FormGroup;
+
     separatorKeysCodes: number[] = [ENTER, COMMA];
 
     private searchParams: SearchParamsModel;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private store: Store<AppState>,
-        private router: Router,
-        private route: ActivatedRoute,
-        private titleService: Title,
-        private saverService: FileSaverService,
-        private searchService: SearchService,
-        private toastr: ToastrService,
-    ) {}
-
-    listOfChrs: string[] = ["all chrs"];
+    listOfChrs: string[];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
+    private static initChromosomes(): string[] {
+        const result: string[] = ["all chrs"];
+        for (let i = 1; i < 22; i++) {
+            result.push("chr" + i);
+        }
+        result.push("chrX");
+        return result;
+    }
+
 
     ngOnInit() {
+        // Set title and meta
         this.titleService.setTitle(this.route.snapshot.data.title);
-        for (let i = 1; i < 22; i++) {
-            this.listOfChrs.push("chr" + i);
-        }
-        this.listOfChrs.push("chrX");
+
+        this.listOfChrs = SearchComponent.initChromosomes();
+
+        // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             searchInput: "",
             searchBy: ["id"],
@@ -85,9 +96,15 @@ export class SearchComponent implements OnInit {
         this.searchForm.patchValue(
             this._convertParamsToForm(this.searchParams)
         );
-        this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
-        this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
 
+        // Init results if form is valid after patching
+        if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
+            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+                {search: this.searchForm.value, isAdvanced: this.isAdvanced}
+            ));
+        }
+
+        // Search options and patching form in simple search
         this.searchForm.get("searchCl").valueChanges.subscribe(
             s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                 {search: {
@@ -97,11 +114,21 @@ export class SearchComponent implements OnInit {
             )));
         this.searchForm.get("searchTf").valueChanges.subscribe(
             s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
-                    {search: {
-                            ...this.searchForm.value as SearchQueryModel,
-                            searchTf: s,
-                        }, tfOrCl: "tf"}
-                )));
+                {search: {
+                        ...this.searchForm.value as SearchQueryModel,
+                        searchTf: s,
+                    }, tfOrCl: "tf"}
+            )));
+        this.searchForm.get("chromosome").valueChanges.subscribe(
+            (s: string) => {
+                if (s === "all chrs") {
+                    this.searchForm.get("searchInput").disable();
+                } else if (this.searchForm.get("searchInput").disabled) {
+                    this.searchForm.get("searchInput").enable();
+                }
+
+            }
+        );
 
         this.searchForm.get("searchBy").valueChanges.subscribe(
             (s: "id" | "pos") => {
@@ -118,11 +145,10 @@ export class SearchComponent implements OnInit {
                     );
                 }
             });
-        if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
-            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                {search: this.searchForm.value, isAdvanced: this.isAdvanced}
-            ));
-        }
+        this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
+        this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
+
+
     }
 
     _clearSearchField() {
@@ -132,18 +158,9 @@ export class SearchComponent implements OnInit {
     _navigateToSearch() {
         if ((this.searchForm.get("searchInput").value || this.isAdvanced) &&
             this.searchForm.valid) {
-            const currentFilter = this.searchForm.value as SearchQueryModel;
-            this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                {search: currentFilter, isAdvanced: this.isAdvanced}
-            ));
-            if (this.isAdvanced) {
-                this.router.navigate(["/search/advanced"], {
-                    queryParams: this._convertFormToParams(this.isAdvanced)});
-            } else {
-                this.router.navigate(["/search/simple"], {
-                    queryParams: this._convertFormToParams(this.isAdvanced)});
-            }
-
+            this.router.navigate(["/search/" +
+            (this.isAdvanced ? "advanced" : "simple")], {
+                queryParams: this._convertFormToParams(this.isAdvanced)});
         }
     }
 
@@ -265,6 +282,8 @@ export class SearchComponent implements OnInit {
                 {searchBy: "id", searchInput: searchParams.rs};
         }
     }
+
+
 }
 
 function convertAdvancedParamToForm(s: SearchByModel,

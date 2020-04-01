@@ -21,9 +21,9 @@ export class SearchService {
         let params: {[id: string]: string};
 
         if (tfOrCl === "tf") {
-            params = searchOptionsParamsMake(tfOrCl, filter.tfList, filter.searchTf);
+            params = makeParamsForSearchOptions(tfOrCl, filter.tfList, filter.searchTf);
         } else {
-            params = searchOptionsParamsMake(tfOrCl, filter.clList, filter.searchCl);
+            params = makeParamsForSearchOptions(tfOrCl, filter.clList, filter.searchCl);
         }
         return this.http.get<SearchHintBackendModel[]>(searchOptionsUrl(tfOrCl),
             {params});
@@ -39,7 +39,7 @@ export class SearchService {
                 }
                 case "pos": {
                     const positions: {start: string, end: string} =
-                        getPositions(filter.searchInput);
+                        getStartEndPositions(filter.searchInput);
                     return this.http.get<SnpSearchBackendModel[]>(
                         `${searchSnpsResultsUrl}/gp/${filter.chromosome}/${positions.start}/${positions.end}`);
                 }
@@ -47,20 +47,20 @@ export class SearchService {
         } else {
             return this.http.get<SnpSearchBackendModel[]>(
                 `${searchSnpsResultsUrl}/advanced`, {
-                    params: searchResultsParamsMakeAdvanced(filter),
+                    params: makeParamsForAdvancedSearchResults(filter),
                 });
         }
     }
     getSearchResultsCsv(filter: SearchQueryModel): Observable<Blob> {
         return this.http.get(
             `${searchSnpsResultsUrl}/advanced/csv`, {
-                params: searchResultsParamsMakeAdvanced(filter),
+                params: makeParamsForAdvancedSearchResults(filter),
                 responseType: "blob"
             });
     }
 }
 
-function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
+function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
                                  options: string[] | null,
                                  search: string | null): {[id: string]: string} {
     const params: { [id: string]: string } = {};
@@ -73,14 +73,14 @@ function searchOptionsParamsMake(tfOrCl: "tf" | "cl",
     return params;
 }
 
-function getPositions(searchInput: string) {
+function getStartEndPositions(searchInput: string) {
     return searchInput.match(/^\d*$/) ?
         {start: searchInput, end: searchInput} :
         {start: searchInput.split("-")[0],
             end: searchInput.split("-")[1]};
 }
 
-function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string]: string} {
+function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: string]: string} {
     const params: {[id: string]: string} = {};
     searchBy.forEach(s => {
             switch (s) {
@@ -90,13 +90,17 @@ function searchResultsParamsMakeAdvanced(filter: SearchQueryModel): {[id: string
                     }
                     return;
                 case "pos":
-                    if (filter.searchInput) {
-                        const positions: {start: string, end: string} =
-                            getPositions(filter.searchInput);
+                    if (filter.chromosome !== "all chrs") {
+                        if (filter.searchInput) {
+                            const positions: { start: string, end: string } =
+                                getStartEndPositions(filter.searchInput);
 
-                        params["chromosome"] = filter.chromosome;
-                        params["start"] = positions.start;
-                        params["end"] = positions.end;
+                            params["chromosome"] = filter.chromosome;
+                            params["start"] = positions.start;
+                            params["end"] = positions.end;
+                        } else {
+                            params["chromosome"] = filter.chromosome;
+                        }
                     }
                     return;
                 case "tf":

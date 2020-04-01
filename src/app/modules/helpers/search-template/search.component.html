@@ -69,12 +69,13 @@
                 class="my-custom-component-small"
             >
                 <!--<span matPrefix>chr{{searchForm.get("chromosome").value}}&nbsp;</span>-->
-                <span matPrefix>{{searchForm.get("chromosome").value}}:</span>
-                <input placeholder="e.g. 28554168-80422458"
-                       matInput
-                       name="Search SNPs"
-                       aria-label="search"
-                       formControlName="searchInput"
+                <span matPrefix>{{searchForm.get("chromosome").value}}:&nbsp;</span>
+                <input
+                    placeholder="e.g. 28554168-80422458"
+                    matInput
+                    name="Search SNPs"
+                    aria-label="search"
+                    formControlName="searchInput"
                 >
                 <button
                     type="submit"
@@ -86,7 +87,7 @@
 
                 <button
                     mat-icon-button
-                    [hidden]="!searchForm.get('searchInput').value"
+                    [hidden]="!searchForm.get('searchInput').value || searchForm.get('searchInput').disabled"
                     matSuffix
                     style="height: 100%; width: 100%"
                     (click)="_clearSearchField()"

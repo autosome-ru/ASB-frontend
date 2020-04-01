@@ -30,7 +30,6 @@
             "styles": [
               "src/styles/theme/theme.sass",
               "src/styles.less",
-              "src/styles/grid/grid.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": []
