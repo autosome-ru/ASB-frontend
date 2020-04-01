@@ -20,7 +20,7 @@
         <ng-container *ngIf="_checkToDisplay('id')">
             <mat-form-field
                 floatLabel="always"
-                style="width: 100%; padding: 0"
+                style="padding: 0"
                 appearance="outline"
                 class="my-custom-component-small"
             >
@@ -64,7 +64,7 @@
         <ng-container *ngIf="_checkToDisplay('pos')">
             <mat-form-field
                 floatLabel="always"
-                style="width: 100%; padding: 0"
+                style="padding: 0"
                 appearance="outline"
                 class="my-custom-component-small"
             >
@@ -159,9 +159,8 @@
         <ng-container *ngIf="_checkToDisplay('cl')">
             <mat-form-field
                 style="width: 100%; padding: 0"
-
             >
-                <mat-chip-list #chipListCl aria-label="Fruit selection">
+                <mat-chip-list #chipListCl aria-label="Cell type selection">
                     <mat-chip
                         *ngFor="let option of searchForm.get('clList').value"
                         selectable

@@ -1,4 +1,3 @@
-
 <div class="asb-table" *ngIf="_dataSource.data.length >0; else emptyContentTemplate">
     <div class="asb-table__table" style="min-width: 100%">
         <table
@@ -93,5 +92,5 @@
 </asb-popover>
 
 <ng-template #emptyContentTemplate>
-
+    <h5>No data available</h5>
 </ng-template>

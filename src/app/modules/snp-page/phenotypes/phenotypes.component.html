@@ -1,12 +1,17 @@
-<dl class="row px-0 mx-0"
-    *ngFor="let db of phenotypesDb"
->
-    <dt class="col-auto">{{db}}</dt>
-    <dd
-        *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
-        style="display: flex; flex-wrap: wrap"
+<ng-container *ngIf="phenotypesDb.length > 0; else emptyContentTemplate">
+    <dl class="row px-0 mx-0"
+        *ngFor="let db of phenotypesDb"
     >
-        {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
-    </dd>
-</dl>
+        <dt class="col-auto">{{db}}</dt>
+        <dd
+            *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
+            style="display: flex; flex-wrap: wrap"
+        >
+            {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
+        </dd>
+    </dl>
+</ng-container>
 
+<ng-template #emptyContentTemplate>
+    <h5>No data available</h5>
+</ng-template>

@@ -19,37 +19,11 @@
 
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <h2 class="col-auto pl-0 ml-0">Название раздела(не Statistics)</h2>
+                        <h2 class="col-auto pl-0 ml-0">Details</h2>
                     </mat-panel-title>
-
                 </mat-expansion-panel-header>
 
-                <ng-container *ngIf="(snpData$ | async)?.transFactors.length > 0
-                     && (snpData$ | async)?.cellLines.length == 0"
-                >
-                    <ng-container
-                        [ngTemplateOutlet]="TfStatisticsTemplate"
-                    >
-                        <h4 class="col-auto pl-0 ml-0">Transcription factors</h4>
-                    </ng-container>
-
-                </ng-container>
-
-                <ng-container
-                    *ngIf="(snpData$ | async)?.transFactors.length == 0
-                     && (snpData$ | async)?.cellLines.length > 0"
-                >
-                    <ng-container
-                        [ngTemplateOutlet]="ClStatisticsTemplate"
-                    >
-                        <h4 class="col-auto pl-0 ml-0">Cell types</h4>
-                    </ng-container>
-                </ng-container>
-
-
                 <mat-tab-group
-                    *ngIf="(snpData$ | async)?.transFactors.length > 0
-                     && (snpData$ | async)?.cellLines.length > 0"
                     animationDuration="0ms"
                 >
                     <mat-tab>
@@ -73,7 +47,7 @@
                 </mat-tab-group>
             </mat-expansion-panel>
 
-            <mat-expansion-panel expanded="true" class="py-0" *ngIf="!phenotypesEmpty">
+            <mat-expansion-panel expanded="true" class="py-0">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h2 class="col-auto pl-0 ml-0">PhenoData)</h2>
@@ -82,7 +56,6 @@
                 </mat-expansion-panel-header>
                 <asb-phenotypes
                     [snpData]="snpData$ | async"
-                    (phenotypesEmpty)="phenotypesEmpty=$event"
                 >
                 </asb-phenotypes>
             </mat-expansion-panel>
