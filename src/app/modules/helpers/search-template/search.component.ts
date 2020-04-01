@@ -144,16 +144,16 @@ export class SearchComponent implements OnInit {
                     }
                 }
                  if (checkOneResult(this.searchData)) {
-                //     this.searchForm.patchValue(
-                //         s === "pos" ?
-                //             {
-                //                 searchInput: this.searchData[0].pos,
-                //                 chromosome: this.searchData[0].chr
-                //             } :
-                //             {
-                //                 searchInput: this.searchData[0].rsId,
-                //             }
-                //     );
+                    this.searchForm.patchValue(
+                        s === "pos" ?
+                            {
+                                searchInput: this.searchData[0].pos,
+                                chromosome: this.searchData[0].chr
+                            } :
+                            {
+                                searchInput: this.searchData[0].rsId,
+                            }
+                    );
                  }
             });
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
