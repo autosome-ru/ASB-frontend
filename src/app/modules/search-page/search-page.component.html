@@ -147,6 +147,7 @@
             [displayedColumns]="displayedColumns"
             [data]="filteredSnpResults$ | async"
             [columnModel]="columnModel"
+            [additionalColumns]="additionalColumns"
             [clickableRow]="true"
             (rowClickEmitter)="_handleTableRowClick($event)"
         >

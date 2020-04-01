@@ -5,8 +5,6 @@ import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {
-    searchBy,
-    SearchByModel,
     SearchHintModel,
     SearchParamsModel,
     SearchQueryModel,
@@ -59,6 +57,7 @@ export class SearchComponent implements OnInit {
     @Input()
     public searchData: SearchResultsModel;
 
+
     public searchForm: FormGroup;
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -85,7 +84,7 @@ export class SearchComponent implements OnInit {
 
         this.listOfChrs = SearchComponent.initChromosomes();
 
-        // Create form and patch it from url params
+        // Create form
         this.searchForm = this.formBuilder.group({
             searchInput: "",
             searchBy: ["id"],
@@ -99,7 +98,7 @@ export class SearchComponent implements OnInit {
                     "searchBy", this.isAdvanced),
             }
         );
-        // Search options and patching form in simple search
+        // Search form subscription
         this.searchForm.get("searchCl").valueChanges.subscribe(
             s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                 {search: {
@@ -151,6 +150,7 @@ export class SearchComponent implements OnInit {
                     );
                 }
             });
+        // Search form patching from url params
         this.searchParams = this.route.snapshot.queryParams as SearchParamsModel;
         this.searchForm.patchValue(
             this._convertParamsToForm(this.searchParams)
@@ -194,15 +194,9 @@ export class SearchComponent implements OnInit {
             });
     }
 
-    _checkToDisplay(id: string) {
-        if (this.isAdvanced) {
-            return id !== "id";
-        } else {
-            return this.searchForm.get("searchBy").value === id;
-        }
 
-    }
 
+    // Input with chips
     _addChip(event: MatChipInputEvent, where: TfOrCl): void {
         const input = event.input;
         const value = event.value;
@@ -252,6 +246,7 @@ export class SearchComponent implements OnInit {
             {clList: this.searchForm.value.clList.filter(s => s !== chipName)});
     }
 
+    // Helpers
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
         const sF = this.searchForm.value as SearchQueryModel;
         if (!isAdvanced) {
@@ -274,10 +269,7 @@ export class SearchComponent implements OnInit {
 
         } else {
             if (sF) {
-                const result: Partial<SearchParamsModel> = {};
-                searchBy.forEach(s => convertFormToAdvancedParam(s,
-                    sF, this.searchData, result));
-                return result;
+                return convertFormToAdvancedParam(sF, this.searchData);
             } else return {};
         }
     }
@@ -285,10 +277,7 @@ export class SearchComponent implements OnInit {
     _convertParamsToForm(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
         if (this.isAdvanced) {
             if (searchParams) {
-                const result: Partial<SearchQueryModel> = {};
-                searchBy.forEach(s => convertAdvancedParamToForm(s,
-                    searchParams, result));
-                return result;
+                return convertAdvancedParamToForm(searchParams);
             } else return {};
 
         } else {
@@ -311,56 +300,58 @@ export class SearchComponent implements OnInit {
                 (!this.searchForm.get("chromosome").value ||
                 this.searchForm.get("chromosome").value === "any chr"));
     }
-}
 
-function convertAdvancedParamToForm(s: SearchByModel,
-                     params: Partial<SearchParamsModel>,
-                     result: Partial<SearchQueryModel>) {
-    switch (s) {
-        case "cl":
-            result.clList = params.cl ? params.cl.split(",") : [];
-            return;
-        case "pos":
-            if (params.pos) {
-                result.searchInput = params.pos;
-                result.chromosome = params.chr;
-            } else if (params.chr) {
-                result.chromosome = params.chr;
-            } else {
-                result.chromosome = "any chr";
-            }
-            return;
-        case "tf":
-            result.tfList = params.tf ? params.tf.split(",") : [];
-            return;
+    _checkToDisplay(id: string) {
+        if (this.isAdvanced) {
+            return id !== "id";
+        } else {
+            return this.searchForm.get("searchBy").value === id;
+        }
+
     }
 }
 
-function convertFormToAdvancedParam(s: SearchByModel,
-                     sF: SearchQueryModel,
-                     searchData: SearchResultsModel,
-                     result: Partial<SearchParamsModel>) {
-    switch (s) {
-        case "cl":
-            if (sF && sF.clList.length > 0) result.cl = sF.clList.join(",");
-            return;
-        case "pos":
-            if (sF.searchInput) {
-                if (checkOneResult(searchData)) {
-                    result.pos = "" + searchData.results[0].pos;
-                    result.chr = searchData.results[0].chr;
-                } else {
-                    result.pos = sF.searchInput;
-                    result.chr = sF.chromosome;
-                }
-            } else if (sF.chromosome && sF.chromosome !== "any chr") {
+function convertAdvancedParamToForm(params: Partial<SearchParamsModel>):
+    Partial<SearchQueryModel> {
+    const result: Partial<SearchQueryModel> = {};
+
+    result.clList = params.cl ? params.cl.split(",") : [];
+
+    if (params.pos) {
+        result.searchInput = params.pos;
+        result.chromosome = params.chr;
+    } else if (params.chr) {
+        result.chromosome = params.chr;
+    } else {
+        result.chromosome = "any chr";
+    }
+
+    result.tfList = params.tf ? params.tf.split(",") : [];
+    return result;
+
+}
+
+function convertFormToAdvancedParam(sF: SearchQueryModel,
+                                    searchData: SearchResultsModel):
+    Partial<SearchParamsModel> {
+    const result: Partial<SearchParamsModel> = {};
+
+        if (sF && sF.clList.length > 0) result.cl = sF.clList.join(",");
+
+        if (sF.searchInput) {
+            if (checkOneResult(searchData)) {
+                result.pos = "" + searchData.results[0].pos;
+                result.chr = searchData.results[0].chr;
+            } else {
+                result.pos = sF.searchInput;
                 result.chr = sF.chromosome;
             }
-            return;
-        case "tf":
-            if (sF && sF.tfList.length > 0) result.tf = sF.tfList.join(",");
-            return;
-    }
+        } else if (sF.chromosome && sF.chromosome !== "any chr") {
+            result.chr = sF.chromosome;
+        }
+
+        if (sF && sF.tfList.length > 0) result.tf = sF.tfList.join(",");
+        return result;
 }
 
 function checkOneResult(searchData: SearchResultsModel): boolean {

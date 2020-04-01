@@ -16,7 +16,7 @@
                 <td
                     mat-cell
                     *matCellDef="let row"
-                    [attr.colspan]="displayedColumns.length"
+                    [attr.colspan]="getDisplayedColumns().length"
                 >
                     <div class="asb-table__table-expand-inner"
                          [@detailExpand]="row === _expandedRow ? 'expanded' : 'collapsed'"
@@ -30,7 +30,7 @@
             </ng-container>
 
             <ng-container
-                *ngFor="let column of columnModel | keyvalue"
+                *ngFor="let column of getColumnModel() | keyvalue"
                 [matColumnDef]="column.key"
             >
                 <th mat-header-cell
@@ -53,8 +53,8 @@
             </ng-container>
 
 
-            <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
+            <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
+            <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"
                 class="asb-table__table-row"
                 [class._clickable]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
                 [class._borderless]="expandCellContentTemplate || popoverContentTemplate || clickableRow"

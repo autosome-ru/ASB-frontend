@@ -30,8 +30,9 @@ export interface PhenotypesModel {
 }
 export interface SnpSearchModel extends SnpGenPosModel {
     genPos: SnpGenPosModel;
-    transFactors: TfSnpCutModel[];
-    cellLines: ClSnpCutModel[];
+    transFactors?: TfSnpCutModel[];
+    cellLines?: ClSnpCutModel[];
+    additional?: {[name: string]: string}
 }
 export interface SnpInfoBackendModel extends SnpGenPosBackendModel {
     tf_aggregated_snps: TfSnpBackendModel[];

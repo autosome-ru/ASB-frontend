@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
 import {
-    searchBy,
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
@@ -82,35 +81,29 @@ function getStartEndPositions(searchInput: string) {
 
 function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: string]: string} {
     const params: {[id: string]: string} = {};
-    searchBy.forEach(s => {
-            switch (s) {
-                case "cl":
-                    if (filter.clList.length > 0) {
-                        params["cell_types"] = filter.clList.join(",");
-                    }
-                    return;
-                case "pos":
-                    if (filter.chromosome && filter.chromosome !== "any chr") {
-                        if (filter.searchInput) {
-                            const positions: { start: string, end: string } =
-                                getStartEndPositions(filter.searchInput);
 
-                            params["chromosome"] = filter.chromosome;
-                            params["start"] = positions.start;
-                            params["end"] = positions.end;
-                        } else {
-                            params["chromosome"] = filter.chromosome;
-                        }
-                    }
-                    return;
-                case "tf":
-                    if (filter.tfList.length > 0) {
-                        params["transcription_factors"] =
-                            filter.tfList.join(",");
-                    }
-                    return;
-            }
+    if (filter.clList.length > 0) {
+        params["cell_types"] = filter.clList.join(",");
+    }
+
+
+    if (filter.chromosome && filter.chromosome !== "any chr") {
+        if (filter.searchInput) {
+            const positions: { start: string, end: string } =
+                getStartEndPositions(filter.searchInput);
+
+            params["chromosome"] = filter.chromosome;
+            params["start"] = positions.start;
+            params["end"] = positions.end;
+        } else {
+            params["chromosome"] = filter.chromosome;
         }
-    );
+    }
+
+    if (filter.tfList.length > 0) {
+        params["transcription_factors"] =
+            filter.tfList.join(",");
+    }
+
     return params;
 }

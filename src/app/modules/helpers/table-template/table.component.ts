@@ -46,6 +46,12 @@ export class AsbTableComponent<T> implements AfterViewInit {
     public externalPaginator: MatPaginator;
 
     @Input()
+    public additionalColumns: {
+        dataAccessor: (data: T[]) => any[],
+        displayedColumns: AsbTableDisplayedColumns<any>,
+        columnModel: AsbTableColumnModel<any>
+    };
+    @Input()
     public colorStyle = null;
     @Input()
     public getTitle: (row: T) => string = null;
@@ -68,7 +74,15 @@ export class AsbTableComponent<T> implements AfterViewInit {
 
     @Input()
     set data(value: Array<T>) {
-        this._dataSource = new MatTableDataSource<T>(value);
+        if (this.additionalColumns && this.additionalColumns.dataAccessor) {
+            this._dataSource = new MatTableDataSource<any>(
+                value.map((s, index) => {
+                    return {...s, ...this.additionalColumns.dataAccessor(value)[index]};
+                }));
+
+        } else {
+            this._dataSource = new MatTableDataSource<T>(value);
+        }
         this._dataSource.sort = this.sort;
         this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
         if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
@@ -90,6 +104,18 @@ export class AsbTableComponent<T> implements AfterViewInit {
 
     @Output()
     public rowClickEmitter = new EventEmitter<T>();
+
+    getDisplayedColumns(): any {
+        return this.additionalColumns && this.additionalColumns.displayedColumns ?
+            [...this.displayedColumns, ...this.additionalColumns.displayedColumns] :
+            this.displayedColumns;
+    }
+
+    getColumnModel(): any {
+        return this.additionalColumns && this.additionalColumns.columnModel ?
+            {...this.columnModel, ...this.additionalColumns.columnModel} :
+            this.columnModel;
+    }
 
     ngAfterViewInit() {
         if (this._dataSource) {

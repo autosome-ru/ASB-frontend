@@ -11,7 +11,10 @@ import {AsbTableComponent} from "../helpers/table-template/table.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {map} from "rxjs/operators";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
-import {SearchResultsModel} from "../../models/searchQueryModel";
+import {SearchParamsModel, SearchResultsModel} from "../../models/searchQueryModel";
+
+
+
 
 @Component({
   selector: "asb-search-page",
@@ -41,6 +44,12 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     public filteredSnpResults$: Observable<SnpSearchModel[]>;
 
     public searchSnpResultsLoading$: Observable<boolean>;
+
+    public additionalColumns: {
+        dataAccessor: (data: SnpSearchModel[]) => any[]
+        displayedColumns: AsbTableDisplayedColumns<any>,
+        columnModel: AsbTableColumnModel<any>
+    } = null;
 
     isAdvancedSearch: boolean;
 
@@ -75,22 +84,45 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.columnModel = {
-            genPos: {view: "Genome position",
-                columnTemplate: this.genomePositionViewTemplate,
-                disabledSort: true},
-            rsId: {view: "rs ID"},
-            transFactors: {view: "Top 5 TFs",
-                columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true},
-            cellLines: {view: "Top 3 cell types",
-                columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true},
-        };
         this.displayedColumns = [
             "genPos",
             "rsId",
-            "transFactors",
-            "cellLines",
         ];
+        this.columnModel = {
+            genPos: {
+                view: "Genome position",
+                columnTemplate: this.genomePositionViewTemplate,
+                disabledSort: true
+            },
+            rsId: {view: "rs ID"},
+        };
+        if (!this.isAdvancedSearch || (this.isAdvancedSearch &&
+            !this.route.snapshot.queryParams.tf &&
+            !this.route.snapshot.queryParams.cl)
+        ) {
+            this.columnModel = {
+                ...this.columnModel,
+                transFactors: {
+                    view: "Top 5 TFs",
+                    columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true
+                },
+                cellLines: {
+                    view: "Top 3 cell types",
+                    columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true
+                },
+            };
+            this.displayedColumns = [
+                ...this.displayedColumns,
+                "transFactors",
+                "cellLines",
+            ];
+        } else {
+            this.additionalColumns = {
+                displayedColumns: this.paramsToDisplayedColumns(),
+                columnModel: this.paramsToColumnModel(),
+                dataAccessor: this.paramsToData
+            };
+        }
     }
 
     _navigateToSnp({rsId: id, alt: base}: {rsId: string, alt: string}): void {
@@ -144,4 +176,75 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             this.paginator ? this.paginator.pageIndex : 0);
 
     }
+
+    private paramsToColumnModel(): any {
+        return convertQueryParamsToColumnModel(this.route.snapshot.queryParams);
+    }
+
+    private paramsToDisplayedColumns(): string[] {
+        return convertQueryParamsToDisplayedColumns(this.route.snapshot.queryParams);
+    }
+
+    private paramsToData(data: SnpSearchModel[]): any[] {
+        const params = this.route.snapshot.queryParams;
+        return data.map(s => {
+            const result = {};
+            if (params.tf) {
+                params.tf.split(",").forEach(
+                    p => {
+                        result[p + "_p_val_alt"] =
+                            s.transFactors.filter(f => f === p)[0].pValueAlt;
+                        result[p + "_p_val_ref"] =
+                            s.transFactors.filter(f => f === p)[0].pValueRef;
+                    });
+            }
+            if (params.cl) {
+                params.cl.split(",").forEach(
+                    p => {
+                        result[p + "_p_val_alt"] =
+                            s.cellLines.filter(f => f === p)[0].pValueAlt;
+                        result[p + "_p_val_ref"] =
+                            s.cellLines.filter(f => f === p)[0].pValueRef;
+                    });
+            }
+            return result;
+        });
+    }
+}
+
+function convertQueryParamsToDisplayedColumns(params: SearchParamsModel): string[] {
+    const result: string[] = [];
+    if (params.cl) {
+        params.cl.split(",").forEach(
+            s => {
+                result.push(s + "_p_val_ref");
+                result.push(s + "_p_val_alt");
+            });
+    }
+    if (params.tf) {
+        params.tf.split(",").forEach(
+            s => {
+                result.push(s + "_p_val_ref");
+                result.push(s + "_p_val_alt");
+            });
+    }
+    return result;
+}
+function convertQueryParamsToColumnModel(params: SearchParamsModel): any {
+    const result = {};
+    if (params.cl) {
+        params.cl.split(",").forEach(
+            s => {
+                result[s + "_p_val_ref"] = {view: s + " -log10 FDR Ref"};
+                result[s + "_p_val_alt"] = {view: s + " -log10 FDR Alt"};
+            });
+    }
+    if (params.tf) {
+        params.tf.split(",").forEach(
+            s => {
+                result[s + "_p_val_ref"] = {view: s + " -log10 FDR Ref"};
+                result[s + "_p_val_alt"] = {view: s + " -log10 FDR Alt"};
+            });
+    }
+    return result;
 }
