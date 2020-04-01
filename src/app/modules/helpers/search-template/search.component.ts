@@ -140,7 +140,7 @@ export class SearchComponent implements OnInit {
                 } else {
                     if ( s === "pos") {
                         this.searchForm.patchValue(
-                            {chromosome: "any chr"}, {emitEvent: false});
+                            {chromosome: "any chr"});
                     }
                 }
                  if (checkOneResult(this.searchData)) {

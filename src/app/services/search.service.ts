@@ -76,7 +76,8 @@ function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
 function getStartEndPositions(searchInput: string) {
     return searchInput.match(/^\d*$/) ?
         {start: searchInput, end: searchInput} :
-        {start: searchInput.split("-")[0],
+        {start: searchInput.split("-")[0] === "0" ?
+                "1" : searchInput.split("-")[0],
             end: searchInput.split("-")[1]};
 }
 
