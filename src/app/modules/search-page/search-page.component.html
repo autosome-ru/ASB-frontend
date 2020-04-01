@@ -40,7 +40,7 @@
                     <div class="layout pb-2"
                          style="margin-bottom: 20px"
                          *ngFor="let snp of filteredSnpResults$ | async">
-                        <div
+                        <a
                             [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
                         >
                             <mat-card
@@ -68,7 +68,7 @@
                                     </asb-snp-card>
                                 </mat-card-content>
                             </mat-card>
-                        </div>
+                        </a>
                     </div>
                 </ng-container>
 
