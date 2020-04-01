@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit {
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
     private static initChromosomes(): string[] {
-        const result: string[] = ["all chrs"];
+        const result: string[] = ["any chr"];
         for (let i = 1; i < 22; i++) {
             result.push("chr" + i);
         }
@@ -147,8 +147,6 @@ export class SearchComponent implements OnInit {
             });
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
-
-
     }
 
     _clearSearchField() {
@@ -282,8 +280,6 @@ export class SearchComponent implements OnInit {
                 {searchBy: "id", searchInput: searchParams.rs};
         }
     }
-
-
 }
 
 function convertAdvancedParamToForm(s: SearchByModel,
@@ -305,6 +301,7 @@ function convertAdvancedParamToForm(s: SearchByModel,
             return;
     }
 }
+
 function convertFormToAdvancedParam(s: SearchByModel,
                      sF: SearchQueryModel,
                      searchData: SnpSearchModel[],
@@ -346,7 +343,7 @@ function matchingPattern(searchKey: string,
         const option: string = group.controls[optionKey].value;
         if ((option === "pos" && !isAdvancedSearch)
             || (isAdvancedSearch && search)) {
-            if (search.match(/\d+-\d+/)) {
+            if (search.match(/^\d+-\d+$/)) {
                 const posArray: string[] = search.split("-");
                 if (posArray.length === 2) {
                     const [startPos, endPos] = posArray;
