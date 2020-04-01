@@ -2,7 +2,7 @@ import {AfterViewInit, Component, HostBinding, OnInit, TemplateRef, ViewChild} f
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
-import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../models/data.model";
+import {ClSnpCutModel, SnpGenPosModel, SnpSearchModel, TfSnpCutModel} from "../../models/data.model";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import {Store} from "@ngrx/store";
@@ -27,6 +27,9 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     @ViewChild("manyValuesViewTemplate")
     public manyTransFactorsViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
+
+    @ViewChild("genomePositionViewTemplate")
+    public genomePositionViewTemplate: TemplateRef<{value: SnpGenPosModel}>;
 
     @ViewChild("manyCellTypesViewTemplate")
     public manyCellTypesViewTemplate: TemplateRef<{value: ClSnpCutModel[]}>;
@@ -73,7 +76,9 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.columnModel = {
-            genPos: {view: "Genome position", disabledSort: true},
+            genPos: {view: "Genome position",
+                columnTemplate: this.genomePositionViewTemplate,
+                disabledSort: true},
             rsId: {view: "rs ID"},
             transFactors: {view: "Top 5 TFs",
                 columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true},

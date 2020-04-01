@@ -109,6 +109,12 @@
     </div>
 </ng-template>
 
+<ng-template #genomePositionViewTemplate let-value="value">
+    <span>
+        {{value?.chr}}:{{value?.pos}} {{value?.refBase}}>{{value?.altBase}}
+    </span>
+</ng-template>
+
 <ng-template #manyCellTypesViewTemplate let-value="value">
     <div
         style="max-height: 140px;
