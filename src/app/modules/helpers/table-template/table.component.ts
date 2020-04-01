@@ -105,13 +105,14 @@ export class AsbTableComponent<T> implements AfterViewInit, OnInit {
 
     ngOnInit() {
         if (this.additionalColumns && this.additionalColumns.dataAccessor) {
-            this._dataSource = new MatTableDataSource<any>(
-                this.data.map((s, index) => {
+            console.log(this.data.map((s, index) => {
+                return {...s, ...this.additionalColumns.dataAccessor(this.data)[index]};
+            }));
+            this._dataSource.data = this.data.map((s, index) => {
                     return {...s, ...this.additionalColumns.dataAccessor(this.data)[index]};
-                }));
-
+                });
         } else {
-            this._dataSource = new MatTableDataSource<T>(this.data);
+            this._dataSource.data = this.data;
         }
         this._dataSource.sort = this.sort;
         this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
