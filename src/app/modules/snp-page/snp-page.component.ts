@@ -33,7 +33,7 @@ export class SnpPageComponent implements OnInit {
     public snpDataLoading$: Observable<boolean>;
 
     public clColumnModel: AsbTableColumnModel<Partial<ClSnpModel>> = {
-        name: {view: "CL name", valueConverter: v => v},
+        name: {view: "Cell type", valueConverter: v => v},
        ...commonColumnModel,
     };
     public clDisplayedColumns: AsbTableDisplayedColumns<ClSnpModel> = [
@@ -42,7 +42,7 @@ export class SnpPageComponent implements OnInit {
 
 
     public tfColumnModel: AsbTableColumnModel<Partial<TfSnpModel>> = {
-        name: {view: "TF name", valueConverter: v => v},
+        name: {view: "Uniprot ID", valueConverter: v => v},
         ...commonColumnModel,
         motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No info"},
         motifConcordance: {view: "Concordance", valueConverter:

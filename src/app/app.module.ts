@@ -7,7 +7,7 @@ import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "src/environments/environment";
 import {AsbHomePageModule} from "./modules/home-page/home-page.module";
 import {AsbPageNotFoundModule} from "./modules/404-page/page-not-found.module";
-import {AsbAboutUsPageModule} from "./modules/about-us-page/about-us.module";
+import {AsbContactsPageModule} from "./modules/contacts-page/contacts.module";
 import {AsbAppIconsModule} from "./helpers/svgIcon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {AsbSearchPageModule} from "src/app/modules/search-page/search-page.module";
@@ -41,7 +41,7 @@ import { ToastrModule } from "ngx-toastr";
       AsbHomePageModule,
       AsbPageNotFoundModule,
       AsbSnpPageModule,
-      AsbAboutUsPageModule,
+      AsbContactsPageModule,
       AsbSearchPageModule,
 
   ],

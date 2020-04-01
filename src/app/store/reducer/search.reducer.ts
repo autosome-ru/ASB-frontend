@@ -4,7 +4,9 @@ import {SnpSearchModel} from "../../models/data.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
 } from "../../helpers/snp-model.converter";
-import {convertSearchHintBackendModelToSearchHintModel} from "../../helpers/search-model.converter";
+import {
+    convertSearchHintBackendModelToSearchHintModel
+} from "../../helpers/search-model.converter";
 
 export interface SearchState {
     searchOptions: {
@@ -113,13 +115,6 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             };
         }
         case fromActions.ActionTypes.LoadSearchResultsFail: {
-            if (action.payload.errorCode) {
-                return {
-                    ...state,
-                    searchResultsLoading: false,
-                    searchResults: [],
-                };
-            }
             return {
                 ...state,
                 searchResults: [],

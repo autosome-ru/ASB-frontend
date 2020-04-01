@@ -25,7 +25,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     public paginator: MatPaginator;
 
     @ViewChild("manyValuesViewTemplate")
-    public manyValuesViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
+    public manyTransFactorsViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
 
     @ViewChild("manyCellTypesViewTemplate")
     public manyCellTypesViewTemplate: TemplateRef<{value: ClSnpCutModel[]}>;
@@ -76,7 +76,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
             refBase: {view: "ref"},
             altBase: {view: "alt"},
             transFactors: {view: "Top 5 TFs",
-                columnTemplate: this.manyValuesViewTemplate, disabledSort: true},
+                columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true},
             cellLines: {view: "Top 3 cell types",
                 columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true},
         };

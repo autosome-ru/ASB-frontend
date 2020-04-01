@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import {HomePageComponent} from "./modules/home-page/home-page.component";
-import {AboutUsComponent} from "./modules/about-us-page/about-us.component";
+import {ContactsComponent} from "./modules/contacts-page/contacts.component";
 import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component";
 import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 
@@ -15,10 +15,17 @@ const routes: Routes = [
         }
     },
     {
-        path: "about-us-page",
-        component: AboutUsComponent,
+        path: "contacts",
+        component: ContactsComponent,
         data: {
-            title: "ASB about-us-page"
+            title: "ASB contacts-page"
+        }
+    },
+    {
+        path: "help",
+        component: ContactsComponent,
+        data: {
+            title: "ASB contacts-page"
         }
     },
     {

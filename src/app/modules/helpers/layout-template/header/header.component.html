@@ -24,25 +24,33 @@
         <div class="navbar-nav">
             <a
                 class="nav-item nav-link"
-                [routerLink]="'/about-us-page'"
+                [routerLink]="'/contacts'"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
             >
-                about
+                Contacts
+            </a>
+            <a
+                class="nav-item nav-link"
+                [routerLink]="'/help'"
+                [routerLinkActive]="['active']"
+                (click)="toggleNavbar('close')"
+            >
+                Help
             </a>
             <a class="nav-item nav-link"
                [routerLink]="'/snps/rs11260841/A'"
                [routerLinkActive]="['active']"
                (click)="toggleNavbar('close')"
             >
-                test
+                Test
             </a>
             <a class="nav-item nav-link"
                [routerLink]="'/snps/rs62034351/A'"
                [routerLinkActive]="['active']"
                (click)="toggleNavbar('close')"
             >
-                test2
+                Test2
             </a>
         </div>
     </div>

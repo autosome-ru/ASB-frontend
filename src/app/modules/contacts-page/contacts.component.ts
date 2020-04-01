@@ -4,10 +4,10 @@ import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: "asb-about-us",
-    templateUrl: "./about-us.component.html",
-    styleUrls: ["./about-us.component.less"]
+    templateUrl: "./contacts.component.html",
+    styleUrls: ["./contacts.component.less"]
 })
-export class AboutUsComponent implements OnInit {
+export class ContactsComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private titleService: Title) {}

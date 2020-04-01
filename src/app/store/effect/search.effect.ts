@@ -6,7 +6,6 @@ import {SearchService} from "src/app/services/search.service";
 import * as fromActions from "src/app/store/action/search.action";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {EMPTY, of} from "rxjs";
-import {ToastrService} from "ngx-toastr";
 
 @Injectable()
 export class SearchEffect {
