@@ -316,6 +316,10 @@ function convertAdvancedParamToForm(s: SearchByModel,
             if (params.pos) {
                 result.searchInput = params.pos;
                 result.chromosome = params.chr;
+            } else if (params.chr) {
+                result.chromosome = params.chr;
+            } else {
+                result.chromosome = "any chr";
             }
             return;
         case "tf":
@@ -341,6 +345,8 @@ function convertFormToAdvancedParam(s: SearchByModel,
                     result.pos = sF.searchInput;
                     result.chr = sF.chromosome;
                 }
+            } else if (sF.chromosome && sF.chromosome !== "any chr") {
+                result.chr = sF.chromosome;
             }
             return;
         case "tf":
