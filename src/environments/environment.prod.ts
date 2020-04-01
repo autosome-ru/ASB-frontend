@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    serverUrl: "http://adastra.autosome.ru"
+    serverUrl: "https://adastra.autosome.ru"
 };
