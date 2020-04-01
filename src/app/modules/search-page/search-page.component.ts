@@ -186,7 +186,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
 
     private paramsToData(data: SnpSearchModel[]): any[] {
-        const params = this.route.snapshot.queryParams;
+        const params = this.route ? this.route.snapshot.queryParams : {};
         return data.map(s => {
             const result = {};
             if (params.tf) {

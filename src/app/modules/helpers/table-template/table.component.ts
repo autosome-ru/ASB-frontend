@@ -65,7 +65,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnInit {
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
 
-    public _dataSource: MatTableDataSource<T>;
+    public _dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
     public sortDirection: SortDirection = "";
     public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
         ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
