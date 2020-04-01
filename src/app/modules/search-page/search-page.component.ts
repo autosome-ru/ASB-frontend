@@ -64,16 +64,11 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private router: Router,
-                private titleService: Title) {}
+                private titleService: Title) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
     ngOnInit() {
-        this.columnModel = {
-            genPos: {
-                view: "Genome position",
-                columnTemplate: this.genomePositionViewTemplate,
-                disabledSort: true
-            },
-            rsId: {view: "rs ID"},
-        };
+
         if (!this.isAdvancedSearch || (this.isAdvancedSearch &&
             !this.route.snapshot.queryParams.tf &&
             !this.route.snapshot.queryParams.cl)
@@ -110,7 +105,14 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-
+        this.columnModel = {
+            genPos: {
+                view: "Genome position",
+                columnTemplate: this.genomePositionViewTemplate,
+                disabledSort: true
+            },
+            rsId: {view: "rs ID"},
+        };
         if (!this.isAdvancedSearch || (this.isAdvancedSearch &&
             !this.route.snapshot.queryParams.tf &&
             !this.route.snapshot.queryParams.cl)
