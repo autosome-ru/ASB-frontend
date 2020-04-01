@@ -66,6 +66,21 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
                 private router: Router,
                 private titleService: Title) {}
     ngOnInit() {
+        if (!this.isAdvancedSearch || (this.isAdvancedSearch &&
+            !this.route.snapshot.queryParams.tf &&
+            !this.route.snapshot.queryParams.cl)
+        ) {
+            this.displayedColumns = [
+                ...this.displayedColumns,
+                "transFactors",
+                "cellLines",
+            ];
+            this.additionalColumns = {
+                displayedColumns: this.paramsToDisplayedColumns(),
+                columnModel: this.paramsToColumnModel(),
+                dataAccessor: this.paramsToData
+            };
+        }
         this.titleService.setTitle(this.route.snapshot.data.title);
 
         this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
@@ -87,7 +102,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-
         this.columnModel = {
             genPos: {
                 view: "Genome position",
@@ -110,17 +124,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
                     view: "Top 3 cell types",
                     columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true
                 },
-            };
-            this.displayedColumns = [
-                ...this.displayedColumns,
-                "transFactors",
-                "cellLines",
-            ];
-        } else {
-            this.additionalColumns = {
-                displayedColumns: this.paramsToDisplayedColumns(),
-                columnModel: this.paramsToColumnModel(),
-                dataAccessor: this.paramsToData
             };
         }
     }
