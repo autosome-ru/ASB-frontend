@@ -135,7 +135,7 @@ export class SearchComponent implements OnInit {
                 if (this.searchForm.get("chromosome").value) {
                     if (s === "id") {
                         this.searchForm.patchValue(
-                            {chromosome: null}, {emitEvent: false});
+                            {chromosome: null});
                     }
                 } else {
                     if ( s === "pos") {
