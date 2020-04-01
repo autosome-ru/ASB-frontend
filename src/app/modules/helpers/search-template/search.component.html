@@ -48,7 +48,10 @@
             </mat-form-field>
         </ng-container>
 
-        <mat-form-field *ngIf="_checkToDisplay('pos')">
+        <mat-form-field
+            *ngIf="_checkToDisplay('pos')"
+            style="width: 100px"
+        >
             <mat-label>Chromosome</mat-label>
             <mat-select
                 formControlName="chromosome"
@@ -68,8 +71,7 @@
                 appearance="outline"
                 class="my-custom-component-small"
             >
-                <!--<span matPrefix>chr{{searchForm.get("chromosome").value}}&nbsp;</span>-->
-                <span matPrefix>{{searchForm.get("chromosome").value}}:&nbsp;</span>
+                <!--<span matPrefix>{{searchForm.get("chromosome").value}}:&nbsp;</span>-->
                 <input
                     placeholder="e.g. 28554168-80422458"
                     matInput
