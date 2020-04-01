@@ -96,6 +96,9 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
         if (loading) {
             return "Searching...";
         }
+        if (!searchResults.total) {
+            return "No results found";
+        }
         switch (searchResults.total) {
             case 0: {
                 return "No results found";
