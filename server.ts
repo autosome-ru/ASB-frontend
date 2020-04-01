@@ -45,10 +45,18 @@ function run() {
   const port = process.env.PORT || 4000;
 
   // Start up the Node server
-  const server = app();
-  server.listen(port, () => {
+  const express_app = app();
+  const server = express_app.listen(port, () => {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
+  const teardown = function() {
+    // if port is a socket, it is automatically unlinked here
+    server.close();
+    process.exit();
+  };
+  process.on('SIGTERM', teardown);
+  process.on('SIGQUIT', teardown);
+  process.on('SIGINT', teardown);
 }
 
 // Webpack will replace 'require' with '__webpack_require__'
