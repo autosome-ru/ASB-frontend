@@ -29,7 +29,6 @@ export interface PhenotypesModel {
     QTL: string[];
 }
 export interface SnpSearchModel extends SnpGenPosModel {
-    genPos: SnpGenPosModel;
     transFactors: TfSnpCutModel[];
     cellLines: ClSnpCutModel[];
 }
