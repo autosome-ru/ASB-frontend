@@ -81,11 +81,8 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         this.columnModel = {
-            chr: {view: "Chromosome", disabledSort: true},
-            pos: {view: "Position"},
+            genPos: {view: "Genome position", disabledSort: true},
             rsId: {view: "rs ID"},
-            refBase: {view: "ref"},
-            altBase: {view: "alt"},
             transFactors: {view: "Top 5 TFs",
                 columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true},
             cellLines: {view: "Top 3 cell types",

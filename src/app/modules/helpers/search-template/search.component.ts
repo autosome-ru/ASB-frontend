@@ -70,11 +70,11 @@ export class SearchComponent implements OnInit {
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
 
     private static initChromosomes(): string[] {
-        const result: string[] = ["Any chr"];
+        const result: string[] = ["any chr"];
         for (let i = 1; i < 22; i++) {
-            result.push("Chr" + i);
+            result.push("chr" + i);
         }
-        result.push("ChrX");
+        result.push("chrX");
         return result;
     }
 
