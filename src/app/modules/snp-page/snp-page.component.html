@@ -31,7 +31,15 @@
                             [ngTemplateOutlet]="TfStatisticsTemplate"
                         >
                             <ng-template mat-tab-label>
-                                <h4 class="col-auto pl-0 ml-0">Transcription factors</h4>
+                                <h4 class="col-auto d-none d-sm-block pl-0 ml-0"
+                                >
+                                    Transcription factors
+                                </h4>
+                                <span
+                                    class="d-sm-none"
+                                >
+                                    Transcription factors
+                                </span>
                             </ng-template>
                         </ng-container>
                     </mat-tab>
@@ -40,7 +48,15 @@
                             [ngTemplateOutlet]="ClStatisticsTemplate"
                         >
                             <ng-template mat-tab-label>
-                                <h4 class="col-auto pl-0 ml-0">Cell types</h4>
+                                <h4 class="col-auto d-none d-sm-block pl-0 ml-0"
+                                >
+                                    Cell types
+                                </h4>
+                                <span
+                                    class="d-sm-none"
+                                >
+                                    Cell types
+                                </span>
                             </ng-template>
                         </ng-container>
                     </mat-tab>

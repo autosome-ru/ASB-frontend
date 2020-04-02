@@ -97,8 +97,8 @@ export class SnpPageComponent implements OnInit {
 
 const commonColumnModel:
     AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {
-    effectSizeRef: {view: "Effect size ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    effectSizeAlt: {view: "Effect size alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    effectSizeRef: {view: "Effect size Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+    effectSizeAlt: {view: "Effect size Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
     pValueRef: {view: "-log10 FDR Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
     pValueAlt: {view: "-log10 FDR Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
     meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}

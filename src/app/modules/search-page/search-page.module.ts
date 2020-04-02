@@ -14,6 +14,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {AsbSearchPageRoutingModule} from "./search-page-routing.module";
+import {SearchPageTableComponent} from "./search-table/search-table.component";
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import {AsbSearchPageRoutingModule} from "./search-page-routing.module";
     ],
     declarations: [
         SearchPageComponent,
+        SearchPageTableComponent,
     ],
     exports: [SearchPageComponent],
 })

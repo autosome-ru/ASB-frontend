@@ -17,9 +17,9 @@
                             <span *ngIf="tableFormGroup.get('columns').value?.length > 1"
                                   class="snp-page__additional-selection"
                             >
-                                                        (+{{tableFormGroup.get('columns').value?.length - 1}}
+                                (+{{tableFormGroup.get('columns').value?.length - 1}}
                                 {{tableFormGroup.get('columns').value?.length === 2 ? 'other' : 'others'}})
-                                                    </span>
+                            </span>
                         </mat-select-trigger>
                         <mat-option
                             *ngFor="let column of nonStickyColumnModel | keyvalue: originalOrder"
@@ -29,7 +29,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-                <div style="display: flex; justify-content: flex-start">
+                <div style="display: flex; justify-content: flex-start; flex-wrap: wrap">
                     <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
                         <input
                             placeholder="Filter"
@@ -54,27 +54,31 @@
                             <mat-icon svgIcon="clear"></mat-icon>
                         </button>
                     </mat-form-field>
-                    <button
-                        mat-raised-button
-                        style="margin-right: 5px"
-                        (click)="_applyFilter()"
-                        color="primary"
-                    >
-                        Apply filter
-                    </button>
-                    <button
-                        style="margin-right: 5px"
-                        mat-raised-button
-                        (click)="_resetFilters()"
-                    >
-                        Reset
-                    </button>
-                    <button
-                        mat-raised-button
-                        (click)="_getSnpInfoCsv()"
-                    >
-                        Get CSV
-                    </button>
+                    <div>
+                        <button
+                            mat-raised-button
+                            style="margin-right: 5px"
+                            (click)="_applyFilter()"
+                            color="primary"
+                        >
+                            Apply filter
+                        </button>
+                        <button
+                            style="margin-right: 5px"
+                            mat-raised-button
+                            (click)="_resetFilters()"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            mat-raised-button
+                            (click)="_getSnpInfoCsv()"
+                        >
+                            Get TSV
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>
@@ -89,7 +93,6 @@
             [getTitle]="_getTitle"
             [paginatorOptions]="_getPaginatorOptions()"
             [colorStyle]="_calculateColor"
-            [disabledToolTips]="disabledToolTips"
         >
         </asb-table>
     </div>

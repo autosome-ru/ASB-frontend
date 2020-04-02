@@ -1,7 +1,7 @@
 <div class="asb-table" *ngIf="_dataSource.data.length >0; else emptyContentTemplate">
     <div class="asb-table__table" style="min-width: 100%">
         <table
-            style="padding-left: 5px; padding-right: 5px"
+            style="padding-left: 5px; padding-right: 5px; width:100%"
             #table
             mat-table
             matSort
@@ -36,7 +36,7 @@
                 <th mat-header-cell
                     mat-sort-header
                     [disabled]="column.value?.disabledSort"
-                    [matTooltip]="_getTooltipMessage(column.value?.helpMessage)"
+                    [matTooltip]="column.value?.helpMessage"
                     *matHeaderCellDef>{{column.value.view}}</th>
                 <td mat-cell *matCellDef="let row">
                     <ng-container
@@ -92,5 +92,5 @@
 </asb-popover>
 
 <ng-template #emptyContentTemplate>
-    <h5>No data available</h5>
+
 </ng-template>

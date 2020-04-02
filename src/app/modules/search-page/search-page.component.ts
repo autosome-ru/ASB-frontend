@@ -1,12 +1,11 @@
-import { Component, HostBinding, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import { Component, HostBinding, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
-import {ClSnpCutModel, SnpGenPosModel, SnpSearchModel, TfSnpCutModel} from "../../models/data.model";
+import {SnpSearchModel} from "../../models/data.model";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import {Store} from "@ngrx/store";
-import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {AsbTableComponent} from "../helpers/table-template/table.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {map} from "rxjs/operators";
@@ -25,15 +24,6 @@ export class SearchPageComponent implements OnInit {
     @ViewChild(MatPaginator, {static: false})
     public paginator: MatPaginator;
 
-    @ViewChild("manyValuesViewTemplate")
-    public manyTransFactorsViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
-
-    @ViewChild("genomePositionViewTemplate")
-    public genomePositionViewTemplate: TemplateRef<{value: SnpGenPosModel}>;
-
-    @ViewChild("manyCellTypesViewTemplate")
-    public manyCellTypesViewTemplate: TemplateRef<{value: ClSnpCutModel[]}>;
-
     @HostBinding("class.search-page")
     private readonly cssClass = true;
 
@@ -44,13 +34,6 @@ export class SearchPageComponent implements OnInit {
 
     isAdvancedSearch: boolean;
 
-    public columnModel: AsbTableColumnModel<SnpSearchModel>;
-    public displayedColumns: AsbTableDisplayedColumns<SnpSearchModel> = [
-        "genPos",
-        "rsId",
-        "transFactors",
-        "cellLines",
-    ];
     public pageSize: number;
     public initialGroupValue: "list" | "card";
 
@@ -77,20 +60,6 @@ export class SearchPageComponent implements OnInit {
             (_, index) =>
                 index < this.pageSize && index >= 0)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
-        this.columnModel = {
-            genPos: {view: "Genome position",
-                columnTemplate: this.genomePositionViewTemplate,
-                disabledSort: true},
-            rsId: {view: "rs ID"},
-            transFactors: {view: "Top 5 TFs",
-                columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true},
-            cellLines: {view: "Top 3 cell types",
-                columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true},
-        };
-    }
-
-    _navigateToSnp({rsId: id, alt: base}: {rsId: string, alt: string}): void {
-        this.router.navigate(["snps/" + id + "/" + base]);
     }
 
     getPhrase(searchResults: SearchResultsModel, loading: boolean): string {
@@ -113,10 +82,6 @@ export class SearchPageComponent implements OnInit {
                     "\nToo many to display. Use get in tsv option" : "");
             }
         }
-    }
-
-    _handleTableRowClick(row: SnpSearchModel) {
-        this._navigateToSnp({rsId: row.rsId, alt: row.altBase});
     }
 
     _handlePageChange(page: PageEvent) {
