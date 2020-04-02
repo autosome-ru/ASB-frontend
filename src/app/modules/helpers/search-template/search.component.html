@@ -221,7 +221,7 @@
             <a
                 mat-raised-button
                 style="margin-right: 5px"
-                [disabled]="(!searchForm.get('searchInput').value && !isAdvanced) || searchForm.invalid"
+                [disabled]="_isSearchDisabled()"
                 (click)="_navigateToSearch()"
             >
                 Search

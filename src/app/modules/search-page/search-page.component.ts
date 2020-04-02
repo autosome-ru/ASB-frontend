@@ -84,7 +84,7 @@ export class SearchPageComponent implements OnInit {
     }
 
     getAdditionalPhrase(searchResults: SearchResultsModel, loading: boolean) {
-        if (loading) {
+        if (loading || !searchResults || !searchResults.total || !this.isAdvancedSearch) {
             return "";
         }
         return searchResults.total !== searchResults.results.length ?

@@ -102,7 +102,7 @@ export class SearchComponent implements OnInit, OnChanges {
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             searchInput: "",
-            searchBy: ["id"],
+            searchBy: "id",
             chromosome: null,
             searchTf: null,
             searchCl: null,
@@ -166,9 +166,7 @@ export class SearchComponent implements OnInit, OnChanges {
                 }
             });
         this.searchParams = this.route.snapshot.queryParams as SearchParamsModel;
-        this.searchForm.patchValue(
-            this._convertParamsToForm(this.searchParams)
-        );
+        this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
 
         // Init results if form is valid after patching
         if (!this._isSearchDisabled()) {
@@ -332,11 +330,12 @@ export class SearchComponent implements OnInit, OnChanges {
     }
 
     _isSearchDisabled(): boolean {
-        return (!this.searchForm.get("searchInput").value && !this.isAdvanced) ||
+        const sF = this.searchForm.value as SearchQueryModel;
+        return (!sF.searchInput && !this.isAdvanced) ||
             this.searchForm.invalid || (
                 this.isAdvanced &&
-                this.searchForm.get("tfList").value === [] &&
-                this.searchForm.get("clList").value === [] &&
+                sF.tfList.length === 0 &&
+                sF.clList.length === 0 &&
                 (!this.searchForm.get("chromosome").value ||
                 this.searchForm.get("chromosome").value === "any chr"));
     }
