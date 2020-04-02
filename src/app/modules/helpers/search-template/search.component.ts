@@ -188,12 +188,11 @@ export class SearchComponent implements OnInit, OnChanges {
         this.searchForm.patchValue(this.nullValue);
     }
 
-    _navigateToSearch(form?: Partial<SearchQueryModel>) {
-        form = form ? form : this.searchForm.value;
+    _navigateToSearch() {
         if (!this._isSearchDisabled()) {
             this.router.navigate(["/search/" +
             (this.isAdvanced ? "advanced" : "simple")], {
-                queryParams: this._convertFormToParams(this.isAdvanced, form)});
+                queryParams: this._convertFormToParams(this.isAdvanced)});
         }
     }
 
@@ -222,7 +221,7 @@ export class SearchComponent implements OnInit, OnChanges {
             search.searchInput = "11260841";
         }
         this.searchForm.patchValue(search);
-        this._navigateToSearch(search);
+        this._navigateToSearch();
     }
 
     _checkToDisplay(id: string) {
@@ -283,8 +282,8 @@ export class SearchComponent implements OnInit, OnChanges {
             {clList: this.searchForm.value.clList.filter(s => s !== chipName)});
     }
 
-    _convertFormToParams(isAdvanced: boolean, form?: Partial<SearchQueryModel>): Partial<SearchParamsModel> {
-        form = form ? form : this.searchForm.value;
+    _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
+        const form = this.searchForm.value;
         if (!isAdvanced) {
             if (form && form.searchBy) {
                 if (form.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
