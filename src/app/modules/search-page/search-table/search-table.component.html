@@ -2,9 +2,10 @@
     <asb-table
         #tableView
         [displayedColumns]="displayedColumns"
-        [data]="searchResults"
+        [data]="dataToView"
         [columnModel]="columnModel"
         [clickableRow]="true"
+        [externalPaginator]="paginator"
         (rowClickEmitter)="_handleTableRowClick($event)"
     >
     </asb-table>

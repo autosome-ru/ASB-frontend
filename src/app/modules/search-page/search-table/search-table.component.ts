@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     HostBinding,
     Input,
@@ -11,13 +12,15 @@ import {ClSnpCutModel, SnpGenPosModel, SnpSearchModel, TfSnpCutModel} from "../.
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {SearchParamsModel} from "../../../models/searchQueryModel";
+import {MatPaginator} from "@angular/material/paginator";
 
 
 
 @Component({
     selector: "asb-search-table",
     templateUrl: "./search-table.component.html",
-    styleUrls: ["../search-page.component.less"]
+    styleUrls: ["../search-page.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchPageTableComponent implements OnInit {
     @ViewChild("tableView", {static: true})
@@ -36,9 +39,10 @@ export class SearchPageTableComponent implements OnInit {
     private readonly cssClass = true;
 
     @Input()
-    public searchResults: SnpSearchModel[];
+    readonly searchResults: SnpSearchModel[];
 
-
+    @Input()
+    public paginator: MatPaginator;
 
     public columnModel: AsbTableColumnModel<any>;
     public displayedColumns: AsbTableDisplayedColumns<any> = [
@@ -46,14 +50,17 @@ export class SearchPageTableComponent implements OnInit {
         "rsId",
 
     ];
+    public dataToView: any[];
 
     constructor(private router: Router, private route: ActivatedRoute) {}
 
     ngOnInit() {
         this.columnModel = {
-            genPos: {view: "Genome position",
+            genPos: {
+                view: "Genome position",
                 columnTemplate: this.genomePositionViewTemplate,
-                disabledSort: true},
+                disabledSort: true
+            },
             rsId: {view: "rs ID"},
 
         };
@@ -63,10 +70,14 @@ export class SearchPageTableComponent implements OnInit {
             this.router.isActive("/search/simple", false)) {
             this.columnModel = {
                 ...this.columnModel,
-                transFactors: {view: "Top 5 TFs",
-                    columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true},
-                cellLines: {view: "Top 3 cell types",
-                    columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true},
+                transFactors: {
+                    view: "Top 5 TFs",
+                    columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true
+                },
+                cellLines: {
+                    view: "Top 3 cell types",
+                    columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true
+                },
             };
             this.displayedColumns = [
                 ...this.displayedColumns,
@@ -82,11 +93,15 @@ export class SearchPageTableComponent implements OnInit {
                 ...this.columnModel,
                 ...this.paramsToColumnModel(),
             };
-            this.searchResults = this.searchResults.map((s, index) => {
-                return {...s, ...this.paramsToData(this.searchResults)[index]};
-            });
         }
+        this.dataToView = this.searchResults.map(s => {
+            return {
+                ...s,
+                ...this.paramsToData(s)
+            };
+        });
     }
+
 
 
     _navigateToSnp({rsId: id, alt: base}: {rsId: string, alt: string}): void {
@@ -152,31 +167,31 @@ export class SearchPageTableComponent implements OnInit {
         return result;
     }
 
-    private paramsToData(data: SnpSearchModel[]): any[] {
+    private paramsToData(s: SnpSearchModel): any {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
-        return data.map(s => {
-            const result = {};
-            if (params.tf) {
-                params.tf.split(",").forEach(
-                    p => {
-                        result[convertNameToValue(p, "Alt")] =
-                            s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueAlt : "NaN";
-                        result[convertNameToValue(p, "Ref")] =
-                            s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueRef : "NaN";
-                    });
-            }
-            if (params.cl) {
-                params.cl.split(",").forEach(
-                    p => {
-                        result[convertNameToValue(p, "Alt")] =
-                            s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueAlt : "NaN";
-                        result[convertNameToValue(p, "Ref")] =
-                            s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueRef : "NaN";
-                    });
-            }
-            return result;
-        });
+        const result = {};
+        if (params.tf) {
+            params.tf.split(",").forEach(
+                p => {
+                    result[convertNameToValue(p, "Alt")] =
+                        s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueAlt : "NaN";
+                    result[convertNameToValue(p, "Ref")] =
+                        s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueRef : "NaN";
+                });
+        }
+        if (params.cl) {
+            params.cl.split(",").forEach(
+                p => {
+                    result[convertNameToValue(p, "Alt")] =
+                        s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueAlt : "NaN";
+                    result[convertNameToValue(p, "Ref")] =
+                        s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueRef : "NaN";
+                });
+        }
+        return result;
     }
+
+
 }
 
 function convertNameToValue(name: string, allele: "Ref" | "Alt"): string {

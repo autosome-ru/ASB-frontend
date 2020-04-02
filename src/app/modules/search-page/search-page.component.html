@@ -102,7 +102,9 @@
 
 <ng-template #tableViewTemplate>
     <asb-search-table
-        [searchResults]="filteredSnpResults$ | async"
+        *ngIf="(searchSnpResults$ | async)?.results.length > 0"
+        [searchResults]="(searchSnpResults$ | async).results"
+        [paginator]="paginator"
     >
     </asb-search-table>
 </ng-template>

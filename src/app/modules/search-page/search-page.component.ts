@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
@@ -13,9 +13,10 @@ import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchResultsModel} from "../../models/searchQueryModel";
 
 @Component({
-  selector: "asb-search-page",
-  templateUrl: "./search-page.component.html",
-  styleUrls: ["./search-page.component.less"]
+    selector: "asb-search-page",
+    templateUrl: "./search-page.component.html",
+    styleUrls: ["./search-page.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchPageComponent implements OnInit {
     @ViewChild("tableView", {static: true})
@@ -56,11 +57,11 @@ export class SearchPageComponent implements OnInit {
         }
 
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
-        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.results.filter(
-            (_, index) =>
-                index < this.pageSize && index >= 0)));
+        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a =>
+            this.filterResults(a, 0, this.pageSize)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
     }
+
 
     getPhrase(searchResults: SearchResultsModel, loading: boolean): string {
         if (loading) {
@@ -96,9 +97,8 @@ export class SearchPageComponent implements OnInit {
     }
 
     _filterSnpResults(pageSize: number, pageIndex: number): void {
-        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a => a.results.filter(
-            (element, index) =>
-                index < pageSize * (pageIndex + 1) && index >= pageSize * pageIndex)));
+        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a =>
+            this.filterResults(a, pageIndex, pageSize)));
     }
 
     _groupToggled(event: MatButtonToggleChange) {
@@ -107,11 +107,21 @@ export class SearchPageComponent implements OnInit {
         } else {
             this.pageSize = 3;
         }
-        if (this.paginator) this.paginator.firstPage();
+        if (this.paginator) {
+            this.paginator.firstPage();
+            this.paginator.pageSize = this.pageSize;
+        }
         this._filterSnpResults(this.pageSize,
             this.paginator ? this.paginator.pageIndex : 0);
 
     }
 
+    private filterResults(results: SearchResultsModel,
+                          pageIndex: number,
+                          pageSize: number): SnpSearchModel[] {
+        return results.results.filter((_, index) =>
+                pageIndex * pageSize <= index &&
+                index < pageSize * (pageIndex + 1));
+    }
 
 }

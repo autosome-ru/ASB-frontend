@@ -2,7 +2,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy,
     Component, ElementRef, EventEmitter,
     HostBinding,
-    Input, Output,
+    Input, OnChanges, Output, SimpleChanges,
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -30,7 +30,7 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
     ],
 })
 
-export class AsbTableComponent<T> implements AfterViewInit {
+export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
     @ViewChild("popover", {static: true})
@@ -93,6 +93,11 @@ export class AsbTableComponent<T> implements AfterViewInit {
             this._dataSource.sort = this.sort;
             this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
             if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+        }
+    }
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes["externalPaginator"] && this.externalPaginator) {
+            if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
         }
     }
     public _handleRowClick(row: T): void {
