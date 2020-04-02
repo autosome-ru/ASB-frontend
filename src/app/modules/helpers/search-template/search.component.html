@@ -120,7 +120,21 @@
                 </mat-hint>
             </mat-form-field>
         </ng-container>
-
+        <!--<div class="ml-auto">
+            <mat-form-field>
+                <input
+                    matInput
+                    placeholder="Nearby"
+                    [formControl]="showNearbyControl"
+                >
+                <span matSuffix>bp</span>
+            </mat-form-field>
+            <button
+                mat-raised-button
+            >
+                Show nearby
+            </button>
+        </div>-->
         <ng-container *ngIf="_checkToDisplay('tf')">
             <mat-form-field
                 style="width: 100%; padding: 0"
@@ -231,7 +245,7 @@
                 [routerLink]="isAdvanced ? '/search/simple' : '/search/advanced'"
                 [queryParams]="_convertFormToParams(!isAdvanced)"
             >
-                {{isAdvanced ? 'simple search' : 'advanced search'}}
+                {{isAdvanced ? 'Simple search' : 'Advanced search'}}
             </a>
         </div>
         <button

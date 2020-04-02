@@ -30,9 +30,16 @@
 </ng-template>
 
 <ng-template #genomePositionViewTemplate let-value="value">
-    <span>
-        {{value?.chr}}:{{value?.pos}} {{value?.refBase}}>{{value?.altBase}}
-    </span>
+    <a
+        [routerLink]="'/snps/' + value?.rsId + '/' + value?.altBase"
+        [routerLinkActive]="['active']"
+    >
+        <div>
+            <span>
+                {{value?.chr}}:{{value?.pos}} {{value?.refBase}}>{{value?.altBase}}
+            </span>
+        </div>
+    </a>
 </ng-template>
 
 <ng-template #manyCellTypesViewTemplate let-value="value">

@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
@@ -69,6 +69,7 @@ export class SearchComponent implements OnInit, OnChanges {
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
     public downloadButtonColor: "primary" | null = null;
+    public showNearbyControl: FormControl;
 
     private static initChromosomes(): string[] {
         const result: string[] = ["any chr"];
@@ -98,6 +99,8 @@ export class SearchComponent implements OnInit, OnChanges {
         this.titleService.setTitle(this.route.snapshot.data.title);
 
         this.listOfChrs = SearchComponent.initChromosomes();
+
+        this.showNearbyControl = this.formBuilder.control(100);
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
