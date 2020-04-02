@@ -3,7 +3,18 @@
     style="background-color: white"
     [class._restricted]="width === 'restricted'"
     [class._full]="width === 'full'">
-    <h3> {{isAdvanced ? 'Advanced search' : 'Search'}}</h3>
+    <div class="asb-search__header">
+    <h3>
+        {{isAdvanced ? 'Advanced search' : 'Search'}}
+    </h3>
+        <button
+            class="asb-search__header-demo"
+            mat-raised-button
+            (click)="_initDemo()"
+        >
+            Try it out
+        </button>
+    </div>
     <form
         [formGroup]="searchForm"
     >
@@ -226,7 +237,8 @@
         <button
             *ngIf="isAdvanced"
             mat-stroked-button
-            [color]="searchData.total !== searchData.results.length ? 'primary' : null"
+            [ngClass]="{'asb-search_light-button': downloadButtonColor === 'primary'}"
+            [color]="downloadButtonColor"
             [disabled]="_isSearchDisabled()"
             (click)="_getResultsInCsv()"
         >

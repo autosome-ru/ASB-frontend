@@ -33,6 +33,10 @@
                             </mat-button-toggle>
                         </mat-button-toggle-group>
                     </h4>
+                    <h4 class="headline text--bold-300 search-page__text">
+                        {{getAdditionalPhrase((searchSnpResults$ | async),
+                        (searchSnpResultsLoading$ | async))}}
+                    </h4>
                 </div>
             </div>
             <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">

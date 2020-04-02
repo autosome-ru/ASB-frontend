@@ -77,11 +77,18 @@ export class SearchPageComponent implements OnInit {
                 return "1 result";
             }
             default: {
-                return `${searchResults.total} results` +
-                    (searchResults.total !== searchResults.results.length ?
-                    "\nToo many to display. Use get in tsv option" : "");
+                return `${searchResults.total} results`;
+
             }
         }
+    }
+
+    getAdditionalPhrase(searchResults: SearchResultsModel, loading: boolean) {
+        if (loading) {
+            return "";
+        }
+        return searchResults.total !== searchResults.results.length ?
+            "Too many to display. Use get in tsv option" : "";
     }
 
     _handlePageChange(page: PageEvent) {
@@ -105,4 +112,6 @@ export class SearchPageComponent implements OnInit {
             this.paginator ? this.paginator.pageIndex : 0);
 
     }
+
+
 }

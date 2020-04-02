@@ -93,6 +93,19 @@ export class SnpPageComponent implements OnInit {
             }
         );
     }
+
+    _downloadPage() {
+        this.dataService.getSnpInfoById({rsId: this.id, alt: this.alt}).subscribe(
+            (res) => {
+                const blob = new Blob([JSON.stringify(res)],
+                    {type: "application/json"});
+                this.saverService.save(blob, `AD_ASTRA_page_${this.id}_${this.alt}.json`);
+            },
+        (err) => {
+                console.log(err);
+            }
+        );
+    }
 }
 
 const commonColumnModel:

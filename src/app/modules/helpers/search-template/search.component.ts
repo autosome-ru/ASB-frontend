@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Input, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
@@ -29,7 +29,7 @@ import {ToastrService} from "ngx-toastr";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnChanges {
 
     constructor(
         private formBuilder: FormBuilder,
@@ -68,6 +68,7 @@ export class SearchComponent implements OnInit {
     listOfChrs: string[];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
+    public downloadButtonColor: "primary" | null = null;
 
     private static initChromosomes(): string[] {
         const result: string[] = ["any chr"];
@@ -76,6 +77,19 @@ export class SearchComponent implements OnInit {
         }
         result.push("chrX");
         return result;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes["searchData"] &&
+            this.isAdvanced &&
+            this.searchData &&
+            this.searchData.total &&
+            this.searchData.total !== this.searchData.results.length) {
+                this.downloadButtonColor = "primary";
+                setTimeout(() => {
+                    this.downloadButtonColor = null;
+            }, 5000);
+        }
     }
 
 
@@ -157,7 +171,7 @@ export class SearchComponent implements OnInit {
         );
 
         // Init results if form is valid after patching
-        if (Object.keys(this.searchParams).length > 0 && this.searchForm.valid) {
+        if (!this._isSearchDisabled()) {
             this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
                 {search: this.searchForm.value, isAdvanced: this.isAdvanced}
             ));
@@ -192,6 +206,21 @@ export class SearchComponent implements OnInit {
                 console.log("err");
                 console.log(err.text);
             });
+    }
+
+    _initDemo() {
+        const search: Partial<SearchQueryModel> = {};
+        if (this.isAdvanced) {
+            search.chromosome = "chr1";
+            search.clList = ["HEK293 (embryonic kidney)"];
+            search.tfList = ["ANDR_HUMAN", "CTCF_HUMAN"];
+            search.searchInput = "1-50000000";
+        } else {
+            search.searchBy = "id";
+            search.searchInput = "11260841";
+        }
+        this.searchForm.patchValue(search);
+        this._navigateToSearch();
     }
 
     _checkToDisplay(id: string) {
