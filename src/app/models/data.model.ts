@@ -87,7 +87,7 @@ export interface TfSnpBackendModel extends TfSnpBackendCutModel {
     exp_snps: ExpSnpBackendModel[];
 
 }
-interface AbstractSnpCutModel {
+interface AbstractSnpCutModel extends SnpGenPosModel {
     name: string;
     pValueRef: number;
     pValueAlt: number;

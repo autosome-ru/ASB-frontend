@@ -13,6 +13,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/tab
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {SearchParamsModel} from "../../../models/searchQueryModel";
 import {MatPaginator} from "@angular/material/paginator";
+import {baseToColors} from "../../../helpers/colors.helper";
 
 
 
@@ -51,6 +52,7 @@ export class SearchPageTableComponent implements OnInit {
 
     ];
     public dataToView: any[];
+    colors: any = baseToColors;
 
     constructor(private router: Router, private route: ActivatedRoute) {}
 

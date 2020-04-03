@@ -36,7 +36,16 @@
     >
         <div>
             <span>
-                {{value?.chr}}:{{value?.pos}} {{value?.refBase}}>{{value?.altBase}}
+                {{value?.chr}}:{{value?.pos}}
+                <span style="color: black">
+                    <span
+                        [ngStyle]="{'color': colors[value.refBase]}"
+                    >{{value.refBase}}</span>
+                    <span>></span>
+                    <span
+                        [ngStyle]="{'color': colors[value.altBase]}"
+                    >{{value.altBase}}</span>
+                </span>
             </span>
         </div>
     </a>

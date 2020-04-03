@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, } from "@angular/core";
 import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
+import {baseToColors} from "../../../../../helpers/colors.helper";
 
 @Component({
     selector: "asb-snp-header",
@@ -12,9 +13,9 @@ export class AsbSnpHeaderComponent implements OnInit {
     public data: SnpSearchModel | SnpInfoModel;
     @Input()
     public snpCard: boolean = true;
+    colors: any = baseToColors;
 
     constructor() {}
     ngOnInit() {
-
     }
 }

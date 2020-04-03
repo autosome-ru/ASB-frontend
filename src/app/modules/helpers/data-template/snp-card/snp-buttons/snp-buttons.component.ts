@@ -29,7 +29,8 @@ export class SnpButtonsComponent implements OnInit {
 
     }
     _calculateColor(i: number) {
-        return calculateColor(this.data[i].pValueRef, this.data[i].pValueAlt);
+        return calculateColor(this.data[i].pValueRef,
+            this.data[i].pValueAlt, this.data[i].refBase, this.data[i].altBase);
     }
 
     _showMoreObjects() {

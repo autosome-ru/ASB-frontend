@@ -2,7 +2,7 @@
 <div class="container-fluid px-0 px-sm-2"
      style="padding-top: 5px;"
 >
-    <div class="row">
+    <div class="row" *ngIf="objectData.length > 0">
         <form [formGroup]="tableFormGroup" class="container">
             <div style="margin-bottom: 10px">
                 <mat-form-field>
