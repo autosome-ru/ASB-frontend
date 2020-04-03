@@ -43,6 +43,7 @@ export class AsbPopoverComponent {
     public popoverClosed = new EventEmitter<void>();
 
     private overlayRef: OverlayRef;
+    public opened: boolean = false;
 
     constructor(private overlay: Overlay, private readonly sso: ScrollStrategyOptions) {
         this.scrollStrategy = this.sso.block();
@@ -62,10 +63,12 @@ export class AsbPopoverComponent {
         // const config = new OverlayConfig({
         //     scrollStrategy: this.scrollStrategy});
         this.overlayRef = this.overlay.create();
+        this.opened = true;
         this.overlayRef.attach(this.portal);
     }
 
     public close(): void {
+        this.opened = false;
         this.overlayRef.dispose();
         this.overlayRef = null;
         this.popoverClosed.emit();

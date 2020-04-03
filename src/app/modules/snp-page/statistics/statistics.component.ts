@@ -40,6 +40,9 @@ export class AsbStatisticsComponent<T> implements OnInit {
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
 
+    @Input()
+    public readonly snpName: (row: T) => string;
+
     @Output()
     private downloadSnpInfo = new EventEmitter<{
         columns: string[],
@@ -50,11 +53,11 @@ export class AsbStatisticsComponent<T> implements OnInit {
     public tableFormGroup: FormGroup;
     public nonStickyColumnModel: Partial<AsbTableColumnModel<Partial<T>>>;
     public filteredObjectData: T[];
-    public disabledToolTips: boolean = true;
 
     originalOrder = ((): number => {
         return 0;
     });
+
 
     constructor(private formBuilder: FormBuilder) {}
 
@@ -111,10 +114,6 @@ export class AsbStatisticsComponent<T> implements OnInit {
     }
     _getPaginatorOptions(): number[] {
         return getPaginatorOptions(this.filteredObjectData.length);
-    }
-
-    _getTitle(row: T): string {
-        return "Additional statistics" ;
     }
 
 

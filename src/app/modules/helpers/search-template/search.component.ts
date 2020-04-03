@@ -164,7 +164,7 @@ export class SearchComponent implements OnInit, OnChanges {
                                 chromosome: this.searchData.results[0].chr
                             } :
                             {
-                                searchInput: this.searchData.results[0].rsId.slice(2),
+                                searchInput: this.searchData.results[0].rsId,
                             }
                     );
                 }
@@ -218,7 +218,7 @@ export class SearchComponent implements OnInit, OnChanges {
             search.tfList = ["ANDR_HUMAN", "CTCF_HUMAN"];
         } else {
             search.searchBy = "id";
-            search.searchInput = "11260841";
+            search.searchInput = "rs11260841";
         }
         this.searchForm.patchValue(search);
         this._navigateToSearch();

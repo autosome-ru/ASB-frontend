@@ -90,7 +90,7 @@
             [displayedColumns]="tableDisplayedColumns"
             [data]="filteredObjectData"
             [popoverContentTemplate]="popoverContentTemplate"
-            [getTitle]="_getTitle"
+            [getTitle]="snpName"
             [paginatorOptions]="_getPaginatorOptions()"
             [colorStyle]="_calculateColor"
         >

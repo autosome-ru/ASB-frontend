@@ -33,7 +33,7 @@ export class SearchService {
             switch (filter.searchBy) {
                 case "id": {
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/rs/${filter.searchInput}`);
+                        `${searchSnpsResultsUrl}/rs/${filter.searchInput.slice(2)}`);
                 }
                 case "pos": {
                     const positions: {start: string, end: string} =

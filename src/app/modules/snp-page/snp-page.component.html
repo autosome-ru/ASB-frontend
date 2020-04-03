@@ -106,6 +106,7 @@
         [objectData]="(snpData$ | async)?.transFactors || []"
         [tableColumnModel]="tfColumnModel"
         [initialDisplayedColumns]="tfDisplayedColumns"
+        [snpName]="_createSnpName(snpData$ | async)"
         [searchFunc]="searchFunction"
         (downloadSnpInfo)="_downloadFile($event, 'tf')"
     >
@@ -119,6 +120,7 @@
         [objectData]="(snpData$ | async)?.cellLines || []"
         [tableColumnModel]="clColumnModel"
         [initialDisplayedColumns]="clDisplayedColumns"
+        [snpName]="_createSnpName(snpData$ | async)"
         [searchFunc]="searchFunction"
         (downloadSnpInfo)="_downloadFile($event, 'cl')"
     >

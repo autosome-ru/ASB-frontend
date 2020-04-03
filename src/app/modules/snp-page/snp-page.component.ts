@@ -106,6 +106,15 @@ export class SnpPageComponent implements OnInit {
             }
         );
     }
+
+    _createSnpName(snpData: SnpInfoModel) {
+        return (row: ClSnpModel | TfSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase} in `
+            + this._getName(row);
+    }
+    _getName(row: ClSnpModel | TfSnpModel) {
+        console.log(row);
+        return row ? row.name : "fail";
+    }
 }
 
 const commonColumnModel:

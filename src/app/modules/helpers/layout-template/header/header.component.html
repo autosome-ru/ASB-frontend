@@ -24,6 +24,14 @@
         <div class="navbar-nav">
             <a
                 class="nav-item nav-link"
+                [routerLink]="'/search/simple'"
+                [routerLinkActive]="['active']"
+                (click)="toggleNavbar('close')"
+            >
+                Search
+            </a>
+            <a
+                class="nav-item nav-link"
                 [routerLink]="'/contacts'"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
