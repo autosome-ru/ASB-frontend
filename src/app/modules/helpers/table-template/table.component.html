@@ -56,6 +56,7 @@
             <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
                 class="asb-table__table-row"
+                [class._shadows-click]="expandCellContentTemplate || popoverContentTemplate"
                 [class._clickable]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
                 [class._borderless]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
                 [class._colorClick]="!expandCellContentTemplate && !popoverContentTemplate && clickableRow"

@@ -6,8 +6,12 @@
             aria-disabled="true"
             disabled
             [className]="buttonsClass"
-            style="margin-top: 8px; opacity: 1!important; pointer-events: none; margin-right: 8px"
-            [ngStyle]="{'background-color':  _calculateColor(i)}"
+            style="margin-top: 8px;
+                    opacity: 1!important;
+                    pointer-events: none;
+                    margin-right: 8px;
+                    color: rgba(0, 0, 0, 0.87);"
+            [ngStyle]="{'background-color':  _calculateColor(i), 'background': _calculateColor(i)}"
         >
             {{obj.name}}
         </button>

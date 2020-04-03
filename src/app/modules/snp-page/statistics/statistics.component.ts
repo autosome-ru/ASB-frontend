@@ -101,10 +101,11 @@ export class AsbStatisticsComponent<T> implements OnInit {
         return result;
     }
     _calculateColor(row: TfSnpModel | ClSnpModel) {
-        return {"background-color": calculateColor(row.pValueRef,
-                row.pValueAlt,
-                row.refBase,
-                row.altBase)};
+        const color: string = calculateColor(row.pValueRef,
+            row.pValueAlt,
+            row.refBase,
+            row.altBase);
+        return {"background-color": color, "background": color};
     }
 
     _resetFilters() {
