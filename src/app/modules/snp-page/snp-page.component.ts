@@ -112,7 +112,6 @@ export class SnpPageComponent implements OnInit {
             + this._getName(row);
     }
     _getName(row: ClSnpModel | TfSnpModel) {
-        console.log(row);
         return row ? row.name : "fail";
     }
 }
