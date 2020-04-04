@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from "@angular/core";
+import {baseToColors} from "../../../helpers/colors.helper";
 
 @Component({
     selector: "asb-color-scales",
@@ -12,6 +13,8 @@ export class ColorScalesComponent implements OnInit {
 
     @Input()
     public altBase: string;
+
+    public colors = baseToColors;
 
     constructor() { }
 
