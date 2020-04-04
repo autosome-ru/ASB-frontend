@@ -19,6 +19,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { ColorScalesComponent } from "./color-scales/color-scales.component";
 
 @NgModule({
     imports: [
@@ -40,7 +41,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatSortModule,
         MatTooltipModule,
     ],
-    declarations: [SnpPageComponent, AsbStatisticsComponent, PhenotypesComponent, InnerTableComponent],
+    declarations: [SnpPageComponent, AsbStatisticsComponent, PhenotypesComponent, InnerTableComponent, ColorScalesComponent],
     exports: [SnpPageComponent, InnerTableComponent],
 })
 export class AsbSnpPageModule {
