@@ -1,4 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: "asb-help-page",
@@ -8,9 +10,11 @@ import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 })
 export class HelpPageComponent implements OnInit {
 
-    constructor() { }
+    constructor(private route: ActivatedRoute,
+                private titleService: Title) { }
 
     ngOnInit(): void {
+        this.titleService.setTitle(this.route.snapshot.data.title);
     }
 
 }
