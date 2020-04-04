@@ -38,13 +38,13 @@
             <span>
                 {{value?.chr}}:{{value?.pos}}
                 <span style="color: black">
-                    <span
+                    <strong
                         [ngStyle]="{'color': colors[value.refBase]}"
-                    >{{value.refBase}}</span>
+                    >{{value.refBase}}</strong>
                     <span>></span>
-                    <span
+                    <strong
                         [ngStyle]="{'color': colors[value.altBase]}"
-                    >{{value.altBase}}</span>
+                    >{{value.altBase}}</strong>
                 </span>
             </span>
         </div>

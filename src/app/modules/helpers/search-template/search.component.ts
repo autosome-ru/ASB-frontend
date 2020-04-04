@@ -74,7 +74,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
     private static initChromosomes(): string[] {
         const result: string[] = ["any chr"];
-        for (let i = 1; i < 22; i++) {
+        for (let i = 1; i < 23; i++) {
             result.push("chr" + i);
         }
         result.push("chrX");

@@ -2,7 +2,7 @@
 <div class="container-fluid px-0 px-sm-2"
      style="padding-top: 5px;"
 >
-    <div class="row" *ngIf="objectData.length > 0">
+    <div class="row" *ngIf="objectData.length > 0; else emptyContentTemplate">
         <form [formGroup]="tableFormGroup" class="container">
             <div style="margin-bottom: 10px">
                 <mat-form-field>
@@ -102,4 +102,8 @@
     <asb-inner-table
         [innerTableData]="row ? row.expSnps : []"
     ></asb-inner-table>
+</ng-template>
+
+<ng-template #emptyContentTemplate>
+    <h5>No data available</h5>
 </ng-template>

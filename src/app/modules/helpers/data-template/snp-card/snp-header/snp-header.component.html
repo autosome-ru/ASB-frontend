@@ -5,20 +5,20 @@
     >
         {{data.rsId}}</a>
      {{data.chr}}:{{data.pos }}
-    <span
+    <strong
         [ngStyle]="{'color': colors[data.refBase]}"
-    >{{data.refBase}}</span>
+    >{{data.refBase}}</strong>
     <span>></span>
-    <span
+    <strong
         [ngStyle]="{'color': colors[data.altBase]}"
-    >{{data.altBase}}</span>
+    >{{data.altBase}}</strong>
 </h2>
 <h2 *ngIf="!snpCard">
     {{data.rsId}} {{data.chr}}:{{data.pos }}
-    <span
-    [ngStyle]="{'color': colors[data.refBase]}">{{data.refBase}}</span>
+    <strong
+    [ngStyle]="{'color': colors[data.refBase]}">{{data.refBase}}</strong>
     <span>></span>
-    <span
+    <strong
         [ngStyle]="{'color': colors[data.altBase]}"
-    >{{data.altBase}}</span>
+    >{{data.altBase}}</strong>
 </h2>
