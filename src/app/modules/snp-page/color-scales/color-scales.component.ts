@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
 @Component({
     selector: "asb-color-scales",
@@ -6,6 +6,12 @@ import { Component, OnInit } from "@angular/core";
     styleUrls: ["./color-scales.component.less"]
 })
 export class ColorScalesComponent implements OnInit {
+
+    @Input()
+    public refBase: string;
+
+    @Input()
+    public altBase: string;
 
     constructor() { }
 

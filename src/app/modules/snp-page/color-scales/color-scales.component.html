@@ -1,6 +1,12 @@
-<div>
+<div style="display:flex; justify-content: space-between; flex-wrap: wrap">
     <img
-        [src]="'assets/images/scale_A.svg'"
+        style="width: 432px; margin-bottom: 5px; margin-right:10px"
+        [src]="'assets/images/scale_' + refBase +'.svg'"
+        alt="color scale"
+    >
+    <img
+        style="width: 432px"
+        [src]="'assets/images/scale_' + altBase +'.svg'"
         alt="color scale"
     >
 </div>

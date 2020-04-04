@@ -1,14 +1,14 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {ContactsComponent} from "./contacts.component";
+import {ContactsPageComponent} from "./contacts-page.component";
 
 @NgModule({
     imports: [
         CommonModule,
     ],
-    declarations: [ContactsComponent],
-    exports: [ContactsComponent],
+    declarations: [ContactsPageComponent],
+    exports: [ContactsPageComponent],
 })
 export class AsbContactsPageModule {
 }

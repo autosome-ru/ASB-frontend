@@ -1,9 +1,10 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import {HomePageComponent} from "./modules/home-page/home-page.component";
-import {ContactsComponent} from "./modules/contacts-page/contacts.component";
+import {ContactsPageComponent} from "./modules/contacts-page/contacts-page.component";
 import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component";
 import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
+import {HelpPageComponent} from "./modules/help-page/help-page.component";
 
 
 const routes: Routes = [
@@ -16,16 +17,16 @@ const routes: Routes = [
     },
     {
         path: "contacts",
-        component: ContactsComponent,
+        component: ContactsPageComponent,
         data: {
-            title: "ASB contacts-page"
+            title: "ASB contacts page"
         }
     },
     {
         path: "help",
-        component: ContactsComponent,
+        component: HelpPageComponent,
         data: {
-            title: "ASB contacts-page"
+            title: "ASB help page"
         }
     },
     {

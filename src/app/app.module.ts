@@ -16,6 +16,7 @@ import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";
 import {AsbHelpersModule} from "./modules/helpers/helpers.module";
 import {AsbSnpPageModule} from "./modules/snp-page/snp-page.module";
+import {AsbHelpPageModule} from "./modules/help-page/help-page.module";
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import { ToastrModule } from "ngx-toastr";
@@ -43,6 +44,7 @@ import { ToastrModule } from "ngx-toastr";
       AsbSnpPageModule,
       AsbContactsPageModule,
       AsbSearchPageModule,
+      AsbHelpPageModule,
 
   ],
   providers: [

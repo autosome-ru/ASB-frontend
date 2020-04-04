@@ -43,7 +43,8 @@ const ICONS = [
     "coin",
     "notebook",
     "megaphone",
-    "download_cl"
+    "download_cl",
+    "card"
 ];
 
 @NgModule({
