@@ -306,7 +306,7 @@ export class SearchComponent implements OnInit, OnChanges {
             if (form) {
                 const result: Partial<SearchParamsModel> = {};
                 if (form && form.clList.length > 0) result.cl = form.clList.join(",");
-                if (form.searchInput && form.searchBy === "id") {
+                if (form.searchInput) {
                     if (checkOneResult(this.searchData) && !this.isAdvanced) {
                         result.pos = "" + this.searchData.results[0].pos;
                         result.chr = this.searchData.results[0].chr;
