@@ -12,7 +12,7 @@ const routes: Routes = [
         path: "",
         component: HomePageComponent,
         data: {
-            title: "ASB home page"
+            title: "ADASTra - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites"
         }
     },
     {
@@ -26,14 +26,14 @@ const routes: Routes = [
         path: "contacts",
         component: ContactsPageComponent,
         data: {
-            title: "ASB contacts page"
+            title: "ADASTra contacts page"
         }
     },
     {
         path: "help",
         component: HelpPageComponent,
         data: {
-            title: "ASB help page"
+            title: "ADASTra help page"
         }
     },
     {
@@ -41,7 +41,7 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/search-page/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
-            title: "ASB-search"
+            title: "ADASTra - search"
         }
 
     },
@@ -49,7 +49,7 @@ const routes: Routes = [
         path: "snps/:rsId/:alt",
         component: SnpPageComponent,
         data: {
-            title: "ASB snp page ID "
+            title: (id: string) => `${id} - ADASTra v1.1` // FIXME
         }
     },
     {

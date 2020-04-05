@@ -60,7 +60,7 @@ export class SnpPageComponent implements OnInit {
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get("rsId");
         this.alt = this.route.snapshot.paramMap.get("alt");
-        this.titleService.setTitle(this.route.snapshot.data.title + this.id);
+        this.titleService.setTitle(this.route.snapshot.data.title(this.id));
 
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
