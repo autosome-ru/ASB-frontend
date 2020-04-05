@@ -42,7 +42,7 @@
                     mat-cell
                     *matCellDef="let row"
                     style="overflow: hidden; position: relative !important;"
-                    [ngStyle]="{'background': column.value.colorStyle ? column.value.colorStyle(row) : 'inherit'}"
+                    [ngStyle]="column.value.colorStyle ? {'background': column.value.colorStyle(row)} : null"
                 >
                     <ng-container
                         *ngIf="column.value.columnTemplate; else valueConverterTemplate"
