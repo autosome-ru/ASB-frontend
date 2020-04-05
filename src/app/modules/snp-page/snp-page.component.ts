@@ -12,6 +12,7 @@ import {AsbStatisticsComponent} from "./statistics/statistics.component";
 import {FileSaverService} from "ngx-filesaver";
 import {DataService} from "../../services/data.service";
 import * as moment from "moment";
+import {calculateColorForOne} from "../../helpers/colors.helper";
 
 
 @Component({
@@ -32,22 +33,16 @@ export class SnpPageComponent implements OnInit {
     public snpData$: Observable<SnpInfoModel>;
     public snpDataLoading$: Observable<boolean>;
 
-    public clColumnModel: AsbTableColumnModel<Partial<ClSnpModel>> = {
-        name: {view: "Cell type", valueConverter: v => v},
-       ...commonColumnModel,
-    };
+    public clColumnModel: AsbTableColumnModel<Partial<ClSnpModel>>;
     public clDisplayedColumns: AsbTableDisplayedColumns<ClSnpModel> = [
         ...commonInitialDisplayedColumns,
     ];
 
+    private commonColumnModel:
+        AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>>;
 
-    public tfColumnModel: AsbTableColumnModel<Partial<TfSnpModel>> = {
-        name: {view: "Uniprot ID", valueConverter: v => v},
-        ...commonColumnModel,
-        motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No info"},
-        motifConcordance: {view: "Motif concordance", valueConverter:
-                    v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
-    };
+
+    public tfColumnModel: AsbTableColumnModel<Partial<TfSnpModel>>;
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         ...commonInitialDisplayedColumns,
         "motifFc",
@@ -71,6 +66,30 @@ export class SnpPageComponent implements OnInit {
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.store.dispatch(new fromActions.data.InitSnpInfoAction(
             {rsId: this.id, alt: this.alt}));
+
+        this.commonColumnModel = {
+            effectSizeRef: {view: "Effect size Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+            effectSizeAlt: {view: "Effect size Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
+            pValueRef: {view: "-log10 FDR Ref",
+                valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
+                colorStyle: row => this._calculateColor(row, "ref")},
+            pValueAlt: {view: "-log10 FDR Alt",
+                valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
+                colorStyle: row => this._calculateColor(row, "alt")},
+            meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}
+        };
+
+        this.clColumnModel = {
+            name: {view: "Cell type", valueConverter: v => v},
+            ...this.commonColumnModel,
+        };
+        this.tfColumnModel = {
+            name: {view: "Uniprot ID", valueConverter: v => v},
+            ...this.commonColumnModel,
+            motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No info"},
+            motifConcordance: {view: "Motif concordance", valueConverter:
+                    v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
+        };
     }
 
     searchFunction(data: ClSnpModel, search: string): boolean {
@@ -107,23 +126,23 @@ export class SnpPageComponent implements OnInit {
         );
     }
 
-    _createSnpName(snpData: SnpInfoModel) {
-        return (row: ClSnpModel | TfSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase} in `
-            + this._getName(row);
+    _calculateColor(row: TfSnpModel | ClSnpModel, w: "ref" | "alt"): string {
+        return w === "ref" ?
+            calculateColorForOne(row.pValueRef,
+            row.refBase) :
+            calculateColorForOne(row.pValueAlt,
+                row.altBase);
+    }
+
+    _createSnpName(snpData: SnpInfoModel, where: TfOrCl) {
+        return (row: ClSnpModel | TfSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase}` +
+            (where === "cl" ? " in " : " of ") + this._getName(row);
     }
     _getName(row: ClSnpModel | TfSnpModel) {
         return row ? row.name : "fail";
     }
 }
 
-const commonColumnModel:
-    AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>> = {
-    effectSizeRef: {view: "Effect size Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    effectSizeAlt: {view: "Effect size Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    pValueRef: {view: "-log10 FDR Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    pValueAlt: {view: "-log10 FDR Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-    meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}
-};
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [
     "name",
     "effectSizeRef",

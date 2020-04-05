@@ -8,11 +8,9 @@ import {
     ViewChild
 } from "@angular/core";
 
-import {ClSnpModel, TfSnpModel} from "src/app/models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
-import {calculateColor} from "src/app/helpers/colors.helper";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
@@ -99,13 +97,6 @@ export class AsbStatisticsComponent<T> implements OnInit {
             result = this.searchFunc(row, search);
         }
         return result;
-    }
-    _calculateColor(row: TfSnpModel | ClSnpModel) {
-        const color: string = calculateColor(row.pValueRef,
-            row.pValueAlt,
-            row.refBase,
-            row.altBase);
-        return {"background-color": color, "background": color};
     }
 
     _resetFilters() {

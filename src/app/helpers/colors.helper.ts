@@ -8,12 +8,16 @@ export function calculateColor(pValueRef: number,
                                refBase: string,
                                altBase: string): string {
     if (pValueAlt < pValueRef) {
-        return baseToColors[refBase] + Math.round(
-            Math.min(pValueRef / 20 * 255,
-                255)).toString(16);
+        return calculateColorForOne(pValueRef, refBase);
     } else {
-        return baseToColors[altBase] + Math.round(
-            Math.min(pValueAlt / 20 * 255,
-                255)).toString(16);
+        return calculateColorForOne(pValueAlt, altBase);
     }
+}
+export function calculateColorForOne(pValue: number,
+                               base: string): string {
+
+    return baseToColors[base] + Math.round(
+        Math.min(pValue / 20 * 255,
+            255)).toString(16);
+
 }

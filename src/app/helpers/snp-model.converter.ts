@@ -43,19 +43,8 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
     model: Partial<SnpSearchBackendModel>
 ): Partial<SnpSearchModel> {
     const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
-    result.genPos = convertSnpModel(model) as SnpGenPosModel;
-    result.cellLines = model.cl_aggregated_snps.map(s => {
-        return {
-            ...convertClAggregatedBackendCutSnp(s),
-            ...result.genPos
-        };
-    }) as ClSnpCutModel[];
-    result.transFactors = model.tf_aggregated_snps.map(s => {
-        return {
-            ...convertTfAggregatedBackendCutSnp(s),
-            ...result.genPos
-        };
-    }) as TfSnpCutModel[];
+    result.cellLines = model.cl_aggregated_snps.map(convertClAggregatedBackendCutSnp) as ClSnpCutModel[];
+    result.transFactors = model.tf_aggregated_snps.map(convertTfAggregatedBackendCutSnp) as TfSnpCutModel[];
     return result;
 }
 

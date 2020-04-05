@@ -46,8 +46,6 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
     public externalPaginator: MatPaginator;
 
     @Input()
-    public colorStyle = null;
-    @Input()
     public getTitle: (row: T) => string = null;
 
     @Input()
@@ -122,9 +120,6 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
 
     _onAdditionalStatisticsClose(): void {
         this.popoverRow = null;
-    }
-    _calculateColor(row: T) {
-        return this.colorStyle ? this.colorStyle(row) : null;
     }
 
     _changeCurrentSortDirection(currentSort: Sort) {

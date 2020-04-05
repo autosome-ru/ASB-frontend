@@ -29,22 +29,22 @@
     </div>
 </ng-template>
 
-<ng-template #genomePositionViewTemplate let-value="value">
+<ng-template #genomePositionViewTemplate let-row="row">
     <a
-        [routerLink]="'/snps/' + value?.rsId + '/' + value?.altBase"
+        [routerLink]="'/snps/' + row?.rsId + '/' + row?.altBase"
         [routerLinkActive]="['active']"
     >
         <div>
             <span>
-                {{value?.chr}}:{{value?.pos}}
+                {{row?.chr}}:{{row?.pos}}
                 <span style="color: black">
                     <strong
-                        [ngStyle]="{'color': colors[value.refBase]}"
-                    >{{value.refBase}}</strong>
+                        [ngStyle]="{'color': colors[row.refBase]}"
+                    >{{row.refBase}}</strong>
                     <span>></span>
                     <strong
-                        [ngStyle]="{'color': colors[value.altBase]}"
-                    >{{value.altBase}}</strong>
+                        [ngStyle]="{'color': colors[row.altBase]}"
+                    >{{row.altBase}}</strong>
                 </span>
             </span>
         </div>

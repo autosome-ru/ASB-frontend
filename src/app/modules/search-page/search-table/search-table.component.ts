@@ -8,7 +8,7 @@ import {
     ViewChild
 } from "@angular/core";
 import {ActivatedRoute,  Router} from "@angular/router";
-import {ClSnpCutModel, SnpGenPosModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
+import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {SearchParamsModel} from "../../../models/searchQueryModel";
@@ -31,7 +31,7 @@ export class SearchPageTableComponent implements OnInit {
     public manyTransFactorsViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
 
     @ViewChild("genomePositionViewTemplate", {static: true})
-    public genomePositionViewTemplate: TemplateRef<{value: SnpGenPosModel}>;
+    public genomePositionViewTemplate: TemplateRef<{row: any, value: any}>;
 
     @ViewChild("manyCellTypesViewTemplate", {static: true})
     public manyCellTypesViewTemplate: TemplateRef<{value: ClSnpCutModel[]}>;
@@ -47,7 +47,7 @@ export class SearchPageTableComponent implements OnInit {
 
     public columnModel: AsbTableColumnModel<any>;
     public displayedColumns: AsbTableDisplayedColumns<any> = [
-        "genPos",
+        "pos",
         "rsId",
 
     ];
@@ -58,7 +58,7 @@ export class SearchPageTableComponent implements OnInit {
 
     ngOnInit() {
         this.columnModel = {
-            genPos: {
+            pos: {
                 view: "Genome position",
                 columnTemplate: this.genomePositionViewTemplate,
                 disabledSort: true
