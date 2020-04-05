@@ -16,6 +16,13 @@ const routes: Routes = [
         }
     },
     {
+        path: "404",
+        component: PageNotFoundComponent,
+        data: {
+            title: "Page not found"
+        }
+    },
+    {
         path: "contacts",
         component: ContactsPageComponent,
         data: {
@@ -47,11 +54,7 @@ const routes: Routes = [
     },
     {
         path: "**",
-        component: PageNotFoundComponent,
-        data: {
-            title: "Page not found(("
-        }
-
+        redirectTo: "/404"
     },
 ];
 

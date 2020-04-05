@@ -4,7 +4,7 @@ import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: "not-found-app",
-    template: `<h3 style="margin-bottom: 0; padding-bottom: 0" >Page not found sry :((</h3>`,
+    template: `<h3 style="margin-bottom: 0; padding-bottom: 0" >Page not found</h3>`,
     styles: [`.app-not-found`],
 })
 export class PageNotFoundComponent implements OnInit {
