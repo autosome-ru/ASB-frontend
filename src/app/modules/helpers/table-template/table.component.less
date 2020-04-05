@@ -55,17 +55,46 @@
 
             &._clickable {
                 cursor: pointer;
-
             }
             &._shadows-click {
-                &:hover {
-                    -webkit-box-shadow:inset 0 0 0 2px #505050FF;
-                    -moz-box-shadow:inset 0 0 0 2px #505050FF;
-                    box-shadow:inset 0 0 0 2px #505050FF;
+                &:hover td{
+                    -webkit-box-shadow:
+                        inset 0 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+                    -moz-box-shadow:
+                        inset 0 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+                    box-shadow:
+                        inset 0 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+
+                }
+                &:hover td:first-child{
+                    -webkit-box-shadow:
+                        inset 2px 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+                    -moz-box-shadow:
+                        inset 2px 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+                    box-shadow:
+                        inset 2px 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+
+                }
+                &:hover td:last-child{
+                    -webkit-box-shadow:
+                        inset -2px 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+                    -moz-box-shadow:
+                        inset -2px 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
+                    box-shadow:
+                        inset -2px 2px 0 0 #AAA,
+                        inset 0 -2px 0 0 #AAA;
 
                 }
             }
-            &._borderless > td {
+            &._borderless > td:last-child {
                 border-bottom-width: 0;
             }
             &._colorClick {
