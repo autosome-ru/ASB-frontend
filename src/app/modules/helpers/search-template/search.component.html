@@ -234,33 +234,34 @@
     </form>
 
     <div class="asb-search__search-buttons">
+        <button
+            mat-raised-button
+            style="margin-right: 20px"
+            [disabled]="_isSearchDisabled()"
+            (click)="_navigateToSearch()"
+        >
+            Search
+        </button>
         <div>
             <a
-                mat-raised-button
-                style="margin-right: 5px"
-                [disabled]="_isSearchDisabled()"
-                (click)="_navigateToSearch()"
-            >
-                Search
-            </a>
-            <a
+                style="margin-right:5px"
                 mat-raised-button
                 [routerLink]="isAdvanced ? '/search/simple' : '/search/advanced'"
                 [queryParams]="_convertFormToParams(!isAdvanced)"
             >
                 {{isAdvanced ? 'Simple search' : 'Advanced search'}}
             </a>
+            <button
+                mat-stroked-button
+                [ngClass]="{'asb-search__light-button': downloadButtonColor === 'primary'}"
+                [color]="downloadButtonColor"
+                [disabled]="_isSearchDisabled()"
+                (click)="_getResultsInCsv()"
+            >
+                <span class="d-none d-sm-inline-block">Get search results in TSV</span>
+                <span class="d-sm-none d-inline-block">Get TSV</span>
+            </button>
         </div>
-        <button
-            mat-stroked-button
-            [ngClass]="{'asb-search__light-button': downloadButtonColor === 'primary'}"
-            [color]="downloadButtonColor"
-            [disabled]="_isSearchDisabled()"
-            (click)="_getResultsInCsv()"
-        >
-            <span class="d-none d-sm-inline-block">Get search results in TSV</span>
-            <span class="d-sm-none d-inline-block">Get TSV</span>
-        </button>
     </div>
 </div>
 

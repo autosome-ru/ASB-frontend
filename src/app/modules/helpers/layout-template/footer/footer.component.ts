@@ -1,5 +1,4 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
-import * as moment from "moment";
 
 @Component({
   selector: "asb-footer",
@@ -13,7 +12,6 @@ export class AsbFooterComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.date = moment().format("DD.MM.YYYY");
     }
 
 }
