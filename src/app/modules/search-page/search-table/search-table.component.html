@@ -35,10 +35,7 @@
         [routerLinkActive]="['active']"
     >
         <div>
-            <span>
-                {{row?.chr}}:{{row?.pos}}
-                <span style="color: black">
-                    <strong
+            <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
                         [ngStyle]="{'color': colors[row.refBase]}"
                     >{{row.refBase}}</strong>
                     <span>></span>

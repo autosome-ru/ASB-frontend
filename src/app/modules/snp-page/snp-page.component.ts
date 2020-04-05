@@ -76,7 +76,7 @@ export class SnpPageComponent implements OnInit {
             pValueAlt: {view: "-log10 FDR Alt",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
                 colorStyle: row => this._calculateColor(row, "alt")},
-            meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2), helpMessage: "this is mean BAD"}
+            meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2)}
         };
 
         this.clColumnModel = {
