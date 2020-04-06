@@ -5,7 +5,7 @@
     <div class="row" *ngIf="objectData.length > 0; else emptyContentTemplate">
         <form [formGroup]="tableFormGroup" class="container">
             <div style="margin-bottom: 10px">
-                <mat-form-field>
+                <mat-form-field style="margin-left: 5px; ">
                     <mat-label>Selected columns</mat-label>
                     <mat-select formControlName="columns"
                                 multiple
