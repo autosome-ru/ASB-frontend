@@ -11,7 +11,7 @@ export class AsbHeaderComponent implements OnInit {
     @HostBinding("class.asb-header")
     private readonly cssClass = true;
     navbarOpen: boolean = false;
-    private version: string;
+    public version: string;
 
     constructor() {}
 
