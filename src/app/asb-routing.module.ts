@@ -5,6 +5,7 @@ import {ContactsPageComponent} from "./modules/contacts-page/contacts-page.compo
 import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component";
 import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 import {HelpPageComponent} from "./modules/help-page/help-page.component";
+import {version} from "./helpers/constants";
 
 
 const routes: Routes = [
@@ -49,7 +50,7 @@ const routes: Routes = [
         path: "snps/:rsId/:alt",
         component: SnpPageComponent,
         data: {
-            title: (id: string) => `${id} - ADASTra v1.1` // FIXME
+            title: (id: string) => `${id} - ADASTra ${version}`
         }
     },
     {

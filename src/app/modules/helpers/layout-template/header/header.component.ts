@@ -1,4 +1,5 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
+import {version} from "../../../../helpers/constants";
 
 
 @Component({
@@ -10,10 +11,13 @@ export class AsbHeaderComponent implements OnInit {
     @HostBinding("class.asb-header")
     private readonly cssClass = true;
     navbarOpen: boolean = false;
+    private version: string;
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.version = version;
+    }
 
     toggleNavbar(event: "toggle" | "close") {
         if (event === "toggle") {

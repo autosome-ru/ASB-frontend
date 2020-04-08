@@ -13,7 +13,7 @@ export class AsbSnpHeaderComponent implements OnInit {
     public data: SnpSearchModel | SnpInfoModel;
     @Input()
     public snpCard: boolean = true;
-    colors: any = baseToColors;
+    colors: {[base: string]: string} = baseToColors;
 
     constructor() {}
     ngOnInit() {
