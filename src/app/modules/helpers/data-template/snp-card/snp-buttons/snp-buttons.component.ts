@@ -14,7 +14,8 @@ export class SnpButtonsComponent implements OnInit {
     public maxObjects: number;
     @Input()
     public data: TfSnpModel[] | ClSnpModel[] | TfSnpCutModel[] | ClSnpCutModel[];
-
+    @Input()
+    public tfOrCl: "tf" | "cl";
     @Input()
     public showMoreObjects: boolean = false;
     @Input()

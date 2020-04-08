@@ -88,6 +88,7 @@ export interface TfSnpBackendModel extends TfSnpBackendCutModel {
 }
 interface AbstractSnpCutModel extends SnpGenPosModel {
     name: string;
+    id: string | number;
     pValueRef: number;
     pValueAlt: number;
 }
@@ -101,7 +102,6 @@ export interface TfSnpCutModel extends AbstractSnpCutModel {
 }
 
 export interface ClSnpCutModel extends AbstractSnpCutModel {
-
 }
 export interface TfSnpModel extends AbstractSnpModel {
     motifPRef: number;

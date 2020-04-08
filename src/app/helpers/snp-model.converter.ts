@@ -71,22 +71,24 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
 
 function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpModel> {
     return {
+        id: s.cell_line.cl_id,
+        name: s.cell_line.name,
         effectSizeRef: s.es_ref,
         effectSizeAlt: s.es_alt,
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
-        name: s.cell_line.name,
         meanBad: s.mean_bad,
         expSnps: s.exp_snps.map(convertBackendExpSnp)
     };
 }
 function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel> {
     return {
+        id: s.transcription_factor.tf_id,
+        name: s.transcription_factor.name,
         effectSizeRef: s.es_ref,
         effectSizeAlt: s.es_alt,
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
-        name: s.transcription_factor.name,
         meanBad: s.mean_bad,
         motifConcordance: s.motif_concordance,
         motifFc: s.motif_log_2_fc,
@@ -100,16 +102,18 @@ function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel
 
 function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSnpCutModel> {
     return {
+        id: s.cell_line.cl_id,
+        name: s.cell_line.name,
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
-        name: s.cell_line.name,
     };
 }
 function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSnpCutModel> {
     return {
+        id: s.transcription_factor.tf_id,
+        name: s.transcription_factor.name,
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
-        name: s.transcription_factor.name,
     };
 }
 

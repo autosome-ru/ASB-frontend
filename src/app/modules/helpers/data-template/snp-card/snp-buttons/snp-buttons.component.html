@@ -1,21 +1,21 @@
  <dd >
     <ng-container *ngFor="let obj of data; let last = last; let i = index;">
-        <button
-            *ngIf="i < maxObjects || data.length < maxObjects || showMoreObjects"
-            tabindex="-1"
-            aria-disabled="true"
-            disabled
-            [className]="buttonsClass"
-            style="margin-top: 8px;
-                    opacity: 1!important;
-                    pointer-events: none;
-                    margin-right: 8px;
-                    color: rgba(0, 0, 0, 0.87);"
-            [ngStyle]="{'background-color':  _calculateColor(i), 'background': _calculateColor(i)}"
-        >
-            {{obj.name}}
-        </button>
         <ng-container *ngIf="!noButtons">
+            <a
+                *ngIf="i < maxObjects || data.length < maxObjects || showMoreObjects"
+                tabindex="-1"
+                [href]="tfOrCl === 'tf' ?
+                'https://www.uniprot.org/uniprot/' +  obj.id  :
+                'http://gtrd.biouml.org/'"
+                target="_blank"
+                rel="noopener noreferrer"
+                [className]="buttonsClass"
+                style="margin-top: 8px; margin-right: 8px; color: rgba(0, 0, 0, 0.87);"
+                [ngStyle]="{'background-color':  _calculateColor(i),
+                            'background': _calculateColor(i)}"
+            >
+                {{obj.name}}
+            </a>
             <button
                 *ngIf="(i == maxObjects && data.length
                     - maxObjects > 1 && !showMoreObjects) || last && showMoreObjects"
@@ -34,6 +34,21 @@
             </button>
         </ng-container>
         <ng-container *ngIf="noButtons">
+            <button
+                *ngIf="i < maxObjects || data.length < maxObjects || showMoreObjects"
+                tabindex="-1"
+                [className]="buttonsClass"
+                aria-disabled="true"
+                disabled
+                style="margin-top: 8px;
+                       margin-right: 8px;
+                       color: rgba(0, 0, 0, 0.87);
+                       opacity: 1!important;
+                       pointer-events: none"
+                [ngStyle]="{'background-color':  _calculateColor(i), 'background': _calculateColor(i)}"
+            >
+                {{obj.name}}
+            </button>
             <button
                 tabindex="-1"
                 disabled
