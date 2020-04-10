@@ -24,6 +24,8 @@ import {ToastrService} from "ngx-toastr";
 import {phenotypesModelExample} from "../../../helpers/constants";
 import {phenotypesFormToList} from "../../../helpers/search-model.converter";
 
+
+
 @Component({
     selector: "asb-search",
     templateUrl: "./search.component.html",
@@ -377,8 +379,9 @@ export class SearchComponent implements OnInit, OnChanges {
                 this.isAdvanced &&
                 sF.tfList.length === 0 &&
                 sF.clList.length === 0 &&
-                (!this.searchForm.get("chromosome").value ||
-                this.searchForm.get("chromosome").value === "any chr"));
+                _checkIfPhenotypeSelected(sF) &&
+                (!sF.chromosome ||
+                sF.chromosome === "any chr"));
     }
 }
 
@@ -420,4 +423,9 @@ function matchingPattern(searchKey: string,
             };
         }
     };
+}
+function _checkIfPhenotypeSelected(sF: SearchQueryModel) {
+    let result: boolean = false;
+    Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);
+    return result;
 }
