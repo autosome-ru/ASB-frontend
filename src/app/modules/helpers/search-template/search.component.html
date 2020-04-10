@@ -235,6 +235,7 @@
             <div class="asb-search__checkboxes">
                 <mat-checkbox
                     *ngFor="let phenotype of phenotypes; let last=last"
+                    style="margin-bottom: 5px"
                     [ngClass]="{'asb-search__checkboxes-checkbox': !last}"
                     [formControlName]="phenotype"
                 >

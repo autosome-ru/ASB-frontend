@@ -26,5 +26,5 @@ export function phenotypesFormToList(form: Partial<SearchQueryModel>): string {
             result = (result ? result + "," : "") + s;
         }
     });
-    return "";
+    return result;
 }
