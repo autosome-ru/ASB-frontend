@@ -1,7 +1,8 @@
 import {
     SearchHintBackendModel,
-    SearchHintModel,
+    SearchHintModel, SearchQueryModel,
 } from "../models/searchQueryModel";
+import {phenotypesModelExample} from "./constants";
 
 export function convertSearchHintBackendModelToSearchHintModel(
     model: SearchHintBackendModel,
@@ -16,4 +17,14 @@ export function convertSearchHintBackendModelToSearchHintModel(
         name: model.name,
         aggregatedSnpCount: model.aggregated_snps_count,
     };
+}
+
+export function phenotypesFormToList(form: Partial<SearchQueryModel>): string {
+    let result: string = "";
+    Object.keys(phenotypesModelExample).forEach(s => {
+        if (s && form[s]) {
+            result = (result ? result + "," : "") + s;
+        }
+    });
+    return "";
 }

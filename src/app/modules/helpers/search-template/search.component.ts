@@ -22,6 +22,7 @@ import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
 import {phenotypesModelExample} from "../../../helpers/constants";
+import {phenotypesFormToList} from "../../../helpers/search-model.converter";
 
 @Component({
     selector: "asb-search",
@@ -68,7 +69,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
     private searchParams: SearchParamsModel;
 
-    public phenotypes: string[];
+    public readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
 
     listOfChrs: string[];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
@@ -107,8 +108,6 @@ export class SearchComponent implements OnInit, OnChanges {
         this.listOfChrs = SearchComponent.initChromosomes();
 
         this.showNearbyControl = this.formBuilder.control(100);
-
-        this.phenotypes = Object.keys(phenotypesModelExample);
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
@@ -296,7 +295,7 @@ export class SearchComponent implements OnInit, OnChanges {
     }
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
-        const form = this.searchForm.value;
+        const form = this.searchForm.value as SearchQueryModel;
         if (!isAdvanced) {
             if (form && form.searchBy) {
                 if (form.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
@@ -318,7 +317,7 @@ export class SearchComponent implements OnInit, OnChanges {
         } else {
             if (form) {
                 const result: Partial<SearchParamsModel> = {};
-                if (form && form.clList.length > 0) result.cl = form.clList.join(",");
+                if (form.clList.length > 0) result.cl = form.clList.join(",");
                 if (form.searchInput) {
                     if (checkOneResult(this.searchData) && !this.isAdvanced) {
                         result.pos = "" + this.searchData.results[0].pos;
@@ -330,7 +329,17 @@ export class SearchComponent implements OnInit, OnChanges {
                 } else if (form.chromosome && form.chromosome !== "any chr") {
                     result.chr = form.chromosome;
                 }
-                if (form && form.tfList.length > 0) result.tf = form.tfList.join(",");
+                if (form.tfList.length > 0) result.tf = form.tfList.join(",");
+                const phenList: string = phenotypesFormToList(form);
+                if (phenList) {
+                    result.phe_db = phenList;
+                }
+                this.phenotypes.forEach(s => {
+                    if (s && form[s]) {
+                        result.phe_db = (result.phe_db ? result.phe_db + "," : "") + s;
+                    }
+
+                });
                 return result;
             } else return {};
         }

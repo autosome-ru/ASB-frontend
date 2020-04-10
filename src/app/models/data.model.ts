@@ -22,12 +22,12 @@ export interface SnpInfoModel extends SnpGenPosModel {
 }
 
 export interface PhenotypesModel {
-    ebi: string[];
-    grasp: string[];
-    clinvar: string[];
-    phewas: string[];
-    finemapping: string[];
-    QTL: string[];
+    ebi: string[] | boolean;
+    grasp: string[] | boolean;
+    clinvar: string[] | boolean;
+    phewas: string[] | boolean;
+    finemapping: string[] | boolean;
+    QTL: string[] | boolean;
 }
 export interface SnpSearchModel extends SnpGenPosModel {
     transFactors: TfSnpCutModel[];

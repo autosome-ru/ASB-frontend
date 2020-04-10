@@ -6,6 +6,7 @@ import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
+import {phenotypesFormToList} from "../helpers/search-model.converter";
 
 
 @Injectable()
@@ -102,6 +103,10 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
     if (filter.tfList.length > 0) {
         params["transcription_factors"] =
             filter.tfList.join(",");
+    }
+    const phenList: string = phenotypesFormToList(filter);
+    if (phenList) {
+        params["phenotype_databases"] = phenList;
     }
 
     return params;
