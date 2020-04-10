@@ -379,7 +379,7 @@ export class SearchComponent implements OnInit, OnChanges {
                 this.isAdvanced &&
                 sF.tfList.length === 0 &&
                 sF.clList.length === 0 &&
-                _checkIfPhenotypeSelected(sF) &&
+                !checkIfPhenotypeSelected(sF) &&
                 (!sF.chromosome ||
                 sF.chromosome === "any chr"));
     }
@@ -424,7 +424,7 @@ function matchingPattern(searchKey: string,
         }
     };
 }
-function _checkIfPhenotypeSelected(sF: SearchQueryModel) {
+function checkIfPhenotypeSelected(sF: SearchQueryModel) {
     let result: boolean = false;
     Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);
     return result;
