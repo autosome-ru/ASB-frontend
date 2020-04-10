@@ -27,6 +27,7 @@ export interface SearchParamsModel {
     by: string;
     cl: string;
     tf: string;
+    phe_db: string;
 }
 
 export interface SearchResultsModel {

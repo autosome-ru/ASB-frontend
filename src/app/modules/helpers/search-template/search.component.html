@@ -231,6 +231,34 @@
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>
+        <ng-container *ngIf="_checkToDisplay('phenotypes')">
+            <div class="asb-search__checkboxes">
+                <mat-checkbox
+                    class="asb-search__checkbox"
+                    formControlName="clinvar"
+                >
+                    ClinVar
+                </mat-checkbox>
+                <mat-checkbox
+                    formControlName="clinvar"
+                >
+                    PheWas
+
+                </mat-checkbox>
+                <mat-checkbox >
+
+                </mat-checkbox>
+                <mat-checkbox >
+
+                </mat-checkbox>
+                <mat-checkbox >
+
+                </mat-checkbox>
+                <mat-checkbox >
+
+                </mat-checkbox>
+            </div>
+        </ng-container>
     </form>
 
     <div class="asb-search__search-buttons">

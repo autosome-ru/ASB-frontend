@@ -20,6 +20,7 @@ export interface SnpInfoModel extends SnpGenPosModel {
     phenotypes: PhenotypesModel;
 
 }
+
 export interface PhenotypesModel {
     ebi: string[];
     grasp: string[];

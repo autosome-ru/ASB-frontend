@@ -10,7 +10,7 @@ import {
     SearchQueryModel,
     SearchResultsModel
 } from "src/app/models/searchQueryModel";
-import {TfOrCl} from "src/app/models/data.model";
+import { TfOrCl} from "src/app/models/data.model";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
@@ -21,6 +21,7 @@ import {FileSaverService} from "ngx-filesaver";
 import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
+import {phenotypesModelExample} from "../../../helpers/constants";
 
 @Component({
     selector: "asb-search",
@@ -28,6 +29,7 @@ import {ToastrService} from "ngx-toastr";
     styleUrls: ["./search.component.less"],
 })
 export class SearchComponent implements OnInit, OnChanges {
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -66,6 +68,8 @@ export class SearchComponent implements OnInit, OnChanges {
 
     private searchParams: SearchParamsModel;
 
+    public phenotypes: string[];
+
     listOfChrs: string[];
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
@@ -83,6 +87,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes["searchData"] &&
+            this.downloadButtonColor !== "primary" &&
             this.isAdvanced &&
             this.searchData &&
             this.searchData.total &&
@@ -103,6 +108,8 @@ export class SearchComponent implements OnInit, OnChanges {
 
         this.showNearbyControl = this.formBuilder.control(100);
 
+        this.phenotypes = Object.keys(phenotypesModelExample);
+
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             searchInput: "",
@@ -112,6 +119,12 @@ export class SearchComponent implements OnInit, OnChanges {
             searchCl: null,
             tfList: [[]],
             clList: [[]],
+            ebi: false,
+            phewas: false,
+            grasp: false,
+            finemapping: false,
+            clinvar: false,
+            QTL: false,
         }, {
                 validator: matchingPattern("searchInput",
                     "searchBy", this.isAdvanced),
@@ -337,6 +350,9 @@ export class SearchComponent implements OnInit, OnChanges {
                 }
                 result.clList = searchParams.cl ? searchParams.cl.split(",") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
+                if (searchParams.phe_db) {
+                    searchParams.phe_db.split(",").forEach(s => result[s] = true);
+                }
                 return result;
             } else return {};
         } else {

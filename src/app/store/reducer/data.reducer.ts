@@ -1,6 +1,7 @@
 import * as fromActions from "src/app/store/action/data.action";
 import {PhenotypesBackendModel, PhenotypesModel, SnpInfoModel} from "src/app/models/data.model";
 import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
+import {phenotypesModelExample} from "../../helpers/constants";
 
 export interface DataState {
     snps: {
@@ -32,14 +33,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
         }
         case fromActions.ActionTypes.LoadSnpInfoSuccess: {
-            const newPhenotypes: PhenotypesModel = {
-                ebi: [],
-                phewas: [],
-                grasp: [],
-                finemapping: [],
-                clinvar: [],
-                QTL: [],
-            };
+            const newPhenotypes: PhenotypesModel = phenotypesModelExample;
             const snpId: string = `rs${action.payload.rs_id}${action.payload.alt}`;
             Object.keys(newPhenotypes).forEach(
                 s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
