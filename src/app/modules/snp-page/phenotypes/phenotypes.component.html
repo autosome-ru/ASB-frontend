@@ -2,12 +2,12 @@
     <dl class="row px-0 mx-0"
         *ngFor="let db of phenotypesDb"
     >
-        <dt class="col-auto">{{db}}</dt>
+        <dt class="col-auto">{{phenToView[db]}}</dt>
         <dd
             *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
             style="display: flex; flex-wrap: wrap"
         >
-            {{phenToView[phenotype]}}<span *ngIf="!last">,&nbsp;</span>
+            {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
         </dd>
     </dl>
 </ng-container>
