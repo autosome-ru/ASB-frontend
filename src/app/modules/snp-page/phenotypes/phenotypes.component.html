@@ -7,7 +7,7 @@
             *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
             style="display: flex; flex-wrap: wrap"
         >
-            {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
+            {{phenToView[phenotype]}}<span *ngIf="!last">,&nbsp;</span>
         </dd>
     </dl>
 </ng-container>

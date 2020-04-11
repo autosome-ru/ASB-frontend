@@ -21,7 +21,7 @@ import {FileSaverService} from "ngx-filesaver";
 import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
-import {phenotypesModelExample} from "../../../helpers/constants";
+import {phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
 import {phenotypesFormToList} from "../../../helpers/search-model.converter";
 
 
@@ -32,27 +32,14 @@ import {phenotypesFormToList} from "../../../helpers/search-model.converter";
     styleUrls: ["./search.component.less"],
 })
 export class SearchComponent implements OnInit, OnChanges {
-
-
-    constructor(
-        private formBuilder: FormBuilder,
-        private store: Store<AppState>,
-        private router: Router,
-        private route: ActivatedRoute,
-        private titleService: Title,
-        private saverService: FileSaverService,
-        private searchService: SearchService,
-        private toastr: ToastrService,
-    ) {}
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
 
     @ViewChild("clInput") clInput: ElementRef<HTMLInputElement>;
     @ViewChild("autoCl") autocompleteCl: MatAutocomplete;
-
     @ViewChild("tfInput") tfInput: ElementRef<HTMLInputElement>;
     @ViewChild("autoTf") autocompleteTf: MatAutocomplete;
-    private readonly nullValue: {searchInput: string} = {searchInput: ""};
+
     @Input()
     public width: "restricted" | "full";
 
@@ -65,19 +52,20 @@ export class SearchComponent implements OnInit, OnChanges {
     @Input()
     public searchDataLoading: boolean;
 
-    public searchForm: FormGroup;
-
-    separatorKeysCodes: number[] = [ENTER, COMMA];
-
+    private readonly nullValue: {searchInput: string} = {searchInput: ""};
     private searchParams: SearchParamsModel;
 
-    public readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
-
+    separatorKeysCodes: number[] = [ENTER, COMMA];
     listOfChrs: string[];
+    readonly phenToView: { [p: string]: string } = phenotypesToView;
+    readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
+
+    public searchForm: FormGroup;
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
     public downloadButtonColor: "primary" | null = null;
     public showNearbyControl: FormControl;
+
 
     private static initChromosomes(): string[] {
         const result: string[] = ["any chr"];
@@ -88,20 +76,16 @@ export class SearchComponent implements OnInit, OnChanges {
         return result;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes["searchData"] &&
-            this.downloadButtonColor !== "primary" &&
-            this.isAdvanced &&
-            this.searchData &&
-            this.searchData.total &&
-            this.searchData.total !== this.searchData.results.length) {
-                this.downloadButtonColor = "primary";
-                setTimeout(() => {
-                    this.downloadButtonColor = null;
-            }, 5000);
-        }
-    }
-
+    constructor(
+        private formBuilder: FormBuilder,
+        private store: Store<AppState>,
+        private router: Router,
+        private route: ActivatedRoute,
+        private titleService: Title,
+        private saverService: FileSaverService,
+        private searchService: SearchService,
+        private toastr: ToastrService,
+    ) {}
 
     ngOnInit() {
         // Set title and meta
@@ -196,6 +180,20 @@ export class SearchComponent implements OnInit, OnChanges {
         );
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes["searchData"] &&
+            this.downloadButtonColor !== "primary" &&
+            this.isAdvanced &&
+            this.searchData &&
+            this.searchData.total &&
+            this.searchData.total !== this.searchData.results.length) {
+            this.downloadButtonColor = "primary";
+            setTimeout(() => {
+                this.downloadButtonColor = null;
+            }, 5000);
+        }
     }
 
     _clearSearchField() {
