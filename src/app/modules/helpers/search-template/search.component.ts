@@ -332,7 +332,6 @@ export class SearchComponent implements OnInit, OnChanges {
                 if (form.tfList.length > 0) result.tf = form.tfList.join(",");
                 const phenList: string = phenotypesFormToList(form);
                 if (phenList) {
-                    console.log(phenList);
                     result.phe_db = phenList;
                 }
                 return result;
