@@ -232,6 +232,7 @@
             </mat-form-field>
         </ng-container>
         <ng-container *ngIf="_checkToDisplay('phenotypes')">
+            <h5>Genetic associations in:</h5>
             <div class="asb-search__checkboxes">
                 <mat-checkbox
                     *ngFor="let phenotype of phenotypes; let last=last"

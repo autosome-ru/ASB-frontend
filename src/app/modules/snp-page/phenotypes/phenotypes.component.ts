@@ -14,14 +14,12 @@ export class PhenotypesComponent implements OnInit {
     public snpData: SnpInfoModel;
 
     public phenotypesDb: string[];
-    private phenToView: { [p: string]: string };
+    readonly phenToView: { [p: string]: string } = phenotypesToView;
     constructor() { }
 
     ngOnInit(): void {
         this.phenotypesDb = Object.keys(this.snpData.phenotypes).filter(
             s => this.snpData.phenotypes[s].length > 0);
-
-        this.phenToView = phenotypesToView;
     }
 
 }
