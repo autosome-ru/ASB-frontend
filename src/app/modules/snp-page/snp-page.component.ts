@@ -104,7 +104,7 @@ export class SnpPageComponent implements OnInit {
             this.id, this.alt, where, options.columns, options.filter).subscribe(
         (res) => {
                 this.saverService.save(res,
-                `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.csv`);
+                `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
             },
         (err) => {
                 console.log("err");

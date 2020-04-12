@@ -213,7 +213,7 @@ export class SearchComponent implements OnInit, OnChanges {
         this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
             (res) => {
                 this.saverService.save(res,
-                    "search_" + moment().format("YYYY-MM-DD_HH-mm") + ".csv");
+                    "AD_ASTRA_search_" + moment().format("YYYY-MM-DD_HH-mm") + ".tsv");
             },
             (err) => {
                 console.log("err");

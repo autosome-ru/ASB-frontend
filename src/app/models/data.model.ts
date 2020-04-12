@@ -68,6 +68,7 @@ export interface TfSnpBackendCutModel {
     tf_snp_id: number;
     transcription_factor: {
         tf_id: number,
+        uniprot_ac: string,
         name: string
     };
     log_p_value_ref: number;
@@ -89,7 +90,7 @@ export interface TfSnpBackendModel extends TfSnpBackendCutModel {
 }
 interface AbstractSnpCutModel extends SnpGenPosModel {
     name: string;
-    id: string | number;
+    id: string;
     pValueRef: number;
     pValueAlt: number;
 }

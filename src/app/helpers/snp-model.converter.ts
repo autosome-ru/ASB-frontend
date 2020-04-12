@@ -71,7 +71,7 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
 
 function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpModel> {
     return {
-        id: s.cell_line.cl_id,
+        id: "" + s.cell_line.cl_id,
         name: s.cell_line.name,
         effectSizeRef: s.es_ref,
         effectSizeAlt: s.es_alt,
@@ -83,7 +83,7 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpMod
 }
 function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel> {
     return {
-        id: s.transcription_factor.tf_id,
+        id: s.transcription_factor.uniprot_ac,
         name: s.transcription_factor.name,
         effectSizeRef: s.es_ref,
         effectSizeAlt: s.es_alt,
@@ -102,7 +102,7 @@ function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel
 
 function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSnpCutModel> {
     return {
-        id: s.cell_line.cl_id,
+        id: "" + s.cell_line.cl_id,
         name: s.cell_line.name,
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
@@ -110,7 +110,7 @@ function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSn
 }
 function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSnpCutModel> {
     return {
-        id: s.transcription_factor.tf_id,
+        id: s.transcription_factor.uniprot_ac,
         name: s.transcription_factor.name,
         pValueRef: s.log_p_value_ref,
         pValueAlt: s.log_p_value_alt,
