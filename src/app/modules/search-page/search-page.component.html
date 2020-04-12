@@ -44,13 +44,15 @@
                     <div class="layout pb-2"
                          style="margin-bottom: 20px"
                          *ngFor="let snp of filteredSnpResults$ | async">
-                        <a
-                            [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
+
+                        <mat-card
+                            class="search-page__card"
+                            asbElevation
+                            role="group"
                         >
-                            <mat-card
-                                class="search-page__card"
-                                asbElevation
-                                role="group"
+                            <a
+                                style="text-decoration: none"
+                                [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
                             >
                                 <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
                                     <mat-card-title>
@@ -70,9 +72,14 @@
                                         [noButtons]="true"
                                     >
                                     </asb-snp-card>
+
                                 </mat-card-content>
-                            </mat-card>
-                        </a>
+                            </a>
+                            <button mat-button (click)="_searchNearbyClick(); $event.stopPropagation()"
+                            >
+                                Search nearby
+                            </button>
+                        </mat-card>
                     </div>
                 </ng-container>
 

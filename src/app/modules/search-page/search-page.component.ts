@@ -124,4 +124,7 @@ export class SearchPageComponent implements OnInit {
                 index < pageSize * (pageIndex + 1));
     }
 
+    _searchNearbyClick() {
+        console.log("CLIIICK")
+    }
 }
