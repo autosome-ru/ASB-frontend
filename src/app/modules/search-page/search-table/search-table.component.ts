@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
-    Component,
+    Component, EventEmitter,
     HostBinding,
     Input,
-    OnInit,
+    OnInit, Output,
     TemplateRef,
     ViewChild
 } from "@angular/core";
@@ -44,6 +44,9 @@ export class SearchPageTableComponent implements OnInit {
 
     @Input()
     public paginator: MatPaginator;
+
+    @Output()
+    public snpClicked = new EventEmitter<{rsId: string, alt: string}>();
 
     public columnModel: AsbTableColumnModel<any>;
     public displayedColumns: AsbTableDisplayedColumns<any> = [
@@ -104,14 +107,8 @@ export class SearchPageTableComponent implements OnInit {
         });
     }
 
-
-
-    _navigateToSnp({rsId: id, alt: base}: {rsId: string, alt: string}): void {
-        this.router.navigate(["snps/" + id + "/" + base]);
-    }
-
     _handleTableRowClick(row: SnpSearchModel) {
-        this._navigateToSnp({rsId: row.rsId, alt: row.altBase});
+        this.snpClicked.emit({rsId: row.rsId, alt: row.altBase});
     }
 
     private paramsToColumnModel(): AsbTableColumnModel<any> {

@@ -1,17 +1,30 @@
-<ng-container *ngIf="!(snpDataLoading$ | async)">
+<ng-container *ngIf="!(snpDataLoading$ | async) && (snpData$ | async) as snpData">
     <div class="container snp-page px-0">
 
         <div class="border-bottom border-info" style="padding-left: 20px; padding-right: 20px">
             <asb-snp-header
-                [data]="snpData$ | async"
+                [data]="snpData"
             >
             </asb-snp-header>
         </div>
         <div style="margin-left: 20px; padding-top: 10px">
             <asb-snp-card
-                [snpData]="snpData$ | async"
+                [snpData]="snpData"
             >
             </asb-snp-card>
+            <div style="display:flex">
+                <a
+                    style="margin-left: auto"
+                    mat-stroked-button
+                    color="primary"
+                    [routerLink]="'/search/simple'"
+                    [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '0')
+                    + '-' + (snpData.pos + 100) ,
+                    chr: snpData.chr}"
+                >
+                    Search SNPs nearby
+                </a>
+            </div>
         </div>
         <mat-accordion multi displayMode="flat" class="mat-elevation-z0 py-5"
                        style="padding-left: 20px !important">

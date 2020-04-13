@@ -11,6 +11,7 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {map} from "rxjs/operators";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchResultsModel} from "../../models/searchQueryModel";
+import {SearchComponent} from "../helpers/search-template/search.component";
 
 @Component({
     selector: "asb-search-page",
@@ -24,6 +25,9 @@ export class SearchPageComponent implements OnInit {
 
     @ViewChild(MatPaginator, {static: false})
     public paginator: MatPaginator;
+
+    @ViewChild("searchComponent", {static: true})
+    public searchComponent: SearchComponent;
 
     @HostBinding("class.search-page")
     private readonly cssClass = true;
@@ -124,7 +128,7 @@ export class SearchPageComponent implements OnInit {
                 index < pageSize * (pageIndex + 1));
     }
 
-    _searchNearbyClick() {
-        console.log("CLIIICK")
+    _navigateToSnp(id: string, alt: string): void {
+        this.router.navigateByUrl("snps/" + id + "/" + alt);
     }
 }
