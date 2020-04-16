@@ -25,7 +25,6 @@ import {phenotypesModelExample, phenotypesToView} from "../../../helpers/constan
 import {phenotypesFormToList} from "../../../helpers/search-model.converter";
 
 
-
 @Component({
     selector: "asb-search",
     templateUrl: "./search.component.html",
@@ -344,7 +343,9 @@ export class SearchComponent implements OnInit, OnChanges {
                 const result: Partial<SearchParamsModel> = {};
                 if (form.clList.length > 0) result.cl = form.clList.join(",");
                 if (form.searchInput) {
-                    if (checkOneResult(this.searchData) && !this.isAdvanced) {
+                    if (checkOneResult(this.searchData) &&
+                        !this.isAdvanced &&
+                        !isValidPosInterval(form.searchInput)) {
                         result.pos = "" + this.searchData.results[0].pos;
                         result.chr = this.searchData.results[0].chr;
                     } else {
@@ -476,4 +477,17 @@ function checkIfPhenotypeSelected(sF: SearchQueryModel) {
     let result: boolean = false;
     Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);
     return result;
+}
+
+function isValidPosInterval(search: string): boolean {
+    if (search.match(/^\d+-\d+$/)) {
+        const posArray: string[] = search.split("-");
+        if (posArray.length === 2) {
+            const [startPos, endPos] = posArray;
+            if ((Number(startPos) || startPos === "0") && Number(endPos)) {
+                return Number(startPos) <= Number(endPos);
+            }
+        }
+    }
+    return false;
 }
