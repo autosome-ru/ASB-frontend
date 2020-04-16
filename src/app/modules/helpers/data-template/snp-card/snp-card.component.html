@@ -40,10 +40,12 @@
     <dt
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
+        *ngIf="!noButtons"
     >
 
     </dt>
     <dd
+        *ngIf="!noButtons"
         style="display:flex"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
     >
