@@ -12,19 +12,6 @@
                 [snpData]="snpData"
             >
             </asb-snp-card>
-            <div style="display:flex">
-                <a
-                    style="margin-left: auto"
-                    mat-raised-button
-                    color="primary"
-                    [routerLink]="'/search/simple'"
-                    [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '0')
-                    + '-' + (snpData.pos + 100) ,
-                    chr: snpData.chr}"
-                >
-                    Search SNPs nearby
-                </a>
-            </div>
         </div>
         <mat-accordion multi displayMode="flat" class="mat-elevation-z0 py-5"
                        style="padding-left: 20px !important">

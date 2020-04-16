@@ -37,4 +37,25 @@
         [buttonsClass]="'btn btn-outline-secondary snp-card__buttons'"
     >
     </asb-snp-buttons>
+    <dt
+        class="col-auto snp-card__tag align-self-start"
+        style="vertical-align: center; margin-top: 5px"
+    >
+
+    </dt>
+    <dd
+        style="display:flex"
+        class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
+    >
+        <a
+            mat-raised-button
+            color="primary"
+            [routerLink]="'/search/simple'"
+            [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '0')
+                    + '-' + (snpData.pos + 100) ,
+                    chr: snpData.chr}"
+        >
+            Search SNPs nearby
+        </a>
+    </dd>
 </dl>
