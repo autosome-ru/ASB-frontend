@@ -450,18 +450,15 @@ function matchingPattern(searchKey: string,
         const option: string = group.controls[optionKey].value;
         if ((option === "pos" && !isAdvancedSearch)
             || (isAdvancedSearch && search)) {
-            if (search.match(/^\d+-\d+$/)) {
-                const posArray: string[] = search.split("-");
-                if (posArray.length === 2) {
-                    const [startPos, endPos] = posArray;
-                    if ((Number(startPos) || startPos === "0") && Number(endPos)) {
-                        if (Number(startPos) > Number(endPos)) {
-                            return {
-                                greater: true
-                            };
-                        }
-                        return;
+            if (isValidPosInterval(search)) {
+                const [startPos, endPos] = search.split("-");
+                if ((Number(startPos) || startPos === "0") && Number(endPos)) {
+                    if (Number(startPos) > Number(endPos)) {
+                        return {
+                            greater: true
+                        };
                     }
+                    return;
                 }
             }
             if (search.match(/^\d*$/)) {
@@ -483,10 +480,7 @@ function isValidPosInterval(search: string): boolean {
     if (search.match(/^\d+-\d+$/)) {
         const posArray: string[] = search.split("-");
         if (posArray.length === 2) {
-            const [startPos, endPos] = posArray;
-            if ((Number(startPos) || startPos === "0") && Number(endPos)) {
-                return Number(startPos) <= Number(endPos);
-            }
+            return true;
         }
     }
     return false;
