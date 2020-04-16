@@ -32,6 +32,17 @@ import {phenotypesFormToList} from "../../../helpers/search-model.converter";
     styleUrls: ["./search.component.less"],
 })
 export class SearchComponent implements OnInit, OnChanges {
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private store: Store<AppState>,
+        private router: Router,
+        private route: ActivatedRoute,
+        private titleService: Title,
+        private saverService: FileSaverService,
+        private searchService: SearchService,
+        private toastr: ToastrService,
+    ) {}
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
 
@@ -67,6 +78,7 @@ export class SearchComponent implements OnInit, OnChanges {
     public showNearbyControl: FormControl;
 
 
+
     private static initChromosomes(): string[] {
         const result: string[] = ["any chr"];
         for (let i = 1; i < 23; i++) {
@@ -76,16 +88,14 @@ export class SearchComponent implements OnInit, OnChanges {
         return result;
     }
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private store: Store<AppState>,
-        private router: Router,
-        private route: ActivatedRoute,
-        private titleService: Title,
-        private saverService: FileSaverService,
-        private searchService: SearchService,
-        private toastr: ToastrService,
-    ) {}
+    private static convertPosToInterval(searchInput: string): string {
+        if (searchInput.match(/^\d+$/)) {
+            return `${Number(searchInput) > 100 ? Number(searchInput) - 100 : 0}-${Number(searchInput) + 100}`;
+        } else {
+            const [start, end] = searchInput.split("-");
+            return `${Number(start) > 100 ? Number(start) - 100 : 0}-${Number(end) + 100}`;
+        }
+    }
 
     ngOnInit() {
         // Set title and meta
@@ -236,11 +246,26 @@ export class SearchComponent implements OnInit, OnChanges {
         this._navigateToSearch();
     }
 
-    _checkToDisplay(id: string) {
+    _checkToDisplay(id: string): boolean {
+        const searchForm = this.searchForm.value as SearchQueryModel;
         if (this.isAdvanced) {
-            return id !== "id";
+            if (id === "searchNear") {
+                return !!searchForm.chromosome &&
+                    searchForm.chromosome !== "any chr" && !this._isSearchDisabled();
+            } else {
+                return id !== "id";
+            }
         } else {
-            return this.searchForm.get("searchBy").value === id;
+            if (id === "searchNear") {
+                if (searchForm.searchBy === "pos") {
+                    return (!!searchForm.chromosome &&
+                        searchForm.chromosome !== "any chr" && !this._isSearchDisabled());
+                } else {
+                    return !this.searchDataLoading && checkOneResult(this.searchData);
+                }
+            } else {
+                return searchForm.searchBy === id;
+            }
         }
 
     }
@@ -379,6 +404,30 @@ export class SearchComponent implements OnInit, OnChanges {
                 !checkIfPhenotypeSelected(sF) &&
                 (!sF.chromosome ||
                 sF.chromosome === "any chr"));
+    }
+
+    _nearbySearch() {
+        let patchValue: Partial<SearchQueryModel>;
+        if (this.isAdvanced) {
+            patchValue = {
+                searchInput: SearchComponent.convertPosToInterval(
+                    this.searchForm.value.searchInput)
+            };
+        } else {
+            if (this.searchForm.value.searchBy === "id") {
+                patchValue = {
+                    searchInput: "" + this.searchData.results[0].pos,
+                    chromosome: this.searchData.results[0].chr,
+                };
+            } else {
+                patchValue = {
+                    searchInput: SearchComponent.convertPosToInterval(
+                        this.searchForm.value.searchInput)
+                };
+            }
+        }
+        this.searchForm.patchValue(patchValue);
+        this._navigateToSearch();
     }
 }
 

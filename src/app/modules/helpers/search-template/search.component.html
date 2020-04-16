@@ -117,10 +117,19 @@
         >
             <button
                 class="asb-search__header-demo"
+                style="margin-right: 15px"
                 mat-raised-button
                 (click)="_initDemo()"
             >
                 Try it out
+            </button>
+            <button
+                class="asb-search__header-demo"
+                mat-raised-button
+                [disabled]="!_checkToDisplay('searchNear')"
+                (click)="_nearbySearch()"
+            >
+                Search SNPs nearby
             </button>
         </div>
         <!--<div class="ml-auto">
