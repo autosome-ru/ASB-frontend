@@ -52,7 +52,7 @@
             mat-raised-button
             color="primary"
             [routerLink]="'/search/simple'"
-            [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '0')
+            [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '1')
                     + '-' + (snpData.pos + 100) ,
                     chr: snpData.chr}"
         >

@@ -93,7 +93,7 @@ export class SearchComponent implements OnInit, OnChanges {
             return `${Number(searchInput) > 100 ? Number(searchInput) - 100 : 0}-${Number(searchInput) + 100}`;
         } else {
             const [start, end] = searchInput.split("-");
-            return `${Number(start) > 100 ? Number(start) - 100 : 0}-${Number(end) + 100}`;
+            return `${Number(start) > 100 ? Number(start) - 100 : 1}-${Number(end) + 100}`;
         }
     }
 
