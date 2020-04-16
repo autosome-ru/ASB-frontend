@@ -417,7 +417,8 @@ export class SearchComponent implements OnInit, OnChanges {
             if (this.searchForm.value.searchBy === "id") {
                 patchValue = {
                     searchBy: "pos",
-                    searchInput: "" + this.searchData.results[0].pos,
+                    searchInput: SearchComponent.convertPosToInterval(
+                        "" + this.searchData.results[0].pos),
                     chromosome: this.searchData.results[0].chr,
                 };
             } else {
