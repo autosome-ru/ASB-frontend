@@ -51,6 +51,7 @@
         <a
             mat-raised-button
             color="primary"
+            matTooltip="+/-100bp"
             [routerLink]="'/search/simple'"
             [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '1')
                     + '-' + (snpData.pos + 100) ,
