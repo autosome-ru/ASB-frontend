@@ -52,22 +52,29 @@
         <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
         <u class="font-weight-bold">Tra</u>nscription factor binding sites
     </h3>
-    <h3 *ngIf="totalInfo$ | async as totalInfo"
+    <div *ngIf="totalInfo$ | async as totalInfo"
         style="text-align: center;"
         [class]="value"
     >
-        Cell types
-        <a
-            [routerLink]="'/browse/cl'"
+        <h3
         >
-            {{totalInfo.cellTypesCount}}
-        </a>
-        Transcription factors
-        <a
-            [routerLink]="'/browse/tf'"
-        >
-            {{totalInfo.transcriptionFactorsCount}}
-        </a>
-        Unique snps: {{totalInfo.snpsCount}}
-    </h3>
+            Cell types
+            <a
+                [routerLink]="'/browse/cl'"
+            >
+                {{totalInfo.cellTypesCount}}
+            </a>
+        </h3>
+        <h3>
+            Transcription factors
+            <a
+                [routerLink]="'/browse/tf'"
+            >
+                {{totalInfo.transcriptionFactorsCount}}
+            </a>
+        </h3>
+        <h3>
+            Unique snps: {{totalInfo.snpsCount}}
+        </h3>
+    </div>
 </ng-template>

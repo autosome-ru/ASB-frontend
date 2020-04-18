@@ -18,12 +18,6 @@ export class HomePageComponent implements OnInit {
     @HostBinding("class.asb-home")
     private readonly cssClass = true;
 
-    constructor(private route: ActivatedRoute,
-                private store: Store<AppState>,
-                private titleService: Title,
-                @Inject(PLATFORM_ID) private platformId: Object) {
-                        this.isBrowser = isPlatformBrowser(this.platformId);
-    }
 
     opacity: number = 1;
     isBrowser: boolean;
@@ -41,6 +35,16 @@ export class HomePageComponent implements OnInit {
         }
 
     }
+
+
+    constructor(private route: ActivatedRoute,
+                private store: Store<AppState>,
+                private titleService: Title,
+                @Inject(PLATFORM_ID) private platformId: Object) {
+                        this.isBrowser = isPlatformBrowser(this.platformId);
+    }
+
+
     ngOnInit() {
         this.titleService.setTitle(this.route.snapshot.data.title);
 

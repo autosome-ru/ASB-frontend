@@ -39,7 +39,7 @@ export class DataEffect {
             ]).pipe(
                 take(1),
                 switchMap(([info, loading]) =>
-                    !loading && info === undefined
+                    !loading && !info
                         ? of(new fromActions.LoadTotalInfoAction())
                         : EMPTY
                 ),
