@@ -24,6 +24,14 @@ const routes: Routes = [
         }
     },
     {
+        path: "browse",
+        loadChildren: () => import(
+            "./modules/browse-page/browse.module").then(mod => mod.AsbBrowsePageModule),
+        data: {
+            title: "ADASTra - browse"
+        }
+    },
+    {
         path: "contacts",
         component: ContactsPageComponent,
         data: {

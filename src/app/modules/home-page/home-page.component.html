@@ -53,28 +53,32 @@
         <u class="font-weight-bold">Tra</u>nscription factor binding sites
     </h3>
     <div *ngIf="totalInfo$ | async as totalInfo"
-        style="text-align: center;"
+        style="text-align: center; margin-top: 10px"
         [class]="value"
     >
-        <h3
+        <h4
         >
-            Cell types
+            Cell types:
             <a
+                style="text-decoration: underline"
+                [class]="value"
                 [routerLink]="'/browse/cl'"
             >
                 {{totalInfo.cellTypesCount}}
             </a>
-        </h3>
-        <h3>
-            Transcription factors
+        </h4>
+        <h4>
+            Transcription factors:
             <a
+                style="text-decoration: underline"
+                [class]="value"
                 [routerLink]="'/browse/tf'"
             >
                 {{totalInfo.transcriptionFactorsCount}}
             </a>
-        </h3>
-        <h3>
-            Unique snps: {{totalInfo.snpsCount}}
-        </h3>
+        </h4>
+        <h4>
+            Unique SNPs with ASB: {{totalInfo.snpsCount}}
+        </h4>
     </div>
 </ng-template>
