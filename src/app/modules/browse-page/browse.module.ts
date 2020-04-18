@@ -8,7 +8,6 @@ import {BrowsePageComponent} from "./browse-page.component";
         CommonModule,
     ],
     declarations: [BrowsePageComponent],
-    exports: [BrowsePageComponent],
 })
 export class AsbBrowsePageModule {
 }

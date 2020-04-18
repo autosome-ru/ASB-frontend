@@ -37,7 +37,6 @@ import {SearchPageTableComponent} from "./search-table/search-table.component";
         SearchPageComponent,
         SearchPageTableComponent,
     ],
-    exports: [SearchPageComponent],
 })
 export class AsbSearchPageModule {
 }
