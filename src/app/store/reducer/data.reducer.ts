@@ -1,8 +1,10 @@
 import * as fromActions from "src/app/store/action/data.action";
-import {PhenotypesBackendModel, PhenotypesModel, SnpInfoModel} from "src/app/models/data.model";
-import {convertSnpInfoBackendModelToSnpInfoModel} from "../../helpers/snp-model.converter";
+import {PhenotypesBackendModel, PhenotypesModel, SnpInfoModel, TotalInfoModel} from "src/app/models/data.model";
+import {convertSnpInfoBackendModelToSnpInfoModel, convertTotalInfoBackendModelToTotalInfoModel} from "../../helpers/snp-model.converter";
 
 export interface DataState {
+    totalInfo: TotalInfoModel;
+    totalInfoLoading: boolean;
     snps: {
         [snpId: string]: {
             loading: boolean,
@@ -10,14 +12,49 @@ export interface DataState {
         },
     };
 }
+
+export const selectTotalInfo = (state: DataState) => state.totalInfo;
+export const selectTotalInfoLoading = (state: DataState) => state.totalInfoLoading;
 export const selectSnps = (state: DataState) => state.snps;
 
+
 export const initialState: DataState = {
-    snps: {}
+    totalInfo: {
+        snpsCount: 0,
+        cellTypesCount: 0,
+        transcriptionFactorsCount: 0,
+    },
+    totalInfoLoading: false,
+    snps: {},
 };
 
 export function dataReducer(state: DataState = initialState, action: fromActions.ActionUnion): DataState {
     switch (action.type) {
+
+        case fromActions.ActionTypes.LoadTotalInfo: {
+            return {
+                ...state,
+                totalInfoLoading: true
+            };
+        }
+
+        case fromActions.ActionTypes.LoadTotalInfoSuccess: {
+            return {
+                ...state,
+                totalInfoLoading: false,
+                totalInfo: convertTotalInfoBackendModelToTotalInfoModel(action.payload)
+            };
+        }
+
+        case fromActions.ActionTypes.LoadTotalInfoFail: {
+            return {
+                ...state,
+                totalInfoLoading: false
+            };
+        }
+
+
+
         case fromActions.ActionTypes.LoadSnpInfo: {
             const snpId: string = `${action.payload.rsId}${action.payload.alt}`;
             return {
@@ -69,6 +106,9 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 }
             };
         }
+
+
+
         default: {
             return state;
         }

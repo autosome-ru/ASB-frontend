@@ -4,9 +4,17 @@ import {
     SnpInfoBackendModel,
     SnpInfoModel,
     SnpSearchBackendModel,
-    SnpSearchModel, TfSnpBackendCutModel, TfSnpBackendModel, TfSnpCutModel, TfSnpModel
+    SnpSearchModel, TfSnpBackendCutModel, TfSnpBackendModel, TfSnpCutModel, TfSnpModel, TotalInfoBackendModel, TotalInfoModel
 } from "../models/data.model";
 
+
+export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBackendModel): TotalInfoModel {
+    return {
+        cellTypesCount: model.cell_types_count,
+        transcriptionFactorsCount: model.transcription_factors_count,
+        snpsCount: model.snps_count,
+    };
+}
 
 export function convertSnpInfoBackendModelToSnpInfoModel(
     model: SnpInfoBackendModel

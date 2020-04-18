@@ -146,8 +146,14 @@ export interface ExpSnpModel {
 
 export type TfOrCl = "tf" | "cl";
 
-export interface TotalBackendInfoModel {
+export interface TotalInfoBackendModel {
     cell_types_count: number;
     transcription_factors_count: number;
     snps_count: number;
+}
+
+export interface TotalInfoModel {
+    cellTypesCount: number;
+    transcriptionFactorsCount: number;
+    snpsCount: number;
 }

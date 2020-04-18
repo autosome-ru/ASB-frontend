@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SnpInfoBackendModel, TfOrCl} from "src/app/models/data.model";
+import {SnpInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
 import {snpsInfoUrl} from "../models/urls";
 
 
@@ -22,6 +22,10 @@ export class DataService {
             {params: constructParams(columns, filter, tfOrCl)
                 , responseType: "blob"});
     }
+    public getTotalInfo(): Observable<TotalInfoBackendModel> {
+        return this.http.get<TotalInfoBackendModel>(`${snpsInfoUrl}`);
+    }
+
 }
 
 function constructParams(columns: string[], filter: string, tfOrCl: TfOrCl):

@@ -1,5 +1,5 @@
 import {Action} from "@ngrx/store";
-import {SnpInfoBackendModel} from "src/app/models/data.model";
+import {SnpInfoBackendModel, TotalInfoBackendModel} from "src/app/models/data.model";
 
 export enum ActionTypes {
     LoadTotalInfo = "[Data] load total info",
@@ -19,17 +19,13 @@ export class LoadTotalInfoAction implements Action {
 export class LoadTotalInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadTotalInfoSuccess;
 
-    constructor(public payload: SnpInfoBackendModel) {}
+    constructor(public payload: TotalInfoBackendModel) {}
 }
 export class LoadTotalInfoFailAction implements Action {
     readonly type = ActionTypes.LoadTotalInfoFail;
-
-    constructor(public payload: {rsId: string, alt: string}) {}
 }
 export class InitTotalInfoAction implements Action {
     readonly type = ActionTypes.InitTotalInfo;
-
-    constructor(public payload: {rsId: string, alt: string}) {}
 }
 
 export class LoadSnpInfoAction implements Action {
@@ -59,4 +55,8 @@ export type ActionUnion =
     | LoadSnpInfoFailAction
     | LoadSnpInfoSuccessAction
     | InitSnpInfoAction
+    | LoadTotalInfoAction
+    | LoadTotalInfoFailAction
+    | LoadTotalInfoSuccessAction
+    | InitTotalInfoAction
     ;

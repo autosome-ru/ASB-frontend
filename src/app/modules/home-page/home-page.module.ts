@@ -6,6 +6,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AsbHelpersModule} from "../helpers/helpers.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import {LazyLoadImageModule} from "ng-lazyload-image";
         MatButtonModule,
         ReactiveFormsModule,
         AsbHelpersModule,
-        LazyLoadImageModule
+        LazyLoadImageModule,
+        RouterModule
     ],
     declarations: [HomePageComponent],
     exports: [HomePageComponent],

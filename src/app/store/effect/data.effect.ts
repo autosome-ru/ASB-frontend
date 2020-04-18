@@ -16,8 +16,36 @@ export class DataEffect {
         private store: Store<AppState>,
         private dataService: DataService,
         private router: Router,
-    ) {
-    }
+    ) { }
+
+    @Effect()
+    loadTotalStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadTotalInfo),
+        mergeMap(() =>
+            this.dataService.getTotalInfo().pipe(
+                map(info => new fromActions.LoadTotalInfoSuccessAction(info)),
+                catchError(() => of(new fromActions.LoadTotalInfoFailAction())),
+            )
+        )
+    );
+
+    @Effect()
+    initTotalStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.InitTotalInfo),
+        mergeMap(() =>
+            combineLatest([
+                this.store.select(fromSelectors.selectTotalInfo),
+                this.store.select(fromSelectors.selectTotalInfoLoading),
+            ]).pipe(
+                take(1),
+                switchMap(([info, loading]) =>
+                    !loading && info === undefined
+                        ? of(new fromActions.LoadTotalInfoAction())
+                        : EMPTY
+                ),
+            ),
+        ),
+    );
 
     @Effect()
     loadSnpStats$ = this.actions$.pipe(
