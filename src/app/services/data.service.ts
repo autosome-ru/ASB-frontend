@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SnpInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
-import {snpsInfoUrl} from "../models/urls";
+import {browseUrl, snpsInfoUrl} from "../models/urls";
 
 
 @Injectable()
@@ -23,7 +23,7 @@ export class DataService {
                 , responseType: "blob"});
     }
     public getTotalInfo(): Observable<TotalInfoBackendModel> {
-        return this.http.get<TotalInfoBackendModel>(`${snpsInfoUrl}`);
+        return this.http.get<TotalInfoBackendModel>(browseUrl + "/total");
     }
 
 }

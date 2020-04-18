@@ -19,11 +19,7 @@ export const selectSnps = (state: DataState) => state.snps;
 
 
 export const initialState: DataState = {
-    totalInfo: {
-        snpsCount: 0,
-        cellTypesCount: 0,
-        transcriptionFactorsCount: 0,
-    },
+    totalInfo: null,
     totalInfoLoading: false,
     snps: {},
 };
@@ -106,8 +102,6 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 }
             };
         }
-
-
 
         default: {
             return state;
