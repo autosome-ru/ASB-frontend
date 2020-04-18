@@ -46,7 +46,7 @@ export class HomePageComponent implements OnInit {
 
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
 
-        this.store.dispatch(new fromActions.data.InitTotalInfoAction);
+        this.store.dispatch(new fromActions.data.InitTotalInfoAction());
 
     }
 }
