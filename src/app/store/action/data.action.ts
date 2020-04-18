@@ -2,10 +2,34 @@ import {Action} from "@ngrx/store";
 import {SnpInfoBackendModel} from "src/app/models/data.model";
 
 export enum ActionTypes {
+    LoadTotalInfo = "[Data] load total info",
+    LoadTotalInfoSuccess = "[Data] total info loaded successfully",
+    LoadTotalInfoFail = "[Data] total info loading failed",
+    InitTotalInfo = "[Data] init total info",
+
     LoadSnpInfo = "[Data] load snp info ",
     LoadSnpInfoSuccess = "[Data] snp info loaded successfully",
     LoadSnpInfoFail = "[Data] snp info loading failed",
     InitSnpInfo = "[Data] init snp info"
+}
+
+export class LoadTotalInfoAction implements Action {
+    readonly type = ActionTypes.LoadTotalInfo;
+}
+export class LoadTotalInfoSuccessAction implements Action {
+    readonly type = ActionTypes.LoadTotalInfoSuccess;
+
+    constructor(public payload: SnpInfoBackendModel) {}
+}
+export class LoadTotalInfoFailAction implements Action {
+    readonly type = ActionTypes.LoadTotalInfoFail;
+
+    constructor(public payload: {rsId: string, alt: string}) {}
+}
+export class InitTotalInfoAction implements Action {
+    readonly type = ActionTypes.InitTotalInfo;
+
+    constructor(public payload: {rsId: string, alt: string}) {}
 }
 
 export class LoadSnpInfoAction implements Action {
