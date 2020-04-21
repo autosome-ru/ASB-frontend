@@ -1,14 +1,16 @@
-<h4>Browse cl page works</h4>
-<asb-table
-    *ngIf="!(browseClInfoLoading$ | async)"
-    #tableView
-    [data]="(browseClInfo$ | async)"
-    [displayedColumns]="displayedColumns"
-    [columnModel]="columnModel"
-    [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"
->
-</asb-table>
 
+<div class="container">
+    <h3>Browse cell types</h3>
+    <asb-table
+        *ngIf="!(browseClInfoLoading$ | async)"
+        #tableView
+        [data]="(browseClInfo$ | async)"
+        [displayedColumns]="displayedColumns"
+        [columnModel]="columnModel"
+        [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"
+    >
+    </asb-table>
+</div>
 <ng-template #cellTypeViewTemplate let-value="value" let-row="row">
     <a
         [href]="'http://gtrd.biouml.org/'"

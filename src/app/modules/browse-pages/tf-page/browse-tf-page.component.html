@@ -1,7 +1,8 @@
 <div class="container">
-    <h4>Browse tf page works</h4>
+    <h4>Browse transcription factors</h4>
     <asb-table
         #tableView
+        *ngIf="!(browseTfInfoLoading$ | async)"
         [data]="browseTfInfo$ | async"
         [displayedColumns]="displayedColumns"
         [columnModel]="columnModel"
