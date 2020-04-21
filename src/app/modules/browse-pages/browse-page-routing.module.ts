@@ -1,16 +1,21 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {BrowsePageComponent} from "./browse-page.component";
+import {BrowseTfPageComponent} from "./tf-page/browse-tf-page.component";
+import {BrowseClPageComponent} from "./cl-page/browse-cl-page.component";
 
 const routes: Routes = [
     {
         path: "cl",
-        component: BrowsePageComponent
+        component: BrowseClPageComponent
     },
     {
         path: "tf",
-        component: BrowsePageComponent,
+        component: BrowseTfPageComponent,
     },
+    {
+        path: "",
+        redirectTo: "tf",
+    }
 
 ];
 

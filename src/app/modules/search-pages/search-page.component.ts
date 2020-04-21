@@ -29,7 +29,7 @@ export class SearchPageComponent implements OnInit {
     @ViewChild("searchComponent", {static: true})
     public searchComponent: SearchComponent;
 
-    @HostBinding("class.search-page")
+    @HostBinding("class.search-pages")
     private readonly cssClass = true;
 
     public searchSnpResults$: Observable<SearchResultsModel>;

@@ -1,10 +1,27 @@
 import * as fromActions from "src/app/store/action/data.action";
-import {PhenotypesBackendModel, PhenotypesModel, SnpInfoModel, TotalInfoModel} from "src/app/models/data.model";
-import {convertSnpInfoBackendModelToSnpInfoModel, convertTotalInfoBackendModelToTotalInfoModel} from "../../helpers/snp-model.converter";
+import {ClInfoModel,
+    PhenotypesBackendModel,
+    PhenotypesModel,
+    SnpInfoModel,
+    TfInfoModel,
+    TotalInfoModel} from "src/app/models/data.model";
+import {
+    convertClInfoBackendModelToClInfoModel,
+    convertSnpInfoBackendModelToSnpInfoModel,
+    convertTfInfoBackendModelToTfInfoModel,
+    convertTotalInfoBackendModelToTotalInfoModel
+} from "../../helpers/snp-model.converter";
 
 export interface DataState {
     totalInfo: TotalInfoModel;
     totalInfoLoading: boolean;
+
+    tfInfo: TfInfoModel[];
+    tfInfoLoading: boolean;
+
+    clInfo: ClInfoModel[];
+    clInfoLoading: boolean;
+
     snps: {
         [snpId: string]: {
             loading: boolean,
@@ -15,12 +32,24 @@ export interface DataState {
 
 export const selectTotalInfo = (state: DataState) => state.totalInfo;
 export const selectTotalInfoLoading = (state: DataState) => state.totalInfoLoading;
+
+export const selectTfInfo = (state: DataState) => state.tfInfo;
+export const selectTfInfoLoading = (state: DataState) => state.tfInfoLoading;
+
+export const selectClInfo = (state: DataState) => state.clInfo;
+export const selectClInfoLoading = (state: DataState) => state.clInfoLoading;
 export const selectSnps = (state: DataState) => state.snps;
 
 
 export const initialState: DataState = {
     totalInfo: null,
+    tfInfo: [],
+    clInfo: [],
+
     totalInfoLoading: false,
+    tfInfoLoading: false,
+    clInfoLoading: false,
+
     snps: {},
 };
 
@@ -49,6 +78,49 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
         }
 
+        case fromActions.ActionTypes.LoadTfInfo: {
+            return {
+                ...state,
+                tfInfoLoading: true
+            };
+        }
+
+        case fromActions.ActionTypes.LoadTfInfoSuccess: {
+            return {
+                ...state,
+                tfInfoLoading: false,
+                tfInfo: action.payload.map(convertTfInfoBackendModelToTfInfoModel)
+            };
+        }
+
+        case fromActions.ActionTypes.LoadTfInfoFail: {
+            return {
+                ...state,
+                tfInfoLoading: false
+            };
+        }
+
+        case fromActions.ActionTypes.LoadClInfo: {
+            return {
+                ...state,
+                clInfoLoading: true
+            };
+        }
+
+        case fromActions.ActionTypes.LoadClInfoSuccess: {
+            return {
+                ...state,
+                clInfoLoading: false,
+                clInfo: action.payload.map(convertClInfoBackendModelToClInfoModel)
+            };
+        }
+
+        case fromActions.ActionTypes.LoadClInfoFail: {
+            return {
+                ...state,
+                clInfoLoading: false
+            };
+        }
 
 
         case fromActions.ActionTypes.LoadSnpInfo: {

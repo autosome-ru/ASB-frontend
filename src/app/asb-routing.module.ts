@@ -6,6 +6,7 @@ import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component
 import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 import {HelpPageComponent} from "./modules/help-page/help-page.component";
 import {version} from "./helpers/constants";
+import {TfOrCl} from "./models/data.model";
 
 
 const routes: Routes = [
@@ -26,9 +27,9 @@ const routes: Routes = [
     {
         path: "browse",
         loadChildren: () => import(
-            "./modules/browse-page/browse.module").then(mod => mod.AsbBrowsePageModule),
+            "./modules/browse-pages/browse.module").then(mod => mod.AsbBrowsePageModule),
         data: {
-            title: "ADASTra - browse"
+            title: (tfOrCl: TfOrCl) => `ADASTra -${tfOrCl === "cl" ? "cell types" : "transcription factors"} browse`
         }
     },
     {
@@ -48,7 +49,7 @@ const routes: Routes = [
     {
         path: "search",
         loadChildren: () => import(
-            "./modules/search-page/search-page.module").then(mod => mod.AsbSearchPageModule),
+            "./modules/search-pages/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
             title: "ADASTra - search"
         }

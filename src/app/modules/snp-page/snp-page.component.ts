@@ -86,7 +86,7 @@ export class SnpPageComponent implements OnInit {
         this.tfColumnModel = {
             name: {view: "Uniprot ID", valueConverter: v => v},
             ...this.commonColumnModel,
-            motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No info"},
+            motifFc: {view: "Fold change", valueConverter: v => v !== null ? v.toFixed(2) : "No motif"},
             motifConcordance: {view: "Motif concordance", valueConverter:
                     v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
         };

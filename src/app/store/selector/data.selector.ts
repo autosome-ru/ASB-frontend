@@ -6,6 +6,12 @@ import {SnpInfoModel} from "../../models/data.model";
 export const selectTotalInfo = createSelector(fromRoot.selectData, fromData.selectTotalInfo);
 export const selectTotalInfoLoading = createSelector(fromRoot.selectData, fromData.selectTotalInfoLoading);
 
+export const selectTfInfo = createSelector(fromRoot.selectData, fromData.selectTfInfo);
+export const selectTfInfoLoading = createSelector(fromRoot.selectData, fromData.selectTfInfoLoading);
+
+export const selectClInfo = createSelector(fromRoot.selectData, fromData.selectClInfo);
+export const selectClInfoLoading = createSelector(fromRoot.selectData, fromData.selectClInfoLoading);
+
 
 const _selectSnpInfoData = createSelector(fromRoot.selectData, fromData.selectSnps);
 const _selectSnpsDataById = createSelector(_selectSnpInfoData,

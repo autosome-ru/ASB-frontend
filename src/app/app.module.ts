@@ -10,7 +10,7 @@ import {AsbPageNotFoundModule} from "./modules/404-page/page-not-found.module";
 import {AsbContactsPageModule} from "./modules/contacts-page/contacts.module";
 import {AsbAppIconsModule} from "./helpers/svgIcon";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {AsbSearchPageModule} from "src/app/modules/search-page/search-page.module";
+import {AsbSearchPageModule} from "src/app/modules/search-pages/search-page.module";
 import {BrowserModule} from "@angular/platform-browser";
 import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";

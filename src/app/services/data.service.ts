@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {SnpInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
+import {ClInfoBackendModel, SnpInfoBackendModel, TfInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
 import {browseUrl, snpsInfoUrl} from "../models/urls";
 
 
@@ -24,6 +24,15 @@ export class DataService {
     }
     public getTotalInfo(): Observable<TotalInfoBackendModel> {
         return this.http.get<TotalInfoBackendModel>(browseUrl + "/total");
+    }
+
+
+    public getTfInfo(): Observable<TfInfoBackendModel[]> {
+        return this.http.get<TfInfoBackendModel[]>(browseUrl + "/tf");
+    }
+
+    public getClInfo(): Observable<ClInfoBackendModel[]> {
+        return this.http.get<ClInfoBackendModel[]>(browseUrl + "/cl");
     }
 
 }

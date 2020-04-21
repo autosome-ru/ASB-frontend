@@ -1,10 +1,26 @@
 import {
+    ClInfoBackendModel,
+    ClInfoModel,
     ClSnpBackendCutModel,
-    ClSnpBackendModel, ClSnpCutModel, ClSnpModel, ExpSnpBackendModel, ExpSnpModel, SnpGenPosBackendModel, SnpGenPosModel,
+    ClSnpBackendModel,
+    ClSnpCutModel,
+    ClSnpModel,
+    ExpSnpBackendModel,
+    ExpSnpModel,
+    SnpGenPosBackendModel,
+    SnpGenPosModel,
     SnpInfoBackendModel,
     SnpInfoModel,
     SnpSearchBackendModel,
-    SnpSearchModel, TfSnpBackendCutModel, TfSnpBackendModel, TfSnpCutModel, TfSnpModel, TotalInfoBackendModel, TotalInfoModel
+    SnpSearchModel,
+    TfInfoBackendModel,
+    TfInfoModel,
+    TfSnpBackendCutModel,
+    TfSnpBackendModel,
+    TfSnpCutModel,
+    TfSnpModel,
+    TotalInfoBackendModel,
+    TotalInfoModel
 } from "../models/data.model";
 
 
@@ -13,6 +29,24 @@ export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBac
         cellTypesCount: model.cell_types_count,
         transcriptionFactorsCount: model.transcription_factors_count,
         snpsCount: model.snps_count,
+    };
+}
+
+export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel): TfInfoModel {
+    return {
+        experimentsCount: model.aggregated_snps_count,
+        aggregatedSnpsCount: model.aggregated_snps_count,
+        id: model.uniprot_ac,
+        name: model.name,
+    };
+}
+
+export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel): ClInfoModel {
+    return {
+        experimentsCount: model.aggregated_snps_count,
+        aggregatedSnpsCount: model.aggregated_snps_count,
+        id: model.cl_id,
+        name: model.name,
     };
 }
 

@@ -36,7 +36,7 @@ export class SearchPageTableComponent implements OnInit {
     @ViewChild("manyCellTypesViewTemplate", {static: true})
     public manyCellTypesViewTemplate: TemplateRef<{value: ClSnpCutModel[]}>;
 
-    @HostBinding("class.search-page")
+    @HostBinding("class.search-pages")
     private readonly cssClass = true;
 
     @Input()

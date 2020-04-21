@@ -157,3 +157,33 @@ export interface TotalInfoModel {
     transcriptionFactorsCount: number;
     snpsCount: number;
 }
+
+export interface TfInfoBackendModel {
+    name: string;
+    uniprot_ac: string;
+    aggregated_snps_count: number;
+    experiments_count: number;
+}
+
+export interface ClInfoBackendModel {
+    cl_id: string;
+    name: string;
+    aggregated_snps_count: number;
+    experiments_count: number;
+}
+
+
+// Front models identical now, may be different in future
+export interface TfInfoModel {
+    id: string;
+    name: string;
+    aggregatedSnpsCount: number;
+    experimentsCount: number;
+}
+
+export interface ClInfoModel {
+    id: string;
+    name: string;
+    aggregatedSnpsCount: number;
+    experimentsCount: number;
+}

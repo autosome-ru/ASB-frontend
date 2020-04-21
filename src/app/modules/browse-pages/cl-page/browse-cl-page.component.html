@@ -1,0 +1,17 @@
+<h4>Browse cl page works</h4>
+<asb-table
+    [data]="browseClInfo$ | async"
+    [displayedColumns]="displayedColumns"
+    [columnModel]="columnModel"
+>
+</asb-table>
+
+<ng-template #cellTypeViewTemplate let-value="value" let-row="row">
+    <a
+        [href]="'http://gtrd.biouml.org/'"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        {{value}}
+    </a>
+</ng-template>

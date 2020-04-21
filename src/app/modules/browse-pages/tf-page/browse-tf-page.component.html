@@ -1,0 +1,17 @@
+<h4>Browse tf page works</h4>
+<asb-table
+    [data]="browseTfInfo$ | async"
+    [displayedColumns]="displayedColumns"
+    [columnModel]="columnModel"
+>
+</asb-table>
+
+<ng-template #uniprotViewTemplate let-value="value">
+    <a
+        [href]="'https://www.uniprot.org/uniprot/' +  value"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        {{value}}
+    </a>
+</ng-template>

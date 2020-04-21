@@ -48,6 +48,65 @@ export class DataEffect {
     );
 
     @Effect()
+    loadTfStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadTfInfo),
+        mergeMap(() =>
+            this.dataService.getTfInfo().pipe(
+                map(info => new fromActions.LoadTfInfoSuccessAction(info)),
+                catchError(() => of(new fromActions.LoadTfInfoFailAction())),
+            )
+        )
+    );
+
+    @Effect()
+    initTfStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.InitTfInfo),
+        mergeMap(() =>
+            combineLatest([
+                this.store.select(fromSelectors.selectTfInfo),
+                this.store.select(fromSelectors.selectTfInfoLoading),
+            ]).pipe(
+                take(1),
+                switchMap(([info, loading]) =>
+                    !loading && !info
+                        ? of(new fromActions.LoadTfInfoAction())
+                        : EMPTY
+                ),
+            ),
+        ),
+    );
+
+    @Effect()
+    loadClStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadClInfo),
+        mergeMap(() =>
+            this.dataService.getClInfo().pipe(
+                map(info => new fromActions.LoadClInfoSuccessAction(info)),
+                catchError(() => of(new fromActions.LoadClInfoFailAction())),
+            )
+        )
+    );
+
+    @Effect()
+    initClStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.InitClInfo),
+        mergeMap(() =>
+            combineLatest([
+                this.store.select(fromSelectors.selectClInfo),
+                this.store.select(fromSelectors.selectClInfoLoading),
+            ]).pipe(
+                take(1),
+                switchMap(([info, loading]) =>
+                    !loading && !info
+                        ? of(new fromActions.LoadClInfoAction())
+                        : EMPTY
+                ),
+            ),
+        ),
+    );
+
+
+    @Effect()
     loadSnpStats$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSnpInfo),
         mergeMap((action: fromActions.LoadSnpInfoAction) =>
