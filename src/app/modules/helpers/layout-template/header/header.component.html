@@ -33,6 +33,7 @@
             <a
                 class="nav-item nav-link"
                 [routerLink]="'/browse'"
+                [queryParams]="{by: 'tf'}"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
             >
