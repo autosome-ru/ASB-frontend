@@ -120,7 +120,7 @@ export class BrowsePageComponent implements OnInit {
     }
 
     _handleTableRowClick(event: TfInfoModel | ClInfoModel, tfOrCl: TfOrCl) {
-        this.router.navigateByUrl("/search/advanced",
+        this.router.navigate(["/search/advanced"],
             {
                 queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
         });
