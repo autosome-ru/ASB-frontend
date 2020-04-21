@@ -85,11 +85,12 @@ export class BrowsePageComponent implements OnInit {
             experimentsCount: {view: "Experiments count"}
         };
         this.store.dispatch(new fromActions.data.InitTfInfoAction());
-        this.browseSelectControl.valueChanges.subscribe(
-            (v: string) => v === "cl" ?
-                this.store.dispatch(new fromActions.data.InitClInfoAction()) :
-                this.store.dispatch(new fromActions.data.InitTfInfoAction())
-        );
+        this.store.dispatch(new fromActions.data.InitClInfoAction());
+        // this.browseSelectControl.valueChanges.subscribe(
+        //     (v: string) => v === "cl" ?
+        //         this.store.dispatch(new fromActions.data.InitClInfoAction()) :
+        //         this.store.dispatch(new fromActions.data.InitTfInfoAction())
+        // );
 
     }
 
