@@ -40,6 +40,13 @@
         </asb-table>
     </ng-container>
 </div>
+
+<ng-container *ngIf="(browseTfInfoLoading$ | async) || (browseClInfoLoading$ | async)">
+    <div class="asb-browse__spinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+    </div>
+</ng-container>
+
 <ng-template #uniprotViewTemplate let-value="value">
     <a
         [href]="'https://www.uniprot.org/uniprot/' +  value"
@@ -73,3 +80,4 @@
     >
     </asb-table>
 </ng-template>
+

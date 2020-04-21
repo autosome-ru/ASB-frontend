@@ -86,6 +86,7 @@ export class BrowsePageComponent implements OnInit {
                             {
                                 queryParams: {by: "tf"}
                             });
+                        this.initialGroupValue = "tf";
                         return;
                  }
             }

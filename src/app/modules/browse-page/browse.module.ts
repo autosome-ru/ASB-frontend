@@ -8,6 +8,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatSelectModule,
         ReactiveFormsModule,
         MatButtonToggleModule,
+        MatProgressSpinnerModule,
 
     ],
     declarations: [BrowsePageComponent],
