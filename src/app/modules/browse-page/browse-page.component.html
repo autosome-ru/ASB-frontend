@@ -25,7 +25,10 @@
             Cell types
         </mat-button-toggle>
     </mat-button-toggle-group>
-    <div *ngIf="group.value === 'tf'; else clTableTemplate">
+    <div
+        *ngIf="group.value === 'tf'; else clTableTemplate"
+        style="margin-bottom: -16px"
+    >
         <asb-table
             #tableTfView
             *ngIf="!(browseTfInfoLoading$ | async)"
