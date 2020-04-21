@@ -26,20 +26,21 @@
         </mat-button-toggle>
     </mat-button-toggle-group>
     <div
-        *ngIf="group.value === 'tf'; else clTableTemplate"
         style="margin-bottom: -16px"
     >
-        <asb-table
-            #tableTfView
-            *ngIf="!(browseTfInfoLoading$ | async)"
-            [data]="browseTfInfo$ | async"
-            [displayedColumns]="tfDisplayedColumns"
-            [columnModel]="tfColumnModel"
-            [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
-            [clickableRow]="true"
-            (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
-        >
-        </asb-table>
+        <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
+            <asb-table
+                #tableTfView
+                *ngIf="!(browseTfInfoLoading$ | async)"
+                [data]="browseTfInfo$ | async"
+                [displayedColumns]="tfDisplayedColumns"
+                [columnModel]="tfColumnModel"
+                [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
+                [clickableRow]="true"
+                (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
+            >
+            </asb-table>
+        </ng-container>
     </div>
 </div>
 
