@@ -24,21 +24,6 @@ export class BrowseClPageComponent implements OnInit {
     @ViewChild("cellTypeViewTemplate", {static: true})
     public cellTypeViewTemplate: TemplateRef<{value: string}>;
 
-    public sampleData: ClInfoModel[] = [
-        {
-            name: '123',
-            id: '1231',
-            aggregatedSnpsCount: 2,
-            experimentsCount: 5,
-        },
-        {
-            name: '345',
-            id: '123',
-            aggregatedSnpsCount: 3,
-            experimentsCount: 4,
-        },
-    ];
-
     public browseClInfo$: Observable<ClInfoModel[]>;
     public browseClInfoLoading$: Observable<boolean>;
 

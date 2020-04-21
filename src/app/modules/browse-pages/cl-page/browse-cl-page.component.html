@@ -1,7 +1,8 @@
 <h4>Browse cl page works</h4>
 <asb-table
+    *ngIf="!(browseClInfoLoading$ | async)"
     #tableView
-    [data]="sampleData"
+    [data]="(browseClInfo$ | async)"
     [displayedColumns]="displayedColumns"
     [columnModel]="columnModel"
     [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"
