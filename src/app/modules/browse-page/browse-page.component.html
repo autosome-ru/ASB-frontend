@@ -25,8 +25,7 @@
             Cell types
         </mat-button-toggle>
     </mat-button-toggle-group>
-
-    <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
+    <div *ngIf="group.value === 'tf'; else clTableTemplate">
         <asb-table
             #tableTfView
             *ngIf="!(browseTfInfoLoading$ | async)"
@@ -38,7 +37,7 @@
             (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
         >
         </asb-table>
-    </ng-container>
+    </div>
 </div>
 
 <ng-container *ngIf="(browseTfInfoLoading$ | async) || (browseClInfoLoading$ | async)">
