@@ -1,0 +1,54 @@
+<div class="container">
+    <mat-form-field>
+        <mat-label>Browse by</mat-label>
+        <mat-select
+            [formControl]="browseSelectControl"
+        >
+            <mat-option [value]="'tf'">Transcription factors</mat-option>
+            <mat-option [value]="'cl'">Cell types</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="browseSelectControl.value === 'tf'; else clTableTemplate">
+        <asb-table
+            #tableTfView
+            *ngIf="!(browseTfInfoLoading$ | async)"
+            [data]="browseTfInfo$ | async"
+            [displayedColumns]="tfDisplayedColumns"
+            [columnModel]="tfColumnModel"
+            [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
+        >
+        </asb-table>
+    </ng-container>
+</div>
+<ng-template #uniprotViewTemplate let-value="value">
+    <a
+        [href]="'https://www.uniprot.org/uniprot/' +  value"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        {{value}}
+    </a>
+</ng-template>
+
+<ng-template #cellTypeViewTemplate let-value="value" let-row="row">
+    <a
+        [href]="'http://gtrd.biouml.org/'"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        {{value}}
+    </a>
+</ng-template>
+
+<ng-template #clTableTemplate>
+    <asb-table
+        #tableClView
+        *ngIf="!(browseClInfoLoading$ | async)"
+        [data]="(browseClInfo$ | async)"
+        [displayedColumns]="clDisplayedColumns"
+        [columnModel]="clColumnModel"
+        [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"
+    >
+    </asb-table>
+</ng-template>

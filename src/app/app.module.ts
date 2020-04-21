@@ -20,7 +20,7 @@ import {AsbHelpPageModule} from "./modules/help-page/help-page.module";
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import { ToastrModule } from "ngx-toastr";
-import {AsbBrowsePageModule} from "./modules/browse-pages/browse.module";
+import {AsbBrowsePageModule} from "./modules/browse-page/browse.module";
 
 @NgModule({
   declarations: [

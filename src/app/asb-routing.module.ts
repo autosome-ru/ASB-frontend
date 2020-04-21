@@ -7,8 +7,8 @@ import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 import {HelpPageComponent} from "./modules/help-page/help-page.component";
 import {version} from "./helpers/constants";
 import {TfOrCl} from "./models/data.model";
-import {BrowseClPageComponent} from "./modules/browse-pages/cl-page/browse-cl-page.component";
-import {BrowseTfPageComponent} from "./modules/browse-pages/tf-page/browse-tf-page.component";
+import {BrowseClPageComponent} from "./modules/browse-page/cl-page/browse-cl-page.component";
+import {BrowsePageComponent} from "./modules/browse-page/browse-page.component";
 
 
 const routes: Routes = [
@@ -29,7 +29,7 @@ const routes: Routes = [
     {
         path: "browse",
         loadChildren: () => import(
-            "./modules/browse-pages/browse.module").then(mod => mod.AsbBrowsePageModule),
+            "./modules/browse-page/browse.module").then(mod => mod.AsbBrowsePageModule),
         data: {
             title: (tfOrCl: TfOrCl) => `ADASTra -${tfOrCl === "cl" ? "cell types" : "transcription factors"} browse`
         }

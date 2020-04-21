@@ -1,20 +1,24 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 
-import {BrowseTfPageComponent} from "./tf-page/browse-tf-page.component";
+import {BrowsePageComponent} from "./browse-page.component";
 import {AsbBrowsePageRoutingModule} from "./browse-page-routing.module";
-import {BrowseClPageComponent} from "./cl-page/browse-cl-page.component";
 import {AsbHelpersModule} from "../helpers/helpers.module";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     imports: [
         CommonModule,
         AsbHelpersModule,
         AsbBrowsePageRoutingModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
 
     ],
-    declarations: [BrowseTfPageComponent, BrowseClPageComponent],
-    exports: [BrowseTfPageComponent, BrowseClPageComponent],
+    declarations: [BrowsePageComponent],
 })
 export class AsbBrowsePageModule {
 }
