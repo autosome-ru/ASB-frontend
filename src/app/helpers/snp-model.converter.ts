@@ -34,7 +34,7 @@ export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBac
 
 export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel): TfInfoModel {
     return {
-        experimentsCount: model.aggregated_snps_count,
+        experimentsCount: model.experiments_count,
         aggregatedSnpsCount: model.aggregated_snps_count,
         id: model.uniprot_ac,
         name: model.name,
