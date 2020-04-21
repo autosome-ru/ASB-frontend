@@ -82,7 +82,7 @@ export class BrowsePageComponent implements OnInit {
                         this.store.dispatch(new fromActions.data.InitTfInfoAction());
                         return;
                     default:
-                        this.router.navigateByUrl("/browse",
+                        this.router.navigate(["/browse"],
                             {
                                 queryParams: {by: "tf"}
                             });
