@@ -70,7 +70,24 @@ export class BrowsePageComponent implements OnInit {
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
 
-        this.initialGroupValue = "tf";
+        this.route.queryParams.subscribe(
+            params => {
+                switch (params.by) {
+                    case "cl":
+                        this.initialGroupValue = "cl";
+                        this.store.dispatch(new fromActions.data.InitClInfoAction());
+                        return;
+                    case "tf":
+                        this.initialGroupValue = "tf";
+                        this.store.dispatch(new fromActions.data.InitTfInfoAction());
+                        return;
+                    default:
+                        this.router.navigateByUrl("/404");
+                        return;
+                 }
+            }
+        );
+
 
         this.tfColumnModel = {
             id: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
@@ -83,13 +100,7 @@ export class BrowsePageComponent implements OnInit {
             aggregatedSnpsCount: {view: "SNPs count"},
             experimentsCount: {view: "Experiments count"}
         };
-        this.store.dispatch(new fromActions.data.InitTfInfoAction());
 
-        // this.browseSelectControl.valueChanges.subscribe(
-        //     (v: string) => v === "cl" ?
-        //         this.store.dispatch(new fromActions.data.InitClInfoAction()) :
-        //         this.store.dispatch(new fromActions.data.InitTfInfoAction())
-        // );
 
     }
 
@@ -97,11 +108,7 @@ export class BrowsePageComponent implements OnInit {
         return array ? getPaginatorOptions(array.length) : [];
     }
 
-    _groupToggled($event: MatButtonToggleChange) {
-        if ($event.value === "cl") {
-            this.store.dispatch(new fromActions.data.InitClInfoAction());
-        } else {
-            this.store.dispatch(new fromActions.data.InitTfInfoAction());
-        }
+    _groupToggled(event: MatButtonToggleChange) {
+        this.router.navigateByUrl("", {queryParams: {by: event.value}});
     }
 }
