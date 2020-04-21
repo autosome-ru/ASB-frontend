@@ -6,11 +6,11 @@ import {AppState} from "src/app/store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Observable} from "rxjs";
-import {ClInfoModel, TfInfoModel} from "../../models/data.model";
+import {ClInfoModel, TfInfoModel, TfOrCl} from "../../models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {getPaginatorOptions} from "../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../helpers/table-template/table.component";
-import {FormBuilder, FormControl} from "@angular/forms";
+import {MatButtonToggleChange} from "@angular/material/button-toggle";
 
 
 @Component({
@@ -53,11 +53,10 @@ export class BrowsePageComponent implements OnInit {
     ];
 
     public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
-    public browseSelectControl: FormControl;
+    public initialGroupValue: TfOrCl;
 
     constructor(
         private router: Router,
-        private formBuilder: FormBuilder,
         private store: Store<AppState>,
         private route: ActivatedRoute,
         private titleService: Title) {}
@@ -71,7 +70,7 @@ export class BrowsePageComponent implements OnInit {
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
 
-        this.browseSelectControl = this.formBuilder.control("tf");
+        this.initialGroupValue = "tf";
 
         this.tfColumnModel = {
             id: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
@@ -85,7 +84,7 @@ export class BrowsePageComponent implements OnInit {
             experimentsCount: {view: "Experiments count"}
         };
         this.store.dispatch(new fromActions.data.InitTfInfoAction());
-        this.store.dispatch(new fromActions.data.InitClInfoAction());
+
         // this.browseSelectControl.valueChanges.subscribe(
         //     (v: string) => v === "cl" ?
         //         this.store.dispatch(new fromActions.data.InitClInfoAction()) :
@@ -98,4 +97,11 @@ export class BrowsePageComponent implements OnInit {
         return array ? getPaginatorOptions(array.length) : [];
     }
 
+    _groupToggled($event: MatButtonToggleChange) {
+        if ($event.value === "cl") {
+            this.store.dispatch(new fromActions.data.InitClInfoAction());
+        } else {
+            this.store.dispatch(new fromActions.data.InitTfInfoAction());
+        }
+    }
 }
