@@ -77,12 +77,15 @@ export class BrowsePageComponent implements OnInit {
                         this.initialGroupValue = "cl";
                         this.store.dispatch(new fromActions.data.InitClInfoAction());
                         return;
-                    // case "tf":
-                    //
-                    //     return;
-                    default:
+                    case "tf":
                         this.initialGroupValue = "tf";
                         this.store.dispatch(new fromActions.data.InitTfInfoAction());
+                        return;
+                    default:
+                        this.router.navigateByUrl("/browse",
+                            {
+                                queryParams: {by: "tf"}
+                            });
                         return;
                  }
             }
