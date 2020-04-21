@@ -77,12 +77,12 @@ export class BrowsePageComponent implements OnInit {
                         this.initialGroupValue = "cl";
                         this.store.dispatch(new fromActions.data.InitClInfoAction());
                         return;
-                    case "tf":
+                    // case "tf":
+                    //
+                    //     return;
+                    default:
                         this.initialGroupValue = "tf";
                         this.store.dispatch(new fromActions.data.InitTfInfoAction());
-                        return;
-                    default:
-                        this.router.navigateByUrl("/404");
                         return;
                  }
             }
@@ -109,6 +109,10 @@ export class BrowsePageComponent implements OnInit {
     }
 
     _groupToggled(event: MatButtonToggleChange) {
-        this.router.navigateByUrl("", {queryParams: {by: event.value}});
+        this.router.navigate([],
+            {
+                relativeTo: this.route,
+                queryParams: {by: event.value}
+            });
     }
 }
