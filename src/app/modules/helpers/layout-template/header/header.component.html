@@ -32,6 +32,14 @@
             </a>
             <a
                 class="nav-item nav-link"
+                [routerLink]="'/browse/tf'"
+                [routerLinkActive]="['active']"
+                (click)="toggleNavbar('close')"
+            >
+                Browse
+            </a>
+            <a
+                class="nav-item nav-link"
                 [routerLink]="'/contacts'"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
