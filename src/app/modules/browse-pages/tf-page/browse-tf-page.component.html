@@ -1,13 +1,14 @@
-<h4>Browse tf page works</h4>
-<asb-table
-    #tableView
-    [data]="browseTfInfo$ | async"
-    [displayedColumns]="displayedColumns"
-    [columnModel]="columnModel"
-    [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
->
-</asb-table>
-
+<div class="container">
+    <h4>Browse tf page works</h4>
+    <asb-table
+        #tableView
+        [data]="browseTfInfo$ | async"
+        [displayedColumns]="displayedColumns"
+        [columnModel]="columnModel"
+        [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
+    >
+    </asb-table>
+</div>
 <ng-template #uniprotViewTemplate let-value="value">
     <a
         [href]="'https://www.uniprot.org/uniprot/' +  value"

@@ -88,6 +88,8 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
 
     ngAfterViewInit() {
         if (this._dataSource) {
+            console.log(this.sort);
+            console.log(this._dataSource)
             this._dataSource.sort = this.sort;
             this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
             if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
