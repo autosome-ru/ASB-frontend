@@ -68,7 +68,7 @@ export class DataEffect {
             ]).pipe(
                 take(1),
                 switchMap(([info, loading]) =>
-                    !loading && !info
+                    !loading && !(info.length > 0)
                         ? of(new fromActions.LoadTfInfoAction())
                         : EMPTY
                 ),
@@ -97,7 +97,7 @@ export class DataEffect {
             ]).pipe(
                 take(1),
                 switchMap(([info, loading]) =>
-                    !loading && !info
+                    !loading && !(info.length > 0)
                         ? of(new fromActions.LoadClInfoAction())
                         : EMPTY
                 ),

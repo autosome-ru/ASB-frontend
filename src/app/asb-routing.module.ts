@@ -69,9 +69,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: "enabled"
-})],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes, {initialNavigation: "enabled"})],
+    exports: [RouterModule]
 })
 export class AsbRoutingModule { }

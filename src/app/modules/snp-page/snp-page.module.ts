@@ -41,7 +41,8 @@ import { ColorScalesComponent } from "./color-scales/color-scales.component";
         MatSortModule,
         MatTooltipModule,
     ],
-    declarations: [SnpPageComponent,
+    declarations: [
+        SnpPageComponent,
         AsbStatisticsComponent,
         PhenotypesComponent,
         InnerTableComponent,

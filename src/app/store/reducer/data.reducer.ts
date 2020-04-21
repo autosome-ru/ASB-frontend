@@ -78,6 +78,8 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
         }
 
+
+
         case fromActions.ActionTypes.LoadTfInfo: {
             return {
                 ...state,

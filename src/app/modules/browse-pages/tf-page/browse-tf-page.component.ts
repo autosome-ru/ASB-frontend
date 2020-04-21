@@ -22,8 +22,6 @@ export class BrowseTfPageComponent implements OnInit {
     @ViewChild("uniprotViewTemplate", {static: true})
     public uniprotViewTemplate: TemplateRef<{value: string}>;
 
-
-
     public browseTfInfo$: Observable<TfInfoModel[]>;
     public browseTfInfoLoading$: Observable<boolean>;
 
