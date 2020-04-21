@@ -1,7 +1,7 @@
 <h4>Browse cl page works</h4>
 <asb-table
     #tableView
-    [data]="browseClInfo$ | async"
+    [data]="sampleData"
     [displayedColumns]="displayedColumns"
     [columnModel]="columnModel"
     [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"

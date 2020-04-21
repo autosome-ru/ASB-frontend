@@ -166,7 +166,7 @@ export interface TfInfoBackendModel {
 }
 
 export interface ClInfoBackendModel {
-    cl_id: string;
+    cl_id: number;
     name: string;
     aggregated_snps_count: number;
     experiments_count: number;
