@@ -118,4 +118,11 @@ export class BrowsePageComponent implements OnInit {
                 queryParams: {by: event.value}
             });
     }
+
+    _handleTableRowClick(event: TfInfoModel | ClInfoModel, tfOrCl: TfOrCl) {
+        this.router.navigateByUrl("/search/advanced",
+            {
+                queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
+        });
+    }
 }
