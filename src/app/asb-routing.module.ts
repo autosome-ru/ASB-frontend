@@ -29,7 +29,7 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/browse-page/browse.module").then(mod => mod.AsbBrowsePageModule),
         data: {
-            title: (tfOrCl: TfOrCl) => `ADASTra -${tfOrCl === "cl" ? "cell types" : "transcription factors"} browse`
+            title: `ADASTra -  browse`
         }
     },
 

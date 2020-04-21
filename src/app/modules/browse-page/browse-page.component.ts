@@ -64,7 +64,7 @@ export class BrowsePageComponent implements OnInit {
 
 
     ngOnInit() {
-        this.titleService.setTitle(this.route.snapshot.data.title("tf"));
+        this.titleService.setTitle(this.route.snapshot.data.title);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
 
