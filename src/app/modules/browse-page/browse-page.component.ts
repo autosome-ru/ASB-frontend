@@ -25,6 +25,7 @@ export class BrowsePageComponent implements OnInit {
 
     @ViewChild("tableClView", {static: true})
     public clTableView: AsbTableComponent<ClInfoModel>;
+
     @ViewChild("cellTypeViewTemplate", {static: true})
     public cellTypeViewTemplate: TemplateRef<{value: string}>;
 
