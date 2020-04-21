@@ -99,10 +99,8 @@ export class BrowsePageComponent implements OnInit {
 
     _groupToggled($event: MatButtonToggleChange) {
         if ($event.value === "cl") {
-            this.initialGroupValue = "cl";
             this.store.dispatch(new fromActions.data.InitClInfoAction());
         } else {
-            this.initialGroupValue = "tf";
             this.store.dispatch(new fromActions.data.InitTfInfoAction());
         }
     }

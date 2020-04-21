@@ -1,5 +1,6 @@
 <div class="container">
     <mat-button-toggle-group
+        #group="matButtonToggleGroup"
         style="margin: 10px 0"
         [value]="initialGroupValue"
         (change)="_groupToggled($event)"
@@ -17,7 +18,7 @@
         </mat-button-toggle>
     </mat-button-toggle-group>
 
-    <ng-container *ngIf="initialGroupValue === 'tf'; else clTableTemplate">
+    <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
         <asb-table
             #tableTfView
             *ngIf="!(browseTfInfoLoading$ | async)"
