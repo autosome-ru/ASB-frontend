@@ -43,7 +43,7 @@ export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel
 
 export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel): ClInfoModel {
     return {
-        experimentsCount: model.aggregated_snps_count,
+        experimentsCount: model.experiments_count,
         aggregatedSnpsCount: model.aggregated_snps_count,
         id: "" + model.cl_id,
         name: model.name,
