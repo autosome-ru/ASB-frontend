@@ -20,6 +20,7 @@ import {AsbHelpPageModule} from "./modules/help-page/help-page.module";
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import { ToastrModule } from "ngx-toastr";
+import {AsbBrowsePageModule} from "./modules/browse-pages/browse.module";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { ToastrModule } from "ngx-toastr";
       AsbContactsPageModule,
       AsbSearchPageModule,
       AsbHelpPageModule,
+      AsbBrowsePageModule
 
   ],
   providers: [
