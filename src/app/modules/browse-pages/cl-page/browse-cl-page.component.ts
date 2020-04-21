@@ -8,6 +8,8 @@ import * as fromActions from "src/app/store/action";
 import {ClInfoModel} from "../../../models/data.model";
 import {Observable} from "rxjs";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
+import {AsbTableComponent} from "../../helpers/table-template/table.component";
+import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 
 
 @Component({
@@ -17,6 +19,8 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/tab
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrowseClPageComponent implements OnInit {
+    @ViewChild("tableView", {static: true})
+    public tableView: AsbTableComponent<ClInfoModel>;
     @ViewChild("cellTypeViewTemplate", {static: true})
     public cellTypeViewTemplate: TemplateRef<{value: string}>;
 
@@ -52,5 +56,7 @@ export class BrowseClPageComponent implements OnInit {
 
         this.store.dispatch(new fromActions.data.InitClInfoAction());
     }
-
+    _getPaginatorOptions(array: ClInfoModel[]) {
+        return array ? getPaginatorOptions(array.length) : [];
+    }
 }

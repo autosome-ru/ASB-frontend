@@ -7,6 +7,8 @@ import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 import {HelpPageComponent} from "./modules/help-page/help-page.component";
 import {version} from "./helpers/constants";
 import {TfOrCl} from "./models/data.model";
+import {BrowseClPageComponent} from "./modules/browse-pages/cl-page/browse-cl-page.component";
+import {BrowseTfPageComponent} from "./modules/browse-pages/tf-page/browse-tf-page.component";
 
 
 const routes: Routes = [
@@ -32,6 +34,20 @@ const routes: Routes = [
             title: (tfOrCl: TfOrCl) => `ADASTra -${tfOrCl === "cl" ? "cell types" : "transcription factors"} browse`
         }
     },
+    // {
+    //     path: "browse/cl",
+    //     component: BrowseClPageComponent,
+    //     data: {
+    //         title: (tfOrCl: TfOrCl) => `ADASTra -${tfOrCl === "cl" ? "cell types" : "transcription factors"} browse`
+    //     }
+    // },
+    // {
+    //     path: "browse/tf",
+    //     component: BrowseTfPageComponent,
+    //     data: {
+    //         title: (tfOrCl: TfOrCl) => `ADASTra -${tfOrCl === "cl" ? "cell types" : "transcription factors"} browse`
+    //     }
+    // },
     {
         path: "contacts",
         component: ContactsPageComponent,

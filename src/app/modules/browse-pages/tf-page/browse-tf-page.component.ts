@@ -5,10 +5,11 @@ import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-
 import {Observable} from "rxjs";
-import {TfInfoModel, TfSnpCutModel} from "../../../models/data.model";
+import {TfInfoModel} from "../../../models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
+import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
+import {AsbTableComponent} from "../../helpers/table-template/table.component";
 
 
 @Component({
@@ -18,6 +19,8 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/tab
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrowseTfPageComponent implements OnInit {
+    @ViewChild("tableView", {static: true})
+    public tableView: AsbTableComponent<TfInfoModel>;
 
     @ViewChild("uniprotViewTemplate", {static: true})
     public uniprotViewTemplate: TemplateRef<{value: string}>;
@@ -54,6 +57,10 @@ export class BrowseTfPageComponent implements OnInit {
             experimentsCount: {view: "Experiments count"}
         };
         this.store.dispatch(new fromActions.data.InitTfInfoAction());
+    }
+
+    _getPaginatorOptions(array: TfInfoModel[]) {
+        return array ? getPaginatorOptions(array.length) : [];
     }
 
 }
