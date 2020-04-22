@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {AsbHelpersModule} from "../helpers/helpers.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {RouterModule} from "@angular/router";
+import {AsbHomePageRoutingModule} from "./home-page-routing.module";
 
 @NgModule({
     imports: [
@@ -16,10 +17,10 @@ import {RouterModule} from "@angular/router";
         ReactiveFormsModule,
         AsbHelpersModule,
         LazyLoadImageModule,
-        RouterModule
+        RouterModule,
+        AsbHomePageRoutingModule
     ],
     declarations: [HomePageComponent],
-    exports: [HomePageComponent],
 })
 export class AsbHomePageModule {
 }

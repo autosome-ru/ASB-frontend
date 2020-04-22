@@ -1,33 +1,23 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import {HomePageComponent} from "./modules/home-page/home-page.component";
-import {ContactsPageComponent} from "./modules/contacts-page/contacts-page.component";
 import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component";
 import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
-import {HelpPageComponent} from "./modules/help-page/help-page.component";
 import {version} from "./helpers/constants";
-import {TfOrCl} from "./models/data.model";
 
 
 const routes: Routes = [
     {
         path: "",
-        component: HomePageComponent,
+        loadChildren: () => import(
+            "./modules/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
         data: {
             title: "ADASTra - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites"
         }
     },
     {
-        path: "404",
-        component: PageNotFoundComponent,
-        data: {
-            title: "Page not found"
-        }
-    },
-    {
         path: "browse",
         loadChildren: () => import(
-            "./modules/browse-page/browse.module").then(mod => mod.AsbBrowsePageModule),
+            "./modules/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {
             title: `ADASTra -  browse`
         }
@@ -35,14 +25,16 @@ const routes: Routes = [
 
     {
         path: "contacts",
-        component: ContactsPageComponent,
+        loadChildren: () => import(
+            "./modules/contacts-page/contacts-page.module").then(mod => mod.AsbContactsPageModule),
         data: {
             title: "ADASTra contacts page"
         }
     },
     {
         path: "help",
-        component: HelpPageComponent,
+        loadChildren: () => import(
+            "./modules/help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
         data: {
             title: "ADASTra help page"
         }
@@ -61,6 +53,13 @@ const routes: Routes = [
         component: SnpPageComponent,
         data: {
             title: (id: string) => `${id} - ADASTra ${version}`
+        }
+    },
+    {
+        path: "404",
+        component: PageNotFoundComponent,
+        data: {
+            title: "Page not found"
         }
     },
     {

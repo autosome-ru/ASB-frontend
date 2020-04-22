@@ -20,6 +20,7 @@ import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { ColorScalesComponent } from "./color-scales/color-scales.component";
+import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
 
 @NgModule({
     imports: [
@@ -40,6 +41,7 @@ import { ColorScalesComponent } from "./color-scales/color-scales.component";
         MatTableModule,
         MatSortModule,
         MatTooltipModule,
+        AsbSnpPageRoutingModule
     ],
     declarations: [
         SnpPageComponent,
@@ -47,7 +49,6 @@ import { ColorScalesComponent } from "./color-scales/color-scales.component";
         PhenotypesComponent,
         InnerTableComponent,
         ColorScalesComponent],
-    exports: [SnpPageComponent, InnerTableComponent],
 })
 export class AsbSnpPageModule {
 }
