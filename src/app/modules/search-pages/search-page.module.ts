@@ -31,7 +31,7 @@ import {SearchPageTableComponent} from "./search-table/search-table.component";
         MatButtonToggleModule,
         MatTooltipModule,
         MatPaginatorModule,
-        AsbSearchPageRoutingModule,
+        AsbSearchPageRoutingModule
     ],
     declarations: [
         SearchPageComponent,

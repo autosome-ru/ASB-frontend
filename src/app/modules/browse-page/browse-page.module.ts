@@ -19,8 +19,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         MatSelectModule,
         ReactiveFormsModule,
         MatButtonToggleModule,
-        MatProgressSpinnerModule,
-
+        MatProgressSpinnerModule
     ],
     declarations: [BrowsePageComponent],
 })

@@ -48,7 +48,8 @@ import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
         AsbStatisticsComponent,
         PhenotypesComponent,
         InnerTableComponent,
-        ColorScalesComponent],
+        ColorScalesComponent
+    ],
 })
 export class AsbSnpPageModule {
 }

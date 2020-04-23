@@ -52,6 +52,7 @@
 
 <ng-template #uniprotViewTemplate let-value="value">
     <a
+        (click)="$event.stopPropagation()"
         [href]="'https://www.uniprot.org/uniprot/' +  value"
         target="_blank"
         rel="noopener noreferrer"
@@ -62,6 +63,7 @@
 
 <ng-template #cellTypeViewTemplate let-value="value" let-row="row">
     <a
+        (click)="$event.stopPropagation()"
         [href]="'http://gtrd.biouml.org/'"
         target="_blank"
         rel="noopener noreferrer"

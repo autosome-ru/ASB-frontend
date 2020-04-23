@@ -16,7 +16,7 @@
                 <ng-container
 
                     [ngTemplateOutlet]="descriptionTemplate"
-                    [ngTemplateOutletContext]="{value: 'd-none d-md-block text-white'}"
+                    [ngTemplateOutletContext]="{value: 'large'}"
                 >
 
                 </ng-container>
@@ -34,7 +34,7 @@
         <ng-container
 
             [ngTemplateOutlet]="descriptionTemplate"
-            [ngTemplateOutletContext]="{value: 'd-md-none'}"
+            [ngTemplateOutletContext]="{value: 'small'}"
         >
 
         </ng-container>
@@ -45,40 +45,45 @@
 <ng-template #descriptionTemplate let-value="value">
     <h3
         style="text-align: center;"
-        [class]="value"
+        [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
     >
         <u class="font-weight-bold">A</u>llelic
         <u class="font-weight-bold">D</u>osage corrected
         <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
         <u class="font-weight-bold">Tra</u>nscription factor binding sites
     </h3>
-    <div *ngIf="totalInfo$ | async as totalInfo"
-        style="text-align: center; margin-top: 15px"
-        [class]="value"
+    <div
+        *ngIf="totalInfo$ | async as totalInfo"
+        style="margin-top: 15px"
+        [class]="(value === 'large' ? 'd-md-flex text-white ' : '') + 'd-none'"
     >
-        <h4
-        >
-            Cell types:
-            <a
-                style="text-decoration: underline"
-                [routerLink]="'/browse'"
-                [queryParams]="{by: 'cl'}"
-            >
-                {{totalInfo.cellTypesCount}}
-            </a>
-        </h4>
-        <h4>
-            Transcription factors:
-            <a
-                style="text-decoration: underline"
-                [routerLink]="'/browse'"
-                [queryParams]="{by: 'tf'}"
-            >
-                {{totalInfo.transcriptionFactorsCount}}
-            </a>
-        </h4>
-        <h4>
-            Unique SNPs with ASB: {{totalInfo.snpsCount}}
-        </h4>
+        <div class="col-md-6" style="text-align: right;">
+            <h4>Cell types:</h4>
+            <h4>Transcription factors:</h4>
+            <h4>Unique SNPs with ASB:</h4>
+        </div>
+        <div class="col-md-6" style="text-align: left;">
+            <h4>
+                <a
+                    style="text-decoration: underline"
+                    [routerLink]="'/browse'"
+                    [queryParams]="{by: 'cl'}"
+                >
+                    {{totalInfo.cellTypesCount}}
+                </a>
+            </h4>
+            <h4>
+                <a
+                    style="text-decoration: underline"
+                    [routerLink]="'/browse'"
+                    [queryParams]="{by: 'tf'}"
+                >
+                    {{totalInfo.transcriptionFactorsCount}}
+                </a>
+            </h4>
+            <h4>
+                {{totalInfo.snpsCount}}
+            </h4>
+        </div>
     </div>
 </ng-template>
