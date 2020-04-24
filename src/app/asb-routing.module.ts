@@ -19,7 +19,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {
-            title: `ADASTra -  browse`
+            title: "ADASTra -  browse",
+            description: "test"
         }
     },
 
@@ -28,7 +29,7 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/contacts-page/contacts-page.module").then(mod => mod.AsbContactsPageModule),
         data: {
-            title: "ADASTra contacts page"
+            title: "ADASTra - contacts"
         }
     },
     {
@@ -36,7 +37,7 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
         data: {
-            title: "ADASTra help page"
+            title: "ADASTra - help"
         }
     },
     {
