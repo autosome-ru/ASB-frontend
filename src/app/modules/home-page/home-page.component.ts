@@ -1,6 +1,5 @@
 import {Component, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Title} from "@angular/platform-browser";
 import {isPlatformBrowser} from "@angular/common";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
@@ -8,6 +7,8 @@ import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action";
 import {TotalInfoModel} from "../../models/data.model";
 import {Observable} from "rxjs";
+import {SeoModel} from "../../models/seo.model";
+import {SeoService} from "../../services/seo.servise";
 
 @Component({
     selector: "home-page",
@@ -39,14 +40,14 @@ export class HomePageComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
-                private titleService: Title,
+                private seoService: SeoService,
                 @Inject(PLATFORM_ID) private platformId: Object) {
                         this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
 
     ngOnInit() {
-        this.titleService.setTitle(this.route.snapshot.data.title);
+        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
 
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
 

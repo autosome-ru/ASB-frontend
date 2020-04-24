@@ -21,6 +21,7 @@ import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import { ToastrModule } from "ngx-toastr";
 import {AsbBrowsePageModule} from "./modules/browse-page/browse-page.module";
+import {SeoService} from "./services/seo.servise";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import {AsbBrowsePageModule} from "./modules/browse-page/browse-page.module";
   providers: [
       DataService,
       SearchService,
+      SeoService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Title} from "@angular/platform-browser";
+import {SeoService} from "../../services/seo.servise";
+import {SeoModel} from "../../models/seo.model";
 
 @Component({
     selector: "asb-about-us",
@@ -11,9 +12,9 @@ import {Title} from "@angular/platform-browser";
 export class ContactsPageComponent implements OnInit {
 
     constructor(private route: ActivatedRoute,
-                private titleService: Title) {}
+                private seoService: SeoService) {}
     ngOnInit() {
-        this.titleService.setTitle(this.route.snapshot.data.title);
+        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
     }
 
 }

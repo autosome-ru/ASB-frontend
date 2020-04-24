@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/reducer";
 import * as fromSelectors from "src/app/store/selector";
@@ -11,6 +10,8 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
 import {getPaginatorOptions} from "../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../helpers/table-template/table.component";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
+import {SeoModel} from "../../models/seo.model";
+import {SeoService} from "../../services/seo.servise";
 
 
 @Component({
@@ -59,11 +60,11 @@ export class BrowsePageComponent implements OnInit {
         private router: Router,
         private store: Store<AppState>,
         private route: ActivatedRoute,
-        private titleService: Title) {}
+        private seoService: SeoService) {}
 
 
     ngOnInit() {
-        this.titleService.setTitle(this.route.snapshot.data.title);
+        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
 

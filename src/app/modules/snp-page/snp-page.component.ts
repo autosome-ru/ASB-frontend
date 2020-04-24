@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
@@ -13,6 +12,7 @@ import {FileSaverService} from "ngx-filesaver";
 import {DataService} from "../../services/data.service";
 import * as moment from "moment";
 import {calculateColorForOne} from "../../helpers/colors.helper";
+import {SeoService} from "../../services/seo.servise";
 
 
 @Component({
@@ -54,19 +54,27 @@ export class SnpPageComponent implements OnInit {
         private router: Router,
         private saverService: FileSaverService,
         private dataService: DataService,
-        private titleService: Title) {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false; }
+        private seoService: SeoService
+    ) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
 
     ngOnInit() {
         this.id = this.route.snapshot.paramMap.get("rsId");
         this.alt = this.route.snapshot.paramMap.get("alt");
-        this.titleService.setTitle(this.route.snapshot.data.title(this.id));
-
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.store.dispatch(new fromActions.data.InitSnpInfoAction(
             {rsId: this.id, alt: this.alt}));
-
+        // FIXME
+        this.snpData$.subscribe(s => s ?
+            this.seoService.updateSeoInfo({
+                title: this.route.snapshot.data.title(this.id),
+                description: s.transFactors.slice(0, 10).join(","),
+                keywords: s.transFactors.slice(0, 10).join(","),
+            }) :
+                null
+        );
         this.commonColumnModel = {
             effectSizeRef: {view: "Effect size Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
             effectSizeAlt: {view: "Effect size Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},

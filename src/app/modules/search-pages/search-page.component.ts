@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
 import {Observable} from "rxjs";
 import {SnpSearchModel} from "../../models/data.model";
 import {AppState} from "../../store/reducer";
@@ -12,6 +11,8 @@ import {map} from "rxjs/operators";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchResultsModel} from "../../models/searchQueryModel";
 import {SearchComponent} from "../helpers/search-template/search.component";
+import {SeoModel} from "../../models/seo.model";
+import {SeoService} from "../../services/seo.servise";
 
 @Component({
     selector: "asb-search-page",
@@ -45,9 +46,9 @@ export class SearchPageComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private router: Router,
-                private titleService: Title) {}
+                private seoService: SeoService) {}
     ngOnInit() {
-        this.titleService.setTitle(this.route.snapshot.data.title);
+        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
 
         this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
         if (this.route.snapshot.queryParams.rs ||
