@@ -1,6 +1,6 @@
 import {PhenotypesModel} from "../models/data.model";
 
-export const version: string = "v 1.1";
+export const version: string = "v 1.1.2";
 export const releaseName: string = "Durland";
 
 export const phenotypesToView: {[name: string]: string} = {

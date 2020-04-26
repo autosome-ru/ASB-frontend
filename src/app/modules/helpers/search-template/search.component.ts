@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from "@angular/core";
+import {Component, ElementRef, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
@@ -11,9 +11,8 @@ import {
     SearchResultsModel
 } from "src/app/models/searchQueryModel";
 import { TfOrCl} from "src/app/models/data.model";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Title} from "@angular/platform-browser";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
@@ -30,18 +29,7 @@ import {phenotypesFormToList} from "../../../helpers/search-model.converter";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
 })
-export class SearchComponent implements OnInit, OnChanges {
-
-    constructor(
-        private formBuilder: FormBuilder,
-        private store: Store<AppState>,
-        private router: Router,
-        private route: ActivatedRoute,
-        private titleService: Title,
-        private saverService: FileSaverService,
-        private searchService: SearchService,
-        private toastr: ToastrService,
-    ) {}
+export class SearchComponent implements OnInit, OnChanges, OnDestroy {
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
 
@@ -64,6 +52,8 @@ export class SearchComponent implements OnInit, OnChanges {
 
     private readonly nullValue: {searchInput: string} = {searchInput: ""};
     private searchParams: SearchParamsModel;
+
+    private subscriptions: Subscription = new Subscription();
 
     separatorKeysCodes: number[] = [ENTER, COMMA];
     listOfChrs: string[];
@@ -96,10 +86,17 @@ export class SearchComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnInit() {
-        // Set title and meta
-        this.titleService.setTitle(this.route.snapshot.data.title);
+    constructor(
+        private formBuilder: FormBuilder,
+        private store: Store<AppState>,
+        private router: Router,
+        private route: ActivatedRoute,
+        private saverService: FileSaverService,
+        private searchService: SearchService,
+        private toastr: ToastrService,
+    ) {}
 
+    ngOnInit() {
         this.listOfChrs = SearchComponent.initChromosomes();
 
         this.showNearbyControl = this.formBuilder.control(100);
@@ -125,67 +122,79 @@ export class SearchComponent implements OnInit, OnChanges {
             }
         );
         // Search options and patching form in simple search
-        this.searchForm.get("searchCl").valueChanges.subscribe(
-            s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
-                {search: {
-                        ...this.searchForm.value as SearchQueryModel,
-                        searchCl: s,
-                    }, tfOrCl: "cl"}
-            )));
-        this.searchForm.get("searchTf").valueChanges.subscribe(
-            s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
-                {search: {
-                        ...this.searchForm.value as SearchQueryModel,
-                        searchTf: s,
-                    }, tfOrCl: "tf"}
-            )));
-        this.searchForm.get("chromosome").valueChanges.subscribe(
-            (s: string) => {
-                if (s === "any chr") {
-                    this.searchForm.get("searchInput").disable();
-                } else if (this.searchForm.get("searchInput").disabled) {
-                    this.searchForm.get("searchInput").enable();
-                }
-
-            }
+        this.subscriptions.add(
+            this.searchForm.get("searchCl").valueChanges.subscribe(
+                s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                    {search: {
+                            ...this.searchForm.value as SearchQueryModel,
+                            searchCl: s,
+                        }, tfOrCl: "cl"}
+                ))
+            )
         );
+        this.subscriptions.add(
+            this.searchForm.get("searchTf").valueChanges.subscribe(
+                s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                    {search: {
+                            ...this.searchForm.value as SearchQueryModel,
+                            searchTf: s,
+                        }, tfOrCl: "tf"}
+                ))
+            )
+        );
+        this.subscriptions.add(
+            this.searchForm.get("chromosome").valueChanges.subscribe(
+                (s: string) => {
+                    if (s === "any chr") {
+                        this.searchForm.get("searchInput").disable();
+                    } else if (this.searchForm.get("searchInput").disabled) {
+                        this.searchForm.get("searchInput").enable();
+                    }
 
-        this.searchForm.get("searchBy").valueChanges.subscribe(
-            (s: "id" | "pos") => {
-                if (this.searchForm.get("chromosome").value) {
-                    if (s === "id") {
-                        this.searchForm.patchValue(
-                            {chromosome: null});
+                }
+            )
+        );
+        this.subscriptions.add(
+            this.searchForm.get("searchBy").valueChanges.subscribe(
+                (s: "id" | "pos") => {
+                    if (this.searchForm.get("chromosome").value) {
+                        if (s === "id") {
+                            this.searchForm.patchValue(
+                                {chromosome: null});
+                        }
+                    } else {
+                        if ( s === "pos") {
+                            this.searchForm.patchValue(
+                                {chromosome: "any chr"});
+                        }
                     }
-                } else {
-                    if ( s === "pos") {
+                    if (checkOneResult(this.searchData)) {
                         this.searchForm.patchValue(
-                            {chromosome: "any chr"});
+                            s === "pos" ?
+                                {
+                                    searchInput: "" + this.searchData.results[0].pos,
+                                    chromosome: this.searchData.results[0].chr
+                                } :
+                                {
+                                    searchInput: this.searchData.results[0].rsId,
+                                }
+                        );
                     }
                 }
-                if (checkOneResult(this.searchData)) {
-                    this.searchForm.patchValue(
-                        s === "pos" ?
-                            {
-                                searchInput: "" + this.searchData.results[0].pos,
-                                chromosome: this.searchData.results[0].chr
-                            } :
-                            {
-                                searchInput: this.searchData.results[0].rsId,
-                            }
-                    );
+            )
+        );
+        this.subscriptions.add(
+            this.route.queryParams.subscribe(
+                (s: SearchParamsModel) => {
+                    this.searchParams = s;
+                    this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
+                    if (!this._isSearchDisabled()) {
+                        this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+                            {search: this.searchForm.value, isAdvanced: this.isAdvanced}
+                        ));
+                    }
                 }
-            });
-        this.route.queryParams.subscribe(
-            (s: SearchParamsModel) => {
-                this.searchParams = s;
-                this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
-                if (!this._isSearchDisabled()) {
-                    this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                        {search: this.searchForm.value, isAdvanced: this.isAdvanced}
-                    ));
-                }
-            }
+            )
         );
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
@@ -205,6 +214,10 @@ export class SearchComponent implements OnInit, OnChanges {
         }
     }
 
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+    }
+
     _clearSearchField() {
         this.searchForm.patchValue(this.nullValue);
     }
@@ -219,15 +232,16 @@ export class SearchComponent implements OnInit, OnChanges {
 
     _getResultsInCsv() {
         this.toastr.info("May take some time with long results", "Info");
-        this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
-            (res) => {
-                this.saverService.save(res,
-                    "AD_ASTRA_search_" + moment().format("YYYY-MM-DD_HH-mm") + ".tsv");
-            },
-            (err) => {
-                console.log("err");
-                console.log(err.text);
-            });
+        this.subscriptions.add(
+            this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
+                (res) => {
+                    this.saverService.save(res,
+                        "AD_ASTRA_search_" + moment().format("YYYY-MM-DD_HH-mm") + ".tsv");
+                },
+                (err) => {
+                    console.warn(err.message);
+                })
+        );
     }
 
     _initDemo() {

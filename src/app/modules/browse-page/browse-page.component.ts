@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ClInfoModel, TfInfoModel, TfOrCl} from "../../models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {getPaginatorOptions} from "../../helpers/check-functions.helper";
@@ -20,7 +20,7 @@ import {SeoService} from "../../services/seo.servise";
     styleUrls: ["./browse-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BrowsePageComponent implements OnInit {
+export class BrowsePageComponent implements OnInit, OnDestroy {
     @ViewChild("tableTfView", {static: true})
     public tfTableView: AsbTableComponent<TfInfoModel>;
 
@@ -56,12 +56,18 @@ export class BrowsePageComponent implements OnInit {
     public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
     public initialGroupValue: TfOrCl;
 
+    private subscriptions: Subscription = new Subscription();
+
     constructor(
         private router: Router,
         private store: Store<AppState>,
         private route: ActivatedRoute,
         private seoService: SeoService) {}
 
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+    }
 
     ngOnInit() {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
@@ -71,7 +77,8 @@ export class BrowsePageComponent implements OnInit {
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
 
-        this.route.queryParams.subscribe(
+        this.subscriptions.add(
+            this.route.queryParams.subscribe(
             params => {
                 switch (params.by) {
                     case "cl":
@@ -90,7 +97,7 @@ export class BrowsePageComponent implements OnInit {
                         this.initialGroupValue = "tf";
                         return;
                  }
-            }
+            })
         );
 
 
@@ -105,7 +112,6 @@ export class BrowsePageComponent implements OnInit {
             aggregatedSnpsCount: {view: "SNPs count"},
             experimentsCount: {view: "Experiments count"}
         };
-
 
     }
 

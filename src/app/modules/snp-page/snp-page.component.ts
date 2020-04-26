@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
@@ -21,7 +21,7 @@ import {SeoService} from "../../services/seo.servise";
     styleUrls: ["./snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SnpPageComponent implements OnInit {
+export class SnpPageComponent implements OnInit, OnDestroy {
 
     @ViewChild("cellLines", {static: true})
     public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
@@ -48,6 +48,8 @@ export class SnpPageComponent implements OnInit {
         "motifFc",
     ];
 
+    private subscriptions: Subscription = new Subscription();
+
     constructor(
         private store: Store<AppState>,
         private route: ActivatedRoute,
@@ -67,13 +69,15 @@ export class SnpPageComponent implements OnInit {
         this.store.dispatch(new fromActions.data.InitSnpInfoAction(
             {rsId: this.id, alt: this.alt}));
         // FIXME
-        this.snpData$.subscribe(s => s ?
-            this.seoService.updateSeoInfo({
-                title: this.route.snapshot.data.title(this.id),
-                description: s.transFactors.slice(0, 10).join(","),
-                keywords: s.transFactors.slice(0, 10).join(","),
-            }) :
-                null
+        this.subscriptions.add(
+            this.snpData$.subscribe(s => s ?
+                this.seoService.updateSeoInfo({
+                    title: this.route.snapshot.data.title(this.id),
+                    description: s.transFactors.slice(0, 10).join(","),
+                    keywords: s.transFactors.slice(0, 10).join(","),
+                }) :
+                    null
+            )
         );
         this.commonColumnModel = {
             effectSizeRef: {view: "Effect size Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
@@ -99,6 +103,9 @@ export class SnpPageComponent implements OnInit {
                     v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
         };
     }
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+    }
 
     searchFunction(data: ClSnpModel, search: string): boolean {
         return data.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
@@ -108,29 +115,33 @@ export class SnpPageComponent implements OnInit {
         columns: string[],
         filter: string,
     }, where: TfOrCl) {
-        this.dataService.getSnpInfoByIdCsv(
-            this.id, this.alt, where, options.columns, options.filter).subscribe(
-        (res) => {
-                this.saverService.save(res,
-                `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
-            },
-        (err) => {
-                console.log("err");
-                console.log(err.text);
-            }
+        this.subscriptions.add(
+            this.dataService.getSnpInfoByIdCsv(
+                this.id, this.alt, where, options.columns, options.filter).subscribe(
+            (res) => {
+                    this.saverService.save(res,
+                    `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
+                },
+            (err) => {
+                    console.log("err");
+                    console.log(err.text);
+                }
+            )
         );
     }
 
     _downloadPage() {
-        this.dataService.getSnpInfoById({rsId: this.id, alt: this.alt}).subscribe(
-            (res) => {
-                const blob = new Blob([JSON.stringify(res)],
-                    {type: "application/json"});
-                this.saverService.save(blob, `AD_ASTRA_page_${this.id}_${this.alt}.json`);
-            },
-        (err) => {
-                console.log(err);
-            }
+        this.subscriptions.add(
+            this.dataService.getSnpInfoById({rsId: this.id, alt: this.alt}).subscribe(
+                (res) => {
+                    const blob = new Blob([JSON.stringify(res)],
+                        {type: "application/json"});
+                    this.saverService.save(blob, `AD_ASTRA_page_${this.id}_${this.alt}.json`);
+                },
+            (err) => {
+                    console.log(err);
+                }
+            )
         );
     }
 
