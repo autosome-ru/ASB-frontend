@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from "@angular/core";
+import {Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
@@ -8,9 +8,8 @@ import {
     SearchHintModel,
     SearchParamsModel,
     SearchQueryModel,
-    SearchResultsModel
 } from "src/app/models/searchQueryModel";
-import { TfOrCl} from "src/app/models/data.model";
+import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -29,7 +28,7 @@ import {phenotypesFormToList} from "../../../helpers/search-model.converter";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
 })
-export class SearchComponent implements OnInit, OnChanges, OnDestroy {
+export class SearchComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
 
@@ -45,7 +44,7 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
     public isAdvanced: boolean;
 
     @Input()
-    public searchData: SearchResultsModel;
+    public searchData: SnpSearchModel[];
 
     @Input()
     public searchDataLoading: boolean;
@@ -172,11 +171,11 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
                         this.searchForm.patchValue(
                             s === "pos" ?
                                 {
-                                    searchInput: "" + this.searchData.results[0].pos,
-                                    chromosome: this.searchData.results[0].chr
+                                    searchInput: "" + this.searchData[0].pos,
+                                    chromosome: this.searchData[0].chr
                                 } :
                                 {
-                                    searchInput: this.searchData.results[0].rsId,
+                                    searchInput: this.searchData[0].rsId,
                                 }
                         );
                     }
@@ -200,20 +199,6 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes["searchData"] &&
-            this.downloadButtonColor !== "primary" &&
-            this.isAdvanced &&
-            this.searchData &&
-            this.searchData.total &&
-            this.searchData.total !== this.searchData.results.length) {
-            this.downloadButtonColor = "primary";
-            setTimeout(() => {
-                this.downloadButtonColor = null;
-            }, 5000);
-        }
-    }
-
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }
@@ -226,7 +211,8 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
         if (!this._isSearchDisabled()) {
             this.router.navigate(["/search/" +
             (this.isAdvanced ? "advanced" : "simple")], {
-                queryParams: this._convertFormToParams(this.isAdvanced)});
+                queryParams: this._convertFormToParams(this.isAdvanced)}).then(
+                    () => null, error => console.log(error));
         }
     }
 
@@ -238,9 +224,8 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
                     this.saverService.save(res,
                         "AD_ASTRA_search_" + moment().format("YYYY-MM-DD_HH-mm") + ".tsv");
                 },
-                (err) => {
-                    console.warn(err.message);
-                })
+                (error) => this.toastr.error(error.message, "Error")
+            )
         );
     }
 
@@ -360,8 +345,8 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
                     if (checkOneResult(this.searchData) &&
                         !this.isAdvanced &&
                         !isValidPosInterval(form.searchInput)) {
-                        result.pos = "" + this.searchData.results[0].pos;
-                        result.chr = this.searchData.results[0].chr;
+                        result.pos = "" + this.searchData[0].pos;
+                        result.chr = this.searchData[0].chr;
                     } else {
                         result.pos = form.searchInput;
                         result.chr = form.chromosome;
@@ -433,8 +418,8 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
                 patchValue = {
                     searchBy: "pos",
                     searchInput: SearchComponent.convertPosToInterval(
-                        "" + this.searchData.results[0].pos),
-                    chromosome: this.searchData.results[0].chr,
+                        "" + this.searchData[0].pos),
+                    chromosome: this.searchData[0].chr,
                 };
             } else {
                 patchValue = {
@@ -448,12 +433,12 @@ export class SearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 }
 
-function checkOneResult(searchData: SearchResultsModel): boolean {
-    return !!(searchData && searchData.results &&
-        searchData.results.length > 0 && searchData.results.length < 4
-        && searchData.results.reduce((a, b) =>
+function checkOneResult(searchData: SnpSearchModel[]): boolean {
+    return !!(searchData &&
+        searchData.length > 0 && searchData.length < 4
+        && searchData.reduce((a, b) =>
                 a.pos === b.pos && a.chr === b.chr ?
-                    b : {chr: "chr0", pos: 0}, searchData.results[0]).pos);
+                    b : {chr: "chr0", pos: 0}, searchData[0]).pos);
 }
 
 function matchingPattern(searchKey: string,

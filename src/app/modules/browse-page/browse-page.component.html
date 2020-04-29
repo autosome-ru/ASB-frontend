@@ -29,17 +29,18 @@
         style="margin-bottom: -16px"
     >
         <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
-            <asb-table
+            <asb-table-server
                 #tableTfView
                 *ngIf="!(browseTfInfoLoading$ | async)"
-                [data]="browseTfInfo$ | async"
+                [data]="browseTfInfo$"
                 [displayedColumns]="tfDisplayedColumns"
                 [columnModel]="tfColumnModel"
                 [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
                 [clickableRow]="true"
                 (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
+                (tableChangesEmitter)="_handleTableChange($event, 'tf')"
             >
-            </asb-table>
+            </asb-table-server>
         </ng-container>
     </div>
 </div>
@@ -73,16 +74,17 @@
 </ng-template>
 
 <ng-template #clTableTemplate>
-    <asb-table
+    <asb-table-server
         #tableClView
         *ngIf="!(browseClInfoLoading$ | async)"
-        [data]="(browseClInfo$ | async)"
+        [data]="browseClInfo$"
         [displayedColumns]="clDisplayedColumns"
         [columnModel]="clColumnModel"
         [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"
         [clickableRow]="true"
         (rowClickEmitter)="_handleTableRowClick($event, 'cl')"
+        (tableChangesEmitter)="_handleTableChange($event, 'cl')"
     >
-    </asb-table>
+    </asb-table-server>
 </ng-template>
 

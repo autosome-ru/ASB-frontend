@@ -89,14 +89,6 @@ export class SearchPageComponent implements OnInit {
         }
     }
 
-    getAdditionalPhrase(searchResults: SearchResultsModel, loading: boolean) {
-        if (loading || !searchResults || !searchResults.total) {
-            return "";
-        }
-        return searchResults.total !== searchResults.results.length ?
-            "Too many to display. Use get in tsv option" : "";
-    }
-
     _handlePageChange(page: PageEvent) {
         this._filterSnpResults(page.pageSize, page.pageIndex);
     }
@@ -130,6 +122,6 @@ export class SearchPageComponent implements OnInit {
     }
 
     _navigateToSnp(id: string, alt: string): void {
-        this.router.navigateByUrl("snps/" + id + "/" + alt);
+        this.router.navigateByUrl("snps/" + id + "/" + alt).then();
     }
 }

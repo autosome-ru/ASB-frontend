@@ -1,6 +1,6 @@
 import {PhenotypesModel, SnpSearchBackendModel, SnpSearchModel} from "./data.model";
 
-export interface SearchQueryModel extends PhenotypesModel{
+export interface SearchQueryModel extends PhenotypesModel {
     searchInput: string;
     searchBy: "id" | "pos";
     chromosome: string;

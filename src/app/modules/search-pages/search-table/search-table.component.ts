@@ -9,11 +9,13 @@ import {
 } from "@angular/core";
 import {ActivatedRoute,  Router} from "@angular/router";
 import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
-import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
+import {AsbTableChangesModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
-import {SearchParamsModel} from "../../../models/searchQueryModel";
+import {SearchParamsModel, SearchResultsModel} from "../../../models/searchQueryModel";
 import {MatPaginator} from "@angular/material/paginator";
 import {baseToColors} from "../../../helpers/colors.helper";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 
 
@@ -40,7 +42,7 @@ export class SearchPageTableComponent implements OnInit {
     private readonly cssClass = true;
 
     @Input()
-    readonly searchResults: SnpSearchModel[];
+    readonly searchResults$: Observable<SearchResultsModel>;
 
     @Input()
     public paginator: MatPaginator;
@@ -54,7 +56,7 @@ export class SearchPageTableComponent implements OnInit {
         "rsId",
 
     ];
-    public dataToView: any[];
+    public dataToView: Observable<any[]>;
     colors: any = baseToColors;
 
     constructor(private router: Router, private route: ActivatedRoute) {}
@@ -99,12 +101,12 @@ export class SearchPageTableComponent implements OnInit {
                 ...this.paramsToColumnModel(),
             };
         }
-        this.dataToView = this.searchResults.map(s => {
+        this.dataToView = this.searchResults$.pipe(map(s => s.results.map(e => {
             return {
-                ...s,
-                ...this.paramsToData(s)
+                ...e,
+                ...this.paramsToData(e)
             };
-        });
+        })));
     }
 
     _handleTableRowClick(row: SnpSearchModel) {
@@ -191,6 +193,10 @@ export class SearchPageTableComponent implements OnInit {
     }
 
 
+    _handleTableChanges(change: AsbTableChangesModel) {
+        console.log(change);
+
+    }
 }
 
 function convertNameToValue(name: string, allele: "Ref" | "Alt"): string {

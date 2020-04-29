@@ -1,4 +1,5 @@
 import {TemplateRef} from "@angular/core";
+import {SortDirection} from "@angular/material/sort";
 
 export type AsbTableColumnModel<T> = {
     [key in keyof Partial<T>]:
@@ -13,3 +14,10 @@ export type AsbTableColumnModel<T> = {
 };
 
 export type AsbTableDisplayedColumns<T> = Array<keyof T>;
+
+export interface AsbTableChangesModel {
+    pageIndex: number;
+    pageSize: number;
+    direction: SortDirection;
+    active: string;
+}

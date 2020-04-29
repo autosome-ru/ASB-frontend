@@ -6,7 +6,6 @@ import {
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
-import {animate, state, style, transition, trigger} from "@angular/animations";
 import {MatSort, Sort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -18,16 +17,16 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
     templateUrl: "./table.component.html",
     styleUrls: ["./table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: [
-        trigger("detailExpand", [
-            state("collapsed, void", style({height: "0px", minHeight: "0", display: "none"})),
-            state("expanded", style({height: "*"})),
-            transition("expanded <=> collapsed",
-                animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
-            transition("expanded <=> void",
-                animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
-        ]),
-    ],
+    // animations: [
+    //     trigger("detailExpand", [
+    //         state("collapsed, void", style({height: "0px", minHeight: "0", display: "none"})),
+    //         state("expanded", style({height: "*"})),
+    //         transition("expanded <=> collapsed",
+    //             animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
+    //         transition("expanded <=> void",
+    //             animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
+    //     ]),
+    // ],
 })
 
 export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy {

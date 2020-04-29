@@ -3,7 +3,7 @@
     <asb-search
         [width]="'full'"
         [isAdvanced]="isAdvancedSearch"
-        [searchData]="searchSnpResults$ | async"
+        [searchData]="(searchSnpResults$ | async).results"
     ></asb-search>
 
     <hr class="v-divider" style="margin:0">
@@ -32,10 +32,6 @@
                                 <mat-icon svgIcon="list"></mat-icon>
                             </mat-button-toggle>
                         </mat-button-toggle-group>
-                    </h4>
-                    <h4 class="headline text--bold-300 search-page__text">
-                        {{getAdditionalPhrase((searchSnpResults$ | async),
-                        (searchSnpResultsLoading$ | async))}}
                     </h4>
                 </div>
             </div>
@@ -110,7 +106,7 @@
 <ng-template #tableViewTemplate>
     <asb-search-table
         *ngIf="(searchSnpResults$ | async)?.results.length > 0"
-        [searchResults]="(searchSnpResults$ | async).results"
+        [searchResults$]="searchSnpResults$"
         [paginator]="paginator"
         (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
     >

@@ -1,5 +1,5 @@
 <div class="layout">
-    <asb-table
+    <asb-table-server
         #tableView
         [displayedColumns]="displayedColumns"
         [data]="dataToView"
@@ -7,8 +7,9 @@
         [clickableRow]="true"
         [externalPaginator]="paginator"
         (rowClickEmitter)="_handleTableRowClick($event)"
+        (tableChangesEmitter)="_handleTableChanges($event)"
     >
-    </asb-table>
+    </asb-table-server>
 </div>
 
 <ng-template #manyValuesViewTemplate let-value="value">

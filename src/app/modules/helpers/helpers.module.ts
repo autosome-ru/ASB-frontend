@@ -31,6 +31,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AsbServerTableComponent} from "./table-template/server-side/table-server.component";
 
 @NgModule({
     imports: [
@@ -67,6 +68,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         SnpButtonsComponent,
         AsbSnpHeaderComponent,
         AsbPopoverComponent,
+        AsbServerTableComponent,
     ],
     exports: [
         SearchComponent,
@@ -75,7 +77,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         AsbElevationDirective,
         AsbSnpHeaderComponent,
         AsbTableComponent,
-        AsbPopoverComponent
+        AsbPopoverComponent,
+        AsbServerTableComponent
     ],
     providers: [{provide: OverlayContainer, useClass: FullscreenOverlayContainer}],
 })

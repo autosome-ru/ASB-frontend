@@ -58,23 +58,6 @@ export class DataEffect {
         )
     );
 
-    @Effect()
-    initTfStats$ = this.actions$.pipe(
-        ofType(fromActions.ActionTypes.InitTfInfo),
-        mergeMap(() =>
-            combineLatest([
-                this.store.select(fromSelectors.selectTfInfo),
-                this.store.select(fromSelectors.selectTfInfoLoading),
-            ]).pipe(
-                take(1),
-                switchMap(([info, loading]) =>
-                    !loading && !(info.length > 0)
-                        ? of(new fromActions.LoadTfInfoAction())
-                        : EMPTY
-                ),
-            ),
-        ),
-    );
 
     @Effect()
     loadClStats$ = this.actions$.pipe(
@@ -86,25 +69,6 @@ export class DataEffect {
             )
         )
     );
-
-    @Effect()
-    initClStats$ = this.actions$.pipe(
-        ofType(fromActions.ActionTypes.InitClInfo),
-        mergeMap(() =>
-            combineLatest([
-                this.store.select(fromSelectors.selectClInfo),
-                this.store.select(fromSelectors.selectClInfoLoading),
-            ]).pipe(
-                take(1),
-                switchMap(([info, loading]) =>
-                    !loading && !(info.length > 0)
-                        ? of(new fromActions.LoadClInfoAction())
-                        : EMPTY
-                ),
-            ),
-        ),
-    );
-
 
     @Effect()
     loadSnpStats$ = this.actions$.pipe(
