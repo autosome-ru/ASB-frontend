@@ -89,11 +89,13 @@ export class SearchPageTableComponent implements OnInit {
                 ...this.columnModel,
                 transFactors: {
                     view: "Top 5 TFs",
-                    columnTemplate: this.manyTransFactorsViewTemplate, disabledSort: true
+                    columnTemplate: this.manyTransFactorsViewTemplate,
+                    disabledSort: true
                 },
                 cellLines: {
                     view: "Top 3 cell types",
-                    columnTemplate: this.manyCellTypesViewTemplate, disabledSort: true
+                    columnTemplate: this.manyCellTypesViewTemplate,
+                    disabledSort: true
                 },
             };
             this.displayedColumns = [
