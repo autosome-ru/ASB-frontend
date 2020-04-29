@@ -58,6 +58,8 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
 
     @Input()
     public paginatorOptions: number[];
+    @Input()
+    public paginatorLength: number;
 
     @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;

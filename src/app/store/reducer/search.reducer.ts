@@ -1,5 +1,5 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {SearchHintModel, SearchResultsModel} from "src/app/models/searchQueryModel";
+import {SearchHintModel, SearchQueryModel, SearchResultsModel} from "src/app/models/searchQueryModel";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
 } from "../../helpers/snp-model.converter";
@@ -13,6 +13,7 @@ export interface SearchState {
         tf: SearchHintModel[],
         cl: SearchHintModel[],
     };
+    searchQuery: SearchQueryModel;
     searchOptionsLoading: {
         tf: boolean,
         cl: boolean,
@@ -23,6 +24,7 @@ export interface SearchState {
 export const selectSearchOptions = (state: SearchState) => state.searchOptions;
 export const selectSearchOptionsLoading = (state: SearchState) => state.searchOptionsLoading;
 
+export const selectSearchQuery = (state: SearchState) => state.searchQuery;
 export const selectSearchResults = (state: SearchState) => state.searchResults;
 export const selectSearchResultsLoading = (state: SearchState) => state.searchResultsLoading;
 
@@ -31,6 +33,7 @@ export const initialState: SearchState = {
         tf: [],
         cl: []
     },
+    searchQuery: null,
     searchOptionsLoading: {
         tf: false,
         cl: false
@@ -108,8 +111,17 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             return {
                 ...state,
                 searchResultsLoading: true,
+                searchQuery: action.payload.search,
             };
         }
+
+        case fromActions.ActionTypes.LoadSearchResultsWithPagination: {
+            return {
+                ...state,
+                searchResultsLoading: true,
+            };
+        }
+
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
             return {
                 ...state,

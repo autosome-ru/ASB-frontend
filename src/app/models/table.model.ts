@@ -21,3 +21,4 @@ export interface AsbTableChangesModel {
     direction: SortDirection;
     active: string;
 }
+

@@ -3,7 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ClInfoBackendModel, SnpInfoBackendModel, TfInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
 import {browseUrl, snpsInfoUrl} from "../models/urls";
+import {AsbTableChangesModel} from "../models/table.model";
 
+
+function convertParamsToBakend(params: AsbTableChangesModel) {
+    return {
+
+    };
+}
 
 @Injectable()
 export class DataService {
@@ -27,12 +34,18 @@ export class DataService {
     }
 
 
-    public getTfInfo(): Observable<TfInfoBackendModel[]> {
-        return this.http.get<TfInfoBackendModel[]>(browseUrl + "/tf");
+    public getTfInfo(params: AsbTableChangesModel): Observable<TfInfoBackendModel[]> {
+        return this.http.get<TfInfoBackendModel[]>(browseUrl + "/tf",
+        {
+            params: convertParamsToBakend(params)
+        });
     }
 
-    public getClInfo(): Observable<ClInfoBackendModel[]> {
-        return this.http.get<ClInfoBackendModel[]>(browseUrl + "/cl");
+    public getClInfo(params: AsbTableChangesModel): Observable<ClInfoBackendModel[]> {
+        return this.http.get<ClInfoBackendModel[]>(browseUrl + "/cl",
+            {
+                params: convertParamsToBakend(params)
+            });
     }
 
 }

@@ -50,8 +50,8 @@ export class DataEffect {
     @Effect()
     loadTfStats$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadTfInfo),
-        mergeMap(() =>
-            this.dataService.getTfInfo().pipe(
+        mergeMap((action: fromActions.LoadClInfoAction) =>
+            this.dataService.getTfInfo(action.payload).pipe(
                 map(info => new fromActions.LoadTfInfoSuccessAction(info)),
                 catchError(() => of(new fromActions.LoadTfInfoFailAction())),
             )
@@ -62,8 +62,8 @@ export class DataEffect {
     @Effect()
     loadClStats$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadClInfo),
-        mergeMap(() =>
-            this.dataService.getClInfo().pipe(
+        mergeMap((action: fromActions.LoadClInfoAction) =>
+            this.dataService.getClInfo(action.payload).pipe(
                 map(info => new fromActions.LoadClInfoSuccessAction(info)),
                 catchError(() => of(new fromActions.LoadClInfoFailAction())),
             )

@@ -4,8 +4,9 @@ import {Store} from "@ngrx/store";
 import {AppState} from "../reducer";
 import {SearchService} from "src/app/services/search.service";
 import * as fromActions from "src/app/store/action/search.action";
-import {catchError, map, mergeMap} from "rxjs/operators";
-import {EMPTY, of} from "rxjs";
+import * as fromSelectors from "src/app/store/selector";
+import {catchError, map, mergeMap, tap} from "rxjs/operators";
+import { EMPTY, of} from "rxjs";
 
 @Injectable()
 export class SearchEffect {
@@ -41,22 +42,35 @@ export class SearchEffect {
     loadSearchResults$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResults),
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
-            this.searchService.getSearchResult(action.payload.search, action.payload.isAdvanced).pipe(
+            this.searchService.getSearchResult(
+                action.payload.search,
+                action.payload.isAdvanced,
+                action.payload.params).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
-                catchError(() => {
-                        return of(new fromActions.LoadSearchResultsFailAction({
-                            ...action.payload,
-                        }));
-                    }),
+                catchError(() => of(new fromActions.LoadSearchResultsFailAction())),
             )
+        )
+    );
+
+    @Effect()
+    loadSearchResultsWithPagination$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadSearchResults),
+        mergeMap((action: fromActions.LoadSearchResultsWithPaginationAction) =>
+            this.store.select(fromSelectors.selectCurrentSearchQuery).pipe(tap((res) =>
+                this.searchService.getSearchResult(
+                    res, action.payload.isAdvanced, action.payload.params).pipe(
+                        map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
+                        catchError(() => of(new fromActions.LoadSearchResultsFailAction()))
+                ),
+            ))
         )
     );
 
     @Effect()
     loadSearchResultsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResultsFail),
-        mergeMap((action: fromActions.LoadSearchResultsFailAction) => {
-            console.log("Something went wrong with " + action.payload.search.searchInput);
+        mergeMap(() => {
+            console.log("Something went wrong");
             return EMPTY;
         }),
     );

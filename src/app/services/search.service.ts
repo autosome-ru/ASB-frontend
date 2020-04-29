@@ -7,6 +7,7 @@ import {
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
 import {phenotypesFormToList} from "../helpers/search-model.converter";
+import {AsbTableChangesModel} from "../models/table.model";
 
 
 @Injectable()
@@ -28,7 +29,7 @@ export class SearchService {
             {params});
     }
 
-    public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean):
+    public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean, params: AsbTableChangesModel):
         Observable<SearchResultsBackendModel> {
         if (!isAdvanced) {
             switch (filter.searchBy) {

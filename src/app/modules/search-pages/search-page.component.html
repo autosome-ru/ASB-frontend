@@ -4,6 +4,7 @@
         [width]="'full'"
         [isAdvanced]="isAdvancedSearch"
         [searchData]="(searchSnpResults$ | async).results"
+        [pageSize]="this.pageSize"
     ></asb-search>
 
     <hr class="v-divider" style="margin:0">
@@ -17,7 +18,7 @@
 
                         <mat-button-toggle-group
                             #group="matButtonToggleGroup"
-                            [value]="initialGroupValue" (change)="_groupToggled($event)">
+                            [value]="groupValue" (change)="_groupToggled($event)">
                             <mat-button-toggle
                                 value="card"
                                 matTooltip="card view"
@@ -39,7 +40,7 @@
                 <ng-container *ngIf="group.value === 'card'; else tableViewTemplate">
                     <div class="layout pb-2"
                          style="margin-bottom: 20px"
-                         *ngFor="let snp of filteredSnpResults$ | async">
+                         *ngFor="let snp of (searchSnpResults$ | async).results">
                         <a
                             [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
                         >
@@ -75,12 +76,18 @@
                 </ng-container>
 
                 <mat-paginator
-                    *ngIf="(searchSnpResults$ | async)?.results.length > 0"
+                    *ngIf="(searchSnpResults$ | async)?.total > 0"
+                    class="search-page__paginator"
                     showFirstLastButtons
                     [pageSize]="pageSize"
-                    [length]="(searchSnpResults$ | async)?.results.length"
+                    [length]="(searchSnpResults$ | async)?.total"
                     [pageSizeOptions]="[3, 10, 25, 50, 100]"
-                    (page)="_handlePageChange($event)"
+                    (page)="_handleChange({
+                        active: null,
+                        direction: '',
+                        pageSize: $event.pageSize,
+                        pageIndex: $event.pageIndex,
+                    })"
                 ></mat-paginator>
 
             </ng-container>
@@ -109,6 +116,7 @@
         [searchResults$]="searchSnpResults$"
         [paginator]="paginator"
         (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
+        (tableChangeEmitter)="_handleChange($event)"
     >
     </asb-search-table>
 </ng-template>

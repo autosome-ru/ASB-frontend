@@ -36,9 +36,12 @@
 
         &-header {
             justify-content: space-between;
+            top: 0;
+            position: sticky;
+            z-index: 10;
 
             & > .mat-card-header-text {
-                max-width: ~"calc(100% - 72px)";
+                max-width: calc(100% - 72px);
             }
 
             &-title {

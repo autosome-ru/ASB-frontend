@@ -4,15 +4,16 @@ import {Observable} from "rxjs";
 import {SnpSearchModel} from "../../models/data.model";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
+import * as fromActions from "src/app/store/action";
 import {Store} from "@ngrx/store";
 import {AsbTableComponent} from "../helpers/table-template/table.component";
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {map} from "rxjs/operators";
+import {MatPaginator} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchResultsModel} from "../../models/searchQueryModel";
 import {SearchComponent} from "../helpers/search-template/search.component";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
+import {AsbTableChangesModel} from "../../models/table.model";
 
 @Component({
     selector: "asb-search-page",
@@ -34,14 +35,12 @@ export class SearchPageComponent implements OnInit {
     private readonly cssClass = true;
 
     public searchSnpResults$: Observable<SearchResultsModel>;
-    public filteredSnpResults$: Observable<SnpSearchModel[]>;
-
     public searchSnpResultsLoading$: Observable<boolean>;
 
     isAdvancedSearch: boolean;
 
     public pageSize: number;
-    public initialGroupValue: "list" | "card";
+    public groupValue: "list" | "card";
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -54,16 +53,14 @@ export class SearchPageComponent implements OnInit {
         if (this.route.snapshot.queryParams.rs ||
             (this.route.snapshot.queryParams.pos &&
                 this.route.snapshot.queryParams.pos.match(/^\d*$/))) {
-            this.initialGroupValue = "card";
+            this.groupValue = "card";
             this.pageSize = 3;
         } else {
-            this.initialGroupValue = "list";
+            this.groupValue = "list";
             this.pageSize = 10;
         }
 
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
-        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a =>
-            this.filterResults(a, 0, this.pageSize)));
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
     }
 
@@ -89,13 +86,18 @@ export class SearchPageComponent implements OnInit {
         }
     }
 
-    _handlePageChange(page: PageEvent) {
-        this._filterSnpResults(page.pageSize, page.pageIndex);
-    }
-
-    _filterSnpResults(pageSize: number, pageIndex: number): void {
-        this.filteredSnpResults$ = this.searchSnpResults$.pipe(map(a =>
-            this.filterResults(a, pageIndex, pageSize)));
+    _handleChange(event: AsbTableChangesModel) {
+        this.store.dispatch(
+            new fromActions.search.LoadSearchResultsWithPaginationAction({
+                isAdvanced: this.isAdvancedSearch,
+                params: {
+                    pageIndex: event.pageIndex,
+                    pageSize: event.pageSize,
+                    direction: "",
+                    active: null
+                }
+            })
+        );
     }
 
     _groupToggled(event: MatButtonToggleChange) {
@@ -104,22 +106,14 @@ export class SearchPageComponent implements OnInit {
         } else {
             this.pageSize = 3;
         }
+        this.groupValue = event.value;
         if (this.paginator) {
             this.paginator.firstPage();
             this.paginator.pageSize = this.pageSize;
         }
-        this._filterSnpResults(this.pageSize,
-            this.paginator ? this.paginator.pageIndex : 0);
-
     }
 
-    private filterResults(results: SearchResultsModel,
-                          pageIndex: number,
-                          pageSize: number): SnpSearchModel[] {
-        return results.results.filter((_, index) =>
-                pageIndex * pageSize <= index &&
-                index < pageSize * (pageIndex + 1));
-    }
+
 
     _navigateToSnp(id: string, alt: string): void {
         this.router.navigateByUrl("snps/" + id + "/" + alt).then();

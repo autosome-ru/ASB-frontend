@@ -5,13 +5,13 @@ import {AppState} from "src/app/store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Observable, Subscription} from "rxjs";
-import {ClInfoModel, TfInfoModel, TfOrCl} from "../../models/data.model";
+import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../models/data.model";
 import {AsbTableChangesModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
-import {getPaginatorOptions} from "../../helpers/check-functions.helper";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
 import {AsbServerTableComponent} from "../helpers/table-template/server-side/table-server.component";
+import {initialServerParams} from "../../helpers/constants";
 
 
 @Component({
@@ -55,8 +55,11 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
     public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
     public initialGroupValue: TfOrCl;
+    public totalInfo$: Observable<TotalInfoModel>;
 
+    private serverParams: AsbTableChangesModel = initialServerParams;
     private subscriptions: Subscription = new Subscription();
+
 
     constructor(
         private router: Router,
@@ -74,6 +77,8 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
 
+        this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
+
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
 
@@ -83,11 +88,11 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                 switch (params.by) {
                     case "cl":
                         this.initialGroupValue = "cl";
-                        this.store.dispatch(new fromActions.data.LoadClInfoAction());
+                        this.store.dispatch(new fromActions.data.LoadClInfoAction(this.serverParams));
                         return;
                     case "tf":
                         this.initialGroupValue = "tf";
-                        this.store.dispatch(new fromActions.data.LoadTfInfoAction());
+                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.serverParams));
                         return;
                     default:
                         this.router.navigate(["/browse"],
@@ -102,6 +107,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                  }
             })
         );
+        this.store.dispatch(new fromActions.data.InitTotalInfoAction());
 
 
         this.tfColumnModel = {
@@ -116,10 +122,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             experimentsCount: {view: "Experiments count"}
         };
 
-    }
-
-    _getPaginatorOptions(array: TfInfoModel[]) {
-        return array ? getPaginatorOptions(array.length) : [];
     }
 
     _groupToggled(event: MatButtonToggleChange) {

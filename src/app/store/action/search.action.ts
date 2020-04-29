@@ -3,13 +3,14 @@ import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "src/app/models/searchQueryModel";
-import {SnpSearchBackendModel} from "../../models/data.model";
+import {AsbTableChangesModel} from "../../models/table.model";
 
 export enum ActionTypes {
     LoadSearchOptions = "[Search] loading search options",
     LoadSearchOptionsSuccess = "[Search] search options loading successfully",
     LoadSearchOptionsFail = "[Search] search options loading failed",
 
+    LoadSearchResultsWithPagination = "[Search] loading search results with pagination",
     LoadSearchResults = "[Search] loading search results",
     LoadSearchResultsSuccess = "[Search] search results loading successfully",
     LoadSearchResultsFail = "[Search] search results loading failed",
@@ -39,7 +40,12 @@ export class LoadSearchOptionsFailAction implements Action {
 export class LoadSearchResultsAction implements Action {
     readonly type = ActionTypes.LoadSearchResults;
 
-    constructor(public payload: {search: SearchQueryModel, isAdvanced: boolean}) {}
+    constructor(public payload: {search: SearchQueryModel, isAdvanced: boolean, params: AsbTableChangesModel}) {}
+}
+export class LoadSearchResultsWithPaginationAction implements Action {
+    readonly type = ActionTypes.LoadSearchResultsWithPagination;
+
+    constructor(public payload: {isAdvanced: boolean, params: AsbTableChangesModel}) {}
 }
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;
@@ -49,9 +55,6 @@ export class LoadSearchResultsSuccessAction implements Action {
 export class LoadSearchResultsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsFail;
 
-    constructor(public payload: {
-        search: SearchQueryModel,
-        isAdvanced: boolean }) {}
 }
 
 
@@ -59,6 +62,7 @@ export type ActionUnion =
     | LoadSearchOptionsAction
     | LoadSearchOptionsSuccessAction
     | LoadSearchResultsAction
+    | LoadSearchResultsWithPaginationAction
     | LoadSearchResultsFailAction
     | LoadSearchResultsSuccessAction
     | LoadSearchOptionsFailAction

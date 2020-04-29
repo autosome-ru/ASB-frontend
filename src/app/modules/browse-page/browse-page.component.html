@@ -35,8 +35,9 @@
                 [data]="browseTfInfo$"
                 [displayedColumns]="tfDisplayedColumns"
                 [columnModel]="tfColumnModel"
-                [paginatorOptions]="_getPaginatorOptions((browseTfInfo$ | async))"
+                [paginatorOptions]="[10, 25, 50, 100]"
                 [clickableRow]="true"
+                [paginatorLength]="(totalInfo$ | async).transcriptionFactorsCount"
                 (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
                 (tableChangesEmitter)="_handleTableChange($event, 'tf')"
             >
@@ -80,8 +81,9 @@
         [data]="browseClInfo$"
         [displayedColumns]="clDisplayedColumns"
         [columnModel]="clColumnModel"
-        [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async))"
+        [paginatorOptions]="[10, 25, 50, 100]"
         [clickableRow]="true"
+        [paginatorLength]="(totalInfo$ | async).cellTypesCount"
         (rowClickEmitter)="_handleTableRowClick($event, 'cl')"
         (tableChangesEmitter)="_handleTableChange($event, 'cl')"
     >

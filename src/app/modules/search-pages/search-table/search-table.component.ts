@@ -48,7 +48,10 @@ export class SearchPageTableComponent implements OnInit {
     public paginator: MatPaginator;
 
     @Output()
-    public snpClicked = new EventEmitter<{rsId: string, alt: string}>();
+    private snpClicked = new EventEmitter<{rsId: string, alt: string}>();
+
+    @Output()
+    private tableChangeEmitter = new EventEmitter<AsbTableChangesModel>();
 
     public columnModel: AsbTableColumnModel<any>;
     public displayedColumns: AsbTableDisplayedColumns<any> = [
@@ -58,6 +61,7 @@ export class SearchPageTableComponent implements OnInit {
     ];
     public dataToView: Observable<any[]>;
     colors: any = baseToColors;
+
 
     constructor(private router: Router, private route: ActivatedRoute) {}
 
@@ -194,7 +198,7 @@ export class SearchPageTableComponent implements OnInit {
 
 
     _handleTableChanges(change: AsbTableChangesModel) {
-        console.log(change);
+        this.tableChangeEmitter.emit(change);
 
     }
 }

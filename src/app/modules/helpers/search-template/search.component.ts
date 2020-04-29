@@ -19,7 +19,7 @@ import {FileSaverService} from "ngx-filesaver";
 import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
-import {phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
+import {initialServerParams, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
 import {phenotypesFormToList} from "../../../helpers/search-model.converter";
 
 
@@ -48,6 +48,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     @Input()
     public searchDataLoading: boolean;
+
+    @Input()
+    public pageSize: number;
 
     private readonly nullValue: {searchInput: string} = {searchInput: ""};
     private searchParams: SearchParamsModel;
@@ -189,7 +192,10 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
                     if (!this._isSearchDisabled()) {
                         this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                            {search: this.searchForm.value, isAdvanced: this.isAdvanced}
+                            {search: this.searchForm.value,
+                                isAdvanced: this.isAdvanced,
+                                params: {...initialServerParams, pageSize: this.pageSize}
+                            }
                         ));
                     }
                 }
