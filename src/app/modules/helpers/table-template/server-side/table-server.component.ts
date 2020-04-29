@@ -5,7 +5,7 @@ import {
     Input, OnChanges, OnDestroy, Output, SimpleChanges,
     TemplateRef, ViewChild,
 } from "@angular/core";
-import {AsbTableChangesModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
+import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {AsbPopoverComponent} from "../../popover-template/popover.component";
@@ -74,18 +74,22 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
     private rowClickEmitter = new EventEmitter<T>();
 
     @Output()
-    private tableChangesEmitter = new EventEmitter<AsbTableChangesModel>();
+    private tableChangesEmitter = new EventEmitter<AsbServerSideModel>();
 
     ngAfterViewInit() {
         if (this._dataSource) {
             if (this.paginatorOptions) {
                 this.addSubscriptions(this.paginator);
             }
+            // external paginator already initialized
+            if (this.externalPaginator && this.sort) {
+                this.addSubscriptions(this.externalPaginator);
+            }
         }
     }
     ngOnChanges(changes: SimpleChanges) {
         if (changes["externalPaginator"] && this.externalPaginator) {
-            if (this.externalPaginator) {
+            if (this.externalPaginator && this.sort) {
                 this.addSubscriptions(this.externalPaginator);
             }
         }

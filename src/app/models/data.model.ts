@@ -173,16 +173,15 @@ export interface ClInfoBackendModel {
 }
 
 
-// Front models identical now, may be different in future
 export interface TfInfoModel {
-    id: string;
+    uniprotAc: string;
     name: string;
     aggregatedSnpsCount: number;
     experimentsCount: number;
 }
 
 export interface ClInfoModel {
-    id: string;
+    clId: string;
     name: string;
     aggregatedSnpsCount: number;
     experimentsCount: number;

@@ -50,7 +50,7 @@ export class DataEffect {
     @Effect()
     loadTfStats$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadTfInfo),
-        mergeMap((action: fromActions.LoadClInfoAction) =>
+        mergeMap((action: fromActions.LoadTfInfoAction) =>
             this.dataService.getTfInfo(action.payload).pipe(
                 map(info => new fromActions.LoadTfInfoSuccessAction(info)),
                 catchError(() => of(new fromActions.LoadTfInfoFailAction())),

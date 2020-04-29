@@ -7,7 +7,8 @@ import {
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
 import {phenotypesFormToList} from "../helpers/search-model.converter";
-import {AsbTableChangesModel} from "../models/table.model";
+import {AsbServerSideModel} from "../models/table.model";
+import {convertServerSideModelToServerSideBackendModel} from "../helpers/snp-model.converter";
 
 
 @Injectable()
@@ -29,25 +30,32 @@ export class SearchService {
             {params});
     }
 
-    public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean, params: AsbTableChangesModel):
+    public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
         if (!isAdvanced) {
             switch (filter.searchBy) {
                 case "id": {
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/rs/${filter.searchInput.slice(2)}`);
+                        `${searchSnpsResultsUrl}/rs/${filter.searchInput.slice(2)}`, {
+                            params: convertServerSideModelToServerSideBackendModel(params)
+                        });
                 }
                 case "pos": {
                     const positions: {start: string, end: string} =
                         getStartEndPositions(filter.searchInput);
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/gp/${filter.chromosome}/${positions.start}/${positions.end}`);
+                        `${searchSnpsResultsUrl}/gp/${filter.chromosome}/${positions.start}/${positions.end}`, {
+                            params: convertServerSideModelToServerSideBackendModel(params)
+                        });
                 }
             }
         } else {
             return this.http.get<SearchResultsBackendModel>(
                 `${searchSnpsResultsUrl}/advanced`, {
-                    params: makeParamsForAdvancedSearchResults(filter),
+                    params: {
+                        ...makeParamsForAdvancedSearchResults(filter),
+                        ...convertServerSideModelToServerSideBackendModel(params)
+                    }
                 });
         }
     }

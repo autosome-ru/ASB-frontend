@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import {ActivatedRoute,  Router} from "@angular/router";
 import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
-import {AsbTableChangesModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
+import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {SearchParamsModel, SearchResultsModel} from "../../../models/searchQueryModel";
 import {MatPaginator} from "@angular/material/paginator";
@@ -54,7 +54,7 @@ export class SearchPageTableComponent implements OnInit {
     private snpClicked = new EventEmitter<{rsId: string, alt: string}>();
 
     @Output()
-    private tableChangeEmitter = new EventEmitter<AsbTableChangesModel>();
+    private tableChangeEmitter = new EventEmitter<AsbServerSideModel>();
 
     public columnModel: AsbTableColumnModel<any>;
     public displayedColumns: AsbTableDisplayedColumns<any> = [
@@ -203,7 +203,7 @@ export class SearchPageTableComponent implements OnInit {
     }
 
 
-    _handleTableChanges(change: AsbTableChangesModel) {
+    _handleTableChanges(change: AsbServerSideModel) {
         this.tableChangeEmitter.emit(change);
 
     }

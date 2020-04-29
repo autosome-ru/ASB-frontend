@@ -31,8 +31,9 @@
         <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
             <asb-table-server
                 #tableTfView
-                *ngIf="!(browseTfInfoLoading$ | async)"
+                *ngIf="browseTfInfoInitialized$ | async"
                 [data]="browseTfInfo$"
+                [dataLoading]="browseTfInfoLoading$ | async"
                 [displayedColumns]="tfDisplayedColumns"
                 [columnModel]="tfColumnModel"
                 [paginatorOptions]="[10, 25, 50, 100]"
@@ -46,7 +47,7 @@
     </div>
 </div>
 
-<ng-container *ngIf="(browseTfInfoLoading$ | async) || (browseClInfoLoading$ | async)">
+<ng-container *ngIf="((browseTfInfoLoading$ | async) && !(browseTfInfoInitialized$ | async)) || ((browseClInfoLoading$ | async) && !(browseClInfoInitialized$ | async))">
     <div class="asb-browse__spinner">
         <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
     </div>
@@ -77,8 +78,9 @@
 <ng-template #clTableTemplate>
     <asb-table-server
         #tableClView
-        *ngIf="!(browseClInfoLoading$ | async)"
+        *ngIf="browseClInfoInitialized$ | async"
         [data]="browseClInfo$"
+        [dataLoading]="browseClInfoLoading$ | async"
         [displayedColumns]="clDisplayedColumns"
         [columnModel]="clColumnModel"
         [paginatorOptions]="[10, 25, 50, 100]"

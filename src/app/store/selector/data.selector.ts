@@ -8,9 +8,11 @@ export const selectTotalInfoLoading = createSelector(fromRoot.selectData, fromDa
 
 export const selectTfInfo = createSelector(fromRoot.selectData, fromData.selectTfInfo);
 export const selectTfInfoLoading = createSelector(fromRoot.selectData, fromData.selectTfInfoLoading);
+export const selectTfInfoInitialized = createSelector(fromRoot.selectData, fromData.selectTfInfoInitialized);
 
 export const selectClInfo = createSelector(fromRoot.selectData, fromData.selectClInfo);
 export const selectClInfoLoading = createSelector(fromRoot.selectData, fromData.selectClInfoLoading);
+export const selectClInfoInitialized = createSelector(fromRoot.selectData, fromData.selectClInfoInitialized);
 
 
 const _selectSnpInfoData = createSelector(fromRoot.selectData, fromData.selectSnps);

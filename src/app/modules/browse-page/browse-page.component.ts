@@ -6,7 +6,7 @@ import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Observable, Subscription} from "rxjs";
 import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../models/data.model";
-import {AsbTableChangesModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
+import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
@@ -48,7 +48,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public clColumnModel: AsbTableColumnModel<ClInfoModel>;
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfInfoModel> = [
         "name",
-        "id",
+        "uniprotAc",
         "aggregatedSnpsCount",
         "experimentsCount",
     ];
@@ -56,9 +56,13 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
     public initialGroupValue: TfOrCl;
     public totalInfo$: Observable<TotalInfoModel>;
+    public browseTfInfoInitialized$: Observable<boolean>;
+    public browseClInfoInitialized$: Observable<boolean>;
 
-    private serverParams: AsbTableChangesModel = initialServerParams;
+    private readonly initialServerParams: AsbServerSideModel = initialServerParams;
     private subscriptions: Subscription = new Subscription();
+
+
 
 
     constructor(
@@ -81,6 +85,8 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
+        this.browseTfInfoInitialized$ = this.store.select(fromSelectors.selectTfInfoInitialized);
+        this.browseClInfoInitialized$ = this.store.select(fromSelectors.selectClInfoInitialized);
 
         this.subscriptions.add(
             this.route.queryParams.subscribe(
@@ -88,11 +94,11 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                 switch (params.by) {
                     case "cl":
                         this.initialGroupValue = "cl";
-                        this.store.dispatch(new fromActions.data.LoadClInfoAction(this.serverParams));
+                        this.store.dispatch(new fromActions.data.LoadClInfoAction(this.initialServerParams));
                         return;
                     case "tf":
                         this.initialGroupValue = "tf";
-                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.serverParams));
+                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.initialServerParams));
                         return;
                     default:
                         this.router.navigate(["/browse"],
@@ -111,7 +117,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
 
         this.tfColumnModel = {
-            id: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
+            uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
             name: {view: "Name"},
             aggregatedSnpsCount: {view: "SNPs count"},
             experimentsCount: {view: "Experiments count"}
@@ -139,7 +145,9 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             }).then();
     }
 
-    _handleTableChange(event: AsbTableChangesModel, tfOrCl: TfOrCl) {
-        console.log(event);
+    _handleTableChange(event: AsbServerSideModel, tfOrCl: TfOrCl) {
+        tfOrCl === "cl" ?
+            this.store.dispatch(new fromActions.data.LoadClInfoAction(event)) :
+            this.store.dispatch(new fromActions.data.LoadTfInfoAction(event));
     }
 }

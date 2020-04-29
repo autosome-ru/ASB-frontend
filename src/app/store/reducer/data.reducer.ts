@@ -18,9 +18,11 @@ export interface DataState {
 
     tfInfo: TfInfoModel[];
     tfInfoLoading: boolean;
+    tfInfoInitialized: boolean;
 
     clInfo: ClInfoModel[];
     clInfoLoading: boolean;
+    clInfoInitialized: boolean;
 
     snps: {
         [snpId: string]: {
@@ -35,9 +37,12 @@ export const selectTotalInfoLoading = (state: DataState) => state.totalInfoLoadi
 
 export const selectTfInfo = (state: DataState) => state.tfInfo;
 export const selectTfInfoLoading = (state: DataState) => state.tfInfoLoading;
+export const selectTfInfoInitialized = (state: DataState) => state.tfInfoInitialized;
 
 export const selectClInfo = (state: DataState) => state.clInfo;
 export const selectClInfoLoading = (state: DataState) => state.clInfoLoading;
+export const selectClInfoInitialized = (state: DataState) => state.clInfoInitialized;
+
 export const selectSnps = (state: DataState) => state.snps;
 
 
@@ -50,6 +55,8 @@ export const initialState: DataState = {
     tfInfoLoading: false,
     clInfoLoading: false,
 
+    tfInfoInitialized: false,
+    clInfoInitialized: false,
     snps: {},
 };
 
@@ -91,6 +98,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             return {
                 ...state,
                 tfInfoLoading: false,
+                tfInfoInitialized: true,
                 tfInfo: action.payload.map(convertTfInfoBackendModelToTfInfoModel)
             };
         }
@@ -113,6 +121,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             return {
                 ...state,
                 clInfoLoading: false,
+                clInfoInitialized: true,
                 clInfo: action.payload.map(convertClInfoBackendModelToClInfoModel)
             };
         }

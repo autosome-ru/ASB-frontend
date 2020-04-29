@@ -22,6 +22,8 @@ import {
     TotalInfoBackendModel,
     TotalInfoModel
 } from "../models/data.model";
+import {AsbServerSideBackendModel, AsbServerSideModel} from "../models/table.model";
+import {SortDirection} from "@angular/material/sort";
 
 
 export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBackendModel): TotalInfoModel {
@@ -36,7 +38,7 @@ export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel
     return {
         experimentsCount: model.experiments_count,
         aggregatedSnpsCount: model.aggregated_snps_count,
-        id: model.uniprot_ac,
+        uniprotAc: model.uniprot_ac,
         name: model.name,
     };
 }
@@ -45,7 +47,7 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
     return {
         experimentsCount: model.experiments_count,
         aggregatedSnpsCount: model.aggregated_snps_count,
-        id: "" + model.cl_id,
+        clId: "" + model.cl_id,
         name: model.name,
     };
 }
@@ -171,4 +173,39 @@ function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
         clName: s.experiment.cl_name,
         tfName: s.experiment.tf_name,
     };
+}
+
+function convertOrderByToBackend(active: string, direction: SortDirection) {
+    const refSuffix = "PValRef";
+    const altSuffix = "PValAlt";
+    const refBackendSuffix = "_fdr_ref";
+    const altBackendSuffix = "_fdr_alt";
+    if (!active || direction === "") {
+        return null;
+    } else {
+        let fieldName: string;
+        if (active.endsWith(refSuffix)) {
+            fieldName = active.replace(refSuffix, refBackendSuffix);
+        } else {
+            if (active.endsWith(altSuffix)) {
+                fieldName = active.replace(altSuffix, altBackendSuffix);
+            } else {
+                fieldName = camelCaseToSnakeCase(active);
+            }
+        }
+        return (direction === "desc" ? "-" : "") + fieldName;
+
+    }
+}
+function camelCaseToSnakeCase(str: string): string {
+    return str[0].toLowerCase() + str.slice(1, str.length).replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+}
+
+export function convertServerSideModelToServerSideBackendModel(model: AsbServerSideModel): AsbServerSideBackendModel {
+    const order_by: string = convertOrderByToBackend(model.active, model.direction);
+    const pagination: AsbServerSideBackendModel = {
+        page: "" + (model.pageIndex + 1),
+        size: "" + model.pageSize
+    };
+    return order_by ? {order_by, ...pagination} : pagination;
 }

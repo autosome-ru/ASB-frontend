@@ -13,7 +13,7 @@ import {SearchResultsModel} from "../../models/searchQueryModel";
 import {SearchComponent} from "../helpers/search-template/search.component";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
-import {AsbTableChangesModel} from "../../models/table.model";
+import {AsbServerSideModel} from "../../models/table.model";
 
 @Component({
     selector: "asb-search-page",
@@ -88,7 +88,7 @@ export class SearchPageComponent implements OnInit {
         }
     }
 
-    _handleChange(event: AsbTableChangesModel) {
+    _handleChange(event: AsbServerSideModel) {
         this.pageSize = event.pageSize;
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
@@ -109,6 +109,12 @@ export class SearchPageComponent implements OnInit {
             this.paginator.firstPage();
             this.paginator.pageSize = this.pageSize;
         }
+        this._handleChange({
+            pageSize: this.pageSize,
+            pageIndex: 0,
+            active: null,
+            direction: ""
+        });
     }
 
 
@@ -117,7 +123,7 @@ export class SearchPageComponent implements OnInit {
         this.router.navigateByUrl("snps/" + id + "/" + alt).then();
     }
 
-    pageModelToChange(event: PageEvent): AsbTableChangesModel {
+    pageModelToChange(event: PageEvent): AsbServerSideModel {
         return {
             active: null,
             direction: "",

@@ -15,10 +15,17 @@ export type AsbTableColumnModel<T> = {
 
 export type AsbTableDisplayedColumns<T> = Array<keyof T>;
 
-export interface AsbTableChangesModel {
+export interface AsbServerSideModel {
     pageIndex: number;
     pageSize: number;
     direction: SortDirection;
     active: string;
+}
+
+export interface AsbServerSideBackendModel {
+    page: string;
+    size: string;
+    order_by?: string;
+    [name: string]: string;
 }
 

@@ -1,5 +1,5 @@
 import {PhenotypesModel} from "../models/data.model";
-import {AsbTableChangesModel} from "../models/table.model";
+import {AsbServerSideModel} from "../models/table.model";
 
 export const version: string = "v 1.1.2";
 export const releaseName: string = "Durland";
@@ -22,7 +22,7 @@ export const phenotypesModelExample: PhenotypesModel = {
     QTL: [],
 };
 
-export const initialServerParams: AsbTableChangesModel = {
+export const initialServerParams: AsbServerSideModel = {
     pageSize: 10,
     pageIndex: 1,
     active: null,

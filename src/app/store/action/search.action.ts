@@ -3,7 +3,7 @@ import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "src/app/models/searchQueryModel";
-import {AsbTableChangesModel} from "../../models/table.model";
+import {AsbServerSideModel} from "../../models/table.model";
 
 export enum ActionTypes {
     LoadSearchOptions = "[Search] loading search options",
@@ -41,12 +41,12 @@ export class LoadSearchResultsAction implements Action {
 
     constructor(public payload: {
         search: SearchQueryModel,
-        isAdvanced: boolean, params: AsbTableChangesModel}) {}
+        isAdvanced: boolean, params: AsbServerSideModel}) {}
 }
 export class LoadSearchResultsWithPaginationAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsWithPagination;
 
-    constructor(public payload: {isAdvanced: boolean, params: AsbTableChangesModel}) {}
+    constructor(public payload: {isAdvanced: boolean, params: AsbServerSideModel}) {}
 }
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;
