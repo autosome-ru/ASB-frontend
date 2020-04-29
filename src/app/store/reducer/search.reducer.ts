@@ -20,6 +20,7 @@ export interface SearchState {
     };
     searchResults: SearchResultsModel;
     searchResultsLoading: boolean;
+    searchChangeLoading: boolean;
 }
 export const selectSearchOptions = (state: SearchState) => state.searchOptions;
 export const selectSearchOptionsLoading = (state: SearchState) => state.searchOptionsLoading;
@@ -27,6 +28,7 @@ export const selectSearchOptionsLoading = (state: SearchState) => state.searchOp
 export const selectSearchQuery = (state: SearchState) => state.searchQuery;
 export const selectSearchResults = (state: SearchState) => state.searchResults;
 export const selectSearchResultsLoading = (state: SearchState) => state.searchResultsLoading;
+export const selectResultsChange = (state: SearchState) => state.searchChangeLoading;
 
 export const initialState: SearchState = {
     searchOptions: {
@@ -43,6 +45,7 @@ export const initialState: SearchState = {
         results: []
     },
     searchResultsLoading: false,
+    searchChangeLoading: false
 };
 export function searchReducer(state: SearchState = initialState, action: fromActions.ActionUnion): SearchState {
     switch (action.type) {
@@ -118,7 +121,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         case fromActions.ActionTypes.LoadSearchResultsWithPagination: {
             return {
                 ...state,
-                searchResultsLoading: true,
+                searchChangeLoading: true,
             };
         }
 
@@ -131,6 +134,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                         convertSnpSearchBackendModelToSnpSearchModel) as SnpSearchModel[]
                 },
                 searchResultsLoading: false,
+                searchChangeLoading: false
             };
         }
         case fromActions.ActionTypes.LoadSearchResultsFail: {
@@ -138,6 +142,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 ...state,
                 searchResults: {results: [], total: null},
                 searchResultsLoading: false,
+                searchChangeLoading: false
             };
         }
         default: {

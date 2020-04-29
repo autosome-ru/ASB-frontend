@@ -74,6 +74,15 @@
                 </tr>
             </ng-container>
         </table>
+        <div class="asb-table__table-loading"
+             *ngIf="dataLoading"
+        >
+            <mat-spinner
+                *ngIf="dataLoading"
+                color="accent"
+                [diameter]="100"
+            ></mat-spinner>
+        </div>
     </div>
     <mat-paginator
         *ngIf="paginatorOptions"

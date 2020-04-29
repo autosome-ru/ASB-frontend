@@ -47,6 +47,9 @@ export class SearchPageTableComponent implements OnInit {
     @Input()
     public paginator: MatPaginator;
 
+    @Input()
+    public dataChanged: boolean;
+
     @Output()
     private snpClicked = new EventEmitter<{rsId: string, alt: string}>();
 
@@ -63,7 +66,10 @@ export class SearchPageTableComponent implements OnInit {
     colors: any = baseToColors;
 
 
-    constructor(private router: Router, private route: ActivatedRoute) {}
+
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                ) {}
 
     ngOnInit() {
         this.columnModel = {

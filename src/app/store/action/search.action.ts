@@ -10,8 +10,8 @@ export enum ActionTypes {
     LoadSearchOptionsSuccess = "[Search] search options loading successfully",
     LoadSearchOptionsFail = "[Search] search options loading failed",
 
-    LoadSearchResultsWithPagination = "[Search] loading search results with pagination",
     LoadSearchResults = "[Search] loading search results",
+    LoadSearchResultsWithPagination = "[Search] loading search results with pagination",
     LoadSearchResultsSuccess = "[Search] search results loading successfully",
     LoadSearchResultsFail = "[Search] search results loading failed",
 
@@ -30,7 +30,6 @@ export class LoadSearchOptionsSuccessAction implements Action {
         tfOrCl: "tf" | "cl"
     }) {}
 }
-
 export class LoadSearchOptionsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchOptionsFail;
 
@@ -63,9 +62,10 @@ export class LoadSearchResultsFailAction implements Action {
 export type ActionUnion =
     | LoadSearchOptionsAction
     | LoadSearchOptionsSuccessAction
+    | LoadSearchOptionsFailAction
+
     | LoadSearchResultsAction
     | LoadSearchResultsWithPaginationAction
     | LoadSearchResultsFailAction
     | LoadSearchResultsSuccessAction
-    | LoadSearchOptionsFailAction
     ;

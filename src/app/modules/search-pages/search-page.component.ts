@@ -41,6 +41,7 @@ export class SearchPageComponent implements OnInit {
 
     public pageSize: number;
     public groupValue: "list" | "card";
+    public searchSnpResultsChanged$: Observable<boolean>;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -62,6 +63,7 @@ export class SearchPageComponent implements OnInit {
 
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
+        this.searchSnpResultsChanged$ = this.store.select(fromSelectors.selectCurrentSearchResultsChanged);
     }
 
 
@@ -87,15 +89,11 @@ export class SearchPageComponent implements OnInit {
     }
 
     _handleChange(event: AsbTableChangesModel) {
-        this.store.dispatch(
-            new fromActions.search.LoadSearchResultsWithPaginationAction({
+        this.pageSize = event.pageSize;
+        this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
+            {
                 isAdvanced: this.isAdvancedSearch,
-                params: {
-                    pageIndex: event.pageIndex,
-                    pageSize: event.pageSize,
-                    direction: "",
-                    active: null
-                }
+                params: event
             })
         );
     }

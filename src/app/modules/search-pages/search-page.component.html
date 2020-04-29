@@ -110,6 +110,7 @@
         *ngIf="(searchSnpResults$ | async)?.results.length > 0"
         [searchResults$]="searchSnpResults$"
         [paginator]="paginator"
+        [dataChanged]="searchSnpResultsChanged$ | async"
         (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
         (tableChangeEmitter)="_handleChange($event)"
     >

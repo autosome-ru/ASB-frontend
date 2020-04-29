@@ -8,5 +8,7 @@ export const selectCurrentSearchOptionsLoading = createSelector(fromRoot.selectS
 export const selectCurrentSearchResults = createSelector(fromRoot.selectSearch, fromSearch.selectSearchResults);
 export const selectCurrentSearchResultsLoading = createSelector(fromRoot.selectSearch,
     fromSearch.selectSearchResultsLoading);
+export const selectCurrentSearchResultsChanged = createSelector(fromRoot.selectSearch,
+    fromSearch.selectResultsChange);
 export const selectCurrentSearchQuery = createSelector(fromRoot.selectSearch,
     fromSearch.selectSearchQuery);
