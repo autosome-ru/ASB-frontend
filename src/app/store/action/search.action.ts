@@ -40,7 +40,9 @@ export class LoadSearchOptionsFailAction implements Action {
 export class LoadSearchResultsAction implements Action {
     readonly type = ActionTypes.LoadSearchResults;
 
-    constructor(public payload: {search: SearchQueryModel, isAdvanced: boolean, params: AsbTableChangesModel}) {}
+    constructor(public payload: {
+        search: SearchQueryModel,
+        isAdvanced: boolean, params: AsbTableChangesModel}) {}
 }
 export class LoadSearchResultsWithPaginationAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsWithPagination;

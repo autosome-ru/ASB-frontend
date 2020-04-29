@@ -54,7 +54,7 @@ export class SearchEffect {
 
     @Effect()
     loadSearchResultsWithPagination$ = this.actions$.pipe(
-        ofType(fromActions.ActionTypes.LoadSearchResults),
+        ofType(fromActions.ActionTypes.LoadSearchResultsWithPagination),
         mergeMap((action: fromActions.LoadSearchResultsWithPaginationAction) =>
             this.store.select(fromSelectors.selectCurrentSearchQuery).pipe(tap((res) =>
                 this.searchService.getSearchResult(

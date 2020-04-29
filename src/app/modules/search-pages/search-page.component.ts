@@ -7,7 +7,7 @@ import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Store} from "@ngrx/store";
 import {AsbTableComponent} from "../helpers/table-template/table.component";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchResultsModel} from "../../models/searchQueryModel";
 import {SearchComponent} from "../helpers/search-template/search.component";
@@ -117,5 +117,14 @@ export class SearchPageComponent implements OnInit {
 
     _navigateToSnp(id: string, alt: string): void {
         this.router.navigateByUrl("snps/" + id + "/" + alt).then();
+    }
+
+    pageModelToChange(event: PageEvent): AsbTableChangesModel {
+        return {
+            active: null,
+            direction: "",
+            pageSize: event.pageSize,
+            pageIndex: event.pageIndex
+        };
     }
 }
