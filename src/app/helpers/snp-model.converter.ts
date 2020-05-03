@@ -183,10 +183,10 @@ function parseFieldName(active: string): {name: string, allele: "ref" | "alt", t
     let tfOrCl: TfOrCl;
     if (active.endsWith(refSuffix)) {
         allele = "ref";
-        active.replace(refSuffix, "");
+        active = active.replace(refSuffix, "");
     } else {
         allele = "alt";
-        active.replace(altSuffix, "");
+        active = active.replace(altSuffix, "");
     }
     if (active.endsWith("TF")) {
         tfOrCl = "tf";
