@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostBinding, Input, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output, ViewChild} from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
@@ -19,8 +19,9 @@ import {FileSaverService} from "ngx-filesaver";
 import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
-import {initialServerParams, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
+import {phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
 import {phenotypesFormToList} from "../../../helpers/search-model.converter";
+import {debounceTime} from "rxjs/operators";
 
 
 @Component({
@@ -51,6 +52,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     @Input()
     public pageSize: number;
+
+    @Output()
+    private searchPressed = new EventEmitter<SearchQueryModel>();
 
     private readonly nullValue: {searchInput: string} = {searchInput: ""};
     private searchParams: SearchParamsModel;
@@ -125,7 +129,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         // Search options and patching form in simple search
         this.subscriptions.add(
-            this.searchForm.get("searchCl").valueChanges.subscribe(
+            this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(1000)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
@@ -135,7 +139,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             )
         );
         this.subscriptions.add(
-            this.searchForm.get("searchTf").valueChanges.subscribe(
+            this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(1000)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
@@ -191,12 +195,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.searchParams = s;
                     this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
                     if (!this._isSearchDisabled()) {
-                        this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
-                            {search: this.searchForm.value,
-                                isAdvanced: this.isAdvanced,
-                                params: {...initialServerParams, pageSize: this.pageSize}
-                            }
-                        ));
+                        this.searchPressed.emit(this.searchForm.value);
                     }
                 }
             )
@@ -218,7 +217,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.router.navigate(["/search/" +
             (this.isAdvanced ? "advanced" : "simple")], {
                 queryParams: this._convertFormToParams(this.isAdvanced)}).then(
-                    () => null, error => console.log(error));
+                    () => window.scrollTo(0, 0), error => console.log(error));
         }
     }
 
@@ -333,11 +332,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                             pos: form.searchInput,
                             chr: form.chromosome,
                         };
-                    } else if (form.chromosome) {
-                        return {
-                            chr: form.chromosome,
-                        };
-                    } else return {};
+                    }  else return {};
                 } else {
                     return form.searchInput ? {rs: form.searchInput} : {};
                 }
@@ -393,11 +388,11 @@ export class SearchComponent implements OnInit, OnDestroy {
                 return result;
             } else return {};
         } else {
-            return searchParams && searchParams.hasOwnProperty("pos") ?
+            return searchParams && searchParams.hasOwnProperty("chr") ?
                 {
                     searchBy: "pos",
                     chromosome: searchParams.chr,
-                    searchInput: searchParams.pos
+                    searchInput: searchParams.pos || ""
                 } :
                 {searchBy: "id", searchInput: searchParams.rs};
         }
@@ -405,8 +400,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     _isSearchDisabled(): boolean {
         const sF = this.searchForm.value as SearchQueryModel;
-        return (!this.isAdvanced && (!sF.searchInput && (!sF.chromosome ||
-            sF.chromosome === "any chr"))) ||
+        return (!this.isAdvanced && !sF.searchInput) ||
             this.searchForm.invalid || (
                 this.isAdvanced &&
                 sF.tfList.length === 0 &&

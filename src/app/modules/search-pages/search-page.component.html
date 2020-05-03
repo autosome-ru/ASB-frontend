@@ -5,6 +5,7 @@
         [isAdvanced]="isAdvancedSearch"
         [searchData]="(searchSnpResults$ | async).results"
         [pageSize]="this.pageSize"
+        (searchPressed)="_handleSearchTemplateChanges($event)"
     ></asb-search>
 
     <hr class="v-divider" style="margin:0">
@@ -83,7 +84,7 @@
                         [pageSize]="pageSize"
                         [length]="(searchSnpResults$ | async)?.total"
                         [pageSizeOptions]="[3, 10, 25, 50, 100]"
-                        (page)="group.value === 'card' ? _handleChange(pageModelToChange($event)) : null"
+                        (page)="group.value === 'card' ? _handlePaginationChange(pageModelToChange($event)) : null"
                     ></mat-paginator>
                 </ng-container>
             </div>
@@ -108,12 +109,13 @@
 
 <ng-template #tableViewTemplate>
     <asb-search-table
+        #searchTableComponent
         *ngIf="(searchSnpResults$ | async)?.results.length > 0"
         [searchResults$]="searchSnpResults$"
         [paginator]="paginator"
         [dataChanged]="searchSnpResultsChanged$ | async"
         (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
-        (tableChangeEmitter)="_handleChange($event)"
+        (tableChangeEmitter)="_handlePaginationChange($event)"
     >
     </asb-search-table>
 </ng-template>

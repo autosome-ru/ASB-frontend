@@ -115,6 +115,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 ...state,
                 searchResultsLoading: true,
                 searchQuery: action.payload.search,
+                searchChangeLoading: true,
             };
         }
 

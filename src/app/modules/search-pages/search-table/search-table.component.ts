@@ -10,12 +10,12 @@ import {
 import {ActivatedRoute,  Router} from "@angular/router";
 import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
-import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {SearchParamsModel, SearchResultsModel} from "../../../models/searchQueryModel";
 import {MatPaginator} from "@angular/material/paginator";
 import {baseToColors} from "../../../helpers/colors.helper";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
 
 
 
@@ -27,7 +27,7 @@ import {map} from "rxjs/operators";
 })
 export class SearchPageTableComponent implements OnInit {
     @ViewChild("tableView", {static: true})
-    public tableView: AsbTableComponent<SnpSearchModel>;
+    public tableView: AsbServerTableComponent<SnpSearchModel>;
 
     @ViewChild("manyValuesViewTemplate", {static: true})
     public manyTransFactorsViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
@@ -207,7 +207,6 @@ export class SearchPageTableComponent implements OnInit {
 
     _handleTableChanges(change: AsbServerSideModel) {
         this.tableChangeEmitter.emit(change);
-
     }
 }
 

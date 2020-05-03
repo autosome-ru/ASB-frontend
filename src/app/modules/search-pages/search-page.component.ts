@@ -1,19 +1,19 @@
 import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable} from "rxjs";
-import {SnpSearchModel} from "../../models/data.model";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Store} from "@ngrx/store";
-import {AsbTableComponent} from "../helpers/table-template/table.component";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
-import {SearchResultsModel} from "../../models/searchQueryModel";
+import {SearchQueryModel, SearchResultsModel} from "../../models/searchQueryModel";
 import {SearchComponent} from "../helpers/search-template/search.component";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
 import {AsbServerSideModel} from "../../models/table.model";
+import {initialServerParams} from "../../helpers/constants";
+import {SearchPageTableComponent} from "./search-table/search-table.component";
 
 @Component({
     selector: "asb-search-page",
@@ -22,8 +22,8 @@ import {AsbServerSideModel} from "../../models/table.model";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchPageComponent implements OnInit {
-    @ViewChild("tableView", {static: true})
-    public tableView: AsbTableComponent<SnpSearchModel>;
+    @ViewChild("searchTableComponent", {static: true})
+    public searchPageTableComponent: SearchPageTableComponent;
 
     @ViewChild(MatPaginator, {static: false})
     public paginator: MatPaginator;
@@ -88,7 +88,7 @@ export class SearchPageComponent implements OnInit {
         }
     }
 
-    _handleChange(event: AsbServerSideModel) {
+    _handlePaginationChange(event: AsbServerSideModel) {
         this.pageSize = event.pageSize;
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
@@ -96,6 +96,17 @@ export class SearchPageComponent implements OnInit {
                 params: event
             })
         );
+    }
+
+    _handleSearchTemplateChanges(event: SearchQueryModel) {
+        this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
+            {
+                search: event,
+                isAdvanced: this.isAdvancedSearch,
+                params: initialServerParams
+            }));
+        this.paginator.pageSize = this.pageSize;
+        this.paginator.firstPage();
     }
 
     _groupToggled(event: MatButtonToggleChange) {
@@ -109,18 +120,13 @@ export class SearchPageComponent implements OnInit {
             this.paginator.firstPage();
             this.paginator.pageSize = this.pageSize;
         }
-        this._handleChange({
-            pageSize: this.pageSize,
-            pageIndex: 0,
-            active: null,
-            direction: ""
-        });
+        this._handlePaginationChange(initialServerParams);
     }
 
 
 
     _navigateToSnp(id: string, alt: string): void {
-        this.router.navigateByUrl("snps/" + id + "/" + alt).then();
+        this.router.navigateByUrl("snps/" + id + "/" + alt).then(() => window.scrollTo(0, 0));
     }
 
     pageModelToChange(event: PageEvent): AsbServerSideModel {

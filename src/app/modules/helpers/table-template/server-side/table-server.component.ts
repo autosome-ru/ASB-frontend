@@ -127,7 +127,7 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
 
         this.subscriptions.add(
             this.sort.sortChange.subscribe(
-                () => paginator.pageIndex = 0)
+                () => paginator.firstPage())
         );
         this.subscriptions.add(
             merge(this.sort.sortChange, paginator.page).pipe(
