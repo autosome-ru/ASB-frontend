@@ -333,8 +333,11 @@ export class SearchComponent implements OnInit, OnDestroy {
                             pos: form.searchInput,
                             chr: form.chromosome,
                         };
+                    } else if (form.chromosome) {
+                        return {
+                            chr: form.chromosome,
+                        };
                     } else return {};
-
                 } else {
                     return form.searchInput ? {rs: form.searchInput} : {};
                 }
