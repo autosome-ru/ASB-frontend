@@ -124,15 +124,20 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
     }
 
     private addSubscriptions(paginator: MatPaginator) {
-
-        this.subscriptions.add(
-            this.sort.sortChange.subscribe(
-                () => paginator.firstPage())
-        );
-        this.subscriptions.add(
-            merge(this.sort.sortChange, paginator.page).pipe(
+        if (this.paginatorOptions) {
+            this.subscriptions.add(
+                this.sort.sortChange.subscribe(
+                    () => paginator.firstPage())
+            );
+            this.subscriptions.add(
+                merge(this.sort.sortChange, paginator.page).pipe(
+                    tap(() => this.emitChanges(paginator))).subscribe()
+            );
+        } else {
+            this.subscriptions.add(this.sort.sortChange.pipe(
                 tap(() => this.emitChanges(paginator))).subscribe()
-        );
+            );
+        }
     }
 }
 

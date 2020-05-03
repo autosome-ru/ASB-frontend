@@ -84,7 +84,7 @@
                         [pageSize]="pageSize"
                         [length]="(searchSnpResults$ | async)?.total"
                         [pageSizeOptions]="[3, 10, 25, 50, 100]"
-                        (page)="group.value === 'card' ? _handlePaginationChange(pageModelToChange($event)) : null"
+                        (page)="_handlePaginationChange(pageModelToChange($event))"
                     ></mat-paginator>
                 </ng-container>
             </div>
