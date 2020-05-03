@@ -36,56 +36,57 @@
                     </h4>
                 </div>
             </div>
-            <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
-                <ng-container *ngIf="group.value === 'card'; else tableViewTemplate">
-                    <div class="layout pb-2"
-                         style="margin-bottom: 20px"
-                         *ngFor="let snp of (searchSnpResults$ | async).results">
-                        <a
-                            [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
-                        >
-                            <mat-card
-                                class="search-page__card"
-                                asbElevation
-                                role="group"
+            <div>
+                <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
+                    <ng-container *ngIf="group.value === 'card'; else tableViewTemplate">
+                        <div class="layout pb-2"
+                             style="margin-bottom: 20px"
+                             *ngFor="let snp of (searchSnpResults$ | async).results">
+                            <a
+                                [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
                             >
-                                <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
-                                    <mat-card-title>
-                                        <asb-snp-header
-                                            [data]="snp"
-                                            [snpCard]="false"
+                                <mat-card
+                                    class="search-page__card"
+                                    asbElevation
+                                    role="group"
+                                >
+                                    <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
+                                        <mat-card-title>
+                                            <asb-snp-header
+                                                [data]="snp"
+                                                [snpCard]="false"
+                                            >
+                                            </asb-snp-header>
+                                        </mat-card-title>
+                                        <mat-card-subtitle>
+
+                                        </mat-card-subtitle>
+                                    </mat-card-header>
+                                    <mat-card-content>
+                                        <asb-snp-card
+                                            [snpData]="snp"
+                                            [noButtons]="true"
                                         >
-                                        </asb-snp-header>
-                                    </mat-card-title>
-                                    <mat-card-subtitle>
+                                        </asb-snp-card>
 
-                                    </mat-card-subtitle>
-                                </mat-card-header>
-                                <mat-card-content>
-                                    <asb-snp-card
-                                        [snpData]="snp"
-                                        [noButtons]="true"
-                                    >
-                                    </asb-snp-card>
+                                    </mat-card-content>
 
-                                </mat-card-content>
+                                </mat-card>
+                            </a>
+                        </div>
+                    </ng-container>
 
-                            </mat-card>
-                        </a>
-                    </div>
+                    <mat-paginator
+                        *ngIf="(searchSnpResults$ | async)?.total > 0"
+                        class="search-page__paginator"
+                        showFirstLastButtons
+                        [pageSize]="pageSize"
+                        [length]="(searchSnpResults$ | async)?.total"
+                        [pageSizeOptions]="[3, 10, 25, 50, 100]"
+                        (page)="group.value === 'card' ? _handleChange(pageModelToChange($event)) : null"
+                    ></mat-paginator>
                 </ng-container>
-
-                <mat-paginator
-                    *ngIf="(searchSnpResults$ | async)?.total > 0"
-                    class="search-page__paginator"
-                    showFirstLastButtons
-                    [pageSize]="pageSize"
-                    [length]="(searchSnpResults$ | async)?.total"
-                    [pageSizeOptions]="[3, 10, 25, 50, 100]"
-                    (page)="group.value === 'card' ? _handleChange(pageModelToChange($event)) : null"
-                ></mat-paginator>
-
-            </ng-container>
+            </div>
         </div>
     </div>
 </div>
