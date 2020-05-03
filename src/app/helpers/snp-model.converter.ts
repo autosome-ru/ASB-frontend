@@ -14,7 +14,7 @@ import {
     SnpSearchBackendModel,
     SnpSearchModel,
     TfInfoBackendModel,
-    TfInfoModel,
+    TfInfoModel, TfOrCl,
     TfSnpBackendCutModel,
     TfSnpBackendModel,
     TfSnpCutModel,
@@ -175,23 +175,42 @@ function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
     };
 }
 
+const refSuffix = "PValRef";
+const altSuffix = "PValAlt";
+function parseFieldName(active: string): {name: string, allele: "ref" | "alt", tfOrCl: TfOrCl} {
+
+    let allele: "ref" | "alt";
+    let tfOrCl: TfOrCl;
+    if (active.endsWith(refSuffix)) {
+        allele = "ref";
+        active.replace(refSuffix, "");
+    } else {
+        allele = "alt";
+        active.replace(altSuffix, "");
+    }
+    if (active.endsWith("TF")) {
+        tfOrCl = "tf";
+    }
+    if (active.endsWith("CL")) {
+        tfOrCl = "cl";
+    }
+    return {
+        name: active.slice(0, active.length - 2),
+        allele,
+        tfOrCl,
+    };
+}
+
 function convertOrderByToBackend(active: string, direction: SortDirection) {
-    const refSuffix = "PValRef";
-    const altSuffix = "PValAlt";
-    const refBackendSuffix = "_fdr_ref";
-    const altBackendSuffix = "_fdr_alt";
     if (!active || direction === "") {
         return null;
     } else {
         let fieldName: string;
-        if (active.endsWith(refSuffix)) {
-            fieldName = active.replace(refSuffix, refBackendSuffix);
+        const parsedName: {name: string, allele: "ref" | "alt", tfOrCl: TfOrCl} = parseFieldName(active);
+        if (active.endsWith(altSuffix) || active.endsWith(refSuffix)) {
+            fieldName = `${parsedName.tfOrCl.toUpperCase()}@log_p_value_${parsedName.allele}@${parsedName.name}`;
         } else {
-            if (active.endsWith(altSuffix)) {
-                fieldName = active.replace(altSuffix, altBackendSuffix);
-            } else {
-                fieldName = camelCaseToSnakeCase(active);
-            }
+            fieldName = camelCaseToSnakeCase(active);
         }
         return (direction === "desc" ? "-" : "") + fieldName;
 

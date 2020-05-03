@@ -128,29 +128,29 @@ export class SearchPageTableComponent implements OnInit {
     private paramsToColumnModel(): AsbTableColumnModel<any> {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
         const result = {};
-        if (params.cl) {
-            params.cl.split(",").forEach(
+        if (params.tf) {
+            params.tf.split(",").forEach(
                 s => {
-                    result[convertNameToValue(s, "Ref")] = {
+                    result[convertTfNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log10 FDR"
-                    };
-                    result[convertNameToValue(s, "Alt")] = {
+                        helpMessage: "-log10 FDR"};
+                    result[convertTfNameToValue(s, "Alt")] = {
                         view: convertNameToView(s, "Alt"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
                         helpMessage: "-log10 FDR"
                     };
                 });
         }
-        if (params.tf) {
-            params.tf.split(",").forEach(
+        if (params.cl) {
+            params.cl.split(",").forEach(
                 s => {
-                    result[convertNameToValue(s, "Ref")] = {
+                    result[convertClNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log10 FDR"};
-                    result[convertNameToValue(s, "Alt")] = {
+                        helpMessage: "-log10 FDR"
+                    };
+                    result[convertClNameToValue(s, "Alt")] = {
                         view: convertNameToView(s, "Alt"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
                         helpMessage: "-log10 FDR"
@@ -163,18 +163,18 @@ export class SearchPageTableComponent implements OnInit {
     private paramsToDisplayedColumns(): string[] {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
         const result: string[] = [];
-        if (params.cl) {
-            params.cl.split(",").forEach(
-                s => {
-                    result.push(convertNameToValue(s, "Ref"));
-                    result.push(convertNameToValue(s, "Alt"));
-                });
-        }
         if (params.tf) {
             params.tf.split(",").forEach(
                 s => {
-                    result.push(convertNameToValue(s, "Ref"));
-                    result.push(convertNameToValue(s, "Alt"));
+                    result.push(convertTfNameToValue(s, "Ref"));
+                    result.push(convertTfNameToValue(s, "Alt"));
+                });
+        }
+        if (params.cl) {
+            params.cl.split(",").forEach(
+                s => {
+                    result.push(convertClNameToValue(s, "Ref"));
+                    result.push(convertClNameToValue(s, "Alt"));
                 });
         }
         return result;
@@ -186,18 +186,18 @@ export class SearchPageTableComponent implements OnInit {
         if (params.tf) {
             params.tf.split(",").forEach(
                 p => {
-                    result[convertNameToValue(p, "Alt")] =
+                    result[convertTfNameToValue(p, "Alt")] =
                         s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueAlt : "NaN";
-                    result[convertNameToValue(p, "Ref")] =
+                    result[convertTfNameToValue(p, "Ref")] =
                         s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueRef : "NaN";
                 });
         }
         if (params.cl) {
             params.cl.split(",").forEach(
                 p => {
-                    result[convertNameToValue(p, "Alt")] =
+                    result[convertClNameToValue(p, "Alt")] =
                         s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueAlt : "NaN";
-                    result[convertNameToValue(p, "Ref")] =
+                    result[convertClNameToValue(p, "Ref")] =
                         s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueRef : "NaN";
                 });
         }
@@ -211,8 +211,11 @@ export class SearchPageTableComponent implements OnInit {
     }
 }
 
-function convertNameToValue(name: string, allele: "Ref" | "Alt"): string {
-    return name + "PVal" + allele;
+function convertTfNameToValue(name: string, allele: "Ref" | "Alt"): string {
+    return name + + "TF" + "PVal" + allele;
+}
+function convertClNameToValue(name: string, allele: "Ref" | "Alt"): string {
+    return name + "CL" + "PVal" + allele;
 }
 function convertNameToView(name: string, allele: "Ref" | "Alt"): string {
     return name + "\nFDR " + allele;
