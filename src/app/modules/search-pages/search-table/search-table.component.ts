@@ -218,5 +218,5 @@ function convertClNameToValue(name: string, allele: "Ref" | "Alt"): string {
     return name + "CL" + "PVal" + allele;
 }
 function convertNameToView(name: string, allele: "Ref" | "Alt"): string {
-    return name + "\nFDR " + allele;
+    return `${name} FDR\u00A0${allele}`;
 }
