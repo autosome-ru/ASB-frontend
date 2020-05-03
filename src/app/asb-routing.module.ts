@@ -47,7 +47,6 @@ const routes: Routes = [
         data: {
             title: "ADASTra - search"
         }
-
     },
     {
         path: "snps/:rsId/:alt",

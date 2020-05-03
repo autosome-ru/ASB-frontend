@@ -217,7 +217,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.router.navigate(["/search/" +
             (this.isAdvanced ? "advanced" : "simple")], {
                 queryParams: this._convertFormToParams(this.isAdvanced)}).then(
-                    () => window.scrollTo(0, 0), error => console.log(error));
+                    () => null, error => console.log(error));
         }
     }
 

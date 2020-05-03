@@ -9,7 +9,7 @@ const routes: Routes = [
     },
     {
         path: "advanced",
-        component: SearchPageComponent,
+        component: SearchPageComponent
     },
 
 ];
