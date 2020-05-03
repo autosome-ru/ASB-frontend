@@ -402,7 +402,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     _isSearchDisabled(): boolean {
         const sF = this.searchForm.value as SearchQueryModel;
-        return (!sF.searchInput && !this.isAdvanced) ||
+        return (!this.isAdvanced && (!sF.searchInput && (!sF.chromosome ||
+            sF.chromosome === "any chr"))) ||
             this.searchForm.invalid || (
                 this.isAdvanced &&
                 sF.tfList.length === 0 &&
