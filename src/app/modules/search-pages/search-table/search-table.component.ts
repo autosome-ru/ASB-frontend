@@ -212,7 +212,7 @@ export class SearchPageTableComponent implements OnInit {
 }
 
 function convertTfNameToValue(name: string, allele: "Ref" | "Alt"): string {
-    return name + + "TF" + "PVal" + allele;
+    return name + "TF" + "PVal" + allele;
 }
 function convertClNameToValue(name: string, allele: "Ref" | "Alt"): string {
     return name + "CL" + "PVal" + allele;
