@@ -59,7 +59,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public browseTfInfoInitialized$: Observable<boolean>;
     public browseClInfoInitialized$: Observable<boolean>;
 
-    private readonly initialServerParams: AsbServerSideModel = initialServerParams;
     private subscriptions: Subscription = new Subscription();
 
 
@@ -94,11 +93,17 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                 switch (params.by) {
                     case "cl":
                         this.initialGroupValue = "cl";
-                        this.store.dispatch(new fromActions.data.LoadClInfoAction(this.initialServerParams));
+                        this.store.dispatch(new fromActions.data.LoadClInfoAction({
+                            ...initialServerParams,
+                            pageSize: 10,
+                        }));
                         return;
                     case "tf":
                         this.initialGroupValue = "tf";
-                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.initialServerParams));
+                        this.store.dispatch(new fromActions.data.LoadTfInfoAction({
+                            ...initialServerParams,
+                            pageSize: 10
+                        }));
                         return;
                     default:
                         this.router.navigate(["/browse"],

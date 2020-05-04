@@ -23,7 +23,7 @@ export const phenotypesModelExample: PhenotypesModel = {
 };
 
 export const initialServerParams: AsbServerSideModel = {
-    pageSize: 10,
+    pageSize: 5,
     pageIndex: 0,
     active: null,
     direction: "",

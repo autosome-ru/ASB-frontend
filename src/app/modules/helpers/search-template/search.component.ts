@@ -50,9 +50,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     @Input()
     public searchDataLoading: boolean;
 
-    @Input()
-    public pageSize: number;
-
     @Output()
     private searchPressed = new EventEmitter<SearchQueryModel>();
 

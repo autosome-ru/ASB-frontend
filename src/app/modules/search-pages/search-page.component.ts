@@ -39,7 +39,7 @@ export class SearchPageComponent implements OnInit {
 
     isAdvancedSearch: boolean;
 
-    public pageSize: number;
+    public pagination: AsbServerSideModel;
     public groupValue: "list" | "card";
     public searchSnpResultsChanged$: Observable<boolean>;
 
@@ -55,11 +55,10 @@ export class SearchPageComponent implements OnInit {
             (this.route.snapshot.queryParams.pos &&
                 this.route.snapshot.queryParams.pos.match(/^\d*$/))) {
             this.groupValue = "card";
-            this.pageSize = 3;
         } else {
             this.groupValue = "list";
-            this.pageSize = 10;
         }
+        this.pagination = initialServerParams;
 
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
@@ -89,7 +88,7 @@ export class SearchPageComponent implements OnInit {
     }
 
     _handlePaginationChange(event: AsbServerSideModel) {
-        this.pageSize = event.pageSize;
+        this.pagination = event;
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
                 isAdvanced: this.isAdvancedSearch,
@@ -99,28 +98,29 @@ export class SearchPageComponent implements OnInit {
     }
 
     _handleSearchTemplateChanges(event: SearchQueryModel) {
+        this.pagination = {
+            ...initialServerParams,
+            pageSize: this.pagination.pageSize
+        };
         this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
             {
                 search: event,
                 isAdvanced: this.isAdvancedSearch,
-                params: initialServerParams
+                params: this.pagination,
             }));
-        this.paginator.pageSize = this.pageSize;
-        this.paginator.firstPage();
+        if (this.paginator) {
+            this.paginator.pageSize = this.pagination.pageSize;
+            this.paginator.firstPage();
+        }
     }
 
     _groupToggled(event: MatButtonToggleChange) {
-        if (event.value === "list") {
-            this.pageSize = 10;
-        } else {
-            this.pageSize = 3;
-        }
         this.groupValue = event.value;
-        if (this.paginator) {
+        if (this.paginator && this.paginator.pageIndex !== 0) {
             this.paginator.firstPage();
-            this.paginator.pageSize = this.pageSize;
+        } else {
+            this._handlePaginationChange(initialServerParams);
         }
-        this._handlePaginationChange(initialServerParams);
     }
 
 
@@ -131,8 +131,7 @@ export class SearchPageComponent implements OnInit {
 
     pageModelToChange(event: PageEvent): AsbServerSideModel {
         return {
-            active: null,
-            direction: "",
+            ...this.pagination,
             pageSize: event.pageSize,
             pageIndex: event.pageIndex
         };

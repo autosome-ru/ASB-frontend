@@ -4,7 +4,6 @@
         [width]="'full'"
         [isAdvanced]="isAdvancedSearch"
         [searchData]="(searchSnpResults$ | async).results"
-        [pageSize]="this.pageSize"
         (searchPressed)="_handleSearchTemplateChanges($event)"
     ></asb-search>
 
@@ -39,7 +38,11 @@
             </div>
             <div>
                 <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
-                    <ng-container *ngIf="group.value === 'card'; else tableViewTemplate">
+                    <div class="position-relative">
+                    <ng-container
+                        *ngIf="group.value === 'card'; else tableViewTemplate"
+
+                    >
                         <div class="layout pb-2"
                              style="margin-bottom: 20px"
                              *ngFor="let snp of (searchSnpResults$ | async).results">
@@ -75,13 +78,24 @@
                                 </mat-card>
                             </a>
                         </div>
+
+                        <div class="search-page-loading"
+                             *ngIf="searchSnpResultsChanged$ | async"
+                        >
+                            <mat-spinner
+                                *ngIf="searchSnpResultsChanged$ | async"
+                                color="accent"
+                                [diameter]="100"
+                            ></mat-spinner>
+                        </div>
                     </ng-container>
+                    </div>
 
                     <mat-paginator
                         *ngIf="(searchSnpResults$ | async)?.total > 0"
                         class="search-page__paginator"
                         showFirstLastButtons
-                        [pageSize]="pageSize"
+                        [pageSize]="pagination.pageSize"
                         [length]="(searchSnpResults$ | async)?.total"
                         [pageSizeOptions]="[3, 10, 25, 50, 100]"
                         (page)="_handlePaginationChange(pageModelToChange($event))"
