@@ -43,7 +43,7 @@
 </div>
 
 <ng-template #descriptionTemplate let-value="value">
-    <h3
+    <h4
         style="text-align: center;"
         [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
     >
@@ -51,19 +51,19 @@
         <u class="font-weight-bold">D</u>osage corrected
         <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
         <u class="font-weight-bold">Tra</u>nscription factor binding sites
-    </h3>
+    </h4>
     <div
         *ngIf="totalInfo$ | async as totalInfo"
         style="margin-top: 15px"
         [class]="(value === 'large' ? 'd-md-flex text-white ' : '') + 'd-none'"
     >
         <div class="col-md-6" style="text-align: right;">
-            <h4>Cell types:</h4>
-            <h4>Transcription factors:</h4>
-            <h4>Unique SNPs with ASB:</h4>
+            <h5>Cell types:</h5>
+            <h5>Transcription factors:</h5>
+            <h5>Unique SNPs with ASB:</h5>
         </div>
         <div class="col-md-6" style="text-align: left;">
-            <h4>
+            <h5>
                 <a
                     style="text-decoration: underline"
                     [routerLink]="'/browse'"
@@ -71,8 +71,8 @@
                 >
                     {{totalInfo.cellTypesCount}}
                 </a>
-            </h4>
-            <h4>
+            </h5>
+            <h5>
                 <a
                     style="text-decoration: underline"
                     [routerLink]="'/browse'"
@@ -80,10 +80,10 @@
                 >
                     {{totalInfo.transcriptionFactorsCount}}
                 </a>
-            </h4>
-            <h4>
+            </h5>
+            <h5>
                 {{totalInfo.snpsCount}}
-            </h4>
+            </h5>
         </div>
     </div>
 </ng-template>

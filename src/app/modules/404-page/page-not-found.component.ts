@@ -5,7 +5,7 @@ import {SeoService} from "../../services/seo.servise";
 
 @Component({
     selector: "not-found-app",
-    template: `<h3 style="margin-bottom: 0; padding-bottom: 0" >Page not found</h3>`,
+    template: `<h4 style="margin-bottom: 0; padding-bottom: 0" >Page not found</h4>`,
     styles: [`.app-not-found`],
 })
 export class PageNotFoundComponent implements OnInit {

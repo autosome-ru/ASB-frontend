@@ -2,15 +2,16 @@
     class="container"
     style="background: white"
 >
-    <h3
+    <h4
         style="padding-top: 10px"
     >
         Browse
-    </h3>
+    </h4>
     <mat-button-toggle-group
         #group="matButtonToggleGroup"
         style="margin-bottom: 10px"
         [value]="initialGroupValue"
+        appearance="legacy"
         (change)="_groupToggled($event)"
     >
         <mat-button-toggle

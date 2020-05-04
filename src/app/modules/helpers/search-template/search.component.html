@@ -1,12 +1,12 @@
 <div
-    class="container-fluid asb-search py-3"
+    class="container-fluid asb-search pb-3 pt-1"
     style="background-color: white"
     [class._restricted]="width === 'restricted'"
     [class._full]="width === 'full'">
     <div class="asb-search__header">
-        <h3>
+        <h4>
             {{isAdvanced ? 'Advanced search' : 'Search'}}
-        </h3>
+        </h4>
     </div>
     <form
         [formGroup]="searchForm"
@@ -150,13 +150,14 @@
         </div>-->
         <ng-container *ngIf="_checkToDisplay('tf')">
             <mat-form-field
-                style="width: 100%; padding: 0"
+                style="width: 100%; padding: 0; margin-top: -20px"
             >
                 <mat-chip-list #chipListTf aria-label="Transcription factor selection">
                     <mat-chip
                         *ngFor="let option of searchForm.get('tfList').value"
                         selectable
                         removable
+                        style="margin: 0 2px 0 0"
                         (removed)="_removeChip(option, 'tf')"
                     >
                         {{option}}
@@ -198,12 +199,13 @@
 
         <ng-container *ngIf="_checkToDisplay('cl')">
             <mat-form-field
-                style="width: 100%; padding: 0"
+                style="width: 100%; padding: 0; margin: -10px 0;"
             >
                 <mat-chip-list #chipListCl aria-label="Cell type selection">
                     <mat-chip
                         *ngFor="let option of searchForm.get('clList').value"
                         selectable
+                        style="margin: 0 2px 0 0"
                         removable
                         (removed)="_removeChip(option, 'cl')"
                     >
@@ -242,7 +244,7 @@
             </mat-form-field>
         </ng-container>
         <ng-container *ngIf="_checkToDisplay('phenotypes')">
-            <h5>Genetic associations in:</h5>
+            <span style="margin-top: -15px">Genetic associations in:</span>
             <div class="asb-search__checkboxes">
                 <mat-checkbox
                     *ngFor="let phenotype of phenotypes; let last=last"

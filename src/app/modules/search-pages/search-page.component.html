@@ -12,28 +12,30 @@
         <div class="container-fluid mx-auto" style="padding-bottom: 5px; padding-top: 5px">
             <div class="flex text-xs-right xs-12">
                 <div class="text-xs-left">
-                    <h4 class="headline text--bold-300 search-page__text">
+                    <span class="search-page__text">
                         {{getPhrase((searchSnpResults$ | async),
                         (searchSnpResultsLoading$ | async))}}
 
                         <mat-button-toggle-group
                             #group="matButtonToggleGroup"
-                            [value]="groupValue" (change)="_groupToggled($event)">
+                            [value]="groupValue"
+                            appearance="legacy"
+                            (change)="_groupToggled($event)">
                             <mat-button-toggle
                                 value="card"
                                 matTooltip="card view"
                             >
-                                <mat-icon svgIcon="card"></mat-icon>
+                                <mat-icon class="search-page__icon" svgIcon="card"></mat-icon>
                             </mat-button-toggle>
 
                             <mat-button-toggle
                                 value="list"
                                 matTooltip="table view"
                             >
-                                <mat-icon svgIcon="list"></mat-icon>
+                                <mat-icon class="search-page__icon" svgIcon="list"></mat-icon>
                             </mat-button-toggle>
                         </mat-button-toggle-group>
-                    </h4>
+                    </span>
                 </div>
             </div>
             <div>
