@@ -1,4 +1,7 @@
-<h2 *ngIf="snpCard">
+<h4
+    *ngIf="snpCard"
+    style="padding-top: .5rem"
+>
     <a
         target="_blank"
         rel="noopener noreferrer"
@@ -13,8 +16,8 @@
     <strong
         [ngStyle]="{'color': colors[data.altBase]}"
     >{{data.altBase}}</strong>
-</h2>
-<h2 *ngIf="!snpCard">
+</h4>
+<h4 *ngIf="!snpCard">
     {{data.rsId}} {{data.chr}}:{{data.pos }}
     <strong
     [ngStyle]="{'color': colors[data.refBase]}">{{data.refBase}}</strong>
@@ -22,4 +25,4 @@
     <strong
         [ngStyle]="{'color': colors[data.altBase]}"
     >{{data.altBase}}</strong>
-</h2>
+</h4>

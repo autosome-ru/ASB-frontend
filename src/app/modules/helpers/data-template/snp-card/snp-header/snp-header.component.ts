@@ -1,11 +1,12 @@
-import {Component, Input, OnInit, } from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, OnInit} from "@angular/core";
 import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
 import {baseToColors} from "../../../../../helpers/colors.helper";
 
 @Component({
     selector: "asb-snp-header",
     templateUrl: "./snp-header.component.html",
-    styleUrls: ["../snp-card.component.less"]
+    styleUrls: ["../snp-card.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AsbSnpHeaderComponent implements OnInit {
 

@@ -1,4 +1,5 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     HostBinding, Inject,
     OnInit, PLATFORM_ID,
@@ -10,6 +11,7 @@ import {isPlatformBrowser} from "@angular/common";
     selector: "app-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent  implements  OnInit {
     @HostBinding("class.asb-app")

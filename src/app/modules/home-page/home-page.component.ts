@@ -1,4 +1,4 @@
-import {Component, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
 import {AppState} from "../../store/reducer";
@@ -13,7 +13,8 @@ import {SeoService} from "../../services/seo.servise";
 @Component({
     selector: "home-page",
     templateUrl: "./home-page.component.html",
-    styleUrls: [ "./home-page.component.less" ]
+    styleUrls: [ "./home-page.component.less" ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePageComponent implements OnInit {
     @HostBinding("class.asb-home")
