@@ -52,38 +52,34 @@
         <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
         <u class="font-weight-bold">Tra</u>nscription factor binding sites
     </h4>
-    <div
-        *ngIf="totalInfo$ | async as totalInfo"
-        style="margin-top: 15px"
-        [class]="(value === 'large' ? 'd-md-flex text-white ' : '') + 'd-none'"
-    >
-        <div class="col-md-6" style="text-align: right;">
-            <h5>Cell types:</h5>
-            <h5>Transcription factors:</h5>
-            <h5>Unique SNPs with ASB:</h5>
-        </div>
-        <div class="col-md-6" style="text-align: left;">
-            <h5>
-                <a
-                    style="text-decoration: underline"
-                    [routerLink]="'/browse'"
-                    [queryParams]="{by: 'cl'}"
-                >
-                    {{totalInfo.cellTypesCount}}
-                </a>
-            </h5>
-            <h5>
-                <a
-                    style="text-decoration: underline"
-                    [routerLink]="'/browse'"
-                    [queryParams]="{by: 'tf'}"
-                >
-                    {{totalInfo.transcriptionFactorsCount}}
-                </a>
-            </h5>
-            <h5>
-                {{totalInfo.snpsCount}}
-            </h5>
-        </div>
-    </div>
+    <ng-container *ngIf="totalInfo$ | async as totalInfo">
+        <h5
+            style="text-align: center"
+            [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
+        >
+            Transcription factors:&nbsp;
+
+            <a
+                style="text-decoration: underline"
+                [routerLink]="'/browse'"
+                [queryParams]="{by: 'tf'}"
+            >
+                {{totalInfo.transcriptionFactorsCount}}
+            </a>
+            &nbsp;&nbsp;&nbsp;Cell types:&nbsp;
+            <a
+                style="text-decoration: underline"
+                [routerLink]="'/browse'"
+                [queryParams]="{by: 'cl'}"
+            >
+                {{totalInfo.cellTypesCount}}
+            </a>
+        </h5>
+        <h5
+            style="text-align: center"
+            [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
+        >
+            Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}
+        </h5>
+    </ng-container>
 </ng-template>

@@ -73,7 +73,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             this.snpData$.subscribe(s => s ?
                 this.seoService.updateSeoInfo({
                     title: this.route.snapshot.data.title(this.id),
-                    description: s.transFactors.slice(0, 10).join(","),
+                    description: this.route.snapshot.data.description(this.id),
                     keywords: s.transFactors.slice(0, 10).join(","),
                 }) :
                     null

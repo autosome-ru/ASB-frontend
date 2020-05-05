@@ -13,6 +13,5 @@ export class PageNotFoundComponent implements OnInit {
                 private seoService: SeoService) {}
     ngOnInit() {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-        this.seoService.removeMeta();
     }
 }

@@ -11,7 +11,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
         data: {
-            title: "ADASTra - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites"
+            title: "ADASTra - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
+            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
     },
     {
@@ -20,7 +21,7 @@ const routes: Routes = [
             "./modules/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {
             title: "ADASTra -  browse",
-            description: "test"
+            description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
     },
 
@@ -45,14 +46,16 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/search-pages/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
-            title: "ADASTra - search"
+            title: "ADASTra - search",
+            description: "ADAstra search page for allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
     },
     {
         path: "snps/:rsId/:alt",
         component: SnpPageComponent,
         data: {
-            title: (id: string) => `${id} - ADASTra ${version}`
+            title: (id: string) => `${id} - ADASTra ${version}`,
+            description: (id: string) => `ADASTra report for ${id} SNP`
         }
     },
     {
