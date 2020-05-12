@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
 import {
     SearchHintBackendModel,
@@ -32,6 +32,9 @@ export class SearchService {
 
     public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
+        if (filter === null) {
+            return of({results: [], total: null});
+        }
         if (!isAdvanced) {
             switch (filter.searchBy) {
                 case "id": {

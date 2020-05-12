@@ -5,8 +5,8 @@ import {AppState} from "../reducer";
 import {SearchService} from "src/app/services/search.service";
 import * as fromActions from "src/app/store/action/search.action";
 import * as fromSelectors from "src/app/store/selector";
-import {catchError, map, mergeMap, switchMap, take} from "rxjs/operators";
-import {combineLatest, EMPTY, of} from "rxjs";
+import {catchError, map, mergeMap} from "rxjs/operators";
+import { EMPTY, of} from "rxjs";
 
 @Injectable()
 export class SearchEffect {
@@ -56,12 +56,8 @@ export class SearchEffect {
     loadSearchResultsWithPagination$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResultsWithPagination),
         mergeMap((action: fromActions.LoadSearchResultsWithPaginationAction) =>
-             combineLatest([
-                 this.store.select(fromSelectors.selectCurrentSearchQuery),
-                 this.store.select(fromSelectors.selectCurrentSearchResultsLoading)]).pipe(
-                 take(1),
-                 switchMap(([query, loading]) =>
-                     loading ? EMPTY :
+            this.store.select(fromSelectors.selectCurrentSearchQuery).pipe(
+                 mergeMap((query) =>
                      this.searchService.getSearchResult(query, action.payload.isAdvanced, action.payload.params).pipe(
                         map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
                         catchError(() => of(new fromActions.LoadSearchResultsFailAction()))
