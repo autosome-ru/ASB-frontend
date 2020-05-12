@@ -94,7 +94,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     private static convertPosToInterval(searchInput: string): string {
         if (searchInput.match(/^\d+$/)) {
-            return `${Number(searchInput) > 100 ? Number(searchInput) - 100 : 0}-${Number(searchInput) + 100}`;
+            return `${Number(searchInput) > 100 ? Number(searchInput) - 100 : 1}-${Number(searchInput) + 100}`;
         } else {
             const [start, end] = searchInput.split("-");
             return `${Number(start) > 100 ? Number(start) - 100 : 1}-${Number(end) + 100}`;
@@ -263,7 +263,8 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (this.isAdvanced) {
             if (id === "searchNear") {
                 return !!searchForm.chromosome &&
-                    searchForm.chromosome !== "any chr" && !this._isSearchDisabled();
+                    searchForm.chromosome !== "any chr" &&
+                    !this._isSearchDisabled() && !!this.searchForm.get("searchInput").value;
             } else {
                 return id !== "id";
             }

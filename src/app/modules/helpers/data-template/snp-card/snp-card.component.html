@@ -49,6 +49,7 @@
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
     >
         <a
+            style="margin-right: 10px"
             mat-raised-button
             color="accent"
             matTooltip="+/-100bp"
@@ -58,6 +59,16 @@
                     chr: snpData.chr}"
         >
             Search SNPs nearby
+        </a>
+        <a
+            mat-raised-button
+            target="_blank"
+            rel="noopener noreferrer"
+            [href]="'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&&position='
+            + snpData.chr + ':' + (snpData.pos > 100 ? snpData.pos - 100 : '1')
+                    + '-' + (snpData.pos + 100) + '&snp142Common=full'"
+        >
+            Show in UCSC
         </a>
     </dd>
 </dl>
