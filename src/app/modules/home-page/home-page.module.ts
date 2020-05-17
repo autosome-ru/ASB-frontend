@@ -8,6 +8,8 @@ import {AsbHelpersModule} from "../helpers/helpers.module";
 import {LazyLoadImageModule} from "ng-lazyload-image";
 import {RouterModule} from "@angular/router";
 import {AsbHomePageRoutingModule} from "./home-page-routing.module";
+import {TestCommand} from "@angular/cli/commands/test-impl";
+import {TestComponent} from "./test/test.component";
 
 @NgModule({
     imports: [
@@ -20,7 +22,7 @@ import {AsbHomePageRoutingModule} from "./home-page-routing.module";
         RouterModule,
         AsbHomePageRoutingModule
     ],
-    declarations: [HomePageComponent],
+    declarations: [HomePageComponent, TestComponent],
 })
 export class AsbHomePageModule {
 }

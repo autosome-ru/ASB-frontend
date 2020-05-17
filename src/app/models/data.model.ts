@@ -186,3 +186,15 @@ export interface ClInfoModel {
     aggregatedSnpsCount: number;
     experimentsCount: number;
 }
+
+export interface MotifDataModel {
+    motifLength: number;
+    motifName: string;
+    data: MotifPointModel[];
+}
+
+export interface MotifPointModel {
+    motifPosition: number;
+    color: string;
+    effectSize: number;
+}
