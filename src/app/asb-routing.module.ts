@@ -1,7 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import {PageNotFoundComponent} from "./modules/404-page/page-not-found.component";
-import {SnpPageComponent} from "./modules/snp-page/snp-page.component";
 import {version} from "./helpers/constants";
 
 
@@ -52,7 +50,8 @@ const routes: Routes = [
     },
     {
         path: "snps/:rsId/:alt",
-        component: SnpPageComponent,
+        loadChildren: () => import(
+            "./modules/snp-page/snp-page.module").then(mod => mod.AsbSnpPageModule),
         data: {
             title: (id: string) => `${id} - ADASTra ${version}`,
             description: (id: string) => `ADASTra report for ${id} SNP`
@@ -60,7 +59,8 @@ const routes: Routes = [
     },
     {
         path: "404",
-        component: PageNotFoundComponent,
+        loadChildren: () => import(
+            "./modules/404-page/page-not-found.module").then(mod => mod.AsbPageNotFoundModule),
         data: {
             title: "Page not found"
         }

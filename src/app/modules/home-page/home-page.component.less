@@ -5,29 +5,8 @@
     --moz-transform-style: preserve-3d;
     transform-style: preserve-3d;
 
-
-
-    &__image-container{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-
-        /* Create the parallax scrolling effect */
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        &_parallax-image {
-
-            border: 0;
-            margin: 0;
-            padding: 0;
-        }
-    }
     &__title-wrapper{
         background-color: transparent;
-        position: relative;
         height: -webkit-calc((100vw / 1.61) - (172px + 28px));
         height: -moz-calc((100vw / 1.61) - (172px + 28px));
         height: calc((100vw / 1.61) - (172px + 28px));
@@ -36,10 +15,11 @@
     }
 
     &__headline{
-        position: absolute;
         margin: 0;
         height: 100%;
         width: 100%;
+        background: url('~src/assets/images/night-sky-big.jpg') no-repeat fixed center;
+        background-size: cover !important;
 
         &-wrapper{
             display: flex;
