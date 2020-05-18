@@ -42,7 +42,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                                     searchData?: SnpSearchModel[]): Partial<SearchParamsModel> {
     if (form && !form.isAdvanced) {
         if (form && form.searchBy) {
-            if (form.searchBy === "pos" || form.isAdvanced !== oldIsAdvanced) {
+            if (form.searchBy === "pos" || (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced)) {
                 if (form.searchInput) {
                     return {
                         pos: form.searchInput,
