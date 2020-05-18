@@ -44,7 +44,6 @@ export class SearchEffect {
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
             this.searchService.getSearchResult(
                 action.payload.search,
-                action.payload.isAdvanced,
                 action.payload.params).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
                 catchError(() => of(new fromActions.LoadSearchResultsFailAction())),
@@ -58,7 +57,7 @@ export class SearchEffect {
         mergeMap((action: fromActions.LoadSearchResultsWithPaginationAction) =>
             this.store.select(fromSelectors.selectCurrentSearchQuery).pipe(
                  mergeMap((query) =>
-                     this.searchService.getSearchResult(query, action.payload.isAdvanced, action.payload.params).pipe(
+                     this.searchService.getSearchResult(query, action.payload.params).pipe(
                         map(results => new fromActions.LoadSearchResultsSuccessAction(results)),
                         catchError(() => of(new fromActions.LoadSearchResultsFailAction()))
                         )

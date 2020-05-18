@@ -91,7 +91,6 @@ export class SearchPageComponent implements OnInit {
         this.pagination = event;
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
-                isAdvanced: this.isAdvancedSearch,
                 params: event
             })
         );
@@ -105,7 +104,6 @@ export class SearchPageComponent implements OnInit {
         this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
             {
                 search: event,
-                isAdvanced: this.isAdvancedSearch,
                 params: this.pagination,
             }));
         if (this.paginator) {

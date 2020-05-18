@@ -19,12 +19,13 @@
     </a>
     <div
         class="collapse navbar-collapse  ml-auto p-2 justify-content-end"
-        [ngClass]="{'show': navbarOpen }"
+        [ngClass]="{'show': navigationBarOpened }"
     >
         <div class="navbar-nav">
             <a
                 class="nav-item nav-link"
-                [routerLink]="'/search/simple'"
+                [routerLink]="'/search/' + ((searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
+                [queryParams]="_convertFormToParams((searchQuery | async))"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
             >

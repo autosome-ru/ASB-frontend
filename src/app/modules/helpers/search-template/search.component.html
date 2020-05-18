@@ -60,6 +60,7 @@
             <mat-select
                 formControlName="chromosome"
             >
+                <mat-option *ngIf="isAdvanced" [value]="'any chr'">any chr</mat-option>
                 <mat-option
                     *ngFor="let chr of listOfChrs"
                             [value]="chr"

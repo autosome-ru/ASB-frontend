@@ -30,16 +30,17 @@ export class SearchService {
             {params});
     }
 
-    public getSearchResult(filter: SearchQueryModel, isAdvanced: boolean, params: AsbServerSideModel):
+    public getSearchResult(filter: SearchQueryModel, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
-        if (filter === null) {
+        if (!filter) {
             return of({results: [], total: null});
         }
-        if (!isAdvanced) {
+        if (!filter.isAdvanced && filter.searchInput) {
             switch (filter.searchBy) {
                 case "id": {
+                    const rsId: string = filter.searchInput.match(/rs\d+/) ? filter.searchInput.slice(2) : filter.searchInput;
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/rs/${filter.searchInput.slice(2)}`, {
+                        `${searchSnpsResultsUrl}/rs/${rsId}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
                 }

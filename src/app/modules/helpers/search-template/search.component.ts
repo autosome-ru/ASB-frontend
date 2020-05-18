@@ -31,8 +31,8 @@ import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
 import {phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
-import {phenotypesFormToList} from "../../../helpers/search-model.converter";
 import {debounceTime} from "rxjs/operators";
+import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/check-functions.helper";
 
 
 @Component({
@@ -84,7 +84,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
 
     private static initChromosomes(): string[] {
-        const result: string[] = ["any chr"];
+        const result: string[] = [];
         for (let i = 1; i < 23; i++) {
             result.push("chr" + i);
         }
@@ -118,6 +118,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
+            isAdvanced: this.isAdvanced,
             searchInput: "",
             searchBy: "id",
             chromosome: null,
@@ -180,7 +181,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     } else {
                         if ( s === "pos") {
                             this.searchForm.patchValue(
-                                {chromosome: "any chr"});
+                                {chromosome: "chr1"});
                         }
                     }
                     if (checkOneResult(this.searchData)) {
@@ -333,49 +334,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
-        const form = this.searchForm.value as SearchQueryModel;
-        if (!isAdvanced) {
-            if (form && form.searchBy) {
-                if (form.searchBy === "pos" || this.isAdvanced !== isAdvanced) {
-                    if (form.searchInput) {
-                        return {
-                            pos: form.searchInput,
-                            chr: form.chromosome,
-                        };
-                    }  else return {};
-                } else {
-                    return form.searchInput ? {rs: form.searchInput} : {};
-                }
-
-            } else {
-                return form.searchInput ? {pos: form.searchInput, chr: form.chromosome} : {};
-            }
-
-        } else {
-            if (form) {
-                const result: Partial<SearchParamsModel> = {};
-                if (form.clList.length > 0) result.cl = form.clList.join(",");
-                if (form.searchInput) {
-                    if (checkOneResult(this.searchData) &&
-                        !this.isAdvanced &&
-                        !isValidPosInterval(form.searchInput)) {
-                        result.pos = "" + this.searchData[0].pos;
-                        result.chr = this.searchData[0].chr;
-                    } else {
-                        result.pos = form.searchInput;
-                        result.chr = form.chromosome;
-                    }
-                } else if (form.chromosome && form.chromosome !== "any chr") {
-                    result.chr = form.chromosome;
-                }
-                if (form.tfList.length > 0) result.tf = form.tfList.join(",");
-                const phenList: string = phenotypesFormToList(form);
-                if (phenList) {
-                    result.phe_db = phenList;
-                }
-                return result;
-            } else return {};
-        }
+        this.searchForm.patchValue({isAdvanced: isAdvanced});
+        return convertFormToParams(this.searchForm.value, this.isAdvanced, this.searchData);
     }
 
     _convertParamsToForm(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
@@ -447,14 +407,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 }
 
-function checkOneResult(searchData: SnpSearchModel[]): boolean {
-    return !!(searchData &&
-        searchData.length > 0 && searchData.length < 4
-        && searchData.reduce((a, b) =>
-                a.pos === b.pos && a.chr === b.chr ?
-                    b : {chr: "chr0", pos: 0}, searchData[0]).pos);
-}
-
 function matchingPattern(searchKey: string,
                          optionKey: string,
                          isAdvancedSearch: boolean) {
@@ -489,12 +441,3 @@ function checkIfPhenotypeSelected(sF: SearchQueryModel) {
     return result;
 }
 
-function isValidPosInterval(search: string): boolean {
-    if (search.match(/^\d+-\d+$/)) {
-        const posArray: string[] = search.split("-");
-        if (posArray.length === 2) {
-            return true;
-        }
-    }
-    return false;
-}

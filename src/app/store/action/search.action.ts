@@ -41,12 +41,12 @@ export class LoadSearchResultsAction implements Action {
 
     constructor(public payload: {
         search: SearchQueryModel,
-        isAdvanced: boolean, params: AsbServerSideModel}) {}
+        params: AsbServerSideModel}) {}
 }
 export class LoadSearchResultsWithPaginationAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsWithPagination;
 
-    constructor(public payload: {isAdvanced: boolean, params: AsbServerSideModel}) {}
+    constructor(public payload: {params: AsbServerSideModel}) {}
 }
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;
