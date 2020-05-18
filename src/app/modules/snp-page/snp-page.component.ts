@@ -13,6 +13,7 @@ import {DataService} from "../../services/data.service";
 import * as moment from "moment";
 import {calculateColorForOne} from "../../helpers/colors.helper";
 import {SeoService} from "../../services/seo.servise";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -56,6 +57,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private router: Router,
         private saverService: FileSaverService,
         private dataService: DataService,
+        private toastr: ToastrService,
         private seoService: SeoService
     ) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -123,8 +125,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                     `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
                 },
             (err) => {
-                    console.log("err");
-                    console.log(err.text);
+                    this.toastr.error(err.message, "Error");
                 }
             )
         );

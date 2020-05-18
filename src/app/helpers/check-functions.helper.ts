@@ -63,7 +63,6 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
             if (form.clList.length > 0) result.cl = form.clList.join(",");
             if (form.searchInput) {
                 if (checkOneResult(searchData) &&
-                    !form.isAdvanced &&
                     !isValidPosInterval(form.searchInput)) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr;

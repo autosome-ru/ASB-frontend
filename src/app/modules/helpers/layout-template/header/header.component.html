@@ -24,7 +24,7 @@
         <div class="navbar-nav">
             <a
                 class="nav-item nav-link"
-                [routerLink]="'/search/' + ((searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
+                [routerLink]="'/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
                 [queryParams]="_convertFormToParams((searchQuery | async))"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
