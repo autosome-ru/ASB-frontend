@@ -39,7 +39,7 @@
                 [columnModel]="tfColumnModel"
                 [paginatorOptions]="[10, 25, 50, 100]"
                 [clickableRow]="true"
-                [paginatorLength]="(totalInfo$ | async).transcriptionFactorsCount"
+                [paginatorLength]="(totalInfo$ | async) && (totalInfo$ | async).transcriptionFactorsCount"
                 (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
                 (tableChangesEmitter)="_handleTableChange($event, 'tf')"
             >
@@ -48,7 +48,9 @@
     </div>
 </div>
 
-<ng-container *ngIf="((browseTfInfoLoading$ | async) && !(browseTfInfoInitialized$ | async)) || ((browseClInfoLoading$ | async) && !(browseClInfoInitialized$ | async))">
+<ng-container *ngIf="((browseTfInfoLoading$ | async) &&
+ !(browseTfInfoInitialized$ | async)) || ((browseClInfoLoading$ | async) &&
+   !(browseClInfoInitialized$ | async))">
     <div class="asb-browse__spinner">
         <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
     </div>

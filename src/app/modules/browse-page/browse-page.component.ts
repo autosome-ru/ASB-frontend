@@ -106,14 +106,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                         }));
                         return;
                     default:
-                        this.router.navigate(["/browse"],
-                            {
-                                queryParams: {by: "tf"}
-                            }).then(
-                                () => this.initialGroupValue = "tf",
-                                error => console.log(error)
-                        );
-
+                        this.router.navigate(["/404"]);
                         return;
                  }
             })
