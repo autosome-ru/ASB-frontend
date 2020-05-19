@@ -1,5 +1,5 @@
 import {
-    AfterViewInit, ChangeDetectionStrategy,
+    ChangeDetectionStrategy, ChangeDetectorRef,
     Component, ElementRef, EventEmitter,
     HostBinding,
     Input, OnChanges, OnDestroy, Output, SimpleChanges,
@@ -21,7 +21,7 @@ import {tap} from "rxjs/operators";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy {
+export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
     @ViewChild("popover", {static: true})
@@ -50,6 +50,7 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
 
     public _dataSource: AsbBackendDataSource<T>;
     public popoverRow: T;
+    private subscriptionMade: boolean = false;
 
     @Input()
     set data(value: Observable<T[]>) {
@@ -76,22 +77,12 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
     @Output()
     private tableChangesEmitter = new EventEmitter<AsbServerSideModel>();
 
-    ngAfterViewInit() {
-        if (this._dataSource) {
-            if (this.paginatorOptions) {
-                this.addSubscriptions(this.paginator);
-            }
-            // external paginator already initialized
-            if (this.externalPaginator && this.sort) {
-                this.addSubscriptions(this.externalPaginator);
-            }
-        }
-    }
+    constructor(private ref: ChangeDetectorRef) {}
+
     ngOnChanges(changes: SimpleChanges) {
-        if (changes["externalPaginator"] && this.externalPaginator) {
-            if (this.externalPaginator && this.sort) {
-                this.addSubscriptions(this.externalPaginator);
-            }
+        if (changes["paginatorLength"] && this._dataSource && this.paginatorLength) {
+            this.ref.detectChanges();
+            this.addSubscriptions();
         }
     }
 
@@ -114,7 +105,7 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
         this.popoverRow = null;
     }
 
-    private emitChanges(paginator: MatPaginator) {
+    public emitChanges(paginator: MatPaginator) {
         this.tableChangesEmitter.emit({
             pageIndex: paginator.pageIndex,
             pageSize: paginator.pageSize,
@@ -123,20 +114,13 @@ export class AsbServerTableComponent<T> implements AfterViewInit, OnChanges, OnD
         });
     }
 
-    private addSubscriptions(paginator: MatPaginator) {
-        if (this.paginatorOptions) {
+    private addSubscriptions() {
+        if (!this.subscriptionMade && this.paginatorLength) {
             this.subscriptions.add(
-                this.sort.sortChange.subscribe(
-                    () => paginator.firstPage())
+                merge(this.sort.sortChange, this.paginator.page).pipe(
+                    tap(() => this.emitChanges(this.paginator))).subscribe()
             );
-            this.subscriptions.add(
-                merge(this.sort.sortChange, paginator.page).pipe(
-                    tap(() => this.emitChanges(paginator))).subscribe()
-            );
-        } else {
-            this.subscriptions.add(this.sort.sortChange.pipe(
-                tap(() => this.emitChanges(paginator))).subscribe()
-            );
+            this.subscriptionMade = true;
         }
     }
 }

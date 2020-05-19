@@ -88,7 +88,7 @@
         [columnModel]="clColumnModel"
         [paginatorOptions]="[10, 25, 50, 100]"
         [clickableRow]="true"
-        [paginatorLength]="(totalInfo$ | async).cellTypesCount"
+        [paginatorLength]="(totalInfo$ | async) && (totalInfo$ | async).cellTypesCount"
         (rowClickEmitter)="_handleTableRowClick($event, 'cl')"
         (tableChangesEmitter)="_handleTableChange($event, 'cl')"
     >

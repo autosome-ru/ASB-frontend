@@ -99,7 +99,7 @@ export class DataEffect {
             ]).pipe(
                 take(1),
                 switchMap(([snp, loading]) =>
-                    !loading && snp === undefined
+                    !loading && !snp
                         ? of(new fromActions.LoadSnpInfoAction(action.payload))
                         : EMPTY
                 ),

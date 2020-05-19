@@ -7,6 +7,7 @@
             matSort
             #sort1="matSort"
             [dataSource]="_dataSource"
+            (matSortChange)="externalPaginator ? emitChanges(externalPaginator) : null"
             [multiTemplateDataRows]="!!expandCellContentTemplate"
         >
             <!-- Expanded Content Column -->
@@ -85,7 +86,7 @@
         </div>
     </div>
     <mat-paginator
-        *ngIf="paginatorOptions && paginatorLength"
+        *ngIf="paginatorLength"
         [pageSizeOptions]="paginatorOptions"
         [length]="paginatorLength"
         showFirstLastButtons
