@@ -4,16 +4,13 @@ import {
     EventEmitter,
     HostBinding,
     Input,
-    Output,
-    ViewChild,
+    Output, TemplateRef,
+    ViewChild, ViewContainerRef,
 } from "@angular/core";
-import { CdkPortal } from "@angular/cdk/portal";
+import {CdkPortal, ComponentPortal, TemplatePortal} from "@angular/cdk/portal";
 import {
-    Overlay,
-    // OverlayConfig,
+    Overlay, OverlayConfig,
     OverlayRef,
-    ScrollStrategy,
-    ScrollStrategyOptions
 } from "@angular/cdk/overlay";
 
 @Component({
@@ -26,9 +23,8 @@ export class AsbPopoverComponent {
 
     @HostBinding("class.asb-popover")
     private cssClass = true;
-    scrollStrategy: ScrollStrategy;
-    @ViewChild(CdkPortal, {static: true})
-    public portal: CdkPortal;
+    @ViewChild("portal", {static: true})
+    public portalTemplate: TemplateRef<any>;
 
     @Input()
     public title: string;
@@ -45,26 +41,28 @@ export class AsbPopoverComponent {
     private overlayRef: OverlayRef;
     public opened: boolean = false;
 
-    constructor(private overlay: Overlay, private readonly sso: ScrollStrategyOptions) {
-        this.scrollStrategy = this.sso.block();
-
-    }
+    constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) { }
 
     public open(): void {
         if (this.overlayRef) {
             console.warn("Tried to popover, but overlay already opened");
             return;
         }
+        const positionStrategy = this.overlay.position()
+            .global()
+            .centerHorizontally()
+            .centerVertically();
+        const overlayConfig = new OverlayConfig({
+            hasBackdrop: true,
+            scrollStrategy: this.overlay.scrollStrategies.block(),
+            positionStrategy
+        });
 
-        if (!this.portal) {
-            console.warn("Tried to popover, but portal is absent");
-            return;
-        }
-        // const config = new OverlayConfig({
-        //     scrollStrategy: this.scrollStrategy});
-        this.overlayRef = this.overlay.create();
+        this.overlayRef = this.overlay.create(overlayConfig);
+        const filePortal = new TemplatePortal(this.portalTemplate, this.viewContainerRef);
         this.opened = true;
-        this.overlayRef.attach(this.portal);
+        this.overlayRef.attach(filePortal);
+        this.overlayRef.backdropClick().subscribe(() => this.close());
     }
 
     public close(): void {
