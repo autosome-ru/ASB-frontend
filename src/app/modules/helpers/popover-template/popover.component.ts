@@ -7,7 +7,7 @@ import {
     Output, TemplateRef,
     ViewChild, ViewContainerRef,
 } from "@angular/core";
-import {CdkPortal, ComponentPortal, TemplatePortal} from "@angular/cdk/portal";
+import {TemplatePortal} from "@angular/cdk/portal";
 import {
     Overlay, OverlayConfig,
     OverlayRef,
