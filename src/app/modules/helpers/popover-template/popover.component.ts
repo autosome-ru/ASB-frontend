@@ -12,6 +12,7 @@ import {
     Overlay, OverlayConfig,
     OverlayRef,
 } from "@angular/cdk/overlay";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: "asb-popover",
@@ -40,6 +41,7 @@ export class AsbPopoverComponent {
 
     private overlayRef: OverlayRef;
     public opened: boolean = false;
+    private subscriptions: Subscription = new Subscription();
 
     constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) { }
 
@@ -62,14 +64,17 @@ export class AsbPopoverComponent {
         const filePortal = new TemplatePortal(this.portalTemplate, this.viewContainerRef);
         this.opened = true;
         this.overlayRef.attach(filePortal);
-        this.overlayRef.backdropClick().subscribe(() => this.close());
+        this.subscriptions.add(this.overlayRef.backdropClick().subscribe(() => this.close()));
     }
 
     public close(): void {
         this.opened = false;
-        this.overlayRef.dispose();
-        this.overlayRef = null;
-        this.popoverClosed.emit();
+        if (this.overlayRef) {
+            this.overlayRef.dispose();
+            this.overlayRef = null;
+            this.popoverClosed.emit();
+            this.subscriptions.unsubscribe();
+        }
     }
 
 }
