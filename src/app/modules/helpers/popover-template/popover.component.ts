@@ -74,6 +74,7 @@ export class AsbPopoverComponent {
             this.overlayRef = null;
             this.popoverClosed.emit();
             this.subscriptions.unsubscribe();
+            this.subscriptions = new Subscription();
         }
     }
 
