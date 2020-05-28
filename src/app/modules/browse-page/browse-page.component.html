@@ -3,29 +3,30 @@
     style="background: white"
 >
     <h4
-        style="padding-top: 0.5rem"
+        style="padding-top: 0.5rem; display: flex"
     >
-        Browse
-    </h4>
-    <mat-button-toggle-group
-        #group="matButtonToggleGroup"
-        style="margin-bottom: 10px"
-        [value]="initialGroupValue"
-        appearance="legacy"
-        (change)="_groupToggled($event)"
-    >
-        <mat-button-toggle
-            value="tf"
+        <span style="padding-right: 0.5rem; align-self: center;">Browse</span>
+        <mat-button-toggle-group
+            style="font-size: 1rem"
+            #group="matButtonToggleGroup"
+            [value]="initialGroupValue"
+            appearance="legacy"
+            (change)="_groupToggled($event)"
         >
-            Transcription factors
-        </mat-button-toggle>
+            <mat-button-toggle
+                value="tf"
+            >
+                Transcription factors
+            </mat-button-toggle>
 
-        <mat-button-toggle
-            value="cl"
-        >
-            Cell types
-        </mat-button-toggle>
-    </mat-button-toggle-group>
+            <mat-button-toggle
+                value="cl"
+            >
+                Cell types
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </h4>
+
     <div
         style="margin-bottom: -16px"
     >

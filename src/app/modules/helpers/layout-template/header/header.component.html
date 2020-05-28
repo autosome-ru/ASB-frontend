@@ -23,7 +23,7 @@
     >
         <div class="navbar-nav">
             <a
-                class="nav-item nav-link"
+                class="nav-item nav-link py-sm-0"
                 [routerLink]="'/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
                 [queryParams]="_convertFormToParams((searchQuery | async))"
                 [routerLinkActive]="['active']"
@@ -32,7 +32,7 @@
                 Search
             </a>
             <a
-                class="nav-item nav-link"
+                class="nav-item nav-link py-sm-0"
                 [routerLink]="'/browse'"
                 [queryParams]="{by: 'tf'}"
                 [routerLinkActive]="['active']"
@@ -41,7 +41,7 @@
                 Browse
             </a>
             <a
-                class="nav-item nav-link"
+                class="nav-item nav-link py-sm-0"
                 [routerLink]="'/contacts'"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
