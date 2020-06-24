@@ -1,8 +1,8 @@
 import {PhenotypesModel} from "../models/data.model";
 import {AsbServerSideModel} from "../models/table.model";
 
-export const version: string = "v 1.1.2";
-export const releaseName: string = "Durland";
+export const version: string = "v 1.1.3";
+export const releaseName: string = "Waddles";
 
 export const phenotypesToView: {[name: string]: string} = {
     ebi: "EMBL-EBI",

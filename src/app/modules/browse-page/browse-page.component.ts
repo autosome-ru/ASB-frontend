@@ -12,6 +12,7 @@ import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
 import {AsbServerTableComponent} from "../helpers/table-template/server-side/table-server.component";
 import {initialServerParams} from "../../helpers/constants";
+import {getPaginatorOptions} from "../../helpers/check-functions.helper";
 
 
 @Component({
@@ -95,14 +96,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                         this.initialGroupValue = "cl";
                         this.store.dispatch(new fromActions.data.LoadClInfoAction({
                             ...initialServerParams,
-                            pageSize: 10,
+                            pageSize: 25,
                         }));
                         return;
                     case "tf":
                         this.initialGroupValue = "tf";
                         this.store.dispatch(new fromActions.data.LoadTfInfoAction({
                             ...initialServerParams,
-                            pageSize: 10
+                            pageSize: 25
                         }));
                         return;
                     default:
@@ -147,5 +148,9 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         tfOrCl === "cl" ?
             this.store.dispatch(new fromActions.data.LoadClInfoAction(event)) :
             this.store.dispatch(new fromActions.data.LoadTfInfoAction(event));
+    }
+
+    _getPaginatorOptions(length: number): number[] {
+        return getPaginatorOptions(length);
     }
 }

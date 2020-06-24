@@ -4,7 +4,7 @@ import {
     HostBinding, Inject,
     OnInit, PLATFORM_ID,
 } from "@angular/core";
-import {NavigationEnd, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
 
 @Component({
