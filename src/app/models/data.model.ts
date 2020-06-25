@@ -183,6 +183,7 @@ export interface TfInfoModel {
 export interface ClInfoModel {
     clId: string;
     name: string;
+
     aggregatedSnpsCount: number;
     experimentsCount: number;
 }
