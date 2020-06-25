@@ -47,7 +47,7 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
     return {
         experimentsCount: model.experiments_count,
         aggregatedSnpsCount: model.aggregated_snps_count,
-        gtrdId: "" + model.cl_id,
+        clId: "" + model.cl_id,
         name: model.name,
     };
 }

@@ -89,7 +89,7 @@
         *ngIf="paginatorLength"
         [pageSizeOptions]="paginatorOptions"
         [length]="paginatorLength"
-        [pageIndex]="paginatorIndex || paginatorOptions[0]"
+        [pageSize]="paginatorPageSize || paginatorOptions[0]"
         showFirstLastButtons
         class="asb-table__paginator"
     ></mat-paginator>

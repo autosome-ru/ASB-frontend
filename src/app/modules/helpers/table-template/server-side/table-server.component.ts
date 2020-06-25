@@ -65,7 +65,7 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     @Input()
     public paginatorLength: number;
     @Input()
-    public paginatorIndex: number | null
+    public paginatorPageSize: number | null
 
     @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;

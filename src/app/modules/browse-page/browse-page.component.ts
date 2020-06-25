@@ -43,7 +43,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
     public clDisplayedColumns: AsbTableDisplayedColumns<ClInfoModel> = [
         "name",
-        "gtrdId",
+        "clId",
         "aggregatedSnpsCount",
         "experimentsCount",
     ];
@@ -123,7 +123,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             experimentsCount: {view: "Experiments count"}
         };
         this.clColumnModel = {
-            gtrdId: {view: "GTRD ID", columnTemplate: this.cellTypeViewTemplate},
+            clId: {view: "GTRD ID", columnTemplate: this.cellTypeViewTemplate},
             name: {view: "Cell type name"},
             aggregatedSnpsCount: {view: "SNPs count"},
             experimentsCount: {view: "Experiments count"}
