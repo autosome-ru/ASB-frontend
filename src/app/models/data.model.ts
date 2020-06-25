@@ -181,7 +181,7 @@ export interface TfInfoModel {
 }
 
 export interface ClInfoModel {
-    clId: string;
+    gtrdId: string;
     name: string;
     aggregatedSnpsCount: number;
     experimentsCount: number;
