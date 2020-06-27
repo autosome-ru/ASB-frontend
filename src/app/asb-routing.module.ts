@@ -22,15 +22,6 @@ const routes: Routes = [
             description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
     },
-
-    {
-        path: "contacts",
-        loadChildren: () => import(
-            "./modules/contacts-page/contacts-page.module").then(mod => mod.AsbContactsPageModule),
-        data: {
-            title: "ADASTra - contacts"
-        }
-    },
     {
         path: "help",
         loadChildren: () => import(

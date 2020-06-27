@@ -3,13 +3,14 @@ import {CommonModule} from "@angular/common";
 
 import {HelpPageComponent} from "./help-page.component";
 import {AsbHelpPageRoutingModule} from "./help-page-routing.module";
+import {ContactsPageComponent} from "./contacts-page/contacts-page.component";
 
 @NgModule({
     imports: [
         CommonModule,
         AsbHelpPageRoutingModule
     ],
-    declarations: [HelpPageComponent],
+    declarations: [HelpPageComponent, ContactsPageComponent],
 })
 export class AsbHelpPageModule {
 }
