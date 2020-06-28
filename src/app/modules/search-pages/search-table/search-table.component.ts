@@ -134,11 +134,11 @@ export class SearchPageTableComponent implements OnInit {
                     result[convertTfNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log10 FDR"};
+                        helpMessage: "-log₁₀FDR"};
                     result[convertTfNameToValue(s, "Alt")] = {
                         view: convertNameToView(s, "Alt"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log10 FDR"
+                        helpMessage: "-log₁₀FDR"
                     };
                 });
         }
@@ -148,12 +148,12 @@ export class SearchPageTableComponent implements OnInit {
                     result[convertClNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log10 FDR"
+                        helpMessage: "-log₁₀FDR"
                     };
                     result[convertClNameToValue(s, "Alt")] = {
                         view: convertNameToView(s, "Alt"),
                         valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log10 FDR"
+                        helpMessage: "-log₁₀FDR"
                     };
                 });
         }

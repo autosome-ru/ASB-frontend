@@ -84,7 +84,7 @@ export interface TfSnpBackendModel extends TfSnpBackendCutModel {
     motif_log_2_fc: number;
     motif_orientation: boolean;
     motif_position: number;
-    motif_concordance: boolean;
+    motif_concordance: string;
     exp_snps: ExpSnpBackendModel[];
 
 }
@@ -111,7 +111,7 @@ export interface TfSnpModel extends AbstractSnpModel {
     motifFc: number;
     motifOrientation: boolean;
     motifPosition: number;
-    motifConcordance: boolean;
+    motifConcordance: string;
 }
 
 export interface ClSnpModel extends AbstractSnpModel {
