@@ -47,6 +47,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         ...commonInitialDisplayedColumns,
         "motifFc",
+        "motifConcordance"
     ];
 
     private subscriptions: Subscription = new Subscription();
@@ -82,12 +83,16 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             )
         );
         this.commonColumnModel = {
-            effectSizeRef: {view: "Effect size Ref", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-            effectSizeAlt: {view: "Effect size Alt", valueConverter: v => v !== null ? v.toFixed(2) : "NaN"},
-            pValueRef: {view: "-log10 FDR Ref",
+            effectSizeRef: {view: "Effect size Ref",
+                valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
+            },
+            effectSizeAlt: {view: "Effect size Alt",
+                valueConverter: v => v !== null ? v.toFixed(2) : "NaN"
+            },
+            pValueRef: {view: "-log₁₀FDR Ref",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
                 colorStyle: row => this._calculateColor(row, "ref")},
-            pValueAlt: {view: "-log10 FDR Alt",
+            pValueAlt: {view: "-log₁₀FDR Alt",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
                 colorStyle: row => this._calculateColor(row, "alt")},
             meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2)}
@@ -102,7 +107,19 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             ...this.commonColumnModel,
             motifFc: {view: "Motif fold change",
                 valueConverter: v => v !== null ? v.toFixed(2) : "No motif",
-
+                helpMessage: 'log₂(Alt/Ref motif p-value)'
+            },
+            motifPRef: {view: "Motif ref p-value",
+                valueConverter: v => v !== null ? v.toFixed(2) : "No motif",
+                helpMessage: '-log₁₀Ref motif p-value'
+            },
+            motifPAlt: {view: "Motif alt p-value",
+                valueConverter: v => v !== null ? v.toFixed(2) : "No motif",
+                helpMessage: '-log₁₀Alt motif p-value'
+            },
+            motifOrientation: {
+                view: 'Motif orientation',
+                valueConverter: v => v !== null ? v ? '+' : '-' : "No motif",
             },
             motifConcordance: {view: "Motif concordance", valueConverter:
                     v => v !== null ? v ? "concordant" : "discordant"  : "NaN"},
