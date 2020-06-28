@@ -7,6 +7,13 @@
         <h4 style="margin-top: 0.5rem">
             {{isAdvanced ? 'Advanced search' : 'Search'}}
         </h4>
+        <a
+            style="margin: 0.5rem 20px 0 auto"
+            [routerLink]="isAdvanced ? '/search/simple' : '/search/advanced'"
+            [queryParams]="_convertFormToParams(!isAdvanced)"
+        >
+            {{isAdvanced ? 'Simple search' : 'Advanced search'}}
+        </a>
     </div>
     <form
         [formGroup]="searchForm"
@@ -48,6 +55,11 @@
                 >
                     <mat-icon svgIcon="clear"></mat-icon>
                 </button>
+                <mat-hint
+                    *ngIf="!searchForm.get('searchInput').value"
+                >
+                    <a routerLink="/search/simple" [queryParams]="{'rs': 'rs11260841'}">rs11260841</a>
+                </mat-hint>
 
             </mat-form-field>
         </ng-container>
@@ -55,6 +67,7 @@
         <mat-form-field
             *ngIf="_checkToDisplay('pos')"
             style="width: 100px; margin-right: 15px;"
+            floatLabel="always"
         >
             <mat-label>Chromosome</mat-label>
             <mat-select
@@ -112,33 +125,47 @@
                 >
                     * interval end coordinate must be greater than start coordinate
                 </mat-hint>
+
             </mat-form-field>
         </ng-container>
         <div
-            style="display: inline-block; position: relative; top: -3px; margin-bottom: 20px;"
+            style="display: inline-flex; justify-content: space-between; position: relative; top: -3px; margin-bottom: 20px;"
         >
+            <div>
+                <button
+                    *ngIf="!isAdvanced"
+                    class="asb-search__header-demo"
+                    style="margin-right: 15px"
+                    mat-raised-button
+                    [disabled]="_isSearchDisabled()"
+                    (click)="_navigateToSearch()"
+                    color="accent"
+                >
+                    <mat-icon
+                        style="margin-left: -5px; margin-right:5px"
+                        svgIcon="search"
+                    ></mat-icon>
+                    Search
+                </button>
+                <button
+                    *ngIf="!isAdvanced"
+                    style="margin-right: 15px"
+                    class="asb-search__header-demo"
+                    mat-raised-button
+                    matTooltip="+/-100bp"
+                    [disabled]="!_checkToDisplay('searchNear')"
+                    (click)="_nearbySearch()"
+                >
+                    Search SNPs nearby
+                </button>
+            </div>
             <button
-                class="asb-search__header-demo"
-                style="margin-right: 15px"
+                *ngIf="!isAdvanced"
                 mat-raised-button
-                [disabled]="_isSearchDisabled()"
-                (click)="_navigateToSearch()"
-                color="accent"
+                style=" margin-left: auto"
+                (click)="_initDemo()"
             >
-                <mat-icon
-                    style="margin-left: -5px; margin-right:5px"
-                    svgIcon="search"
-                ></mat-icon>
-                Search
-            </button>
-            <button
-                class="asb-search__header-demo"
-                mat-raised-button
-                matTooltip="+/-100bp"
-                [disabled]="!_checkToDisplay('searchNear')"
-                (click)="_nearbySearch()"
-            >
-                Search SNPs nearby
+                Example
             </button>
         </div>
         <ng-container *ngIf="_checkToDisplay('tf')">
@@ -254,18 +281,27 @@
     <div
         class="asb-search__search-buttons mt-2 mt-lg-n2"
     >
-        <a
-            style="margin-right: 20px"
-            mat-raised-button
-            [routerLink]="isAdvanced ? '/search/simple' : '/search/advanced'"
-            [queryParams]="_convertFormToParams(!isAdvanced)"
-        >
-            {{isAdvanced ? 'Simple search' : 'Advanced search'}}
-        </a>
-        <div>
+        <div style="width: 100%; display: flex; justify-content: space-between">
             <button
+                *ngIf="isAdvanced"
+                class="asb-search__header-demo"
+                style="margin-right: 15px"
                 mat-raised-button
-                style="margin-right: 5px"
+                [disabled]="_isSearchDisabled()"
+                (click)="_navigateToSearch()"
+                color="accent"
+            >
+                <mat-icon
+                    style="margin-left: -5px; margin-right:5px"
+                    svgIcon="search"
+                ></mat-icon>
+                Search
+            </button>
+            <div>
+            <button
+                *ngIf="isAdvanced"
+                mat-raised-button
+                style="margin-right: 5px;"
                 (click)="_initDemo()"
             >
                 Example
@@ -281,6 +317,7 @@
                 <span class="d-none d-sm-inline-block">Get search results in TSV</span>
                 <span class="d-sm-none d-inline-block">Get TSV</span>
             </button>
+            </div>
         </div>
     </div>
 </div>

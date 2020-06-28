@@ -232,7 +232,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _getResultsInCsv() {
-        this.toastr.info("May take some time with long results", "Info");
+        this.toastr.info("Please wait, it may take a few seconds.", "Info");
         this.subscriptions.add(
             this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
                 (res) => {
