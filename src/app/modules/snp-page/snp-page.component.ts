@@ -84,10 +84,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         );
         this.commonColumnModel = {
             effectSizeRef: {view: "Effect size Ref",
-                valueConverter: v => v !== null ? v.toFixed(2) : "N/A",
+                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
             },
             effectSizeAlt: {view: "Effect size Alt",
-                valueConverter: v => v !== null ? v.toFixed(2) : "N/A"
+                valueConverter: v => v !== null ? v.toFixed(2) : "n/a"
             },
             pValueRef: {view: "-log₁₀FDR Ref",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
@@ -106,23 +106,23 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             name: {view: "Uniprot ID", valueConverter: v => v},
             ...this.commonColumnModel,
             motifFc: {view: "Motif fold change",
-                valueConverter: v => v !== null ? v.toFixed(2) : "N/A",
+                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 helpMessage: 'log₂(Alt/Ref motif p-value)'
             },
             motifPRef: {view: "Motif ref p-value",
-                valueConverter: v => v !== null ? v.toFixed(2) : "N/A",
+                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 helpMessage: '-log₁₀Ref motif p-value'
             },
             motifPAlt: {view: "Motif alt p-value",
-                valueConverter: v => v !== null ? v.toFixed(2) : "N/A",
+                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 helpMessage: '-log₁₀Alt motif p-value'
             },
             motifOrientation: {
                 view: 'Motif orientation',
-                valueConverter: v => v !== null ? v ? '+' : '-' : "N/A",
+                valueConverter: v => v !== null ? v ? '+' : '-' : "n/a",
             },
             motifConcordance: {view: "Motif concordance", valueConverter:
-                    v => v !== null ? v : "N/A"},
+                    v => v !== null ? v : "n/a"},
         };
     }
     ngOnDestroy() {
