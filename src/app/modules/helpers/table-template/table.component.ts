@@ -60,7 +60,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
     public sortDirection: SortDirection = "";
     public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
         ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
-            1000 * (this.sortDirection !== "desc" ? 1 : -1));
+            sortHeaderId == 'motifConcordance' ? (this.sortDirection !== "desc" ? 'zzzzz' : '00000') : 1000 * (this.sortDirection !== "desc" ? 1 : -1));
     public popoverRow: T;
 
     @Input()
