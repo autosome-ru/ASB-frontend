@@ -62,7 +62,20 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
         ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
             sortHeaderId == 'motifConcordance' ? (this.sortDirection !== "desc" ? 'zzzzz' : '00000') : 1000 * (this.sortDirection !== "desc" ? 1 : -1));
     public popoverRow: T;
-
+    // TODO remove sortingDataAccessor
+    // sortData: ((data: T[], sort: MatSort) => T[])
+    // return this.compareItems(valueA, valueB) * (direction == 'asc' ? 1 : -1);
+    //
+    // private compareItems(itemA: any, itemB: any): number {
+    //     let retVal: number = 0;
+    //     if (itemA && itemB) {
+    //         if (itemA > itemB) retVal = 1;
+    //         else if (itemA < itemB) retVal = -1;
+    //     }
+    //     else if (itemA) retVal = 1;
+    //     else if (itemB) retVal = -1;
+    //     return retVal;
+    // }
     @Input()
     set data(value: Array<T>) {
         this._dataSource = new MatTableDataSource<T>(value);
