@@ -109,13 +109,12 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 helpMessage: 'log₂(Alt/Ref motif p-value)'
             },
-            motifPRef: {view: "Motif ref p-value",
+            motifPRef: {view: "-log₁₀ Motif Ref p-value",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                helpMessage: '-log₁₀Ref motif p-value'
+
             },
-            motifPAlt: {view: "Motif alt p-value",
+            motifPAlt: {view: "-log₁₀ Motif Alt p-value",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                helpMessage: '-log₁₀Alt motif p-value'
             },
             motifOrientation: {
                 view: 'Motif orientation',

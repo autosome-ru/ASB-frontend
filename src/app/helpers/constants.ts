@@ -1,7 +1,7 @@
 import {PhenotypesModel} from "../models/data.model";
 import {AsbServerSideModel} from "../models/table.model";
 
-export const version: string = "v 1.1.3";
+export const version: string = "v 1.1.4";
 export const releaseName: string = "Waddles";
 
 export const phenotypesToView: {[name: string]: string} = {
@@ -11,6 +11,15 @@ export const phenotypesToView: {[name: string]: string} = {
     phewas: "PheWAS",
     finemapping: "Finemapping",
     QTL: "QTL"
+};
+
+export const phenotypesToLink: {[name: string]: (s: string) => string} = {
+    ebi: s => "https://www.ebi.ac.uk/gwas/variants/" + s,
+    grasp: () => "https://grasp.nhlbi.nih.gov/Search.aspx",
+    clinvar: s => "https://www.ncbi.nlm.nih.gov/clinvar/?term=" + s,
+    phewas: () => "https://phewascatalog.org/ ",
+    finemapping: () => "http://pubs.broadinstitute.org/pubs/finemapping/dataportal.php",
+    QTL: s => "https://www.gtexportal.org/home/snp/" + s
 };
 
 export const phenotypesModelExample: PhenotypesModel = {

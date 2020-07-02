@@ -2,7 +2,17 @@
     <dl class="row px-0 mx-0"
         *ngFor="let db of phenotypesDb"
     >
-        <dt class="col-auto">{{phenToView[db]}}</dt>
+        <dt
+            class="col-auto" style="padding-left: 0"
+        >
+            <a
+                [href]="phenToLink[db](snpData.rsId)"
+                target="_blank"
+                rel="_noopener _noreferrer"
+            >
+                {{phenToView[db]}}
+            </a>
+        </dt>
         <dd
             *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
             style="display: flex; flex-wrap: wrap"

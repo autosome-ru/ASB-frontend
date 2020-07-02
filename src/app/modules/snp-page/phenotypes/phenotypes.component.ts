@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from "@angular/core";
 import {SnpInfoModel} from "../../../models/data.model";
-import {phenotypesToView} from "../../../helpers/constants";
+import {phenotypesToLink, phenotypesToView} from "../../../helpers/constants";
 
 @Component({
     selector: "asb-phenotypes",
@@ -15,11 +15,13 @@ export class PhenotypesComponent implements OnInit {
 
     public phenotypesDb: string[];
     readonly phenToView: { [p: string]: string } = phenotypesToView;
+    public phenToLink: { [p: string]: (s: string) => string };
     constructor() { }
 
     ngOnInit(): void {
         this.phenotypesDb = Object.keys(this.snpData.phenotypes).filter(
             s => this.snpData.phenotypes[s].length > 0);
+        this.phenToLink = phenotypesToLink
     }
 
 }
