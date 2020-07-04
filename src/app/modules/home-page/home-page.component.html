@@ -1,76 +1,47 @@
 <div class="asb-home__title-wrapper">
     <div class="asb-home__headline ">
-        <div class="asb-home__headline-wrapper">
-            <div [ngStyle]="{'opacity': opacity}">
-                <h1
-                    style="color: #fff; text-align: center;"
-                >
-                    ADASTra
-                </h1>
-                <ng-container
-
-                    [ngTemplateOutlet]="descriptionTemplate"
-                    [ngTemplateOutletContext]="{value: 'large'}"
-                >
-
-                </ng-container>
-            </div>
-        </div>
+        <img
+            class="asb-home__image"
+            src="assets/images/ADASTRA_logo7.png"
+        >
     </div>
 </div>
-
-<div class="asb-home__content-wrapper">
-
-    <div
-        class="container justify-content-center mx-auto py-sm-3"
-        style=" background-color: white"
+<h5
+    style="text-align: center; margin-top:0.75rem"
+>
+    <u class="font-weight-bold">A</u>llelic
+    <u class="font-weight-bold">D</u>osage corrected
+    <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
+    <u class="font-weight-bold">Tra</u>nscription factor binding sites
+</h5>
+<div style="margin-bottom: 1rem">
+<ng-container *ngIf="totalInfo$ | async as totalInfo">
+    <h5
+        style="text-align: center"
     >
-        <ng-container
+        Transcription factors:&nbsp;
 
-            [ngTemplateOutlet]="descriptionTemplate"
-            [ngTemplateOutletContext]="{value: 'small'}"
+        <a
+            style="text-decoration: underline"
+            [routerLink]="'/browse'"
+            [queryParams]="{by: 'tf'}"
         >
-
-        </ng-container>
-        <asb-search [width]="'full'"></asb-search>
-    </div>
+            {{totalInfo.transcriptionFactorsCount}}</a>
+        &nbsp;&nbsp;&nbsp;Cell types:&nbsp;
+        <a
+            style="text-decoration: underline"
+            [routerLink]="'/browse'"
+            [queryParams]="{by: 'cl'}"
+        >
+            {{totalInfo.cellTypesCount}}</a>
+    </h5>
+    <h5
+        style="text-align: center"
+    >
+        Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</h5>
+</ng-container>
+</div>
+<div class="container mat-elevation-z2 p-0" >
+    <asb-search [width]="'full'"></asb-search>
 </div>
 
-<ng-template #descriptionTemplate let-value="value">
-    <h4
-        style="text-align: center;"
-        [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
-    >
-        <u class="font-weight-bold">A</u>llelic
-        <u class="font-weight-bold">D</u>osage corrected
-        <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
-        <u class="font-weight-bold">Tra</u>nscription factor binding sites
-    </h4>
-    <ng-container *ngIf="totalInfo$ | async as totalInfo">
-        <h5
-            style="text-align: center"
-            [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
-        >
-            Transcription factors:&nbsp;
-
-            <a
-                style="text-decoration: underline"
-                [routerLink]="'/browse'"
-                [queryParams]="{by: 'tf'}"
-            >
-                {{totalInfo.transcriptionFactorsCount}}</a>
-            &nbsp;&nbsp;&nbsp;Cell types:&nbsp;
-            <a
-                style="text-decoration: underline"
-                [routerLink]="'/browse'"
-                [queryParams]="{by: 'cl'}"
-            >
-                {{totalInfo.cellTypesCount}}</a>
-        </h5>
-        <h5
-            style="text-align: center"
-            [class]="value === 'large' ? 'd-md-block d-none text-white' : 'd-md-none'"
-        >
-            Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</h5>
-    </ng-container>
-</ng-template>
