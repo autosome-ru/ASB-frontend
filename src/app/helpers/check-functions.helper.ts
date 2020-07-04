@@ -40,6 +40,7 @@ export function checkOneResult(searchData: SnpSearchModel[]): boolean {
 
 export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: boolean,
                                     searchData?: SnpSearchModel[]): Partial<SearchParamsModel> {
+    form.searchInput = form.searchInput ? form.searchInput.trim() : form.searchInput
     if (form && !form.isAdvanced) {
         if (form && form.searchBy) {
             if (form.searchBy === "pos" || (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced)) {
