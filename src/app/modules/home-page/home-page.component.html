@@ -3,6 +3,7 @@
         <img
             class="asb-home__image"
             src="assets/images/ADASTRA_logo7.png"
+            alt=""
         >
     </div>
 </div>
@@ -10,13 +11,13 @@
     style="text-align: center; margin-top:0.75rem"
 >
     <u class="font-weight-bold">A</u>llelic
-    <u class="font-weight-bold">D</u>osage corrected
+    <u class="font-weight-bold">D</u>osage-corrected
     <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
     <u class="font-weight-bold">Tra</u>nscription factor binding sites
 </h5>
 <div style="margin-bottom: 1rem">
 <ng-container *ngIf="totalInfo$ | async as totalInfo">
-    <h5
+    <h6
         style="text-align: center"
     >
         Transcription factors:&nbsp;
@@ -34,11 +35,9 @@
             [queryParams]="{by: 'cl'}"
         >
             {{totalInfo.cellTypesCount}}</a>
-    </h5>
-    <h5
-        style="text-align: center"
-    >
-        Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</h5>
+        Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}
+    </h6>
+
 </ng-container>
 </div>
 <div class="container mat-elevation-z2 p-0" >
