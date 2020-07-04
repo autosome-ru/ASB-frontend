@@ -21,6 +21,7 @@ export function checkIfNumberOrFrac(data: string ) {
 
 
 export function isValidPosInterval(search: string): boolean {
+    search = search.trim()
     if (search.match(/^\d+-\d+$/)) {
         const posArray: string[] = search.split("-");
         if (posArray.length === 2) {
