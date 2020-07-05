@@ -1,19 +1,12 @@
 @import "~src/styles/shared/colors.less";
+@import "~src/styles/shared/layout.less";
 .asb-layout {
     margin-right: 0;
     margin-left: 0;
     padding-left: 0;
     padding-right: 0;
-    min-height: calc(100vh - 112px);
-    min-height: -webkit-calc(100vh - 112px);
-    min-height: -moz-calc(100vh - 112px);
+    min-height: @content-height;
     background: linear-gradient(180deg,hsla(0,0%,98%,.95) 0,hsla(0,0%,98%,.95) 50%,hsla(0,0%,98%,.95)),url('/assets/images/heck.png') no-repeat 50% fixed;
     background-size: cover;
 }
-@media only screen and (max-width: 457px) {
-    .asb-layout {
-        min-height: calc(100vh - 126px);
-        min-height: -webkit-calc(100vh - 126px);
-        min-height: -moz-calc(100vh - 126px);
-    }
-}
+
