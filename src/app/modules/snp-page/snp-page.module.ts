@@ -21,6 +21,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { ColorScalesComponent } from "./color-scales/color-scales.component";
 import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
         MatTableModule,
         MatSortModule,
         MatTooltipModule,
-        AsbSnpPageRoutingModule
+        AsbSnpPageRoutingModule,
+        MatDividerModule
     ],
     declarations: [
         SnpPageComponent,
