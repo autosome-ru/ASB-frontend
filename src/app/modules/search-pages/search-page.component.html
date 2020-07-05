@@ -124,16 +124,18 @@
 
 
 <ng-template #tableViewTemplate>
-    <asb-search-table
-        #searchTableComponent
-        *ngIf="(searchSnpResults$ | async)?.results.length > 0"
-        [searchResults$]="searchSnpResults$"
-        [paginator]="paginator"
-        [dataChanged]="searchSnpResultsChanged$ | async"
-        (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
-        (tableChangeEmitter)="_handlePaginationChange($event)"
-    >
-    </asb-search-table>
+    <div class="mat-elevation-z2">
+        <asb-search-table
+            #searchTableComponent
+            *ngIf="(searchSnpResults$ | async)?.results.length > 0"
+            [searchResults$]="searchSnpResults$"
+            [paginator]="paginator"
+            [dataChanged]="searchSnpResultsChanged$ | async"
+            (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
+            (tableChangeEmitter)="_handlePaginationChange($event)"
+        >
+        </asb-search-table>
+    </div>
 </ng-template>
 
 
