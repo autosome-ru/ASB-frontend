@@ -47,7 +47,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         ...commonInitialDisplayedColumns,
         "motifFc",
-        "motifConcordance"
+        "motifConcordance",
     ];
 
     private subscriptions: Subscription = new Subscription();
@@ -79,22 +79,28 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                     description: this.route.snapshot.data.description(this.id),
                     keywords: s.transFactors.slice(0, 10).join(","),
                 }) :
-                    null
+                null
             )
         );
         this.commonColumnModel = {
-            effectSizeRef: {view: "Effect size Ref",
+            effectSizeRef: {
+                view: "Effect size Ref",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
             },
-            effectSizeAlt: {view: "Effect size Alt",
+            effectSizeAlt: {
+                view: "Effect size Alt",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a"
             },
-            pValueRef: {view: "-log₁₀FDR Ref",
+            pValueRef: {
+                view: "-log₁₀FDR Ref",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
-                colorStyle: row => this._calculateColor(row, "ref")},
-            pValueAlt: {view: "-log₁₀FDR Alt",
+                colorStyle: row => this._calculateColor(row, "ref")
+            },
+            pValueAlt: {
+                view: "-log₁₀FDR Alt",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
-                colorStyle: row => this._calculateColor(row, "alt")},
+                colorStyle: row => this._calculateColor(row, "alt")
+            },
             meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2)}
         };
 
@@ -105,25 +111,36 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.tfColumnModel = {
             name: {view: "Uniprot ID", valueConverter: v => v},
             ...this.commonColumnModel,
-            motifFc: {view: "Motif fold change",
+            motifFc: {
+                view: "Motif fold change",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 helpMessage: 'log₂(Alt/Ref motif p-value)'
             },
-            motifPRef: {view: "-log₁₀ Motif Ref p-value",
+            motifPRef: {
+                view: "-log₁₀ Motif Ref p-value",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
 
             },
-            motifPAlt: {view: "-log₁₀ Motif Alt p-value",
+            motifPAlt: {
+                view: "-log₁₀ Motif Alt p-value",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
             },
             motifOrientation: {
                 view: 'Motif orientation',
                 valueConverter: v => v !== null ? v ? '+' : '-' : "n/a",
             },
-            motifConcordance: {view: "Motif concordance", valueConverter:
-                    v => v !== null ? v : "n/a"},
+            motifConcordance: {
+                view: "Motif concordance",
+                valueConverter: v => v !== null ? v : "n/a",
+            },
+            motifPosition: {
+                view: "Motif position",
+                valueConverter: v => v !== null ? '' + (v + 1) : "n/a",
+                helpMessage: 'SNP position relative to the TF motif (1-based)'
+            },
         };
     }
+
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }
@@ -139,11 +156,11 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.dataService.getSnpInfoByIdCsv(
                 this.id, this.alt, where, options.columns, options.filter).subscribe(
-            (res) => {
+                (res) => {
                     this.saverService.save(res,
-                    `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
+                        `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
                 },
-            (err) => {
+                (err) => {
                     this.toastr.error(err.message, "Error");
                 }
             )
@@ -158,7 +175,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                         {type: "application/json"});
                     this.saverService.save(blob, `AD_ASTRA_page_${this.id}_${this.alt}.json`);
                 },
-            (err) => {
+                (err) => {
                     console.log(err);
                 }
             )
@@ -168,7 +185,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     _calculateColor(row: TfSnpModel | ClSnpModel, w: "ref" | "alt"): string {
         return w === "ref" ?
             calculateColorForOne(row.pValueRef,
-            row.refBase) :
+                row.refBase) :
             calculateColorForOne(row.pValueAlt,
                 row.altBase);
     }
@@ -177,6 +194,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         return (row: ClSnpModel | TfSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase}` +
             (where === "cl" ? " in " : " of ") + this._getName(row);
     }
+
     _getName(row: ClSnpModel | TfSnpModel) {
         return row ? row.name : "fail";
     }

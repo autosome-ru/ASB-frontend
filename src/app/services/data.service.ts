@@ -72,11 +72,23 @@ function changeName(name: string, tfOrCl: TfOrCl): string {
         case "effectSizeAlt": {
             return "es_alt";
         }
+        case "motifPRef": {
+            return "motif_log_p_ref"
+        }
+        case "motifPAlt": {
+            return "motif_log_p_alt"
+        }
         case "motifConcordance": {
             return "motif_concordance";
         }
+        case "motifOrientation": {
+            return "motif_orientation";
+        }
         case "motifFc": {
             return "motif_log_2_fc";
+        }
+        case "motifPosition": {
+            return "motif_position";
         }
     }
 }
