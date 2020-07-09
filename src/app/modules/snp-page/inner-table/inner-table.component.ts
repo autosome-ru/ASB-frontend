@@ -60,17 +60,15 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
             align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
-            rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => (-Math.log10(v)).toFixed(2)},
-            rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => (-Math.log10(v)).toFixed(2)}
+            rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2)},
+            rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => v.toFixed(2)}
 
         };
     }
 
     ngAfterViewInit() {
         if (this._dataSource) {
-            // this.sort.sort(({ id: 'rawPValueRef', start: 'asc'}) as MatSortable);
             this._dataSource.sort = this.sort;
-            console.log(this._dataSource.sort)
             this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
             this._dataSource.paginator = this.paginator;
         }

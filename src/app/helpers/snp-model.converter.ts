@@ -163,8 +163,8 @@ function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSn
 
 function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
     return {
-        rawPValueAlt: s.p_value_alt,
-        rawPValueRef: s.p_value_ref,
+        rawPValueAlt: -Math.log10(s.p_value_alt),
+        rawPValueRef: -Math.log10(s.p_value_ref),
         bad: s.bad,
         altReadCount: s.alt_readcount,
         refReadCount: s.ref_readcount,
