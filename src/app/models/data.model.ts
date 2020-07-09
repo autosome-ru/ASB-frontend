@@ -135,8 +135,8 @@ export interface ExpSnpBackendModel {
 export interface ExpSnpModel {
     refReadCount: number;
     altReadCount: number;
-    pValueRef: number;
-    pValueAlt: number;
+    rawPValueRef: number;
+    rawPValueAlt: number;
     bad: string;
     expId: number;
     align: number;

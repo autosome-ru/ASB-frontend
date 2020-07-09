@@ -45,6 +45,9 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
     public externalPaginator: MatPaginator;
 
     @Input()
+    public isEmpty: boolean;
+
+    @Input()
     public getTitle: (row: T) => string = null;
 
     @Input()

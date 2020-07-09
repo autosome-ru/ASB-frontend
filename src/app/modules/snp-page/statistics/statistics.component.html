@@ -88,6 +88,7 @@
             #tableViewTFCL
             [columnModel]="tableColumnModel"
             [displayedColumns]="tableDisplayedColumns"
+            [isEmpty]="objectData.length == 0"
             [data]="filteredObjectData"
             [popoverContentTemplate]="popoverContentTemplate"
             [getTitle]="snpName"
@@ -99,7 +100,9 @@
 
 <ng-template #popoverContentTemplate let-row="row">
     <asb-inner-table
-        [innerTableData]="row ? row.expSnps : []"
+        *ngIf="row"
+        [innerTableData]="row.expSnps"
+        [sortColumn]="row.pValueRef > row.pValueAlt ? 'ref' : 'alt'"
     ></asb-inner-table>
 </ng-template>
 

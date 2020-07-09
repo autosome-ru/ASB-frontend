@@ -4,7 +4,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/tab
 import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, MatSortable, Sort} from "@angular/material/sort";
 
 @Component({
     selector: "asb-inner-table",
@@ -26,12 +26,14 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
 
     public columnModel: AsbTableColumnModel<ExpSnpModel>;
     public displayedColumns: AsbTableDisplayedColumns<ExpSnpModel> = [
-        "refReadCount",
-        "altReadCount",
         "align",
         "clName",
         "tfName",
+        "refReadCount",
+        "altReadCount",
         "bad",
+        "rawPValueRef",
+        "rawPValueAlt",
     ];
 
     private sortingDataAccessor: ((data: ExpSnpModel, id: string) => string | number) = (
@@ -47,6 +49,9 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
         this._dataSource.paginator = this.paginator;
     }
 
+    @Input()
+    sortColumn: 'ref' | 'alt' | '';
+
     ngOnInit(): void {
         this.columnModel = {
             bad: {view: "Estimated BAD", valueConverter: v => v},
@@ -55,12 +60,17 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
             align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
+            rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => (-Math.log10(v)).toFixed(2)},
+            rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => (-Math.log10(v)).toFixed(2)}
+
         };
     }
 
     ngAfterViewInit() {
         if (this._dataSource) {
+            // this.sort.sort(({ id: 'rawPValueRef', start: 'asc'}) as MatSortable);
             this._dataSource.sort = this.sort;
+            console.log(this._dataSource.sort)
             this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
             this._dataSource.paginator = this.paginator;
         }

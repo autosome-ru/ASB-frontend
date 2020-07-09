@@ -39,6 +39,7 @@
 
                 <mat-tab-group
                     animationDuration="0ms"
+                    [selectedIndex]="(snpData$ | async)?.transFactors.length > 0 ? 0 : 1"
                 >
                     <mat-tab>
                         <ng-container

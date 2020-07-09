@@ -1,4 +1,4 @@
-<div class="asb-table" >
+<div class="asb-table" *ngIf="!isEmpty; else emptyContentTemplate">
     <div class="asb-table__table" style="min-width: 100%">
         <table
             style="padding-left: 5px; padding-right: 5px; width:100%"
