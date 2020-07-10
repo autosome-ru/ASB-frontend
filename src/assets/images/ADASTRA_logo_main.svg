@@ -2399,40 +2399,6 @@
      d="m 137.97254,209.46208 h -1.69964 l -1.17606,-3.3429 h -5.18754 l -1.17605,3.3429 h -1.61909 l 4.3659,-11.99417 h 2.12657 z m -3.36706,-4.71228 -2.10241,-5.88834 -2.11046,5.88834 z"
      style="stroke-width:0.41242543"
      id="path1504" /></g>
-<animate
-   href="#path1538"
-   attributeName="cx"
-   from="86.107666"
-   to="87.107666"
-   dur="0.5s"
-   begin="path2654.mouseover"
-   fill="freeze" />
-<animate
-   href="#path1538"
-   attributeName="cx"
-   from="87.107666"
-   to="86.107666"
-   dur="1s"
-   fill="freeze"
-   begin="path2654.mouseout" />
-<animate
-   href="#path1538-7"
-   attributeName="cx"
-   id="right-eye-forward"
-   from="129.28616"
-   to="130.28616"
-   dur="0.5s"
-   fill="freeze"
-   begin="path2654.mouseover" />
-<animate
-   href="#path1538-7"
-   attributeName="cx"
-   id="right-eye-backward"
-   from="130.28616"
-   to="129.28616"
-   dur="1s"
-   fill="freeze"
-   begin="path2654.mouseout" />
 <flowRoot
    xml:space="preserve"
    id="flowRoot1510"

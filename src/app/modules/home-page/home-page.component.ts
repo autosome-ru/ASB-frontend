@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, HostBinding, HostListener, Inject, OnInit, PLATFORM_ID} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component, ElementRef,
+    HostBinding,
+    Inject, OnDestroy,
+    OnInit,
+    PLATFORM_ID,
+    ViewChild
+} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
 import {AppState} from "../../store/reducer";
@@ -16,28 +24,13 @@ import {SeoService} from "../../services/seo.servise";
     styleUrls: [ "./home-page.component.less" ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-home")
     private readonly cssClass = true;
-
-
-    opacity: number = 1;
+    @ViewChild('svgContainer', {static: true})
+    public svgContainer: ElementRef<HTMLObjectElement>;
     isBrowser: boolean;
     public totalInfo$: Observable<TotalInfoModel>;
-
-    @HostListener("window:scroll", [])
-    onScroll() {
-        if (this.isBrowser) {
-            const pos = (document.documentElement.scrollTop || document.body.scrollTop);
-            if (pos) {
-                this.opacity = 1 - 3 * pos / document.documentElement.offsetWidth;
-            } else {
-                this.opacity = 1;
-            }
-        }
-
-    }
-
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -53,6 +46,40 @@ export class HomePageComponent implements OnInit {
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
 
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());
+        if (this.isBrowser) {
+            document.addEventListener('mousemove',
+                event => {
+                    const ded = this.svgContainer.nativeElement.contentDocument
+                    const headerHeight: number = 56;
+                    if (ded) {
+                        const dedWidth: number = this.svgContainer.nativeElement.offsetWidth
+                        const marginLeft: number = (document.documentElement.offsetWidth - dedWidth) / 2
+                        const leftEye = ded.getElementById('path1538');
+                        function moveEye(eye: HTMLElement, centerX: number, centerY: number) {
+                            const angleLeft = Math.atan2((event.y - (eye.getBoundingClientRect().y + headerHeight)), (event.x - (eye.getBoundingClientRect().x + marginLeft)))
+                            eye.setAttribute('cx', '' + (centerX + Math.cos(angleLeft)))
+                            eye.setAttribute('cy', '' + (centerY + Math.sin(angleLeft) / 2))
+                        }
+                        if (leftEye) {
+                            const leftEyeCenterX: number = 87.507666
+                            const leftEyeCenterY: number = 127.65275
+                            moveEye(leftEye, leftEyeCenterX, leftEyeCenterY)
+                        }
+                        const rightEye = ded.getElementById('path1538-7')
+                        if (rightEye) {
+                            const rightEyeCenterX: number = 129.68616
+                            const rightEyeCenterY: number = 100.84577
+                            moveEye(rightEye, rightEyeCenterX, rightEyeCenterY)
+                        }
+
+                    }
+                })
+        }
 
     }
+
+    ngOnDestroy() {
+
+    }
+
 }
