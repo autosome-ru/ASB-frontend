@@ -25,8 +25,7 @@ export class AsbMotifsComponent implements OnInit {
     }
 
     makeImagePath(tf: TfSnpModel): string {
-        console.log(tf)
-        return "assets/images/ADASTRA_logo_main.svg"
+        return `static/${tf.name}_${tf.rsId}_${tf.altBase}.png`
     }
 
 }
