@@ -214,10 +214,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 Math.max(b.effectSizeAlt, b.effectSizeRef) - Math.max(a.effectSizeAlt, a.effectSizeRef))
     }
 
-    getExpandedIndex(tfSnpModels: TfSnpModel[]) {
-        return tfSnpModels.indexOf(this.openedTf)
-    }
-
     openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
         this.openedTf = $event
         const id = tfs.indexOf(this.openedTf)
@@ -227,10 +223,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         document.getElementById('tf' + id).scrollIntoView({behavior: "smooth"})
     }
 
-    makeImagePath(tf: TfSnpModel): string {
-        console.log(tf)
-        return "assets/images/ADASTRA_logo_main.svg"
-    }
 }
 
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [

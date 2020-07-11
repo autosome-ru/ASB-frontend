@@ -1,0 +1,27 @@
+<mat-accordion>
+    <mat-expansion-panel
+        *ngFor="let tf of transcriptionFactors; let first=first; let i=index"
+        class="mat-elevation-z1"
+        [expanded]="getExpandedIndex(transcriptionFactors) === - 1 ? first: getExpandedIndex(transcriptionFactors) === i"
+        [id]="'tf' + i"
+    >
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{tf.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{tf.motifConcordance}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+            <img
+                style=" width: 100%; max-height: 80vh"
+                [src]="makeImagePath(tf)"
+                alt=""
+            >
+            <button mat-raised-button matTooltip="Will be available soon">Download in SVG</button>
+        </ng-template>
+
+
+    </mat-expansion-panel>
+</mat-accordion>

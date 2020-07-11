@@ -85,28 +85,12 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <ng-container *ngIf="_getGoodTfs((snpData.transFactors)) && _getGoodTfs((snpData.transFactors)).length > 0; else noMotifAnalysisTemplate">
-                    <mat-accordion>
-                        <mat-expansion-panel
-                            *ngFor="let tf of _getGoodTfs((snpData.transFactors)); let first=first; let i=index"
-                            class="mat-elevation-z1"
-                            [expanded]="getExpandedIndex(_getGoodTfs((snpData.transFactors))) === - 1 ? first: getExpandedIndex(_getGoodTfs((snpData.transFactors))) === i"
-                            [id]="'tf' + i"
-                        >
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    {{tf.name}}
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                    {{tf.motifConcordance}}
-                                </mat-panel-description>
-                            </mat-expansion-panel-header>
-                            <ng-template [ngTemplateOutlet]="matExpansionPanelContent"
-                                          [ngTemplateOutletContext]="{tf: tf}"></ng-template>
+                    <asb-motifs
+                        [transcriptionFactors]="_getGoodTfs((snpData.transFactors))"
+                        [openedTf]="openedTf"
+                    >
 
-
-                            <button mat-raised-button>Download in SVG</button>
-                        </mat-expansion-panel>
-                    </mat-accordion>
+                    </asb-motifs>
                 </ng-container>
             </mat-expansion-panel>
             <mat-divider></mat-divider>
@@ -179,11 +163,4 @@
 
 <ng-template #noMotifAnalysisTemplate>
     No concordant/discordant #FIXME
-</ng-template>
-<ng-template #matExpansionPanelContent let-tf="tf">
-    <img
-        style=" width: 100%; max-height: 80vh"
-        [src]="makeImagePath(tf)"
-        alt=""
-    >
 </ng-template>

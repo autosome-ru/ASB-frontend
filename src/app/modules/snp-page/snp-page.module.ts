@@ -22,6 +22,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { ColorScalesComponent } from "./color-scales/color-scales.component";
 import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
+import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 
 @NgModule({
     imports: [
@@ -51,6 +52,7 @@ import {MatDividerModule} from "@angular/material/divider";
         PhenotypesComponent,
         InnerTableComponent,
         ColorScalesComponent,
+        AsbMotifsComponent
     ],
 })
 export class AsbSnpPageModule {

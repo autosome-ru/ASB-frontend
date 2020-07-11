@@ -1,7 +1,7 @@
 import {PhenotypesModel} from "../models/data.model";
 import {AsbServerSideModel} from "../models/table.model";
 
-export const version: string = "v1.2.2";
+export const version: string = "v1.3.0";
 export const releaseName: string = "Waddles";
 
 export const phenotypesToView: {[name: string]: string} = {
