@@ -37,6 +37,8 @@ export class AsbStatisticsComponent<T> implements OnInit {
 
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
+    @Input()
+    action: (row: T) => boolean
 
     @Input()
     public readonly snpName: (row: T) => string;
@@ -55,6 +57,9 @@ export class AsbStatisticsComponent<T> implements OnInit {
     originalOrder = ((): number => {
         return 0;
     });
+    @Output()
+    actionClicked = new EventEmitter<T>();
+
 
 
     constructor(private formBuilder: FormBuilder) {}

@@ -93,6 +93,9 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
     public paginatorOptions: number[];
 
     @Input()
+    public action: (row: T) => boolean
+
+    @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;
 
 
@@ -100,6 +103,9 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
 
     @Output()
     public rowClickEmitter = new EventEmitter<T>();
+    @Output()
+    actionClicked = new EventEmitter<T>();
+
 
     ngAfterViewInit() {
         if (this._dataSource) {
@@ -139,6 +145,15 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
 
     _changeCurrentSortDirection(currentSort: Sort) {
         this.sortDirection = currentSort.direction;
+    }
+
+    getDisplayedColumns(): string[] {
+        const result = []
+        result.push(...this.displayedColumns);
+        if (this.action) {
+            result.push("__action__")
+        }
+        return result
     }
 }
 

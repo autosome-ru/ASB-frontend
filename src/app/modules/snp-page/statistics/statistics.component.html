@@ -90,6 +90,8 @@
             [displayedColumns]="tableDisplayedColumns"
             [isEmpty]="objectData.length == 0"
             [data]="filteredObjectData"
+            [action]="action"
+            (actionClicked)="actionClicked.emit($event)"
             [popoverContentTemplate]="popoverContentTemplate"
             [getTitle]="snpName"
             [paginatorOptions]="_getPaginatorOptions()"

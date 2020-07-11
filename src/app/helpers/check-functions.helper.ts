@@ -41,24 +41,22 @@ export function checkOneResult(searchData: SnpSearchModel[]): boolean {
 
 export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: boolean,
                                     searchData?: SnpSearchModel[]): Partial<SearchParamsModel> {
-    if (form) {
-        form.searchInput = form.searchInput ? form.searchInput.trim() : form.searchInput
-    }
+
     if (form && !form.isAdvanced) {
         if (form && form.searchBy) {
             if (form.searchBy === "pos" || (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced)) {
                 if (form.searchInput) {
                     return {
-                        pos: form.searchInput,
+                        pos: form.searchInput.trim(),
                         chr: form.chromosome,
                     };
                 }  else return {};
             } else {
-                return form.searchInput ? {rs: form.searchInput} : {};
+                return form.searchInput ? {rs: form.searchInput.trim()} : {};
             }
 
         } else {
-            return form.searchInput ? {pos: form.searchInput, chr: form.chromosome} : {};
+            return form.searchInput ? {pos: form.searchInput.trim(), chr: form.chromosome} : {};
         }
 
     } else {
@@ -67,11 +65,11 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
             if (form.clList.length > 0) result.cl = form.clList.join(",");
             if (form.searchInput) {
                 if (checkOneResult(searchData) &&
-                    !isValidPosInterval(form.searchInput)) {
+                    !isValidPosInterval(form.searchInput.trim())) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr;
                 } else {
-                    result.pos = form.searchInput;
+                    result.pos = form.searchInput.trim();
                     result.chr = form.chromosome;
                 }
             } else if (form.chromosome && form.chromosome !== "any chr") {

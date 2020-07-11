@@ -50,7 +50,7 @@ import {MatDividerModule} from "@angular/material/divider";
         AsbStatisticsComponent,
         PhenotypesComponent,
         InnerTableComponent,
-        ColorScalesComponent
+        ColorScalesComponent,
     ],
 })
 export class AsbSnpPageModule {

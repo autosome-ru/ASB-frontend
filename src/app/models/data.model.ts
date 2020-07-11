@@ -64,6 +64,8 @@ export interface ClSnpBackendModel extends ClSnpBackendCutModel {
     es_alt: number;
     exp_snps: ExpSnpBackendModel[];
 }
+
+
 export interface TfSnpBackendCutModel {
     tf_snp_id: number;
     transcription_factor: {

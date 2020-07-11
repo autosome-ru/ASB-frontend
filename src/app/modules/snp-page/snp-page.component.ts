@@ -14,7 +14,8 @@ import * as moment from "moment";
 import {calculateColorForOne} from "../../helpers/colors.helper";
 import {SeoService} from "../../services/seo.servise";
 import {ToastrService} from "ngx-toastr";
-
+import {MatExpansionPanel} from "@angular/material/expansion";
+import {AsbPopoverComponent} from "../helpers/popover-template/popover.component";
 
 @Component({
     selector: "asb-snp-page",
@@ -28,6 +29,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
     @ViewChild("transcriptionFactors", {static: true})
     public tfStats: AsbStatisticsComponent<TfSnpModel>;
+
+    @ViewChild('motifPanel')
+    public motifPanel: MatExpansionPanel
 
     public id: string;
     public alt: string;
@@ -51,6 +55,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
 
     private subscriptions: Subscription = new Subscription();
+    openedTf: TfSnpModel;
 
     constructor(
         private store: Store<AppState>,
@@ -197,6 +202,34 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     _getName(row: ClSnpModel | TfSnpModel) {
         return row ? row.name : "fail";
+    }
+
+    filterCondition(tf: TfSnpModel): boolean {
+        return !!(tf.motifConcordance && tf.motifConcordance !== "No Hit")
+    }
+
+    _getGoodTfs(tfs: TfSnpModel[]): TfSnpModel[] {
+        return tfs.filter(s => this.filterCondition(s)).sort(
+            (a, b) =>
+                Math.max(b.effectSizeAlt, b.effectSizeRef) - Math.max(a.effectSizeAlt, a.effectSizeRef))
+    }
+
+    getExpandedIndex(tfSnpModels: TfSnpModel[]) {
+        return tfSnpModels.indexOf(this.openedTf)
+    }
+
+    openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
+        this.openedTf = $event
+        const id = tfs.indexOf(this.openedTf)
+        if (this.motifPanel.closed) {
+            this.motifPanel.open()
+        }
+        document.getElementById('tf' + id).scrollIntoView({behavior: "smooth"})
+    }
+
+    makeImagePath(tf: TfSnpModel): string {
+        console.log(tf)
+        return "assets/images/ADASTRA_logo_main.svg"
     }
 }
 
