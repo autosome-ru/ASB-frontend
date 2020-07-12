@@ -24,8 +24,7 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/assets",
-              "src/pngs"
+              "src/assets"
             ],
             "styles": [
               "src/styles/theme/theme.sass",
