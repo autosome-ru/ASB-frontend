@@ -25,7 +25,7 @@ export class AsbMotifsComponent implements OnInit {
     }
 
     makeImagePath(tf: TfSnpModel): string {
-        return `static/${tf.name}_${tf.rsId}_${tf.altBase}.png`
+        return `pngs/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}.png`
     }
 
 }

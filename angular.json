@@ -25,7 +25,7 @@
             "aot": true,
             "assets": [
               "src/assets",
-              "src/static"
+              "src/pngs"
             ],
             "styles": [
               "src/styles/theme/theme.sass",
