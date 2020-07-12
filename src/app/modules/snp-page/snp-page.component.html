@@ -86,8 +86,8 @@
                 </mat-expansion-panel-header>
                 <ng-container *ngIf="_getGoodTfs((snpData.transFactors)) && _getGoodTfs((snpData.transFactors)).length > 0; else noMotifAnalysisTemplate">
                     <asb-motifs
+                        #asbMotifsComponent
                         [transcriptionFactors]="_getGoodTfs((snpData.transFactors))"
-                        [openedTf]="openedTf"
                     >
 
                     </asb-motifs>

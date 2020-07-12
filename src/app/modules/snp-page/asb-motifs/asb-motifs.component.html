@@ -1,10 +1,9 @@
 <mat-accordion multi>
     <mat-expansion-panel
+        #panels
         *ngFor="let tf of transcriptionFactors; let first=first; let i=index"
         class="mat-elevation-z1"
-        [expanded]="getExpandedIndex(transcriptionFactors, i) ? first: getExpandedIndex(transcriptionFactors, i)"
-        (opened)="_addToManuallyOpenedList(i)"
-        (closed)="_deleteToManuallyOpenedList(i)"
+        [expanded]="first"
         [id]="'tf' + i"
     >
         <mat-expansion-panel-header>
@@ -16,11 +15,13 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
+            <div style="width: 100%; display: flex; justify-content: center">
             <img
-                style=" width: 100%; max-height: 80vh"
+                style="max-height: 30vh"
                 [src]="makeImagePath(tf)"
-                alt=""
+                [alt]="tf.name + ' picture'"
             >
+            </div>
             <button mat-raised-button matTooltip="Will be available soon">Download in SVG</button>
         </ng-template>
 

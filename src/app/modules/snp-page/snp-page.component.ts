@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable, Subscription} from "rxjs";
+import {Observable, of, Subscription} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
@@ -15,7 +15,8 @@ import {calculateColorForOne} from "../../helpers/colors.helper";
 import {SeoService} from "../../services/seo.servise";
 import {ToastrService} from "ngx-toastr";
 import {MatExpansionPanel} from "@angular/material/expansion";
-import {AsbPopoverComponent} from "../helpers/popover-template/popover.component";
+import {map} from "rxjs/operators";
+import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 
 @Component({
     selector: "asb-snp-page",
@@ -31,7 +32,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public tfStats: AsbStatisticsComponent<TfSnpModel>;
 
     @ViewChild('motifPanel')
-    public motifPanel: MatExpansionPanel
+    public motifPanel: MatExpansionPanel;
+
+    @ViewChild('asbMotifsComponent')
+    public asbMotifsComponent: AsbMotifsComponent
 
     public id: string;
     public alt: string;
@@ -55,7 +59,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
 
     private subscriptions: Subscription = new Subscription();
-    openedTf: TfSnpModel;
 
     constructor(
         private store: Store<AppState>,
@@ -215,8 +218,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
-        this.openedTf = $event
-        const id = tfs.indexOf(this.openedTf)
+        const id = tfs.indexOf($event)
+        this.asbMotifsComponent.expansionPanels.filter(
+            (s, i) => i == id)[0].open()
         if (this.motifPanel.closed) {
             this.motifPanel.open()
         }
