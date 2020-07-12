@@ -3,6 +3,8 @@
         *ngFor="let tf of transcriptionFactors; let first=first; let i=index"
         class="mat-elevation-z1"
         [expanded]="getExpandedIndex(transcriptionFactors) === - 1 ? first: getExpandedIndex(transcriptionFactors) === i"
+        (closed)="openedTf = null"
+        (opened)="openedTf = tf"
         [id]="'tf' + i"
     >
         <mat-expansion-panel-header>
