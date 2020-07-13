@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
@@ -21,7 +21,7 @@ import {SearchPageTableComponent} from "./search-table/search-table.component";
     styleUrls: ["./search-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchPageComponent implements OnInit {
+export class SearchPageComponent implements OnInit, OnDestroy {
     @ViewChild("searchTableComponent", {static: true})
     public searchPageTableComponent: SearchPageTableComponent;
 
@@ -34,6 +34,8 @@ export class SearchPageComponent implements OnInit {
     @HostBinding("class.search-pages")
     private readonly cssClass = true;
 
+    private subscriptions = new Subscription();
+
     public searchSnpResults$: Observable<SearchResultsModel>;
     public searchSnpResultsLoading$: Observable<boolean>;
 
@@ -42,12 +44,15 @@ export class SearchPageComponent implements OnInit {
     public pagination: AsbServerSideModel;
     public groupValue: "list" | "card";
     public searchSnpResultsChanged$: Observable<boolean>;
+    public searchQuery$: Observable<SearchQueryModel>;
+    private firstTimeOpen: boolean;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
+        this.firstTimeOpen = true
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
 
         this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
@@ -59,10 +64,28 @@ export class SearchPageComponent implements OnInit {
             this.groupValue = "list";
         }
         this.pagination = initialServerParams;
-
+        this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery)
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
         this.searchSnpResultsChanged$ = this.store.select(fromSelectors.selectCurrentSearchResultsChanged);
+        this.subscriptions.add(
+            this.searchQuery$.subscribe(
+                (q) => {
+                    if (q) {
+                        this.pagination = {
+                            active: q.active || initialServerParams.active,
+                            direction: q.direction || initialServerParams.direction,
+                            pageSize: q.pageSize || initialServerParams.pageSize,
+                            pageIndex: q.pageIndex || initialServerParams.pageIndex
+                        }
+                    }
+                }
+            )
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe()
     }
 
 
@@ -97,10 +120,13 @@ export class SearchPageComponent implements OnInit {
     }
 
     _handleSearchTemplateChanges(event: SearchQueryModel) {
-        this.pagination = {
-            ...initialServerParams,
-            pageSize: this.pagination.pageSize
-        };
+        if (!this.firstTimeOpen) {
+            this.pagination = {
+                ...initialServerParams,
+                pageSize: this.pagination.pageSize
+            };
+        }
+        this.firstTimeOpen = false
         this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
             {
                 search: event,

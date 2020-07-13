@@ -5,6 +5,8 @@
             #table
             mat-table
             matSort
+            [matSortDirection]="initialSort.direction"
+            [matSortActive]="initialSort.active"
             #sort1="matSort"
             [dataSource]="_dataSource"
             (matSortChange)="externalPaginator ? emitChanges(externalPaginator) : null"

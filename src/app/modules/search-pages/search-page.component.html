@@ -99,7 +99,8 @@
                         showFirstLastButtons
                         [pageSize]="pagination.pageSize"
                         [length]="(searchSnpResults$ | async)?.total"
-                        [pageSizeOptions]="[3, 10, 25, 50, 100]"
+                        [pageSizeOptions]="[3, 5, 10, 25, 50, 100]"
+                        [pageIndex]="pagination.pageIndex"
                         (page)="_handlePaginationChange(pageModelToChange($event))"
                     ></mat-paginator>
                 </ng-container>
@@ -130,6 +131,7 @@
             *ngIf="(searchSnpResults$ | async)?.results.length > 0"
             [searchResults$]="searchSnpResults$"
             [paginator]="paginator"
+            [initialSort]="{active: pagination.active, direction: pagination.direction}"
             [dataChanged]="searchSnpResultsChanged$ | async"
             (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
             (tableChangeEmitter)="_handlePaginationChange($event)"

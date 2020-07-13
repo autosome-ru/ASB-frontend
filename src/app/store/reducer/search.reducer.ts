@@ -114,7 +114,10 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             return {
                 ...state,
                 searchResultsLoading: true,
-                searchQuery: action.payload.search,
+                searchQuery: {
+                    ...action.payload.search,
+                    ...action.payload.params
+                },
                 searchChangeLoading: true,
             };
         }
@@ -123,6 +126,10 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             return {
                 ...state,
                 searchChangeLoading: true,
+                searchQuery: {
+                    ...state.searchQuery,
+                    ...action.payload.params
+                }
             };
         }
 

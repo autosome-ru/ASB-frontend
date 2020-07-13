@@ -206,6 +206,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
                     if (!this._isSearchDisabled()) {
                         this.searchPressed.emit(this.searchForm.value);
+
                     }
                 }
             )

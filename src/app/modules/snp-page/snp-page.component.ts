@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable, of, Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../store/reducer";
@@ -15,7 +15,6 @@ import {calculateColorForOne} from "../../helpers/colors.helper";
 import {SeoService} from "../../services/seo.servise";
 import {ToastrService} from "ngx-toastr";
 import {MatExpansionPanel} from "@angular/material/expansion";
-import {map} from "rxjs/operators";
 import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 
 @Component({
@@ -68,18 +67,22 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private dataService: DataService,
         private toastr: ToastrService,
         private seoService: SeoService
-    ) {
-        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    }
+    ) {}
 
     ngOnInit() {
-        this.id = this.route.snapshot.paramMap.get("rsId");
-        this.alt = this.route.snapshot.paramMap.get("alt");
+        this.subscriptions.add(
+            this.route.paramMap.subscribe(
+                (p) => {
+                    this.id = p.get("rsId")
+                    this.alt = p.get("alt")
+                    this.store.dispatch(new fromActions.data.InitSnpInfoAction(
+                        {rsId: this.id, alt: this.alt}));
+                }
+
+            )
+        )
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
-        this.store.dispatch(new fromActions.data.InitSnpInfoAction(
-            {rsId: this.id, alt: this.alt}));
-        // FIXME
         this.subscriptions.add(
             this.snpData$.subscribe(s => s ?
                 this.seoService.updateSeoInfo({
@@ -219,8 +222,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
         const id = tfs.indexOf($event)
-        this.asbMotifsComponent.expansionPanels.filter(
-            (s, i) => i == id)[0].open()
+        const chosenExpansionPanel =this.asbMotifsComponent.expansionPanels.filter(
+            (s, i) => i == id)[0]
+        chosenExpansionPanel.open()
+
         if (this.motifPanel.closed) {
             this.motifPanel.open()
         }

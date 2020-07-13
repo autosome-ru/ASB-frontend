@@ -16,6 +16,7 @@ import {baseToColors} from "../../../helpers/colors.helper";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
+import {SortDirection} from "@angular/material/sort";
 
 
 
@@ -49,6 +50,9 @@ export class SearchPageTableComponent implements OnInit {
 
     @Input()
     public dataChanged: boolean;
+
+    @Input()
+    public initialSort: {direction: SortDirection, active: string};
 
     @Output()
     private snpClicked = new EventEmitter<{rsId: string, alt: string}>();

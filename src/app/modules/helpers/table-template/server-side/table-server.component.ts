@@ -6,7 +6,7 @@ import {
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {AsbPopoverComponent} from "../../popover-template/popover.component";
 import {merge, Observable, Subscription} from "rxjs";
@@ -56,6 +56,9 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     set data(value: Observable<T[]>) {
         this._dataSource = new AsbBackendDataSource(value);
     }
+
+    @Input()
+    public initialSort: {direction: SortDirection, active: string};
 
     @Input()
     public dataLoading: boolean;

@@ -1,6 +1,7 @@
 import {PhenotypesModel, SnpSearchBackendModel, SnpSearchModel} from "./data.model";
+import {AsbServerSideModel} from "./table.model";
 
-export interface SearchQueryModel extends PhenotypesModel {
+export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel {
     isAdvanced: boolean;
     searchInput: string;
     searchBy: "id" | "pos";
