@@ -52,7 +52,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
-        this.firstTimeOpen = true
+
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
 
         this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
@@ -63,6 +63,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         } else {
             this.groupValue = "list";
         }
+        this.firstTimeOpen = this.route.snapshot.queryParams['is_test'] != '1';
         this.pagination = initialServerParams;
         this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery)
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
