@@ -36,6 +36,7 @@
     <a
         [routerLink]="'/snps/' + row?.rsId + '/' + row?.altBase"
         [routerLinkActive]="['active']"
+        (click)="$event.stopPropagation()"
     >
         <div>
             <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
