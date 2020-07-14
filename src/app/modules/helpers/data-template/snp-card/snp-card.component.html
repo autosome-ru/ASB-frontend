@@ -56,7 +56,7 @@
             [routerLink]="'/search/simple'"
             [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '1')
                     + '-' + (snpData.pos + 100) ,
-                    chr: snpData.chr}"
+                    chr: snpData.chr, skip_check: '1'}"
         >
             Search SNPs nearby
         </a>

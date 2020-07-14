@@ -63,7 +63,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         } else {
             this.groupValue = "list";
         }
-        this.firstTimeOpen = this.route.snapshot.queryParams['is_test'] != '1';
+        this.firstTimeOpen = this.route.snapshot.queryParams['skip_check'] != '1';
         this.pagination = initialServerParams;
         this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery)
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);

@@ -229,7 +229,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             (this.isAdvanced ? "advanced" : "simple")], {
                 queryParams: {
                     ...this._convertFormToParams(this.isAdvanced),
-                    is_test: "1"
+                    skip_check: "1"
                 }}).then(
                     () => null, error => console.log(error));
         }
