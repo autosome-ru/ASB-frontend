@@ -15,6 +15,8 @@ import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import { ToastrModule } from "ngx-toastr";
 import {SeoService} from "./services/seo.servise";
+import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -37,7 +39,8 @@ import {SeoService} from "./services/seo.servise";
   providers: [
       DataService,
       SearchService,
-      SeoService
+      SeoService,
+      { provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
