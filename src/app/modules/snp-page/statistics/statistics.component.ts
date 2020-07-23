@@ -46,6 +46,8 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
         columns: string[],
         filter: string,
     }>();
+    @Output()
+    actionClicked = new EventEmitter<T>();
 
     public tableDisplayedColumns: AsbTableDisplayedColumns<T>;
     public tableFormGroup: FormGroup;
@@ -55,12 +57,8 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     originalOrder = ((): number => {
         return 0;
     });
-    @Output()
-    actionClicked = new EventEmitter<T>();
+
     private subscriptions = new Subscription();
-
-
-
     constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
