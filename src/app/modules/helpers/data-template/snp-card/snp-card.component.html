@@ -1,5 +1,17 @@
 <dl class="row">
     <dt
+        *ngIf="!noButtons"
+        class="col-auto snp-card__tag align-self-start d-none d-md-block"
+        style="vertical-align: center;"
+    >
+        Sequence
+    </dt>
+    <dd
+        *ngIf="!noButtons"
+        style="margin-bottom: 0"
+        class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center d-none d-md-block"
+    ><h6 style="margin-bottom: 0">{{snpData.context}}</h6></dd>
+    <dt
         *ngIf="snpData.cellLines.length != 0"
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
@@ -37,6 +49,7 @@
         [buttonsClass]="'btn btn-outline-secondary snp-card__buttons'"
     >
     </asb-snp-buttons>
+
     <dt
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"

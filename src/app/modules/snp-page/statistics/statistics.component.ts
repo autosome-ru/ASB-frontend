@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
-    Input,
+    Input, OnDestroy,
     OnInit,
     Output,
     ViewChild
@@ -13,6 +13,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -22,7 +23,7 @@ import {AsbTableComponent} from "../../helpers/table-template/table.component";
     changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class AsbStatisticsComponent<T> implements OnInit {
+export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     @ViewChild("tableViewTFCL", {static: true})
     public tableView: AsbTableComponent<T>;
 
@@ -31,9 +32,6 @@ export class AsbStatisticsComponent<T> implements OnInit {
 
     @Input()
     public tableColumnModel: AsbTableColumnModel<T>;
-
-    @Input()
-    public searchFunc: ((data: T, search: string) => boolean);
 
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
@@ -59,6 +57,7 @@ export class AsbStatisticsComponent<T> implements OnInit {
     });
     @Output()
     actionClicked = new EventEmitter<T>();
+    private subscriptions = new Subscription();
 
 
 
@@ -78,6 +77,36 @@ export class AsbStatisticsComponent<T> implements OnInit {
             columns: [this.initialDisplayedColumns.filter(s => s !== "name"), null],
             filter: null,
         });
+        this.subscriptions.add(
+                this.tableFormGroup.get('filter').valueChanges.subscribe(
+                (s) => this._applyFilter(s)
+            )
+        )
+
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
+    }
+
+    filterData(data: T[], search: string): T[] {
+        return data && data.filter(row => {
+            let result = true;
+            if (search) {
+                result = result && Object.keys(row).some(key => {
+                    if (!this.tableDisplayedColumns.some(s => s == key)) {
+                        return false
+                    }
+                    const converter = (this.tableColumnModel[key] && this.tableColumnModel[key].valueConverter)
+                        || (v => String(v));
+                    if (!row[key]) {
+                        return false
+                    }
+                    return converter(row[key]).toLowerCase().indexOf(search.toLowerCase().trim()) !== -1;
+                });
+            }
+            return result;
+        });
     }
 
     _changeColumns(event: MatSelectChange) {
@@ -87,21 +116,14 @@ export class AsbStatisticsComponent<T> implements OnInit {
         ];
     }
 
-    _applyFilter() {
-        this.filteredObjectData =
-            this.objectData.filter(s => this.filterData(s, this.tableFormGroup.get("filter").value));
+    _applyFilter(s?: string) {
+        let search: string
+        search = s ? s : this.tableFormGroup.get("filter").value
+        this.filteredObjectData = this.filterData(this.objectData, search);
 
     }
     _clearFilterField() {
         this.tableFormGroup.patchValue({filter: null});
-    }
-
-    filterData(row: T, search: string) {
-        let result = true;
-        if (search && this.searchFunc) {
-            result = this.searchFunc(row, search);
-        }
-        return result;
     }
 
     _resetFilters() {
@@ -109,7 +131,7 @@ export class AsbStatisticsComponent<T> implements OnInit {
         this.filteredObjectData = this.objectData;
         this.tableFormGroup.patchValue({
             columns: this.initialDisplayedColumns.filter(s => s !== "name"),
-            filter: null,
+            filter: null
         });
     }
     _getPaginatorOptions(): number[] {

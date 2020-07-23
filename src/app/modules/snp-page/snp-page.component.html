@@ -139,7 +139,6 @@
         [initialDisplayedColumns]="tfDisplayedColumns"
         [action]="snpData?.transFactors.filter(filterCondition).length > 0 ? filterCondition : null"
         [snpName]="_createSnpName(snpData ,'tf')"
-        [searchFunc]="searchFunction"
         (actionClicked)="openMotifAnalysis($event, _getGoodTfs(snpData.transFactors))"
         (downloadSnpInfo)="_downloadFile($event, 'tf')"
     >
@@ -154,7 +153,6 @@
         [tableColumnModel]="clColumnModel"
         [initialDisplayedColumns]="clDisplayedColumns"
         [snpName]="_createSnpName((snpData$ | async),'cl')"
-        [searchFunc]="searchFunction"
         (downloadSnpInfo)="_downloadFile($event, 'cl')"
     >
         <ng-content></ng-content>

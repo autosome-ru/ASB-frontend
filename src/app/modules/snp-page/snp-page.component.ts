@@ -156,10 +156,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
 
-    searchFunction(data: ClSnpModel, search: string): boolean {
-        return data.name.toLowerCase().indexOf(search.trim().toLowerCase()) !== -1;
-    }
-
     _downloadFile(options: {
         columns: string[],
         filter: string,

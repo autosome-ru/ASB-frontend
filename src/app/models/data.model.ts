@@ -4,6 +4,7 @@ export interface SnpGenPosModel {
     pos: number;
     refBase: string;
     altBase: string;
+    context: string;
 }
 
 export interface SnpGenPosBackendModel {
@@ -12,6 +13,7 @@ export interface SnpGenPosBackendModel {
     ref: string;
     alt: string;
     rs_id: number;
+    context: string;
 }
 
 export interface SnpInfoModel extends SnpGenPosModel {

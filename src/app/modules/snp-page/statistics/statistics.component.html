@@ -5,7 +5,7 @@
     <div class="row" *ngIf="objectData.length > 0; else emptyContentTemplate">
         <form [formGroup]="tableFormGroup" class="container">
             <div style="margin-bottom: 10px">
-                <mat-form-field style="margin-left: 5px; ">
+                <mat-form-field style="margin-left: 5px; margin-right: 5px">
                     <mat-label>Selected columns</mat-label>
                     <mat-select formControlName="columns"
                                 multiple
@@ -29,6 +29,12 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                <button
+                    mat-raised-button
+                    (click)="_resetFilters()"
+                >
+                    Reset
+                </button>
                 <div style="display: flex; justify-content: flex-start; flex-wrap: wrap">
                     <mat-form-field style="margin-left: 5px; margin-right: 5px; width:180px">
                         <input
@@ -54,23 +60,6 @@
                             <mat-icon svgIcon="clear"></mat-icon>
                         </button>
                     </mat-form-field>
-                    <div>
-                        <button
-                            mat-raised-button
-                            style="margin-right: 5px"
-                            (click)="_applyFilter()"
-                            color="accent"
-                        >
-                            Apply
-                        </button>
-                        <button
-                            style="margin-right: 5px"
-                            mat-raised-button
-                            (click)="_resetFilters()"
-                        >
-                            Reset
-                        </button>
-                    </div>
                     <div style="margin-left:auto">
                         <button
                             mat-raised-button

@@ -8,21 +8,19 @@
         [href]="'https://www.ncbi.nlm.nih.gov/snp/' + data.rsId"
     >
         {{data.rsId}}</a>
-     {{data.chr}}:{{data.pos }}
-    <strong
-        [ngStyle]="{'color': colors[data.refBase]}"
-    >{{data.refBase}}</strong>
-    <span>></span>
-    <strong
-        [ngStyle]="{'color': colors[data.altBase]}"
-    >{{data.altBase}}</strong>
+    <ng-container *ngTemplateOutlet="colorLettersTemplate"></ng-container>
 </h4>
 <h4 *ngIf="!snpCard">
-    {{data.rsId}} {{data.chr}}:{{data.pos }}
+    <span>{{data.rsId}}</span>
+    <ng-container *ngTemplateOutlet="colorLettersTemplate"></ng-container>
+</h4>
+
+<ng-template #colorLettersTemplate>
+    {{data.chr}}:{{data.pos }}
     <strong
-    [ngStyle]="{'color': colors[data.refBase]}">{{data.refBase}}</strong>
+        [ngStyle]="{'color': colors[data.refBase]}">{{data.refBase}}</strong>
     <span>></span>
     <strong
         [ngStyle]="{'color': colors[data.altBase]}"
     >{{data.altBase}}</strong>
-</h4>
+</ng-template>

@@ -1,7 +1,7 @@
 <mat-accordion multi>
     <mat-expansion-panel
         #panels
-        *ngFor="let tf of transcriptionFactors; let first=first; let i=index"
+        *ngFor="let tf of _transcriptionFactors; let first=first; let i=index"
         class="mat-elevation-z1"
         [expanded]="first"
         [id]="'tf' + i"
@@ -19,10 +19,25 @@
             <img
                 style="max-height: 30vh"
                 [src]="makeImagePath(tf)"
-                [alt]="tf.name + ' picture'"
+                [alt]="tf.name + ' pic'"
             >
             </div>
-            <button mat-raised-button matTooltip="Will be available soon">Download SVG</button>
+            <div style="display: flex; flex-wrap: wrap">
+                <button
+                    mat-raised-button
+                    (click)="changeRevCompState(tf)"
+                    color="accent"
+                >
+                    Show revcomp
+                </button>
+                <button
+                    mat-raised-button
+                    matTooltip="Will be available soon"
+                    style="margin-left: auto"
+                >
+                    Download SVG
+                </button>
+            </div>
         </ng-template>
     </mat-expansion-panel>
 </mat-accordion>
