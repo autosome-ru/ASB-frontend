@@ -32,7 +32,7 @@ export class SearchService {
 
     public getSearchResult(filter: SearchQueryModel, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
-        if (!filter) {
+        if (!filter || (!filter.isAdvanced && !filter.searchInput)) {
             return of({results: [], total: null});
         }
         if (!filter.isAdvanced && filter.searchInput) {
@@ -96,7 +96,7 @@ function getStartEndPositions(searchInput: string) {
 function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: string]: string} {
     const params: {[id: string]: string} = {};
 
-    if (filter.clList.length > 0) {
+    if (filter.clList && filter.clList.length > 0) {
         params["cell_types"] = filter.clList.join(",");
     }
 
@@ -113,7 +113,7 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
         }
     }
 
-    if (filter.tfList.length > 0) {
+    if (filter.tfList && filter.tfList.length > 0) {
         params["transcription_factors"] =
             filter.tfList.join(",");
     }
