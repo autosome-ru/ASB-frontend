@@ -1,7 +1,7 @@
-import {PhenotypesModel} from "../models/data.model";
+import {MotifConcordanceModel, PhenotypesModel} from "../models/data.model";
 import {AsbServerSideModel} from "../models/table.model";
 
-export const version: string = "v1.4.0";
+export const version: string = "v1.4.1";
 export const releaseName: string = "Waddles";
 
 export const phenotypesToView: {[name: string]: string} = {
@@ -29,6 +29,12 @@ export const phenotypesModelExample: PhenotypesModel = {
     phewas: [],
     finemapping: [],
     QTL: [],
+};
+export const concordanceModelExample: MotifConcordanceModel = {
+    'Concordant': false,
+    'Discordant': false,
+    'Weak Concordant': false,
+    'Weak Discordant': false
 };
 
 export const initialServerParams: AsbServerSideModel = {

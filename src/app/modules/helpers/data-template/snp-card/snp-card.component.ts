@@ -32,6 +32,4 @@ export class AsbSnpCardComponent implements OnInit {
         this.showMoreTfs = value;
     }
 
-
-
 }

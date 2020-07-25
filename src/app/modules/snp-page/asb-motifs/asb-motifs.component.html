@@ -28,7 +28,7 @@
                     (click)="changeRevCompState(tf)"
                     color="accent"
                 >
-                    Show revcomp
+                    Show {{!revCompStateArray[tf.id] ? 'reverse compliment' : 'direct'}}
                 </button>
                 <button
                     mat-raised-button

@@ -1,7 +1,7 @@
-import {PhenotypesModel, SnpSearchBackendModel, SnpSearchModel} from "./data.model";
+import {MotifConcordanceModel, PhenotypesModel, SnpSearchBackendModel, SnpSearchModel} from "./data.model";
 import {AsbServerSideModel} from "./table.model";
 
-export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel {
+export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, MotifConcordanceModel {
     isAdvanced: boolean;
     searchInput: string;
     searchBy: "id" | "pos";
@@ -29,6 +29,7 @@ export interface SearchParamsModel {
     by: string;
     cl: string;
     tf: string;
+    motif_conc: string;
     phe_db: string;
 }
 

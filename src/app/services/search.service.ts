@@ -6,7 +6,7 @@ import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
-import {phenotypesFormToList} from "../helpers/search-model.converter";
+import {formCheckboxesToList} from "../helpers/search-model.converter";
 import {AsbServerSideModel} from "../models/table.model";
 import {convertServerSideModelToServerSideBackendModel} from "../helpers/snp-model.converter";
 
@@ -117,9 +117,13 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
         params["transcription_factors"] =
             filter.tfList.join(",");
     }
-    const phenList: string = phenotypesFormToList(filter);
+    const phenList: string = formCheckboxesToList(filter);
     if (phenList) {
         params["phenotype_databases"] = phenList;
+    }
+    const concList: string = formCheckboxesToList(filter, "concordance");
+    if (concList) {
+        params['motif_conc'] = concList
     }
 
     return params;

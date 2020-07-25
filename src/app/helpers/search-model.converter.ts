@@ -2,7 +2,7 @@ import {
     SearchHintBackendModel,
     SearchHintModel, SearchQueryModel,
 } from "../models/searchQueryModel";
-import {phenotypesModelExample} from "./constants";
+import {concordanceModelExample, phenotypesModelExample} from "./constants";
 
 export function convertSearchHintBackendModelToSearchHintModel(
     model: SearchHintBackendModel,
@@ -19,9 +19,10 @@ export function convertSearchHintBackendModelToSearchHintModel(
     };
 }
 
-export function phenotypesFormToList(form: Partial<SearchQueryModel>): string {
+export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: 'phenotypes' | 'concordance'): string {
     let result: string = "";
-    Object.keys(phenotypesModelExample).forEach(s => {
+    Object.keys(type == 'concordance' ? concordanceModelExample : phenotypesModelExample)
+        .forEach(s => {
         if (s && form[s]) {
             result = (result ? result + "," : "") + s;
         }

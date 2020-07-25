@@ -258,17 +258,34 @@
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>
+        <ng-container *ngIf="_checkToDisplay('concordance')">
+            <div >
+                <span >Motif Concordance:</span>
+                <div class="asb-search__checkboxes">
+                    <mat-checkbox
+                        *ngFor="let concordance of concordances; let last=last"
+                        style="margin-bottom: 5px"
+                        [ngClass]="{'asb-search__checkboxes-checkbox': !last}"
+                        [formControlName]="concordance"
+                    >
+                        {{concordance}}
+                    </mat-checkbox>
+                </div>
+            </div>
+        </ng-container>
         <ng-container *ngIf="_checkToDisplay('phenotypes')">
-            <span style="margin-top: -15px">Genetic associations in:</span>
-            <div class="asb-search__checkboxes">
-                <mat-checkbox
-                    *ngFor="let phenotype of phenotypes; let last=last"
-                    style="margin-bottom: 5px"
-                    [ngClass]="{'asb-search__checkboxes-checkbox': !last}"
-                    [formControlName]="phenotype"
-                >
-                    {{phenToView[phenotype]}}
-                </mat-checkbox>
+            <div style="margin-top: -15px">
+            <span >Genetic associations in:</span>
+                <div class="asb-search__checkboxes">
+                    <mat-checkbox
+                        *ngFor="let phenotype of phenotypes; let last=last"
+                        style="margin-bottom: 5px"
+                        [ngClass]="{'asb-search__checkboxes-checkbox': !last}"
+                        [formControlName]="phenotype"
+                    >
+                        {{phenToView[phenotype]}}
+                    </mat-checkbox>
+                </div>
             </div>
         </ng-container>
     </form>

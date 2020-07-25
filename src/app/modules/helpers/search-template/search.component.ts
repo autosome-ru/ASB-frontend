@@ -30,7 +30,7 @@ import {FileSaverService} from "ngx-filesaver";
 import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
-import {phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
+import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
 import {debounceTime} from "rxjs/operators";
 import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/check-functions.helper";
 
@@ -74,6 +74,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     listOfChrs: string[];
     readonly phenToView: { [p: string]: string } = phenotypesToView;
     readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
+    readonly concordances: string[] = Object.keys(concordanceModelExample);
 
     public searchForm: FormGroup;
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
@@ -132,6 +133,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             finemapping: false,
             clinvar: false,
             QTL: false,
+            ...concordanceModelExample
         }, {
                 validator: matchingPattern("searchInput",
                     "searchBy", this.isAdvanced),
@@ -225,12 +227,16 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     _navigateToSearch() {
         if (!this._isSearchDisabled()) {
+            let params: {[a: string]: string} = {
+                ...this._convertFormToParams(this.isAdvanced)
+            }
+            if (!this.router.isActive('/search',  false)) {
+                params = {...params, skip_check: '1'}
+            }
             this.router.navigate(["/search/" +
             (this.isAdvanced ? "advanced" : "simple")], {
-                queryParams: {
-                    ...this._convertFormToParams(this.isAdvanced),
-                    skip_check: "1"
-                }}).then(
+                queryParams: params
+            }).then(
                     () => null, error => console.log(error));
         }
     }
@@ -257,7 +263,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             search.tfList = ["ANDR_HUMAN", "CTCF_HUMAN"];
         } else {
             search.searchBy = "id";
-            search.searchInput = "rs11260841";
+            search.searchInput = "rs28372852";
         }
         this.searchForm.patchValue(search);
         this._navigateToSearch();
@@ -359,6 +365,9 @@ export class SearchComponent implements OnInit, OnDestroy {
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
                 }
+                if (searchParams.motif_conc) {
+                    searchParams.motif_conc.split(',').forEach(s => result[s] = true)
+                }
                 return result;
             } else return {};
         } else {
@@ -379,7 +388,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 this.isAdvanced &&
                 sF.tfList.length === 0 &&
                 sF.clList.length === 0 &&
-                !checkIfPhenotypeSelected(sF) &&
+                !checkIfCheckpointSelected(sF) &&
                 (!sF.chromosome ||
                 sF.chromosome === "any chr"));
     }
@@ -439,8 +448,9 @@ function matchingPattern(searchKey: string,
         }
     };
 }
-function checkIfPhenotypeSelected(sF: SearchQueryModel) {
+function checkIfCheckpointSelected(sF: SearchQueryModel) {
     let result: boolean = false;
+    Object.keys(concordanceModelExample).forEach(s => sF[s] ? result = true : null);
     Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);
     return result;
 }

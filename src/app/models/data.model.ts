@@ -31,6 +31,10 @@ export interface PhenotypesModel {
     finemapping: string[] | boolean;
     QTL: string[] | boolean;
 }
+
+export interface MotifConcordanceModel {
+
+}
 export interface SnpSearchModel extends SnpGenPosModel {
     transFactors: TfSnpCutModel[];
     cellLines: ClSnpCutModel[];

@@ -1,5 +1,5 @@
 import {SearchParamsModel, SearchQueryModel} from "../models/searchQueryModel";
-import {phenotypesFormToList} from "./search-model.converter";
+import {formCheckboxesToList} from "./search-model.converter";
 import {SnpSearchModel} from "../models/data.model";
 
 export function getPaginatorOptions(len: number): number[] {
@@ -76,9 +76,13 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                 result.chr = form.chromosome;
             }
             if (form.tfList.length > 0) result.tf = form.tfList.join(",");
-            const phenList: string = phenotypesFormToList(form);
+            const phenList: string = formCheckboxesToList(form);
             if (phenList) {
                 result.phe_db = phenList;
+            }
+            const concList: string = formCheckboxesToList(form, "concordance");
+            if (concList) {
+                result.motif_conc = concList
             }
             return result;
         } else return {};
