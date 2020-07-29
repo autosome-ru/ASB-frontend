@@ -4,7 +4,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/tab
 import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort, MatSortable, Sort} from "@angular/material/sort";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
     selector: "asb-inner-table",
@@ -27,8 +27,6 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
     public columnModel: AsbTableColumnModel<ExpSnpModel>;
     public displayedColumns: AsbTableDisplayedColumns<ExpSnpModel> = [
         "align",
-        "clName",
-        "tfName",
         "refReadCount",
         "altReadCount",
         "bad",
@@ -50,14 +48,21 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
     }
 
     @Input()
+    isCl: boolean;
+
+    @Input()
     sortColumn: 'ref' | 'alt' | '';
 
     ngOnInit(): void {
+        this.displayedColumns = this.isCl ? ["align", "tfName", "refReadCount",
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"] :
+        ["align", "clName", "refReadCount", "altReadCount", "bad", "rawPValueRef",
+            "rawPValueAlt"]
         this.columnModel = {
             bad: {view: "Estimated BAD", valueConverter: v => v},
             refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
             altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
-            align: {view: "GTRD align", columnTemplate: this.alignViewTemplate},
+            align: {view: "GTRD align ID", columnTemplate: this.alignViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
             rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2)},

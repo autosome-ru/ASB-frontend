@@ -31,6 +31,9 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     public objectData: T[];
 
     @Input()
+    public isCl: boolean;
+
+    @Input()
     public tableColumnModel: AsbTableColumnModel<T>;
 
     @Input()
@@ -39,7 +42,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     action: (row: T) => boolean
 
     @Input()
-    public readonly snpName: (row: T) => string;
+    public readonly getSnpName: (row: T) => string;
 
     @Output()
     private downloadSnpInfo = new EventEmitter<{

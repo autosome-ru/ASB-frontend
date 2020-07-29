@@ -82,7 +82,7 @@
             [action]="action"
             (actionClicked)="actionClicked.emit($event)"
             [popoverContentTemplate]="popoverContentTemplate"
-            [getTitle]="snpName"
+            [getTitle]="getSnpName"
             [paginatorOptions]="_getPaginatorOptions()"
         >
         </asb-table>
@@ -93,6 +93,7 @@
     <asb-inner-table
         *ngIf="row"
         [innerTableData]="row.expSnps"
+        [isCl]="isCl"
         [sortColumn]="row.pValueRef > row.pValueAlt ? 'ref' : 'alt'"
     ></asb-inner-table>
 </ng-template>

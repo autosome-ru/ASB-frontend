@@ -138,7 +138,8 @@
         [tableColumnModel]="tfColumnModel"
         [initialDisplayedColumns]="tfDisplayedColumns"
         [action]="snpData?.transFactors.filter(filterCondition).length > 0 ? filterCondition : null"
-        [snpName]="_createSnpName(snpData ,'tf')"
+        [getSnpName]="_createSnpName(snpData ,'tf')"
+        [isCl]="false"
         (actionClicked)="openMotifAnalysis($event, _getGoodTfs(snpData.transFactors))"
         (downloadSnpInfo)="_downloadFile($event, 'tf')"
     >
@@ -152,7 +153,7 @@
         [objectData]="(snpData$ | async)?.cellLines || []"
         [tableColumnModel]="clColumnModel"
         [initialDisplayedColumns]="clDisplayedColumns"
-        [snpName]="_createSnpName((snpData$ | async),'cl')"
+        [getSnpName]="_createSnpName((snpData$ | async),'cl')"
         (downloadSnpInfo)="_downloadFile($event, 'cl')"
     >
         <ng-content></ng-content>

@@ -62,10 +62,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public browseClInfoInitialized$: Observable<boolean>;
 
     private subscriptions: Subscription = new Subscription();
-
-
-
-
     constructor(
         private router: Router,
         private store: Store<AppState>,
