@@ -33,8 +33,8 @@
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="this.displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
+        <tr mat-header-row *matHeaderRowDef="this.getDisplayedColumns()"></tr>
+        <tr mat-row *matRowDef="let row; columns: this.getDisplayedColumns();"
             class="asb-table__table-row"
         ></tr>
     </table>

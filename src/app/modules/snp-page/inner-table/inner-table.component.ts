@@ -25,14 +25,7 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
     public _dataSource: MatTableDataSource<ExpSnpModel>;
 
     public columnModel: AsbTableColumnModel<ExpSnpModel>;
-    public displayedColumns: AsbTableDisplayedColumns<ExpSnpModel> = [
-        "align",
-        "refReadCount",
-        "altReadCount",
-        "bad",
-        "rawPValueRef",
-        "rawPValueAlt",
-    ];
+    private displayedColumns: AsbTableDisplayedColumns<ExpSnpModel>;
 
     private sortingDataAccessor: ((data: ExpSnpModel, id: string) => string | number) = (
         (data: ExpSnpModel, id: string) => typeof data[id] === "string" ?
@@ -54,10 +47,6 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
     sortColumn: 'ref' | 'alt' | '';
 
     ngOnInit(): void {
-        this.displayedColumns = this.isCl ? ["align", "tfName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"] :
-        ["align", "clName", "refReadCount", "altReadCount", "bad", "rawPValueRef",
-            "rawPValueAlt"]
         this.columnModel = {
             bad: {view: "Estimated BAD", valueConverter: v => v},
             refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
@@ -81,5 +70,15 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
 
     _getPaginatorOptions(): number[] {
         return this._dataSource ? getPaginatorOptions(this._dataSource.data.length) : [];
+    }
+
+    getDisplayedColumns() {
+        if (this.isCl) {
+            return ["align", "tfName", "refReadCount",
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
+        } else {
+            return  ["align", "clName", "refReadCount",
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
+        }
     }
 }

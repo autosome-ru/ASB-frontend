@@ -152,6 +152,7 @@
         #cellLines
         [objectData]="(snpData$ | async)?.cellLines || []"
         [tableColumnModel]="clColumnModel"
+        [isCl]="true"
         [initialDisplayedColumns]="clDisplayedColumns"
         [getSnpName]="_createSnpName((snpData$ | async),'cl')"
         (downloadSnpInfo)="_downloadFile($event, 'cl')"
