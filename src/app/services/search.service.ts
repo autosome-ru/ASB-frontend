@@ -123,7 +123,7 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
     }
     const concList: string = formCheckboxesToList(filter, "concordance");
     if (concList) {
-        params['motif_conc'] = concList
+        params['motif_concordance'] = concList
     }
 
     return params;
