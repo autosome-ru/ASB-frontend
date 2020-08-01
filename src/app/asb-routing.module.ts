@@ -14,6 +14,15 @@ const routes: Routes = [
         }
     },
     {
+        path: "about",
+        loadChildren: () => import(
+            "./modules/about-page/about-page.module").then(mod => mod.AsbAboutPageModule),
+        data: {
+            title: "ADASTra - about",
+            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+        }
+    },
+    {
         path: "browse",
         loadChildren: () => import(
             "./modules/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
@@ -27,7 +36,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "./modules/help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
         data: {
-            title: "ADASTra - help"
+            title: "ADASTra - help",
+            description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
     },
     {

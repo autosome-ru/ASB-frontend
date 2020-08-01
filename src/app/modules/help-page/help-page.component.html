@@ -1,14 +1,56 @@
 <div class="container mat-elevation-z2 px-0">
-    <div class="container" style="background-color: white; padding-bottom: 0.5rem">
+    <div class="container" style="background-color: white; padding-bottom: 0.5rem; white-space: pre-line">
         <h4 style="padding-top: 0.5rem">Help</h4>
-        <a
-            style="padding: 0 15px"
-            target="_blank"
-            rel="_noopenner _noreferrer"
-            href="https://docs.google.com/document/d/e/2PACX-1vT66diwj9BRgofueJIbEWKz6O4nyVhkHniBoFEvw76WNPU2MpsGKK47Qj-cOr6fRhjjDBohMkKSsqID/pub"
-        >
-            Link to Google Doc <small>(work in progress)</small>
-        </a>
+        <dl style="padding: 0 15px">
+            <div *ngFor="let obj of array; let last = last">
+                <dt>{{obj.value}}</dt>
+                <dd>{{obj.description}}</dd>
+            </div>
+            <div>
+                <b>Motif Concordance</b><br>
+                <span>
+                Motif Concordance indicates whether the allelic read imbalance is consistent with the transcription factor Motif Fold Change.
+                Thus, the following values are possible:
+                </span>
+                <ul style="list-style-type: circle;">
+                    <li>
+                        <b>n/a:</b>
+                        No motif available for the transcription factor</li>
+                    <li>
+                        <b>No hit:</b>
+                        Neither Motif Ref P-value nor Motif Alt P-value passes 0.0005 filter
+                    </li>
+                    <li>
+                        <b>Weak concordant:</b>
+                        The absolute value of Motif Fold Change is less than 2 and is consistent with allelic read imbalance
+                    </li>
+                    <li>
+                        <b>Weak discordant:</b>
+                        The absolute value of  Motif Fold Change is less than 2 and is not consistent with allelic read imbalance
+                    </li>
+                    <li>
+                        <b>Concordant:</b>
+                        The absolute value of  Motif Fold Change is greater or equal than 2 and is consistent with allelic read imbalance
+                    </li>
+                    <li>
+                        <b>Discordant:</b>
+                        The absolute value of  Motif Fold Change is greater or equal than 2 and is not consistent with allelic read imbalance
+                    </li>
+                </ul>
+                <br>
+            </div>
+            <div>
+                <b>API</b><br>
+                <span>ADASTra API is available at <a href="https://adastra.autosome.ru/api/v1/" target="_blank" rel="noopener noreferrer">https://adastra.autosome.ru/api/v1/</a></span>
+            </div>
+        </dl>
+<!--        <a-->
+<!--            style="padding: 0 15px"-->
+<!--            target="_blank"-->
+<!--            rel="_noopenner _noreferrer"-->
+<!--            href="https://docs.google.com/document/d/e/2PACX-1vT66diwj9BRgofueJIbEWKz6O4nyVhkHniBoFEvw76WNPU2MpsGKK47Qj-cOr6fRhjjDBohMkKSsqID/pub"-->
+<!--        >-->
+<!--            Link to Google Doc <small>(work in progress)</small>-->
+<!--        </a>-->
     </div>
-    <asb-contacts></asb-contacts>
 </div>
