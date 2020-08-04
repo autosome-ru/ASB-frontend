@@ -5,6 +5,7 @@ import {DataService} from "../../../services/data.service";
 import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
+import {FileSaverService} from "ngx-filesaver";
 
 @Component({
     selector: "asb-motifs",
@@ -20,7 +21,8 @@ export class AsbMotifsComponent implements OnInit, OnDestroy {
 
     constructor(
         private dataService: DataService,
-        private toastrService: ToastrService
+        private toastrService: ToastrService,
+        private saverService: FileSaverService
     ) { }
 
     public _transcriptionFactors: TfSnpModel[]
@@ -51,7 +53,8 @@ export class AsbMotifsComponent implements OnInit, OnDestroy {
     downloadSvg(path: string) {
         this.subscriptions.add(
             this.dataService.downloadSvg(path).subscribe(
-                () => null,
+                (blob) =>
+                    this.saverService.save(blob, path.slice(5)),
                 (error: HttpErrorResponse) =>
                     this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`,)
             )
