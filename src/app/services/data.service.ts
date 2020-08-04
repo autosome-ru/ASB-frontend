@@ -24,6 +24,10 @@ export class DataService {
             {params: constructParams(columns, filter, tfOrCl)
                 , responseType: "blob"});
     }
+    downloadSvg(path: string): Observable<Blob>{
+        return this.http.get(path, {responseType: 'blob'});
+    }
+
     public getTotalInfo(): Observable<TotalInfoBackendModel> {
         return this.http.get<TotalInfoBackendModel>(browseUrl + "/total");
     }

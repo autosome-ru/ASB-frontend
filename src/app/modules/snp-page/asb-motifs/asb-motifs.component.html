@@ -32,7 +32,7 @@
                 </button>
                 <button
                     mat-raised-button
-                    matTooltip="Will be available soon"
+                    (click)="downloadSvg(makeImagePath(tf, true))"
                     style="margin-left: auto"
                 >
                     Download SVG
