@@ -23,6 +23,15 @@ const routes: Routes = [
         }
     },
     {
+        path: "downloads",
+        loadChildren: () => import(
+            "./modules/downloads-page/downloads-page.module").then(mod => mod.AsbDownloadsPageModule),
+        data: {
+            title: "ADASTra - downloads",
+            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+        }
+    },
+    {
         path: "browse",
         loadChildren: () => import(
             "./modules/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
