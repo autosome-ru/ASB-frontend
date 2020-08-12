@@ -88,7 +88,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 this.seoService.updateSeoInfo({
                     title: this.route.snapshot.data.title(this.id),
                     description: this.route.snapshot.data.description(this.id),
-                    keywords: s.transFactors.slice(0, 10).join(","),
+                    keywords: s.transFactors.slice(0, 10).map(s => s.name).join(","),
                 }) :
                 null
             )
