@@ -674,7 +674,7 @@ EXP010287	ALIGN034551	None	None	421	HEK293 (embryonic kidney)	2122	HEK293__embry
 EXP010288	ALIGN034552	None	None	113	MCF7 (Invasive ductal breast carcinoma)	2119	MCF7__Invasive_ductal_breast_carcinoma_@_labs_vishwanath-iyer___biosamples_ENCBS252AAA_	ENCSR000DMW; wgEncodeEH000589	None	True
 EXP010289	ALIGN034553	None	None	423	HeLa S3 (cervical adenocarcinoma)	2117	HeLa_S3__cervical_adenocarcinoma_@_labs_sherman-weissman___biosamples_ENCBS714AAA_	ENCSR000EZN; wgEncodeEH000611	None	True
 EXP010295	ALIGN033419	P49711	CTCF_HUMAN	113	MCF7 (Invasive ductal breast carcinoma)	2027	MCF7__Invasive_ductal_breast_carcinoma_@_labs_john-stamatoyannopoulos___biosamples_ENCBS748WRO_	ENCSR000DWH; wgEncodeEH002057	None	False
-EXP010296	ALIGN034554	Q13127	REST_HUMAN	849	U87 (glioblastoma)	2045	U87__glioblastoma_@False	wgEncodeEH001554	None	False
+EXP010296	ALIGN034554	Q13127	REST_HUMAN	849	U87 (glioblastoma)	2045	U87__glioblastoma_@wgEncode	wgEncodeEH001554	None	False
 EXP010297	ALIGN033420	P49711	CTCF_HUMAN	356	GM12878 (female B-cells)	1972	GM12878__female_B-cells_@_labs_michael-snyder___biosamples_ENCBS630AAA_	ENCSR000DZN; wgEncodeEH001851	None	False
 EXP010298	ALIGN033421	P25490	TYY1_HUMAN	357	GM12891 (male B-cells)	2060	GM12891__male_B-cells_@_labs_richard-myers___biosamples_ENCBS388ENC_	ENCSR000BKJ; wgEncodeEH001573	None	False
 EXP010299	ALIGN033422	Q01860	PO5F1_HUMAN	376	H1 (embryonic stem cells)	1951	H1__embryonic_stem_cells_@_labs_richard-myers___biosamples_ENCBS111ENC_	ENCSR000BMU; wgEncodeEH001636	None	False
@@ -762,7 +762,7 @@ EXP010420	ALIGN033471	P49711	CTCF_HUMAN	376	H1 (embryonic stem cells)	2029	H1__e
 EXP010421	ALIGN033472	Q06546	GABPA_HUMAN	376	H1 (embryonic stem cells)	1951	H1__embryonic_stem_cells_@_labs_richard-myers___biosamples_ENCBS111ENC_	ENCSR000BIW; wgEncodeEH001534	None	False
 EXP010423	ALIGN033473	P49711	CTCF_HUMAN	38	A549 (lung carcinoma)	1133	A549__lung_carcinoma_@_labs_richard-myers___biosamples_ENCBS165AAA_	ENCSR000BHV; wgEncodeEH001507	None	False
 EXP010426	ALIGN033474	P49711	CTCF_HUMAN	215	keratinocytes	2008	keratinocytes@_labs_bradley-bernstein___biosamples_ENCBS584ENC_	ENCSR000ALJ; wgEncodeEH000063	None	False
-EXP010428	ALIGN034586	None	None	376	H1 (embryonic stem cells)	2031	H1__embryonic_stem_cells_@False	wgEncodeEH001543	None	True
+EXP010428	ALIGN034586	None	None	376	H1 (embryonic stem cells)	2031	H1__embryonic_stem_cells_@wgEncode	wgEncodeEH001543	None	True
 EXP010429	ALIGN033475	P49711	CTCF_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2079	HeLa_S3__cervical_adenocarcinoma_@_labs_vishwanath-iyer___biosamples_ENCBS646PGB_	ENCSR000DLO; wgEncodeEH000541	None	False
 EXP010430	ALIGN033476	P20226	TBP_HUMAN	376	H1 (embryonic stem cells)	2055	H1__embryonic_stem_cells_@_labs_michael-snyder___biosamples_ENCBS854AAA_	ENCSR000ECB; wgEncodeEH001848	None	False
 EXP010431	ALIGN034587	P19793	RXRA_HUMAN	356	GM12878 (female B-cells)	1903	GM12878__female_B-cells_@_labs_richard-myers___biosamples_ENCBS110ENC_	ENCSR000BJD; wgEncodeEH001541	None	False
@@ -817,7 +817,7 @@ EXP010499	ALIGN034600	Q13127	REST_HUMAN	356	GM12878 (female B-cells)	1903	GM1287
 EXP010500	ALIGN033511	P49711	CTCF_HUMAN	67	aortic adventitial fibroblasts	1901	aortic_adventitial_fibroblasts@_labs_john-stamatoyannopoulos___biosamples_ENCBS098SOQ_	ENCSR000DPY; wgEncodeEH000980	None	False
 EXP010501	ALIGN034601	Q13127	REST_HUMAN	356	GM12878 (female B-cells)	1903	GM12878__female_B-cells_@_labs_richard-myers___biosamples_ENCBS110ENC_	ENCSR000BGF; wgEncodeEH001465	None	False
 EXP010502	ALIGN033512	P49711	CTCF_HUMAN	416	HCPEpiC (choroid plexus epithelial cells)	1998	HCPEpiC__choroid_plexus_epithelial_cells_@_labs_john-stamatoyannopoulos___biosamples_ENCBS395ENC_	ENCSR000DTL; wgEncodeEH000983	None	False
-EXP010503	ALIGN033513	P05549	AP2A_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2152	HeLa_S3__cervical_adenocarcinoma_@False	wgEncodeEH000685	None	False
+EXP010503	ALIGN033513	P05549	AP2A_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2152	HeLa_S3__cervical_adenocarcinoma_@wgEncode	wgEncodeEH000685	None	False
 EXP010505	ALIGN034602	None	None	665	SK-N-SH (neuroblastoma)	1941	SK-N-SH__neuroblastoma_@_labs_richard-myers___biosamples_ENCBS428ENC_	ENCSR000BPR; wgEncodeEH002287	None	True
 EXP010506	ALIGN033514	Q16656	NRF1_HUMAN	514	K562 (myelogenous leukemia)	2074	K562__myelogenous_leukemia_@_labs_michael-snyder___biosamples_ENCBS039ENC_	ENCSR000EHH; wgEncodeEH001796	None	False
 EXP010507	ALIGN034603	None	None	712	PANC1 (pancreatic ductal adenocarcinoma)	2011	PANC1__pancreatic_ductal_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS425ENC_	ENCSR000BPP; wgEncodeEH002285	None	True
@@ -838,7 +838,7 @@ EXP010537	ALIGN034608	Q99081	HTF4_HUMAN	356	GM12878 (female B-cells)	1903	GM1287
 EXP010538	ALIGN034609	None	None	430	HepG2 (hepatoblastoma)	1948	HepG2__hepatoblastoma_@_labs_richard-myers___biosamples_ENCBS114ENC_	ENCSR000BLN; wgEncodeEH001603	None	True
 EXP010539	ALIGN034610	None	None	430	HepG2 (hepatoblastoma)	1948	HepG2__hepatoblastoma_@_labs_richard-myers___biosamples_ENCBS114ENC_	ENCSR000BLN; wgEncodeEH001603	None	True
 EXP010540	ALIGN033524	P24468	COT2_HUMAN	514	K562 (myelogenous leukemia)	1950	K562__myelogenous_leukemia_@_labs_richard-myers___biosamples_ENCBS109ENC_	ENCSR000BRS; wgEncodeEH002382	None	False
-EXP010541	ALIGN034611	None	None	849	U87 (glioblastoma)	2045	U87__glioblastoma_@False	wgEncodeEH001559	None	True
+EXP010541	ALIGN034611	None	None	849	U87 (glioblastoma)	2045	U87__glioblastoma_@wgEncode	wgEncodeEH001559	None	True
 EXP010543	ALIGN033525	P49711	CTCF_HUMAN	72	astrocytes	2140	astrocytes@_labs_bradley-bernstein___biosamples_ENCBS020ENC_	ENCSR000AOO; wgEncodeEH001026	None	False
 EXP010544	ALIGN033526	Q9ULX9	MAFF_HUMAN	430	HepG2 (hepatoblastoma)	2069	HepG2__hepatoblastoma_@_labs_michael-snyder___biosamples_ENCBS638AAA_	ENCSR000EEC; wgEncodeEH001841	None	False
 EXP010545	ALIGN033527	None	None	430	HepG2 (hepatoblastoma)	2095	HepG2__hepatoblastoma_@_labs_sherman-weissman___biosamples_ENCBS712AAA_	ENCSR000EZR; wgEncodeEH000640	None	True
@@ -850,7 +850,7 @@ EXP010552	ALIGN033529	P23769	GATA2_HUMAN	472	HUVEC (umbilical vein endothelial c
 EXP010553	ALIGN033530	Q14653	IRF3_HUMAN	356	GM12878 (female B-cells)	1972	GM12878__female_B-cells_@_labs_michael-snyder___biosamples_ENCBS630AAA_	ENCSR000DZX; wgEncodeEH001809	None	False
 EXP010555	ALIGN034615	None	None	504	Ishikawa (endometrial adenocarcinoma)	2089	Ishikawa__endometrial_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS312UTV_	ENCSR000BKX; wgEncodeEH001587	None	True
 EXP010558	ALIGN034616	None	None	712	PANC1 (pancreatic ductal adenocarcinoma)	2011	PANC1__pancreatic_ductal_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS425ENC_	ENCSR000BIN; wgEncodeEH001525	None	True
-EXP010559	ALIGN033531	Q92754	AP2C_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2152	HeLa_S3__cervical_adenocarcinoma_@False	wgEncodeEH000686	None	False
+EXP010559	ALIGN033531	Q92754	AP2C_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2152	HeLa_S3__cervical_adenocarcinoma_@wgEncode	wgEncodeEH000686	None	False
 EXP010562	ALIGN033532	P01100	FOS_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2053	HeLa_S3__cervical_adenocarcinoma_@_labs_sherman-weissman___biosamples_ENCBS637AAA_	ENCSR000EZE; wgEncodeEH000647	None	False
 EXP010563	ALIGN033533	Q86T24	KAISO_HUMAN	514	K562 (myelogenous leukemia)	1950	K562__myelogenous_leukemia_@_labs_richard-myers___biosamples_ENCBS109ENC_	ENCSR000BKF; wgEncodeEH001569	None	False
 EXP010564	ALIGN034617	P18847	ATF3_HUMAN	430	HepG2 (hepatoblastoma)	1948	HepG2__hepatoblastoma_@_labs_richard-myers___biosamples_ENCBS114ENC_	ENCSR000BKE; wgEncodeEH001568	None	False
@@ -868,7 +868,7 @@ EXP010581	ALIGN034621	None	None	356	GM12878 (female B-cells)	1903	GM12878__femal
 EXP010582	ALIGN034622	None	None	514	K562 (myelogenous leukemia)	2084	K562__myelogenous_leukemia_@_labs_bradley-bernstein___biosamples_ENCBS639AAA_	ENCSR000AKY; wgEncodeEH000052	None	True
 EXP010583	ALIGN033541	None	None	674	normal lung fibroblasts	2083	normal_lung_fibroblasts@_labs_bradley-bernstein___biosamples_ENCBS339AAA_	ENCSR000AMZ; wgEncodeEH000105	None	True
 EXP010584	ALIGN033542	P17535	JUND_HUMAN	514	K562 (myelogenous leukemia)	2014	K562__myelogenous_leukemia_@_labs_kevin-white___biosamples_ENCBS770RPE_	ENCSR000DJX; wgEncodeEH001211	None	False
-EXP010585	ALIGN034623	Q13127	REST_HUMAN	849	U87 (glioblastoma)	2045	U87__glioblastoma_@False	wgEncodeEH001554	None	False
+EXP010585	ALIGN034623	Q13127	REST_HUMAN	849	U87 (glioblastoma)	2045	U87__glioblastoma_@wgEncode	wgEncodeEH001554	None	False
 EXP010586	ALIGN033543	P21675	TAF1_HUMAN	358	GM12892 (female B-cells)	2059	GM12892__female_B-cells_@_labs_richard-myers___biosamples_ENCBS055ENC_	ENCSR000BIB; wgEncodeEH001513	None	False
 EXP010587	ALIGN034624	None	None	376	H1 (embryonic stem cells)	2082	H1__embryonic_stem_cells_@_labs_peggy-farnham___biosamples_ENCBS668AAA_	ENCSR000EUR; wgEncodeEH001751	None	True
 EXP010588	ALIGN033544	P01100	FOS_HUMAN	514	K562 (myelogenous leukemia)	1946	K562__myelogenous_leukemia_@_labs_kevin-white___biosamples_ENCBS799VSJ_	ENCSR000DKB; wgEncodeEH001207	None	False
@@ -973,7 +973,7 @@ EXP010732	ALIGN033604	None	None	472	HUVEC (umbilical vein endothelial cells)	204
 EXP010733	ALIGN034663	P40426	PBX3_HUMAN	356	GM12878 (female B-cells)	1903	GM12878__female_B-cells_@_labs_richard-myers___biosamples_ENCBS110ENC_	ENCSR000BGR; wgEncodeEH001477	None	False
 EXP010734	ALIGN033605	P49711	CTCF_HUMAN	472	HUVEC (umbilical vein endothelial cells)	1898	HUVEC__umbilical_vein_endothelial_cells_@_labs_john-stamatoyannopoulos___biosamples_ENCBS834QWR_	ENCSR000DVP; wgEncodeEH000410	None	False
 EXP010736	ALIGN033606	Q16254	E2F4_HUMAN	514	K562 (myelogenous leukemia)	1980	K562__myelogenous_leukemia_@_labs_peggy-farnham___biosamples_ENCBS667AAA_	ENCSR000EWL; wgEncodeEH000671	None	False
-EXP010737	ALIGN034664	None	None	849	U87 (glioblastoma)	2045	U87__glioblastoma_@False	wgEncodeEH001559	None	True
+EXP010737	ALIGN034664	None	None	849	U87 (glioblastoma)	2045	U87__glioblastoma_@wgEncode	wgEncodeEH001559	None	True
 EXP010738	ALIGN033607	P21675	TAF1_HUMAN	423	HeLa S3 (cervical adenocarcinoma)	2112	HeLa_S3__cervical_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS113ENC_	ENCSR000BHT; wgEncodeEH001505	None	False
 EXP010739	ALIGN033608	Q13127	REST_HUMAN	712	PANC1 (pancreatic ductal adenocarcinoma)	2011	PANC1__pancreatic_ductal_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS425ENC_	ENCSR000BPK; wgEncodeEH002280	None	False
 EXP010740	ALIGN033609	P49711	CTCF_HUMAN	918	myotube	2050	myotube@_labs_bradley-bernstein___biosamples_ENCBS639UHS_	ENCSR000ANS; wgEncodeEH001000	None	False
@@ -1015,7 +1015,7 @@ EXP010790	ALIGN034681	None	None	1133	fibroblast of mammary gland	2013	fibroblast
 EXP010791	ALIGN034682	None	None	712	PANC1 (pancreatic ductal adenocarcinoma)	2011	PANC1__pancreatic_ductal_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS425ENC_	ENCSR000BVV; wgEncodeEH003429	None	True
 EXP010792	ALIGN033630	None	None	215	keratinocytes	2009	keratinocytes@_labs_bradley-bernstein___biosamples_ENCBS585ENC_	ENCSR000ALS; wgEncodeEH000072	None	True
 EXP010794	ALIGN034683	None	None	448	retinal pigment epithelial cells	2007	retinal_pigment_epithelial_cells@_labs_john-stamatoyannopoulos___biosamples_ENCBS893GDP_	ENCSR000DVJ; wgEncodeEH000962	None	True
-EXP010795	ALIGN033631	None	None	514	K562 (myelogenous leukemia)	1947	K562__myelogenous_leukemia_@False	wgEncodeEH001202	None	True
+EXP010795	ALIGN033631	None	None	514	K562 (myelogenous leukemia)	1947	K562__myelogenous_leukemia_@wgEncode	wgEncodeEH001202	None	True
 EXP010796	ALIGN034684	None	None	113	MCF7 (Invasive ductal breast carcinoma)	1929	MCF7__Invasive_ductal_breast_carcinoma_@_labs_richard-myers___biosamples_ENCBS001AAA_	ENCSR000AHE; wgEncodeEH003428	None	True
 EXP010797	ALIGN034685	None	None	113	MCF7 (Invasive ductal breast carcinoma)	1929	MCF7__Invasive_ductal_breast_carcinoma_@_labs_richard-myers___biosamples_ENCBS001AAA_	ENCSR000AHE; wgEncodeEH003428	None	True
 EXP010798	ALIGN034686	None	None	58	AG10803 (fibroblasts)	2004	AG10803__fibroblasts_@_labs_john-stamatoyannopoulos___biosamples_ENCBS793PDT_	ENCSR000DPW; wgEncodeEH000936	None	True
@@ -1066,7 +1066,7 @@ EXP010860	ALIGN034721	None	None	376	H1 (embryonic stem cells)	1951	H1__embryonic
 EXP010861	ALIGN034722	None	None	514	K562 (myelogenous leukemia)	1079	K562__myelogenous_leukemia_@_labs_richard-myers___biosamples_ENCBS600AAA_	ENCSR000BRJ; wgEncodeEH002332	None	True
 EXP010863	ALIGN033646	None	None	356	GM12878 (female B-cells)	390	GM12878__female_B-cells_@_labs_bradley-bernstein___biosamples_ENCBS830CIQ_	ENCSR000AKJ; wgEncodeEH000037	None	True
 EXP010864	ALIGN034724	None	None	430	HepG2 (hepatoblastoma)	1948	HepG2__hepatoblastoma_@_labs_richard-myers___biosamples_ENCBS114ENC_	ENCSR000BPH; wgEncodeEH002277	None	True
-EXP010865	ALIGN033647	None	None	514	K562 (myelogenous leukemia)	1947	K562__myelogenous_leukemia_@False	wgEncodeEH001201	None	True
+EXP010865	ALIGN033647	None	None	514	K562 (myelogenous leukemia)	1947	K562__myelogenous_leukemia_@wgEncode	wgEncodeEH001201	None	True
 EXP010866	ALIGN034725	None	None	356	GM12878 (female B-cells)	1945	GM12878__female_B-cells_@_labs_vishwanath-iyer___biosamples_ENCBS337LQM_	ENCSR000DKW; wgEncodeEH000528	None	True
 EXP010867	ALIGN034726	None	None	215	keratinocytes	1944	keratinocytes@_labs_john-stamatoyannopoulos___biosamples_ENCBS501AXW_	ENCSR000DWT; wgEncodeEH000472	None	True
 EXP010868	ALIGN034727	None	None	38	A549 (lung carcinoma)	1904	A549__lung_carcinoma_@_labs_richard-myers___biosamples_ENCBS164AAA_	ENCSR000BVQ; wgEncodeEH003423	None	True
@@ -1132,7 +1132,7 @@ EXP010960	ALIGN034782	P49716	CEBPD_HUMAN	514	K562 (myelogenous leukemia)	1950	K5
 EXP010961	ALIGN034783	P25490	TYY1_HUMAN	665	SK-N-SH (neuroblastoma)	1941	SK-N-SH__neuroblastoma_@_labs_richard-myers___biosamples_ENCBS428ENC_	ENCSR000BSM; wgEncodeEH003228	None	False
 EXP010963	ALIGN033660	P49711	CTCF_HUMAN	113	MCF7 (Invasive ductal breast carcinoma)	2121	MCF7__Invasive_ductal_breast_carcinoma_@_labs_vishwanath-iyer___biosamples_ENCBS251AAA_	ENCSR000DML; wgEncodeEH003437	None	False
 EXP010965	ALIGN033661	P49711	CTCF_HUMAN	909	kidney	1909	kidney@_labs_vishwanath-iyer___biosamples_ENCBS349AAA_	ENCSR000DMC; wgEncodeEH003461	None	False
-EXP010966	ALIGN034784	Q9UGL1	KDM5B_HUMAN	376	H1 (embryonic stem cells)	2031	H1__embryonic_stem_cells_@False	wgEncodeEH003127	None	False
+EXP010966	ALIGN034784	Q9UGL1	KDM5B_HUMAN	376	H1 (embryonic stem cells)	2031	H1__embryonic_stem_cells_@wgEncode	wgEncodeEH003127	None	False
 EXP010967	ALIGN034785	Q13127	REST_HUMAN	514	K562 (myelogenous leukemia)	2085	K562__myelogenous_leukemia_@_labs_bradley-bernstein___biosamples_ENCBS674MPN_	ENCSR000ATM; wgEncodeEH003096	None	False
 EXP010968	ALIGN034786	Q06546	GABPA_HUMAN	665	SK-N-SH (neuroblastoma)	1941	SK-N-SH__neuroblastoma_@_labs_richard-myers___biosamples_ENCBS428ENC_	ENCSR000BTG; wgEncodeEH003248	None	False
 EXP010969	ALIGN034787	Q15561	TEAD4_HUMAN	417	HCT-116 (colon carcinoma)	1925	HCT-116__colon_carcinoma_@_labs_richard-myers___biosamples_ENCBS389ENC_	ENCSR000BVJ; wgEncodeEH003309	None	False
@@ -1225,7 +1225,7 @@ EXP011101	ALIGN034857	P61244	MAX_HUMAN	113	MCF7 (Invasive ductal breast carcinom
 EXP011102	ALIGN034858	P16220	CREB1_HUMAN	504	Ishikawa (endometrial adenocarcinoma)	1953	Ishikawa__endometrial_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS034DOC_	ENCSR000BUR; wgEncodeEH003287	None	False
 EXP011104	ALIGN034859	P40426	PBX3_HUMAN	665	SK-N-SH (neuroblastoma)	1941	SK-N-SH__neuroblastoma_@_labs_richard-myers___biosamples_ENCBS428ENC_	ENCSR000BVE; wgEncodeEH003300	None	False
 EXP011107	ALIGN033693	P21675	TAF1_HUMAN	504	Ishikawa (endometrial adenocarcinoma)	1953	Ishikawa__endometrial_adenocarcinoma_@_labs_richard-myers___biosamples_ENCBS034DOC_	ENCSR000BTO; wgEncodeEH003256	None	False
-EXP011108	ALIGN033694	P29375	KDM5A_HUMAN	376	H1 (embryonic stem cells)	2031	H1__embryonic_stem_cells_@False	wgEncodeEH002096	None	False
+EXP011108	ALIGN033694	P29375	KDM5A_HUMAN	376	H1 (embryonic stem cells)	2031	H1__embryonic_stem_cells_@wgEncode	wgEncodeEH002096	None	False
 EXP011109	ALIGN034862	P61244	MAX_HUMAN	665	SK-N-SH (neuroblastoma)	1941	SK-N-SH__neuroblastoma_@_labs_richard-myers___biosamples_ENCBS428ENC_	ENCSR000BVD; wgEncodeEH003299	None	False
 EXP011110	ALIGN034863	Q08050	FOXM1_HUMAN	113	MCF7 (Invasive ductal breast carcinoma)	1928	MCF7__Invasive_ductal_breast_carcinoma_@_labs_richard-myers___biosamples_ENCBS056AAA_	ENCSR000BUJ; wgEncodeEH003279	None	False
 EXP011111	ALIGN033695	P01106	MYC_HUMAN	113	MCF7 (Invasive ductal breast carcinoma)	2121	MCF7__Invasive_ductal_breast_carcinoma_@_labs_vishwanath-iyer___biosamples_ENCBS251AAA_	ENCSR000DMJ; wgEncodeEH003439	None	False
