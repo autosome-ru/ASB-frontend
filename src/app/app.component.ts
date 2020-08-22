@@ -10,6 +10,9 @@ import {ReleasesService} from "./services/releases.service";
 import {AppState} from "./store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action";
+import * as fromSelectors from "src/app/store/selector";
+import {Observable} from "rxjs";
+
 
 @Component({
     selector: "app-root",
@@ -21,6 +24,7 @@ export class AppComponent  implements  OnInit {
     @HostBinding("class.asb-app")
     private cssClass = true;
     private readonly isBrowser: boolean;
+    public releaseLoding$: Observable<boolean>;
 
     constructor(private router: Router,
                 private route: ActivatedRoute,

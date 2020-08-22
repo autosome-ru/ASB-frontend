@@ -18,10 +18,12 @@ import {SeoService} from "./services/seo.servise";
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ReleasesService} from "./services/releases.service";
+import {RedirectComponent} from "./redirect.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RedirectComponent
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: "serverApp" }),

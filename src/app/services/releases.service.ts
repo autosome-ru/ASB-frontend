@@ -18,9 +18,7 @@ export class ReleasesService {
             return this.releases[0]
         }
         const releaseIndex = this.releases.findIndex(release => release.url === releaseUrl)
-        if (releaseIndex == -1) {
-            //this.router.navigateByUrl(`/${this.releases[0].url}/404`)
-        } else {
+        if (releaseIndex != -1) {
             return this.releases[releaseIndex]
         }
     }
@@ -28,7 +26,7 @@ export class ReleasesService {
 
     getReleaseFromRoute(): Observable<ReleaseModel> {
         let path: string = ""
-        const url: string = this.location ? this.location.path() : ''
+        let url: string = this.location ? this.location.path() : ''
         if ( url != "" && url != "/") {
             path = url.split('/')[1]
         }

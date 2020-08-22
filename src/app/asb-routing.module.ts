@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import {Routes, RouterModule} from "@angular/router";
 import {SoosComponent} from "./modules/versions/soos/soos.component";
 import {DeprecatedComponent} from "./modules/versions/deprecated/deprecated.component";
+import {RedirectComponent} from "./redirect.component";
 
 const routes: Routes = [
     {
@@ -14,10 +15,10 @@ const routes: Routes = [
         component: DeprecatedComponent,
         loadChildren: () => import(`src/app/modules/versions/deprecated/deprecated.module`).then(mod => mod.DeprecatedModule)
     },
+
     {
-        path: "",
-        pathMatch: "prefix",
-        redirectTo: "soos"
+        path: "**",
+        component: RedirectComponent,
     }
 ]
 

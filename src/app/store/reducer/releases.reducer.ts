@@ -1,5 +1,6 @@
 import * as fromActions from "src/app/store/action/releases.action";
 import {ReleaseModel} from "../../models/releases.model";
+import {releasesList} from "../../helpers/releases";
 
 export interface ReleaseState {
     release: ReleaseModel,
@@ -9,7 +10,7 @@ export interface ReleaseState {
 export const selectCurrentRelease = (state: ReleaseState) => state.release;
 
 export const initialState: ReleaseState = {
-    release: null,
+    release: releasesList[0],
     releaseLoading: false
 };
 
