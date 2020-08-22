@@ -15,7 +15,6 @@ export class RedirectComponent implements OnInit {
         if (!path.startsWith('/')) {
             path = '/' + path
         }
-        console.log(`/${releasesList[0].url}${path}`)
         this.router.navigateByUrl(`/${releasesList[0].url}${path}`)
     }
 }
