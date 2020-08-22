@@ -17,6 +17,7 @@ import {TotalInfoModel} from "../../models/data.model";
 import {Observable} from "rxjs";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
+import {ReleaseModel} from "../../models/releases.model";
 
 @Component({
     selector: "home-page",
@@ -31,6 +32,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     public svgContainer: ElementRef<HTMLObjectElement>;
     isBrowser: boolean;
     public totalInfo$: Observable<TotalInfoModel>;
+    public release$: Observable<ReleaseModel>;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -42,7 +44,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
 
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());

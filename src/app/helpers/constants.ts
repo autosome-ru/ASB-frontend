@@ -1,8 +1,6 @@
 import {MotifConcordanceModel, PhenotypesModel} from "../models/data.model";
 import {AsbServerSideModel} from "../models/table.model";
 
-export const version: string = "v1.4.4";
-export const releaseName: string = "Soos";
 
 export const phenotypesToView: {[name: string]: string} = {
     ebi: "EMBL-EBI",

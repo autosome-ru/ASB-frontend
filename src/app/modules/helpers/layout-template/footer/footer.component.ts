@@ -1,5 +1,10 @@
 import {Component, HostBinding, OnInit} from "@angular/core";
-import {releaseName, version} from "../../../../helpers/constants";
+import {ReleaseModel} from "../../../../models/releases.model";
+import * as fromSelectors from "src/app/store/selector";
+import {Observable} from "rxjs";
+import {AppState} from "../../../../store/reducer";
+import {Store} from "@ngrx/store";
+
 
 @Component({
   selector: "asb-footer",
@@ -9,14 +14,11 @@ import {releaseName, version} from "../../../../helpers/constants";
 export class AsbFooterComponent implements OnInit {
     @HostBinding("class.asb-footer")
     private readonly cssClass = true;
-    public date: string;
-    public version: string;
-    public releaseName: string;
-    constructor() { }
+    public release$: Observable<ReleaseModel>;
+    constructor(private store: Store<AppState>) { }
 
     ngOnInit() {
-        this.version = version;
-        this.releaseName = releaseName;
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
     }
 
 }

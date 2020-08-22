@@ -25,14 +25,14 @@
 
         <a
             style="text-decoration: underline"
-            [routerLink]="'/browse'"
+            [routerLink]="'/' + (release$ | async).url + '/browse'"
             [queryParams]="{by: 'tf'}"
         >
             {{totalInfo.transcriptionFactorsCount}}</a>
         &nbsp;&nbsp;&nbsp;Cell types:&nbsp;
         <a
             style="text-decoration: underline"
-            [routerLink]="'/browse'"
+            [routerLink]="'/' + (release$ | async).url + '/browse'"
             [queryParams]="{by: 'cl'}"
         >
             {{totalInfo.cellTypesCount}}</a>

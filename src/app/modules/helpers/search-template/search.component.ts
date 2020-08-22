@@ -33,6 +33,7 @@ import {ToastrService} from "ngx-toastr";
 import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
 import {debounceTime} from "rxjs/operators";
 import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/check-functions.helper";
+import {ReleaseModel} from "../../../models/releases.model";
 
 
 @Component({
@@ -81,6 +82,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
     public downloadButtonColor: "primary" | null = null;
     public showNearbyControl: FormControl;
+    public currentRelease$: Observable<ReleaseModel>;
 
 
 
@@ -114,6 +116,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.listOfChrs = SearchComponent.initChromosomes();
+        this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease)
 
         this.showNearbyControl = this.formBuilder.control(100);
 
@@ -230,14 +233,17 @@ export class SearchComponent implements OnInit, OnDestroy {
             let params: {[a: string]: string} = {
                 ...this._convertFormToParams(this.isAdvanced)
             }
-            if (!this.router.isActive('/search',  false)) {
+            if (!this.router.url.includes('/search')) {
                 params = {...params, skip_check: '1'}
             }
-            this.router.navigate(["/search/" +
-            (this.isAdvanced ? "advanced" : "simple")], {
-                queryParams: params
-            }).then(
-                    () => null, error => console.log(error));
+            this.subscriptions.add(
+                this.currentRelease$.subscribe(r =>
+                    this.router.navigate([`/${r.url}/search/` +
+                    (this.isAdvanced ? "advanced" : "simple")], {
+                        queryParams: params
+                    })
+                )
+            )
         }
     }
 

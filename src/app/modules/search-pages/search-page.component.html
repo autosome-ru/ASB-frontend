@@ -49,7 +49,7 @@
                              style="margin-bottom: 20px"
                              *ngFor="let snp of (searchSnpResults$ | async).results">
                             <a
-                                [routerLink]="'/snps/' + snp.rsId + '/' + snp.altBase"
+                                [routerLink]="'/' + (release$ | async).url + '/snps/' + snp.rsId + '/' + snp.altBase"
                             >
                                 <mat-card
                                     class="search-page__card"

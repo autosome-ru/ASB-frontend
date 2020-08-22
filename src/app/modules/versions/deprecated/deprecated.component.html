@@ -1,0 +1,5 @@
+<ngb-alert type="danger" [dismissible]="false" *ngIf="isBrowser">
+    <strong>Attention!</strong> ADASTRA release <strong>{{(release$ | async)?.name}}</strong> is outdated. Please switch to the latest ADASTRA release
+    <a href="https://adastra.autosome.ru">adastra.autosome.ru</a>
+</ngb-alert>
+<router-outlet></router-outlet>

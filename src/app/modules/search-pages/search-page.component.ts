@@ -2,9 +2,9 @@ import {ChangeDetectionStrategy, Component, HostBinding, OnDestroy, OnInit, View
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../store/reducer";
-import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Store} from "@ngrx/store";
+import * as fromSelectors from "src/app/store/selector";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchQueryModel, SearchResultsModel} from "../../models/searchQueryModel";
@@ -14,6 +14,7 @@ import {SeoService} from "../../services/seo.servise";
 import {AsbServerSideModel} from "../../models/table.model";
 import {initialServerParams} from "../../helpers/constants";
 import {SearchPageTableComponent} from "./search-table/search-table.component";
+import {ReleaseModel} from "../../models/releases.model";
 
 @Component({
     selector: "asb-search-page",
@@ -46,16 +47,16 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public searchSnpResultsChanged$: Observable<boolean>;
     public searchQuery$: Observable<SearchQueryModel>;
     private firstTimeOpen: boolean;
+    public release$: Observable<ReleaseModel>;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
-
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-
-        this.isAdvancedSearch = !this.router.isActive("/search/simple", false);
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.isAdvancedSearch = !this.router.url.includes("search/simple");
         if (this.route.snapshot.queryParams.rs ||
             (this.route.snapshot.queryParams.pos &&
                 this.route.snapshot.queryParams.pos.match(/^\d*$/))) {
@@ -151,7 +152,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
 
     _navigateToSnp(id: string, alt: string): void {
-        this.router.navigateByUrl("snps/" + id + "/" + alt).then(() => window.scrollTo(0, 0));
+        this.subscriptions.add(
+            this.release$.subscribe((s) =>
+                this.router.navigateByUrl(`${s.url}/snps/${id}/${alt}`).then(() => window.scrollTo(0, 0))
+            )
+        );
     }
 
     pageModelToChange(event: PageEvent): AsbServerSideModel {

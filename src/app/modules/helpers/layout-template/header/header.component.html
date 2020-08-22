@@ -1,4 +1,5 @@
 <nav
+    *ngIf="currentRelease$ | async as release"
     class="navbar navbar-expand-sm navbar-dark bg-dark mb-0 justify-content-start asb-header"
 >
     <button
@@ -11,14 +12,14 @@
     </button>
     <a
         class="navbar-brand"
-        [routerLink]="'/'"
+        [routerLink]="'/' + release.url "
         [routerLinkActive]="['active']"
         [routerLinkActiveOptions]="{exact:true}"
     >
         <div style="display: flex; align-items: flex-end">
         <img src="../../../../../assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
             <div style="display: inline-block">
-                ADASTRA {{version}}
+                ADASTRA {{release.version}}
             </div>
         </div>
     </a>
@@ -29,7 +30,7 @@
         <div class="navbar-nav">
             <a
                 class="nav-item nav-link py-sm-0"
-                [routerLink]="'/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
+                [routerLink]="'/' + release.url + '/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
                 [queryParams]="_convertFormToParams((searchQuery | async))"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
@@ -38,7 +39,7 @@
             </a>
             <a
                 class="nav-item nav-link py-sm-0"
-                [routerLink]="'/browse'"
+                [routerLink]="'/' + release.url + '/browse'"
                 [queryParams]="{by: 'tf'}"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
@@ -47,7 +48,7 @@
             </a>
             <a
                 class="nav-item nav-link py-sm-0"
-                [routerLink]="'/help'"
+                [routerLink]="'/' + release.url + '/help'"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
             >
@@ -55,13 +56,13 @@
             </a>
             <a
                 class="nav-item nav-link py-sm-0"
-                [routerLink]="'/downloads'"
+                [routerLink]="'/' + release.url + '/downloads'"
             >
                 Downloads
             </a>
             <a
                 class="nav-item nav-link py-sm-0"
-                [routerLink]="'/about'"
+                [routerLink]="'/' + release.url + '/about'"
                 [routerLinkActive]="['active']"
                 (click)="toggleNavbar('close')"
             >

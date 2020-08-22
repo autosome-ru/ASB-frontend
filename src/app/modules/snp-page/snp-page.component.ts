@@ -16,6 +16,7 @@ import {SeoService} from "../../services/seo.servise";
 import {ToastrService} from "ngx-toastr";
 import {MatExpansionPanel} from "@angular/material/expansion";
 import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
+import {ReleasesService} from "../../services/releases.service";
 
 @Component({
     selector: "asb-snp-page",
@@ -66,6 +67,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private saverService: FileSaverService,
         private dataService: DataService,
         private toastr: ToastrService,
+        private releasesService: ReleasesService,
         private seoService: SeoService
     ) {}
 
@@ -86,7 +88,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.snpData$.subscribe(s => s ?
                 this.seoService.updateSeoInfo({
-                    title: this.route.snapshot.data.title(this.id),
+                    title: this.route.snapshot.data.title(this.id, 'Soos'),
                     description: this.route.snapshot.data.description(this.id),
                     keywords: s.transFactors.slice(0, 10).map(s => s.name).join(","),
                 }) :
