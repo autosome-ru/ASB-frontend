@@ -10,7 +10,6 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
 import {AsbStatisticsComponent} from "./statistics/statistics.component";
 import {FileSaverService} from "ngx-filesaver";
 import {DataService} from "../../services/data.service";
-import * as moment from "moment";
 import {calculateColorForOne} from "../../helpers/colors.helper";
 import {SeoService} from "../../services/seo.servise";
 import {ToastrService} from "ngx-toastr";
@@ -167,7 +166,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 this.id, this.alt, where, options.columns, options.filter).subscribe(
                 (res) => {
                     this.saverService.save(res,
-                        `AD_ASTRA_${this.id}_${this.alt}_${moment().format("YYYY-MM-DD_HH-mm")}.tsv`);
+                        `AD_ASTRA_${this.id}_${this.alt}_SNP_details.tsv`);
                 },
                 (err) => {
                     this.toastr.error(err.message, "Error");
