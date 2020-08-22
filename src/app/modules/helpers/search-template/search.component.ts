@@ -27,7 +27,6 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {FileSaverService} from "ngx-filesaver";
-import * as moment from "moment";
 import {SearchService} from "../../../services/search.service";
 import {ToastrService} from "ngx-toastr";
 import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
@@ -253,7 +252,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
                 (res) => {
                     this.saverService.save(res,
-                        "AD_ASTRA_search_" + moment().format("YYYY-MM-DD_HH-mm") + ".tsv");
+                        "AD_ASTRA_search_results.tsv");
                 },
                 (error) => this.toastr.error(error.message, "Error")
             )
