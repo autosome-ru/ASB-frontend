@@ -15,6 +15,11 @@ const routes: Routes = [
         component: DeprecatedComponent,
         loadChildren: () => import(`src/app/modules/versions/deprecated/deprecated.module`).then(mod => mod.DeprecatedModule)
     },
+    {
+        path: "",
+        pathMatch: "full",
+        redirectTo: "soos",
+    },
 
     {
         path: "**",
