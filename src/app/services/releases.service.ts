@@ -19,7 +19,7 @@ export class ReleasesService {
         }
         const releaseIndex = this.releases.findIndex(release => release.url === releaseUrl)
         if (releaseIndex == -1) {
-            this.router.navigateByUrl(`/${this.releases[0].url}/404`)
+            //this.router.navigateByUrl(`/${this.releases[0].url}/404`)
         } else {
             return this.releases[releaseIndex]
         }
