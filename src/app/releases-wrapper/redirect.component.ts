@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {releasesList} from "./helpers/releases";
+import {recentRelease} from "../helpers/releases";
 import {Location} from "@angular/common";
 
 @Component({
@@ -15,6 +15,6 @@ export class RedirectComponent implements OnInit {
         if (!path.startsWith('/')) {
             path = '/' + path
         }
-        this.router.navigateByUrl(`/${releasesList[0].url}${path}`)
+        this.router.navigateByUrl(`/${recentRelease.url}${path}`).then(() => null)
     }
 }

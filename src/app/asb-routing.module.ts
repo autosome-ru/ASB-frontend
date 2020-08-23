@@ -1,19 +1,15 @@
 import { NgModule } from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
-import {SoosComponent} from "./modules/versions/soos/soos.component";
-import {DeprecatedComponent} from "./modules/versions/deprecated/deprecated.component";
-import {RedirectComponent} from "./redirect.component";
+import {RecentComponent} from "./releases-wrapper/recent.component";
+import {RedirectComponent} from "./releases-wrapper/redirect.component";
 
+
+// Use RecentComponent for recent release and DeprecatedComponent for deprecated one
 const routes: Routes = [
     {
         path: "soos",
-        component: SoosComponent,
+        component: RecentComponent,
         loadChildren: () => import("src/app/modules/versions/soos/soos.module").then(mod => mod.SoosModule)
-    },
-    {
-        path: "waddles",
-        component: DeprecatedComponent,
-        loadChildren: () => import(`src/app/modules/versions/deprecated/deprecated.module`).then(mod => mod.DeprecatedModule)
     },
     {
         path: "",

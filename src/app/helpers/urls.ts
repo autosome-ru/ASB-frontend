@@ -1,6 +1,6 @@
 import {environment} from "../../environments/environment";
-
-const serverUrl = environment.serverUrl + "/api/v1";
+import {recentRelease} from "./releases"
+const serverUrl = environment.serverUrl + `/api/${recentRelease.api}`;
 
 export const browseUrl = serverUrl + "/browse";
 export const snpsInfoUrl = serverUrl + "/snps";

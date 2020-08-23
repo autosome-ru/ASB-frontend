@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {ReleaseModel} from "../models/releases.model";
 import { Location } from "@angular/common";
 import {Observable, of} from "rxjs";
-import {releasesList} from "../helpers/releases";
+import {recentRelease, releasesList} from "../helpers/releases";
 
 
 @Injectable()
@@ -14,13 +14,12 @@ export class ReleasesService {
     private releases: ReleaseModel[] = releasesList
 
     getRelease(releaseUrl: string): ReleaseModel {
-        if (releaseUrl == "") {
-            return this.releases[0]
-        }
+
         const releaseIndex = this.releases.findIndex(release => release.url === releaseUrl)
         if (releaseIndex != -1) {
             return this.releases[releaseIndex]
         }
+        return recentRelease
     }
 
 

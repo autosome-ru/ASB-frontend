@@ -18,12 +18,11 @@ import {SeoService} from "./services/seo.servise";
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ReleasesService} from "./services/releases.service";
-import {RedirectComponent} from "./redirect.component";
+import {ReleasesWrapperModule} from "./releases-wrapper/releases-wrapper.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RedirectComponent
+    AppComponent
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: "serverApp" }),
@@ -37,6 +36,7 @@ import {RedirectComponent} from "./redirect.component";
 
       AsbAppIconsModule,
       AsbHelpersModule,
+      ReleasesWrapperModule,
 
   ],
   providers: [

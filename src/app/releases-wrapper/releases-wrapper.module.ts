@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DeprecatedComponent} from "./deprecated.component";
-import {DeprecatedRoutingModule} from "./deprecated-routing.module";
+import {RecentComponent} from "./recent.component";
+import {RedirectComponent} from "./redirect.component";
+import {RouterModule} from "@angular/router";
 import {NgbAlertModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 @NgModule({
     imports: [
         CommonModule,
-        DeprecatedRoutingModule,
+        RouterModule,
         NgbAlertModule,
     ],
-    declarations: [DeprecatedComponent]
+    declarations: [DeprecatedComponent, RecentComponent, RedirectComponent]
 })
-export class DeprecatedModule { }
+export class ReleasesWrapperModule { }

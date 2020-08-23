@@ -1,7 +1,7 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    HostBinding, Inject,
+    HostBinding, Inject, OnDestroy,
     OnInit, PLATFORM_ID,
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,21 +10,19 @@ import {ReleasesService} from "./services/releases.service";
 import {AppState} from "./store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action";
-import * as fromSelectors from "src/app/store/selector";
-import {Observable} from "rxjs";
+import {Subscription} from "rxjs";
 
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent  implements  OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-app")
     private cssClass = true;
     private readonly isBrowser: boolean;
-    public releaseLoding$: Observable<boolean>;
+    private subscriptions = new Subscription()
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -35,8 +33,14 @@ export class AppComponent  implements  OnInit {
     }
 
     ngOnInit() {
-        this.router.events.subscribe(() => {
-            this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction())
-        })
+        this.subscriptions.add(
+            this.router.events.subscribe(() => {
+                this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction())
+            })
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
     }
 }

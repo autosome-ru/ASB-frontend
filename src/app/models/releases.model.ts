@@ -4,4 +4,5 @@ export interface ReleaseModel {
     url: string,
     version: string,
     recent: boolean,
+    api: string
 }

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/models/urls";
+import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/urls";
 import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
