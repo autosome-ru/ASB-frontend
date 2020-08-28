@@ -288,49 +288,50 @@
                 </div>
             </div>
         </ng-container>
-    </form>
 
-    <div
-        class="asb-search__search-buttons mt-2 mt-lg-n2"
-    >
-        <div style="width: 100%; display: flex; justify-content: space-between">
-            <button
-                *ngIf="isAdvanced"
-                class="asb-search__header-demo"
-                style="margin-right: 15px"
-                mat-raised-button
-                [disabled]="_isSearchDisabled()"
-                (click)="_navigateToSearch()"
-                color="accent"
-            >
-                <mat-icon
-                    style="margin-left: -5px; margin-right:5px"
-                    svgIcon="search"
-                ></mat-icon>
-                Search
-            </button>
-            <div>
-            <button
-                *ngIf="isAdvanced"
-                mat-raised-button
-                style="margin-right: 5px;"
-                (click)="_initDemo()"
-            >
-                Example
-            </button>
-            <button
-                *ngIf="isAdvanced"
-                mat-stroked-button
-                [ngClass]="{'asb-search__light-button': downloadButtonColor === 'primary'}"
-                [color]="downloadButtonColor"
-                [disabled]="_isSearchDisabled()"
-                (click)="_getResultsInCsv()"
-            >
-                <span class="d-none d-sm-inline-block">Get search results in TSV</span>
-                <span class="d-sm-none d-inline-block">Get TSV</span>
-            </button>
+        <div
+            class="asb-search__search-buttons mt-2 mt-lg-n2"
+        >
+            <div style="width: 100%; display: flex; justify-content: space-between">
+                <button
+                    *ngIf="isAdvanced"
+                    class="asb-search__header-demo"
+                    style="margin-right: 15px"
+                    type="button"
+                    mat-raised-button
+                    [disabled]="_isSearchDisabled()"
+                    (click)="_navigateToSearch()"
+                    color="accent"
+                >
+                    <mat-icon
+                        style="margin-left: -5px; margin-right:5px"
+                        svgIcon="search"
+                    ></mat-icon>
+                    Search
+                </button>
+                <div>
+                    <button
+                        *ngIf="isAdvanced"
+                        mat-raised-button
+                        style="margin-right: 5px;"
+                        (click)="_initDemo()"
+                    >
+                        Example
+                    </button>
+                    <button
+                        *ngIf="isAdvanced"
+                        mat-stroked-button
+                        [ngClass]="{'asb-search__light-button': downloadButtonColor === 'primary'}"
+                        [color]="downloadButtonColor"
+                        [disabled]="_isSearchDisabled()"
+                        (click)="_getResultsInCsv()"
+                    >
+                        <span class="d-none d-sm-inline-block">Get search results in TSV</span>
+                        <span class="d-sm-none d-inline-block">Get TSV</span>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
