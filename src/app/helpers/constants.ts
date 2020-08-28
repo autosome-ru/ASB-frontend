@@ -41,3 +41,12 @@ export const initialServerParams: AsbServerSideModel = {
     active: null,
     direction: "",
 };
+enum Concordance {
+    'Discordant',
+    'Weak Discordant',
+    'Weak Concordant',
+    'Concordant',
+}
+export function compareConcordance(a: string, b: string): number {
+    return Concordance[a] - Concordance[b]
+}

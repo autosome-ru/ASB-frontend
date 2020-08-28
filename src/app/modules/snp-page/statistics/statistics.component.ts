@@ -14,6 +14,7 @@ import {MatSelectChange} from "@angular/material/select";
 import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {Subscription} from "rxjs";
+import {MatSort} from "@angular/material/sort";
 
 
 @Component({
@@ -44,6 +45,9 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     @Input()
     public readonly getSnpName: (row: T) => string;
 
+    @Input()
+    sortData:((data: T[], sort: MatSort) => T[])
+
     @Output()
     private downloadSnpInfo = new EventEmitter<{
         columns: string[],
@@ -54,7 +58,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
 
     public tableDisplayedColumns: AsbTableDisplayedColumns<T>;
     public tableFormGroup: FormGroup;
-    public nonStickyColumnModel: Partial<AsbTableColumnModel<Partial<T>>>;
+    public nonStickyColumnModel: Partial<AsbTableColumnModel<Partial<T>>> = {};
     public filteredObjectData: T[];
 
     originalOrder = ((): number => {
@@ -62,20 +66,20 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     });
 
     private subscriptions = new Subscription();
+    private stickyColumn: string;
     constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
         this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
-        if (!this.nonStickyColumnModel) this.nonStickyColumnModel = {};
         Object.keys(this.tableColumnModel).forEach(
-            key => key !== "name" ?
-                this.nonStickyColumnModel[key] = this.tableColumnModel[key]
-                : null
+            key => this.tableColumnModel[key as keyof AsbTableColumnModel<T> ].isSticky ?
+                this.stickyColumn = key
+                : this.nonStickyColumnModel[key] = this.tableColumnModel[key]
         );
 
         this.tableFormGroup = this.formBuilder.group({
-            columns: [this.initialDisplayedColumns.filter(s => s !== "name"), null],
+            columns: [this.initialDisplayedColumns.filter(s => !this.tableColumnModel[s].isSticky), null],
             filter: null,
         });
         this.subscriptions.add(
@@ -112,7 +116,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
 
     _changeColumns(event: MatSelectChange) {
         this.tableDisplayedColumns = [
-            "name",
+            this.stickyColumn,
             ...event.value
         ];
     }
@@ -131,7 +135,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
         this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
         this.tableFormGroup.patchValue({
-            columns: this.initialDisplayedColumns.filter(s => s !== "name"),
+            columns: this.initialDisplayedColumns.filter(s => s !== this.stickyColumn),
             filter: null
         });
     }
@@ -143,7 +147,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     _getSnpInfoCsv() {
         this.downloadSnpInfo.emit({
             columns: [
-                "name",
+                this.stickyColumn,
                 ...this.tableFormGroup.value.columns],
             filter: this.tableFormGroup.value.filter,
         });

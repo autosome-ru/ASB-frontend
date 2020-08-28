@@ -16,6 +16,8 @@ import {ToastrService} from "ngx-toastr";
 import {MatExpansionPanel} from "@angular/material/expansion";
 import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 import {ReleasesService} from "../../services/releases.service";
+import {MatSort} from "@angular/material/sort";
+import {compareData} from "../../helpers/check-functions.helper";
 
 @Component({
     selector: "asb-snp-page",
@@ -58,6 +60,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
 
     private subscriptions: Subscription = new Subscription();
+    private releaseVersion: string = '';
 
     constructor(
         private store: Store<AppState>,
@@ -82,12 +85,17 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
             )
         )
+        this.subscriptions.add(
+            this.store.select(fromSelectors.selectCurrentRelease).subscribe(
+                s => this.releaseVersion = s.version
+            )
+        )
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.subscriptions.add(
             this.snpData$.subscribe(s => s ?
                 this.seoService.updateSeoInfo({
-                    title: this.route.snapshot.data.title(this.id, 'Soos'),
+                    title: this.route.snapshot.data.title(this.id, this.releaseVersion),
                     description: this.route.snapshot.data.description(this.id),
                     keywords: s.transFactors.slice(0, 10).map(s => s.name).join(","),
                 }) :
@@ -117,11 +125,11 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         };
 
         this.clColumnModel = {
-            name: {view: "Cell type", valueConverter: v => v},
+            name: {view: "Cell type", valueConverter: v => v, isSticky: true},
             ...this.commonColumnModel,
         };
         this.tfColumnModel = {
-            name: {view: "Uniprot ID", valueConverter: v => v},
+            name: {view: "Uniprot ID", valueConverter: v => v, isSticky: true},
             ...this.commonColumnModel,
             motifFc: {
                 view: "Motif fold change",
@@ -192,10 +200,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     _calculateColor(row: TfSnpModel | ClSnpModel, w: "ref" | "alt"): string {
         return w === "ref" ?
-            calculateColorForOne(row.pValueRef,
-                row.refBase) :
-            calculateColorForOne(row.pValueAlt,
-                row.altBase);
+            calculateColorForOne(row.pValueRef, row.refBase) :
+            calculateColorForOne(row.pValueAlt, row.altBase);
     }
 
     _createSnpName(snpData: SnpInfoModel, where: TfOrCl) {
@@ -219,7 +225,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
         const id = tfs.indexOf($event)
-        const chosenExpansionPanel =this.asbMotifsComponent.expansionPanels.filter(
+        const chosenExpansionPanel = this.asbMotifsComponent.expansionPanels.filter(
             (s, i) => i == id)[0]
         chosenExpansionPanel.open()
 
@@ -229,6 +235,11 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         document.getElementById('tf' + id).scrollIntoView({behavior: "smooth"})
     }
 
+    sortData(data: TfSnpModel[], sort: MatSort): TfSnpModel[] {
+        return data.sort(
+            (a, b) => compareData(a, b, sort)
+        )
+    }
 }
 
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [

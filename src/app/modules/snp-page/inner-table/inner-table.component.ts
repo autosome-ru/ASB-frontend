@@ -25,7 +25,6 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
     public _dataSource: MatTableDataSource<ExpSnpModel>;
 
     public columnModel: AsbTableColumnModel<ExpSnpModel>;
-    private displayedColumns: AsbTableDisplayedColumns<ExpSnpModel>;
 
     private sortingDataAccessor: ((data: ExpSnpModel, id: string) => string | number) = (
         (data: ExpSnpModel, id: string) => typeof data[id] === "string" ?

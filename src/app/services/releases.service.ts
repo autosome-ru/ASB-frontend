@@ -13,7 +13,7 @@ export class ReleasesService {
     }
     private releases: ReleaseModel[] = releasesList
 
-    getRelease(releaseUrl: string): ReleaseModel {
+    getReleaseFromPrefix(releaseUrl: string): ReleaseModel {
 
         const releaseIndex = this.releases.findIndex(release => release.url === releaseUrl)
         if (releaseIndex != -1) {
@@ -29,7 +29,7 @@ export class ReleasesService {
         if ( url != "" && url != "/") {
             path = url.split('/')[1]
         }
-        return of(this.getRelease(path))
+        return of(this.getReleaseFromPrefix(path))
     }
 
 

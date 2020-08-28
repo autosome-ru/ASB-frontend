@@ -6,7 +6,7 @@ export const releasesList: ReleaseModel[] = [
         url: "soos",
         date: "22.06.2020",
         recent: true,
-        version: "v1.4.5",
+        version: "v1.4.6",
         api: 'v1'
     },
 ];

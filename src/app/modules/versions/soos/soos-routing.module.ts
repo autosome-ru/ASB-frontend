@@ -71,7 +71,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "../../404-page/page-not-found.module").then(mod => mod.AsbPageNotFoundModule),
         data: {
-            title: "Page not found"
+            title: "Page not found",
+            description: "Page not found"
         }
     },
     {
@@ -82,7 +83,6 @@ const routes: Routes = [
         path: '**',
         redirectTo: '404'
     }
-
 ];
 
 @NgModule({

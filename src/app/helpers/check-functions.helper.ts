@@ -1,6 +1,8 @@
 import {SearchParamsModel, SearchQueryModel} from "../models/searchQueryModel";
 import {formCheckboxesToList} from "./search-model.converter";
-import {SnpSearchModel} from "../models/data.model";
+import {SnpSearchModel, TfSnpModel} from "../models/data.model";
+import {MatSort} from "@angular/material/sort";
+import {compareConcordance} from "./constants";
 
 export function getPaginatorOptions(len: number): number[] {
     return len > 50 ?
@@ -87,4 +89,38 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
             return result;
         } else return {};
     }
+}
+
+function applyFunction(a: string | number, b: string | number, isBadElem: ((x: string | number) => boolean)): number {
+    if (isBadElem(a) && isBadElem(b)) {
+        return 0
+    } else {
+        if (isBadElem(a)) {
+            return 1
+        } else {
+            return -1
+        }
+    }
+}
+
+export function compareData(a: TfSnpModel, b: TfSnpModel, sort: MatSort): number {
+    let result: number = 0
+    if (sort.active) {
+        if (a[sort.active] && b[sort.active]) {
+            if (sort.active == "motifConcordance") {
+                if (a.motifConcordance != 'No Hit' && b.motifConcordance != 'No Hit') {
+                    result = compareConcordance(a.motifConcordance, b.motifConcordance)
+                } else {
+                    return applyFunction(a.motifConcordance, b.motifConcordance,
+                        x => x == 'No Hit' )
+                }
+
+            } else {
+                result = a[sort.active] > b[sort.active] ? 1 : -1
+            }
+        } else {
+            return applyFunction(a[sort.active], b[sort.active], x => !x)
+        }
+    }
+    return result * (sort.direction == 'asc' ? 1 : -1)
 }

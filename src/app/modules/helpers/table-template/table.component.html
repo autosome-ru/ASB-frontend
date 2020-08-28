@@ -6,7 +6,6 @@
             mat-table
             matSort
             #sort1="matSort"
-            (matSortChange)="_changeCurrentSortDirection($event)"
             [dataSource]="_dataSource"
             [multiTemplateDataRows]="!!expandCellContentTemplate"
         >

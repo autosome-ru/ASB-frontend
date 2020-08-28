@@ -6,7 +6,7 @@ import {
     TemplateRef, ViewChild,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
-import {MatSort, Sort, SortDirection} from "@angular/material/sort";
+import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {AsbPopoverComponent} from "../popover-template/popover.component";
@@ -60,30 +60,23 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
     public displayedColumns: AsbTableDisplayedColumns<T>;
 
     public _dataSource: MatTableDataSource<T>;
-    public sortDirection: SortDirection = "";
-    public sortingDataAccessor: ((data: T, sortHeaderId: string) => string | number) =
-        ((data: T, sortHeaderId: string) => data[sortHeaderId] !== null ? data[sortHeaderId] :
-            sortHeaderId == 'motifConcordance' ? (this.sortDirection !== "desc" ? 'zzzzz' : '00000') : 1000 * (this.sortDirection !== "desc" ? 1 : -1));
     public popoverRow: T;
-    // TODO remove sortingDataAccessor
-    // sortData: ((data: T[], sort: MatSort) => T[])
-    // return this.compareItems(valueA, valueB) * (direction == 'asc' ? 1 : -1);
-    //
-    // private compareItems(itemA: any, itemB: any): number {
-    //     let retVal: number = 0;
-    //     if (itemA && itemB) {
-    //         if (itemA > itemB) retVal = 1;
-    //         else if (itemA < itemB) retVal = -1;
-    //     }
-    //     else if (itemA) retVal = 1;
-    //     else if (itemB) retVal = -1;
-    //     return retVal;
-    // }
+
+
     @Input()
-    set data(value: Array<T>) {
+    private sortData: ((data: T[], sort: MatSort) => T[]);
+
+    public initialValue: T[];
+
+    @Input()
+    set data(value: T[]) {
         this._dataSource = new MatTableDataSource<T>(value);
         this._dataSource.sort = this.sort;
-        this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
+        this.initialValue = value
+        if (this.sortData) {
+            this._dataSource.sortData = ((data, sort) =>
+                sort.active ? this.sortData(data, sort) : this.initialValue)
+        }
         if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
         if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
     }
@@ -110,7 +103,10 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
     ngAfterViewInit() {
         if (this._dataSource) {
             this._dataSource.sort = this.sort;
-            this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
+            if (this.sortData) {
+                this._dataSource.sortData = ((data, sort) =>
+                    sort.direction ? this.sortData(data, sort) : this.initialValue)
+            }
             if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
         }
     }
@@ -132,19 +128,10 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
             this.popover.title = this.getTitle ? this.getTitle(row) : null;
             this.popoverRow = row;
         }
-        // if (this.expandCellContentTemplate) {
-        //     if (row != undefined) {
-        //         this._expandedRow = this._expandedRow === row ? null : row;
-        //     }
-        // }
     }
 
     _onAdditionalStatisticsClose(): void {
         this.popoverRow = null;
-    }
-
-    _changeCurrentSortDirection(currentSort: Sort) {
-        this.sortDirection = currentSort.direction;
     }
 
     getDisplayedColumns(): string[] {

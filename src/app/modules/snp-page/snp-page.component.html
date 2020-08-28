@@ -136,6 +136,7 @@
         #transcriptionFactors
         [objectData]="snpData?.transFactors || []"
         [tableColumnModel]="tfColumnModel"
+        [sortData]="sortData"
         [initialDisplayedColumns]="tfDisplayedColumns"
         [action]="snpData?.transFactors.filter(filterCondition).length > 0 ? filterCondition : null"
         [getSnpName]="_createSnpName(snpData ,'tf')"
