@@ -81,11 +81,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.tourSteps = [
-            'sequence',
-            'cell-types-buttons',
-            'transcription-factors-buttons'
-        ]
+
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 (p) => {
@@ -114,6 +110,22 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 null
             )
         );
+        this.tourSteps = [
+            'sequence',
+        ]
+        this.subscriptions.add(
+            this.snpData$.subscribe(
+                s => {
+                    if (s.transFactors.length > 0) {
+                        this.tourSteps.push('transcription-factors-buttons')
+                    }
+                    if (s.cellLines.length > 0) {
+                        this.tourSteps.push('cell-types-buttons')
+                    }
+                }
+            )
+        )
+
         this.commonColumnModel = {
             effectSizeRef: {
                 view: "Effect size Ref",
