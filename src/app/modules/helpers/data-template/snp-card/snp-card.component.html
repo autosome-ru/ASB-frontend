@@ -8,8 +8,11 @@
     </dt>
     <dd
         joyrideStep="sequence"
-        title="Sequence"
-        text="sequence"
+        [stepContent]="stepTemplate"
+        [stepContentParams]="getTextByStepName('sequence')"
+        [prevTemplate]="prevTemplate"
+        [nextTemplate]="nextTemplate"
+        [doneTemplate]="doneTemplate"
         *ngIf="!noButtons"
         style="margin-bottom: 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center d-none d-md-block"
@@ -23,6 +26,8 @@
     </dt>
     <asb-snp-buttons
         joyrideStep="cell-types-buttons"
+        [stepContent]="stepTemplate"
+        [stepContentParams]="getTextByStepName('cell-types-buttons')"
         *ngIf="snpData.cellLines.length != 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.cellLines"
@@ -43,6 +48,9 @@
     </dt>
     <asb-snp-buttons
         joyrideStep="transcription-factors-buttons"
+        [stepContent]="stepTemplate"
+        [stepContentParams]="getTextByStepName('transcription-factors-buttons')"
+        text="This is transcription factors"
         *ngIf="snpData.transFactors.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.transFactors"
@@ -94,3 +102,20 @@
         </a>
     </dd>
 </dl>
+
+<ng-template #stepTemplate let-text=text>
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
+</ng-template>
+<ng-template #prevTemplate>
+    <button mat-stroked-button color="accent">Prev</button>
+</ng-template>
+
+<ng-template #nextTemplate>
+    <button mat-raised-button color="accent">Next</button>
+</ng-template>
+
+<ng-template #doneTemplate>
+    <button mat-raised-button color="accent">Exit</button>
+</ng-template>

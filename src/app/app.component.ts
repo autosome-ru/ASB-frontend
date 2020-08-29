@@ -1,8 +1,12 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    HostBinding, Inject, OnDestroy,
-    OnInit, PLATFORM_ID,
+    HostBinding,
+    Inject,
+    OnDestroy,
+    OnInit,
+    PLATFORM_ID,
+    ViewEncapsulation,
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
@@ -13,11 +17,11 @@ import * as fromActions from "src/app/store/action";
 import {Subscription} from "rxjs";
 import {JoyrideService} from "ngx-joyride";
 
-
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-app")

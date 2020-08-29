@@ -9,6 +9,14 @@ export const releasesList: ReleaseModel[] = [
         version: "v1.4.6",
         api: 'v1'
     },
+    {
+        name: "Test",
+        url: "test",
+        date: "22.06.2020",
+        recent: false,
+        version: "v1.5.0 beta",
+        api: 'v1'
+    },
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0]

@@ -34,6 +34,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AsbServerTableComponent} from "./table-template/server-side/table-server.component";
 import {JoyrideModule} from "ngx-joyride";
 import {AsbTourComponent} from "./tour-template/tour-template.component";
+import {StepTemplateComponent} from "./tour-template/step-template/step-template.component";
 
 @NgModule({
     imports: [
@@ -72,7 +73,8 @@ import {AsbTourComponent} from "./tour-template/tour-template.component";
         AsbSnpHeaderComponent,
         AsbPopoverComponent,
         AsbServerTableComponent,
-        AsbTourComponent
+        AsbTourComponent,
+        StepTemplateComponent
     ],
     exports: [
         SearchComponent,
@@ -83,6 +85,7 @@ import {AsbTourComponent} from "./tour-template/tour-template.component";
         AsbTableComponent,
         AsbPopoverComponent,
         AsbServerTableComponent,
+        StepTemplateComponent,
         AsbTourComponent
     ],
     providers: [{provide: OverlayContainer, useClass: FullscreenOverlayContainer}],

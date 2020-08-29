@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostBinding, OnInit, Output, ViewChild} from "@angular/core";
+import {Component, HostBinding, OnInit, ViewChild} from "@angular/core";
 import {AsbPopoverComponent} from "../popover-template/popover.component";
 
 @Component({

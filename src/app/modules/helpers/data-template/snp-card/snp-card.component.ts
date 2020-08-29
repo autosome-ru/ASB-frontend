@@ -39,4 +39,22 @@ export class AsbSnpCardComponent implements OnInit {
         this.showMoreTfs = value;
     }
 
+    getTextByStepName(step: string) {
+        let text: string = '';
+        switch (step) {
+            case 'sequence':
+                text = 'SNV genomic context\n +/- 25 nucleotides'
+                break
+            case 'cell-types-buttons':
+                text = 'Cell types from GTRD database\n' +
+                    'having ASB at this SNV.\n Click for GTRD link.'
+                break
+            case 'transcription-factors-buttons':
+                text = 'Transcription factors from GTRD database\n' +
+                    'having ASB at this SNV.\n Click to go to the UNIPROT page.'
+                break
+
+        }
+        return {text}
+    }
 }
