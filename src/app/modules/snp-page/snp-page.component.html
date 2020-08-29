@@ -32,13 +32,13 @@
                      style="overflow: auto; margin: -10px; padding: 10px"
                      joyrideStep="color-scales"
                      [stepContent]="stepTemplate"
-                     (next)="statsPanel.open()"
-                     [stepContentParams]="{text: '1321'}"
+                     (next)="statsPanel.open(); checkSelectedIndex(tabGroup, snpData)"
+                     [stepContentParams]="getTextByStepName('color-scales')"
                 >
                     <asb-color-scales
 
-                        [refBase]="(snpData$ | async).refBase"
-                        [altBase]="(snpData$ | async).altBase"
+                        [refBase]="snpData.refBase"
+                        [altBase]="snpData.altBase"
                     >
                     </asb-color-scales>
                 </div>
@@ -53,7 +53,7 @@
                     <mat-panel-title
                         joyrideStep="transcription-factors-stats"
                         [stepContent]="stepTemplate"
-                        [stepContentParams]="{text: '1321'}"
+                        [stepContentParams]="getTextByStepName('transcription-factors-stats')"
                         (next)="openPanels(); phenPanel.open()"
                     >
                         <h4 class="col-auto pl-0 ml-0">Details</h4>
@@ -61,9 +61,11 @@
                 </mat-expansion-panel-header>
 
                 <mat-tab-group
+                    #tabGroup
+                    dynamicHeight
                     style="margin-top: -20px"
                     animationDuration="0ms"
-                    [selectedIndex]="(snpData$ | async)?.transFactors.length > 0 ? 0 : 1"
+                    [selectedIndex]="snpData.transFactors.length > 0 ? 0 : 1"
                 >
                     <mat-tab label="Transcription factors">
                         <ng-template matTabContent>
@@ -118,7 +120,7 @@
                     style="margin: -10px; padding: 10px"
                     joyrideStep="phen-stats"
                     [stepContent]="stepTemplate"
-                    [stepContentParams]="{text: '1321'}"
+                    [stepContentParams]="getTextByStepName('phen-stats')"
                 >
                     <asb-phenotypes
                         [snpData]="snpData$ | async"

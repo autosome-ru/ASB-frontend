@@ -6,6 +6,7 @@ import {ReleaseModel} from "../../../../models/releases.model";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer";
+import {getTextByStepName} from "../../../../helpers/tour-text.helper";
 
 @Component({
     selector: "asb-snp-card",
@@ -43,24 +44,7 @@ export class AsbSnpCardComponent implements OnInit {
     }
 
     getTextByStepName(step: string) {
-        let text: string = '';
-        switch (step) {
-            case 'sequence':
-                text = 'SNV genomic context\n +/- 25 nucleotides'
-                break
-            case 'cell-types-buttons':
-                text = 'Cell types from GTRD database\n' +
-                    'having ASB at this SNV.\n Click for GTRD link.'
-                break
-            case 'transcription-factors-buttons':
-                text = 'Transcription factors from GTRD database\n' +
-                    'having ASB at this SNV.\n Click to go to the UNIPROT page.'
-                break
-            case 'search-nearby':
-                text = 'Search ASB nearby SNV position +/-100bp'
-
-        }
-        return {text}
+        return getTextByStepName(step)
     }
 
     nextStep() {

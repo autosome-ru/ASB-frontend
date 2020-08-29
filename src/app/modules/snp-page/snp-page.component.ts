@@ -20,6 +20,8 @@ import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../helpers/check-functions.helper";
 import {JoyrideService} from "ngx-joyride";
 import {AsbPopoverComponent} from "../helpers/popover-template/popover.component";
+import {getTextByStepName} from "../../helpers/tour-text.helper";
+import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
     selector: "asb-snp-page",
@@ -118,6 +120,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'color-scales',
             'transcription-factors-stats',
             'transcription-factors-columns',
+            'table0',
+            'table1',
             'motif-analysis',
             'phen-stats'
         ]
@@ -125,20 +129,26 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             this.snpData$.subscribe(
                 s => {
                     if (s) {
-                        if (s.cellLines.length == 0) {
-                            this.tourSteps.filter(s => s != 'cell-types-buttons')
+                        if (s.cellLines.length > 0 && s.transFactors.length > 0) {
+                            this.tourSteps = this.tourSteps.filter(s => s != 'table1')
+                        } else {
+                            if (s.cellLines.length == 0) {
+                                this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons' && s != 'table1')
+                            } else {
+                                this.tourSteps = this.tourSteps.filter(s => s != 'table0' && s != 'transcription-factors-buttons')
+                            }
                         }
                         if (this._getGoodTfs(s.transFactors).length == 0) {
-                            this.tourSteps.filter(s => s != 'motif-analysis')
+                            this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis')
                         }
 
                         if (s.phenotypes.total == 0) {
-                            this.tourSteps.filter(s => s != 'phen-stats')
+                            this.tourSteps = this.tourSteps.filter(s => s != 'phen-stats')
                         }
 
-                        if (s.transFactors.length == 0) {
-                            this.tourSteps.filter(s => s != 'transcription-factors-buttons')
-                        }
+                        console.log(this.tourSteps)
+
+
                     }
                 }
             )
@@ -201,6 +211,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 helpMessage: 'SNP position relative to the TF motif (1-based)'
             },
         };
+    }
+
+    getTextByStepName(step: string) {
+        return getTextByStepName(step)
     }
 
     ngOnDestroy() {
@@ -284,10 +298,19 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     openPanels() {
-
         if (this.tourSteps.indexOf('motif-analysis') !== -1) {
             this.motifPanel.open()
             this.asbMotifsComponent.expansionPanels.filter((s, i) => i ==0)[0].open()
+        }
+    }
+
+    checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel) {
+        const index = tabGroup.selectedIndex
+        if (index == 0 && snp.transFactors.length == 0) {
+            tabGroup.selectedIndex = 1
+        }
+        if (index == 1 && snp.cellLines.length == 0) {
+            tabGroup.selectedIndex = 0
         }
     }
 }

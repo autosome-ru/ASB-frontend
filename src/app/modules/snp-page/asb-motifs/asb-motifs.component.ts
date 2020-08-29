@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
+import {getTextByStepName} from "../../../helpers/tour-text.helper";
 
 @Component({
     selector: "asb-motifs",
@@ -38,6 +39,10 @@ export class AsbMotifsComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
+    }
+
+    getTextByStepName(step: string) {
+        return getTextByStepName(step)
     }
 
 

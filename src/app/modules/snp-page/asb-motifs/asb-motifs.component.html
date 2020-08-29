@@ -19,7 +19,7 @@
             <img
                 joyrideStep="motif-analysis"
                 [stepContent]="stepTemplate"
-                [stepContentParams]="{text: '1321'}"
+                [stepContentParams]="getTextByStepName('motif-analysis')"
                 style="max-height: 30vh"
                 [src]="makeImagePath(tf)"
                 [alt]="tf.name + ' pic'"

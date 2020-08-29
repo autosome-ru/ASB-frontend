@@ -54,7 +54,12 @@ export class AsbTourComponent implements OnInit {
         this.joyrideService.startTour({
             steps: this.steps,
             waitingTime: 20,
-        })
+            stepDefaultPosition: 'bottom'
+        }).subscribe(
+            s => {
+                console.log(this.steps[s.number - 1])
+            }
+        )
     }
 
 }

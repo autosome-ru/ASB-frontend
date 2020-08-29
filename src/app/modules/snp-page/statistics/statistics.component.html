@@ -2,14 +2,14 @@
 <div class="container-fluid px-0 px-sm-2"
      style="padding-top: 5px;"
 >
-    <div class="row" *ngIf="objectData.length > 0; else emptyContentTemplate">
+    <div class="row" *ngIf="objectData.length > 0; else emptyContentTemplate" style="overflow: auto !important;">
         <form [formGroup]="tableFormGroup" class="container">
             <div style="margin-bottom: 10px">
                 <mat-form-field
                     style="margin-left: 5px; margin-right: 5px"
                     joyrideStep="transcription-factors-columns"
                     [stepContent]="stepTemplate"
-                    [stepContentParams]="{text: '1321'}"
+                    [stepContentParams]="getTextByStepName('transcription-factors-columns')"
                 >
                     <mat-label>Selected columns</mat-label>
                     <mat-select formControlName="columns"
@@ -77,7 +77,11 @@
             </div>
         </form>
     </div>
-    <div class="snp-page__table-elevation">
+    <div class="snp-page__table-elevation"
+         [joyrideStep]="'table' + (isCl ? '1' : '0')"
+         [stepContent]="stepTemplate"
+         [stepContentParams]="getTextByStepName('table')"
+    >
         <asb-table
             #tableViewTFCL
             [columnModel]="tableColumnModel"

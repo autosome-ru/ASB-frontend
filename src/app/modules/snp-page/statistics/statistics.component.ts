@@ -15,6 +15,7 @@ import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
+import {getTextByStepName} from "../../../helpers/tour-text.helper";
 
 
 @Component({
@@ -88,6 +89,10 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
             )
         )
 
+    }
+
+    getTextByStepName(step: string) {
+        return getTextByStepName(step)
     }
 
     ngOnDestroy() {
