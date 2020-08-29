@@ -45,7 +45,7 @@ export class AppComponent implements OnInit, OnDestroy {
     onClick() {
         this.subscriptions.add(
             this.joyrideService.startTour({ steps: ['step1',
-                    'step2@search/simple', 'step3@search/simple', 'step4'] }).subscribe(
+                    'step2', 'step3', 'step4'] }).subscribe(
                 step => {
                     if (step) {
                         console.log(step)
