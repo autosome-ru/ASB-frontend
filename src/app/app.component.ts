@@ -11,6 +11,7 @@ import {AppState} from "./store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action";
 import {Subscription} from "rxjs";
+import {JoyrideService} from "ngx-joyride";
 
 
 @Component({
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
+                private joyrideService: JoyrideService,
                 private store: Store<AppState>,
                 private releasesService: ReleasesService,
                 @Inject(PLATFORM_ID) private platformId) {
@@ -37,6 +39,25 @@ export class AppComponent implements OnInit, OnDestroy {
             this.router.events.subscribe(() => {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction())
             })
+        )
+    }
+
+    onClick() {
+        this.subscriptions.add(
+            this.joyrideService.startTour({ steps: ['step1',
+                    'step2@search/simple', 'step3@search/simple', 'step4'] }).subscribe(
+                step => {
+                    if (step) {
+                        console.log(step)
+                    }
+                },
+                error => {
+                    /*handle error*/
+                },
+                () => {
+                    /*Tour is finished here, do something*/
+                }
+            )
         )
     }
 

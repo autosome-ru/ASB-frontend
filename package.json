@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "file-saver": "^2.0.2",
     "ngx-filesaver": "^10.0.0",
+    "ngx-joyride": "^2.3.1",
     "ngx-toastr": "^13.0.0",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.1",

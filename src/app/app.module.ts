@@ -19,26 +19,30 @@ import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ReleasesService} from "./services/releases.service";
 import {ReleasesWrapperModule} from "./releases-wrapper/releases-wrapper.module";
+import {JoyrideModule} from "ngx-joyride";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
     AppComponent
   ],
-  imports: [
-      BrowserModule.withServerTransition({ appId: "serverApp" }),
-      BrowserAnimationsModule,
-      StoreModule.forRoot(asbAppReducer),
-      EffectsModule.forRoot(asbAppEffects),
-      ToastrModule.forRoot(),
-      environment.production ? [] : StoreDevtoolsModule.instrument(),
-      MatSnackBarModule,
-      AsbRoutingModule,
+    imports: [
+        BrowserModule.withServerTransition({appId: "serverApp"}),
+        BrowserAnimationsModule,
+        StoreModule.forRoot(asbAppReducer),
+        EffectsModule.forRoot(asbAppEffects),
+        ToastrModule.forRoot(),
+        JoyrideModule.forRoot(),
+        environment.production ? [] : StoreDevtoolsModule.instrument(),
+        MatSnackBarModule,
+        AsbRoutingModule,
 
-      AsbAppIconsModule,
-      AsbHelpersModule,
-      ReleasesWrapperModule,
+        AsbAppIconsModule,
+        AsbHelpersModule,
+        ReleasesWrapperModule,
+        MatButtonModule,
 
-  ],
+    ],
   providers: [
       DataService,
       SearchService,

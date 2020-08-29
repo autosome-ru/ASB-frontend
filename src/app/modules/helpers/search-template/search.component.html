@@ -4,7 +4,7 @@
     [class._restricted]="width === 'restricted'"
     [class._full]="width === 'full'">
     <div class="asb-search__header">
-        <h4 style="margin-top: 0.5rem">
+        <h4 style="margin-top: 0.5rem" joyrideStep="step1">
             {{isAdvanced ? 'Advanced search' : 'Search'}}
         </h4>
         <a
@@ -18,7 +18,7 @@
     <form
         [formGroup]="searchForm"
     >
-        <mat-form-field style="margin-right: 15px" *ngIf="!isAdvanced">
+        <mat-form-field style="margin-right: 15px" *ngIf="!isAdvanced" joyrideStep="step2">
             <mat-label>Search by</mat-label>
             <mat-select
                 formControlName="searchBy"
@@ -79,6 +79,8 @@
         </mat-form-field>
         <ng-container *ngIf="_checkToDisplay('pos')">
             <mat-form-field
+                joyrideStep="step4"
+                text="Enter genome position, for interval use '-' e.g. 1-5000000"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px"
                 appearance="outline"
@@ -123,6 +125,8 @@
 
             </mat-form-field>
         </ng-container>
+
+
         <div
             style="display: inline-flex; justify-content: space-between; position: relative; top: -3px; margin-bottom: 20px;"
         >
@@ -155,6 +159,8 @@
                 </button>
             </div>
             <button
+                joyrideStep="step3"
+                text="Or just click example button to try it out"
                 *ngIf="!isAdvanced"
                 mat-raised-button
                 style=" margin-left: auto"

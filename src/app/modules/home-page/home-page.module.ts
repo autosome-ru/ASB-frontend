@@ -16,7 +16,7 @@ import {AsbHomePageRoutingModule} from "./home-page-routing.module";
         ReactiveFormsModule,
         AsbHelpersModule,
         RouterModule,
-        AsbHomePageRoutingModule
+        AsbHomePageRoutingModule,
     ],
     declarations: [HomePageComponent],
 })

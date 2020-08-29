@@ -32,6 +32,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AsbServerTableComponent} from "./table-template/server-side/table-server.component";
+import {JoyrideModule} from "ngx-joyride";
 
 @NgModule({
     imports: [
@@ -56,6 +57,7 @@ import {AsbServerTableComponent} from "./table-template/server-side/table-server
         MatChipsModule,
         MatProgressSpinnerModule,
         MatCheckboxModule,
+        JoyrideModule,
     ],
     declarations: [
         SearchComponent,
