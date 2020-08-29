@@ -18,6 +18,8 @@ import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 import {ReleasesService} from "../../services/releases.service";
 import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../helpers/check-functions.helper";
+import {JoyrideService} from "ngx-joyride";
+import {AsbPopoverComponent} from "../helpers/popover-template/popover.component";
 
 @Component({
     selector: "asb-snp-page",
@@ -34,6 +36,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     @ViewChild('motifPanel')
     public motifPanel: MatExpansionPanel;
+
+    @ViewChild('tourPopover')
+    private tourPopover: AsbPopoverComponent
 
     @ViewChild('asbMotifsComponent')
     public asbMotifsComponent: AsbMotifsComponent
@@ -61,6 +66,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription = new Subscription();
     private releaseVersion: string = '';
+    public tourSteps: string[];
 
     constructor(
         private store: Store<AppState>,
@@ -69,11 +75,17 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private saverService: FileSaverService,
         private dataService: DataService,
         private toastr: ToastrService,
+        private joyrideService: JoyrideService,
         private releasesService: ReleasesService,
         private seoService: SeoService
     ) {}
 
     ngOnInit() {
+        this.tourSteps = [
+            'sequence',
+            'cell-types-buttons',
+            'transcription-factors-buttons'
+        ]
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 (p) => {

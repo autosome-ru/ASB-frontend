@@ -1,0 +1,41 @@
+<button
+    (click)="openTourPopover()"
+    color="accent"
+    mat-fab
+    style="position: sticky;
+                right: 16px;
+                bottom: 10px;
+                background: #607d8bAA;
+                z-index: 2;
+                transform: translate3d(0, -20%, 0);
+                margin-left: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: bottom .2s ease;">
+    <mat-icon style="height: 28px;
+                width: 28px;
+                display: flex;" svgIcon="help"></mat-icon>
+</button>
+
+<asb-popover #tourPopover>
+    <div class="confirm-dialog__button-wrapper">
+        <button
+            (click)="closePopover()"
+            mat-stroked-button
+            color="accent"
+            class="confirm-dialog__button _left"
+        >
+            No
+        </button>
+
+        <button
+            (click)="startTour()"
+            mat-raised-button
+            color="accent"
+            class="confirm-dialog__button"
+        >
+            Yes
+        </button>
+    </div>
+</asb-popover>

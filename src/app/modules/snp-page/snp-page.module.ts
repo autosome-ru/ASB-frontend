@@ -23,6 +23,7 @@ import { ColorScalesComponent } from "./color-scales/color-scales.component";
 import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
 import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
+import {JoyrideModule} from "ngx-joyride";
 
 @NgModule({
     imports: [
@@ -44,7 +45,8 @@ import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
         MatSortModule,
         MatTooltipModule,
         AsbSnpPageRoutingModule,
-        MatDividerModule
+        MatDividerModule,
+        JoyrideModule.forChild()
     ],
     declarations: [
         SnpPageComponent,

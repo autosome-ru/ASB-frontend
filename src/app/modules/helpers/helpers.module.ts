@@ -33,6 +33,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AsbServerTableComponent} from "./table-template/server-side/table-server.component";
 import {JoyrideModule} from "ngx-joyride";
+import {AsbTourComponent} from "./tour-template/tour-template.component";
 
 @NgModule({
     imports: [
@@ -71,6 +72,7 @@ import {JoyrideModule} from "ngx-joyride";
         AsbSnpHeaderComponent,
         AsbPopoverComponent,
         AsbServerTableComponent,
+        AsbTourComponent
     ],
     exports: [
         SearchComponent,
@@ -80,7 +82,8 @@ import {JoyrideModule} from "ngx-joyride";
         AsbSnpHeaderComponent,
         AsbTableComponent,
         AsbPopoverComponent,
-        AsbServerTableComponent
+        AsbServerTableComponent,
+        AsbTourComponent
     ],
     providers: [{provide: OverlayContainer, useClass: FullscreenOverlayContainer}],
 })

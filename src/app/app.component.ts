@@ -42,25 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
         )
     }
 
-    onClick() {
-        this.subscriptions.add(
-            this.joyrideService.startTour({ steps: ['step1',
-                    'step2', 'step3', 'step4'] }).subscribe(
-                step => {
-                    if (step) {
-                        console.log(step)
-                    }
-                },
-                error => {
-                    /*handle error*/
-                },
-                () => {
-                    /*Tour is finished here, do something*/
-                }
-            )
-        )
-    }
-
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }

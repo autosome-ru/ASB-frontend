@@ -12,23 +12,6 @@ export class LayoutComponent implements OnInit {
     @HostBinding("class.asb-layout")
     private readonly cssClass = true;
 
-    @Output()
-    helpClickEvent = new EventEmitter<void>()
-
     constructor() { }
     ngOnInit() {}
-
-    helpClicked() {
-        this.popover.title = 'Do you want to star a tour?'
-        this.popover.open()
-    }
-
-    startTour() {
-        this.helpClickEvent.emit()
-        this.popover.close()
-    }
-
-    closePopover() {
-        this.popover.close()
-    }
 }

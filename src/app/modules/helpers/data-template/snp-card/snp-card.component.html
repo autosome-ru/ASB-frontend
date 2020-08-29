@@ -7,6 +7,9 @@
         Sequence
     </dt>
     <dd
+        joyrideStep="sequence"
+        title="Sequence"
+        text="sequence"
         *ngIf="!noButtons"
         style="margin-bottom: 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center d-none d-md-block"
@@ -19,6 +22,7 @@
         ASB in cell types
     </dt>
     <asb-snp-buttons
+        joyrideStep="cell-types-buttons"
         *ngIf="snpData.cellLines.length != 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.cellLines"
@@ -38,6 +42,7 @@
         ASB for transcription factors
     </dt>
     <asb-snp-buttons
+        joyrideStep="transcription-factors-buttons"
         *ngIf="snpData.transFactors.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.transFactors"
