@@ -34,7 +34,7 @@
 
 <ng-template #genomePositionViewTemplate let-row="row">
     <a
-        [routerLink]="'/snps/' + row?.rsId + '/' + row?.altBase"
+        [routerLink]="'/' + (release$ | async).url + '/snps/' + row?.rsId + '/' + row?.altBase"
         [routerLinkActive]="['active']"
         (click)="$event.stopPropagation()"
     >

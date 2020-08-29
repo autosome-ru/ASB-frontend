@@ -13,11 +13,37 @@ import { AppServerModule } from "./src/main.server";
 import { APP_BASE_HREF } from "@angular/common";
 import { existsSync } from "fs";
 import {RESPONSE} from "@nguniversal/express-engine/tokens";
+// ssr DOM
+const domino = require('domino');
+const fs = require('fs');
+const path = require('path');
+// index from browser build!
+const distFolder = join(process.cwd(), "dist/browser");
+const template = fs.readFileSync(path.join(distFolder, 'index.html')).toString();
+// for mock global window by domino
+const win = domino.createWindow(template);
+// mock
+global['window'] = win;
+// not implemented property and functions
+Object.defineProperty(win.document.body.style, 'transform', {
+    value: () => {
+        return {
+            enumerable: true,
+            configurable: true,
+        };
+    },
+});
 
+// mock documnet
+global['document'] = win.document;
+// othres mock
+global['CSS'] = null;
+// global['XMLHttpRequest'] = require('xmlhttprequest').XMLHttpRequest;
+global['Prism'] = null;
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
   const server = express();
-  const distFolder = join(process.cwd(), "dist/browser");
+
   const indexHtml = existsSync(join(distFolder, "index.original.html")) ? "index.original.html" : "index";
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)

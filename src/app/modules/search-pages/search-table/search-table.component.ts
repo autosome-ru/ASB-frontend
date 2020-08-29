@@ -17,6 +17,10 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
 import {SortDirection} from "@angular/material/sort";
+import {ReleaseModel} from "../../../models/releases.model";
+import {AppState} from "../../../store/reducer";
+import {Store} from "@ngrx/store";
+import * as fromSelectors from "src/app/store/selector";
 
 
 
@@ -68,11 +72,13 @@ export class SearchPageTableComponent implements OnInit {
     ];
     public dataToView: Observable<any[]>;
     colors: any = baseToColors;
+    release$: Observable<ReleaseModel>;
 
 
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
+                private store: Store<AppState>
                 ) {}
 
     ngOnInit() {
@@ -85,6 +91,8 @@ export class SearchPageTableComponent implements OnInit {
             rsId: {view: "rs ID"},
 
         };
+
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
         if ((!this.router.isActive("/search/simple", false) &&
             !this.route.snapshot.queryParams.tf &&
             !this.route.snapshot.queryParams.cl) ||

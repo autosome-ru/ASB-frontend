@@ -136,10 +136,15 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     }
 
     _handleTableRowClick(event: TfInfoModel | ClInfoModel, tfOrCl: TfOrCl) {
-        this.router.navigate(["/search/advanced"],
-            {
-                queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
-            }).then();
+        this.subscriptions.add(
+            this.store.select(fromSelectors.selectCurrentRelease).subscribe(
+                s => this.router.navigate([`/${s.url}/search/advanced`],
+                    {
+                        queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
+                    }).then()
+            )
+        )
+
     }
 
     _handleTableChange(event: AsbServerSideModel, tfOrCl: TfOrCl) {
