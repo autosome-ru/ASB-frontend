@@ -5,7 +5,12 @@
     <div class="row" *ngIf="objectData.length > 0; else emptyContentTemplate">
         <form [formGroup]="tableFormGroup" class="container">
             <div style="margin-bottom: 10px">
-                <mat-form-field style="margin-left: 5px; margin-right: 5px">
+                <mat-form-field
+                    style="margin-left: 5px; margin-right: 5px"
+                    joyrideStep="transcription-factors-columns"
+                    [stepContent]="stepTemplate"
+                    [stepContentParams]="{text: '1321'}"
+                >
                     <mat-label>Selected columns</mat-label>
                     <mat-select formControlName="columns"
                                 multiple
@@ -101,4 +106,10 @@
 
 <ng-template #emptyContentTemplate>
     <h6>No data available</h6>
+</ng-template>
+
+<ng-template #stepTemplate let-text=text>
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
 </ng-template>

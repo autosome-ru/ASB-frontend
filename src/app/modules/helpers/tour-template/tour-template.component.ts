@@ -53,6 +53,7 @@ export class AsbTourComponent implements OnInit {
         this.closePopover()
         this.joyrideService.startTour({
             steps: this.steps,
+            waitingTime: 20,
         })
     }
 

@@ -1,5 +1,6 @@
 <ng-container *ngIf="!(release | async).recent">
     <button
+        matTooltip="Open page tour"
         (click)="openTourPopover()"
         color="accent"
         mat-fab

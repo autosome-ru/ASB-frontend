@@ -155,10 +155,13 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 phewas: [],
                 finemapping: [],
                 QTL: [],
+                total: 0
             };
             const snpId: string = `rs${action.payload.rs_id}${action.payload.alt}`;
             Object.keys(newPhenotypes).forEach(
-                s => newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes)
+                s => s != 'total' ?
+                    newPhenotypes[s] = reduceToDb(s, action.payload.phenotypes) :
+                    newPhenotypes['total'] = action.payload.phenotypes.length
             );
             return {
                 ...state,

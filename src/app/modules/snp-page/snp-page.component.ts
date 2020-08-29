@@ -112,15 +112,33 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         );
         this.tourSteps = [
             'sequence',
+            'cell-types-buttons',
+            'transcription-factors-buttons',
+            'search-nearby',
+            'color-scales',
+            'transcription-factors-stats',
+            'transcription-factors-columns',
+            'motif-analysis',
+            'phen-stats'
         ]
         this.subscriptions.add(
             this.snpData$.subscribe(
                 s => {
-                    if (s.transFactors.length > 0) {
-                        this.tourSteps.push('transcription-factors-buttons')
-                    }
-                    if (s.cellLines.length > 0) {
-                        this.tourSteps.push('cell-types-buttons')
+                    if (s) {
+                        if (s.cellLines.length == 0) {
+                            this.tourSteps.filter(s => s != 'cell-types-buttons')
+                        }
+                        if (this._getGoodTfs(s.transFactors).length == 0) {
+                            this.tourSteps.filter(s => s != 'motif-analysis')
+                        }
+
+                        if (s.phenotypes.total == 0) {
+                            this.tourSteps.filter(s => s != 'phen-stats')
+                        }
+
+                        if (s.transFactors.length == 0) {
+                            this.tourSteps.filter(s => s != 'transcription-factors-buttons')
+                        }
                     }
                 }
             )
@@ -263,6 +281,14 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         return data.sort(
             (a, b) => compareData(a, b, sort)
         )
+    }
+
+    openPanels() {
+
+        if (this.tourSteps.indexOf('motif-analysis') !== -1) {
+            this.motifPanel.open()
+            this.asbMotifsComponent.expansionPanels.filter((s, i) => i ==0)[0].open()
+        }
     }
 }
 

@@ -17,6 +17,9 @@
         <ng-template matExpansionPanelContent>
             <div style="width: 100%; display: flex; justify-content: center">
             <img
+                joyrideStep="motif-analysis"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="{text: '1321'}"
                 style="max-height: 30vh"
                 [src]="makeImagePath(tf)"
                 [alt]="tf.name + ' pic'"
@@ -41,3 +44,9 @@
         </ng-template>
     </mat-expansion-panel>
 </mat-accordion>
+
+<ng-template #stepTemplate let-text=text>
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
+</ng-template>

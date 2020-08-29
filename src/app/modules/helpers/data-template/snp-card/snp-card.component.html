@@ -50,7 +50,6 @@
         joyrideStep="transcription-factors-buttons"
         [stepContent]="stepTemplate"
         [stepContentParams]="getTextByStepName('transcription-factors-buttons')"
-        text="This is transcription factors"
         *ngIf="snpData.transFactors.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.transFactors"
@@ -74,19 +73,27 @@
         *ngIf="!noButtons"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
     >
-        <a
-            style="margin-right: 10px"
-            mat-raised-button
-            color="accent"
-            matTooltip="+/-100bp"
-            [routerLink]="'/' + (release$ | async).url + '/search/simple'"
-            [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '1')
-                    + '-' + (snpData.pos + 100) ,
-                    chr: snpData.chr, skip_check: '1'}"
+        <div
+            joyrideStep="search-nearby"
+            [stepContent]="stepTemplate"
+            (next)="nextStep()"
+            [stepContentParams]="getTextByStepName('search-nearby')"
+            style="margin: -10px; padding: 10px; display: inline-block"
         >
-            Search SNPs nearby
-        </a>
+            <a
+                mat-raised-button
+                color="accent"
+                matTooltip="+/-100bp"
+                [routerLink]="'/' + (release$ | async).url + '/search/simple'"
+                [queryParams]="{pos: (snpData.pos > 100 ? snpData.pos - 100 : '1')
+                        + '-' + (snpData.pos + 100) ,
+                        chr: snpData.chr, skip_check: '1'}"
+            >
+                Search SNPs nearby
+            </a>
+        </div>
         <a
+            style="margin-left: 10px"
             mat-raised-button
             target="_blank"
             rel="noopener noreferrer"

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, Input, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnInit, Output} from "@angular/core";
 import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
 import {environment} from "src/environments/environment";
 import * as fromSelectors from "src/app/store/selector";
@@ -20,6 +20,9 @@ export class AsbSnpCardComponent implements OnInit {
     public snpData: SnpSearchModel | SnpInfoModel;
     @Input()
     public noButtons: boolean = false;
+
+    @Output()
+    public emitNextStep = new EventEmitter<void>();
 
     public showMoreCellLines: boolean = false;
     public showMoreTfs: boolean = false;
@@ -53,8 +56,14 @@ export class AsbSnpCardComponent implements OnInit {
                 text = 'Transcription factors from GTRD database\n' +
                     'having ASB at this SNV.\n Click to go to the UNIPROT page.'
                 break
+            case 'search-nearby':
+                text = 'Search ASB nearby SNV position +/-100bp'
 
         }
         return {text}
+    }
+
+    nextStep() {
+        this.emitNextStep.emit()
     }
 }

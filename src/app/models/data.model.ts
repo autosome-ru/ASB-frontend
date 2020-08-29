@@ -24,6 +24,7 @@ export interface SnpInfoModel extends SnpGenPosModel {
 }
 
 export interface PhenotypesModel {
+    total?: number;
     ebi: string[] | boolean;
     grasp: string[] | boolean;
     clinvar: string[] | boolean;
