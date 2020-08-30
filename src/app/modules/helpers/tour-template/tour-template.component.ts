@@ -38,6 +38,13 @@ export class AsbTourComponent implements OnInit {
         this.release = this.store.select(fromSelectors.selectCurrentRelease)
     }
 
+    ngOnDestroy() {
+        if (this.joyrideService.isTourInProgress()) {
+            this.joyrideService.closeTour()
+        }
+        this.closePopover()
+    }
+
 
     openTourPopover() {
         this.tourPopover.title = 'Do you want to start the page tour?'
@@ -55,11 +62,7 @@ export class AsbTourComponent implements OnInit {
             steps: this.steps,
             waitingTime: 20,
             stepDefaultPosition: 'bottom'
-        }).subscribe(
-            s => {
-                console.log(this.steps[s.number - 1])
-            }
-        )
+        })
     }
 
 }

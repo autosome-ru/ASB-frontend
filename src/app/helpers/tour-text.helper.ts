@@ -26,6 +26,8 @@ function getText(step: string): string {
             return 'Picture for motif analysis'
         case 'table':
             return 'Click on table row to open additional statistics'
+        case 'snp-header':
+            return 'SNV position, 1-based.\nClick on id for dbSNP link'
         default:
             return ''
     }

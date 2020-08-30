@@ -18,7 +18,6 @@ import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 import {ReleasesService} from "../../services/releases.service";
 import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../helpers/check-functions.helper";
-import {JoyrideService} from "ngx-joyride";
 import {AsbPopoverComponent} from "../helpers/popover-template/popover.component";
 import {getTextByStepName} from "../../helpers/tour-text.helper";
 import {MatTabGroup} from "@angular/material/tabs";
@@ -35,6 +34,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
     @ViewChild("transcriptionFactors", {static: true})
     public tfStats: AsbStatisticsComponent<TfSnpModel>;
+
+    @ViewChild('tabGroup', {static: true})
+    public tabGroup: MatTabGroup;
 
     @ViewChild('motifPanel')
     public motifPanel: MatExpansionPanel;
@@ -77,7 +79,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private saverService: FileSaverService,
         private dataService: DataService,
         private toastr: ToastrService,
-        private joyrideService: JoyrideService,
         private releasesService: ReleasesService,
         private seoService: SeoService
     ) {}
@@ -113,6 +114,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             )
         );
         this.tourSteps = [
+            'snp-header',
             'sequence',
             'cell-types-buttons',
             'transcription-factors-buttons',
@@ -130,7 +132,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 s => {
                     if (s) {
                         if (s.cellLines.length > 0 && s.transFactors.length > 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'table1')
+                            this.tourSteps = this.tourSteps.filter(s => s != `table1`)
                         } else {
                             if (s.cellLines.length == 0) {
                                 this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons' && s != 'table1')
@@ -142,9 +144,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                             this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis')
                         }
 
-                        if (s.phenotypes.total == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'phen-stats')
-                        }
+                        // if (s.phenotypes.total == 0) {
+                        //     this.tourSteps = this.tourSteps.filter(s => s != 'phen-stats')
+                        // }
                     }
                 }
             )
@@ -295,13 +297,18 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     openPanels() {
         if (this.tourSteps.indexOf('motif-analysis') !== -1) {
-            this.motifPanel.open()
+            if (this.motifPanel.closed) {
+                this.motifPanel.open()
+            }
             this.asbMotifsComponent.expansionPanels.filter((s, i) => i ==0)[0].open()
         }
     }
 
     checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel) {
         const index = tabGroup.selectedIndex
+        console.log(index)
+        if (snp.transFactors.length > 0 && snp.cellLines.length > 0)
+            tabGroup.selectedIndex = 0
         if (index == 0 && snp.transFactors.length == 0) {
             tabGroup.selectedIndex = 1
         }

@@ -1,4 +1,7 @@
 <h4
+    joyrideStep="snp-header"
+    [stepContent]="stepTemplate"
+    [stepContentParams]="getTextByStepName('snp-header')"
     *ngIf="snpCard"
     style="padding-top: .5rem"
 >
@@ -23,4 +26,11 @@
     <strong
         [ngStyle]="{'color': colors[data.altBase]}"
     >{{data.altBase}}</strong>
+</ng-template>
+
+
+<ng-template #stepTemplate let-text=text>
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
 </ng-template>
