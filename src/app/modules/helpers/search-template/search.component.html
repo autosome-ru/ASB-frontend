@@ -18,7 +18,17 @@
     <form
         [formGroup]="searchForm"
     >
-        <mat-form-field style="margin-right: 15px" *ngIf="!isAdvanced" joyrideStep="step2">
+        <mat-form-field
+            style="margin-right: 15px"
+            *ngIf="!isAdvanced"
+            joyrideStep="search-by"
+            [stepContent]="stepTemplate"
+            [stepContentParams]="getTextByStepName('search-by')"
+            (next)="searchForm.patchValue({searchBy: 'id'})"
+            [prevTemplate]="prevTemplate"
+            [nextTemplate]="nextTemplate"
+            [doneTemplate]="doneTemplate"
+        >
             <mat-label>Search by</mat-label>
             <mat-select
                 formControlName="searchBy"
@@ -30,6 +40,10 @@
 
         <ng-container *ngIf="_checkToDisplay('id')">
             <mat-form-field
+                joyrideStep="search-rs"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('search-rs')"
+                (next)="searchForm.patchValue({searchBy: 'pos'})"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px; width: 230px"
                 appearance="outline"
@@ -59,28 +73,33 @@
             </mat-form-field>
         </ng-container>
 
-        <mat-form-field
+        <div
+            style="display: inline-block; margin-left: -10px; padding-left: 10px"
             *ngIf="_checkToDisplay('pos')"
-            style="width: 100px; margin-right: 15px;"
-            floatLabel="always"
+            joyrideStep="search-pos"
+            [stepContent]="stepTemplate"
+            (prev)="searchForm.patchValue({searchBy: 'id'})"
+            [stepContentParams]="getTextByStepName('search-pos')"
         >
-            <mat-label>Chromosome</mat-label>
-            <mat-select
-                formControlName="chromosome"
-            >
-                <mat-option *ngIf="isAdvanced" [value]="'any chr'">any chr</mat-option>
-                <mat-option
-                    *ngFor="let chr of listOfChrs"
-                            [value]="chr"
-                >
-                    {{chr}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <ng-container *ngIf="_checkToDisplay('pos')">
             <mat-form-field
-                joyrideStep="step4"
-                text="Enter genome position, for interval use '-' e.g. 1-5000000"
+                style="width: 100px; margin-right: 15px;"
+                floatLabel="always"
+            >
+                <mat-label>Chromosome</mat-label>
+                <mat-select
+                    formControlName="chromosome"
+                >
+                    <mat-option *ngIf="isAdvanced" [value]="'any chr'">any chr</mat-option>
+                    <mat-option
+                        *ngFor="let chr of listOfChrs"
+                                [value]="chr"
+                    >
+                        {{chr}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px"
                 appearance="outline"
@@ -124,7 +143,7 @@
                 </mat-hint>
 
             </mat-form-field>
-        </ng-container>
+        </div>
 
 
         <div
@@ -159,8 +178,9 @@
                 </button>
             </div>
             <button
-                joyrideStep="step3"
-                text="Or just click example button to try it out"
+                joyrideStep="search-example"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('search-example')"
                 *ngIf="!isAdvanced"
                 mat-raised-button
                 style=" margin-left: auto"
@@ -341,3 +361,19 @@
     </form>
 </div>
 
+<ng-template #stepTemplate let-text=text>
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
+</ng-template>
+<ng-template #prevTemplate>
+    <button mat-stroked-button color="accent">Prev</button>
+</ng-template>
+
+<ng-template #nextTemplate>
+    <button mat-raised-button color="accent">Next</button>
+</ng-template>
+
+<ng-template #doneTemplate>
+    <button mat-raised-button color="accent">Exit</button>
+</ng-template>

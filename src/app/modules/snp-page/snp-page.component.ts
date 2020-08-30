@@ -145,10 +145,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                         if (s.phenotypes.total == 0) {
                             this.tourSteps = this.tourSteps.filter(s => s != 'phen-stats')
                         }
-
-                        console.log(this.tourSteps)
-
-
                     }
                 }
             )

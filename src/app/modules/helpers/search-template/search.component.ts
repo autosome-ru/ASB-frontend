@@ -33,6 +33,7 @@ import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from 
 import {debounceTime} from "rxjs/operators";
 import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/check-functions.helper";
 import {ReleaseModel} from "../../../models/releases.model";
+import {getTextByStepName} from "../../../helpers/tour-text.helper";
 
 
 @Component({
@@ -422,6 +423,10 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
         this.searchForm.patchValue(patchValue);
         this._navigateToSearch();
+    }
+
+    getTextByStepName(step: string) {
+        return getTextByStepName(step)
     }
 }
 

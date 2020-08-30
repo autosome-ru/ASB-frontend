@@ -33,6 +33,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     isBrowser: boolean;
     public totalInfo$: Observable<TotalInfoModel>;
     public release$: Observable<ReleaseModel>;
+    public tourSteps: string[];
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -77,6 +78,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
                     }
                 })
         }
+        this.tourSteps = ['search-by', 'search-rs', 'search-pos', 'search-example']
 
     }
 
