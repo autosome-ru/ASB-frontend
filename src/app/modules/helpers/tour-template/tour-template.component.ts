@@ -53,7 +53,9 @@ export class AsbTourComponent implements OnInit {
 
 
     closePopover() {
-        this.tourPopover.close()
+        if (this.tourPopover) {
+            this.tourPopover.close()
+        }
     }
 
     startTour() {
