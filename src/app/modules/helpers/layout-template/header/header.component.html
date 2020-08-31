@@ -16,7 +16,7 @@
         [routerLinkActiveOptions]="{exact:true}"
     >
         <div style="display: flex; align-items: flex-end">
-        <img src="../../../../../assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
+        <img src="/assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
             <div style="display: inline-block">
                 ADASTRA {{(currentRelease$ | async)?.version}}
             </div>
@@ -56,6 +56,8 @@
             <a
                 class="nav-item nav-link py-sm-0"
                 [routerLink]="'/' + (currentRelease$ | async)?.url + '/downloads'"
+                [routerLinkActive]="['active']"
+                (click)="toggleNavbar('close')"
             >
                 Downloads
             </a>

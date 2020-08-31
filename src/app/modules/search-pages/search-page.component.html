@@ -14,7 +14,7 @@
     <div class="d-flex">
         <div class="container-fluid mx-auto" style="padding-bottom: 5px; padding-top: 5px">
             <div class="flex text-xs-right xs-12">
-                <div class="text-xs-left">
+                <div class="text-xs-left" style="overflow: auto;">
                     <span class="search-page__text">
                         {{getPhrase((searchSnpResults$ | async),
                         (searchSnpResultsLoading$ | async))}}
@@ -48,7 +48,7 @@
             </div>
             <div>
                 <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
-                    <div class="position-relative">
+                    <div class="position-relative" style="overflow: auto;">
                     <ng-container
                         *ngIf="group.value === 'card'; else tableViewTemplate"
 
@@ -78,6 +78,7 @@
                                     </mat-card-header>
                                     <mat-card-content>
                                         <asb-snp-card
+                                            [index]="i"
                                             [snpData]="snp"
                                             [noButtons]="true"
                                         >
@@ -117,7 +118,6 @@
     </div>
 </div>
 <asb-tour-button
-    *ngIf="!isAdvancedSearch"
     [steps]="tourSteps"
 ></asb-tour-button>
 </div>

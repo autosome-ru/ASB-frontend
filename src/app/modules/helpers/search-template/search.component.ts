@@ -436,6 +436,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     nextExampleStep() {
         this.nextStep.emit()
     }
+
+    searchById() {
+        if (!this.isAdvanced) {
+            this.searchForm.patchValue({searchBy: 'id'})
+        }
+    }
 }
 
 function matchingPattern(searchKey: string,

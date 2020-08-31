@@ -94,16 +94,27 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 }
             )
         );
-    this.tourSteps = [
-        'search-by',
-        'search-rs',
-        'search-pos',
-        'search-example',
-        'search-nearby',
-        'search-view',
-        'cell-types-buttons',
-        'transcription-factors-buttons',
-    ]
+    if (this.isAdvancedSearch) {
+        this.tourSteps = [
+            'search-pos',
+            'search-adv-example',
+            'search-download',
+            'search-view',
+            'cell-types-buttons',
+            'transcription-factors-buttons',
+        ]
+    } else {
+        this.tourSteps = [
+            'search-by',
+            'search-rs',
+            'search-pos',
+            'search-example',
+            'search-nearby',
+            'search-view',
+            'cell-types-buttons',
+            'transcription-factors-buttons',
+        ]
+    }
     }
 
     ngOnDestroy() {

@@ -25,7 +25,7 @@
         ASB in cell types
     </dt>
     <asb-snp-buttons
-        joyrideStep="cell-types-buttons"
+        [joyrideStep]="'cell-types-buttons'  + (index ? index : '')"
         [stepContent]="stepTemplate"
         [stepContentParams]="getTextByStepName('cell-types-buttons', noButtons ? 'search' : 'snp')"
         *ngIf="snpData.cellLines.length != 0"
@@ -47,7 +47,7 @@
         ASB for transcription factors
     </dt>
     <asb-snp-buttons
-        joyrideStep="transcription-factors-buttons"
+        [joyrideStep]="'transcription-factors-buttons' + (index ? index : '')"
         [stepContent]="stepTemplate"
         [stepContentParams]="getTextByStepName('transcription-factors-buttons', noButtons ? 'search' : 'snp')"
         *ngIf="snpData.transFactors.length != 0"

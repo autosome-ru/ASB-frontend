@@ -22,6 +22,9 @@ export class AsbSnpCardComponent implements OnInit {
     @Input()
     public noButtons: boolean = false;
 
+    @Input()
+    public index: number = 0;
+
     @Output()
     public emitNextStep = new EventEmitter<void>();
 
