@@ -17,6 +17,7 @@ import {SearchPageTableComponent} from "./search-table/search-table.component";
 import {ReleaseModel} from "../../models/releases.model";
 import {getTextByStepName} from "../../helpers/tour-text.helper";
 import {JoyrideService} from "ngx-joyride";
+import {SnpSearchModel} from "../../models/data.model";
 
 @Component({
     selector: "asb-search-page",
@@ -50,7 +51,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public searchQuery$: Observable<SearchQueryModel>;
     private firstTimeOpen: boolean;
     public release$: Observable<ReleaseModel>;
-    private resultsLen: number;
+    results: SnpSearchModel[];
     public tourSteps: string[];
 
     constructor(private route: ActivatedRoute,
@@ -71,7 +72,17 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         }
         this.subscriptions.add(
             this.store.select(fromSelectors.selectCurrentSearchResults).subscribe(
-                s => this.resultsLen = s.total
+                s => {
+                    if (s && s.results && s.results.length > 0) {
+                        this.results = s.results
+                        if (s.results[0].cellLines.length == 0) {
+                            this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons')
+                        }
+                        if (s.results[0].transFactors.length == 0) {
+                            this.tourSteps = this.tourSteps.filter(s => s != 'transcription-factors-buttons')
+                        }
+                    }
+                }
             )
         )
         this.firstTimeOpen = this.route.snapshot.queryParams['skip_check'] != '1';
@@ -97,6 +108,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     if (this.isAdvancedSearch) {
         this.tourSteps = [
             'search-pos',
+            'search-tf-list',
+            'search-cl-list',
+            'search-concordance',
+            'search-associations',
             'search-adv-example',
             'search-download',
             'search-view',
@@ -113,6 +128,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             'search-view',
             'cell-types-buttons',
             'transcription-factors-buttons',
+            'search-adv'
         ]
     }
     }
@@ -203,7 +219,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     }
 
     checkResult() {
-        if (!this.resultsLen) {
+        console.log(this.results)
+        if (!this.results || this.results.length == 0) {
             this.searchComponent._initDemo()
         }
     }

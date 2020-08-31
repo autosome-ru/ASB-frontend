@@ -272,8 +272,9 @@ export class SearchComponent implements OnInit, OnDestroy {
             search.clList = ["HEK293 (embryonic kidney)"];
             search.tfList = ["ANDR_HUMAN", "CTCF_HUMAN"];
         } else {
-            search.searchBy = "id";
-            search.searchInput = "rs28372852";
+            search.searchBy = "pos";
+            search.chromosome = 'chr3'
+            search.searchInput = "158644602";
         }
         this.searchForm.patchValue(search);
         this._navigateToSearch();
