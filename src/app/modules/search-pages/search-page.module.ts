@@ -15,6 +15,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {AsbSearchPageRoutingModule} from "./search-page-routing.module";
 import {SearchPageTableComponent} from "./search-table/search-table.component";
+import {JoyrideModule} from "ngx-joyride";
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import {SearchPageTableComponent} from "./search-table/search-table.component";
         MatButtonToggleModule,
         MatTooltipModule,
         MatPaginatorModule,
-        AsbSearchPageRoutingModule
+        AsbSearchPageRoutingModule,
+        JoyrideModule
     ],
     declarations: [
         SearchPageComponent,

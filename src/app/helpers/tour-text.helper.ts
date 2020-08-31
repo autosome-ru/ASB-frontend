@@ -1,17 +1,17 @@
-export function getTextByStepName(step: string): {text: string} {
-    return {text: getText(step)}
+export function getTextByStepName(step: string, component?: string): {text: string} {
+    return {text: getText(step, component)}
 }
 
-function getText(step: string): string {
+function getText(step: string, component?: string): string {
     switch (step) {
         case 'sequence':
             return  'SNV genomic context\n +/- 25 nucleotides'
         case 'cell-types-buttons':
             return 'Cell types from GTRD database\n' +
-                'having ASB at this SNV.\n Click for GTRD link.'
+                'having ASB at this SNV.' + (component == 'snp' ? '\nClick for GTRD link.' : '')
         case 'transcription-factors-buttons':
             return  'Transcription factors from GTRD database\n' +
-                'having ASB at this SNV.\n Click to go to the UNIPROT page.'
+                'having ASB at this SNV.' + (component == 'snp' ? '\n Click to go to the UNIPROT page.' : '')
         case 'search-nearby':
             return  'Search ASB nearby SNV position +/-100bp'
         case 'color-scales':

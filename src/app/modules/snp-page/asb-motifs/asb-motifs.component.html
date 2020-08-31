@@ -15,11 +15,13 @@
             </mat-panel-description>
         </mat-expansion-panel-header>
         <ng-template matExpansionPanelContent>
-            <div style="width: 100%; display: flex; justify-content: center">
-            <img
-                joyrideStep="motif-analysis"
+            <div
+                style="width: 100%; display: flex; justify-content: center"
+                [joyrideStep]="'motif-analysis' + i"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('motif-analysis')"
+            >
+            <img
                 style="max-height: 30vh"
                 [src]="makeImagePath(tf)"
                 [alt]="tf.name + ' pic'"

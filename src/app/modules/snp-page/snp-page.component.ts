@@ -124,7 +124,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'transcription-factors-columns',
             'table0',
             'table1',
-            'motif-analysis',
+            'motif-analysis0',
             'phen-stats'
         ]
         this.subscriptions.add(
@@ -141,7 +141,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                             }
                         }
                         if (this._getGoodTfs(s.transFactors).length == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis')
+                            this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis0')
                         }
 
                         // if (s.phenotypes.total == 0) {
@@ -296,7 +296,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     openPanels() {
-        if (this.tourSteps.indexOf('motif-analysis') !== -1) {
+        if (this.tourSteps.indexOf('motif-analysis0') !== -1) {
             if (this.motifPanel.closed) {
                 this.motifPanel.open()
             }

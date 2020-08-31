@@ -1,10 +1,13 @@
+<div>
 <div class="container flex-grow-1 mx-md-auto pb-3 px-sm-0 px-md-auto">
     <div class="mat-elevation-z2">
         <asb-search
+            #searchComponent
             [width]="'full'"
             [isAdvanced]="isAdvancedSearch"
             [searchData]="(searchSnpResults$ | async).results"
             (searchPressed)="_handleSearchTemplateChanges($event)"
+            (nextStep)="checkResult()"
         ></asb-search>
     </div>
 
@@ -18,6 +21,10 @@
 
                         <mat-button-toggle-group
                             style="background: white"
+                            joyrideStep="search-view"
+                            [stepContent]="stepTemplate"
+                            [stepContentParams]="getTextByStepName('search-view')"
+                            (next)="group.value = 'card'"
                             #group="matButtonToggleGroup"
                             [value]="groupValue"
                             appearance="legacy"
@@ -48,7 +55,7 @@
                     >
                         <div class="layout pb-2"
                              style="margin-bottom: 20px"
-                             *ngFor="let snp of (searchSnpResults$ | async).results">
+                             *ngFor="let snp of (searchSnpResults$ | async).results; let i = index">
                             <a
                                 [routerLink]="'/' + (release$ | async).url + '/snps/' + snp.rsId + '/' + snp.altBase"
                             >
@@ -109,6 +116,11 @@
         </div>
     </div>
 </div>
+<asb-tour-button
+    *ngIf="!isAdvancedSearch"
+    [steps]="tourSteps"
+></asb-tour-button>
+</div>
 
 <ng-template #loadingTemplate>
     <div style="height: 370px">
@@ -141,4 +153,9 @@
     </div>
 </ng-template>
 
+<ng-template #stepTemplate let-text=text>
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
+</ng-template>
 

@@ -15,6 +15,8 @@ import {AsbServerSideModel} from "../../models/table.model";
 import {initialServerParams} from "../../helpers/constants";
 import {SearchPageTableComponent} from "./search-table/search-table.component";
 import {ReleaseModel} from "../../models/releases.model";
+import {getTextByStepName} from "../../helpers/tour-text.helper";
+import {JoyrideService} from "ngx-joyride";
 
 @Component({
     selector: "asb-search-page",
@@ -48,9 +50,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public searchQuery$: Observable<SearchQueryModel>;
     private firstTimeOpen: boolean;
     public release$: Observable<ReleaseModel>;
+    private resultsLen: number;
+    public tourSteps: string[];
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
+                private joyrideService: JoyrideService,
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
@@ -64,6 +69,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         } else {
             this.groupValue = "list";
         }
+        this.subscriptions.add(
+            this.store.select(fromSelectors.selectCurrentSearchResults).subscribe(
+                s => this.resultsLen = s.total
+            )
+        )
         this.firstTimeOpen = this.route.snapshot.queryParams['skip_check'] != '1';
         this.pagination = initialServerParams;
         this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery)
@@ -83,7 +93,17 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                     }
                 }
             )
-        )
+        );
+    this.tourSteps = [
+        'search-by',
+        'search-rs',
+        'search-pos',
+        'search-example',
+        'search-nearby',
+        'search-view',
+        'cell-types-buttons',
+        'transcription-factors-buttons',
+    ]
     }
 
     ngOnDestroy() {
@@ -165,5 +185,15 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             pageSize: event.pageSize,
             pageIndex: event.pageIndex
         };
+    }
+
+    getTextByStepName(step: string) {
+        return getTextByStepName(step)
+    }
+
+    checkResult() {
+        if (!this.resultsLen) {
+            this.searchComponent._initDemo()
+        }
     }
 }

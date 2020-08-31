@@ -11,6 +11,11 @@ const routes: Routes = [
         path: "advanced",
         component: SearchPageComponent
     },
+    {
+        path: "",
+        pathMatch: 'full',
+        redirectTo: 'simple'
+    },
 
 ];
 

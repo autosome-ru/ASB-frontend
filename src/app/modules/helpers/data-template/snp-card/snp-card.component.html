@@ -27,7 +27,7 @@
     <asb-snp-buttons
         joyrideStep="cell-types-buttons"
         [stepContent]="stepTemplate"
-        [stepContentParams]="getTextByStepName('cell-types-buttons')"
+        [stepContentParams]="getTextByStepName('cell-types-buttons', noButtons ? 'search' : 'snp')"
         *ngIf="snpData.cellLines.length != 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.cellLines"
@@ -49,7 +49,7 @@
     <asb-snp-buttons
         joyrideStep="transcription-factors-buttons"
         [stepContent]="stepTemplate"
-        [stepContentParams]="getTextByStepName('transcription-factors-buttons')"
+        [stepContentParams]="getTextByStepName('transcription-factors-buttons', noButtons ? 'search' : 'snp')"
         *ngIf="snpData.transFactors.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
         [data]="snpData.transFactors"

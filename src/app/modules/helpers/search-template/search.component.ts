@@ -66,6 +66,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     @Output()
     private searchPressed = new EventEmitter<SearchQueryModel>();
 
+    @Output()
+    private nextStep= new EventEmitter<void>();
+
     private readonly nullValue: {searchInput: string} = {searchInput: ""};
     private searchParams: SearchParamsModel;
 
@@ -83,6 +86,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     public downloadButtonColor: "primary" | null = null;
     public showNearbyControl: FormControl;
     public currentRelease$: Observable<ReleaseModel>;
+
 
 
 
@@ -240,7 +244,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 this.currentRelease$.subscribe(r =>
                     this.router.navigate([`/${r.url}/search/` +
                     (this.isAdvanced ? "advanced" : "simple")], {
-                        queryParams: params
+                        queryParams: params,
                     })
                 )
             )
@@ -427,6 +431,10 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     getTextByStepName(step: string) {
         return getTextByStepName(step)
+    }
+
+    nextExampleStep() {
+        this.nextStep.emit()
     }
 }
 

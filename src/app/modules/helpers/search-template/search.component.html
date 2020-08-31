@@ -43,7 +43,7 @@
                 joyrideStep="search-rs"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('search-rs')"
-                (next)="searchForm.patchValue({searchBy: 'pos'})"
+                (next)="searchForm.patchValue({searchBy: 'pos', chr: 'chr1'})"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px; width: 230px"
                 appearance="outline"
@@ -165,22 +165,33 @@
                     ></mat-icon>
                     Search
                 </button>
-                <button
-                    *ngIf="!isAdvanced"
-                    style="margin-right: 15px"
-                    class="asb-search__header-demo"
-                    mat-raised-button
-                    matTooltip="+/-100bp"
-                    [disabled]="!_checkToDisplay('searchNear')"
-                    (click)="_nearbySearch()"
-                >
-                    Search SNPs nearby
-                </button>
+                <div style="margin-right: 15px; display: inline-block">
+                    <div
+                        *ngIf="!isAdvanced"
+                        joyrideStep="search-nearby"
+                        [stepContent]="stepTemplate"
+                        [stepContentParams]="getTextByStepName('search-nearby')"
+                        style="padding: 10px; margin: -10px"
+                    >
+                    <button
+
+                        class="asb-search__header-demo"
+                        mat-raised-button
+                        matTooltip="+/-100bp"
+                        [disabled]="!_checkToDisplay('searchNear')"
+                        (click)="_nearbySearch()"
+                    >
+                        Search SNPs nearby
+                    </button>
+                    </div>
+                </div>
             </div>
             <button
                 joyrideStep="search-example"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('search-example')"
+                (next)="nextExampleStep()"
+                (prev)="searchForm.patchValue({searchBy: 'pos', chr: 'chr1'})"
                 *ngIf="!isAdvanced"
                 mat-raised-button
                 style=" margin-left: auto"

@@ -43,8 +43,8 @@ export class AsbSnpCardComponent implements OnInit {
         this.showMoreTfs = value;
     }
 
-    getTextByStepName(step: string) {
-        return getTextByStepName(step)
+    getTextByStepName(step: string, component?: string) {
+        return getTextByStepName(step, component)
     }
 
     nextStep() {
