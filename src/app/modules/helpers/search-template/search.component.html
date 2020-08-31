@@ -381,20 +381,23 @@
                     >
                         Example
                     </button>
-                    <button
+                    <div
                         joyrideStep="search-download"
                         [stepContent]="stepTemplate"
                         [stepContentParams]="getTextByStepName('search-download')"
                         *ngIf="isAdvanced"
-                        mat-stroked-button
-                        [ngClass]="{'asb-search__light-button': downloadButtonColor === 'primary'}"
-                        [color]="downloadButtonColor"
-                        [disabled]="_isSearchDisabled()"
-                        (click)="_getResultsInCsv()"
-                    >
-                        <span class="d-none d-sm-inline-block">Get search results in TSV</span>
-                        <span class="d-sm-none d-inline-block">Get TSV</span>
-                    </button>
+                        style="display: inline-flex; overflow: auto">
+                        <button
+
+                            mat-stroked-button
+                            [color]="'accent'"
+                            [disabled]="_isSearchDisabled()"
+                            (click)="_getResultsInCsv()"
+                        >
+                            <span class="d-none d-sm-inline-block">Get search results in TSV</span>
+                            <span class="d-sm-none d-inline-block">Get TSV</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
