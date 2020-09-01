@@ -1,41 +1,45 @@
 <div class="container mat-elevation-z2 px-0">
-    <div class="container" style="background-color: white; padding-bottom: 0.5rem; white-space: pre-line">
+    <div class="container" style="background-color: white; white-space: pre-line">
         <h4 style="padding-top: 0.5rem">Downloads</h4>
         <ul>
-            <li *ngFor="let release of releasesList">
+            <li *ngFor="let release of releasesList" style="padding-bottom: 10px">
                 <h5>
                     Release
                     <a [routerLink]="'/' + release.url">{{release.name}}</a>
                     {{release.version}}, {{release.date}}
                     <span *ngIf="release.recent">(current)</span>
                 </h5>
-                <dl style="padding: 0 15px">
-                    <ng-container *ngIf="release.notes">
-                        <dt>
+                <div style="padding: 0 15px">
+                    <div *ngIf="release.notes">
+                        <strong>
                             Release Notes:
-                        </dt>
-                        <dd>
+                        </strong>
+                        <span>
                             {{release.notes}}
-                        </dd>
-                    </ng-container>
-                    <dt>
-                        List of <a href="http://gtrd.biouml.org/" target="_blank" rel="noopener noreferrer">GTRD</a> data used:
-                    </dt>
-                    <dd>
-                        <a [href]="'/assets/' + release.gtrdExpsPath" [download]="_getGtrdExpsName(release)">{{_getGtrdExpsName(release)}}</a>
-                    </dd>
-                    <dt>
-                        Full genome BAD maps called with
-                        <a
-                            href="https://github.com/autosome-ru/BABACHI"
-                            rel="noopener noreferrer"
-                            target="_blank">
-                            BABACHI</a>:
-                    </dt>
-                    <dd>
-                        <a [href]="'/assets/' + release.badMapsPath" [download]="_getBadmapsName(release)">{{_getBadmapsName(release)}}</a>
-                    </dd>
-                </dl>
+                        </span>
+                    </div>
+                    <div>
+                        <strong>
+                            List of <a href="http://gtrd.biouml.org/" target="_blank" rel="noopener noreferrer">GTRD</a> data used:
+                        </strong>
+                        <span>
+                            <a [href]="'/assets/' + release.gtrdExpsPath" [download]="_getGtrdExpsName(release)">{{_getGtrdExpsName(release)}}</a>
+                        </span>
+                    </div>
+                    <div>
+                        <strong>
+                            Full genome BAD maps called with
+                            <a
+                                href="https://github.com/autosome-ru/BABACHI"
+                                rel="noopener noreferrer"
+                                target="_blank">
+                                BABACHI</a>:
+                        </strong>
+                        <span>
+                            <a [href]="'/assets/' + release.badMapsPath" [download]="_getBadmapsName(release)">{{_getBadmapsName(release)}}</a>
+                        </span>
+                    </div>
+                </div>
             </li>
         </ul>
     </div>

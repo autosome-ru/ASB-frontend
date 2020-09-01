@@ -12,11 +12,11 @@ export const releasesList: ReleaseModel[] = [
         badMapsPath: 'BADmaps.zip'
     },
     {
-        name: "Test",
-        url: "test",
+        name: "Beta",
+        url: "beta",
         date: "22.06.2020",
         recent: false,
-        version: "v1.5.0 beta",
+        version: "v1.5.0",
         api: 'v1',
         gtrdExpsPath: 'ADASTRA_GTRD_exps.tsv',
         badMapsPath: 'BADmaps.zip',

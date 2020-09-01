@@ -13,7 +13,7 @@ const routes: Routes = [
         loadChildren: () => import("src/app/modules/versions/soos/soos.module").then(mod => mod.SoosModule)
     },
     {
-        path: "test",
+        path: "beta",
         component: DeprecatedComponent,
         loadChildren: () => import("src/app/modules/versions/deprecated/test/test.module").then(mod => mod.TestModule)
     },
