@@ -6,10 +6,18 @@
                 <h5>
                     Release
                     <a [routerLink]="'/' + release.url">{{release.name}}</a>
-                    {{release.version}}
+                    {{release.version}}, {{release.date}}
                     <span *ngIf="release.recent">(current)</span>
                 </h5>
                 <dl style="padding: 0 15px">
+                    <ng-container *ngIf="release.notes">
+                        <dt>
+                            Release Notes:
+                        </dt>
+                        <dd>
+                            {{release.notes}}
+                        </dd>
+                    </ng-container>
                     <dt>
                         List of <a href="http://gtrd.biouml.org/" target="_blank" rel="noopener noreferrer">GTRD</a> data used:
                     </dt>

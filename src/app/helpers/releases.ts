@@ -19,7 +19,8 @@ export const releasesList: ReleaseModel[] = [
         version: "v1.5.0 beta",
         api: 'v1',
         gtrdExpsPath: 'ADASTRA_GTRD_exps.tsv',
-        badMapsPath: 'BADmaps.zip'
+        badMapsPath: 'BADmaps.zip',
+        notes: 'For development usage only.'
     },
 ];
 

@@ -6,5 +6,6 @@ export interface ReleaseModel {
     recent: boolean,
     api: string,
     gtrdExpsPath: string,
-    badMapsPath: string
+    badMapsPath: string,
+    notes?: string
 }
