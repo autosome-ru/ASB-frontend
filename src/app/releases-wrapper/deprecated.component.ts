@@ -9,7 +9,7 @@ import {AppState} from "../store/reducer";
 @Component({
     selector: 'asb-deprecated',
     template: `
-    <ngb-alert type="danger" [dismissible]="false">
+    <ngb-alert style="margin-top: -1rem" type="danger" [dismissible]="false">
         <strong>Attention!</strong>
         ADASTRA release <strong>{{(release$ | async)?.name}}</strong> is outdated. Please switch to the latest ADASTRA release
         <a href="https://adastra.autosome.ru">adastra.autosome.ru</a>

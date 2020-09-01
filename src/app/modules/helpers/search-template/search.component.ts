@@ -265,16 +265,27 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _initDemo() {
-        const search: Partial<SearchQueryModel> = {};
+        let search: Partial<SearchQueryModel> = {};
         if (this.isAdvanced) {
-            search.searchInput = "1-50000000";
-            search.chromosome = "chr1";
-            search.clList = ["HEK293 (embryonic kidney)"];
-            search.tfList = ["ANDR_HUMAN", "CTCF_HUMAN"];
+            search = {
+                searchInput: "1-50000000",
+                chromosome: "chr1",
+                clList: ["HEK293 (embryonic kidney)"],
+                tfList: ["ANDR_HUMAN", "CTCF_HUMAN"],
+                ebi: false,
+                grasp: false,
+                phewas: false,
+                finemapping: false,
+                clinvar: false,
+                QTL: false,
+                ...concordanceModelExample
+            };
         } else {
-            search.searchBy = "pos";
-            search.chromosome = 'chr3'
-            search.searchInput = "158644602";
+            search = {
+                searchBy: 'pos',
+                chromosome: 'chr3',
+                searchInput: '158644602'
+            }
         }
         this.searchForm.patchValue(search);
         this._navigateToSearch();
