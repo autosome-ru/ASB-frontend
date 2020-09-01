@@ -7,7 +7,9 @@ export const releasesList: ReleaseModel[] = [
         date: "22.06.2020",
         recent: true,
         version: "v1.4.6",
-        api: 'v1'
+        api: 'v1',
+        gtrdExpsPath: 'ADASTRA_GTRD_exps.tsv',
+        badMapsPath: 'BADmaps.zip'
     },
     {
         name: "Test",
@@ -15,7 +17,9 @@ export const releasesList: ReleaseModel[] = [
         date: "22.06.2020",
         recent: false,
         version: "v1.5.0 beta",
-        api: 'v1'
+        api: 'v1',
+        gtrdExpsPath: 'ADASTRA_GTRD_exps.tsv',
+        badMapsPath: 'BADmaps.zip'
     },
 ];
 
