@@ -148,7 +148,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         // Search options and patching form in simple search
         this.subscriptions.add(
-            this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(500)).subscribe(
+            this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(250)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
@@ -158,7 +158,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             )
         );
         this.subscriptions.add(
-            this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(500)).subscribe(
+            this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(250)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
