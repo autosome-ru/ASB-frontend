@@ -64,7 +64,7 @@ export class AsbTourComponent implements OnInit {
         let tourOptions: JoyrideOptions = {
             steps: this.steps,
             waitingTime: 40,
-            stepDefaultPosition: 'bottom',
+            stepDefaultPosition: 'top',
         }
 
         this.joyrideService.startTour(
