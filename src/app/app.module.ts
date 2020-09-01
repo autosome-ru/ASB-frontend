@@ -6,22 +6,20 @@ import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "src/environments/environment";
 import {AsbAppIconsModule} from "./helpers/svgIcon";
-import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {BrowserModule} from "@angular/platform-browser";
 import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";
-import {AsbHelpersModule} from "./modules/helpers/helpers.module";
-import {DataService} from "./services/data.service";
-import {SearchService} from "./services/search.service";
-import { ToastrModule } from "ngx-toastr";
-import {SeoService} from "./services/seo.servise";
+import {ToastrModule} from "ngx-toastr";
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ReleasesService} from "./services/releases.service";
 import {ReleasesWrapperModule} from "./releases-wrapper/releases-wrapper.module";
 import {JoyrideModule} from "ngx-joyride";
-import {MatButtonModule} from "@angular/material/button";
+import {AsbLayoutsModule} from "./modules/helpers/layout-template/layout.module";
 
+import {DataService} from "./services/data.service";
+import {SearchService} from "./services/search.service";
+import {SeoService} from "./services/seo.servise";
 @NgModule({
   declarations: [
     AppComponent
@@ -34,13 +32,10 @@ import {MatButtonModule} from "@angular/material/button";
         ToastrModule.forRoot(),
         JoyrideModule.forRoot(),
         environment.production ? [] : StoreDevtoolsModule.instrument(),
-        MatSnackBarModule,
         AsbRoutingModule,
-
         AsbAppIconsModule,
-        AsbHelpersModule,
         ReleasesWrapperModule,
-        MatButtonModule,
+        AsbLayoutsModule,
 
     ],
   providers: [

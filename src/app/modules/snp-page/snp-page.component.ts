@@ -125,6 +125,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'table0',
             'table1',
             'motif-analysis0',
+            'motif-analysis',
             'phen-stats'
         ]
         this.subscriptions.add(
@@ -142,11 +143,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                         }
                         if (this._getGoodTfs(s.transFactors).length == 0) {
                             this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis0')
+                        } else {
+                            this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis')
                         }
-
-                        // if (s.phenotypes.total == 0) {
-                        //     this.tourSteps = this.tourSteps.filter(s => s != 'phen-stats')
-                        // }
                     }
                 }
             )
@@ -306,7 +305,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel) {
         const index = tabGroup.selectedIndex
-        console.log(index)
         if (snp.transFactors.length > 0 && snp.cellLines.length > 0)
             tabGroup.selectedIndex = 0
         if (index == 0 && snp.transFactors.length == 0) {

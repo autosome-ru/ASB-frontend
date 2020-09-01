@@ -219,7 +219,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     }
 
     checkResult() {
-        console.log(this.results)
         if (!this.results || this.results.length == 0) {
             this.searchComponent._initDemo()
         }

@@ -12,6 +12,7 @@ import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
 import {ReleaseModel} from "../../../models/releases.model";
 import {Observable} from "rxjs";
+import {JoyrideOptions} from "ngx-joyride/lib/models/joyride-options.class";
 
 @Component({
     selector: "asb-tour-button",
@@ -31,12 +32,12 @@ export class AsbTourComponent implements OnInit {
     public steps: string[];
     public release: Observable<ReleaseModel>;
 
-
     constructor(private joyrideService: JoyrideService, private store: Store<AppState>) { }
 
     ngOnInit() {
         this.release = this.store.select(fromSelectors.selectCurrentRelease)
     }
+
 
     ngOnDestroy() {
         if (this.joyrideService.isTourInProgress()) {
@@ -60,11 +61,16 @@ export class AsbTourComponent implements OnInit {
 
     startTour() {
         this.closePopover()
-        this.joyrideService.startTour({
+        let tourOptions: JoyrideOptions = {
             steps: this.steps,
             waitingTime: 40,
-            stepDefaultPosition: 'bottom'
-        })
+            stepDefaultPosition: 'bottom',
+        }
+
+        this.joyrideService.startTour(
+            tourOptions
+        )
+
     }
 
 }

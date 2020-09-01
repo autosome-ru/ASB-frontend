@@ -187,7 +187,13 @@
 </ng-template>
 
 <ng-template #noMotifAnalysisTemplate>
-    <h6>No data available</h6>
+    <div
+        [joyrideStep]="'motif-analysis'"
+        [stepContent]="stepTemplate"
+        [stepContentParams]="getTextByStepName('motif-analysis')"
+    >
+        <h6>No data available</h6>
+    </div>
 </ng-template>
 
 <ng-template #stepTemplate let-text=text>

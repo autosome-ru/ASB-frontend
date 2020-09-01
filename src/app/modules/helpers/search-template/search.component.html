@@ -4,13 +4,13 @@
     [class._restricted]="width === 'restricted'"
     [class._full]="width === 'full'">
     <div class="asb-search__header">
-        <h4 style="margin-top: 0.5rem" joyrideStep="step1">
+        <h4 style="margin-top: 0.5rem">
             {{isAdvanced ? 'Advanced search' : 'Search'}}
         </h4>
         <a
             joyrideStep="search-adv"
             [stepContent]="stepTemplate"
-            [stepContentParams]="getTextByStepName('search-pos')"
+            [stepContentParams]="getTextByStepName('search-adv')"
             style="margin: 0.5rem 20px 0 auto"
             [routerLink]="'/' + (currentRelease$ | async).url + '/' + (isAdvanced ? '/search/simple' : '/search/advanced')"
             [queryParams]="_convertFormToParams(!isAdvanced)"

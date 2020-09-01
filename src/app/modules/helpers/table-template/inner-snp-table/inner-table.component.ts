@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef, ViewChild} from "@angular/core";
-import {ExpSnpModel} from "../../../models/data.model";
-import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
-import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../helpers/check-functions.helper";
+import {ExpSnpModel} from "../../../../models/data.model";
+import {AsbTableColumnModel} from "../../../../models/table.model";
+import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../../helpers/check-functions.helper";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
