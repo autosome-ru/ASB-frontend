@@ -265,7 +265,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _initDemo() {
-        let search: Partial<SearchQueryModel> = {};
+        let search: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             search = {
                 searchInput: "1-50000000",
