@@ -6,9 +6,23 @@
         aria-label="Toggle navigation"
         type="button"
         (click)="toggleNavbar('toggle')"
+        [matMenuTriggerFor]="links"
     >
         <span class="navbar-toggler-icon"></span>
     </button>
+    <mat-menu #links="matMenu" style="padding-top: 0" class="d-sm-none">
+        <mat-list style="padding-top: 0">
+            <a
+                mat-list-item
+                [routerLink]="'/' + (currentRelease$ | async)?.url"
+                [routerLinkActive]="['active']"
+                (click)="toggleNavbar('close')"
+            >
+                Home
+            </a>
+            <ng-container *ngTemplateOutlet="linksTemplate"></ng-container>
+        </mat-list>
+    </mat-menu>
     <a
         class="navbar-brand"
         [routerLink]="'/' + (currentRelease$ | async)?.url "
@@ -24,51 +38,59 @@
     </a>
     <div
         class="collapse navbar-collapse  ml-auto p-2 justify-content-end"
-        [ngClass]="{'show': navigationBarOpened }"
     >
-        <div class="navbar-nav">
-            <a
-                class="nav-item nav-link py-sm-0"
-                [routerLink]="'/' + (currentRelease$ | async)?.url + '/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
-                [queryParams]="_convertFormToParams((searchQuery | async))"
-                [routerLinkActive]="['active']"
-                (click)="toggleNavbar('close')"
-            >
-                Search
-            </a>
-            <a
-                class="nav-item nav-link py-sm-0"
-                [routerLink]="'/' + (currentRelease$ | async)?.url + '/browse'"
-                [queryParams]="{by: 'tf'}"
-                [routerLinkActive]="['active']"
-                (click)="toggleNavbar('close')"
-            >
-                Browse
-            </a>
-            <a
-                class="nav-item nav-link py-sm-0"
-                [routerLink]="'/' + (currentRelease$ | async)?.url + '/help'"
-                [routerLinkActive]="['active']"
-                (click)="toggleNavbar('close')"
-            >
-                Help
-            </a>
-            <a
-                class="nav-item nav-link py-sm-0"
-                [routerLink]="'/' + (currentRelease$ | async)?.url + '/downloads'"
-                [routerLinkActive]="['active']"
-                (click)="toggleNavbar('close')"
-            >
-                Downloads
-            </a>
-            <a
-                class="nav-item nav-link py-sm-0"
-                [routerLink]="'/' + (currentRelease$ | async)?.url + '/about'"
-                [routerLinkActive]="['active']"
-                (click)="toggleNavbar('close')"
-            >
-                About
-            </a>
-        </div>
+        <ng-container *ngTemplateOutlet="linksTemplate"></ng-container>
     </div>
 </nav>
+
+<ng-template #linksTemplate>
+    <div class="navbar-nav">
+        <a
+            class="nav-item nav-link py-sm-0"
+            mat-list-item
+            [routerLink]="'/' + (currentRelease$ | async)?.url + '/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
+            [queryParams]="_convertFormToParams((searchQuery | async))"
+            [routerLinkActive]="['active']"
+            (click)="toggleNavbar('close')"
+        >
+            Search
+        </a>
+        <a
+            class="nav-item nav-link py-sm-0"
+            mat-list-item
+            [routerLink]="'/' + (currentRelease$ | async)?.url + '/browse'"
+            [queryParams]="{by: 'tf'}"
+            [routerLinkActive]="['active']"
+            (click)="toggleNavbar('close')"
+        >
+            Browse
+        </a>
+        <a
+            class="nav-item nav-link py-sm-0"
+            mat-list-item
+            [routerLink]="'/' + (currentRelease$ | async)?.url + '/help'"
+            [routerLinkActive]="['active']"
+            (click)="toggleNavbar('close')"
+        >
+            Help
+        </a>
+        <a
+            class="nav-item nav-link py-sm-0"
+            mat-list-item
+            [routerLink]="'/' + (currentRelease$ | async)?.url + '/downloads'"
+            [routerLinkActive]="['active']"
+            (click)="toggleNavbar('close')"
+        >
+            Downloads
+        </a>
+        <a
+            class="nav-item nav-link py-sm-0"
+            mat-list-item
+            [routerLink]="'/' + (currentRelease$ | async)?.url + '/about'"
+            [routerLinkActive]="['active']"
+            (click)="toggleNavbar('close')"
+        >
+            About
+        </a>
+    </div>
+</ng-template>
