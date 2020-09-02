@@ -48,7 +48,10 @@
             </div>
             <div>
                 <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
-                    <div class="position-relative" style="overflow: auto;">
+                    <div
+                        class="position-relative"
+                        style="overflow: auto;margin-left: -16px;margin-right: -16px;"
+                    >
                     <ng-container
                         *ngIf="group.value === 'card'; else tableViewTemplate"
 
@@ -60,6 +63,7 @@
                                 [routerLink]="'/' + (release$ | async).url + '/snps/' + snp.rsId + '/' + snp.altBase"
                             >
                                 <mat-card
+                                    style="margin-left: 16px; margin-right: 16px"
                                     class="search-page__card"
                                     asbElevation
                                     role="group"
@@ -104,6 +108,7 @@
 
                     <mat-paginator
                         *ngIf="(searchSnpResults$ | async)?.total > 0"
+                        style="margin-left: -20px; margin-right: -20px"
                         class="search-page__paginator"
                         showFirstLastButtons
                         [pageSize]="pagination.pageSize"
