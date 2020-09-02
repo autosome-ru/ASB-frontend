@@ -15,7 +15,7 @@
         <div  style="padding-bottom: 5px; padding-top: 5px; width: 100%">
             <div class="flex text-xs-right xs-12">
                 <div class="text-xs-left" style="overflow: auto;">
-                    <span class="search-page__text">
+                    <span class="search-page__text px-3">
                         {{getPhrase((searchSnpResults$ | async),
                         (searchSnpResultsLoading$ | async))}}
 
@@ -56,7 +56,7 @@
                         *ngIf="group.value === 'card'; else tableViewTemplate"
 
                     >
-                        <div style="margin-left: 16px; margin-right: 16px; position: relative">
+                        <div class="position-relative mx-3">
                         <div class="layout pb-2" style="margin-bottom: 20px"
 
                              *ngFor="let snp of (searchSnpResults$ | async).results; let i = index">
@@ -110,7 +110,7 @@
 
                     <mat-paginator
                         *ngIf="(searchSnpResults$ | async)?.total > 0"
-                        class="search-page__paginator"
+                        class="search-page__paginator mx-3"
                         showFirstLastButtons
                         [pageSize]="pagination.pageSize"
                         [length]="(searchSnpResults$ | async)?.total"
@@ -134,7 +134,7 @@
             <mat-progress-spinner
                 mode="indeterminate"
                 color="accent"
-                [diameter]="120"
+                [diameter]="100"
             ></mat-progress-spinner>
         </div>
     </div>
