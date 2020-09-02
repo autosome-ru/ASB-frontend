@@ -12,7 +12,7 @@
     </div>
 
     <div class="d-flex">
-        <div class="container-fluid mx-auto" style="padding-bottom: 5px; padding-top: 5px">
+        <div  style="padding-bottom: 5px; padding-top: 5px; width: 100%">
             <div class="flex text-xs-right xs-12">
                 <div class="text-xs-left" style="overflow: auto;">
                     <span class="search-page__text">
@@ -50,20 +50,21 @@
                 <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
                     <div
                         class="position-relative"
-                        style="overflow: auto;margin-left: -16px;margin-right: -16px;"
+                        style="overflow: auto;"
                     >
                     <ng-container
                         *ngIf="group.value === 'card'; else tableViewTemplate"
 
                     >
-                        <div class="layout pb-2"
-                             style="margin-bottom: 20px"
+                        <div style="margin-left: 16px; margin-right: 16px; position: relative">
+                        <div class="layout pb-2" style="margin-bottom: 20px"
+
                              *ngFor="let snp of (searchSnpResults$ | async).results; let i = index">
                             <a
                                 [routerLink]="'/' + (release$ | async).url + '/snps/' + snp.rsId + '/' + snp.altBase"
                             >
                                 <mat-card
-                                    style="margin-left: 16px; margin-right: 16px"
+
                                     class="search-page__card"
                                     asbElevation
                                     role="group"
@@ -103,12 +104,12 @@
                                 [diameter]="100"
                             ></mat-spinner>
                         </div>
+                        </div>
                     </ng-container>
                     </div>
 
                     <mat-paginator
                         *ngIf="(searchSnpResults$ | async)?.total > 0"
-                        style="margin-left: -20px; margin-right: -20px"
                         class="search-page__paginator"
                         showFirstLastButtons
                         [pageSize]="pagination.pageSize"
@@ -143,18 +144,20 @@
 
 
 <ng-template #tableViewTemplate>
-    <div class="mat-elevation-z2">
-        <asb-search-table
-            #searchTableComponent
-            *ngIf="(searchSnpResults$ | async)?.results.length > 0"
-            [searchResults$]="searchSnpResults$"
-            [paginator]="paginator"
-            [initialSort]="{active: pagination.active, direction: pagination.direction}"
-            [dataChanged]="searchSnpResultsChanged$ | async"
-            (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
-            (tableChangeEmitter)="_handlePaginationChange($event)"
-        >
-        </asb-search-table>
+    <div class="container-fluid">
+        <div class="mat-elevation-z2">
+            <asb-search-table
+                #searchTableComponent
+                *ngIf="(searchSnpResults$ | async)?.results.length > 0"
+                [searchResults$]="searchSnpResults$"
+                [paginator]="paginator"
+                [initialSort]="{active: pagination.active, direction: pagination.direction}"
+                [dataChanged]="searchSnpResultsChanged$ | async"
+                (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"
+                (tableChangeEmitter)="_handlePaginationChange($event)"
+            >
+            </asb-search-table>
+        </div>
     </div>
 </ng-template>
 
