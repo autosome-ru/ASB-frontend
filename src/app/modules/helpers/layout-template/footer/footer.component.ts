@@ -1,4 +1,4 @@
-import {Component, HostBinding, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import {ReleaseModel} from "../../../../models/releases.model";
 import * as fromSelectors from "src/app/store/selector";
 import {Observable} from "rxjs";
@@ -7,9 +7,11 @@ import {Store} from "@ngrx/store";
 
 
 @Component({
-  selector: "asb-footer",
-  templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.less"]
+    selector: "asb-footer",
+    templateUrl: "./footer.component.html",
+    styleUrls: ["./footer.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
 })
 export class AsbFooterComponent implements OnInit {
     @HostBinding("class.asb-footer")

@@ -1,6 +1,5 @@
 import {Inject, Injectable, PLATFORM_ID} from "@angular/core";
 import {HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpEvent} from "@angular/common/http";
-
 import {catchError} from "rxjs/operators";
 import {Observable, throwError} from "rxjs";
 import {ToastrService} from "ngx-toastr";

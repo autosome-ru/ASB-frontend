@@ -5,17 +5,17 @@ import {
     Input, OnDestroy,
     OnInit,
     Output,
-    ViewChild
+    ViewChild, ViewEncapsulation
 } from "@angular/core";
 
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
-import {getPaginatorOptions} from "../../../helpers/check-functions.helper";
+import {getPaginatorOptions} from "../../../helpers/helper/check-functions.helper";
 import {AsbTableComponent} from "../../helpers/table-template/table.component";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
-import {getTextByStepName} from "../../../helpers/tour-text.helper";
+import {getTextByStepName} from "../../../helpers/helper/tour-text.helper";
 
 
 @Component({
@@ -23,7 +23,7 @@ import {getTextByStepName} from "../../../helpers/tour-text.helper";
     templateUrl: "./statistics.component.html",
     styleUrls: ["../snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-
+    encapsulation: ViewEncapsulation.None
 })
 export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     @ViewChild("tableViewTFCL", {static: true})

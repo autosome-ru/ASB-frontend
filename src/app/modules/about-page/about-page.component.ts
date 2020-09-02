@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
-import {SeoModel} from "../../models/seo.model";
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {SeoModel} from "src/app/models/seo.model";
 import {ActivatedRoute} from "@angular/router";
-import {SeoService} from "../../services/seo.servise";
+import {SeoService} from "src/app/services/seo.servise";
 
 
 @Component({
@@ -9,6 +9,7 @@ import {SeoService} from "../../services/seo.servise";
     templateUrl: "./about-page.component.html",
     styleUrls: ["./about-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class AboutPageComponent implements OnInit {
 

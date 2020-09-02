@@ -3,7 +3,7 @@ import {
     Component, ElementRef, EventEmitter,
     HostBinding,
     Input, OnChanges, OnDestroy, Output, SimpleChanges,
-    TemplateRef, ViewChild,
+    TemplateRef, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {MatSort} from "@angular/material/sort";
@@ -17,16 +17,7 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
     templateUrl: "./table.component.html",
     styleUrls: ["./table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    // animations: [
-    //     trigger("detailExpand", [
-    //         state("collapsed, void", style({height: "0px", minHeight: "0", display: "none"})),
-    //         state("expanded", style({height: "*"})),
-    //         transition("expanded <=> collapsed",
-    //             animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
-    //         transition("expanded <=> void",
-    //             animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)"))
-    //     ]),
-    // ],
+    encapsulation: ViewEncapsulation.None
 })
 
 export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy {

@@ -3,14 +3,14 @@ import {
     Component,
     HostBinding,
     Input, OnInit,
-    ViewChild
+    ViewChild, ViewEncapsulation
 } from "@angular/core";
 import {AsbPopoverComponent} from "../popover-template/popover.component";
 import {JoyrideService} from "ngx-joyride";
-import {AppState} from "../../../store/reducer";
+import {AppState} from "src/app/store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
-import {ReleaseModel} from "../../../models/releases.model";
+import {ReleaseModel} from "src/app/models/releases.model";
 import {Observable} from "rxjs";
 import {JoyrideOptions} from "ngx-joyride/lib/models/joyride-options.class";
 
@@ -18,7 +18,8 @@ import {JoyrideOptions} from "ngx-joyride/lib/models/joyride-options.class";
     selector: "asb-tour-button",
     templateUrl: "./tour-template.component.html",
     styleUrls: ["./tour-template.component.less"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class AsbTourComponent implements OnInit {
 

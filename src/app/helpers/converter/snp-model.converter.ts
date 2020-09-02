@@ -21,8 +21,8 @@ import {
     TfSnpModel,
     TotalInfoBackendModel,
     TotalInfoModel
-} from "../models/data.model";
-import {AsbServerSideBackendModel, AsbServerSideModel} from "../models/table.model";
+} from "../../models/data.model";
+import {AsbServerSideBackendModel, AsbServerSideModel} from "../../models/table.model";
 import {SortDirection} from "@angular/material/sort";
 
 

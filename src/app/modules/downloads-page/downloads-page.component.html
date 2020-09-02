@@ -5,11 +5,10 @@
             <li *ngFor="let release of releasesList" style="padding-bottom: 25px; ">
                 <h5>
                     Release
-                    <a [routerLink]="'/' + release.url">{{release.name}}</a>
+                    <a [href]="'/' + release.url">{{release.name}}</a>
                     {{release.version}}, {{release.date}}
                     <span *ngIf="release.recent">(current)</span>
                 </h5>
-<!--                <hr class="v-divider" style="margin: 0">-->
                 <ul style="padding: 0 0 0 40px; list-style-type: none">
                     <li *ngIf="release.notes">
                         <strong>

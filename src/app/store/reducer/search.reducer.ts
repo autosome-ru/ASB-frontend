@@ -2,10 +2,10 @@ import * as fromActions from "src/app/store/action/search.action";
 import {SearchHintModel, SearchQueryModel, SearchResultsModel} from "src/app/models/searchQueryModel";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
-} from "../../helpers/snp-model.converter";
+} from "../../helpers/converter/snp-model.converter";
 import {
     convertSearchHintBackendModelToSearchHintModel
-} from "../../helpers/search-model.converter";
+} from "../../helpers/converter/search-model.converter";
 import {SnpSearchModel} from "../../models/data.model";
 
 export interface SearchState {

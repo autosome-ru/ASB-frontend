@@ -5,14 +5,14 @@ import {
     Input,
     OnInit, Output,
     TemplateRef,
-    ViewChild
+    ViewChild, ViewEncapsulation
 } from "@angular/core";
 import {ActivatedRoute,  Router} from "@angular/router";
 import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {SearchParamsModel, SearchResultsModel} from "../../../models/searchQueryModel";
 import {MatPaginator} from "@angular/material/paginator";
-import {baseToColors} from "../../../helpers/colors.helper";
+import {baseToColors} from "../../../helpers/helper/colors.helper";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
@@ -29,6 +29,7 @@ import * as fromSelectors from "src/app/store/selector";
     templateUrl: "./search-table.component.html",
     styleUrls: ["../search-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchPageTableComponent implements OnInit {
     @ViewChild("tableView", {static: true})

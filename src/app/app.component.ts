@@ -21,7 +21,7 @@ import {JoyrideService} from "ngx-joyride";
     selector: "app-root",
     templateUrl: "./app.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-app")

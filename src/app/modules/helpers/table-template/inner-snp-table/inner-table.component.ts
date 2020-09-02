@@ -1,7 +1,16 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from "@angular/core";
 import {ExpSnpModel} from "../../../../models/data.model";
 import {AsbTableColumnModel} from "../../../../models/table.model";
-import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../../helpers/check-functions.helper";
+import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../../helpers/helper/check-functions.helper";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
@@ -11,6 +20,7 @@ import {MatSort} from "@angular/material/sort";
     templateUrl: "./inner-table.component.html",
     styleUrls: ["./inner-table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class InnerTableComponent implements OnInit, AfterViewInit {
 

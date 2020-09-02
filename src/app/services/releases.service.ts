@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {ReleaseModel} from "../models/releases.model";
 import { Location } from "@angular/common";
 import {Observable, of} from "rxjs";
-import {recentRelease, releasesList} from "../helpers/releases";
+import {recentRelease, releasesList} from "../helpers/constants/releases";
 
 
 @Injectable()

@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Input, OnInit, Output} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    HostBinding,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from "@angular/core";
 import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
 import {environment} from "src/environments/environment";
 import * as fromSelectors from "src/app/store/selector";
@@ -6,13 +15,14 @@ import {ReleaseModel} from "../../../../models/releases.model";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer";
-import {getTextByStepName} from "../../../../helpers/tour-text.helper";
+import {getTextByStepName} from "../../../../helpers/helper/tour-text.helper";
 
 @Component({
     selector: "asb-snp-card",
     templateUrl: "./snp-card.component.html",
     styleUrls: ["./snp-card.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class AsbSnpCardComponent implements OnInit {
     @HostBinding("class.snp-card")

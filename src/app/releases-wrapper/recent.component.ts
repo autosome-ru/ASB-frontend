@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 
 @Component({
-  selector: 'asb-soos',
-  template: `<router-outlet></router-outlet>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'asb-recent',
+    template: `<router-outlet></router-outlet>`,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class RecentComponent implements OnInit {
 

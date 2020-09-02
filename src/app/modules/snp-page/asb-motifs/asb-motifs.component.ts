@@ -1,17 +1,27 @@
 import {TfSnpModel} from "../../../models/data.model";
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, QueryList, ViewChildren} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    ViewChildren,
+    ViewEncapsulation
+} from "@angular/core";
 import {MatExpansionPanel} from "@angular/material/expansion";
 import {DataService} from "../../../services/data.service";
 import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
-import {getTextByStepName} from "../../../helpers/tour-text.helper";
+import {getTextByStepName} from "../../../helpers/helper/tour-text.helper";
 
 @Component({
     selector: "asb-motifs",
     templateUrl: "./asb-motifs.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class AsbMotifsComponent implements OnInit, OnDestroy {
 

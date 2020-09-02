@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/reducer";
@@ -8,11 +16,11 @@ import {Observable, Subscription} from "rxjs";
 import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../models/data.model";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
-import {SeoModel} from "../../models/seo.model";
-import {SeoService} from "../../services/seo.servise";
+import {SeoModel} from "src/app/models/seo.model";
+import {SeoService} from "src/app/services/seo.servise";
 import {AsbServerTableComponent} from "../helpers/table-template/server-side/table-server.component";
-import {initialServerParams} from "../../helpers/constants";
-import {getPaginatorOptions} from "../../helpers/check-functions.helper";
+import {initialServerParams} from "src/app/helpers/constants/constants";
+import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
 
 
 @Component({
@@ -20,6 +28,7 @@ import {getPaginatorOptions} from "../../helpers/check-functions.helper";
     templateUrl: "./browse-page.component.html",
     styleUrls: ["./browse-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class BrowsePageComponent implements OnInit, OnDestroy {
     @ViewChild("tableTfView", {static: true})

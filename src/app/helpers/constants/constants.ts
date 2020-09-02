@@ -1,5 +1,5 @@
-import {MotifConcordanceModel, PhenotypesModel} from "../models/data.model";
-import {AsbServerSideModel} from "../models/table.model";
+import {MotifConcordanceModel, PhenotypesModel} from "../../models/data.model";
+import {AsbServerSideModel} from "../../models/table.model";
 
 
 export const phenotypesToView: {[name: string]: string} = {

@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from "@ngrx/store";
 import {asbAppReducer, asbAppEffects} from "./store";
 import {EffectsModule} from "@ngrx/effects";
@@ -10,9 +10,8 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";
 import {ToastrModule} from "ngx-toastr";
-import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {ReleasesService} from "./services/releases.service";
+
 import {ReleasesWrapperModule} from "./releases-wrapper/releases-wrapper.module";
 import {JoyrideModule} from "ngx-joyride";
 import {AsbLayoutsModule} from "./modules/helpers/layout-template/layout.module";
@@ -20,6 +19,10 @@ import {AsbLayoutsModule} from "./modules/helpers/layout-template/layout.module"
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import {SeoService} from "./services/seo.servise";
+import {ReleasesService} from "./services/releases.service";
+
+import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
+
 @NgModule({
   declarations: [
     AppComponent

@@ -8,18 +8,14 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    ViewChild
+    ViewChild, ViewEncapsulation
 } from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {
-    SearchHintModel,
-    SearchParamsModel,
-    SearchQueryModel,
-} from "src/app/models/searchQueryModel";
+import {SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/searchQueryModel";
 import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -27,13 +23,13 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {FileSaverService} from "ngx-filesaver";
-import {SearchService} from "../../../services/search.service";
+import {SearchService} from "src/app/services/search.service";
 import {ToastrService} from "ngx-toastr";
-import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants";
-import {debounceTime} from "rxjs/operators";
-import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/check-functions.helper";
-import {ReleaseModel} from "../../../models/releases.model";
-import {getTextByStepName} from "../../../helpers/tour-text.helper";
+import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants/constants";
+import {debounceTime, map} from "rxjs/operators";
+import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/helper/check-functions.helper";
+import {ReleaseModel} from "src/app/models/releases.model";
+import {getTextByStepName} from "src/app/helpers/helper/tour-text.helper";
 
 
 @Component({
@@ -41,6 +37,7 @@ import {getTextByStepName} from "../../../helpers/tour-text.helper";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-search")
@@ -86,6 +83,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     public downloadButtonColor: "primary" | null = null;
     public showNearbyControl: FormControl;
     public currentRelease$: Observable<ReleaseModel>;
+    public search: (text$: Observable<string>) => Observable<unknown>;
 
 
 
@@ -123,6 +121,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease)
 
         this.showNearbyControl = this.formBuilder.control(100);
+        this.search = (text$: Observable<string>) =>
+            text$.pipe(
+                debounceTime(200),
+                map(term => console.log(term))
+            )
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({

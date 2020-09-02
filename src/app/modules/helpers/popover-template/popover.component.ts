@@ -5,20 +5,18 @@ import {
     HostBinding,
     Input,
     Output, TemplateRef,
-    ViewChild, ViewContainerRef,
+    ViewChild, ViewContainerRef, ViewEncapsulation,
 } from "@angular/core";
 import {TemplatePortal} from "@angular/cdk/portal";
-import {
-    Overlay, OverlayConfig,
-    OverlayRef,
-} from "@angular/cdk/overlay";
+import {Overlay, OverlayConfig, OverlayRef} from "@angular/cdk/overlay";
 import {Subscription} from "rxjs";
 
 @Component({
     selector: "asb-popover",
     templateUrl: "./popover.component.html",
     styleUrls: ["./popover.component.less"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class AsbPopoverComponent {
 

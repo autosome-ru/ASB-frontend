@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {Router} from "@angular/router";
-import {recentRelease} from "../helpers/releases";
+import {recentRelease} from "../helpers/constants/releases";
 import {Location} from "@angular/common";
 
 @Component({
     selector: "redirect",
     template: "",
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class RedirectComponent implements OnInit {
     constructor(private router: Router, private location: Location) { }

@@ -1,4 +1,4 @@
-import {environment} from "../../environments/environment";
+import {environment} from "../../../environments/environment";
 import {recentRelease} from "./releases"
 const serverUrl = environment.serverUrl + `/api/${recentRelease.api}`;
 

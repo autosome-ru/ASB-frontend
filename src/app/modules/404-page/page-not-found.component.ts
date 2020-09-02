@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit, Optional} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Inject, OnInit, Optional, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {SeoModel} from "../../models/seo.model";
-import {SeoService} from "../../services/seo.servise";
+import {SeoModel} from "src/app/models/seo.model";
+import {SeoService} from "src/app/services/seo.servise";
 import {RESPONSE} from "@nguniversal/express-engine/tokens";
 import {Response} from "express";
 
@@ -9,7 +9,8 @@ import {Response} from "express";
     selector: "not-found-app",
     templateUrl: "page-not-found.component.html",
     styleUrls: ["./page-not-found.component.less"],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class PageNotFoundComponent implements OnInit {
     private readonly response: Response;

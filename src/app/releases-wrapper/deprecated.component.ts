@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from '@angular/core';
 import * as fromSelectors from "src/app/store/selector";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -16,8 +16,11 @@ import {AppState} from "../store/reducer";
     </ngb-alert>
     <router-outlet></router-outlet>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class DeprecatedComponent implements OnInit {
+    @HostBinding("class.asb-deprecated")
+    private readonly cssClass = true;
     public release$: Observable<ReleaseModel>;
 
     constructor(private store: Store<AppState>) {}

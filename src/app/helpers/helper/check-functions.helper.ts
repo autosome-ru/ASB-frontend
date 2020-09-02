@@ -1,8 +1,8 @@
-import {SearchParamsModel, SearchQueryModel} from "../models/searchQueryModel";
-import {formCheckboxesToList} from "./search-model.converter";
-import {SnpSearchModel, TfSnpModel} from "../models/data.model";
+import {SearchParamsModel, SearchQueryModel} from "../../models/searchQueryModel";
+import {formCheckboxesToList} from "../converter/search-model.converter";
+import {SnpSearchModel, TfSnpModel} from "../../models/data.model";
 import {MatSort} from "@angular/material/sort";
-import {compareConcordance} from "./constants";
+import {compareConcordance} from "../constants/constants";
 
 export function getPaginatorOptions(len: number): number[] {
     return len > 50 ?

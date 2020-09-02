@@ -1,14 +1,14 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/urls";
+import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/constants/urls";
 import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/searchQueryModel";
-import {formCheckboxesToList} from "../helpers/search-model.converter";
+import {formCheckboxesToList} from "../helpers/converter/search-model.converter";
 import {AsbServerSideModel} from "../models/table.model";
-import {convertServerSideModelToServerSideBackendModel} from "../helpers/snp-model.converter";
+import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";
 
 
 @Injectable()

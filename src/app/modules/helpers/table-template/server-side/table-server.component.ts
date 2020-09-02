@@ -3,7 +3,7 @@ import {
     Component, ElementRef, EventEmitter,
     HostBinding,
     Input, OnChanges, OnDestroy, Output, SimpleChanges,
-    TemplateRef, ViewChild,
+    TemplateRef, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {MatSort, SortDirection} from "@angular/material/sort";
@@ -19,6 +19,7 @@ import {tap} from "rxjs/operators";
     templateUrl: "./table-server.component.html",
     styleUrls: ["../table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 
 export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {

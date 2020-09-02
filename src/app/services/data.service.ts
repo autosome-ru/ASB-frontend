@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ClInfoBackendModel, SnpInfoBackendModel, TfInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
-import {browseUrl, snpsInfoUrl} from "../helpers/urls";
+import {browseUrl, snpsInfoUrl} from "../helpers/constants/urls";
 import {AsbServerSideModel} from "../models/table.model";
-import {convertServerSideModelToServerSideBackendModel} from "../helpers/snp-model.converter";
+import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";
 
 
 @Injectable()

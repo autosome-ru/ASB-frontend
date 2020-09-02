@@ -1,11 +1,14 @@
 import {
     ChangeDetectionStrategy,
-    Component, ElementRef,
+    Component,
+    ElementRef,
     HostBinding,
-    Inject, OnDestroy,
+    Inject,
+    OnDestroy,
     OnInit,
     PLATFORM_ID,
-    ViewChild
+    ViewChild,
+    ViewEncapsulation
 } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
@@ -24,6 +27,7 @@ import {ReleaseModel} from "../../models/releases.model";
     templateUrl: "./home-page.component.html",
     styleUrls: [ "./home-page.component.less" ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class HomePageComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-home")
@@ -34,6 +38,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     public totalInfo$: Observable<TotalInfoModel>;
     public release$: Observable<ReleaseModel>;
     public tourSteps: string[];
+    public totalInfoLoading$: Observable<boolean>;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -47,6 +52,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
+        this.totalInfoLoading$ = this.store.select(fromSelectors.selectTotalInfoLoading);
 
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());
         if (this.isBrowser) {

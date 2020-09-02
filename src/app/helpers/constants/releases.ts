@@ -1,4 +1,4 @@
-import {ReleaseModel} from "../models/releases.model";
+import {ReleaseModel} from "../../models/releases.model";
 // All available releases. First one is the most recent
 export const releasesList: ReleaseModel[] = [
     {

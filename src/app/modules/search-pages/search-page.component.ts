@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    HostBinding,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../store/reducer";
@@ -12,10 +20,10 @@ import {SearchComponent} from "../helpers/search-template/search.component";
 import {SeoModel} from "../../models/seo.model";
 import {SeoService} from "../../services/seo.servise";
 import {AsbServerSideModel} from "../../models/table.model";
-import {initialServerParams} from "../../helpers/constants";
+import {initialServerParams} from "../../helpers/constants/constants";
 import {SearchPageTableComponent} from "./search-table/search-table.component";
 import {ReleaseModel} from "../../models/releases.model";
-import {getTextByStepName} from "../../helpers/tour-text.helper";
+import {getTextByStepName} from "../../helpers/helper/tour-text.helper";
 import {JoyrideService} from "ngx-joyride";
 import {SnpSearchModel} from "../../models/data.model";
 
@@ -24,6 +32,7 @@ import {SnpSearchModel} from "../../models/data.model";
     templateUrl: "./search-page.component.html",
     styleUrls: ["./search-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
     @ViewChild("searchTableComponent", {static: true})

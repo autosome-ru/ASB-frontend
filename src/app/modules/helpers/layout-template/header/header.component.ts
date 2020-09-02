@@ -1,6 +1,6 @@
-import {Component, HostBinding, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import {SearchQueryModel} from "../../../../models/searchQueryModel";
-import {convertFormToParams} from "../../../../helpers/check-functions.helper";
+import {convertFormToParams} from "../../../../helpers/helper/check-functions.helper";
 import {AppState} from "../../../../store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
@@ -8,9 +8,11 @@ import {Observable} from "rxjs";
 import {ReleaseModel} from "../../../../models/releases.model";
 
 @Component({
-  selector: "asb-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.less"]
+    selector: "asb-header",
+    templateUrl: "./header.component.html",
+    styleUrls: ["./header.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
 })
 export class AsbHeaderComponent implements OnInit {
     @HostBinding("class.asb-header")

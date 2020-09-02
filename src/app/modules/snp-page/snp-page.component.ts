@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
@@ -10,16 +10,16 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.
 import {AsbStatisticsComponent} from "./statistics/statistics.component";
 import {FileSaverService} from "ngx-filesaver";
 import {DataService} from "../../services/data.service";
-import {calculateColorForOne} from "../../helpers/colors.helper";
+import {calculateColorForOne} from "../../helpers/helper/colors.helper";
 import {SeoService} from "../../services/seo.servise";
 import {ToastrService} from "ngx-toastr";
 import {MatExpansionPanel} from "@angular/material/expansion";
 import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 import {ReleasesService} from "../../services/releases.service";
 import {MatSort} from "@angular/material/sort";
-import {compareData} from "../../helpers/check-functions.helper";
+import {compareData} from "../../helpers/helper/check-functions.helper";
 import {AsbPopoverComponent} from "../helpers/popover-template/popover.component";
-import {getTextByStepName} from "../../helpers/tour-text.helper";
+import {getTextByStepName} from "../../helpers/helper/tour-text.helper";
 import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
@@ -27,6 +27,7 @@ import {MatTabGroup} from "@angular/material/tabs";
     templateUrl: "./snp-page.component.html",
     styleUrls: ["./snp-page.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
 
