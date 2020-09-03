@@ -22,9 +22,9 @@
         *ngIf="!(totalInfoLoading$ | async) && (totalInfo$ | async) as totalInfo; else TotalInfoLoadingTemplate"
     >
         <h6
-            style="text-align: center"
+            style="text-align: center; display: flex; justify-content: center; flex-wrap: wrap"
         >
-            Transcription factors:&nbsp;
+            <span style="white-space: nowrap">Transcription factors:&nbsp;
 
             <a
                 style="text-decoration: underline"
@@ -32,14 +32,16 @@
                 [queryParams]="{by: 'tf'}"
             >
                 {{totalInfo.transcriptionFactorsCount}}</a>
-            &nbsp;&nbsp;&nbsp;Cell types:&nbsp;
+            </span>
+            <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Cell types:&nbsp;
             <a
                 style="text-decoration: underline"
                 [routerLink]="'/' + (release$ | async).url + '/browse'"
                 [queryParams]="{by: 'cl'}"
             >
                 {{totalInfo.cellTypesCount}}</a>
-            &nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}
+            </span>
+            <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
         </h6>
 
     </ng-container>

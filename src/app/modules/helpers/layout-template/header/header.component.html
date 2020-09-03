@@ -1,28 +1,7 @@
 <nav
-    class="navbar navbar-expand-sm navbar-dark bg-dark mb-0 justify-content-start asb-header"
+    class="navbar navbar-expand-md navbar-dark bg-dark mb-0 justify-content-start asb-header"
 >
-    <button
-        class="navbar-toggler mr-sm-0 mr-2"
-        aria-label="Toggle navigation"
-        type="button"
-        (click)="toggleNavbar('toggle')"
-        [matMenuTriggerFor]="links"
-    >
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <mat-menu #links="matMenu" style="padding-top: 0" class="d-sm-none">
-        <mat-list style="padding-top: 0">
-            <a
-                mat-list-item
-                [routerLink]="'/' + (currentRelease$ | async)?.url"
-                [routerLinkActive]="['active']"
-                (click)="toggleNavbar('close')"
-            >
-                Home
-            </a>
-            <ng-container *ngTemplateOutlet="linksTemplate"></ng-container>
-        </mat-list>
-    </mat-menu>
+
     <a
         class="navbar-brand"
         [routerLink]="'/' + (currentRelease$ | async)?.url "
@@ -41,6 +20,19 @@
     >
         <ng-container *ngTemplateOutlet="linksTemplate"></ng-container>
     </div>
+    <button
+        class="navbar-toggler mr-sm-0 mr-2 ml-auto"
+        aria-label="Toggle navigation"
+        type="button"
+        [matMenuTriggerFor]="links"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <mat-menu #links="matMenu" style="padding-top: 0">
+        <mat-nav-list style="padding-top: 0">
+            <ng-container *ngTemplateOutlet="linksTemplate"></ng-container>
+        </mat-nav-list>
+    </mat-menu>
 </nav>
 
 <ng-template #linksTemplate>
@@ -51,7 +43,6 @@
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
             [queryParams]="_convertFormToParams((searchQuery | async))"
             [routerLinkActive]="['active']"
-            (click)="toggleNavbar('close')"
         >
             Search
         </a>
@@ -61,7 +52,6 @@
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/browse'"
             [queryParams]="{by: 'tf'}"
             [routerLinkActive]="['active']"
-            (click)="toggleNavbar('close')"
         >
             Browse
         </a>
@@ -70,7 +60,6 @@
             mat-list-item
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/help'"
             [routerLinkActive]="['active']"
-            (click)="toggleNavbar('close')"
         >
             Help
         </a>
@@ -79,7 +68,6 @@
             mat-list-item
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/downloads'"
             [routerLinkActive]="['active']"
-            (click)="toggleNavbar('close')"
         >
             Downloads
         </a>

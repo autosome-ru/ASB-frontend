@@ -475,15 +475,19 @@ function matchingPattern(searchKey: string,
                             greater: true
                         };
                     }
-                    return;
+                    return {
+                        wrongPattern: true
+                    };
                 }
             }
             if (search.match(/^\d*$/)) {
                 return;
             }
-            return {
-                wrongPattern: true
-            };
+            else {
+                return {
+                    notNumber: true
+                }
+            }
         }
     };
 }

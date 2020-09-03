@@ -1,15 +1,15 @@
 
-
-.search-without-hint {
+.field-without-hint {
     .mat-form-field-subscript-wrapper {
         display: none;
     }
+}
+.search-field {
+
     .mat-form-field-infix {
         padding: 0.02em 0 0.6em 0 !important;
     }
-    .mat-form-field-wrapper {
-        padding-bottom: 0 !important;
-    }
+
     .mat-form-field-suffix {
         top: 0.09em !important;
     }
@@ -18,18 +18,9 @@
     }
 }
 
-.search-with-hint {
-    .mat-form-field-infix {
-        padding: 0.02em 0 0.6em 0 !important;
-    }
-    .mat-form-field-wrapper {
-        padding-bottom: 0 !important;
-    }
+.search-field-hint {
     .mat-form-field-hint-wrapper {
-        padding-top: 1.2em
-    }
-    .mat-form-field-suffix {
-        top: 0.09em !important;
+        padding-top: 0
     }
 }
 
@@ -67,6 +58,7 @@
     &__checkboxes {
         display: flex;
         flex-wrap: wrap;
+        padding-left: 10px;
 
         &-checkbox{
             margin-right: 10px;
