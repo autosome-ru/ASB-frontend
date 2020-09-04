@@ -12,7 +12,7 @@ import {AppComponent} from "./app.component";
 import {ToastrModule} from "ngx-toastr";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
-import {ReleasesWrapperModule} from "./releases-wrapper/releases-wrapper.module";
+import {ReleasesWrapperModule} from "./modules/releases-wrapper/releases-wrapper.module";
 import {JoyrideModule} from "ngx-joyride";
 import {AsbLayoutsModule} from "./modules/helpers/layout-template/layout.module";
 

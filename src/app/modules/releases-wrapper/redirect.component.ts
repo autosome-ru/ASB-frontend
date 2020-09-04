@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {Router} from "@angular/router";
-import {recentRelease} from "../helpers/constants/releases";
+import {recentRelease} from "../../helpers/constants/releases";
 import {Location} from "@angular/common";
 
 @Component({

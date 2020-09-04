@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulati
 import * as fromSelectors from "src/app/store/selector";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {ReleaseModel} from "../models/releases.model";
-import {AppState} from "../store/reducer";
+import {ReleaseModel} from "../../models/releases.model";
+import {AppState} from "../../store/reducer";
 
 
 @Component({
