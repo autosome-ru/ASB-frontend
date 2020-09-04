@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {SeoService} from "../../services/seo.servise";
-import {SeoModel} from "../../models/seo.model";
-import {ReleaseModel} from "../../models/releases.model";
-import {releasesList} from "../../helpers/constants/releases";
+import {SeoService} from "../../../services/seo.servise";
+import {SeoModel} from "../../../models/seo.model";
+import {ReleaseModel} from "../../../models/releases.model";
+import {releasesList} from "../../../helpers/constants/releases";
 
 
 @Component({

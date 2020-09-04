@@ -1,4 +1,4 @@
-import {SearchParamsModel, SearchQueryModel} from "../../models/searchQueryModel";
+import {SearchParamsModel, SearchQueryModel} from "../../models/search-query.model";
 import {formCheckboxesToList} from "../converter/search-model.converter";
 import {SnpSearchModel, TfSnpModel} from "../../models/data.model";
 import {MatSort} from "@angular/material/sort";

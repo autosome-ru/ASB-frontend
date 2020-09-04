@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
-import {SnpInfoModel} from "../../../models/data.model";
-import {phenotypesToLink, phenotypesToView} from "../../../helpers/constants/constants";
+import {SnpInfoModel} from "../../../../models/data.model";
+import {phenotypesToLink, phenotypesToView} from "../../../../helpers/constants/constants";
 
 @Component({
     selector: "asb-phenotypes",

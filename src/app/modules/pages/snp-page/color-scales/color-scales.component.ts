@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
-import {baseToColors} from "../../../helpers/helper/colors.helper";
+import {baseToColors} from "../../../../helpers/helper/colors.helper";
 
 @Component({
     selector: "asb-color-scales",

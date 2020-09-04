@@ -5,7 +5,7 @@ import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/constants
 import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
-} from "../models/searchQueryModel";
+} from "../models/search-query.model";
 import {formCheckboxesToList} from "../helpers/converter/search-model.converter";
 import {AsbServerSideModel} from "../models/table.model";
 import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";

@@ -1,5 +1,5 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {SearchHintModel, SearchQueryModel, SearchResultsModel} from "src/app/models/searchQueryModel";
+import {SearchHintModel, SearchQueryModel, SearchResultsModel} from "src/app/models/search-query.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
 } from "../../helpers/converter/snp-model.converter";

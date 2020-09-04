@@ -1,5 +1,5 @@
 import {ReleaseModel} from "../../models/releases.model";
-// All available releases. First one is the most recent
+// All available releases. Don't forget to change app-routing module
 export const releasesList: ReleaseModel[] = [
     {
         name: "Soos",

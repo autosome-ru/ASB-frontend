@@ -15,7 +15,7 @@ import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/searchQueryModel";
+import {SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/search-query.model";
 import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";

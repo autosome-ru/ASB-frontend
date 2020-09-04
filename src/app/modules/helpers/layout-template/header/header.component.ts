@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
-import {SearchQueryModel} from "../../../../models/searchQueryModel";
+import {SearchQueryModel} from "../../../../models/search-query.model";
 import {convertFormToParams} from "../../../../helpers/helper/check-functions.helper";
 import {AppState} from "../../../../store/reducer";
 import {Store} from "@ngrx/store";

@@ -1,7 +1,7 @@
 import {
     SearchHintBackendModel,
     SearchHintModel, SearchQueryModel,
-} from "../../models/searchQueryModel";
+} from "../../models/search-query.model";
 import {concordanceModelExample, phenotypesModelExample} from "../constants/constants";
 
 export function convertSearchHintBackendModelToSearchHintModel(

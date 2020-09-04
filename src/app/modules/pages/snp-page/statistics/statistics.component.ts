@@ -11,11 +11,11 @@ import {
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
-import {getPaginatorOptions} from "../../../helpers/helper/check-functions.helper";
-import {AsbTableComponent} from "../../helpers/table-template/table.component";
+import {getPaginatorOptions} from "../../../../helpers/helper/check-functions.helper";
+import {AsbTableComponent} from "../../../helpers/table-template/table.component";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
-import {getTextByStepName} from "../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../../helpers/helper/tour-text.helper";
 
 
 @Component({

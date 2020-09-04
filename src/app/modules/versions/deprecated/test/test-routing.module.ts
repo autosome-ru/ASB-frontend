@@ -6,7 +6,7 @@ const routes: Routes = [
     {
         path: "",
         loadChildren: () => import(
-            "src/app/modules/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
+            "src/app/modules/pages/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
         data: {
             title: "ADASTRA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
             description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
@@ -15,7 +15,7 @@ const routes: Routes = [
     {
         path: "about",
         loadChildren: () => import(
-            "src/app/modules/about-page/about-page.module").then(mod => mod.AsbAboutPageModule),
+            "src/app/modules/pages/about-page/about-page.module").then(mod => mod.AsbAboutPageModule),
         data: {
             title: "ADASTRA - about",
             description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
@@ -24,7 +24,7 @@ const routes: Routes = [
     {
         path: "downloads",
         loadChildren: () => import(
-            "src/app/modules/downloads-page/downloads-page.module").then(mod => mod.AsbDownloadsPageModule),
+            "src/app/modules/pages/downloads-page/downloads-page.module").then(mod => mod.AsbDownloadsPageModule),
         data: {
             title: "ADASTRA - downloads",
             description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
@@ -33,7 +33,7 @@ const routes: Routes = [
     {
         path: "browse",
         loadChildren: () => import(
-            "src/app/modules/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
+            "src/app/modules/pages/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {
             title: "ADASTRA -  browse",
             description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
@@ -42,7 +42,7 @@ const routes: Routes = [
     {
         path: "help",
         loadChildren: () => import(
-            "src/app/modules/help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
+            "src/app/modules/pages/help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
         data: {
             title: "ADASTRA - help",
             description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
@@ -51,7 +51,7 @@ const routes: Routes = [
     {
         path: "search",
         loadChildren: () => import(
-            "src/app/modules/search-pages/search-page.module").then(mod => mod.AsbSearchPageModule),
+            "src/app/modules/pages/search-pages/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
             title: "ADASTRA - search",
             description: "ADASTRA search page for allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
@@ -60,7 +60,7 @@ const routes: Routes = [
     {
         path: "snps/:rsId/:alt",
         loadChildren: () => import(
-            "src/app/modules/snp-page/snp-page.module").then(mod => mod.AsbSnpPageModule),
+            "src/app/modules/pages/snp-page/snp-page.module").then(mod => mod.AsbSnpPageModule),
         data: {
             title: (id: string, version: string) => `${id} - ADASTRA ${version}`,
             description: (id: string) => `ADASTRA report for ${id} SNP`
@@ -69,7 +69,7 @@ const routes: Routes = [
     {
         path: "404",
         loadChildren: () => import(
-            "src/app/modules/404-page/page-not-found.module").then(mod => mod.AsbPageNotFoundModule),
+            "src/app/modules/pages/404-page/page-not-found.module").then(mod => mod.AsbPageNotFoundModule),
         data: {
             title: "Page not found",
             description: "Page not found"

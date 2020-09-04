@@ -8,17 +8,17 @@ import {
     ViewChild, ViewEncapsulation
 } from "@angular/core";
 import {ActivatedRoute,  Router} from "@angular/router";
-import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../models/data.model";
-import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
-import {SearchParamsModel, SearchResultsModel} from "../../../models/searchQueryModel";
+import {ClSnpCutModel, SnpSearchModel, TfSnpCutModel} from "../../../../models/data.model";
+import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
+import {SearchParamsModel, SearchResultsModel} from "../../../../models/search-query.model";
 import {MatPaginator} from "@angular/material/paginator";
-import {baseToColors} from "../../../helpers/helper/colors.helper";
+import {baseToColors} from "../../../../helpers/helper/colors.helper";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
+import {AsbServerTableComponent} from "../../../helpers/table-template/server-side/table-server.component";
 import {SortDirection} from "@angular/material/sort";
-import {ReleaseModel} from "../../../models/releases.model";
-import {AppState} from "../../../store/reducer";
+import {ReleaseModel} from "../../../../models/releases.model";
+import {AppState} from "../../../../store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
 

@@ -5,7 +5,7 @@ import {asbAppReducer, asbAppEffects} from "./store";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "src/environments/environment";
-import {AsbAppIconsModule} from "./helpers/svgIcon";
+import {AsbAppIconsModule} from "./helpers/svg-icons-sanitizer";
 import {BrowserModule} from "@angular/platform-browser";
 import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";

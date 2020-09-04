@@ -1,4 +1,4 @@
-import {TfSnpModel} from "../../../models/data.model";
+import {TfSnpModel} from "../../../../models/data.model";
 import {
     ChangeDetectionStrategy,
     Component,
@@ -10,12 +10,12 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import {MatExpansionPanel} from "@angular/material/expansion";
-import {DataService} from "../../../services/data.service";
+import {DataService} from "../../../../services/data.service";
 import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
-import {getTextByStepName} from "../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../../helpers/helper/tour-text.helper";
 
 @Component({
     selector: "asb-motifs",

@@ -2,7 +2,7 @@ import {Action} from "@ngrx/store";
 import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
-} from "src/app/models/searchQueryModel";
+} from "src/app/models/search-query.model";
 import {AsbServerSideModel} from "../../models/table.model";
 
 export enum ActionTypes {

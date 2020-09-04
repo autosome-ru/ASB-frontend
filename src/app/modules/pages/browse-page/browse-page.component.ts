@@ -13,12 +13,12 @@ import {AppState} from "src/app/store/reducer";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {Observable, Subscription} from "rxjs";
-import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../models/data.model";
-import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../models/table.model";
+import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../../models/data.model";
+import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SeoModel} from "src/app/models/seo.model";
 import {SeoService} from "src/app/services/seo.servise";
-import {AsbServerTableComponent} from "../helpers/table-template/server-side/table-server.component";
+import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
 
