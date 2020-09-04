@@ -19,7 +19,6 @@ import {SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/mode
 import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {FileSaverService} from "ngx-filesaver";
@@ -71,7 +70,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription = new Subscription();
 
-    separatorKeysCodes: number[] = [ENTER, COMMA];
+
     listOfChrs: string[];
     readonly phenToView: { [p: string]: string } = phenotypesToView;
     readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
@@ -469,27 +468,30 @@ function matchingPattern(searchKey: string,
             || (isAdvancedSearch && search)) {
             if (isValidPosInterval(search)) {
                 const [startPos, endPos] = search.split("-");
-                if ((Number(startPos) || startPos === "0") && Number(endPos)) {
-                    if (Number(startPos) > Number(endPos)) {
+                if ((Number(startPos) || startPos === "0") && (Number(endPos) || endPos === "0")) {
+                    if (Number(startPos) > Number(endPos) || endPos === "0") {
                         return {
                             greater: true
                         };
+                    } else {
+                        return;
                     }
+                }
+                return {
+                    wrongPattern: true
+                };
+            } else {
+                if (search.match(/^\d*$/)) {
+                    return;
+                } else {
                     return {
                         wrongPattern: true
                     };
                 }
             }
-            if (search.match(/^\d*$/)) {
-                return;
-            }
-            else {
-                return {
-                    notNumber: true
-                }
-            }
+
         }
-    };
+    }
 }
 function checkIfCheckpointSelected(sF: SearchQueryModel) {
     let result: boolean = false;

@@ -19,7 +19,7 @@ import {tap} from "rxjs/operators";
     templateUrl: "./table-server.component.html",
     styleUrls: ["../table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    // encapsulation: ViewEncapsulation.None
 })
 
 export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {

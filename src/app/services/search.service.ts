@@ -80,7 +80,10 @@ function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
         params["options"] = options.join(",");
     }
     if (search !== null && search !== "") {
-        params["search"] = search.endsWith("%") ? search : search + "%";
+        let search_opt: string = search.endsWith("%") ? search : search + "%"
+        search_opt = search_opt.startsWith('*') ? '%' + search_opt.slice(1) : search_opt
+
+        params["search"] = search_opt
     }
     return params;
 }

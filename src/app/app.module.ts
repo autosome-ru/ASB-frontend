@@ -22,6 +22,8 @@ import {SeoService} from "./services/seo.servise";
 import {ReleasesService} from "./services/releases.service";
 
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,12 @@ import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
       SearchService,
       SeoService,
       ReleasesService,
+      {
+          provide: MAT_CHIPS_DEFAULT_OPTIONS,
+          useValue: {
+              separatorKeyCodes: [ENTER, COMMA]
+          }
+      },
       { provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
