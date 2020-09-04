@@ -2,11 +2,11 @@
     <div class="container" style="background-color: white; padding-bottom: 0.5rem; white-space: pre-line">
         <h4 style="padding-top: 0.5rem">Help</h4>
         <dl style="padding: 0 15px">
-            <div *ngFor="let obj of array; let last = last">
+            <div *ngFor="let obj of array; let last = last" [attr.id]="getId(obj.value)">
                 <dt>{{obj.value}}</dt>
                 <dd>{{obj.description}}</dd>
             </div>
-            <div>
+            <div id="Motif-concordance">
                 <b>Motif Concordance</b><br>
                 <span>
                 Motif Concordance indicates whether the allelic read imbalance is consistent with the transcription factor Motif Fold Change.
@@ -39,12 +39,14 @@
                 </ul>
                 <br>
             </div>
-            <dt>
-                API
-            </dt>
-            <dd>
-                <span>ADASTRA API is available at <a href="https://adastra.autosome.ru/api/v1/" target="_blank" rel="noopener noreferrer">https://adastra.autosome.ru/api/v1/</a></span>
-            </dd>
+            <div id="API">
+                <dt>
+                    API
+                </dt>
+                <dd>
+                    <span>ADASTRA API is available at <a href="https://adastra.autosome.ru/api/v1/" target="_blank" rel="noopener noreferrer">https://adastra.autosome.ru/api/v1/</a></span>
+                </dd>
+            </div>
         </dl>
     </div>
 </div>
