@@ -23,7 +23,7 @@ import {AsbServerSideModel} from "../../../models/table.model";
 import {initialServerParams} from "../../../helpers/constants/constants";
 import {SearchPageTableComponent} from "./search-table/search-table.component";
 import {ReleaseModel} from "../../../models/releases.model";
-import {getTextByStepName} from "../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
 import {JoyrideService} from "ngx-joyride";
 import {SnpSearchModel} from "../../../models/data.model";
 

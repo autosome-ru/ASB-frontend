@@ -15,7 +15,7 @@ import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
-import {getTextByStepName} from "../../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
 
 @Component({
     selector: "asb-motifs",

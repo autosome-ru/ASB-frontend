@@ -28,7 +28,7 @@ import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from 
 import {debounceTime, map} from "rxjs/operators";
 import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/helper/check-functions.helper";
 import {ReleaseModel} from "src/app/models/releases.model";
-import {getTextByStepName} from "src/app/helpers/helper/tour-text.helper";
+import {getTextByStepName} from "src/app/helpers/text-helpers/tour-text.helper";
 
 
 @Component({

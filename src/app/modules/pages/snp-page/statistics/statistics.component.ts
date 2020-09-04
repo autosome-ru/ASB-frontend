@@ -15,7 +15,7 @@ import {getPaginatorOptions} from "../../../../helpers/helper/check-functions.he
 import {AsbTableComponent} from "../../../helpers/table-template/table.component";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
-import {getTextByStepName} from "../../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
 
 
 @Component({

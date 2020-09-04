@@ -2,7 +2,7 @@
     <div class="container" style="background-color: white; padding-bottom: 0.5rem; white-space: pre-line">
         <h4 style="padding-top: 0.5rem">Help</h4>
         <dl style="padding: 0 15px">
-            <div *ngFor="let obj of array; let last = last" [attr.id]="getId(obj.value)">
+            <div *ngFor="let obj of helpMessagesArray; let last = last" [attr.id]="getId(obj.value)">
                 <dt>{{obj.value}}</dt>
                 <dd>{{obj.description}}</dd>
             </div>

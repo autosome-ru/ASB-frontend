@@ -15,7 +15,7 @@ import {ReleaseModel} from "../../../../models/releases.model";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer";
-import {getTextByStepName} from "../../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
 
 @Component({
     selector: "asb-snp-card",

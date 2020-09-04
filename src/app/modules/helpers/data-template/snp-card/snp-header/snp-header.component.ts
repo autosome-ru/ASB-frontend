@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
 import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
 import {baseToColors} from "../../../../../helpers/helper/colors.helper";
-import {getTextByStepName} from "../../../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../../../helpers/text-helpers/tour-text.helper";
 
 @Component({
     selector: "asb-snp-header",

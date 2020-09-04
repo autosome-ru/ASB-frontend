@@ -19,7 +19,7 @@ import {ReleasesService} from "../../../services/releases.service";
 import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../../helpers/helper/check-functions.helper";
 import {AsbPopoverComponent} from "../../helpers/popover-template/popover.component";
-import {getTextByStepName} from "../../../helpers/helper/tour-text.helper";
+import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
 import {MatTabGroup} from "@angular/material/tabs";
 
 @Component({
