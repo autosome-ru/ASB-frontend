@@ -34,7 +34,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     revCompStateArray: {[id: string]: boolean } = {};
     private subscriptions = new Subscription()
     private readonly isBrowser: boolean;
-    public openedTfIndex: number = 0;
+    public openedTfName: string;
 
     constructor(
         private dataService: DataService,
@@ -56,22 +56,16 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit(): void {
         this._transcriptionFactors.forEach(s => this.revCompStateArray[s.id] = false);
-        if (this.checkIfPanelId()) {
-            this.openedTfIndex = Number(this.route.snapshot.fragment.slice(2))
+        if (this.route.snapshot.fragment) {
+            this.openedTfName = this.route.snapshot.fragment
         }
 
     }
 
-    checkIfPanelId() {
-        return this.route.snapshot.fragment && this.route.snapshot.fragment.match(/^tf\d+$/)
-    }
-
     ngAfterViewInit() {
-        if (!this.release.recent && this.isBrowser && this.checkIfPanelId()) {
-            const chosenPanel: MatExpansionPanel = this.expansionPanels.filter(
-                (s, i) => "" + i === this.route.snapshot.fragment.slice(2))[0]
-            if (chosenPanel) {
-                const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment)
+        if (!this.release.recent && this.isBrowser && this.route.snapshot.fragment) {
+            const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment)
+            if (initialElement) {
                 setTimeout(() =>
                     initialElement.scrollIntoView({behavior: 'smooth'}), 0)
             }
@@ -107,8 +101,12 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
         )
     }
 
-    checkExpanded(i: number): boolean {
-        return i == this.openedTfIndex
+    checkExpanded(tf: TfSnpModel, i: number): boolean {
+        if (this.openedTfName) {
+            return tf.name == this.openedTfName
+        } else {
+            return i == 0
+        }
     }
 }
 

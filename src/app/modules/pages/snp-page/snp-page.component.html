@@ -54,7 +54,7 @@
                         joyrideStep="transcription-factors-stats"
                         [stepContent]="stepTemplate"
                         [stepContentParams]="getTextByStepName('transcription-factors-stats')"
-                        (next)="openPanels(); phenPanel.open()"
+                        (next)="openPanels(_getGoodTfs((snpData.transFactors))); phenPanel.open()"
                     >
                         <h4 class="col-auto pl-0 ml-0">Details</h4>
                     </mat-panel-title>

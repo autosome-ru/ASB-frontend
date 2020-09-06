@@ -136,14 +136,11 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'transcription-factors-columns',
             'table0',
             'table1',
-            'motif-analysis0',
-            'motif-analysis',
-            'phen-stats'
         ]
         this.subscriptions.add(
             this.snpData$.subscribe(
                 s => {
-                    if (s) {
+                    if (s && s.cellLines) {
                         if (s.cellLines.length > 0 && s.transFactors.length > 0) {
                             this.tourSteps = this.tourSteps.filter(s => s != `table1`)
                         } else {
@@ -153,11 +150,20 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                                 this.tourSteps = this.tourSteps.filter(s => s != 'table0' && s != 'transcription-factors-buttons')
                             }
                         }
-                        if (this._getGoodTfs(s.transFactors).length == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis0')
+                        if (this._getGoodTfs(s.transFactors).length > 0) {
+                            const ind: number = this._getGoodTfs(s.transFactors).findIndex(
+                                s => s.name == this.route.snapshot.fragment || '')
+                            if (ind != -1) {
+                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[ind].name)
+                            } else {
+                                this.tourSteps.push('motif-analysis-' + s.transFactors[0].name)
+                            }
                         } else {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'motif-analysis')
+                            this.tourSteps.push('motif-analysis')
+
                         }
+                        this.tourSteps.push('phen-stats')
+
                     }
                 }
             )
@@ -289,7 +295,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
-        const id = tfs.indexOf($event)
+        const id: number = tfs.indexOf($event)
         const chosenExpansionPanel = this.asbMotifsComponent.expansionPanels.filter(
             (s, i) => i == id)[0]
         chosenExpansionPanel.open()
@@ -297,7 +303,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         if (this.motifPanel.closed) {
             this.motifPanel.open()
         }
-        document.getElementById('tf' + id).scrollIntoView({behavior: "smooth"})
+        document.getElementById(tfs[id].name).scrollIntoView({behavior: "smooth"})
     }
 
     sortData(data: TfSnpModel[], sort: MatSort): TfSnpModel[] {
@@ -306,12 +312,16 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         )
     }
 
-    openPanels() {
-        if (this.tourSteps.indexOf('motif-analysis0') !== -1) {
+    openPanels(tfs: TfSnpModel[]) {
+        const ind: number = this.tourSteps.findIndex(s => s.match(/motif-analysis-/))
+        if (ind != -1) {
             if (this.motifPanel.closed) {
                 this.motifPanel.open()
             }
-            this.asbMotifsComponent.expansionPanels.filter((s, i) => i ==0)[0].open()
+            const tf_name: string = this.tourSteps[ind].match(/motif-analysis-(.*)/)[1]
+
+            this.asbMotifsComponent.expansionPanels.filter((s, i) =>
+                i == tfs.findIndex(s => s.name == tf_name))[0].open()
         }
     }
 

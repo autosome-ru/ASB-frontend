@@ -3,8 +3,8 @@
         #panels
         *ngFor="let tf of _transcriptionFactors; let first=first; let i=index"
         class="mat-elevation-z1"
-        [expanded]="checkExpanded(i)"
-        [id]="'tf' + i"
+        [expanded]="checkExpanded(tf, i)"
+        [id]="tf.name "
     >
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -14,7 +14,7 @@
                     style="line-height: 20px; width: auto; height: auto"
                     mat-icon-button
                     routerLink="."
-                    [fragment]="'tf' + i"
+                    [fragment]="tf.name"
                     replaceUrl
                     (click)="$event.stopPropagation()"
                 >
@@ -33,7 +33,7 @@
         <ng-template matExpansionPanelContent>
             <div
                 style="width: 100%; display: flex; justify-content: center"
-                [joyrideStep]="'motif-analysis' + i"
+                [joyrideStep]="'motif-analysis-' + tf.name"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('motif-analysis')"
             >

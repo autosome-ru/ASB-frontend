@@ -2,7 +2,7 @@
     <dt
         *ngIf="!noButtons"
         class="col-auto snp-card__tag align-self-start d-none d-md-block"
-        style="vertical-align: center;"
+        style="vertical-align: center"
     >
         Sequence
     </dt>
@@ -14,7 +14,7 @@
         [nextTemplate]="nextTemplate"
         [doneTemplate]="doneTemplate"
         *ngIf="!noButtons"
-        style="margin-bottom: 0"
+        style="margin-bottom: 0; overflow: auto"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center d-none d-md-block"
     ><h6 style="margin-bottom: 0">{{snpData.context}}</h6></dd>
     <dt
@@ -27,6 +27,7 @@
     <asb-snp-buttons
         [joyrideStep]="'cell-types-buttons'  + (index ? index : '')"
         [stepContent]="stepTemplate"
+        style="overflow: auto"
         [stepContentParams]="getTextByStepName('cell-types-buttons', noButtons ? 'search' : 'snp')"
         *ngIf="snpData.cellLines.length != 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
@@ -49,6 +50,7 @@
     <asb-snp-buttons
         [joyrideStep]="'transcription-factors-buttons' + (index ? index : '')"
         [stepContent]="stepTemplate"
+        style="overflow: auto"
         [stepContentParams]="getTextByStepName('transcription-factors-buttons', noButtons ? 'search' : 'snp')"
         *ngIf="snpData.transFactors.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
@@ -78,7 +80,7 @@
             [stepContent]="stepTemplate"
             (next)="nextStep()"
             [stepContentParams]="getTextByStepName('search-nearby')"
-            style="margin: -10px; padding: 10px; display: inline-block"
+            style="margin: -10px; padding: 10px; display: inline-flex; overflow: auto"
         >
             <a
                 mat-raised-button
