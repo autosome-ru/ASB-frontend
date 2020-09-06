@@ -156,7 +156,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                             if (ind != -1) {
                                 this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[ind].name)
                             } else {
-                                this.tourSteps.push('motif-analysis-' + s.transFactors[0].name)
+                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[0].name)
                             }
                         } else {
                             this.tourSteps.push('motif-analysis')
@@ -320,8 +320,11 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             }
             const tf_name: string = this.tourSteps[ind].match(/motif-analysis-(.*)/)[1]
 
-            this.asbMotifsComponent.expansionPanels.filter((s, i) =>
-                i == tfs.findIndex(s => s.name == tf_name))[0].open()
+            const expPanel: MatExpansionPanel = this.asbMotifsComponent.expansionPanels.filter((s, i) =>
+                i == tfs.findIndex(s => s.name == tf_name))[0]
+            if (expPanel && expPanel.closed) {
+                expPanel.open()
+            }
         }
     }
 

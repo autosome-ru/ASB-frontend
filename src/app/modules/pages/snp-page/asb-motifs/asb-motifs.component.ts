@@ -19,7 +19,6 @@ import {FileSaverService} from "ngx-filesaver";
 import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
 import {isPlatformBrowser} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
-import {ReleaseModel} from "../../../../models/releases.model";
 
 @Component({
     selector: "asb-motifs",
@@ -51,9 +50,6 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
         this._transcriptionFactors = value;
     };
 
-    @Input()
-    release: ReleaseModel
-
     ngOnInit(): void {
         this._transcriptionFactors.forEach(s => this.revCompStateArray[s.id] = false);
         if (this.route.snapshot.fragment) {
@@ -63,7 +59,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (!this.release.recent && this.isBrowser && this.route.snapshot.fragment) {
+        if (this.isBrowser && this.route.snapshot.fragment) {
             const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment)
             if (initialElement) {
                 setTimeout(() =>
