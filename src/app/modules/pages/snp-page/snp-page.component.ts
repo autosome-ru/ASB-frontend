@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
@@ -21,6 +28,7 @@ import {compareData} from "../../../helpers/helper/check-functions.helper";
 import {AsbPopoverComponent} from "../../helpers/popover-template/popover.component";
 import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
 import {MatTabGroup} from "@angular/material/tabs";
+import {ReleaseModel} from "../../../models/releases.model";
 
 @Component({
     selector: "asb-snp-page",
@@ -72,6 +80,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription = new Subscription();
     private releaseVersion: string = '';
     public tourSteps: string[];
+    public release$: Observable<ReleaseModel>;
 
     constructor(
         private store: Store<AppState>,
@@ -97,8 +106,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
             )
         )
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
         this.subscriptions.add(
-            this.store.select(fromSelectors.selectCurrentRelease).subscribe(
+            this.release$.subscribe(
                 s => this.releaseVersion = s.version
             )
         )
@@ -114,6 +124,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 null
             )
         );
+
         this.tourSteps = [
             'snp-header',
             'sequence',

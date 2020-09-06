@@ -1,10 +1,11 @@
 import {TfSnpModel} from "../../../../models/data.model";
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
-    Component,
+    Component, Inject,
     Input,
     OnDestroy,
-    OnInit,
+    OnInit, PLATFORM_ID,
     QueryList,
     ViewChildren,
     ViewEncapsulation
@@ -16,6 +17,9 @@ import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
 import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
+import {isPlatformBrowser} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
+import {ReleaseModel} from "../../../../models/releases.model";
 
 @Component({
     selector: "asb-motifs",
@@ -23,18 +27,22 @@ import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.help
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class AsbMotifsComponent implements OnInit, OnDestroy {
+export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChildren("panels")
     expansionPanels: QueryList<MatExpansionPanel>
     revCompStateArray: {[id: string]: boolean } = {};
     private subscriptions = new Subscription()
+    private readonly isBrowser: boolean;
+    public openedTfIndex: number = 0;
 
     constructor(
         private dataService: DataService,
         private toastrService: ToastrService,
-        private saverService: FileSaverService
-    ) { }
+        private saverService: FileSaverService,
+        private route: ActivatedRoute,
+        @Inject(PLATFORM_ID) private platformId
+    ) { this.isBrowser = isPlatformBrowser(platformId);}
 
     public _transcriptionFactors: TfSnpModel[]
 
@@ -43,8 +51,31 @@ export class AsbMotifsComponent implements OnInit, OnDestroy {
         this._transcriptionFactors = value;
     };
 
+    @Input()
+    release: ReleaseModel
+
     ngOnInit(): void {
         this._transcriptionFactors.forEach(s => this.revCompStateArray[s.id] = false);
+        if (this.checkIfPanelId()) {
+            this.openedTfIndex = Number(this.route.snapshot.fragment.slice(2))
+        }
+
+    }
+
+    checkIfPanelId() {
+        return this.route.snapshot.fragment && this.route.snapshot.fragment.match(/^tf\d+$/)
+    }
+
+    ngAfterViewInit() {
+        if (!this.release.recent && this.isBrowser && this.checkIfPanelId()) {
+            const chosenPanel: MatExpansionPanel = this.expansionPanels.filter(
+                (s, i) => "" + i === this.route.snapshot.fragment.slice(2))[0]
+            if (chosenPanel) {
+                const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment)
+                setTimeout(() =>
+                    initialElement.scrollIntoView({behavior: 'smooth'}), 0)
+            }
+        }
     }
 
     ngOnDestroy() {
@@ -74,6 +105,10 @@ export class AsbMotifsComponent implements OnInit, OnDestroy {
                     this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`,)
             )
         )
+    }
+
+    checkExpanded(i: number): boolean {
+        return i == this.openedTfIndex
     }
 }
 
