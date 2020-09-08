@@ -1,12 +1,14 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {HomePageComponent} from "./home-page.component";
+import {CloseDialogOnRouteService} from "../../../interceptors/popup-interceptor";
 
 
 const routes: Routes = [
     {
         path: "",
-        component: HomePageComponent
+        component: HomePageComponent,
+        canDeactivate: [CloseDialogOnRouteService],
     }
 ];
 

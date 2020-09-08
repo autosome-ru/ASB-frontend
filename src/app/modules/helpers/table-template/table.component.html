@@ -35,6 +35,7 @@
             >
                 <th mat-header-cell
                     mat-sort-header
+                    tabindex="-1"
                     [disabled]="column.value?.disabledSort"
                     [matTooltip]="column.value?.helpMessage"
                     *matHeaderCellDef>{{column.value.view}}</th>
@@ -107,17 +108,6 @@
     ></mat-paginator>
 </div>
 
-<asb-popover
-    #popover
-    align="center"
-    [title]="getTitle ? getTitle(popoverRow) : 'test'"
-    (popoverClosed)="_onAdditionalStatisticsClose()"
->
-    <ng-container
-        [ngTemplateOutlet]="popoverContentTemplate"
-        [ngTemplateOutletContext]="{row: popoverRow}"
-    ></ng-container>
-</asb-popover>
 
 <ng-template #emptyContentTemplate>
 

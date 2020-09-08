@@ -3,16 +3,17 @@ import {
     Component,
     HostBinding,
     Input, OnInit,
-    ViewChild, ViewEncapsulation
+    ViewEncapsulation
 } from "@angular/core";
-import {AsbPopoverComponent} from "../popover-template/popover.component";
 import {JoyrideService} from "ngx-joyride";
 import {AppState} from "src/app/store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
 import {ReleaseModel} from "src/app/models/releases.model";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {JoyrideOptions} from "ngx-joyride/lib/models/joyride-options.class";
+import {MatDialog} from "@angular/material/dialog";
+import {AsbConfirmDialogComponent} from "../popover-template/confirm-dialog/confirm-dialog.component";
 
 @Component({
     selector: "asb-tour-button",
@@ -25,15 +26,16 @@ export class AsbTourComponent implements OnInit {
 
     @HostBinding("class.asb-popover")
     private cssClass = true;
+    private subscriptions = new Subscription()
 
-    @ViewChild('tourPopover')
-    private tourPopover: AsbPopoverComponent
 
     @Input()
     public steps: string[];
     public release: Observable<ReleaseModel>;
 
-    constructor(private joyrideService: JoyrideService, private store: Store<AppState>) { }
+    constructor(private joyrideService: JoyrideService,
+                private dialog: MatDialog,
+                private store: Store<AppState>) { }
 
     ngOnInit() {
         this.release = this.store.select(fromSelectors.selectCurrentRelease)
@@ -44,24 +46,26 @@ export class AsbTourComponent implements OnInit {
         if (this.joyrideService.isTourInProgress()) {
             this.joyrideService.closeTour()
         }
-        this.closePopover()
+        this.subscriptions.unsubscribe()
     }
 
 
     openTourPopover() {
-        this.tourPopover.title = 'Do you want to start the page tour?'
-        this.tourPopover.open()
+        const dialogRef = this.dialog.open(AsbConfirmDialogComponent, {
+            data: {title: 'Do you want to start the page tour?'}
+        });
+        this.subscriptions.add(
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.startTour()
+                }
+            })
+        )
+
     }
 
-
-    closePopover() {
-        if (this.tourPopover) {
-            this.tourPopover.close()
-        }
-    }
 
     startTour() {
-        this.closePopover()
         let tourOptions: JoyrideOptions = {
             steps: this.steps,
             waitingTime: 40,

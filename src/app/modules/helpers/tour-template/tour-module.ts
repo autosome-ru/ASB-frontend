@@ -5,7 +5,6 @@ import {AsbTourComponent} from "./tour-template.component";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {AsbPopoverModule} from "../popover-template/popover.module";
 import {AsbDirectivesModule} from "../directives/directives.module";
 
 
@@ -15,7 +14,6 @@ import {AsbDirectivesModule} from "../directives/directives.module";
         MatTooltipModule,
         MatButtonModule,
         MatIconModule,
-        AsbPopoverModule,
         AsbDirectivesModule,
     ],
     declarations: [

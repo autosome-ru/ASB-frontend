@@ -3,6 +3,7 @@ import {Routes, RouterModule, ExtraOptions} from "@angular/router";
 import {RecentComponent} from "./modules/releases-wrapper/recent.component";
 import {RedirectComponent} from "./modules/releases-wrapper/redirect.component";
 import {DeprecatedComponent} from "./modules/releases-wrapper/deprecated.component";
+import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
 const routerOptions: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
     anchorScrolling: 'enabled',

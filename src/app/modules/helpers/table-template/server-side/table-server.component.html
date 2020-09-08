@@ -97,14 +97,3 @@
     ></mat-paginator>
 </div>
 
-<asb-popover
-    #popover
-    align="center"
-    [title]="getTitle ? getTitle(popoverRow) : 'test'"
-    (popoverClosed)="_onAdditionalStatisticsClose()"
->
-    <ng-container
-        [ngTemplateOutlet]="popoverContentTemplate"
-        [ngTemplateOutletContext]="{row: popoverRow}"
-    ></ng-container>
-</asb-popover>

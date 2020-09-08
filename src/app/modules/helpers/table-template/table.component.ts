@@ -2,7 +2,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy,
     Component, ElementRef, EventEmitter,
     HostBinding,
-    Input, OnChanges, OnDestroy, Output, SimpleChanges,
+    Input, OnChanges, Output, SimpleChanges,
     TemplateRef, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -10,6 +10,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {AsbPopoverComponent} from "../popover-template/popover.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -20,14 +21,16 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
     encapsulation: ViewEncapsulation.None
 })
 
-export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy {
+export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
-    @ViewChild("popover", {static: true})
-    public popover: AsbPopoverComponent;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild("sort1", {static: false}) sort: MatSort;
+
+    constructor(
+        public dialog: MatDialog,
+    ) {}
 
     @Input()
     public columnModel: AsbTableColumnModel<T>;
@@ -107,23 +110,19 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnDestroy
         }
     }
 
-    ngOnDestroy() {
-        if (this.popover.opened) {
-            this.popover.close();
-        }
-    }
+
     public _handleRowClick(row: T): void {
-        this.rowClickEmitter.emit(row);
-        if (this.popoverContentTemplate) {
-            this.popover.open();
-            this.popover.title = this.getTitle ? this.getTitle(row) : null;
-            this.popoverRow = row;
-        }
+        this.dialog.open(AsbPopoverComponent, {
+            autoFocus: false,
+            panelClass: 'custom-dialog-container',
+            data: {
+                title: this.getTitle(row),
+                template: this.popoverContentTemplate,
+                templateContext: {row}
+            }
+        });
     }
 
-    _onAdditionalStatisticsClose(): void {
-        this.popoverRow = null;
-    }
 
     getDisplayedColumns(): string[] {
         const result = []

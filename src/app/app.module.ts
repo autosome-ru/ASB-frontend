@@ -24,11 +24,19 @@ import {ReleasesService} from "./services/releases.service";
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
+import {AsbPopoverComponent} from "./modules/helpers/popover-template/popover.component";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {AsbConfirmDialogComponent} from "./modules/helpers/popover-template/confirm-dialog/confirm-dialog.component";
+import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+    declarations: [
+        AppComponent,
+        AsbPopoverComponent,
+        AsbConfirmDialogComponent
+    ],
     imports: [
         BrowserModule.withServerTransition({appId: "serverApp"}),
         BrowserAnimationsModule,
@@ -41,21 +49,35 @@ import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
         AsbAppIconsModule,
         ReleasesWrapperModule,
         AsbLayoutsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatIconModule
 
     ],
-  providers: [
-      DataService,
-      SearchService,
-      SeoService,
-      ReleasesService,
-      {
-          provide: MAT_CHIPS_DEFAULT_OPTIONS,
-          useValue: {
-              separatorKeyCodes: [ENTER, COMMA]
-          }
-      },
-      { provide: HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        DataService,
+        SearchService,
+        SeoService,
+        ReleasesService,
+        CloseDialogOnRouteService,
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: {
+                hasBackdrop: true,
+                closeOnNavigation: false,
+            }
+        },
+        {
+            provide: MAT_CHIPS_DEFAULT_OPTIONS,
+            useValue: {
+                separatorKeyCodes: [ENTER, COMMA]
+            }
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorsInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

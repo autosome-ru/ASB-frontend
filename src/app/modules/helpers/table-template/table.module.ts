@@ -2,7 +2,6 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import { AsbTableComponent } from "./table.component";
 import {AsbServerTableComponent} from "./server-side/table-server.component";
-import {AsbPopoverModule} from "../popover-template/popover.module";
 import {AsbTourModule} from "../tour-template/tour-module";
 import {MatTableModule} from "@angular/material/table";
 import {MatSortModule} from "@angular/material/sort";
@@ -16,7 +15,6 @@ import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
 @NgModule({
     imports: [
         CommonModule,
-        AsbPopoverModule,
         AsbTourModule,
         MatTableModule,
         MatSortModule,

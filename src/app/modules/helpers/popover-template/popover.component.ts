@@ -1,15 +1,10 @@
 import {
     ChangeDetectionStrategy,
-    Component,
-    EventEmitter,
-    HostBinding,
-    Input,
-    Output, TemplateRef,
-    ViewChild, ViewContainerRef, ViewEncapsulation,
+    Component, HostBinding,
+    Inject, OnInit,
+    ViewEncapsulation,
 } from "@angular/core";
-import {TemplatePortal} from "@angular/cdk/portal";
-import {Overlay, OverlayConfig, OverlayRef} from "@angular/cdk/overlay";
-import {Subscription} from "rxjs";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
     selector: "asb-popover",
@@ -18,62 +13,22 @@ import {Subscription} from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class AsbPopoverComponent {
+export class AsbPopoverComponent implements OnInit {
+    public title: string
+    public popoverTemplate: any;
+    public popoverContext: any;
+    constructor(
+        public dialogRef: MatDialogRef<AsbPopoverComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-    @HostBinding("class.asb-popover")
-    private cssClass = true;
-    @ViewChild("portal", {static: true})
-    public portalTemplate: TemplateRef<any>;
-
-    @Input()
-    public title: string;
-
-    @Input()
-    public cardClass: string;
-
-    @Input()
-    public align: "center" | "top" | "bottom";
-
-    @Output()
-    public popoverClosed = new EventEmitter<void>();
-
-    private overlayRef: OverlayRef;
-    public opened: boolean = false;
-    private subscriptions: Subscription = new Subscription();
-
-    constructor(private overlay: Overlay, private viewContainerRef: ViewContainerRef) { }
-
-    public open(): void {
-        if (this.overlayRef) {
-            console.warn("Tried to popover, but overlay already opened");
-            return;
-        }
-        const positionStrategy = this.overlay.position()
-            .global()
-            .centerHorizontally()
-            .centerVertically();
-        const overlayConfig = new OverlayConfig({
-            hasBackdrop: true,
-            scrollStrategy: this.overlay.scrollStrategies.block(),
-            positionStrategy
-        });
-
-        this.overlayRef = this.overlay.create(overlayConfig);
-        const filePortal = new TemplatePortal(this.portalTemplate, this.viewContainerRef);
-        this.opened = true;
-        this.overlayRef.attach(filePortal);
-        this.subscriptions.add(this.overlayRef.backdropClick().subscribe(() => this.close()));
+    ngOnInit() {
+        this.title = this.data.title
+        this.popoverTemplate = this.data.template
+        this.popoverContext = this.data.templateContext
     }
 
-    public close(): void {
-        this.opened = false;
-        if (this.overlayRef) {
-            this.overlayRef.dispose();
-            this.overlayRef = null;
-            this.popoverClosed.emit();
-            this.subscriptions.unsubscribe();
-            this.subscriptions = new Subscription();
-        }
-    }
 
+    closePopover() {
+        this.dialogRef.close(null);
+    }
 }

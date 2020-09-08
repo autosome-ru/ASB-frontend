@@ -8,7 +8,6 @@ import {
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
 import {MatSort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
-import {AsbPopoverComponent} from "../../popover-template/popover.component";
 import {merge, Observable, Subscription} from "rxjs";
 import {AsbBackendDataSource} from "./server-side-table.component";
 import {tap} from "rxjs/operators";
@@ -19,14 +18,12 @@ import {tap} from "rxjs/operators";
     templateUrl: "./table-server.component.html",
     styleUrls: ["../table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    // encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None
 })
 
 export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
-    @ViewChild("popover", {static: true})
-    public popover: AsbPopoverComponent;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild("sort1", {static: false}) sort: MatSort;
@@ -93,22 +90,10 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.popover.opened) {
-            this.popover.close();
-        }
         this.subscriptions.unsubscribe();
     }
     public _handleRowClick(row: T): void {
         this.rowClickEmitter.emit(row);
-        if (this.popoverContentTemplate) {
-            this.popover.open();
-            this.popover.title = this.getTitle ? this.getTitle(row) : null;
-            this.popoverRow = row;
-        }
-    }
-
-    _onAdditionalStatisticsClose(): void {
-        this.popoverRow = null;
     }
 
     public emitChanges(paginator: MatPaginator) {

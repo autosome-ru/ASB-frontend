@@ -1,27 +1,47 @@
-<ng-template #portal>
-    <mat-card class="asb-popover__card "
-              [ngClass]="cardClass"
-    >
-        <mat-card-header
-            *ngIf="title"
-            class="asb-popover__card-header"
-        >
-            <mat-card-title class="asb-popover__card-header-title">
-                {{title}}
-            </mat-card-title>
-            <button
-                mat-icon-button
-                class="asb-popover__card-header-button"
-                (click)="close()"
-            >
-                <mat-icon
-                    svgIcon="clear"
-                    aria-label="Close button"
-                >
-                    Close
-                </mat-icon>
-            </button>
-        </mat-card-header>
-        <ng-content></ng-content>
-    </mat-card>
-</ng-template>
+<h1
+    style="display: flex; justify-content: space-between; margin-bottom: 0;"
+    mat-dialog-title
+>
+    <strong>{{title}}</strong>
+    <button mat-dialog-close
+            mat-icon-button tabindex="-1">
+        <mat-icon svgIcon="clear"></mat-icon>
+    </button>
+</h1>
+<div mat-dialog-content style="max-height: 80vh">
+    <ng-container
+        [ngTemplateOutlet]="popoverTemplate"
+        [ngTemplateOutletContext]="popoverContext"
+    ></ng-container>
+
+</div>
+<!--<div mat-dialog-actions>-->
+<!--&lt;!&ndash;    <button mat-button (click)="onNoClick()">No Thanks</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>&ndash;&gt;-->
+<!--</div>-->
+<!--<mat-card class="asb-popover__card "-->
+<!--          [ngClass]="cardClass"-->
+<!--&gt;-->
+<!--    <mat-card-header-->
+<!--        *ngIf="title"-->
+<!--        class="asb-popover__card-header"-->
+<!--    >-->
+<!--        <mat-card-title class="asb-popover__card-header-title">-->
+<!--            {{title}}-->
+<!--        </mat-card-title>-->
+<!--        <button-->
+<!--            mat-icon-button-->
+<!--            class="asb-popover__card-header-button"-->
+<!--            (click)="close()"-->
+<!--        >-->
+<!--            <mat-icon-->
+<!--                svgIcon="clear"-->
+<!--                aria-label="Close button"-->
+<!--            >-->
+<!--                Close-->
+<!--            </mat-icon>-->
+<!--        </button>-->
+<!--    </mat-card-header>-->
+<!--    <ng-content></ng-content>-->
+<!--</mat-card>-->
+
