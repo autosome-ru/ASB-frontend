@@ -1,6 +1,6 @@
 # ASB-app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) v9.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) v10.
 
 ## Development server
 
