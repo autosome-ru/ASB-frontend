@@ -33,8 +33,7 @@ import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
         AsbTableComponent,
         AsbServerTableComponent,
         InnerTableComponent,
-    ],
-    providers: [],
+    ]
 })
 export class AsbTablesModule {
 }

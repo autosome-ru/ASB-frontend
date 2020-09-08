@@ -7,7 +7,6 @@ import {Injectable} from "@angular/core";
 
 
 @Injectable()
-
 export class CloseDialogOnRouteService implements CanDeactivate<any> {
 
     constructor(private dialog: MatDialog,

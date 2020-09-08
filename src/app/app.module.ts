@@ -20,7 +20,6 @@ import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
 import {SeoService} from "./services/seo.servise";
 import {ReleasesService} from "./services/releases.service";
-
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
