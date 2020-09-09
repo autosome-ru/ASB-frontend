@@ -2,13 +2,10 @@ import {
     ChangeDetectionStrategy,
     Component,
     HostBinding,
-    Input, OnInit,
+    Input, OnDestroy,
     ViewEncapsulation
 } from "@angular/core";
 import {JoyrideService} from "ngx-joyride";
-import {AppState} from "src/app/store/reducer";
-import {Store} from "@ngrx/store";
-import * as fromSelectors from "src/app/store/selector";
 import {ReleaseModel} from "src/app/models/releases.model";
 import {Observable, Subscription} from "rxjs";
 import {JoyrideOptions} from "ngx-joyride/lib/models/joyride-options.class";
@@ -22,7 +19,7 @@ import {AsbConfirmDialogComponent} from "../popover-template/confirm-dialog/conf
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class AsbTourComponent implements OnInit {
+export class AsbTourComponent implements OnDestroy {
 
     @HostBinding("class.asb-popover")
     private cssClass = true;
@@ -35,12 +32,7 @@ export class AsbTourComponent implements OnInit {
 
     constructor(private joyrideService: JoyrideService,
                 private dialog: MatDialog,
-                private store: Store<AppState>) { }
-
-    ngOnInit() {
-        this.release = this.store.select(fromSelectors.selectCurrentRelease)
-    }
-
+                ) { }
 
     ngOnDestroy() {
         if (this.joyrideService.isTourInProgress()) {

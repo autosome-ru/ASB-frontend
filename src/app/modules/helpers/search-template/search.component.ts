@@ -443,8 +443,8 @@ export class SearchComponent implements OnInit, OnDestroy {
         this._navigateToSearch();
     }
 
-    getTextByStepName(step: string) {
-        return getTextByStepName(step)
+    getTextByStepName(step: string, component?: string) {
+        return getTextByStepName(step, component)
     }
 
     nextExampleStep() {

@@ -11,8 +11,6 @@ import {ActivatedRoute} from "@angular/router";
 import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
 import {isPlatformBrowser} from "@angular/common";
-import {helpMessagesArray} from "../../../helpers/text-helpers/help-text.helper";
-import {HelpMessageModel} from "../../../models/help-message.model";
 
 @Component({
     selector: "asb-help-page",
@@ -30,12 +28,9 @@ export class HelpPageComponent implements OnInit, AfterViewInit {
 ) { this.isBrowser = isPlatformBrowser(platformId);}
 
 
-    helpMessagesArray: HelpMessageModel[] = []
 
     ngOnInit(): void {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-
-        this.helpMessagesArray = helpMessagesArray
     }
     ngAfterViewInit() {
         if (this.isBrowser) {

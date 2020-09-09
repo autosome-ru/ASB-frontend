@@ -5,55 +5,71 @@ export function getTextByStepName(step: string, component?: string): {text: stri
 function getText(step: string, component?: string): string {
     switch (step) {
         case 'sequence':
-            return  'SNV genomic context\n +/- 25 nucleotides'
+            return  'Sequence surrounding SNV, ± 25 nts.'
         case 'cell-types-buttons':
-            return 'Cell types from GTRD database\n' +
-                'having ASB at this SNV.' + (component == 'snp' ? '\nClick for GTRD link.' : '')
+            return 'Cell types from the GTRD database\n exhibiting ASB at the SNV.'
+                + (component == 'snp' ? '\nClick the links to visit the\n respective GTRD page.' : '')
         case 'transcription-factors-buttons':
-            return  'Transcription factors from GTRD database\n' +
-                'having ASB at this SNV.' + (component == 'snp' ? '\n Click to go to the UNIPROT page.' : '')
+            return  'Transcription factors exhibiting\nASB at this SNV.' +
+                (component == 'snp' ? '\nClick to visit the UniProt page\n' +
+                    ' of the respective protein.' : '')
         case 'search-nearby':
-            return  'Search ASB nearby SNV position +/-100bp'
+            return  'Search ASBs nearby (±100bp,\n' +
+                'either relative to dbSNP ID, if\nfound, or relative to ' +
+                'a given\ngenomic interval).'
+        case 'genome-browser':
+            return 'Open the surrounding region\n in the UCSC Genome Browser.'
         case 'color-scales':
-            return 'Color scales'
+            return 'Color scales used for visual representation\n' +
+                ' of the ASB significance thoughout\n the whole SNV report page'
         case 'transcription-factors-stats':
-            return 'Transcription factors and cell types stats'
+            return 'Detailed information on read counts,\nallelic imbalance,' +
+                'and motif annotation\n for the ASBs in regard to \ntranscription ' +
+                'factors and cell types.'
         case 'phen-stats':
-            return 'Phenotypes stats'
+            return 'Information on phenotype\n associations and eQTLs'
         case 'transcription-factors-columns':
-            return 'Choose additional columns if needed'
+            return 'Additional columns can be shown.'
         case 'motif-analysis':
-            return 'Picture for motif analysis'
+            return 'Visualization of motif analysis.'
         case 'table':
-            return 'Click on table row to open additional statistics'
+            return 'Click on a table row to open\n detailed data on individual SNVs\n' +
+                'used in statistical aggregation.'
         case 'snp-header':
-            return 'SNV position, 1-based.\nClick on id for dbSNP link'
+            return 'SNV position, 1-based. Click on the dbSNP rsID\nto visit the respective dbSNP page'
         case 'search-adv':
-            return 'For additional filters use "Advanced search"'
+            return 'Additional filters are\navailable in "Advanced search".'
         case 'search-by':
-            return 'Search ASB by dbSNP ID or by genome position'
+            return 'Search ASBs by dbSNP ID\n or by genome position.'
         case 'search-rs':
-            return 'Type some ID\n(with or without rs prefix)'
+            return 'Type a dbSNP ID\n(with or without rs prefix).'
         case 'search-pos':
-            return 'To search by interval use "-"\n e.g. 1-500000'
+            return 'Use dash "-" to search in a\ngenomic interval e.g. 1-500000' +
+                 (component == 'advanced' ? ',\nignored if "any chr" is selected.' : '.' )
         case 'search-example':
-            return 'Or just click the example button'
+            return 'Or click the "Example" button\nto see ADASTRA in action.'
         case 'search-tf-list':
-            return 'TF list to search SNP with ASB in all of them.\n' +
-                'Type something for autocomplete suggestions\nTo see the list of all ' +
-                'TFs use "Browse" page'
+            return 'Look for SNVs with ASBs at the\n' +
+                'selected transcription factors only\n' +
+                '(start typing and use autocomplete).\n' +
+                'TFs are listed according to UniProt IDs.\n' +
+                'The complete list of TFs can be found\n' +
+                'at the "Browse" page.'
         case 'search-cl-list':
-            return 'List of cell types to search SNP with ASB in all of them.\n' +
-                'Type something for autocomplete suggestions\nTo see the list of all ' +
-                'cell types use "Browse" page'
+            return 'Look for SNVs with ASBs at the\n' +
+                'selected cell types only\n' +
+                '(start typing and use autocomplete).\n' +
+                'Cell types are named according to the\n ' +
+                'GTRD data. The complete list of cell types\ncan be found' +
+                'at the "Browse" page.'
         case 'search-download':
-            return 'Use to download search results in TSV format'
+            return 'Download search results in TSV format.'
         case 'search-view':
-            return 'Use to switch between card and table view'
+            return 'Allows switching between card\n and table view of search results.'
         case 'search-associations':
             return 'SNPs with associations in all databases'
         case 'search-concordance':
-            return 'SNPs with any concordance from provided'
+            return 'SNPs concordance'
         default:
             return ''
     }

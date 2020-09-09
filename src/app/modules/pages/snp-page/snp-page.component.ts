@@ -131,6 +131,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'cell-types-buttons',
             'transcription-factors-buttons',
             'search-nearby',
+            'genome-browser',
             'color-scales',
             'transcription-factors-stats',
             'transcription-factors-columns',

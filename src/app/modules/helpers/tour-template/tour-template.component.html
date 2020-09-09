@@ -1,28 +1,27 @@
-<ng-container *ngIf="!(release | async).recent">
-    <div style="margin-bottom: -56px"></div>
-    <button
-        matTooltip="Open page tour"
-        aria-label="Open page tour"
-        asbElevation
-        [defaultElevation]="4"
-        [raisedElevation]="14"
-        (click)="openTourPopover()"
-        color="accent"
-        mat-fab
-        class="d-xl-flex d-none"
-        style="position: sticky;
-                    right: 16px;
-                    bottom: 0;
-                    background: #607d8bAA;
-                    z-index: 2;
-                    transform: translate3d(0, -20%, 0);
-                    margin-left: auto;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    transition: bottom .2s ease;">
-        <mat-icon style="height: 28px;
-                    width: 28px;
-                    display: flex;" svgIcon="help"></mat-icon>
-    </button>
-</ng-container>
+<div style="margin-bottom: -56px"></div>
+<button
+    matTooltip="Open page tour"
+    aria-label="Open page tour"
+    asbElevation
+    [defaultElevation]="4"
+    [raisedElevation]="14"
+    (click)="openTourPopover()"
+    color="accent"
+    mat-fab
+    class="d-xl-flex d-none"
+    style="position: sticky;
+                right: 16px;
+                bottom: 0;
+                background: #607d8bAA;
+                z-index: 2;
+                transform: translate3d(0, -20%, 0);
+                margin-left: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: bottom .2s ease;">
+    <mat-icon style="height: 28px;
+                width: 28px;
+                display: flex;" svgIcon="help"></mat-icon>
+</button>
+
