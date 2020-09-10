@@ -14,9 +14,8 @@ function getText(step: string, component?: string): string {
                 (component == 'snp' ? '\nClick to visit the UniProt page\n' +
                     ' of the respective protein.' : '')
         case 'search-nearby':
-            return  'Search ASBs nearby (±100bp,\n' +
-                'either relative to dbSNP ID, if\nfound, or relative to ' +
-                'a given\ngenomic interval).'
+            return  `Search ASBs nearby (±100bp${component == 'snp' ? ')' : ', ' +
+                'either relative to dbSNP ID, if\nfound, or relative to a given\ngenomic interval).'}`
         case 'genome-browser':
             return 'Open the surrounding region\n in the UCSC Genome Browser.'
         case 'color-scales':
@@ -67,9 +66,9 @@ function getText(step: string, component?: string): string {
         case 'search-view':
             return 'Allows switching between card\n and table view of search results.'
         case 'search-associations':
-            return 'SNPs with associations in all databases'
+            return 'SNVs with associations in all databases'
         case 'search-concordance':
-            return 'SNPs concordance'
+            return 'SNVs concordance with HOCOMOCO11 motifs'
         default:
             return ''
     }

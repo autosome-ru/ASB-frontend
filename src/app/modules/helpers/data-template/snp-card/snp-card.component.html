@@ -79,7 +79,7 @@
             joyrideStep="search-nearby"
             [stepContent]="stepTemplate"
             (next)="nextStep()"
-            [stepContentParams]="getTextByStepName('search-nearby')"
+            [stepContentParams]="getTextByStepName('search-nearby', noButtons ? 'search' : 'snp')"
             style="margin: -10px; padding: 10px; display: inline-flex; overflow: auto"
         >
             <a
