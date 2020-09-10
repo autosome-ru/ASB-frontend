@@ -15,7 +15,7 @@ function getText(step: string, component?: string): string {
                     ' of the respective protein.' : '')
         case 'search-nearby':
             return  `Search ASBs nearby (±100bp${component == 'snp' ? ')' : ', ' +
-                'either relative to dbSNP ID, if\nfound, or relative to a given\ngenomic interval).'}`
+                'either\nrelative to dbSNP ID, if found, or\nrelative to a given genomic interval).'}`
         case 'genome-browser':
             return 'Open the surrounding region\n in the UCSC Genome Browser.'
         case 'color-scales':
