@@ -1,55 +1,56 @@
-<div>
-    <div class="asb-home__title-wrapper">
-        <div class="asb-home__headline ">
-            <object
-                #svgContainer
-                class="asb-home__image"
-                data="../../../../assets/images/ADASTRA_logo_main.svg"
-                type="image/svg+xml"
-            ></object>
+<div class="asb-home" style="display: flex; justify-content: space-between; flex-direction: column">
+    <div>
+        <div class="asb-home__title-wrapper">
+            <div class="asb-home__headline ">
+                <object
+                    #svgContainer
+                    class="asb-home__image"
+                    data="../../../../assets/images/ADASTRA_logo_main.svg"
+                    type="image/svg+xml"
+                ></object>
+            </div>
+        </div>
+        <h5
+            style="text-align: center; margin-top:0.4rem"
+        >
+            <u class="font-weight-bold">A</u>llelic
+            <u class="font-weight-bold">D</u>osage-corrected
+            <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
+            <u class="font-weight-bold">Tra</u>nscription factor binding sites
+        </h5>
+        <div style="margin-bottom: 1rem">
+        <ng-container
+            *ngIf="!(totalInfoLoading$ | async) && (totalInfo$ | async) as totalInfo; else TotalInfoLoadingTemplate"
+        >
+            <h6
+                style="text-align: center; display: flex; justify-content: center; flex-wrap: wrap"
+            >
+                <span style="white-space: nowrap">Transcription factors:&nbsp;
+
+                <a
+                    style="text-decoration: underline"
+                    [routerLink]="'/' + (release$ | async).url + '/browse'"
+                    [queryParams]="{by: 'tf'}"
+                >
+                    {{totalInfo.transcriptionFactorsCount}}</a>
+                </span>
+                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Cell types:&nbsp;
+                <a
+                    style="text-decoration: underline"
+                    [routerLink]="'/' + (release$ | async).url + '/browse'"
+                    [queryParams]="{by: 'cl'}"
+                >
+                    {{totalInfo.cellTypesCount}}</a>
+                </span>
+                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
+            </h6>
+
+        </ng-container>
+        </div>
+        <div class="container mat-elevation-z2 p-0" >
+            <asb-search [width]="'full'"></asb-search>
         </div>
     </div>
-    <h5
-        style="text-align: center; margin-top:0.4rem"
-    >
-        <u class="font-weight-bold">A</u>llelic
-        <u class="font-weight-bold">D</u>osage-corrected
-        <u class="font-weight-bold">A</u>llele-<u class="font-weight-bold">S</u>pecific human
-        <u class="font-weight-bold">Tra</u>nscription factor binding sites
-    </h5>
-    <div style="margin-bottom: 1rem">
-    <ng-container
-        *ngIf="!(totalInfoLoading$ | async) && (totalInfo$ | async) as totalInfo; else TotalInfoLoadingTemplate"
-    >
-        <h6
-            style="text-align: center; display: flex; justify-content: center; flex-wrap: wrap"
-        >
-            <span style="white-space: nowrap">Transcription factors:&nbsp;
-
-            <a
-                style="text-decoration: underline"
-                [routerLink]="'/' + (release$ | async).url + '/browse'"
-                [queryParams]="{by: 'tf'}"
-            >
-                {{totalInfo.transcriptionFactorsCount}}</a>
-            </span>
-            <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Cell types:&nbsp;
-            <a
-                style="text-decoration: underline"
-                [routerLink]="'/' + (release$ | async).url + '/browse'"
-                [queryParams]="{by: 'cl'}"
-            >
-                {{totalInfo.cellTypesCount}}</a>
-            </span>
-            <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
-        </h6>
-
-    </ng-container>
-    </div>
-    <div class="container mat-elevation-z2 p-0" >
-        <asb-search [width]="'full'"></asb-search>
-    </div>
-
     <asb-tour-button
         [steps]="tourSteps"
     ></asb-tour-button>
