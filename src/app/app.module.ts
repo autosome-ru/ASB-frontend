@@ -29,6 +29,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {AsbConfirmDialogComponent} from "./modules/helpers/popover-template/confirm-dialog/confirm-dialog.component";
 import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
+import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor";
 
 @NgModule({
     declarations: [
@@ -59,6 +60,7 @@ import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
         SeoService,
         ReleasesService,
         CloseDialogOnRouteService,
+
         {provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {
                 hasBackdrop: true,
@@ -74,6 +76,11 @@ import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorsInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: EncodeHttpParamsInterceptor,
             multi: true
         }
     ],
