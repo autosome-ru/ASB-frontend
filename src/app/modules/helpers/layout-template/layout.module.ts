@@ -23,7 +23,6 @@ import {MatListModule} from "@angular/material/list";
     ],
     exports: [
         LayoutComponent,
-
     ],
     providers: [],
 })
