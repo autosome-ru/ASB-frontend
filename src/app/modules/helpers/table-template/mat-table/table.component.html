@@ -32,7 +32,7 @@
             </ng-container>
 
             <ng-container
-                *ngFor="let column of columnModel | keyvalue"
+                *ngFor="let column of columnModel | toList"
                 [matColumnDef]="column.key"
             >
                 <th mat-header-cell

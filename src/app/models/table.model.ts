@@ -1,22 +1,22 @@
 import {TemplateRef} from "@angular/core";
 import {SortDirection} from "@angular/material/sort";
-
-export type AsbTableColumnModel<T> = {
-    [key in keyof Partial<T>]:
-    | {
-    view: string,
-    valueConverter?: (value: T[key]) => string,
-    helpMessage?: string,
-    disabledSort?: boolean,
-    isSticky?: boolean,
-    colorStyle?: (row: T) => string
+export type ColumnConfigModel<T, key extends keyof T> = {
+        view: string,
+        valueConverter?: (value: T[key]) => string,
+        helpMessage?: string,
+        disabledSort?: boolean,
+        isSticky?: boolean,
+        colorStyle?: (row: T) => string
     }
     | { view: string,
-    columnTemplate: TemplateRef<{value: T[key]}>,
+    columnTemplate: TemplateRef<{value: T[key], row?: T}>,
     helpMessage?: string,
     isSticky?: boolean,
     disabledSort?: boolean
-    }
+};
+
+export type AsbTableColumnModel<T> = {
+    [key in keyof Partial<T>]: ColumnConfigModel<T, key>
 };
 
 export type AsbTableDisplayedColumns<T> = Array<keyof T>;
