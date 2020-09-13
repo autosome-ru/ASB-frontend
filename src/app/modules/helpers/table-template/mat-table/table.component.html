@@ -6,7 +6,9 @@
             #table
             mat-table
             matSort
-            #sort1="matSort"
+            #sort="matSort"
+            [matSortDirection]="initialSorting ? initialSorting.direction : null"
+            [matSortActive]="initialSorting ? initialSorting.active : null"
             [dataSource]="_dataSource"
             [multiTemplateDataRows]="!!expandCellContentTemplate"
         >

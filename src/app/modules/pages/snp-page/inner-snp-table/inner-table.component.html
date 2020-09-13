@@ -1,0 +1,23 @@
+<div>
+    <asb-table
+        [data]="innerTableData"
+        [displayedColumns]="displayedColumns"
+        [columnModel]="columnModel"
+        [paginatorOptions]="_getPaginatorOptions()"
+        [sortingDataAccessor]="sortingDataAccessor"
+        [initialSorting]="initialSorting"
+    >
+
+    </asb-table>
+</div>
+
+<ng-template #alignTemplate let-value="value">
+    <a
+        *ngIf="value"
+        target="_blank"
+        rel="noopener noreferrer"
+        [href]="'http://gtrd.biouml.org/'"
+    >
+        {{value}}
+    </a>
+</ng-template>

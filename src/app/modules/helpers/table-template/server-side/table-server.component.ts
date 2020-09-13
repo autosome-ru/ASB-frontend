@@ -16,7 +16,7 @@ import {tap} from "rxjs/operators";
 @Component({
     selector: "asb-table-server",
     templateUrl: "./table-server.component.html",
-    styleUrls: ["../table.component.less"],
+    styleUrls: ["../mat-table/table.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })

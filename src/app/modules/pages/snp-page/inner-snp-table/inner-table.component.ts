@@ -1,5 +1,4 @@
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
     Input,
@@ -9,11 +8,9 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import {ExpSnpModel} from "../../../../models/data.model";
-import {AsbTableColumnModel} from "../../../../models/table.model";
+import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
 import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../../helpers/helper/check-functions.helper";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {SortDirection} from "@angular/material/sort";
 
 @Component({
     selector: "asb-inner-table",
@@ -22,38 +19,31 @@ import {MatSort} from "@angular/material/sort";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class InnerTableComponent implements OnInit, AfterViewInit {
-
-    @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild("sort2", {static: false}) sort: MatSort;
-
+export class InnerTableComponent implements OnInit {
     @ViewChild("alignTemplate", {static: true})
     public alignViewTemplate: TemplateRef<{value: number}>;
 
-    constructor() { }
-
-    public _dataSource: MatTableDataSource<ExpSnpModel>;
-
-    public columnModel: AsbTableColumnModel<ExpSnpModel>;
-
-    private sortingDataAccessor: ((data: ExpSnpModel, id: string) => string | number) = (
-        (data: ExpSnpModel, id: string) => typeof data[id] === "string" ?
-            checkIfNumberOrFrac(data[id]) : data[id]
-    );
-
     @Input()
-    set innerTableData(value:  ExpSnpModel[]) {
-        this._dataSource = new MatTableDataSource<ExpSnpModel>(value);
-        this._dataSource.sort = this.sort;
-        this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
-        this._dataSource.paginator = this.paginator;
-    }
+    innerTableData: ExpSnpModel[]
 
     @Input()
     isCl: boolean;
 
     @Input()
     sortColumn: 'ref' | 'alt' | '';
+
+    public displayedColumns: AsbTableDisplayedColumns<ExpSnpModel>;
+    public initialSorting: {active: string; direction: SortDirection};
+    public columnModel: AsbTableColumnModel<ExpSnpModel>;
+    public sortingDataAccessor: ((data: ExpSnpModel, id: string) => string | number) = (
+        (data: ExpSnpModel, id: string) => typeof data[id] === "string" ?
+            checkIfNumberOrFrac(data[id]) : data[id]
+    );
+
+
+
+
+    constructor() { }
 
     ngOnInit(): void {
         this.columnModel = {
@@ -65,29 +55,20 @@ export class InnerTableComponent implements OnInit, AfterViewInit {
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
             rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2)},
             rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => v.toFixed(2)}
-
         };
-    }
+        if (this.isCl) {
+            this.displayedColumns = ["align", "tfName", "refReadCount",
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
 
-    ngAfterViewInit() {
-        if (this._dataSource) {
-            this._dataSource.sort = this.sort;
-            this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
-            this._dataSource.paginator = this.paginator;
+        } else {
+           this.displayedColumns = ["align", "clName", "refReadCount",
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
         }
+        this.initialSorting = {direction: "desc",
+            active: this.sortColumn == 'ref' ? "rawPValueRef" : "rawPValueAlt"}
     }
 
     _getPaginatorOptions(): number[] {
-        return this._dataSource ? getPaginatorOptions(this._dataSource.data.length) : [];
-    }
-
-    getDisplayedColumns() {
-        if (this.isCl) {
-            return ["align", "tfName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
-        } else {
-            return  ["align", "clName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
-        }
+        return getPaginatorOptions(this.innerTableData.length);
     }
 }

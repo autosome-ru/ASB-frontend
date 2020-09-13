@@ -6,10 +6,10 @@ import {
     TemplateRef, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {AsbPopoverComponent} from "../popover-template/popover.component";
+import {AsbPopoverComponent} from "../../popover-template/popover.component";
 import {MatDialog} from "@angular/material/dialog";
 
 
@@ -26,7 +26,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     private readonly cssClass = true;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
-    @ViewChild("sort1", {static: false}) sort: MatSort;
+    @ViewChild("sort", {static: false}) sort: MatSort;
 
     constructor(
         public dialog: MatDialog,
@@ -35,6 +35,8 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     @Input()
     public columnModel: AsbTableColumnModel<T>;
 
+    @Input()
+    private sortingDataAccessor: ((data: T, s: string ) => string | number)
     @Input()
     public externalPaginator: MatPaginator;
 
@@ -63,19 +65,16 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public initialValue: T[];
 
     @Input()
+    public initialSorting: { active: string; direction: SortDirection }
+
+    @Input()
     set data(value: T[]) {
         this._dataSource = new MatTableDataSource<T>(value);
-        this._dataSource.sort = this.sort;
         this.initialValue = value
-        if (this.sortData) {
-            this._dataSource.sortData = ((data, sort) =>
-                sort.active ? this.sortData(data, sort) : this.initialValue)
-        }
-        if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+        this.checkDataSource()
         if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
     }
 
-    @HostBinding("class._paginator")
     @Input()
     public paginatorOptions: number[];
 
@@ -96,13 +95,18 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
     ngAfterViewInit() {
         if (this._dataSource) {
-            this._dataSource.sort = this.sort;
-            if (this.sortData) {
-                this._dataSource.sortData = ((data, sort) =>
-                    sort.direction ? this.sortData(data, sort) : this.initialValue)
-            }
-            if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+            this.checkDataSource()
         }
+    }
+
+    checkDataSource() {
+        this._dataSource.sort = this.sort;
+        if (this.sortData) {
+            this._dataSource.sortData = ((data, sort) =>
+                sort.direction ? this.sortData(data, sort) : this.initialValue)
+        }
+        if (this.sortingDataAccessor) this._dataSource.sortingDataAccessor = this.sortingDataAccessor
+        if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
     }
     ngOnChanges(changes: SimpleChanges) {
         if (changes["externalPaginator"] && this.externalPaginator) {

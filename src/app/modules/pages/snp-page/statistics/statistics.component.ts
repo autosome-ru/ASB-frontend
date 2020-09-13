@@ -12,7 +12,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/tabl
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
 import {getPaginatorOptions} from "../../../../helpers/helper/check-functions.helper";
-import {AsbTableComponent} from "../../../helpers/table-template/table.component";
+import {AsbTableComponent} from "../../../helpers/table-template/mat-table/table.component";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";

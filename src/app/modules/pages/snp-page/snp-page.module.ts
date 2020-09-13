@@ -21,7 +21,7 @@ import {AsbTourModule} from "../../helpers/tour-template/tour-module";
 import {AsbTablesModule} from "../../helpers/table-template/table.module";
 import {AsbSnpDataModule} from "../../helpers/data-template/data.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {CloseDialogOnRouteService} from "../../../interceptors/popup-interceptor";
+import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
 
 @NgModule({
     imports: [
@@ -48,7 +48,8 @@ import {CloseDialogOnRouteService} from "../../../interceptors/popup-interceptor
         AsbStatisticsComponent,
         PhenotypesComponent,
         ColorScalesComponent,
-        AsbMotifsComponent
+        AsbMotifsComponent,
+        InnerTableComponent,
     ],
 })
 export class AsbSnpPageModule {
