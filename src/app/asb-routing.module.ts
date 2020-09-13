@@ -8,6 +8,7 @@ const routerOptions: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
     anchorScrolling: 'enabled',
     scrollOffset: [0, 20],
+    initialNavigation: 'enabled'
 };
 
 // Use RecentComponent for recent release and DeprecatedComponent for deprecated one
