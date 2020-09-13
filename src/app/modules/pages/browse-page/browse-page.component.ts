@@ -18,7 +18,7 @@ import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from 
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SeoModel} from "src/app/models/seo.model";
 import {SeoService} from "src/app/services/seo.servise";
-import {AsbServerTableComponent} from "../../helpers/table-template/server-side/table-server.component";
+import {AsbServerTableComponent} from "../../shared/table-template/server-side/table-server.component";
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
 

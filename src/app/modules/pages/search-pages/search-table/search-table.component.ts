@@ -15,7 +15,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {baseToColors} from "../../../../helpers/helper/colors.helper";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {AsbServerTableComponent} from "../../../helpers/table-template/server-side/table-server.component";
+import {AsbServerTableComponent} from "../../../shared/table-template/server-side/table-server.component";
 import {SortDirection} from "@angular/material/sort";
 import {ReleaseModel} from "../../../../models/releases.model";
 import {AppState} from "../../../../store/reducer";

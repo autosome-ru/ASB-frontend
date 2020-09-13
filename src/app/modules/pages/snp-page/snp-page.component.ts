@@ -25,7 +25,7 @@ import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 import {ReleasesService} from "../../../services/releases.service";
 import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../../helpers/helper/check-functions.helper";
-import {AsbPopoverComponent} from "../../helpers/popover-template/popover.component";
+import {AsbPopoverComponent} from "../../shared/popover-template/popover.component";
 import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
 import {MatTabGroup} from "@angular/material/tabs";
 import {ReleaseModel} from "../../../models/releases.model";

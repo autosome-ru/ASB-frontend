@@ -14,7 +14,7 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 import {ReleasesWrapperModule} from "./modules/releases-wrapper/releases-wrapper.module";
 import {JoyrideModule} from "ngx-joyride";
-import {AsbLayoutsModule} from "./modules/helpers/layout-template/layout.module";
+import {AsbLayoutsModule} from "./modules/shared/layout-template/layout.module";
 
 import {DataService} from "./services/data.service";
 import {SearchService} from "./services/search.service";
@@ -23,11 +23,11 @@ import {ReleasesService} from "./services/releases.service";
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
-import {AsbPopoverComponent} from "./modules/helpers/popover-template/popover.component";
+import {AsbPopoverComponent} from "./modules/shared/popover-template/popover.component";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {AsbConfirmDialogComponent} from "./modules/helpers/popover-template/confirm-dialog/confirm-dialog.component";
+import {AsbConfirmDialogComponent} from "./modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
 import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor";
 

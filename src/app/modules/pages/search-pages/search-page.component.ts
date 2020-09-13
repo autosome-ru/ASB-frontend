@@ -16,7 +16,7 @@ import * as fromSelectors from "src/app/store/selector";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SearchQueryModel, SearchResultsModel} from "../../../models/search-query.model";
-import {SearchComponent} from "../../helpers/search-template/search.component";
+import {SearchComponent} from "../../shared/search-template/search.component";
 import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
 import {AsbServerSideModel} from "../../../models/table.model";

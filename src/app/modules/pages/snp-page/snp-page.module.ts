@@ -17,9 +17,9 @@ import {AsbSnpPageRoutingModule} from "./snp-page-routing.module";
 import {MatDividerModule} from "@angular/material/divider";
 import {AsbMotifsComponent} from "./asb-motifs/asb-motifs.component";
 import {JoyrideModule} from "ngx-joyride";
-import {AsbTourModule} from "../../helpers/tour-template/tour-module";
-import {AsbTablesModule} from "../../helpers/table-template/table.module";
-import {AsbSnpDataModule} from "../../helpers/data-template/data.module";
+import {AsbTourModule} from "../../shared/tour-template/tour-module";
+import {AsbTablesModule} from "../../shared/table-template/table.module";
+import {AsbSnpDataModule} from "../../shared/data-template/data.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
 
