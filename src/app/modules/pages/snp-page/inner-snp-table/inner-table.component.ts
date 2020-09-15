@@ -21,7 +21,7 @@ import {SortDirection} from "@angular/material/sort";
 })
 export class InnerTableComponent implements OnInit {
     @ViewChild("alignTemplate", {static: true})
-    public alignViewTemplate: TemplateRef<{value: number}>;
+    public expViewTemplate: TemplateRef<{value: number}>;
 
     @Input()
     innerTableData: ExpSnpModel[]
@@ -53,18 +53,18 @@ export class InnerTableComponent implements OnInit {
             bad: {view: "Estimated BAD", valueConverter: v => v},
             refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
             altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
-            align: {view: "GTRD experiment ID", columnTemplate: this.alignViewTemplate},
+            expId: {view: "GTRD experiment ID", columnTemplate: this.expViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
             rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2)},
             rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => v.toFixed(2)}
         };
         if (this.isCl) {
-            this.displayedColumns = ["align", "tfName", "refReadCount",
+            this.displayedColumns = ["expId", "tfName", "refReadCount",
                 "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
 
         } else {
-           this.displayedColumns = ["align", "clName", "refReadCount",
+           this.displayedColumns = ["expId", "clName", "refReadCount",
                 "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
         }
         this.initialSorting = {direction: "desc",
