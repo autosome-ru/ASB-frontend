@@ -71,8 +71,9 @@
 
 <ng-template #cellTypeViewTemplate let-value="value" let-row="row">
     <a
+        style="min-width: 50px"
         (click)="$event.stopPropagation()"
-        [href]="'http://gtrd.biouml.org/'"
+        [href]="'http://gtrd-analytics.biouml.org/#!table/gtrd_current.cells/Details/ID=' + value"
         target="_blank"
         rel="noopener noreferrer"
     >

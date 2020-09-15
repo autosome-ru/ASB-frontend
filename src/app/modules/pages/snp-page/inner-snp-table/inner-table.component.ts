@@ -29,6 +29,9 @@ export class InnerTableComponent implements OnInit {
     @Input()
     isCl: boolean;
 
+
+
+
     @Input()
     sortColumn: 'ref' | 'alt' | '';
 
@@ -50,7 +53,7 @@ export class InnerTableComponent implements OnInit {
             bad: {view: "Estimated BAD", valueConverter: v => v},
             refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
             altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
-            align: {view: "GTRD align ID", columnTemplate: this.alignViewTemplate},
+            align: {view: "GTRD experiment ID", columnTemplate: this.alignViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
             rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2)},
@@ -71,4 +74,20 @@ export class InnerTableComponent implements OnInit {
     _getPaginatorOptions(): number[] {
         return getPaginatorOptions(this.innerTableData.length);
     }
+
+    convertClId(id: number) {
+        return 'EXP' + addZeros(id)
+
+    }
+
+}
+
+function addZeros(id: number) {
+    let result: string = '' + id;
+    let len: number = result.length
+    while (len < 6) {
+        result = '0' + result
+        len += 1
+    }
+    return result;
 }

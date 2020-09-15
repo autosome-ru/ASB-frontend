@@ -11,13 +11,13 @@
     </asb-table>
 </div>
 
-<ng-template #alignTemplate let-value="value">
+<ng-template #alignTemplate let-value="value" let-row="row">
     <a
         *ngIf="value"
         target="_blank"
         rel="noopener noreferrer"
-        [href]="'http://gtrd.biouml.org/'"
+        [href]="'http://gtrd-analytics.biouml.org/#!experiment/'+ convertClId(row.expId)"
     >
-        {{value}}
+        {{convertClId(row.expId)}}
     </a>
 </ng-template>
