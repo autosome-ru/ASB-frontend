@@ -124,14 +124,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.tfColumnModel = {
             uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
             name: {view: "Name"},
-            aggregatedSnpsCount: {view: "ASBs count"},
-            experimentsCount: {view: "Experiments count"}
+            aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
+            experimentsCount: {view: "Experiments count", isDesc: true}
         };
         this.clColumnModel = {
             clId: {view: "GTRD ID", columnTemplate: this.cellTypeViewTemplate},
             name: {view: "Cell type name"},
-            aggregatedSnpsCount: {view: "ASBs count"},
-            experimentsCount: {view: "Experiments count"}
+            aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
+            experimentsCount: {view: "Experiments count", isDesc: true}
         };
 
     }

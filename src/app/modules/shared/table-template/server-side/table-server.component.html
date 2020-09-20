@@ -39,6 +39,7 @@
                     mat-sort-header
                     [disabled]="column.value?.disabledSort"
                     [matTooltip]="column.value?.helpMessage"
+                    [start]="column.value?.isDesc ? 'desc' : 'asc'"
                     *matHeaderCellDef>{{column.value.view}}</th>
                 <td
                     mat-cell

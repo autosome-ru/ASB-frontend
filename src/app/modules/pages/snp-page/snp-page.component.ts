@@ -174,20 +174,24 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             effectSizeRef: {
                 view: "Effect size Ref",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
+                isDesc: true
             },
             effectSizeAlt: {
                 view: "Effect size Alt",
-                valueConverter: v => v !== null ? v.toFixed(2) : "n/a"
+                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
+                isDesc: true
             },
             pValueRef: {
                 view: "-log₁₀FDR Ref",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
-                colorStyle: row => this._calculateColor(row, "ref")
+                colorStyle: row => this._calculateColor(row, "ref"),
+                isDesc: true
             },
             pValueAlt: {
                 view: "-log₁₀FDR Alt",
                 valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
-                colorStyle: row => this._calculateColor(row, "alt")
+                colorStyle: row => this._calculateColor(row, "alt"),
+                isDesc: true
             },
             meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2)}
         };
@@ -202,16 +206,18 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             motifFc: {
                 view: "Motif fold change",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                helpMessage: 'log₂(Alt/Ref motif p-value)'
+                helpMessage: 'log₂(Alt/Ref motif p-value)',
+                isDesc: true
             },
             motifPRef: {
                 view: "-log₁₀ Motif Ref p-value",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-
+                isDesc: true
             },
             motifPAlt: {
                 view: "-log₁₀ Motif Alt p-value",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
+                isDesc: true
             },
             motifOrientation: {
                 view: 'Motif orientation',
@@ -220,6 +226,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             motifConcordance: {
                 view: "Motif concordance",
                 valueConverter: v => v !== null ? v : "n/a",
+                isDesc: true
             },
             motifPosition: {
                 view: "Motif position",

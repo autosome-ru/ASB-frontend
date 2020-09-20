@@ -51,13 +51,13 @@ export class InnerTableComponent implements OnInit {
     ngOnInit(): void {
         this.columnModel = {
             bad: {view: "Estimated BAD", valueConverter: v => v},
-            refReadCount: {view: "Ref read counts", valueConverter: v => "" + v},
-            altReadCount: {view: "Alt read counts", valueConverter: v => "" + v},
+            refReadCount: {view: "Ref read counts", valueConverter: v => "" + v, isDesc: true},
+            altReadCount: {view: "Alt read counts", valueConverter: v => "" + v, isDesc: true},
             expId: {view: "GTRD experiment ID", columnTemplate: this.expViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
-            rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2)},
-            rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => v.toFixed(2)}
+            rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2), isDesc: true},
+            rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => v.toFixed(2), isDesc: true}
         };
         if (this.isCl) {
             this.displayedColumns = ["expId", "tfName", "refReadCount",
