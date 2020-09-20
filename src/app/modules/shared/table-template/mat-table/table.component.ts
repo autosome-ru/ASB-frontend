@@ -9,8 +9,8 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/tabl
 import {MatSort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {AsbPopoverComponent} from "../../popover-template/popover.component";
 import {MatDialog} from "@angular/material/dialog";
+import {CustomTemplateDialogComponent} from "../../popover-template/custom-template-dialog/custom-template-dialog.component";
 
 
 @Component({
@@ -116,7 +116,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
 
     public _handleRowClick(row: T): void {
-        this.dialog.open(AsbPopoverComponent, {
+        this.dialog.open(CustomTemplateDialogComponent, {
             autoFocus: false,
             panelClass: 'custom-dialog-container',
             data: {
