@@ -23,15 +23,19 @@ import {ReleasesService} from "./services/releases.service";
 import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
+import {AsbPopoverComponent} from "./modules/shared/popover-template/popover.component";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {AsbConfirmDialogComponent} from "./modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
 import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor";
 
 @NgModule({
     declarations: [
         AppComponent,
+        AsbPopoverComponent,
+        AsbConfirmDialogComponent
     ],
     imports: [
         BrowserModule.withServerTransition({appId: "serverApp"}),

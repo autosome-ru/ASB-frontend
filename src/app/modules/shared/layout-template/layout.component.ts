@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
+import {AsbPopoverComponent} from "../popover-template/popover.component";
 
 @Component({
     selector: "asb-layout",
@@ -8,6 +9,8 @@ import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulati
     encapsulation: ViewEncapsulation.None
 })
 export class LayoutComponent implements OnInit {
+    @ViewChild('popover')
+    private popover: AsbPopoverComponent
     @HostBinding("class.asb-layout")
     private readonly cssClass = true;
 
