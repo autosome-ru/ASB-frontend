@@ -22,7 +22,7 @@ import {
     NgControl,
 } from "@angular/forms";
 import {MAT_FORM_FIELD, MatFormField, MatFormFieldControl} from "@angular/material/form-field";
-import {Subject} from "rxjs";
+import {Subject, Subscription} from "rxjs";
 import {FocusMonitor} from "@angular/cdk/a11y";
 import {coerceBooleanProperty} from "@angular/cdk/coercion";
 import {isValidPosInterval} from "../../../helpers/helper/check-functions.helper";
@@ -98,6 +98,7 @@ export class AsbChrPosInputComponent implements OnInit,
     OnDestroy, ControlValueAccessor, MatFormFieldControl<ChromPos> {
     static nextId = 0;
     controlType = 'asb-chr-pos-field';
+    private subscriptions = new Subscription();
 
     @HostBinding()
     id = `asb-chr-pos-field-${AsbChrPosInputComponent.nextId++}`;
@@ -213,37 +214,42 @@ export class AsbChrPosInputComponent implements OnInit,
     if (this.ngControl != null) {
         this.ngControl.valueAccessor = this;
     }
-    this._focusMonitor.monitor(this.elRef, true).subscribe(
-        origin => {
-        if (this.focused && !origin) {
-            this.onTouched();
-        }
-        this.focused = !!origin;
-        this.stateChanges.next();
-    });
+    this.subscriptions.add(
+        this._focusMonitor.monitor(this.elRef, true).subscribe(
+            origin => {
+            if (this.focused && !origin) {
+                this.onTouched();
+            }
+            this.focused = !!origin;
+            this.stateChanges.next();
+        })
+    );
     this.chromPos =  this.formBuilder.group({
         pos: [''],
         chr: ['']
         },
         {validator: validateGroup}
     );
-    this.chromPos.get('pos').valueChanges.subscribe(
-        (s: string) => {
-        if (!!s) {
-            this.previousPos = s
-        }
-        this.patchGroupOnPaste(s)
-        }
-    )
-
-    this.chromPos.get('chr').valueChanges.subscribe(
-    (s: string) => {
-            if (s.length > 1 && s.match(/^0\d$/)) {
-                this.chromPos.patchValue({chr: s.slice(1)});
-                this._focusMonitor.focusVia(this.posInput, 'program')
+    this.subscriptions.add(
+        this.chromPos.get('pos').valueChanges.subscribe(
+            (s: string) => {
+            if (!!s) {
+                this.previousPos = s
             }
-            this.patchGroupOnPaste(s, 'chr')
-        }
+            this.patchGroupOnPaste(s)
+            }
+        )
+    )
+    this.subscriptions.add(
+        this.chromPos.get('chr').valueChanges.subscribe(
+        (s: string) => {
+                if (s.length > 1 && s.match(/^0\d$/)) {
+                    this.chromPos.patchValue({chr: s.slice(1)});
+                    this._focusMonitor.focusVia(this.posInput, 'program')
+                }
+                this.patchGroupOnPaste(s, 'chr')
+            }
+        )
     )
 
     }
@@ -273,7 +279,8 @@ export class AsbChrPosInputComponent implements OnInit,
         this.previousPos = control.value
     }
     ngOnDestroy() {
-        this.stateChanges.complete()
+        this.stateChanges.complete();
+        this.subscriptions.unsubscribe();
         this._focusMonitor.stopMonitoring(this.elRef.nativeElement);
     }
 
