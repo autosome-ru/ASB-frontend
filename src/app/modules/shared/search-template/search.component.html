@@ -40,6 +40,8 @@
             >
                 <mat-option value="id">rs ID</mat-option>
                 <mat-option value="pos">Genome position</mat-option>
+                <mat-option value="geneId">Gene ID</mat-option>
+                <mat-option value="geneName">Gene name</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -48,7 +50,7 @@
                 joyrideStep="search-rs"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('search-rs')"
-                (next)="searchForm.patchValue({searchBy: 'pos', chr: 'chr1'})"
+                (next)="searchForm.patchValue({searchBy: 'pos', chromPos: {chr: '', pos: ''}})"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
                 appearance="outline"
@@ -58,7 +60,7 @@
                            matInput
                            name="Search SNPs"
                            aria-label="search"
-                           formControlName="searchInput"
+                           formControlName="rsId"
                     >
                 <button
                     type="submit"
@@ -67,10 +69,10 @@
                 >hidden submit</button>
                 <button
                     mat-icon-button
-                    [hidden]="!searchForm.get('searchInput').value"
+                    [hidden]="!searchForm.get('rsId').value"
                     matSuffix
                     style="height: 100%; width: 100%"
-                    (click)="_clearSearchField()"
+                    (click)="_clearSearchField('rsId')"
                 >
                     <mat-icon svgIcon="clear"></mat-icon>
                 </button>
@@ -78,80 +80,107 @@
             </mat-form-field>
         </ng-container>
 
-        <div
-            style="display: inline-flex;overflow: auto; flex-wrap: wrap; align-items: center"
-            *ngIf="_checkToDisplay('pos')"
-            joyrideStep="search-pos"
-            [stepContent]="stepTemplate"
-            [prevTemplate]="prevTemplate"
-            [nextTemplate]="nextTemplate"
-            [doneTemplate]="doneTemplate"
-            (prev)="searchById()"
-            [stepContentParams]="getTextByStepName('search-pos',isAdvanced? 'advanced' : 'search')"
-        >
-            <mat-form-field
-                style="width: 100px; margin-right: 15px;"
-                floatLabel="always"
-                class="field-without-hint"
-            >
-                <mat-label>Chromosome</mat-label>
-                <mat-select
-                    formControlName="chromosome"
-                >
-                    <mat-option *ngIf="isAdvanced" [value]="'any chr'">any chr</mat-option>
-                    <mat-option
-                        *ngFor="let chr of listOfChrs"
-                                [value]="chr"
-                    >
-                        {{chr}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-
+        <ng-container *ngIf="_checkToDisplay('geneId')">
             <mat-form-field
                 floatLabel="always"
-                style="padding: 0; margin-right: 15px; margin-top: 0.8em; max-width: 230px; width:230px"
+                style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
                 appearance="outline"
-                class="search-field search-field-hint"
+                class="search-field field-without-hint"
             >
-                <input
-                    placeholder="e.g. 28554168-80422458"
-                    matInput
-                    name="Search SNPs"
-                    aria-label="search"
-                    formControlName="searchInput"
+                <input placeholder="e.g. ...1"
+                       matInput
+                       name="Search SNPs"
+                       aria-label="search"
+                       formControlName="geneId"
                 >
                 <button
                     type="submit"
                     style="display:none"
                     (click)="_navigateToSearch()"
-                >
-                    hidden submit
-                </button>
-
+                >hidden submit</button>
                 <button
                     mat-icon-button
-                    [hidden]="!searchForm.get('searchInput').value || searchForm.get('searchInput').disabled"
+                    [hidden]="!searchForm.get('geneId').value"
                     matSuffix
                     style="height: 100%; width: 100%"
-                    (click)="_clearSearchField()"
+                    (click)="_clearSearchField('geneId')"
                 >
                     <mat-icon svgIcon="clear"></mat-icon>
                 </button>
 
-                <mat-hint
-                    *ngIf="searchForm.hasError('wrongPattern')"
-                   >
-                    * must be from-to
-                </mat-hint>
-                <mat-hint
-                    *ngIf="searchForm.hasError('greater')"
-                >
-                    * end must be > start
-                </mat-hint>
             </mat-form-field>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="_checkToDisplay('geneName')">
+            <mat-form-field
+                floatLabel="always"
+                style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
+                appearance="outline"
+                class="search-field field-without-hint"
+            >
+                <input placeholder="e.g. ..."
+                       matInput
+                       name="Search SNPs"
+                       aria-label="search"
+                       formControlName="geneName"
+                >
+                <button
+                    type="submit"
+                    style="display:none"
+                    (click)="_navigateToSearch()"
+                >hidden submit</button>
+                <button
+                    mat-icon-button
+                    [hidden]="!searchForm.get('geneName').value"
+                    matSuffix
+                    style="height: 100%; width: 100%"
+                    (click)="_clearSearchField('geneName')"
+                >
+                    <mat-icon svgIcon="clear"></mat-icon>
+                </button>
 
+            </mat-form-field>
+        </ng-container>
+        <div style="margin-right: 15px" *ngIf="_checkToDisplay('pos')">
+            <div
+                style="display: inline-flex;overflow: auto; flex-wrap: wrap; align-items: center; min-width: 240px"
+                joyrideStep="search-pos"
+                [stepContent]="stepTemplate"
+                [prevTemplate]="prevTemplate"
+                [nextTemplate]="nextTemplate"
+                [doneTemplate]="doneTemplate"
+                (prev)="searchById()"
+                [stepContentParams]="getTextByStepName('search-pos',isAdvanced? 'advanced' : 'search')"
+            >
+                <mat-form-field
+                    floatLabel="always"
+                    style="padding: 0; margin-top: 0.8em; min-width: 250px"
+                    appearance="outline"
+                    class="search-field search-field-hint"
+                >
+                    <asb-chr-pos-field formControlName="chromPos"></asb-chr-pos-field>
+                    <button
+                        type="submit"
+                        style="display:none"
+                        (click)="_navigateToSearch()"
+                    >
+                        hidden submit
+                    </button>
+
+                    <button
+                        mat-icon-button
+                        [hidden]="!(searchForm.get('chromPos').value.chr || searchForm.get('chromPos').value.chr)"
+                        matSuffix
+                        style="height: 100%; width: 100%"
+                        (click)="_clearSearchField('chromPos')"
+                    >
+                        <mat-icon svgIcon="clear"></mat-icon>
+                    </button>
+                    <mat-hint *ngFor="let error of searchForm?.get('chromPos').errors | keyvalue">
+                        <span>{{getValidationMessages(error.key)}}</span>
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
 
         <div
             *ngIf="!isAdvanced"

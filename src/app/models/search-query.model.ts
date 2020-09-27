@@ -1,11 +1,14 @@
 import {MotifConcordanceModel, PhenotypesModel, SnpSearchBackendModel, SnpSearchModel} from "./data.model";
 import {AsbServerSideModel} from "./table.model";
+import {ChromPos} from "../modules/shared/form-fields/form-fields.component";
 
 export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, MotifConcordanceModel {
     isAdvanced: boolean;
-    searchInput: string;
-    searchBy: "id" | "pos";
-    chromosome: string;
+    rsId: string;
+    geneId: string;
+    geneName: string;
+    chromPos: ChromPos
+    searchBy: "id" | "pos" | "geneId" | "geneName";
     searchCl: string;
     searchTf: string;
     tfList: string[];
@@ -27,6 +30,8 @@ export interface SearchParamsModel {
     rs: string;
     chr: string;
     by: string;
+    g_id: string;
+    g_name: string;
     cl: string;
     tf: string;
     motif_conc: string;

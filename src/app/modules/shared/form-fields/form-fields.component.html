@@ -1,0 +1,22 @@
+<div role="group"
+     class="input-container"
+     [formGroup]="chromPos">
+    <span class="input-spacer">chr</span>
+    <input
+        #chr
+        size="2"
+        style="text-align: center; width: 25px; text-overflow: ellipsis"
+        class="input-element"
+        formControlName="chr"
+        (input)="_handleInput(chromPos.controls.chr, 'chr', pos)"
+    >
+    <span class="input-spacer">:&nbsp;</span>
+    <input
+        #pos
+        class="input-element"
+        style="width: 180px"
+        formControlName="pos"
+        (input)="_handleInput(chromPos.controls.pos)"
+        (keyup.backspace)="autoFocusPrev(chromPos.controls.pos, chr)"
+    >
+</div>

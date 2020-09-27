@@ -46,36 +46,52 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
 
     if (form && !form.isAdvanced) {
         if (form && form.searchBy) {
-            if (form.searchBy === "pos" || (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced)) {
-                if (form.searchInput) {
-                    return {
-                        pos: form.searchInput.trim(),
-                        chr: form.chromosome,
-                    };
-                }  else return {};
-            } else {
-                return form.searchInput ? {rs: form.searchInput.trim()} : {};
+            if (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced) {
+                form.searchBy = 'pos'
+            }
+            switch (form.searchBy) {
+                case "id":
+                    return form.rsId ? {rs: form.rsId.trim()} : {};
+                case "pos":
+                    let result = {}
+                    if (form.chromPos.pos) {
+                        result = {
+                            ...result,
+                            pos: form.chromPos.pos.trim()
+                        };
+                    }
+                    if (form.chromPos.chr) {
+                        result = {
+                            ...result,
+                            chr: form.chromPos.chr.trim()
+                        };
+                    }
+                    return result
+                case "geneId":
+                    return form.geneId ? {g_id: form.geneId.trim()} : {}
+                case "geneName":
+                    return form.geneName ? {g_name: form.geneName.trim()} : {}
             }
 
         } else {
-            return form.searchInput ? {pos: form.searchInput.trim(), chr: form.chromosome} : {};
+            return form.rsId ? {pos: form.chromPos.pos, chr: form.chromPos.chr} : {};
         }
 
     } else {
         if (form) {
             const result: Partial<SearchParamsModel> = {};
             if (form.clList.length > 0) result.cl = form.clList.join(",");
-            if (form.searchInput) {
+            if (form.chromPos.pos) {
                 if (checkOneResult(searchData) &&
-                    !isValidPosInterval(form.searchInput.trim())) {
+                    !isValidPosInterval(form.chromPos.pos.trim())) {
                     result.pos = "" + searchData[0].pos;
-                    result.chr = searchData[0].chr;
+                    result.chr = searchData[0].chr.slice(3);
                 } else {
-                    result.pos = form.searchInput.trim();
-                    result.chr = form.chromosome;
+                    result.pos = form.chromPos.pos;
+                    result.chr = form.chromPos.chr;
                 }
-            } else if (form.chromosome && form.chromosome !== "any chr") {
-                result.chr = form.chromosome;
+            } else if (form.chromPos.chr) {
+                result.chr = form.chromPos.chr;
             }
             if (form.tfList.length > 0) result.tf = form.tfList.join(",");
             const phenList: string = formCheckboxesToList(form);

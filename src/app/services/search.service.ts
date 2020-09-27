@@ -32,26 +32,36 @@ export class SearchService {
 
     public getSearchResult(filter: SearchQueryModel, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
-        if (!filter || (!filter.isAdvanced && !filter.searchInput)) {
-            return of({results: [], total: null});
+        if (!filter) {
+            if (!filter.isAdvanced &&
+                (
+                    (filter.searchBy == 'id' && !filter.rsId) ||
+                    (filter.searchBy == 'pos' && !filter.chromPos.chr) ||
+                    (filter.searchBy == 'geneId' && !filter.geneId) ||
+                    (filter.searchBy == 'geneName' && !filter.geneName)
+                )
+            ) {
+                return of({results: [], total: null});
+            }
         }
-        if (!filter.isAdvanced && filter.searchInput) {
+        if (!filter.isAdvanced && filter.searchBy !== 'pos') {
             switch (filter.searchBy) {
-                case "id": {
-                    const rsId: string = filter.searchInput.match(/rs\d+/) ? filter.searchInput.slice(2) : filter.searchInput;
+                case "geneId":
+                    return this.http.get<SearchResultsBackendModel>(
+                        `${searchSnpsResultsUrl}/gene_id/${filter.geneId}`, {
+                            params: convertServerSideModelToServerSideBackendModel(params)
+                        });
+                case "id":
+                    const rsId: string = filter.rsId.match(/rs\d+/) ? filter.rsId.slice(2) : filter.rsId;
                     return this.http.get<SearchResultsBackendModel>(
                         `${searchSnpsResultsUrl}/rs/${rsId}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
-                }
-                case "pos": {
-                    const positions: {start: string, end: string} =
-                        getStartEndPositions(filter.searchInput);
+                case "geneName":
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/gp/${filter.chromosome}/${positions.start}/${positions.end}`, {
+                        `${searchSnpsResultsUrl}/gene_name/${filter.geneName}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
-                }
             }
         } else {
             return this.http.get<SearchResultsBackendModel>(
@@ -103,16 +113,13 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
         params["cell_types"] = filter.clList.join(",");
     }
 
-    if (filter.chromosome && filter.chromosome !== "any chr") {
-        if (filter.searchInput) {
+    if (filter.chromPos.chr) {
+        params["chromosome"] = 'chr' + filter.chromPos.chr;
+        if (filter.chromPos.pos) {
             const positions: { start: string, end: string } =
-                getStartEndPositions(filter.searchInput);
-
-            params["chromosome"] = filter.chromosome;
+                getStartEndPositions(filter.chromPos.pos);
             params["start"] = positions.start;
             params["end"] = positions.end;
-        } else {
-            params["chromosome"] = filter.chromosome;
         }
     }
 

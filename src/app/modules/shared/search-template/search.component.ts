@@ -25,10 +25,11 @@ import {FileSaverService} from "ngx-filesaver";
 import {SearchService} from "src/app/services/search.service";
 import {ToastrService} from "ngx-toastr";
 import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants/constants";
-import {debounceTime, map} from "rxjs/operators";
-import {checkOneResult, convertFormToParams, isValidPosInterval} from "../../../helpers/helper/check-functions.helper";
+import {debounceTime} from "rxjs/operators";
+import {checkOneResult, convertFormToParams} from "../../../helpers/helper/check-functions.helper";
 import {ReleaseModel} from "src/app/models/releases.model";
 import {getTextByStepName} from "src/app/helpers/text-helpers/tour-text.helper";
+import {ChromPos, validateGroup} from "../form-fields/form-fields.component";
 
 
 @Component({
@@ -65,7 +66,12 @@ export class SearchComponent implements OnInit, OnDestroy {
     @Output()
     private nextStep= new EventEmitter<void>();
 
-    private readonly nullValue: {searchInput: string} = {searchInput: ""};
+    private readonly nullValue = {
+        rsId: "",
+        geneId: '',
+        geneName: '',
+        chromPos: new ChromPos('', '')
+    };
     private searchParams: SearchParamsModel;
 
     private subscriptions: Subscription = new Subscription();
@@ -82,19 +88,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     public downloadButtonColor: "primary" | null = null;
     public showNearbyControl: FormControl;
     public currentRelease$: Observable<ReleaseModel>;
-    public search: (text$: Observable<string>) => Observable<unknown>;
 
-
-
-
-    private static initChromosomes(): string[] {
-        const result: string[] = [];
-        for (let i = 1; i < 23; i++) {
-            result.push("chr" + i);
-        }
-        result.push("chrX");
-        return result;
-    }
 
     private static convertPosToInterval(searchInput: string): string {
         if (searchInput.match(/^\d+$/)) {
@@ -116,22 +110,19 @@ export class SearchComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.listOfChrs = SearchComponent.initChromosomes();
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease)
 
         this.showNearbyControl = this.formBuilder.control(100);
-        this.search = (text$: Observable<string>) =>
-            text$.pipe(
-                debounceTime(200),
-                map(term => console.log(term))
-            )
+
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             isAdvanced: this.isAdvanced,
-            searchInput: "",
+            rsId: "",
+            chromPos: [new ChromPos('', ''), [validateGroup]],
             searchBy: "id",
-            chromosome: null,
+            geneId: "",
+            geneName: "",
             searchTf: null,
             searchCl: null,
             tfList: [[]],
@@ -143,14 +134,11 @@ export class SearchComponent implements OnInit, OnDestroy {
             clinvar: false,
             QTL: false,
             ...concordanceModelExample
-        }, {
-                validator: matchingPattern("searchInput",
-                    "searchBy", this.isAdvanced),
-            }
+        }
         );
         // Search options and patching form in simple search
         this.subscriptions.add(
-            this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(250)).subscribe(
+            this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(200)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
@@ -160,7 +148,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             )
         );
         this.subscriptions.add(
-            this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(250)).subscribe(
+            this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(200)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
@@ -170,43 +158,36 @@ export class SearchComponent implements OnInit, OnDestroy {
             )
         );
         this.subscriptions.add(
-            this.searchForm.get("chromosome").valueChanges.subscribe(
-                (s: string) => {
-                    if (s === "any chr") {
-                        this.searchForm.get("searchInput").disable();
-                    } else if (this.searchForm.get("searchInput").disabled) {
-                        this.searchForm.get("searchInput").enable();
-                    }
-
-                }
-            )
-        );
-        this.subscriptions.add(
             this.searchForm.get("searchBy").valueChanges.subscribe(
-                (s: "id" | "pos") => {
-                    if (this.searchForm.get("chromosome").value) {
-                        if (s === "id") {
-                            this.searchForm.patchValue(
-                                {chromosome: null});
-                        }
-                    } else {
-                        if ( s === "pos") {
-                            this.searchForm.patchValue(
-                                {chromosome: "chr1"});
-                        }
-                    }
+                (s: "id" | "pos" | 'geneId' | "geneName") => {
+                    let patchValue: Partial<SearchQueryModel> = {}
                     if (checkOneResult(this.searchData)) {
-                        this.searchForm.patchValue(
-                            s === "pos" ?
-                                {
-                                    searchInput: "" + this.searchData[0].pos,
-                                    chromosome: this.searchData[0].chr
-                                } :
-                                {
-                                    searchInput: this.searchData[0].rsId,
+                        switch (s) {
+                            case "pos":
+                               patchValue = {
+                                   chromPos: new ChromPos(this.searchData[0].chr.slice(3), "" + this.searchData[0].pos)
+                               }
+                               break;
+                            case "id":
+                                patchValue = {
+                                    rsId: this.searchData[0].rsId,
                                 }
-                        );
+                                break;
+                        }
                     }
+                    // if (this.searchData.length > 1) {
+                    //     switch (s) {
+                    //         case "pos":
+                    //             patchValue = {
+                    //                 chromPos: new ChromPos(
+                    //                     this.searchData[0].chr.slice(3),
+                    //                     "" + this.searchData[0].pos
+                    //                 )
+                    //             }
+                    //             break;
+                    //     }
+                    // }
+                    this.searchForm.patchValue(patchValue);
                 }
             )
         );
@@ -214,7 +195,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.route.queryParams.subscribe(
                 (s: SearchParamsModel) => {
                     this.searchParams = s;
-                    this.searchForm.patchValue(this._convertParamsToForm(this.searchParams));
+                    this.searchForm.patchValue(this._convertParamsToForm(s));
                     if (!this._isSearchDisabled()) {
                         this.searchPressed.emit(this.searchForm.value);
 
@@ -230,8 +211,8 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
 
-    _clearSearchField() {
-        this.searchForm.patchValue(this.nullValue);
+    _clearSearchField(name) {
+        this.searchForm.patchValue({[name]: this.nullValue[name]});
     }
 
     _navigateToSearch() {
@@ -270,8 +251,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         let search: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             search = {
-                searchInput: "1-50000000",
-                chromosome: "chr1",
+                chromPos: new ChromPos('1','1-50000000'),
                 clList: ["HEK293 (embryonic kidney)"],
                 tfList: ["ANDR_HUMAN", "CTCF_HUMAN"],
                 ebi: false,
@@ -285,8 +265,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
             search = {
                 searchBy: 'pos',
-                chromosome: 'chr3',
-                searchInput: '158644602'
+                chromPos: new ChromPos('3','158644602')
             }
         }
         this.searchForm.patchValue(search);
@@ -296,18 +275,15 @@ export class SearchComponent implements OnInit, OnDestroy {
     _checkToDisplay(id: string): boolean {
         const searchForm = this.searchForm.value as SearchQueryModel;
         if (this.isAdvanced) {
-            if (id === "searchNear") {
-                return !!searchForm.chromosome &&
-                    searchForm.chromosome !== "any chr" &&
-                    !this._isSearchDisabled() && !!this.searchForm.get("searchInput").value;
+            if (id === "searchNear" || id === 'geneName' || id === 'geneId') {
+                return false;
             } else {
                 return id !== "id";
             }
         } else {
             if (id === "searchNear") {
                 if (searchForm.searchBy === "pos") {
-                    return (!!searchForm.chromosome &&
-                        searchForm.chromosome !== "any chr" && !this._isSearchDisabled());
+                    return (!this._isSearchDisabled());
                 } else {
                     return !this.searchDataLoading && checkOneResult(this.searchData);
                 }
@@ -376,14 +352,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (this.isAdvanced) {
             if (searchParams) {
                 const result: Partial<SearchQueryModel> = {};
-                if (searchParams.pos) {
-                    result.searchInput = searchParams.pos;
-                    result.chromosome = searchParams.chr;
-                } else if (searchParams.chr) {
-                    result.chromosome = searchParams.chr;
-                } else {
-                    result.chromosome = "any chr";
-                }
+                result.chromPos = new ChromPos(searchParams.chr || '', searchParams.pos || '');
                 result.clList = searchParams.cl ? searchParams.cl.split(",") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
                 if (searchParams.phe_db) {
@@ -395,47 +364,77 @@ export class SearchComponent implements OnInit, OnDestroy {
                 return result;
             } else return {};
         } else {
-            return searchParams && searchParams.hasOwnProperty("chr") ?
-                {
-                    searchBy: "pos",
-                    chromosome: searchParams.chr,
-                    searchInput: searchParams.pos || ""
-                } :
-                {searchBy: "id", searchInput: searchParams.rs};
+            if (searchParams) {
+                if (searchParams.hasOwnProperty("chr")) {
+                    return {
+                        searchBy: "pos",
+                        chromPos: new ChromPos(searchParams.chr, searchParams.pos)
+                    }
+                }
+                if (searchParams.hasOwnProperty("g_id")) {
+                    return {
+                        searchBy: "geneId",
+                        geneId: searchParams.g_id
+                    }
+                }
+                if (searchParams.hasOwnProperty("g_name")) {
+                    return {
+                        searchBy: "geneName",
+                        geneName: searchParams.g_name
+                    }
+                }
+            } else {
+                return {
+                    searchBy: "id",
+                    geneId: searchParams.rs || ''
+                }
+            }
         }
     }
 
     _isSearchDisabled(): boolean {
         const sF = this.searchForm.value as SearchQueryModel;
-        return (!this.isAdvanced && !sF.searchInput) ||
-            this.searchForm.invalid || (
-                this.isAdvanced &&
-                sF.tfList.length === 0 &&
-                sF.clList.length === 0 &&
-                !checkIfCheckpointSelected(sF) &&
-                (!sF.chromosome ||
-                sF.chromosome === "any chr"));
+        if (!this.searchForm.invalid) {
+            if (this.isAdvanced) {
+                return !sF.chromPos.chr && sF.tfList.length === 0 &&
+                    sF.clList.length === 0 && !checkIfCheckpointSelected(sF)
+            } else {
+                if (sF.searchBy == 'id') {
+                    return !sF.rsId
+                }
+                if (sF.searchBy == 'pos') {
+                    return !sF.chromPos.chr
+                }
+                if (sF.searchBy == 'geneId') {
+                    return !sF.geneId
+                }
+                if (sF.searchBy == 'geneName') {
+                    return !sF.geneName
+                }
+            }
+        }
+        return true
     }
 
     _nearbySearch() {
         let patchValue: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             patchValue = {
-                searchInput: SearchComponent.convertPosToInterval(
+                rsId: SearchComponent.convertPosToInterval(
                     this.searchForm.value.searchInput)
             };
         } else {
             if (this.searchForm.value.searchBy === "id") {
                 patchValue = {
                     searchBy: "pos",
-                    searchInput: SearchComponent.convertPosToInterval(
-                        "" + this.searchData[0].pos),
-                    chromosome: this.searchData[0].chr,
+                    chromPos: new ChromPos(this.searchData[0].chr,
+                        SearchComponent.convertPosToInterval(
+                            "" + this.searchData[0].pos))
                 };
             } else {
                 patchValue = {
-                    searchInput: SearchComponent.convertPosToInterval(
-                        this.searchForm.value.searchInput)
+                    chromPos: new ChromPos(this.searchForm.value.chromPos.chr, SearchComponent.convertPosToInterval(
+                        this.searchForm.value.searchInput))
                 };
             }
         }
@@ -456,43 +455,23 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.searchForm.patchValue({searchBy: 'id'})
         }
     }
-}
 
-function matchingPattern(searchKey: string,
-                         optionKey: string,
-                         isAdvancedSearch: boolean) {
-    return (group: FormGroup): {[key: string]: any} => {
-        const search: string = group.controls[searchKey].value || "";
-        const option: string = group.controls[optionKey].value;
-        if ((option === "pos" && !isAdvancedSearch)
-            || (isAdvancedSearch && search)) {
-            if (isValidPosInterval(search)) {
-                const [startPos, endPos] = search.split("-");
-                if ((Number(startPos) || startPos === "0") && (Number(endPos) || endPos === "0")) {
-                    if (Number(startPos) > Number(endPos) || endPos === "0") {
-                        return {
-                            greater: true
-                        };
-                    } else {
-                        return;
-                    }
-                }
-                return {
-                    wrongPattern: true
-                };
-            } else {
-                if (search.match(/^\d*$/)) {
-                    return;
-                } else {
-                    return {
-                        wrongPattern: true
-                    };
-                }
-            }
-
+    getValidationMessages(s: string): string {
+        switch (s) {
+            case 'noChr':
+                return '*No chromosome provided'
+            case 'badChr':
+                return '*Invalid chromosome'
+            case 'greater':
+                return '*end must be > start'
+            case 'wrongPos':
+                return '*must be from-to'
+            default:
+                return ''
         }
     }
 }
+
 function checkIfCheckpointSelected(sF: SearchQueryModel) {
     let result: boolean = false;
     Object.keys(concordanceModelExample).forEach(s => sF[s] ? result = true : null);

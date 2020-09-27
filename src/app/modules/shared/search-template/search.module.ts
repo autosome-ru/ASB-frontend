@@ -14,6 +14,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSelectModule} from "@angular/material/select";
 import {RouterModule} from "@angular/router";
+import {FormFieldsModule} from "../form-fields/form-fields.module";
 
 
 
@@ -33,6 +34,7 @@ import {RouterModule} from "@angular/router";
         MatTooltipModule,
         MatSelectModule,
         RouterModule,
+        FormFieldsModule,
 
     ],
     declarations: [
