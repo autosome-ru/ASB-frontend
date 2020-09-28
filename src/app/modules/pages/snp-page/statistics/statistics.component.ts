@@ -41,13 +41,13 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
     @Input()
-    action: (row: T) => boolean
+    action: (row: T) => boolean;
 
     @Input()
     public readonly getSnpName: (row: T) => string;
 
     @Input()
-    sortData:((data: T[], sort: MatSort) => T[])
+    sortData: ((data: T[], sort: MatSort) => T[]);
 
     @Output()
     private downloadSnpInfo = new EventEmitter<{
@@ -87,12 +87,12 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
                 this.tableFormGroup.get('filter').valueChanges.subscribe(
                 (s) => this._applyFilter(s)
             )
-        )
+        );
 
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step)
+        return getTextByStepName(step);
     }
 
     ngOnDestroy() {
@@ -105,12 +105,12 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
             if (search) {
                 result = result && Object.keys(row).some(key => {
                     if (!this.tableDisplayedColumns.some(s => s == key)) {
-                        return false
+                        return false;
                     }
                     const converter = (this.tableColumnModel[key] && this.tableColumnModel[key].valueConverter)
                         || (v => String(v));
                     if (!row[key]) {
-                        return false
+                        return false;
                     }
                     return converter(row[key]).toLowerCase().indexOf(search.toLowerCase().trim()) !== -1;
                 });
@@ -127,8 +127,8 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     }
 
     _applyFilter(s?: string) {
-        let search: string
-        search = s ? s : this.tableFormGroup.get("filter").value
+        let search: string;
+        search = s ? s : this.tableFormGroup.get("filter").value;
         this.filteredObjectData = this.filterData(this.objectData, search);
 
     }

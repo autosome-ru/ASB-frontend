@@ -51,10 +51,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public motifPanel: MatExpansionPanel;
 
     @ViewChild('tourPopover')
-    private tourPopover: AsbPopoverComponent
+    private tourPopover: AsbPopoverComponent;
 
     @ViewChild('asbMotifsComponent')
-    public asbMotifsComponent: AsbMotifsComponent
+    public asbMotifsComponent: AsbMotifsComponent;
 
     public id: string;
     public alt: string;
@@ -78,7 +78,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
 
     private subscriptions: Subscription = new Subscription();
-    private releaseVersion: string = '';
+    private releaseVersion = '';
     public tourSteps: string[];
     public release$: Observable<ReleaseModel>;
 
@@ -98,20 +98,20 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 (p) => {
-                    this.id = p.get("rsId")
-                    this.alt = p.get("alt")
+                    this.id = p.get("rsId");
+                    this.alt = p.get("alt");
                     this.store.dispatch(new fromActions.data.InitSnpInfoAction(
                         {rsId: this.id, alt: this.alt}));
                 }
 
             )
-        )
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        );
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.subscriptions.add(
             this.release$.subscribe(
                 s => this.releaseVersion = s.version
             )
-        )
+        );
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.subscriptions.add(
@@ -137,38 +137,38 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'transcription-factors-columns',
             'table0',
             'table1',
-        ]
+        ];
         this.subscriptions.add(
             this.snpData$.subscribe(
                 s => {
                     if (s && s.cellLines) {
                         if (s.cellLines.length > 0 && s.transFactors.length > 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != `table1`)
+                            this.tourSteps = this.tourSteps.filter(s => s != `table1`);
                         } else {
                             if (s.cellLines.length == 0) {
-                                this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons' && s != 'table1')
+                                this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons' && s != 'table1');
                             } else {
-                                this.tourSteps = this.tourSteps.filter(s => s != 'table0' && s != 'transcription-factors-buttons')
+                                this.tourSteps = this.tourSteps.filter(s => s != 'table0' && s != 'transcription-factors-buttons');
                             }
                         }
                         if (this._getGoodTfs(s.transFactors).length > 0) {
                             const ind: number = this._getGoodTfs(s.transFactors).findIndex(
-                                s => s.name == this.route.snapshot.fragment || '')
+                                s => s.name == this.route.snapshot.fragment || '');
                             if (ind != -1) {
-                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[ind].name)
+                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[ind].name);
                             } else {
-                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[0].name)
+                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[0].name);
                             }
                         } else {
-                            this.tourSteps.push('motif-analysis')
+                            this.tourSteps.push('motif-analysis');
 
                         }
-                        this.tourSteps.push('phen-stats')
+                        this.tourSteps.push('phen-stats');
 
                     }
                 }
             )
-        )
+        );
 
         this.commonColumnModel = {
             effectSizeRef: {
@@ -237,7 +237,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step)
+        return getTextByStepName(step);
     }
 
     ngOnDestroy() {
@@ -247,7 +247,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     _downloadFile(options: {
         columns: string[],
         filter: string,
-    }, where: TfOrCl) {
+    },            where: TfOrCl) {
         this.subscriptions.add(
             this.dataService.getSnpInfoByIdCsv(
                 this.id, this.alt, where, options.columns, options.filter).subscribe(
@@ -293,58 +293,59 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     filterCondition(tf: TfSnpModel): boolean {
-        return !!(tf.motifConcordance && tf.motifConcordance !== "No Hit")
+        return !!(tf.motifConcordance && tf.motifConcordance !== "No Hit");
     }
 
     _getGoodTfs(tfs: TfSnpModel[]): TfSnpModel[] {
         return tfs.filter(s => this.filterCondition(s)).sort(
             (a, b) =>
-                Math.max(b.effectSizeAlt, b.effectSizeRef) - Math.max(a.effectSizeAlt, a.effectSizeRef))
+                Math.max(b.effectSizeAlt, b.effectSizeRef) - Math.max(a.effectSizeAlt, a.effectSizeRef));
     }
 
     openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
-        const id: number = tfs.indexOf($event)
+        const id: number = tfs.indexOf($event);
         const chosenExpansionPanel = this.asbMotifsComponent.expansionPanels.filter(
-            (s, i) => i == id)[0]
-        chosenExpansionPanel.open()
+            (s, i) => i == id)[0];
+        chosenExpansionPanel.open();
 
         if (this.motifPanel.closed) {
-            this.motifPanel.open()
+            this.motifPanel.open();
         }
-        document.getElementById(tfs[id].name).scrollIntoView({behavior: "smooth"})
+        document.getElementById(tfs[id].name).scrollIntoView({behavior: "smooth"});
     }
 
     sortData(data: TfSnpModel[], sort: MatSort): TfSnpModel[] {
         return data.sort(
             (a, b) => compareData(a, b, sort)
-        )
+        );
     }
 
     openPanels(tfs: TfSnpModel[]) {
-        const ind: number = this.tourSteps.findIndex(s => s.match(/motif-analysis-/))
+        const ind: number = this.tourSteps.findIndex(s => s.match(/motif-analysis-/));
         if (ind != -1) {
             if (this.motifPanel.closed) {
-                this.motifPanel.open()
+                this.motifPanel.open();
             }
-            const tf_name: string = this.tourSteps[ind].match(/motif-analysis-(.*)/)[1]
+            const tf_name: string = this.tourSteps[ind].match(/motif-analysis-(.*)/)[1];
 
             const expPanel: MatExpansionPanel = this.asbMotifsComponent.expansionPanels.filter((s, i) =>
-                i == tfs.findIndex(s => s.name == tf_name))[0]
+                i == tfs.findIndex(s => s.name == tf_name))[0];
             if (expPanel && expPanel.closed) {
-                expPanel.open()
+                expPanel.open();
             }
         }
     }
 
     checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel) {
-        const index = tabGroup.selectedIndex
-        if (snp.transFactors.length > 0 && snp.cellLines.length > 0)
-            tabGroup.selectedIndex = 0
+        const index = tabGroup.selectedIndex;
+        if (snp.transFactors.length > 0 && snp.cellLines.length > 0) {
+            tabGroup.selectedIndex = 0;
+        }
         if (index == 0 && snp.transFactors.length == 0) {
-            tabGroup.selectedIndex = 1
+            tabGroup.selectedIndex = 1;
         }
         if (index == 1 && snp.cellLines.length == 0) {
-            tabGroup.selectedIndex = 0
+            tabGroup.selectedIndex = 0;
         }
     }
 }

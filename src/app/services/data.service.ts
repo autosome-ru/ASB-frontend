@@ -20,12 +20,12 @@ export class DataService {
 
     public getSnpInfoByIdCsv(id: string, alt: string, tfOrCl: TfOrCl,
                              columns: string[], filter?: string): Observable<Blob> {
-        return this.http.get(`${snpsInfoUrl}/${id.slice(2)}/${alt}/${tfOrCl}/csv`,
+        return this.http.get(`${snpsInfoUrl}/${id.slice(2)}/${alt}/${tfOrCl}/tsv`,
             {params: constructParams(columns, filter, tfOrCl)
                 , responseType: "blob"});
     }
-    downloadSvg(path: string): Observable<Blob>{
-        return this.http.get(path, {responseType: 'blob'});
+    downloadSvg(path: string): Observable<Blob> {
+        return this.http.get(path, {responseType: "blob"});
     }
 
     public getTotalInfo(): Observable<TotalInfoBackendModel> {
@@ -52,7 +52,7 @@ export class DataService {
 function constructParams(columns: string[], filter: string, tfOrCl: TfOrCl):
     {[id: string]: string} {
     const params: {[id: string]: string} = {};
-        params["columns"] = columns.map(column => changeName(column, tfOrCl)).join(",");
+    params.columns = columns.map(column => changeName(column, tfOrCl)).join(",");
     return params;
 }
 
@@ -77,10 +77,10 @@ function changeName(name: string, tfOrCl: TfOrCl): string {
             return "es_alt";
         }
         case "motifPRef": {
-            return "motif_log_p_ref"
+            return "motif_log_p_ref";
         }
         case "motifPAlt": {
-            return "motif_log_p_alt"
+            return "motif_log_p_alt";
         }
         case "motifConcordance": {
             return "motif_concordance";

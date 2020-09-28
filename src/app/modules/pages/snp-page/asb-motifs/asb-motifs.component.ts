@@ -29,9 +29,9 @@ import {ActivatedRoute} from "@angular/router";
 export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     @ViewChildren("panels")
-    expansionPanels: QueryList<MatExpansionPanel>
+    expansionPanels: QueryList<MatExpansionPanel>;
     revCompStateArray: {[id: string]: boolean } = {};
-    private subscriptions = new Subscription()
+    private subscriptions = new Subscription();
     private readonly isBrowser: boolean;
     public openedTfName: string;
 
@@ -41,29 +41,29 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
         private saverService: FileSaverService,
         private route: ActivatedRoute,
         @Inject(PLATFORM_ID) private platformId
-    ) { this.isBrowser = isPlatformBrowser(platformId);}
+    ) { this.isBrowser = isPlatformBrowser(platformId); }
 
-    public _transcriptionFactors: TfSnpModel[]
+    public _transcriptionFactors: TfSnpModel[];
 
     @Input()
     set transcriptionFactors(value: TfSnpModel[]) {
         this._transcriptionFactors = value;
-    };
+    }
 
     ngOnInit(): void {
         this._transcriptionFactors.forEach(s => this.revCompStateArray[s.id] = false);
         if (this.route.snapshot.fragment) {
-            this.openedTfName = this.route.snapshot.fragment
+            this.openedTfName = this.route.snapshot.fragment;
         }
 
     }
 
     ngAfterViewInit() {
         if (this.isBrowser && this.route.snapshot.fragment) {
-            const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment)
+            const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment);
             if (initialElement) {
                 setTimeout(() =>
-                    initialElement.scrollIntoView({behavior: 'smooth'}), 0)
+                    initialElement.scrollIntoView({behavior: 'smooth'}), 0);
             }
         }
     }
@@ -73,17 +73,17 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step)
+        return getTextByStepName(step);
     }
 
 
 
     makeImagePath(tf: TfSnpModel, isSvg?: boolean): string {
-        return `${isSvg ? 'svgs' : 'pngs'}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`
+        return `${isSvg ? 'svgs' : 'pngs'}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`;
     }
 
     changeRevCompState(tf: TfSnpModel) {
-        this.revCompStateArray[tf.id] = !this.revCompStateArray[tf.id]
+        this.revCompStateArray[tf.id] = !this.revCompStateArray[tf.id];
     }
 
     downloadSvg(path: string) {
@@ -92,16 +92,16 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
                 (blob) =>
                     this.saverService.save(blob, path.slice(5)),
                 (error: HttpErrorResponse) =>
-                    this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`,)
+                    this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`, )
             )
-        )
+        );
     }
 
     checkExpanded(tf: TfSnpModel, i: number): boolean {
         if (this.openedTfName) {
-            return tf.name == this.openedTfName
+            return tf.name == this.openedTfName;
         } else {
-            return i == 0
+            return i == 0;
         }
     }
 }

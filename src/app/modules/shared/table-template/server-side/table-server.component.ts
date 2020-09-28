@@ -41,14 +41,14 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     public popoverContentTemplate: TemplateRef<{row: T}> = null ;
 
     @Input()
-    public clickableRow: boolean = false;
+    public clickableRow = false;
 
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
 
     public _dataSource: AsbBackendDataSource<T>;
     public popoverRow: T;
-    private subscriptionMade: boolean = false;
+    private subscriptionMade = false;
 
     @Input()
     set data(value: Observable<T[]>) {
@@ -66,7 +66,7 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     @Input()
     public paginatorLength: number;
     @Input()
-    public paginatorPageSize: number | null
+    public paginatorPageSize: number | null;
 
     @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;
@@ -83,7 +83,7 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     constructor(private ref: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes["paginatorLength"] && this._dataSource && this.paginatorLength) {
+        if (changes.paginatorLength && this._dataSource && this.paginatorLength) {
             this.ref.detectChanges();
             this.addSubscriptions();
         }

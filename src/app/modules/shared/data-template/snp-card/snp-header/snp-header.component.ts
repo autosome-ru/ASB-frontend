@@ -12,12 +12,12 @@ import {getTextByStepName} from "../../../../../helpers/text-helpers/tour-text.h
 })
 export class AsbSnpHeaderComponent implements OnInit {
     @HostBinding('snp-header')
-    private readonly cssClass = true
+    private readonly cssClass = true;
 
     @Input()
     public data: SnpSearchModel | SnpInfoModel;
     @Input()
-    public snpCard: boolean = true;
+    public snpCard = true;
     colors: {[base: string]: string} = baseToColors;
 
     constructor() {}
@@ -25,6 +25,6 @@ export class AsbSnpHeaderComponent implements OnInit {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step)
+        return getTextByStepName(step);
     }
 }

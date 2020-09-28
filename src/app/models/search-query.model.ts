@@ -7,7 +7,7 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     rsId: string;
     geneId: string;
     geneName: string;
-    chromPos: ChromPos
+    chromPos: ChromPos;
     searchBy: "id" | "pos" | "geneId" | "geneName";
     searchCl: string;
     searchTf: string;
@@ -20,9 +20,25 @@ export interface SearchHintBackendModel {
     aggregated_snps_count: number;
 }
 
+export interface SearchByGeneNameHintBackendModel {
+    gene_name: string;
+    gene_id: string;
+    chromosome: string;
+    start_pos: number;
+    end_pos: number;
+}
+
 export interface SearchHintModel {
     name: string;
     aggregatedSnpCount: number;
+}
+
+export interface GeneModel {
+    name: string;
+    id: string;
+    chr: string;
+    startPos: number;
+    endPos: number;
 }
 
 export interface SearchParamsModel {
@@ -40,10 +56,12 @@ export interface SearchParamsModel {
 
 export interface SearchResultsModel {
     results: SnpSearchModel[];
+    gene?: GeneModel;
     total: number;
 }
 
 export interface SearchResultsBackendModel {
     results: SnpSearchBackendModel[];
+    gene?: SearchByGeneNameHintBackendModel;
     total: number;
 }

@@ -3,9 +3,9 @@ import {dataReducer, DataState} from "./data.reducer";
 import {releaseReducer, ReleaseState} from "./releases.reducer";
 
 export interface AppState {
-    search: SearchState,
-    data: DataState,
-    release: ReleaseState
+    search: SearchState;
+    data: DataState;
+    release: ReleaseState;
 }
 
 export const selectSearch = (state: AppState) => state.search;

@@ -24,7 +24,7 @@ export class InnerTableComponent implements OnInit {
     public expViewTemplate: TemplateRef<{value: number}>;
 
     @Input()
-    innerTableData: ExpSnpModel[]
+    innerTableData: ExpSnpModel[];
 
     @Input()
     isCl: boolean;
@@ -61,14 +61,14 @@ export class InnerTableComponent implements OnInit {
         };
         if (this.isCl) {
             this.displayedColumns = ["expId", "tfName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"];
 
         } else {
            this.displayedColumns = ["expId", "clName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"]
+                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"];
         }
         this.initialSorting = {direction: "desc",
-            active: this.sortColumn == 'ref' ? "rawPValueRef" : "rawPValueAlt"}
+            active: this.sortColumn == 'ref' ? "rawPValueRef" : "rawPValueAlt"};
     }
 
     _getPaginatorOptions(): number[] {
@@ -76,7 +76,7 @@ export class InnerTableComponent implements OnInit {
     }
 
     convertClId(id: number) {
-        return 'EXP' + addZeros(id)
+        return 'EXP' + addZeros(id);
 
     }
 
@@ -84,10 +84,10 @@ export class InnerTableComponent implements OnInit {
 
 function addZeros(id: number) {
     let result: string = '' + id;
-    let len: number = result.length
+    let len: number = result.length;
     while (len < 6) {
-        result = '0' + result
-        len += 1
+        result = '0' + result;
+        len += 1;
     }
     return result;
 }

@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-app")
     private cssClass = true;
     private readonly isBrowser: boolean;
-    private subscriptions = new Subscription()
+    private subscriptions = new Subscription();
 
     constructor(private router: Router,
                 private route: ActivatedRoute,
@@ -41,9 +41,9 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscriptions.add(
             this.router.events.subscribe(() => {
-                this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction())
+                this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
             })
-        )
+        );
     }
 
     ngOnDestroy() {

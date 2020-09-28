@@ -25,7 +25,7 @@ export class HelpPageComponent implements OnInit, AfterViewInit {
     constructor(private route: ActivatedRoute,
                 private seoService: SeoService,
                 @Inject(PLATFORM_ID) private platformId
-) { this.isBrowser = isPlatformBrowser(platformId);}
+) { this.isBrowser = isPlatformBrowser(platformId); }
 
 
 
@@ -34,14 +34,14 @@ export class HelpPageComponent implements OnInit, AfterViewInit {
     }
     ngAfterViewInit() {
         if (this.isBrowser) {
-            const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment)
+            const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment);
             if (initialElement) {
-                initialElement.scrollIntoView({behavior: 'smooth'})
+                initialElement.scrollIntoView({behavior: "smooth"});
             }
         }
     }
 
     getId(value: string) {
-        return value.replace(' ', '-')
+        return value.replace(" ", "-");
     }
 }

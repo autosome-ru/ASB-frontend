@@ -15,7 +15,7 @@ import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
-import {SearchQueryModel, SearchResultsModel} from "../../../models/search-query.model";
+import {GeneModel, SearchQueryModel, SearchResultsModel} from "../../../models/search-query.model";
 import {SearchComponent} from "../../shared/search-template/search.component";
 import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
@@ -62,6 +62,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public release$: Observable<ReleaseModel>;
     results: SnpSearchModel[];
     public tourSteps: string[];
+    public selectedGene$: Observable<GeneModel>;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -70,7 +71,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private seoService: SeoService) {}
     ngOnInit() {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.isAdvancedSearch = !this.router.url.includes("search/simple");
         if (this.route.snapshot.queryParams.rs ||
             (this.route.snapshot.queryParams.pos &&
@@ -83,20 +84,21 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             this.store.select(fromSelectors.selectCurrentSearchResults).subscribe(
                 s => {
                     if (s && s.results && s.results.length > 0) {
-                        this.results = s.results
+                        this.results = s.results;
                         if (s.results[0].cellLines.length == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons')
+                            this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons');
                         }
                         if (s.results[0].transFactors.length == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'transcription-factors-buttons')
+                            this.tourSteps = this.tourSteps.filter(s => s != 'transcription-factors-buttons');
                         }
                     }
                 }
             )
-        )
-        this.firstTimeOpen = this.route.snapshot.queryParams['skip_check'] != '1';
+        );
+        this.firstTimeOpen = this.route.snapshot.queryParams.skip_check != '1';
         this.pagination = initialServerParams;
-        this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery)
+        this.selectedGene$ = this.store.select(fromSelectors.selectSelectedGene)
+        this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
         this.searchSnpResultsChanged$ = this.store.select(fromSelectors.selectCurrentSearchResultsChanged);
@@ -109,12 +111,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                             direction: q.direction || initialServerParams.direction,
                             pageSize: q.pageSize || initialServerParams.pageSize,
                             pageIndex: q.pageIndex || initialServerParams.pageIndex
-                        }
+                        };
                     }
                 }
             )
         );
-    if (this.isAdvancedSearch) {
+        if (this.isAdvancedSearch) {
         this.tourSteps = [
             'search-pos',
             'search-tf-list',
@@ -126,7 +128,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             'search-view',
             'cell-types-buttons',
             'transcription-factors-buttons',
-        ]
+        ];
     } else {
         this.tourSteps = [
             'search-by',
@@ -138,12 +140,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             'cell-types-buttons',
             'transcription-factors-buttons',
             'search-adv'
-        ]
+        ];
     }
     }
 
     ngOnDestroy() {
-        this.subscriptions.unsubscribe()
+        this.subscriptions.unsubscribe();
     }
 
 
@@ -184,7 +186,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 pageSize: this.pagination.pageSize
             };
         }
-        this.firstTimeOpen = false
+        this.firstTimeOpen = false;
         this.store.dispatch(new fromActions.search.LoadSearchResultsAction(
             {
                 search: event,
@@ -224,12 +226,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step)
+        return getTextByStepName(step);
     }
 
     checkResult() {
         if (!this.results || this.results.length == 0) {
-            this.searchComponent._initDemo()
+            this.searchComponent._initDemo();
         }
     }
 }

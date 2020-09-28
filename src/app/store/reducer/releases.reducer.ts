@@ -3,8 +3,8 @@ import {ReleaseModel} from "../../models/releases.model";
 import {recentRelease} from "../../helpers/constants/releases";
 
 export interface ReleaseState {
-    release: ReleaseModel,
-    releaseLoading: boolean
+    release: ReleaseModel;
+    releaseLoading: boolean;
 }
 
 export const selectCurrentRelease = (state: ReleaseState) => state.release;
@@ -20,20 +20,20 @@ export function releaseReducer(state: ReleaseState = initialState, action: fromA
             return {
                 ...state,
                 releaseLoading: true
-            }
+            };
         }
         case fromActions.ActionTypes.GetCurrentReleaseFail: {
             return {
                 ...state,
                 releaseLoading: false
-            }
+            };
         }
         case fromActions.ActionTypes.GetCurrentReleaseSuccess: {
             return {
                 ...state,
                 releaseLoading: false,
                 release: action.payload
-            }
+            };
         }
 
         default: {

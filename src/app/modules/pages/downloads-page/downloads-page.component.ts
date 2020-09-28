@@ -19,15 +19,15 @@ export class DownloadsPageComponent implements OnInit {
                 private seoService: SeoService) { }
 
     ngOnInit(): void {
-        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel)
-        this.releasesList = releasesList
+        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
+        this.releasesList = releasesList;
     }
 
     _getBadmapsName(release: ReleaseModel) {
-        return `BADmaps_${release.name}.zip`
+        return `BADmaps_${release.name}.zip`;
     }
 
     _getGtrdExpsName(release: ReleaseModel) {
-        return `ADASTRA_${release.name}_GTRD_exps.tsv`
+        return `ADASTRA_${release.name}_GTRD_exps.tsv`;
     }
 }

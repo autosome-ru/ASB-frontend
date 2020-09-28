@@ -36,7 +36,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public columnModel: AsbTableColumnModel<T>;
 
     @Input()
-    private sortingDataAccessor: ((data: T, s: string ) => string | number)
+    private sortingDataAccessor: ((data: T, s: string ) => string | number);
     @Input()
     public externalPaginator: MatPaginator;
 
@@ -50,7 +50,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public popoverContentTemplate: TemplateRef<{row: T}> = null ;
 
     @Input()
-    public clickableRow: boolean = false;
+    public clickableRow = false;
 
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
@@ -65,21 +65,21 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public initialValue: T[];
 
     @Input()
-    public initialSorting: { active: string; direction: SortDirection }
+    public initialSorting: { active: string; direction: SortDirection };
 
     @Input()
     set data(value: T[]) {
         this._dataSource = new MatTableDataSource<T>(value);
-        this.initialValue = value
-        this.checkDataSource()
-        if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
+        this.initialValue = value;
+        this.checkDataSource();
+        if (this.externalPaginator && !this.paginatorOptions) { this._dataSource.paginator = this.externalPaginator; }
     }
 
     @Input()
     public paginatorOptions: number[];
 
     @Input()
-    public action: (row: T) => boolean
+    public action: (row: T) => boolean;
 
     @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;
@@ -95,7 +95,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
     ngAfterViewInit() {
         if (this._dataSource) {
-            this.checkDataSource()
+            this.checkDataSource();
         }
     }
 
@@ -103,14 +103,14 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
         this._dataSource.sort = this.sort;
         if (this.sortData) {
             this._dataSource.sortData = ((data, sort) =>
-                sort.direction ? this.sortData(data, sort) : this.initialValue)
+                sort.direction ? this.sortData(data, sort) : this.initialValue);
         }
-        if (this.sortingDataAccessor) this._dataSource.sortingDataAccessor = this.sortingDataAccessor
-        if (this.paginatorOptions) this._dataSource.paginator = this.paginator;
+        if (this.sortingDataAccessor) { this._dataSource.sortingDataAccessor = this.sortingDataAccessor; }
+        if (this.paginatorOptions) { this._dataSource.paginator = this.paginator; }
     }
     ngOnChanges(changes: SimpleChanges) {
-        if (changes["externalPaginator"] && this.externalPaginator) {
-            if (this.externalPaginator && !this.paginatorOptions) this._dataSource.paginator = this.externalPaginator;
+        if (changes.externalPaginator && this.externalPaginator) {
+            if (this.externalPaginator && !this.paginatorOptions) { this._dataSource.paginator = this.externalPaginator; }
         }
     }
 
@@ -118,7 +118,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public _handleRowClick(row: T): void {
         this.dialog.open(AsbPopoverComponent, {
             autoFocus: false,
-            panelClass: 'custom-dialog-container',
+            panelClass: "custom-dialog-container",
             data: {
                 title: this.getTitle(row),
                 template: this.popoverContentTemplate,
@@ -129,12 +129,12 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
 
     getDisplayedColumns(): string[] {
-        const result = []
+        const result = [];
         result.push(...this.displayedColumns);
         if (this.action) {
-            result.push("__action__")
+            result.push("__action__");
         }
-        return result
+        return result;
     }
 
 }

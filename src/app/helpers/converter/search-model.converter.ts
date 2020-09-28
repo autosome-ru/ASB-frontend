@@ -1,4 +1,6 @@
 import {
+    SearchByGeneNameHintBackendModel,
+    GeneModel,
     SearchHintBackendModel,
     SearchHintModel, SearchQueryModel,
 } from "../../models/search-query.model";
@@ -19,9 +21,21 @@ export function convertSearchHintBackendModelToSearchHintModel(
     };
 }
 
-export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: 'phenotypes' | 'concordance'): string {
-    let result: string = "";
-    Object.keys(type == 'concordance' ? concordanceModelExample : phenotypesModelExample)
+export function convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
+    model: SearchByGeneNameHintBackendModel): GeneModel {
+    if (!model) return null
+    return {
+        chr: model.chromosome,
+        startPos: model.start_pos,
+        id: model.gene_id,
+        name: model.gene_name,
+        endPos: model.end_pos
+    }
+}
+
+export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: "phenotypes" | "concordance"): string {
+    let result = "";
+    Object.keys(type == "concordance" ? concordanceModelExample : phenotypesModelExample)
         .forEach(s => {
         if (s && form[s]) {
             result = (result ? result + "," : "") + s;

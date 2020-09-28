@@ -122,7 +122,27 @@
                        name="Search SNPs"
                        aria-label="search"
                        formControlName="geneName"
+                       [matAutocomplete]="auto1"
                 >
+                <mat-autocomplete
+                    #auto1="matAutocomplete"
+                >
+                    <ng-container *ngIf="!(searchGeneOptionsLoading$ | async)">
+                    <mat-option *ngFor="let option of searchGeneOptions$ | async"
+                                [value]="option.name"
+                    >
+                        <span>{{option.name}}</span>
+                    </mat-option>
+                    </ng-container>
+                    <mat-option *ngIf="searchGeneOptionsLoading$ | async">
+                        Loading...
+                        <mat-spinner
+                            matSuffix
+                            color="accent"
+                            [diameter]="12"
+                        ></mat-spinner>
+                    </mat-option>
+                </mat-autocomplete>
                 <button
                     type="submit"
                     style="display:none"
@@ -270,7 +290,7 @@
                     >
                 </mat-chip-list>
                 <mat-autocomplete #autoTf="matAutocomplete"
-                                  autoActiveFirstOption
+                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).tf"
                                   (optionSelected)="_selectOption($event, 'tf')"
                 >
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
@@ -323,7 +343,7 @@
                     >
                 </mat-chip-list>
                 <mat-autocomplete #autoCl="matAutocomplete"
-                                  autoActiveFirstOption
+                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).cl"
                                   (optionSelected)="_selectOption($event, 'cl')"
                 >
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
@@ -332,11 +352,13 @@
                             <small>&nbsp;Total snps: {{option.aggregatedSnpCount}}</small>
                         </mat-option>
                     </ng-container>
-                    <mat-spinner
-                        *ngIf="(searchOptionsLoading$ | async).cl"
-                        matSuffix color="accent"
-                        [diameter]="12"
-                    ></mat-spinner>
+                    <mat-option *ngIf="(searchOptionsLoading$ | async).cl">
+                        <mat-spinner
+                            matSuffix color="accent"
+                            [diameter]="12"
+                        ></mat-spinner>
+                        Loading...
+                    </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>

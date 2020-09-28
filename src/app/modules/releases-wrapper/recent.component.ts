@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from "@angular/core";
 
 @Component({
-    selector: 'asb-recent',
+    selector: "asb-recent",
     template: `<router-outlet></router-outlet>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None

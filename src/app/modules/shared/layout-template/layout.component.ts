@@ -10,7 +10,7 @@ import {AsbPopoverComponent} from "../popover-template/popover.component";
 })
 export class LayoutComponent implements OnInit {
     @ViewChild('popover')
-    private popover: AsbPopoverComponent
+    private popover: AsbPopoverComponent;
     @HostBinding("class.asb-layout")
     private readonly cssClass = true;
 

@@ -7,9 +7,9 @@ export const releasesList: ReleaseModel[] = [
         date: "22.06.2020",
         recent: true,
         version: "v1.5",
-        api: 'v1',
-        gtrdExpsPath: 'ADASTRA_GTRD_exps.tsv',
-        badMapsPath: 'BADmaps.zip'
+        api: "v1",
+        gtrdExpsPath: "ADASTRA_GTRD_exps.tsv",
+        badMapsPath: "BADmaps.zip"
     },
     {
         name: "Beta",
@@ -17,11 +17,11 @@ export const releasesList: ReleaseModel[] = [
         date: "22.06.2020",
         recent: false,
         version: "v1.5.1",
-        api: 'v1',
-        gtrdExpsPath: 'ADASTRA_GTRD_exps.tsv',
-        badMapsPath: 'BADmaps.zip',
-        notes: 'For development usage only.'
+        api: "v1",
+        gtrdExpsPath: "ADASTRA_GTRD_exps.tsv",
+        badMapsPath: "BADmaps.zip",
+        notes: "For development usage only."
     },
 ];
 
-export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0]
+export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0];

@@ -14,8 +14,8 @@ import {
 })
 export class StepTemplateComponent {
 
-    @ViewChild('template')
-    public template: TemplateRef<any>
+    @ViewChild("template")
+    public template: TemplateRef<any>;
 
     @HostBinding("class.asb-popover")
     private cssClass = true;

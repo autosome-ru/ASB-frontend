@@ -23,7 +23,7 @@ export function checkIfNumberOrFrac(data: string ) {
 
 
 export function isValidPosInterval(search: string): boolean {
-    search = search.trim()
+    search = search.trim();
     if (search.match(/^\d+-\d+$/)) {
         const posArray: string[] = search.split("-");
         if (posArray.length === 2) {
@@ -47,13 +47,13 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
     if (form && !form.isAdvanced) {
         if (form && form.searchBy) {
             if (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced) {
-                form.searchBy = 'pos'
+                form.searchBy = "pos";
             }
             switch (form.searchBy) {
                 case "id":
                     return form.rsId ? {rs: form.rsId.trim()} : {};
                 case "pos":
-                    let result = {}
+                    let result = {};
                     if (form.chromPos.pos) {
                         result = {
                             ...result,
@@ -66,11 +66,11 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                             chr: form.chromPos.chr.trim()
                         };
                     }
-                    return result
+                    return result;
                 case "geneId":
-                    return form.geneId ? {g_id: form.geneId.trim()} : {}
+                    return form.geneId ? {g_id: form.geneId.trim()} : {};
                 case "geneName":
-                    return form.geneName ? {g_name: form.geneName.trim()} : {}
+                    return form.geneName ? {g_name: form.geneName.trim()} : {};
             }
 
         } else {
@@ -80,7 +80,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
     } else {
         if (form) {
             const result: Partial<SearchParamsModel> = {};
-            if (form.clList.length > 0) result.cl = form.clList.join(",");
+            if (form.clList.length > 0) { result.cl = form.clList.join(","); }
             if (form.chromPos.pos) {
                 if (checkOneResult(searchData) &&
                     !isValidPosInterval(form.chromPos.pos.trim())) {
@@ -93,50 +93,50 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
             } else if (form.chromPos.chr) {
                 result.chr = form.chromPos.chr;
             }
-            if (form.tfList.length > 0) result.tf = form.tfList.join(",");
+            if (form.tfList.length > 0) { result.tf = form.tfList.join(","); }
             const phenList: string = formCheckboxesToList(form);
             if (phenList) {
                 result.phe_db = phenList;
             }
             const concList: string = formCheckboxesToList(form, "concordance");
             if (concList) {
-                result.motif_conc = concList
+                result.motif_conc = concList;
             }
             return result;
-        } else return {};
+        } else { return {}; }
     }
 }
 
 function applyFunction(a: string | number, b: string | number, isBadElem: ((x: string | number) => boolean)): number {
     if (isBadElem(a) && isBadElem(b)) {
-        return 0
+        return 0;
     } else {
         if (isBadElem(a)) {
-            return 1
+            return 1;
         } else {
-            return -1
+            return -1;
         }
     }
 }
 
 export function compareData(a: TfSnpModel, b: TfSnpModel, sort: MatSort): number {
-    let result: number = 0
+    let result = 0;
     if (sort.active) {
         if (a[sort.active] && b[sort.active]) {
             if (sort.active == "motifConcordance") {
-                if (a.motifConcordance != 'No Hit' && b.motifConcordance != 'No Hit') {
-                    result = compareConcordance(a.motifConcordance, b.motifConcordance)
+                if (a.motifConcordance != "No Hit" && b.motifConcordance != "No Hit") {
+                    result = compareConcordance(a.motifConcordance, b.motifConcordance);
                 } else {
                     return applyFunction(a.motifConcordance, b.motifConcordance,
-                        x => x == 'No Hit' )
+                        x => x == "No Hit" );
                 }
 
             } else {
-                result = a[sort.active] > b[sort.active] ? 1 : -1
+                result = a[sort.active] > b[sort.active] ? 1 : -1;
             }
         } else {
-            return applyFunction(a[sort.active], b[sort.active], x => !x)
+            return applyFunction(a[sort.active], b[sort.active], x => !x);
         }
     }
-    return result * (sort.direction == 'asc' ? 1 : -1)
+    return result * (sort.direction == "asc" ? 1 : -1);
 }

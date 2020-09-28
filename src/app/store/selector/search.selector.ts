@@ -12,3 +12,11 @@ export const selectCurrentSearchResultsChanged = createSelector(fromRoot.selectS
     fromSearch.selectResultsChange);
 export const selectCurrentSearchQuery = createSelector(fromRoot.selectSearch,
     fromSearch.selectSearchQuery);
+
+export const selectCurrentSearchByGeneNameOptions = createSelector(fromRoot.selectSearch,
+    fromSearch.selectSearchByGeneNameOptions)
+export const selectCurrentSearchByGeneNameOptionsLoading = createSelector(fromRoot.selectSearch,
+    fromSearch.selectSearchByGeneNameOptionsLoading)
+
+export const selectSelectedGene = createSelector(fromRoot.selectSearch,
+    fromSearch.selectCurrentSelectedGene)

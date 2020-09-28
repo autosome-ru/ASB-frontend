@@ -22,7 +22,7 @@ const _selectSnpsDataById = createSelector(_selectSnpInfoData,
                     snpData?: SnpInfoModel,
                     loading: boolean,
                 };
-            }, id: string) => <{loading: boolean, snpData?: SnpInfoModel}> snps[id],
+            }, id: string) => snps[id] as {loading: boolean, snpData?: SnpInfoModel},
 );
 export const selectSnpInfoDataById = createSelector(
     _selectSnpsDataById,

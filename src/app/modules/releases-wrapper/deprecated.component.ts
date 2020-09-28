@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import * as fromSelectors from "src/app/store/selector";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -7,7 +7,7 @@ import {AppState} from "../../store/reducer";
 
 
 @Component({
-    selector: 'asb-deprecated',
+    selector: "asb-deprecated",
     template: `
     <ngb-alert style="margin-top: -1rem" type="danger" [dismissible]="false">
         <strong>Attention!</strong>
@@ -26,7 +26,7 @@ export class DeprecatedComponent implements OnInit {
     constructor(private store: Store<AppState>) {}
 
     ngOnInit(): void {
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
 
 }

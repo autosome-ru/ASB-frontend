@@ -1,8 +1,8 @@
 export const baseToColors: {[base: string]: string} = {
-    "A": "#0074FF",
-    "T": "#7900C8",
-    "G": "#FF4500",
-    "C": "#FFA500"};
+    A: "#0074FF",
+    T: "#7900C8",
+    G: "#FF4500",
+    C: "#FFA500"};
 export function calculateColor(pValueRef: number,
                                pValueAlt: number,
                                refBase: string,
@@ -14,7 +14,7 @@ export function calculateColor(pValueRef: number,
     }
 }
 export function calculateColorForOne(pValue: number,
-                               base: string): string {
+                                     base: string): string {
 
     return baseToColors[base] + Math.round(
         Math.min(pValue / 20 * 255,

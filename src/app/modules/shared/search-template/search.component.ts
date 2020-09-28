@@ -15,7 +15,12 @@ import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
-import {SearchHintModel, SearchParamsModel, SearchQueryModel} from "src/app/models/search-query.model";
+import {
+    GeneModel,
+    SearchHintModel,
+    SearchParamsModel,
+    SearchQueryModel
+} from "src/app/models/search-query.model";
 import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -52,6 +57,9 @@ export class SearchComponent implements OnInit, OnDestroy {
     public width: "restricted" | "full";
 
     @Input()
+    private selectedGene: GeneModel;
+
+    @Input()
     public isAdvanced: boolean;
 
     @Input()
@@ -64,13 +72,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     private searchPressed = new EventEmitter<SearchQueryModel>();
 
     @Output()
-    private nextStep= new EventEmitter<void>();
+    private nextStep = new EventEmitter<void>();
 
     private readonly nullValue = {
         rsId: "",
-        geneId: '',
-        geneName: '',
-        chromPos: new ChromPos('', '')
+        geneId: "",
+        geneName: "",
+        chromPos: new ChromPos("", "")
     };
     private searchParams: SearchParamsModel;
 
@@ -88,6 +96,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     public downloadButtonColor: "primary" | null = null;
     public showNearbyControl: FormControl;
     public currentRelease$: Observable<ReleaseModel>;
+    public searchGeneOptions$: Observable<GeneModel[]>;
+    public searchGeneOptionsLoading$: Observable<boolean>;
 
 
     private static convertPosToInterval(searchInput: string): string {
@@ -110,7 +120,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
 
         this.showNearbyControl = this.formBuilder.control(100);
 
@@ -119,7 +129,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searchForm = this.formBuilder.group({
             isAdvanced: this.isAdvanced,
             rsId: "",
-            chromPos: [new ChromPos('', ''), [validateGroup]],
+            chromPos: [new ChromPos("", ""), [validateGroup]],
             searchBy: "id",
             geneId: "",
             geneName: "",
@@ -148,6 +158,12 @@ export class SearchComponent implements OnInit, OnDestroy {
             )
         );
         this.subscriptions.add(
+            this.searchForm.get('geneName').valueChanges.pipe(debounceTime(200)).subscribe(
+                (s: string) => this.store.dispatch(
+                    new fromActions.search.LoadSearchByGeneNameOptionsAction(s))
+            )
+        )
+        this.subscriptions.add(
             this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(200)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
@@ -159,34 +175,44 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.subscriptions.add(
             this.searchForm.get("searchBy").valueChanges.subscribe(
-                (s: "id" | "pos" | 'geneId' | "geneName") => {
-                    let patchValue: Partial<SearchQueryModel> = {}
+                (s: "id" | "pos" | "geneId" | "geneName") => {
+                    let patchValue: Partial<SearchQueryModel> = {};
                     if (checkOneResult(this.searchData)) {
                         switch (s) {
                             case "pos":
                                patchValue = {
                                    chromPos: new ChromPos(this.searchData[0].chr.slice(3), "" + this.searchData[0].pos)
-                               }
+                               };
                                break;
                             case "id":
                                 patchValue = {
                                     rsId: this.searchData[0].rsId,
+                                };
+                                break;
+                        }
+                    }
+                    if (this.selectedGene) {
+                        switch (s) {
+                            case "pos":
+                                patchValue = {
+                                    chromPos: new ChromPos(
+                                        this.selectedGene.chr.slice(3),
+                                        `${Math.max(this.selectedGene.startPos - 1000, 1)}-${this.selectedGene.endPos}`
+                                    )
+                                }
+                                break;
+                            case "geneId":
+                                patchValue = {
+                                    geneId: this.selectedGene.id
+                                }
+                                break;
+                            case "geneName":
+                                patchValue = {
+                                    geneName: this.selectedGene.name
                                 }
                                 break;
                         }
                     }
-                    // if (this.searchData.length > 1) {
-                    //     switch (s) {
-                    //         case "pos":
-                    //             patchValue = {
-                    //                 chromPos: new ChromPos(
-                    //                     this.searchData[0].chr.slice(3),
-                    //                     "" + this.searchData[0].pos
-                    //                 )
-                    //             }
-                    //             break;
-                    //     }
-                    // }
                     this.searchForm.patchValue(patchValue);
                 }
             )
@@ -203,6 +229,11 @@ export class SearchComponent implements OnInit, OnDestroy {
                 }
             )
         );
+        this.searchGeneOptions$ = this.store.select(
+            fromSelectors.selectCurrentSearchByGeneNameOptions)
+        this.searchGeneOptionsLoading$ = this.store.select(
+            fromSelectors.selectCurrentSearchByGeneNameOptionsLoading)
+
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
     }
@@ -219,9 +250,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (!this._isSearchDisabled()) {
             let params: {[a: string]: string} = {
                 ...this._convertFormToParams(this.isAdvanced)
-            }
-            if (!this.router.url.includes('/search')) {
-                params = {...params, skip_check: '1'}
+            };
+            if (!this.router.url.includes("/search")) {
+                params = {...params, skip_check: "1"};
             }
             this.subscriptions.add(
                 this.currentRelease$.subscribe(r =>
@@ -230,7 +261,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                         queryParams: params,
                     })
                 )
-            )
+            );
         }
     }
 
@@ -251,7 +282,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         let search: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             search = {
-                chromPos: new ChromPos('1','1-50000000'),
+                chromPos: new ChromPos("1", "1-50000000"),
                 clList: ["HEK293 (embryonic kidney)"],
                 tfList: ["ANDR_HUMAN", "CTCF_HUMAN"],
                 ebi: false,
@@ -264,9 +295,9 @@ export class SearchComponent implements OnInit, OnDestroy {
             };
         } else {
             search = {
-                searchBy: 'pos',
-                chromPos: new ChromPos('3','158644602')
-            }
+                searchBy: "pos",
+                chromPos: new ChromPos("3", "158644602")
+            };
         }
         this.searchForm.patchValue(search);
         this._navigateToSearch();
@@ -275,7 +306,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     _checkToDisplay(id: string): boolean {
         const searchForm = this.searchForm.value as SearchQueryModel;
         if (this.isAdvanced) {
-            if (id === "searchNear" || id === 'geneName' || id === 'geneId') {
+            if (id === "searchNear" || id === "geneName" || id === "geneId") {
                 return false;
             } else {
                 return id !== "id";
@@ -344,7 +375,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
-        this.searchForm.patchValue({isAdvanced: isAdvanced});
+        this.searchForm.patchValue({isAdvanced});
         return convertFormToParams(this.searchForm.value, this.isAdvanced, this.searchData);
     }
 
@@ -352,42 +383,44 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (this.isAdvanced) {
             if (searchParams) {
                 const result: Partial<SearchQueryModel> = {};
-                result.chromPos = new ChromPos(searchParams.chr || '', searchParams.pos || '');
+                result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
                 result.clList = searchParams.cl ? searchParams.cl.split(",") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
                 }
                 if (searchParams.motif_conc) {
-                    searchParams.motif_conc.split(',').forEach(s => result[s] = true)
+                    searchParams.motif_conc.split(",").forEach(s => result[s] = true);
                 }
                 return result;
-            } else return {};
+            } else { return {}; }
         } else {
             if (searchParams) {
                 if (searchParams.hasOwnProperty("chr")) {
                     return {
                         searchBy: "pos",
                         chromPos: new ChromPos(searchParams.chr, searchParams.pos)
-                    }
+                    };
                 }
                 if (searchParams.hasOwnProperty("g_id")) {
                     return {
                         searchBy: "geneId",
                         geneId: searchParams.g_id
-                    }
+                    };
                 }
                 if (searchParams.hasOwnProperty("g_name")) {
                     return {
                         searchBy: "geneName",
                         geneName: searchParams.g_name
-                    }
+                    };
+                } else {
+                    return {}
                 }
             } else {
                 return {
                     searchBy: "id",
-                    geneId: searchParams.rs || ''
-                }
+                    geneId: ""
+                };
             }
         }
     }
@@ -397,23 +430,23 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (!this.searchForm.invalid) {
             if (this.isAdvanced) {
                 return !sF.chromPos.chr && sF.tfList.length === 0 &&
-                    sF.clList.length === 0 && !checkIfCheckpointSelected(sF)
+                    sF.clList.length === 0 && !checkIfCheckpointSelected(sF);
             } else {
-                if (sF.searchBy == 'id') {
-                    return !sF.rsId
+                if (sF.searchBy == "id") {
+                    return !sF.rsId;
                 }
-                if (sF.searchBy == 'pos') {
-                    return !sF.chromPos.chr
+                if (sF.searchBy == "pos") {
+                    return !sF.chromPos.chr;
                 }
-                if (sF.searchBy == 'geneId') {
-                    return !sF.geneId
+                if (sF.searchBy == "geneId") {
+                    return !sF.geneId;
                 }
-                if (sF.searchBy == 'geneName') {
-                    return !sF.geneName
+                if (sF.searchBy == "geneName") {
+                    return !sF.geneName;
                 }
             }
         }
-        return true
+        return true;
     }
 
     _nearbySearch() {
@@ -443,37 +476,38 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(step: string, component?: string) {
-        return getTextByStepName(step, component)
+        return getTextByStepName(step, component);
     }
 
     nextExampleStep() {
-        this.nextStep.emit()
+        this.nextStep.emit();
     }
 
     searchById() {
         if (!this.isAdvanced) {
-            this.searchForm.patchValue({searchBy: 'id'})
+            this.searchForm.patchValue({searchBy: "id"});
         }
     }
 
     getValidationMessages(s: string): string {
         switch (s) {
-            case 'noChr':
-                return '*No chromosome provided'
-            case 'badChr':
-                return '*Invalid chromosome'
-            case 'greater':
-                return '*end must be > start'
-            case 'wrongPos':
-                return '*must be from-to'
+            case "noChr":
+                return "*No chromosome provided";
+            case "badChr":
+                return "*Invalid chromosome";
+            case "greater":
+                return "*end must be > start";
+            case "wrongPos":
+                return "*must be from-to";
             default:
-                return ''
+                return "";
         }
     }
+
 }
 
 function checkIfCheckpointSelected(sF: SearchQueryModel) {
-    let result: boolean = false;
+    let result = false;
     Object.keys(concordanceModelExample).forEach(s => sF[s] ? result = true : null);
     Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);
     return result;

@@ -12,10 +12,10 @@ import {Location} from "@angular/common";
 export class RedirectComponent implements OnInit {
     constructor(private router: Router, private location: Location) { }
     ngOnInit() {
-        let path = this.location.path()
-        if (!path.startsWith('/')) {
-            path = '/' + path
+        let path = this.location.path();
+        if (!path.startsWith("/")) {
+            path = "/" + path;
         }
-        this.router.navigateByUrl(`/${recentRelease.url}${path}`).then(() => null)
+        this.router.navigateByUrl(`/${recentRelease.url}${path}`).then(() => null);
     }
 }

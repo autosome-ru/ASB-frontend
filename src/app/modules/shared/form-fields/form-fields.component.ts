@@ -12,7 +12,7 @@ import {
     Optional,
     ViewChild,
     ViewEncapsulation,
-} from '@angular/core';
+} from "@angular/core";
 import {
     AbstractControl,
     ControlValueAccessor,
@@ -33,19 +33,19 @@ export class ChromPos {
 }
 
 function isValidChromosome(chromosome: string): boolean {
-    return !!chromosome.match(/^([1-9]|1\d|2[0-2]|X|Y)$/)
+    return !!chromosome.match(/^([1-9]|1\d|2[0-2]|X|Y)$/);
 }
 
 export function validateGroup(form: FormGroup) {
-    const formValue = form.value as ChromPos
+    const formValue = form.value as ChromPos;
     if (formValue) {
         if (formValue.chr) {
             if (!isValidChromosome(formValue.chr)) {
-                return {badChr: true}
+                return {badChr: true};
             }
             if (formValue.pos) {
                 if (formValue.pos.match(/^\d+$/)) {
-                    return null
+                    return null;
                 } else {
                     if (isValidPosInterval(formValue.pos)) {
                         const [startPos, endPos] = formValue.pos.split("-");
@@ -59,22 +59,22 @@ export function validateGroup(form: FormGroup) {
                             }
                         }
                     } else {
-                        return {wrongPos: true}
+                        return {wrongPos: true};
                     }
                 }
             }
         }
         if (formValue.pos && !formValue.chr) {
-            return {noChr: true}
+            return {noChr: true};
         }
     }
-    return null
+    return null;
 }
 
 @Component({
-    selector: 'asb-chr-pos-field',
-    templateUrl: './form-fields.component.html',
-    styleUrls: ['./form-fields.component.less'],
+    selector: "asb-chr-pos-field",
+    templateUrl: "./form-fields.component.html",
+    styleUrls: ["./form-fields.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     providers: [
@@ -90,23 +90,12 @@ export function validateGroup(form: FormGroup) {
         }
     ],
     host: {
-        '[class.example-floating]': 'shouldLabelFloat',
-        '[id]': 'id',
+        "[class.example-floating]": "shouldLabelFloat",
+        "[id]": "id",
     }
 })
 export class AsbChrPosInputComponent implements OnInit,
     OnDestroy, ControlValueAccessor, MatFormFieldControl<ChromPos> {
-    static nextId = 0;
-    controlType = 'asb-chr-pos-field';
-    private subscriptions = new Subscription();
-
-    @HostBinding()
-    id = `asb-chr-pos-field-${AsbChrPosInputComponent.nextId++}`;
-    stateChanges = new Subject<void>();
-    private previousPos: string = "";
-
-    @ViewChild('pos')
-    private posInput: HTMLInputElement
 
 
     @Input()
@@ -116,15 +105,11 @@ export class AsbChrPosInputComponent implements OnInit,
         this._disabled ? this.chromPos.disable() : this.chromPos.enable();
         this.stateChanges.next();
     }
-    private _disabled = false;
 
-    @HostBinding('class.floating')
+    @HostBinding("class.floating")
     get shouldLabelFloat() {
-        return true
+        return true;
     }
-
-    @Input('aria-describedby')
-    userAriaDescribedBy: string;
 
     @Input()
     get placeholder() {
@@ -134,7 +119,6 @@ export class AsbChrPosInputComponent implements OnInit,
         this._placeholder = plh;
         this.stateChanges.next();
     }
-    private _placeholder: string;
 
     get errorState(): boolean {
         return this.chromPos.invalid && this.chromPos.dirty;
@@ -142,14 +126,14 @@ export class AsbChrPosInputComponent implements OnInit,
 
     @Input()
     get value(): ChromPos | null {
-        let n = this.chromPos.value as ChromPos;
-        return new ChromPos(n.chr || '', n.pos || '');
+        const n = this.chromPos.value as ChromPos;
+        return new ChromPos(n.chr || "", n.pos || "");
     }
     set value(chrPos: ChromPos | null) {
-        chrPos = chrPos || new ChromPos('', '');
+        chrPos = chrPos || new ChromPos("", "");
         this.chromPos.setValue({
-            chr: chrPos.chr || '',
-            pos: chrPos.pos || ''
+            chr: chrPos.chr || "",
+            pos: chrPos.pos || ""
         });
         this.onChange(chrPos);
         this.stateChanges.next();
@@ -163,17 +147,41 @@ export class AsbChrPosInputComponent implements OnInit,
         this._required = coerceBooleanProperty(req);
         this.stateChanges.next();
     }
-    private _required = false;
 
     get empty() {
-        let n = this.chromPos.value as ChromPos;
+        const n = this.chromPos.value as ChromPos;
         return !n.chr && !n.pos;
     }
+    constructor(private formBuilder: FormBuilder,
+                private _focusMonitor: FocusMonitor,
+                public injector: Injector,
+                @Optional() @Inject(MAT_FORM_FIELD) public _formField: MatFormField,
+                private elRef: ElementRef<HTMLElement>) {
+    }
+    static nextId = 0;
+    controlType = "asb-chr-pos-field";
+    private subscriptions = new Subscription();
+
+    @HostBinding()
+    id = `asb-chr-pos-field-${AsbChrPosInputComponent.nextId++}`;
+    stateChanges = new Subject<void>();
+    private previousPos = "";
+
+    @ViewChild("pos")
+    private posInput: HTMLInputElement;
+    private _disabled = false;
+
+    @Input("aria-describedby")
+    userAriaDescribedBy: string;
+    private _placeholder: string;
+    private _required = false;
     focused = false;
+    ngControl: NgControl;
+
+    chromPos: FormGroup;
 
     onChange = (_: any) => {};
     onTouched = () => {};
-    ngControl: NgControl;
 
 
     writeValue(chromPos: ChromPos | null): void {
@@ -190,23 +198,15 @@ export class AsbChrPosInputComponent implements OnInit,
 
     setDescribedByIds(ids: string[]) {
         const controlElement = this.elRef.nativeElement
-            .querySelector('.input-container');
-        controlElement.setAttribute('aria-describedby', ids.join(' '));
+            .querySelector(".input-container");
+        controlElement.setAttribute("aria-describedby", ids.join(" "));
 
     }
 
     onContainerClick(event: MouseEvent) {
-        if ((event.target as Element).tagName.toLowerCase() != 'input') {
-            this.elRef.nativeElement.querySelectorAll('input')[0].focus();
+        if ((event.target as Element).tagName.toLowerCase() != "input") {
+            this.elRef.nativeElement.querySelectorAll("input")[0].focus();
         }
-    }
-
-    chromPos: FormGroup;
-    constructor(private formBuilder: FormBuilder,
-                private _focusMonitor: FocusMonitor,
-                public injector: Injector,
-                @Optional() @Inject(MAT_FORM_FIELD) public _formField: MatFormField,
-                private elRef: ElementRef<HTMLElement>) {
     }
 
     ngOnInit(): void {
@@ -225,58 +225,58 @@ export class AsbChrPosInputComponent implements OnInit,
         })
     );
     this.chromPos =  this.formBuilder.group({
-        pos: [''],
-        chr: ['']
+        pos: [""],
+        chr: [""]
         },
         {validator: validateGroup}
     );
     this.subscriptions.add(
-        this.chromPos.get('pos').valueChanges.subscribe(
+        this.chromPos.get("pos").valueChanges.subscribe(
             (s: string) => {
             if (!!s) {
-                this.previousPos = s
+                this.previousPos = s;
             }
-            this.patchGroupOnPaste(s)
+            this.patchGroupOnPaste(s);
             }
         )
-    )
+    );
     this.subscriptions.add(
-        this.chromPos.get('chr').valueChanges.subscribe(
+        this.chromPos.get("chr").valueChanges.subscribe(
         (s: string) => {
                 if (s.length > 1 && s.match(/^0\d$/)) {
                     this.chromPos.patchValue({chr: s.slice(1)});
-                    this._focusMonitor.focusVia(this.posInput, 'program')
+                    this._focusMonitor.focusVia(this.posInput, "program");
                 }
-                this.patchGroupOnPaste(s, 'chr')
+                this.patchGroupOnPaste(s, "chr");
             }
         )
-    )
+    );
 
     }
     patchGroupOnPaste(s: string, from?: keyof ChromPos) {
 
-        if (s && s.includes(':')) {
-            const sList = s.trim().split(':')
+        if (s && s.includes(":")) {
+            const sList = s.trim().split(":");
             if (!sList[0]) {
-                sList[0] = this.chromPos.value.chr
+                sList[0] = this.chromPos.value.chr;
             }
-            if (!!sList[0] && !sList[1] && from == 'chr') {
-               this._focusMonitor.focusVia(this.posInput, 'program')
+            if (!!sList[0] && !sList[1] && from == "chr") {
+               this._focusMonitor.focusVia(this.posInput, "program");
             }
-            this.chromPos.patchValue({chr: sList[0], pos: sList[1]})
+            this.chromPos.patchValue({chr: sList[0], pos: sList[1]});
         }
     }
     autoFocusNext(control: AbstractControl, type?: keyof ChromPos, nextElement?: HTMLInputElement): void {
-        if (!control.errors && type =='chr' && !this.chromPos.get('pos').value && control.value.length == 2 && nextElement) {
-            this._focusMonitor.focusVia(nextElement, 'program');
+        if (!control.errors && type == "chr" && !this.chromPos.get("pos").value && control.value.length == 2 && nextElement) {
+            this._focusMonitor.focusVia(nextElement, "program");
         }
     }
 
     autoFocusPrev(control: AbstractControl, prevElement: HTMLInputElement): void {
         if (control.value.length < 1 && this.previousPos.length < 1) {
-            this._focusMonitor.focusVia(prevElement, 'program');
+            this._focusMonitor.focusVia(prevElement, "program");
         }
-        this.previousPos = control.value
+        this.previousPos = control.value;
     }
     ngOnDestroy() {
         this.stateChanges.complete();

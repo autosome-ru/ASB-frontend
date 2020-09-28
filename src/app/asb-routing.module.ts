@@ -33,7 +33,7 @@ const routes: Routes = [
         path: "**",
         component: RedirectComponent,
     }
-]
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, routerOptions)],

@@ -23,7 +23,7 @@ export class AsbTourComponent implements OnDestroy {
 
     @HostBinding("class.asb-popover")
     private cssClass = true;
-    private subscriptions = new Subscription()
+    private subscriptions = new Subscription();
 
 
     @Input()
@@ -36,37 +36,37 @@ export class AsbTourComponent implements OnDestroy {
 
     ngOnDestroy() {
         if (this.joyrideService.isTourInProgress()) {
-            this.joyrideService.closeTour()
+            this.joyrideService.closeTour();
         }
-        this.subscriptions.unsubscribe()
+        this.subscriptions.unsubscribe();
     }
 
 
     openTourPopover() {
         const dialogRef = this.dialog.open(AsbConfirmDialogComponent, {
-            data: {title: 'Do you want to start the page tour?'}
+            data: {title: "Do you want to start the page tour?"}
         });
         this.subscriptions.add(
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.startTour()
+                    this.startTour();
                 }
             })
-        )
+        );
 
     }
 
 
     startTour() {
-        let tourOptions: JoyrideOptions = {
+        const tourOptions: JoyrideOptions = {
             steps: this.steps,
             waitingTime: 40,
-            stepDefaultPosition: 'top',
-        }
+            stepDefaultPosition: "top",
+        };
 
         this.joyrideService.startTour(
             tourOptions
-        )
+        );
 
     }
 

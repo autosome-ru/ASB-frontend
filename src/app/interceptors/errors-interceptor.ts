@@ -8,12 +8,12 @@ import {isPlatformBrowser} from "@angular/common";
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {
-    isBrowser: boolean
+    isBrowser: boolean;
     constructor(
         private router: Router,
         private toastr: ToastrService,
         @Inject(PLATFORM_ID) private platformId
-    ) { this.isBrowser = isPlatformBrowser(platformId);}
+    ) { this.isBrowser = isPlatformBrowser(platformId); }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(

@@ -14,7 +14,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
     encapsulation: ViewEncapsulation.None
 })
 export class AsbPopoverComponent implements OnInit {
-    public title: string
+    public title: string;
     public popoverTemplate: any;
     public popoverContext: any;
     constructor(
@@ -22,9 +22,9 @@ export class AsbPopoverComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        this.title = this.data.title
-        this.popoverTemplate = this.data.template
-        this.popoverContext = this.data.templateContext
+        this.title = this.data.title;
+        this.popoverTemplate = this.data.template;
+        this.popoverContext = this.data.templateContext;
     }
 
 

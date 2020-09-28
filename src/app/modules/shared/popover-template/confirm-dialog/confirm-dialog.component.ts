@@ -14,14 +14,14 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
     encapsulation: ViewEncapsulation.None
 })
 export class AsbConfirmDialogComponent implements OnInit {
-    public title: string
+    public title: string;
 
     constructor(
         public dialogRef: MatDialogRef<AsbConfirmDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) { }
 
     ngOnInit() {
-        this.title = this.data.title
+        this.title = this.data.title;
     }
 
     onConfirmClick(): void {

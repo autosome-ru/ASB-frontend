@@ -93,7 +93,7 @@ export class SearchPageTableComponent implements OnInit {
 
         };
 
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         if ((!this.router.isActive("/search/simple", false) &&
             !this.route.snapshot.queryParams.tf &&
             !this.route.snapshot.queryParams.cl) ||

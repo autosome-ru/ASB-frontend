@@ -28,13 +28,13 @@ export class SnpButtonsComponent implements OnInit {
     @Input()
     public tfOrCl: "tf" | "cl";
     @Input()
-    public showMoreObjects: boolean = false;
+    public showMoreObjects = false;
     @Input()
     public buttonsClass: string;
     @Output() objectsQualChanged = new EventEmitter<boolean>();
 
     @Input()
-    public noButtons: boolean = false;
+    public noButtons = false;
 
     constructor() {}
     ngOnInit() {

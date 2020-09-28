@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import { searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/constants/urls";
+import {searchOptionsByGeneNameUrl, searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/constants/urls";
 import {
+    SearchByGeneNameHintBackendModel,
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/search-query.model";
@@ -30,21 +31,26 @@ export class SearchService {
             {params});
     }
 
+    public getSearchOptionsByGeneName(filter: string): Observable<SearchByGeneNameHintBackendModel[]> {
+        return this.http.get<SearchByGeneNameHintBackendModel[]>(searchOptionsByGeneNameUrl,
+            {params: {search: addPercents(filter)}});
+    }
+
     public getSearchResult(filter: SearchQueryModel, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
         if (!filter) {
             if (!filter.isAdvanced &&
                 (
-                    (filter.searchBy == 'id' && !filter.rsId) ||
-                    (filter.searchBy == 'pos' && !filter.chromPos.chr) ||
-                    (filter.searchBy == 'geneId' && !filter.geneId) ||
-                    (filter.searchBy == 'geneName' && !filter.geneName)
+                    (filter.searchBy == "id" && !filter.rsId) ||
+                    (filter.searchBy == "pos" && !filter.chromPos.chr) ||
+                    (filter.searchBy == "geneId" && !filter.geneId) ||
+                    (filter.searchBy == "geneName" && !filter.geneName)
                 )
             ) {
                 return of({results: [], total: null});
             }
         }
-        if (!filter.isAdvanced && filter.searchBy !== 'pos') {
+        if (!filter.isAdvanced && filter.searchBy !== "pos") {
             switch (filter.searchBy) {
                 case "geneId":
                     return this.http.get<SearchResultsBackendModel>(
@@ -83,19 +89,24 @@ export class SearchService {
 }
 
 function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
-                                 options: string[] | null,
-                                 search: string | null): {[id: string]: string} {
+                                    options: string[] | null,
+                                    search: string | null): {[id: string]: string} {
     const params: { [id: string]: string } = {};
     if (options && options.length > 0) {
-        params["options"] = options.join(",");
+        params.options = options.join(",");
     }
-    if (search !== null && search !== "") {
-        let search_opt: string = search.endsWith("%") ? search : search + "%"
-        search_opt = search_opt.startsWith('*') ? '%' + search_opt.slice(1) : search_opt
+    params.search = addPercents(search)
 
-        params["search"] = search_opt
-    }
     return params;
+}
+
+function addPercents(search: string): string {
+    let search_opt: string = ''
+    if (search !== null && search !== "") {
+        search_opt= search.endsWith("%") ? search : search + "%";
+        search_opt = search_opt.startsWith("*") ? "%" + search_opt.slice(1) : search_opt;
+    }
+    return search_opt;
 }
 
 function getStartEndPositions(searchInput: string) {
@@ -110,30 +121,30 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
     const params: {[id: string]: string} = {};
 
     if (filter.clList && filter.clList.length > 0) {
-        params["cell_types"] = filter.clList.join(",");
+        params.cell_types = filter.clList.join(",");
     }
 
     if (filter.chromPos.chr) {
-        params["chromosome"] = 'chr' + filter.chromPos.chr;
+        params.chromosome = "chr" + filter.chromPos.chr;
         if (filter.chromPos.pos) {
             const positions: { start: string, end: string } =
                 getStartEndPositions(filter.chromPos.pos);
-            params["start"] = positions.start;
-            params["end"] = positions.end;
+            params.start = positions.start;
+            params.end = positions.end;
         }
     }
 
     if (filter.tfList && filter.tfList.length > 0) {
-        params["transcription_factors"] =
+        params.transcription_factors =
             filter.tfList.join(",");
     }
     const phenList: string = formCheckboxesToList(filter);
     if (phenList) {
-        params["phenotype_databases"] = phenList;
+        params.phenotype_databases = phenList;
     }
     const concList: string = formCheckboxesToList(filter, "concordance");
     if (concList) {
-        params['motif_concordance'] = concList
+        params.motif_concordance = concList;
     }
 
     return params;

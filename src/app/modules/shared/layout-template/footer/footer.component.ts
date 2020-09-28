@@ -20,7 +20,7 @@ export class AsbFooterComponent implements OnInit {
     constructor(private store: Store<AppState>) { }
 
     ngOnInit() {
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
 
 }

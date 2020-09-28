@@ -32,7 +32,7 @@ import {ReleaseModel} from "../../../models/releases.model";
 export class HomePageComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-home")
     private readonly cssClass = true;
-    @ViewChild('svgContainer', {static: true})
+    @ViewChild("svgContainer", {static: true})
     public svgContainer: ElementRef<HTMLObjectElement>;
     isBrowser: boolean;
     public totalInfo$: Observable<TotalInfoModel>;
@@ -56,35 +56,35 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());
         if (this.isBrowser) {
-            document.addEventListener('mousemove',
+            document.addEventListener("mousemove",
                 event => {
-                    const ded = this.svgContainer.nativeElement.contentDocument
-                    const headerHeight: number = 56;
+                    const ded = this.svgContainer.nativeElement.contentDocument;
+                    const headerHeight = 56;
                     if (ded) {
-                        const dedWidth: number = this.svgContainer.nativeElement.offsetWidth
-                        const marginLeft: number = (document.documentElement.offsetWidth - dedWidth) / 2
-                        const leftEye = ded.getElementById('path1538');
+                        const dedWidth: number = this.svgContainer.nativeElement.offsetWidth;
+                        const marginLeft: number = (document.documentElement.offsetWidth - dedWidth) / 2;
+                        const leftEye = ded.getElementById("path1538");
                         function moveEye(eye: HTMLElement, centerX: number, centerY: number) {
-                            const angleLeft = Math.atan2((event.y - (eye.getBoundingClientRect().y + headerHeight)), (event.x - (eye.getBoundingClientRect().x + marginLeft)))
-                            eye.setAttribute('cx', '' + (centerX + Math.cos(angleLeft)))
-                            eye.setAttribute('cy', '' + (centerY + Math.sin(angleLeft) / 2))
+                            const angleLeft = Math.atan2((event.y - (eye.getBoundingClientRect().y + headerHeight)), (event.x - (eye.getBoundingClientRect().x + marginLeft)));
+                            eye.setAttribute("cx", "" + (centerX + Math.cos(angleLeft)));
+                            eye.setAttribute("cy", "" + (centerY + Math.sin(angleLeft) / 2));
                         }
                         if (leftEye) {
-                            const leftEyeCenterX: number = 87.507666
-                            const leftEyeCenterY: number = 127.65275
-                            moveEye(leftEye, leftEyeCenterX, leftEyeCenterY)
+                            const leftEyeCenterX = 87.507666;
+                            const leftEyeCenterY = 127.65275;
+                            moveEye(leftEye, leftEyeCenterX, leftEyeCenterY);
                         }
-                        const rightEye = ded.getElementById('path1538-7')
+                        const rightEye = ded.getElementById("path1538-7");
                         if (rightEye) {
-                            const rightEyeCenterX: number = 129.68616
-                            const rightEyeCenterY: number = 100.84577
-                            moveEye(rightEye, rightEyeCenterX, rightEyeCenterY)
+                            const rightEyeCenterX = 129.68616;
+                            const rightEyeCenterY = 100.84577;
+                            moveEye(rightEye, rightEyeCenterX, rightEyeCenterY);
                         }
 
                     }
-                })
+                });
         }
-        this.tourSteps = ['search-by', 'search-rs', 'search-pos', 'search-example']
+        this.tourSteps = ["search-by", "search-rs", "search-pos", "search-example"];
 
     }
 

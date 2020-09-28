@@ -7,6 +7,7 @@
             [width]="'full'"
             [isAdvanced]="isAdvancedSearch"
             [searchData]="(searchSnpResults$ | async).results"
+            [selectedGene]="selectedGene$ | async"
             (searchPressed)="_handleSearchTemplateChanges($event)"
             (nextStep)="checkResult()"
         ></asb-search>
@@ -48,7 +49,7 @@
                 </div>
             </div>
             <div>
-                <ng-container *ngIf="!(searchSnpResultsLoading$ | async); else loadingTemplate">
+                <ng-container *ngIf="(searchSnpResultsLoading$ | async) === false; else loadingTemplate">
                     <div
                         class="position-relative"
                         style="overflow: auto;"

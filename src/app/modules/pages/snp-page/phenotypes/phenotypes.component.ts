@@ -22,7 +22,7 @@ export class PhenotypesComponent implements OnInit {
     ngOnInit(): void {
         this.phenotypesDb = Object.keys(this.snpData.phenotypes).filter(
             s => this.snpData.phenotypes[s].length > 0);
-        this.phenToLink = phenotypesToLink
+        this.phenToLink = phenotypesToLink;
     }
 
 }

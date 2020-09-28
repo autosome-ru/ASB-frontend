@@ -35,7 +35,7 @@ export class AsbElevationDirective implements OnChanges {
     setElevation(amount: number) {
         // remove all elevation classes
         const classesToRemove = Array.from(
-            (<HTMLElement>this.element.nativeElement).classList).filter(
+            (this.element.nativeElement as HTMLElement).classList).filter(
                 c => c.startsWith("mat-elevation-z"));
         classesToRemove.forEach((c) => {
             this.renderer.removeClass(this.element.nativeElement, c);

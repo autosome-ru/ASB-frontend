@@ -1,5 +1,6 @@
 import {Action} from "@ngrx/store";
 import {
+    SearchByGeneNameHintBackendModel,
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "src/app/models/search-query.model";
@@ -10,12 +11,33 @@ export enum ActionTypes {
     LoadSearchOptionsSuccess = "[Search] search options loading successfully",
     LoadSearchOptionsFail = "[Search] search options loading failed",
 
+    LoadSearchByGeneNameOptions = "[Search] loading search options by gene name",
+    LoadSearchByGeneNameOptionsSuccess = "[Search] search options loading by gene name successfully",
+    LoadSearchByGeneNameOptionsFail = "[Search] search options loading by gene name failed",
+
     LoadSearchResults = "[Search] loading search results",
     LoadSearchResultsWithPagination = "[Search] loading search results with pagination",
     LoadSearchResultsSuccess = "[Search] search results loading successfully",
     LoadSearchResultsFail = "[Search] search results loading failed",
-
 }
+
+
+export class LoadSearchByGeneNameOptionsAction implements Action {
+    readonly type = ActionTypes.LoadSearchByGeneNameOptions;
+
+    constructor(public payload: string) {}
+}
+export class LoadSearchByGeneNameOptionsSuccessAction implements Action {
+    readonly type = ActionTypes.LoadSearchByGeneNameOptionsSuccess;
+
+    constructor(public payload: SearchByGeneNameHintBackendModel[]) {}
+}
+export class LoadSearchByGeneNameOptionsFailAction implements Action {
+    readonly type = ActionTypes.LoadSearchByGeneNameOptionsFail;
+
+    constructor(public payload: string) {}
+}
+
 
 export class LoadSearchOptionsAction implements Action {
     readonly type = ActionTypes.LoadSearchOptions;
@@ -63,6 +85,10 @@ export type ActionUnion =
     | LoadSearchOptionsAction
     | LoadSearchOptionsSuccessAction
     | LoadSearchOptionsFailAction
+
+    | LoadSearchByGeneNameOptionsAction
+    | LoadSearchByGeneNameOptionsSuccessAction
+    | LoadSearchByGeneNameOptionsFailAction
 
     | LoadSearchResultsAction
     | LoadSearchResultsWithPaginationAction

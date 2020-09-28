@@ -29,10 +29,10 @@ export const phenotypesModelExample: PhenotypesModel = {
     QTL: [],
 };
 export const concordanceModelExample: MotifConcordanceModel = {
-    'Concordant': false,
-    'Discordant': false,
-    'Weak Concordant': false,
-    'Weak Discordant': false
+    Concordant: false,
+    Discordant: false,
+    "Weak Concordant": false,
+    "Weak Discordant": false
 };
 
 export const initialServerParams: AsbServerSideModel = {
@@ -42,11 +42,11 @@ export const initialServerParams: AsbServerSideModel = {
     direction: "",
 };
 enum Concordance {
-    'Discordant',
-    'Weak Discordant',
-    'Weak Concordant',
-    'Concordant',
+    "Discordant",
+    "Weak Discordant",
+    "Weak Concordant",
+    "Concordant",
 }
 export function compareConcordance(a: string, b: string): number {
-    return Concordance[a] - Concordance[b]
+    return Concordance[a] - Concordance[b];
 }

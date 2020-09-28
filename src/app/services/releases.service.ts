@@ -11,25 +11,25 @@ export class ReleasesService {
 
     constructor(private router: Router, private location: Location) {
     }
-    private releases: ReleaseModel[] = releasesList
+    private releases: ReleaseModel[] = releasesList;
 
     getReleaseFromPrefix(releaseUrl: string): ReleaseModel {
 
-        const releaseIndex = this.releases.findIndex(release => release.url === releaseUrl)
+        const releaseIndex = this.releases.findIndex(release => release.url === releaseUrl);
         if (releaseIndex != -1) {
-            return this.releases[releaseIndex]
+            return this.releases[releaseIndex];
         }
-        return recentRelease
+        return recentRelease;
     }
 
 
     getReleaseFromRoute(): Observable<ReleaseModel> {
-        let path: string = ""
-        let url: string = this.location ? this.location.path() : ''
+        let path = "";
+        const url: string = this.location ? this.location.path() : "";
         if ( url != "" && url != "/") {
-            path = url.split('/')[1]
+            path = url.split("/")[1];
         }
-        return of(this.getReleaseFromPrefix(path))
+        return of(this.getReleaseFromPrefix(path));
     }
 
 

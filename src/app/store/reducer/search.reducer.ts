@@ -1,9 +1,15 @@
 import * as fromActions from "src/app/store/action/search.action";
-import {SearchHintModel, SearchQueryModel, SearchResultsModel} from "src/app/models/search-query.model";
+import {
+    GeneModel,
+    SearchHintModel,
+    SearchQueryModel,
+    SearchResultsModel
+} from "src/app/models/search-query.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
 } from "../../helpers/converter/snp-model.converter";
 import {
+    convertSearchByGeneNameHintBackendToSearchByGeneHintModel,
     convertSearchHintBackendModelToSearchHintModel
 } from "../../helpers/converter/search-model.converter";
 import {SnpSearchModel} from "../../models/data.model";
@@ -13,17 +19,29 @@ export interface SearchState {
         tf: SearchHintModel[],
         cl: SearchHintModel[],
     };
-    searchQuery: SearchQueryModel;
     searchOptionsLoading: {
         tf: boolean,
         cl: boolean,
     };
+
+    searchByGeneNameOptions: GeneModel[],
+    searchByGeneNameOptionsLoading: boolean,
+    searchGene: GeneModel,
+
+    searchQuery: SearchQueryModel;
+
     searchResults: SearchResultsModel;
     searchResultsLoading: boolean;
     searchChangeLoading: boolean;
 }
 export const selectSearchOptions = (state: SearchState) => state.searchOptions;
 export const selectSearchOptionsLoading = (state: SearchState) => state.searchOptionsLoading;
+
+export const selectSearchByGeneNameOptions = (state: SearchState) => state.searchByGeneNameOptions;
+export const selectSearchByGeneNameOptionsLoading = (state: SearchState) =>
+    state.searchByGeneNameOptionsLoading;
+
+export const selectCurrentSelectedGene = (state: SearchState) => state.searchGene;
 
 export const selectSearchQuery = (state: SearchState) => state.searchQuery;
 export const selectSearchResults = (state: SearchState) => state.searchResults;
@@ -35,6 +53,10 @@ export const initialState: SearchState = {
         tf: [],
         cl: []
     },
+    searchByGeneNameOptions: [],
+    searchByGeneNameOptionsLoading: false,
+    searchGene: null,
+
     searchQuery: null,
     searchOptionsLoading: {
         tf: false,
@@ -64,17 +86,37 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                     }
             };
         }
+        case fromActions.ActionTypes.LoadSearchByGeneNameOptions: {
+            return {
+                ...state,
+                searchByGeneNameOptionsLoading: true
+            }
+        }
+        case fromActions.ActionTypes.LoadSearchByGeneNameOptionsSuccess: {
+            return {
+                ...state,
+                searchByGeneNameOptions: action.payload.map(convertSearchByGeneNameHintBackendToSearchByGeneHintModel),
+                searchByGeneNameOptionsLoading: false
+            }
+        }
+        case fromActions.ActionTypes.LoadSearchByGeneNameOptionsFail: {
+            return {
+                ...state,
+                searchByGeneNameOptions: [],
+                searchByGeneNameOptionsLoading: false
+            }
+        }
         case fromActions.ActionTypes.LoadSearchOptionsSuccess: {
             return {
                 ...state,
                 searchOptions: action.payload.tfOrCl === "tf" ?
                     {
-                        tf: <SearchHintModel[]>action.payload.options.map(convertSearchHintBackendModelToSearchHintModel),
+                        tf: action.payload.options.map(convertSearchHintBackendModelToSearchHintModel) as SearchHintModel[],
                         cl: state.searchOptions.cl
                     } :
                     {
                         tf: state.searchOptions.tf,
-                        cl: <SearchHintModel[]>action.payload.options.map(convertSearchHintBackendModelToSearchHintModel),
+                        cl: action.payload.options.map(convertSearchHintBackendModelToSearchHintModel) as SearchHintModel[],
                     },
                 searchOptionsLoading: action.payload.tfOrCl === "tf" ?
                     {
@@ -136,6 +178,8 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
             return {
                 ...state,
+                searchGene: convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
+                    action.payload.gene),
                 searchResults: {
                     total: action.payload.total,
                     results: action.payload.results.map(

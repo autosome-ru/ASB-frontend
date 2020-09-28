@@ -39,6 +39,27 @@ export class SearchEffect {
     );
 
     @Effect()
+    loadSearchOptionsByGeneName$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadSearchByGeneNameOptions),
+        mergeMap((action: fromActions.LoadSearchByGeneNameOptionsAction) =>
+            this.searchService.getSearchOptionsByGeneName(action.payload).pipe(
+                map(options => new fromActions.LoadSearchByGeneNameOptionsSuccessAction(
+                    options)),
+                catchError(() => of(new fromActions.LoadSearchByGeneNameOptionsFailAction(action.payload))),
+            )
+        )
+    );
+
+    @Effect()
+    loadSearchOptionsByGeneNameFail$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadSearchByGeneNameOptionsFail),
+        mergeMap((action: fromActions.LoadSearchOptionsFailAction) => {
+                console.log("Something went wrong with get search options", action.payload);
+                return EMPTY;
+            }
+        )
+    );
+    @Effect()
     loadSearchResults$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchResults),
         mergeMap((action: fromActions.LoadSearchResultsAction) =>

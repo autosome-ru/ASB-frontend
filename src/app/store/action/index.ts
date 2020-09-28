@@ -6,4 +6,4 @@ export {
     search,
     data,
     releases
-}
+};

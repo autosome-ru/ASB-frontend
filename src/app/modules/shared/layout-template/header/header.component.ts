@@ -17,14 +17,14 @@ import {ReleaseModel} from "../../../../models/releases.model";
 export class AsbHeaderComponent implements OnInit {
     @HostBinding("class.asb-header")
     private readonly cssClass = true;
-    public navigationBarOpened: boolean = false;
+    public navigationBarOpened = false;
     public searchQuery: Observable<SearchQueryModel>;
     public currentRelease$: Observable<ReleaseModel>;
 
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
-        this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.searchQuery = this.store.select(fromSelectors.selectCurrentSearchQuery);
     }
 

@@ -30,23 +30,23 @@ export class AsbSnpCardComponent implements OnInit {
     @Input()
     public snpData: SnpSearchModel | SnpInfoModel;
     @Input()
-    public noButtons: boolean = false;
+    public noButtons = false;
 
     @Input()
-    public index: number = 0;
+    public index = 0;
 
     @Output()
     public emitNextStep = new EventEmitter<void>();
 
-    public showMoreCellLines: boolean = false;
-    public showMoreTfs: boolean = false;
+    public showMoreCellLines = false;
+    public showMoreTfs = false;
     public serverUrl: string = environment.serverUrl;
     public release$: Observable<ReleaseModel>;
 
     constructor(private store: Store<AppState>) { }
 
     ngOnInit() {
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
 
     _showMoreCellLines(value: boolean) {
@@ -57,10 +57,10 @@ export class AsbSnpCardComponent implements OnInit {
     }
 
     getTextByStepName(step: string, component?: string) {
-        return getTextByStepName(step, component)
+        return getTextByStepName(step, component);
     }
 
     nextStep() {
-        this.emitNextStep.emit()
+        this.emitNextStep.emit();
     }
 }
