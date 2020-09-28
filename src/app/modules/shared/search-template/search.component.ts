@@ -191,7 +191,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                                 break;
                         }
                     }
-                    if (this.selectedGene) {
+                    if (this.selectedGene && this.selectedGene.chr) {
                         switch (s) {
                             case "pos":
                                 patchValue = {
