@@ -115,13 +115,14 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.subscriptions.add(
-            this.snpData$.subscribe(s => s ?
-                this.seoService.updateSeoInfo({
-                    title: this.route.snapshot.data.title(this.id, this.releaseVersion),
-                    description: this.route.snapshot.data.description(this.id),
-                    keywords: s.transFactors.slice(0, 10).map(s => s.name).join(","),
-                }) :
-                null
+            this.snpData$.subscribe(s => {
+                if (s) {
+                    this.seoService.updateSeoInfo({
+                        title: this.route.snapshot.data.title(this.id, this.releaseVersion),
+                        description: this.route.snapshot.data.description(this.id),
+                    })
+                }
+                }
             )
         );
 
