@@ -1,0 +1,6 @@
+https://adastra.autosome.ru/assets/sitemaps/paths_1.txt
+https://adastra.autosome.ru/assets/sitemaps/paths_2.txt
+https://adastra.autosome.ru/assets/sitemaps/paths_3.txt
+https://adastra.autosome.ru/assets/sitemaps/paths_4.txt
+https://adastra.autosome.ru/assets/sitemaps/paths_5.txt
+https://adastra.autosome.ru/assets/sitemaps/paths_6.txt
