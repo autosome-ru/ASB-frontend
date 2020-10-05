@@ -45,7 +45,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                                     searchData?: SnpSearchModel[]): Partial<SearchParamsModel> {
 
     if (form && !form.isAdvanced) {
-        if (form && form.searchBy) {
+        if (form.searchBy) {
             if (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced) {
                 form.searchBy = "pos";
             }
@@ -81,19 +81,22 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
         if (form) {
             const result: Partial<SearchParamsModel> = {};
             if (form.clList.length > 0) { result.cl = form.clList.join(","); }
-            if (form.chromPos.pos) {
-                if (checkOneResult(searchData) &&
+            if (form.chromPos.pos ) {
+                if (checkOneResult(searchData) && !oldIsAdvanced && form.searchBy === 'id' &&
                     !isValidPosInterval(form.chromPos.pos.trim())) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr.slice(3);
-                } else {
-                    result.pos = form.chromPos.pos;
-                    result.chr = form.chromPos.chr;
+                }
+                else {
+                    result.pos = form.chromPos.pos.trim();
+                    result.chr = form.chromPos.chr.trim();
                 }
             } else if (form.chromPos.chr) {
                 result.chr = form.chromPos.chr;
             }
-            if (form.tfList.length > 0) { result.tf = form.tfList.join(","); }
+            if (form.tfList.length > 0) {
+                result.tf = form.tfList.join(",");
+            }
             const phenList: string = formCheckboxesToList(form);
             if (phenList) {
                 result.phe_db = phenList;
