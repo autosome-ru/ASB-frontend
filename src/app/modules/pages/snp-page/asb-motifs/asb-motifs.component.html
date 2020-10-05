@@ -48,7 +48,8 @@
                     (click)="changeRevCompState(tf)"
                     color="accent"
                 >
-                    Show {{!revCompStateArray[tf.id] ? 'reverse complement' : 'direct'}}
+                    <span class="d-none d-sm-inline-block">Show {{!revCompStateArray[tf.id] ? 'reverse complement' : 'direct'}}</span>
+                    <span class="d-sm-none d-inline-block">Show {{!revCompStateArray[tf.id] ? 'rev. comp.' : 'direct'}}</span>
                 </button>
                 <button
                     mat-raised-button

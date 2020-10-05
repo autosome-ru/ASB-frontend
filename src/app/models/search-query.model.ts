@@ -8,12 +8,14 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     geneId: string;
     geneName: string;
     chromPos: ChromPos;
-    searchBy: "id" | "pos" | "geneId" | "geneName";
+    searchBy: SearchByModel;
     searchCl: string;
     searchTf: string;
     tfList: string[];
     clList: string[];
 }
+
+export type SearchByModel = "id" | "pos" | "geneId" | "geneName";
 
 export interface SearchHintBackendModel {
     name: string;

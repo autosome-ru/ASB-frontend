@@ -16,7 +16,7 @@ import {AppState} from "src/app/store";
 import * as fromSelectors from "src/app/store/selector";
 import * as fromActions from "src/app/store/action";
 import {
-    GeneModel,
+    GeneModel, SearchByModel,
     SearchHintModel,
     SearchParamsModel,
     SearchQueryModel
@@ -313,10 +313,13 @@ export class SearchComponent implements OnInit, OnDestroy {
             }
         } else {
             if (id === "searchNear") {
-                if (searchForm.searchBy === "pos") {
-                    return (!this._isSearchDisabled());
-                } else {
-                    return !this.searchDataLoading && checkOneResult(this.searchData);
+                switch (searchForm.searchBy) {
+                    case "pos":
+                        return (!this._isSearchDisabled());
+                    case "id":
+                        return !this.searchDataLoading && checkOneResult(this.searchData);
+                    default:
+                        return !!this.selectedGene
                 }
             } else {
                 return searchForm.searchBy === id;
@@ -399,6 +402,9 @@ export class SearchComponent implements OnInit, OnDestroy {
                 if (searchParams.hasOwnProperty("chr")) {
                     return {
                         searchBy: "pos",
+                        geneId: "",
+                        geneName: "",
+                        rsId: "",
                         chromPos: new ChromPos(searchParams.chr, searchParams.pos)
                     };
                 }
@@ -419,7 +425,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             } else {
                 return {
                     searchBy: "id",
-                    geneId: ""
+                    geneId: "",
+                    geneName: ""
                 };
             }
         }
@@ -453,22 +460,32 @@ export class SearchComponent implements OnInit, OnDestroy {
         let patchValue: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             patchValue = {
-                rsId: SearchComponent.convertPosToInterval(
-                    this.searchForm.value.searchInput)
+                chromPos: new ChromPos(this.searchForm.value.chromPos.chr, SearchComponent.convertPosToInterval(
+                    this.searchForm.value.chromPos.pos))
             };
         } else {
-            if (this.searchForm.value.searchBy === "id") {
-                patchValue = {
-                    searchBy: "pos",
-                    chromPos: new ChromPos(this.searchData[0].chr,
-                        SearchComponent.convertPosToInterval(
-                            "" + this.searchData[0].pos))
-                };
-            } else {
-                patchValue = {
-                    chromPos: new ChromPos(this.searchForm.value.chromPos.chr, SearchComponent.convertPosToInterval(
-                        this.searchForm.value.searchInput))
-                };
+            switch (this.searchForm.value.searchBy as SearchByModel) {
+                case 'id':
+                    patchValue = {
+                        searchBy: "pos",
+                        chromPos: new ChromPos(this.searchData[0].chr.slice(3),
+                            SearchComponent.convertPosToInterval(
+                                "" + this.searchData[0].pos))
+                    };
+                    break;
+                case 'pos':
+                    patchValue = {
+                        chromPos: new ChromPos(this.searchForm.value.chromPos.chr, SearchComponent.convertPosToInterval(
+                            this.searchForm.value.chromPos.pos))
+                    };
+                    break;
+                default:
+                    patchValue = {
+                        searchBy: "pos",
+                        chromPos: new ChromPos(this.selectedGene.chr.slice(3), SearchComponent.convertPosToInterval(
+                            `${this.selectedGene.startPos}-${this.selectedGene.endPos}`))
+                    }
+                    break;
             }
         }
         this.searchForm.patchValue(patchValue);
