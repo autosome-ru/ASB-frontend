@@ -11,9 +11,8 @@
     "dev:ssr": "ng run ad-astra:serve-ssr",
     "serve:ssr": "node dist/server/main.js",
     "analyze": "ng build --prod --stats-json && webpack-bundle-analyzer dist/browser/stats.json",
-    "build:ssr": "ng build --prod && ng run ad-astra:server:production",
-    "prerender": "ng run ad-astra:prerender",
-    "mock:server": "tsc-watch --skipLibCheck ./server/server.ts --lib es6 --outDir ./dist_server --onSuccess \"node ./dist_server/server.js\" --onFailure \"echo Beep! Compilation Failed\" --compiler typescript/bin/tsc"
+    "build:ssr": "ng build --prod --output-hashing=all && ng run ad-astra:server:production",
+    "prerender": "ng run ad-astra:prerender"
   },
   "private": true,
   "dependencies": {
