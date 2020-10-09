@@ -1,11 +1,19 @@
-import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    HostBinding,
+    OnInit,
+    ViewEncapsulation
+} from "@angular/core";
 import {SearchQueryModel} from "../../../../models/search-query.model";
 import {convertFormToParams} from "../../../../helpers/helper/check-functions.helper";
 import {AppState} from "../../../../store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromSelectors from "src/app/store/selector";
-import {Observable} from "rxjs";
 import {ReleaseModel} from "../../../../models/releases.model";
+import {Observable} from "rxjs";
+import {releasesList} from "../../../../helpers/constants/releases";
+
 
 @Component({
     selector: "asb-header",
@@ -20,10 +28,13 @@ export class AsbHeaderComponent implements OnInit {
     public navigationBarOpened = false;
     public searchQuery: Observable<SearchQueryModel>;
     public currentRelease$: Observable<ReleaseModel>;
+    public releasesList: ReleaseModel[];
+    public releaseOpened: boolean = false;
 
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
+        this.releasesList = releasesList;
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.searchQuery = this.store.select(fromSelectors.selectCurrentSearchQuery);
     }
@@ -38,5 +49,9 @@ export class AsbHeaderComponent implements OnInit {
 
     _convertFormToParams(form: SearchQueryModel) {
         return convertFormToParams(form);
+    }
+
+    selectRelease() {
+        this.releaseOpened = true
     }
 }

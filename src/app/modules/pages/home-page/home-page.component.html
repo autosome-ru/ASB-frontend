@@ -47,13 +47,22 @@
 
         </ng-container>
         </div>
+
         <div class="container mat-elevation-z2 p-0" >
             <asb-search [width]="'full'"></asb-search>
         </div>
+        <div
+            class="container mat-elevation-z2 py-2"
+            style="margin-top: 30px; background: #E7EBEC; margin-bottom: 5px">
+            <asb-article-cite>
+
+            </asb-article-cite>
+        </div>
+        <asb-tour-button
+            [steps]="tourSteps"
+        ></asb-tour-button>
     </div>
-    <asb-tour-button
-        [steps]="tourSteps"
-    ></asb-tour-button>
+
 </div>
 
 <ng-template #TotalInfoLoadingTemplate>

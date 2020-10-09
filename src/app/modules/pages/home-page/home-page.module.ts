@@ -5,6 +5,7 @@ import {AsbHomePageRoutingModule} from "./home-page-routing.module";
 import {AsbTourModule} from "../../shared/tour-template/tour-module";
 import {AsbSearchModule} from "../../shared/search-template/search.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         AsbTourModule,
         AsbSearchModule,
         MatProgressSpinnerModule,
+        ArticleCiteModule,
     ],
     declarations: [HomePageComponent],
 })

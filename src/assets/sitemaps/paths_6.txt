@@ -1,5 +1,5 @@
 https://adastra.autosome.ru/soos
-https://adastra.autosome.ru/soos/browse
+https://adastra.autosome.ru/soos/browse?by=tf
 https://adastra.autosome.ru/soos/help
 https://adastra.autosome.ru/soos/downloads
 https://adastra.autosome.ru/soos/about

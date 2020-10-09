@@ -3,6 +3,19 @@
     position: relative;
     z-index: 1;
 
+
+
+    &-trans {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        transition-duration: 0.5s
+    }
+    &-trans-back {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        transition-duration: 0.5s
+    }
+
     &-footer {
         flex: 0 0 48px;
         width: 100%;

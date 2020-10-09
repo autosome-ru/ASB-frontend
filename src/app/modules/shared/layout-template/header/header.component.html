@@ -1,20 +1,47 @@
 <nav
     class="navbar navbar-expand-md navbar-dark theme-accent-color mb-0 justify-content-start asb-header"
 >
-
-    <a
-        class="navbar-brand"
-        [routerLink]="'/' + (currentRelease$ | async)?.url "
-        [routerLinkActive]="['active']"
-        [routerLinkActiveOptions]="{exact:true}"
-    >
-        <div style="display: flex; align-items: center">
-        <img src="/assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
-            <div style="display: inline-block">
-                ADASTRA {{(currentRelease$ | async)?.version}}
+    <div style="display: flex; align-items: center">
+        <a
+            style="padding-right: 0"
+            class="navbar-brand mr-0"
+            [routerLink]="'/' + (currentRelease$ | async)?.url "
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{exact:true}"
+        >
+            <div style="display: flex; align-items: center">
+            <img src="/assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
+                <div style="display: inline-block">
+                    ADASTRA {{(currentRelease$ | async)?.version}}
+                </div>
             </div>
-        </div>
-    </a>
+        </a>
+        <button
+            mat-icon-button
+            disableRipple
+            matTooltip="Switch the release"
+            (click)="selectRelease()"
+            style="color: white; display: flex; align-items: center; vertical-align: middle"
+            [matMenuTriggerFor]="releasesMenu"
+            color="accent"
+        >
+            <mat-icon
+                [ngClass]="releaseOpened ? 'asb-header-trans' : 'asb-header-trans-back'"
+                svgIcon="chevron-down"
+            ></mat-icon>
+        </button>
+        <mat-menu #releasesMenu="matMenu"
+                  (closed)="releaseOpened = false">
+            <a
+                *ngFor="let release of releasesList"
+                mat-menu-item
+                [ngClass]="(currentRelease$ | async)?.url === release.url ? 'asb-header__active' : ''"
+                [href]="release.url"
+            >
+                Release {{release.name}} | <small>{{release.version}}</small>
+            </a>
+        </mat-menu>
+    </div>
     <div
         class="collapse navbar-collapse  ml-auto p-2 justify-content-end"
     >

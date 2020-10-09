@@ -6,6 +6,9 @@ import {AsbFooterComponent} from "./footer/footer.component";
 import {AsbHeaderComponent} from "./header/header.component";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatListModule} from "@angular/material/list";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -14,6 +17,9 @@ import {MatListModule} from "@angular/material/list";
         RouterModule,
         MatMenuModule,
         MatListModule,
+        MatButtonModule,
+        MatIconModule,
+        MatTooltipModule,
 
     ],
     declarations: [
