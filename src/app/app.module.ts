@@ -30,6 +30,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {AsbConfirmDialogComponent} from "./modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
 import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
     declarations: [
@@ -51,7 +52,8 @@ import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor
         AsbLayoutsModule,
         MatDialogModule,
         MatButtonModule,
-        MatIconModule
+        MatIconModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 
     ],
     providers: [
