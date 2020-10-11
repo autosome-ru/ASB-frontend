@@ -44,7 +44,7 @@ function getText(step: string, component?: string): string {
             return "Type a dbSNP ID\n(with or without rs prefix).";
         case "search-pos":
             return "Use dash \"-\" to search in a\ngenomic interval e.g. 1-500000" +
-                 ",\nignored if empty.";
+                 ",\nposition ignored if empty.";
         case "search-example":
             return "Or click the \"Example\" button\nto see ADASTRA in action.";
         case "search-tf-list":

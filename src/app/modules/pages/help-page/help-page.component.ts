@@ -9,8 +9,13 @@ import {
 } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {SeoModel} from "../../../models/seo.model";
+import * as fromSelectors from "src/app/store/selector";
 import {SeoService} from "../../../services/seo.servise";
 import {isPlatformBrowser} from "@angular/common";
+import {AppState} from "../../../store/reducer";
+import {Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {ReleaseModel} from "../../../models/releases.model";
 
 @Component({
     selector: "asb-help-page",
@@ -21,15 +26,18 @@ import {isPlatformBrowser} from "@angular/common";
 })
 export class HelpPageComponent implements OnInit, AfterViewInit {
     private readonly isBrowser: boolean;
+    public currentRelease$: Observable<ReleaseModel>;
 
     constructor(private route: ActivatedRoute,
                 private seoService: SeoService,
+                private store: Store<AppState>,
                 @Inject(PLATFORM_ID) private platformId
 ) { this.isBrowser = isPlatformBrowser(platformId); }
 
 
 
     ngOnInit(): void {
+        this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease)
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
     }
     ngAfterViewInit() {
@@ -43,5 +51,9 @@ export class HelpPageComponent implements OnInit, AfterViewInit {
 
     getId(value: string) {
         return value.replace(" ", "-");
+    }
+
+    getApiUrl(release: ReleaseModel): string {
+        return `https://adastra.autosome.ru/api/${release.api}`
     }
 }

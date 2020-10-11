@@ -1,7 +1,7 @@
 {
   "name": "ADASTRA",
   "short_name": "ADASTRA",
-  "theme_color": "#1976d2",
+  "theme_color": "#212c31",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

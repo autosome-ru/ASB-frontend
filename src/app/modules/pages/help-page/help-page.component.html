@@ -129,7 +129,15 @@
             <h5>API</h5>
             <div class="px-3">
                 <span>For programmatic access,
-                    ADASTRA API is available at <a href="https://adastra.autosome.ru/api/v1/" target="_blank" rel="noopener noreferrer">https://adastra.autosome.ru/api/v1/</a></span>
+                    ADASTRA API is available at
+                    <a
+                        [href]="getApiUrl(currentRelease$ | async)"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {{getApiUrl(currentRelease$ | async)}}
+                    </a>
+                </span>
             </div>
         </section>
     </div>
