@@ -58,7 +58,7 @@ const routes: Routes = [
         }
     },
     {
-        path: "snps/:rsId/:alt",
+        path: "snps/:rsId",
         loadChildren: () => import(
             "src/app/modules/pages/snp-page/snp-page.module").then(mod => mod.AsbSnpPageModule),
         data: {

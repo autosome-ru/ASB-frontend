@@ -10,6 +10,11 @@ const routes: Routes = [
         path: "",
         canDeactivate: [CloseDialogOnRouteService],
         component: SnpPageComponent
+    },
+    {
+        path: ":alt",
+        canDeactivate: [CloseDialogOnRouteService],
+        component: SnpPageComponent
     }
 ];
 

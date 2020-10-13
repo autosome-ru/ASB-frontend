@@ -78,7 +78,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
 
     private subscriptions: Subscription = new Subscription();
-    private releaseVersion = '';
+    private release: ReleaseModel;
     public tourSteps: string[];
     public release$: Observable<ReleaseModel>;
 
@@ -94,31 +94,36 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
+        this.subscriptions.add(
+            this.release$.subscribe(
+                s => this.release = s
+            )
+        );
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 (p) => {
                     this.id = p.get("rsId");
                     this.alt = p.get("alt");
-                    this.store.dispatch(new fromActions.data.InitSnpInfoAction(
-                        {rsId: this.id, alt: this.alt}));
+                    if (!this.alt) {
+                        this.router.navigate([`/${this.release.url}/search/simple`], {queryParams: {rs: this.id}})
+                    } else {
+                        this.store.dispatch(new fromActions.data.InitSnpInfoAction(
+                            {rsId: this.id, alt: this.alt}));
+                    }
                 }
 
             )
         );
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
-        this.subscriptions.add(
-            this.release$.subscribe(
-                s => this.releaseVersion = s.version
-            )
-        );
+
+
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
         this.subscriptions.add(
             this.snpData$.subscribe(s => {
                 if (s) {
                     this.seoService.updateSeoInfo({
-                        title: this.route.snapshot.data.title(this.id, this.releaseVersion),
+                        title: this.route.snapshot.data.title(this.id, this.release.version),
                         description: this.route.snapshot.data.description(this.id),
                     })
                 }

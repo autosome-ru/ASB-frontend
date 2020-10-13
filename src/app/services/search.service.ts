@@ -58,7 +58,7 @@ export class SearchService {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
                 case "id":
-                    const rsId: string = filter.rsId.match(/rs\d+/) ? filter.rsId.slice(2) : filter.rsId;
+                    const rsId: string = filter.rsId.match(/^rs\d+$/) ? filter.rsId.slice(2) : filter.rsId;
                     return this.http.get<SearchResultsBackendModel>(
                         `${searchSnpsResultsUrl}/rs/${rsId}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)

@@ -399,6 +399,15 @@ export class SearchComponent implements OnInit, OnDestroy {
             } else { return {}; }
         } else {
             if (searchParams) {
+                if (searchParams.hasOwnProperty("rs")) {
+                    return {
+                        searchBy: "id",
+                        geneId: "",
+                        geneName: "",
+                        rsId: searchParams.rs,
+                        chromPos: new ChromPos(searchParams.chr, searchParams.pos)
+                    };
+                }
                 if (searchParams.hasOwnProperty("chr")) {
                     return {
                         searchBy: "pos",

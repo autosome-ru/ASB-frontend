@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import {Routes, RouterModule, ExtraOptions} from "@angular/router";
 import {RecentComponent} from "./modules/releases-wrapper/recent.component";
-import {RedirectComponent} from "./modules/releases-wrapper/redirect.component";
+import {RedirectReleaseComponent} from "./modules/releases-wrapper/redirect-release.component";
 import {DeprecatedComponent} from "./modules/releases-wrapper/deprecated.component";
 
 const routerOptions: ExtraOptions = {
@@ -31,7 +31,7 @@ const routes: Routes = [
 
     {
         path: "**",
-        component: RedirectComponent,
+        component: RedirectReleaseComponent,
     }
 ];
 

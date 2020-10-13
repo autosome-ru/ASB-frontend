@@ -9,7 +9,7 @@ import {Location} from "@angular/common";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class RedirectComponent implements OnInit {
+export class RedirectReleaseComponent implements OnInit {
     constructor(private router: Router, private location: Location) { }
     ngOnInit() {
         let path = this.location.path();
