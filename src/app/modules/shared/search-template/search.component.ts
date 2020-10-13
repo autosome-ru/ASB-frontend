@@ -296,7 +296,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         } else {
             search = {
                 searchBy: "pos",
-                chromPos: new ChromPos("3", "158644602")
+                chromPos: new ChromPos("15", "67150258")
             };
         }
         this.searchForm.patchValue(search);
