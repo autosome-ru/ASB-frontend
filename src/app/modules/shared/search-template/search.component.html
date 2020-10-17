@@ -368,7 +368,7 @@
                 joyrideStep="search-concordance"
                 [stepContent]="hocomocoTemplate"
             >
-                <span >Include only entries with motif concordance:</span>
+                <span >Show only entries with motif concordance for any of the selected TFs:</span>
                 <div class="asb-search__checkboxes">
                     <mat-checkbox
                         *ngFor="let concordance of concordances; let last=last"
@@ -387,7 +387,7 @@
                  [stepContent]="stepTemplate"
                  [stepContentParams]="getTextByStepName('search-associations')"
             >
-            <span >Include only entries with known associations in:</span>
+            <span >Show only entries with known associations in:</span>
                 <div class="asb-search__checkboxes">
                     <mat-checkbox
                         disableRipple
@@ -479,11 +479,11 @@
     <div
         style="text-align: center; white-space: pre-line; padding: 10px 20px 10px 10px"
     >
-        SNVs concordance with <a
+        Look for ASBs which are concordant<br> with motif predictions of <a
         rel="noopener noreferrer" target="_blank"
         href="https://hocomoco11.autosome.ru/"
     >
-        HOCOMOCO v.11
-    </a> motifs
+        HOCOMOCO
+    </a>
     </div>
 </ng-template>

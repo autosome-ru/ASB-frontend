@@ -68,7 +68,7 @@ function getText(step: string, component?: string): string {
         case "search-associations":
             return "Search for SNVs with known\n associations with phenotypes or eQTLs";
         case "search-concordance":
-            return "SNVs concordance with HOCOMOCO11 motifs";
+            return "Look for ASBs which are\nconcordant with motif predictions of HOCOMOCO";
         default:
             return "";
     }
