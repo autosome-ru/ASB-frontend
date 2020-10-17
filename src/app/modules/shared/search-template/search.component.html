@@ -368,7 +368,7 @@
                 joyrideStep="search-concordance"
                 [stepContent]="hocomocoTemplate"
             >
-                <span >Motif Concordance:</span>
+                <span >Include only entries with motif concordance:</span>
                 <div class="asb-search__checkboxes">
                     <mat-checkbox
                         *ngFor="let concordance of concordances; let last=last"
@@ -387,7 +387,7 @@
                  [stepContent]="stepTemplate"
                  [stepContentParams]="getTextByStepName('search-associations')"
             >
-            <span >Genetic associations in:</span>
+            <span >Include only entries with known associations in:</span>
                 <div class="asb-search__checkboxes">
                     <mat-checkbox
                         disableRipple

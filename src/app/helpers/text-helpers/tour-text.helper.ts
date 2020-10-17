@@ -48,7 +48,7 @@ function getText(step: string, component?: string): string {
         case "search-example":
             return "Or click the \"Example\" button\nto see ADASTRA in action.";
         case "search-tf-list":
-            return "Look for SNVs with ASBs at the\n" +
+            return "Look for SNVs with ASBs for the\n" +
                 "selected transcription factors only\n" +
                 "(start typing and use autocomplete).\n" +
                 "TFs are listed according to UniProt IDs.\n" +
@@ -60,13 +60,13 @@ function getText(step: string, component?: string): string {
                 "(start typing and use autocomplete).\n" +
                 "Cell types are named according to the\n " +
                 "GTRD data. The complete list of cell types\ncan be found" +
-                "at the \"Browse\" page.";
+                " at the \"Browse\" page.";
         case "search-download":
             return "Download search results in TSV format.";
         case "search-view":
             return "Allows switching between card\n and table view of search results.";
         case "search-associations":
-            return "SNVs with associations in all databases";
+            return "Search for SNVs with known\n associations with phenotypes or eQTLs";
         case "search-concordance":
             return "SNVs concordance with HOCOMOCO11 motifs";
         default:
