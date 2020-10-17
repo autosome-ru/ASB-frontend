@@ -38,7 +38,7 @@ export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: "ph
     Object.keys(type == "concordance" ? concordanceModelExample : phenotypesModelExample)
         .forEach(s => {
         if (s && form[s]) {
-            result = (result ? result + "," : "") + s;
+            result = (result ? result + "," : "") + (s != 'Other' ? s : 'No Hit,None');
         }
     });
     return result;

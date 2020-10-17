@@ -32,7 +32,8 @@ export const concordanceModelExample: MotifConcordanceModel = {
     Concordant: false,
     Discordant: false,
     "Weak Concordant": false,
-    "Weak Discordant": false
+    "Weak Discordant": false,
+    "Other": false,
 };
 
 export const initialServerParams: AsbServerSideModel = {
