@@ -33,12 +33,12 @@ export function convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
     }
 }
 
-export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: "phenotypes" | "concordance"): string {
+export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: "phenotypes" | "concordance", forBackend?: boolean): string {
     let result = "";
     Object.keys(type == "concordance" ? concordanceModelExample : phenotypesModelExample)
         .forEach(s => {
         if (s && form[s]) {
-            result = (result ? result + "," : "") + (s != 'Other' ? s : 'No Hit,None');
+            result = (result ? result + "," : "") + (forBackend ? s != 'Other' ? s : 'No Hit,None' : s);
         }
     });
     return result;

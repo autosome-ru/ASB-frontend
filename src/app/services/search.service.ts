@@ -142,7 +142,7 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
     if (phenList) {
         params.phenotype_databases = phenList;
     }
-    const concList: string = formCheckboxesToList(filter, "concordance");
+    const concList: string = formCheckboxesToList(filter, "concordance", true);
     if (concList) {
         params.motif_concordance = concList;
     }
