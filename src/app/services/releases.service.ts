@@ -4,12 +4,13 @@ import {ReleaseModel} from "../models/releases.model";
 import { Location } from "@angular/common";
 import {Observable, of} from "rxjs";
 import {recentRelease, releasesList} from "../helpers/constants/releases";
+import {UrlService} from "./url.service";
 
 
 @Injectable()
 export class ReleasesService {
 
-    constructor(private router: Router, private location: Location) {
+    constructor(private router: Router,private urlService: UrlService, private location: Location) {
     }
     private releases: ReleaseModel[] = releasesList;
 
@@ -19,6 +20,7 @@ export class ReleasesService {
         if (releaseIndex != -1) {
             return this.releases[releaseIndex];
         }
+
         return recentRelease;
     }
 
@@ -29,7 +31,9 @@ export class ReleasesService {
         if ( url != "" && url != "/") {
             path = url.split("/")[1];
         }
-        return of(this.getReleaseFromPrefix(path));
+        const currentRelease = this.getReleaseFromPrefix(path)
+        this.urlService.currentRelease = currentRelease
+        return of(currentRelease);
     }
 
 

@@ -2,25 +2,25 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ClInfoBackendModel, SnpInfoBackendModel, TfInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
-import {browseUrl, snpsInfoUrl} from "../helpers/constants/urls";
 import {AsbServerSideModel} from "../models/table.model";
 import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";
+import {UrlService} from "./url.service";
 
 
 @Injectable()
 export class DataService {
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
     public getSnpInfoById({rsId: id, alt: altBase}:
                               {rsId: string, alt: string}): Observable<SnpInfoBackendModel> {
-        return this.http.get<SnpInfoBackendModel>(`${snpsInfoUrl}/${id.slice(2)}/${altBase}`);
+        return this.http.get<SnpInfoBackendModel>(`${this.urlService.getUrlForQuery("snp")}/${id.slice(2)}/${altBase}`);
     }
 
     public getSnpInfoByIdCsv(id: string, alt: string, tfOrCl: TfOrCl,
                              columns: string[], filter?: string): Observable<Blob> {
-        return this.http.get(`${snpsInfoUrl}/${id.slice(2)}/${alt}/${tfOrCl}/tsv`,
+        return this.http.get(`${this.urlService.getUrlForQuery("snp")}/${id.slice(2)}/${alt}/${tfOrCl}/tsv`,
             {params: constructParams(columns, filter, tfOrCl)
                 , responseType: "blob"});
     }
@@ -29,19 +29,19 @@ export class DataService {
     }
 
     public getTotalInfo(): Observable<TotalInfoBackendModel> {
-        return this.http.get<TotalInfoBackendModel>(browseUrl + "/total");
+        return this.http.get<TotalInfoBackendModel>(this.urlService.getUrlForQuery("browse") + "/total");
     }
 
 
     public getTfInfo(params: AsbServerSideModel): Observable<TfInfoBackendModel[]> {
-        return this.http.get<TfInfoBackendModel[]>(browseUrl + "/tf",
+        return this.http.get<TfInfoBackendModel[]>(this.urlService.getUrlForQuery("browse") + "/tf",
         {
             params: convertServerSideModelToServerSideBackendModel(params)
         });
     }
 
     public getClInfo(params: AsbServerSideModel): Observable<ClInfoBackendModel[]> {
-        return this.http.get<ClInfoBackendModel[]>(browseUrl + "/cl",
+        return this.http.get<ClInfoBackendModel[]>(this.urlService.getUrlForQuery("browse") + "/cl",
             {
                 params: convertServerSideModelToServerSideBackendModel(params)
             });

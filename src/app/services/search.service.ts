@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
-import {searchOptionsByGeneNameUrl, searchOptionsUrl, searchSnpsResultsUrl} from "src/app/helpers/constants/urls";
 import {
     SearchByGeneNameHintBackendModel,
     SearchHintBackendModel,
@@ -10,12 +9,12 @@ import {
 import {formCheckboxesToList} from "../helpers/converter/search-model.converter";
 import {AsbServerSideModel} from "../models/table.model";
 import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";
+import {UrlService} from "./url.service";
 
 
 @Injectable()
 export class SearchService {
-
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
     public getSearchOptions(filter: SearchQueryModel, tfOrCl: "tf" | "cl"):
@@ -27,12 +26,12 @@ export class SearchService {
         } else {
             params = makeParamsForSearchOptions(tfOrCl, filter.clList, filter.searchCl);
         }
-        return this.http.get<SearchHintBackendModel[]>(searchOptionsUrl(tfOrCl),
+        return this.http.get<SearchHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptAdv', tfOrCl),
             {params});
     }
 
     public getSearchOptionsByGeneName(filter: string): Observable<SearchByGeneNameHintBackendModel[]> {
-        return this.http.get<SearchByGeneNameHintBackendModel[]>(searchOptionsByGeneNameUrl,
+        return this.http.get<SearchByGeneNameHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptGene'),
             {params: {search: addPercents(filter)}});
     }
 
@@ -54,24 +53,24 @@ export class SearchService {
             switch (filter.searchBy) {
                 case "geneId":
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/gene_id/${filter.geneId}`, {
+                        `${this.urlService.getUrlForQuery("search")}/gene_id/${filter.geneId}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
                 case "id":
                     const rsId: string = filter.rsId.match(/^rs\d+$/) ? filter.rsId.slice(2) : filter.rsId;
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/rs/${rsId}`, {
+                        `${this.urlService.getUrlForQuery("search")}/rs/${rsId}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
                 case "geneName":
                     return this.http.get<SearchResultsBackendModel>(
-                        `${searchSnpsResultsUrl}/gene_name/${filter.geneName}`, {
+                        `${this.urlService.getUrlForQuery("search")}/gene_name/${filter.geneName}`, {
                             params: convertServerSideModelToServerSideBackendModel(params)
                         });
             }
         } else {
             return this.http.get<SearchResultsBackendModel>(
-                `${searchSnpsResultsUrl}/advanced`, {
+                `${this.urlService.getUrlForQuery("search")}/advanced`, {
                     params: {
                         ...makeParamsForAdvancedSearchResults(filter),
                         ...convertServerSideModelToServerSideBackendModel(params)
@@ -81,7 +80,7 @@ export class SearchService {
     }
     getSearchResultsCsv(filter: SearchQueryModel): Observable<Blob> {
         return this.http.get(
-            `${searchSnpsResultsUrl}/advanced/csv`, {
+            `${this.urlService.getUrlForQuery("search")}/advanced/csv`, {
                 params: makeParamsForAdvancedSearchResults(filter),
                 responseType: "blob"
             });

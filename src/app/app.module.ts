@@ -31,6 +31,7 @@ import {AsbConfirmDialogComponent} from "./modules/shared/popover-template/confi
 import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import {UrlService} from "./services/url.service";
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ],
     providers: [
         DataService,
+        UrlService,
         SearchService,
         SeoService,
         ReleasesService,

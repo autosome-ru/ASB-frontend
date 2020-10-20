@@ -40,7 +40,7 @@ export class AsbSnpCardComponent implements OnInit {
 
     public showMoreCellLines = false;
     public showMoreTfs = false;
-    public serverUrl: string = environment.serverUrl;
+    public serverUrl: string = environment.serverUrlPort;
     public release$: Observable<ReleaseModel>;
 
     constructor(private store: Store<AppState>) { }
