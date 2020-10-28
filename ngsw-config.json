@@ -5,7 +5,8 @@
     {
       "name": "api",
       "urls": [
-        "/api/**"
+        "/api/**",
+        "/sitemap/**"
       ],
       "cacheConfig": {
         "maxAge": "2d",
