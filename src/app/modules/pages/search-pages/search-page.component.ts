@@ -80,6 +80,32 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         } else {
             this.groupValue = "list";
         }
+        if (this.isAdvancedSearch) {
+            this.tourSteps = [
+                'search-pos',
+                'search-tf-list',
+                'search-cl-list',
+                'search-concordance',
+                'search-associations',
+                'search-adv-example',
+                'search-download',
+                'search-view',
+                'cell-types-buttons',
+                'transcription-factors-buttons',
+            ];
+        } else {
+            this.tourSteps = [
+                'search-by',
+                'search-rs',
+                'search-pos',
+                'search-example',
+                'search-nearby',
+                'search-view',
+                'cell-types-buttons',
+                'transcription-factors-buttons',
+                'search-adv'
+            ];
+        }
         this.subscriptions.add(
             this.store.select(fromSelectors.selectCurrentSearchResults).subscribe(
                 s => {
@@ -116,32 +142,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 }
             )
         );
-        if (this.isAdvancedSearch) {
-        this.tourSteps = [
-            'search-pos',
-            'search-tf-list',
-            'search-cl-list',
-            'search-concordance',
-            'search-associations',
-            'search-adv-example',
-            'search-download',
-            'search-view',
-            'cell-types-buttons',
-            'transcription-factors-buttons',
-        ];
-    } else {
-        this.tourSteps = [
-            'search-by',
-            'search-rs',
-            'search-pos',
-            'search-example',
-            'search-nearby',
-            'search-view',
-            'cell-types-buttons',
-            'transcription-factors-buttons',
-            'search-adv'
-        ];
-    }
+
     }
 
     ngOnDestroy() {
