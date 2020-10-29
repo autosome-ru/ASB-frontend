@@ -16,8 +16,8 @@ export const releasesList: ReleaseModel[] = [
         url: "beta",
         date: "22.06.2020",
         recent: false,
-        version: "v1.7",
-        api: "v1",
+        version: "v2.0",
+        api: "v2",
         gtrdExpsPath: "ADASTRA_GTRD_exps.tsv",
         badMapsPath: "BADmaps.zip",
         notes: "For development usage only."
