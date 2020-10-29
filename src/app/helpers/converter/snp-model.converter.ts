@@ -110,8 +110,9 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
     result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;
     result.altBase = model.alt;
-    if (model.context.length !== 49) {
+    if (model.context && model.context.length !== 49) {
         console.warn("Wrong context value", model.context.length);
+        result.context = ''
     } else {
         result.context = model.context.slice(0, 24) +
             `[${model.ref}/${model.alt}]` + model.context.slice(25);
