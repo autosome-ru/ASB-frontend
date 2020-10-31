@@ -50,7 +50,7 @@
                 joyrideStep="search-rs"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('search-rs')"
-                (next)="searchForm.patchValue({searchBy: 'pos', chromPos: {chr: '', pos: ''}})"
+                (next)="setSearchBy('gene')"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
                 appearance="outline"
@@ -112,6 +112,11 @@
         </ng-container>
         <ng-container *ngIf="_checkToDisplay('geneName')">
             <mat-form-field
+                joyrideStep="search-gene"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('search-gene')"
+                (next)="setSearchBy('pos')"
+                (prev)="setSearchBy('id')"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
                 appearance="outline"
@@ -168,7 +173,7 @@
                 [prevTemplate]="prevTemplate"
                 [nextTemplate]="nextTemplate"
                 [doneTemplate]="doneTemplate"
-                (prev)="searchById()"
+                (prev)="setSearchBy('gene')"
                 [stepContentParams]="getTextByStepName('search-pos',isAdvanced? 'advanced' : 'search')"
             >
                 <mat-form-field
@@ -368,7 +373,9 @@
                 joyrideStep="search-concordance"
                 [stepContent]="hocomocoTemplate"
             >
+                <div>
                 <span >Show only entries with motif concordance for any of the selected TFs:</span>
+                </div>
                 <div class="asb-search__checkboxes">
                     <mat-checkbox
                         *ngFor="let concordance of concordances; let last=last"

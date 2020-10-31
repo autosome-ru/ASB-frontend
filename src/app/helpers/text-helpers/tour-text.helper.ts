@@ -69,6 +69,9 @@ function getText(step: string, component?: string): string {
             return "Search for SNVs with known\n associations with phenotypes or eQTLs";
         case "search-concordance":
             return "Look for ASBs which are\nconcordant with motif predictions of HOCOMOCO";
+        case "search-gene":
+            return "Search for ASB sites within a particular\ngene locus (within the gene body and\n 5000bp upstream of the TSS).\n" +
+                "GENCODE gene symbols are used as gene\nnames, start typing and use autocomplete."
         default:
             return "";
     }

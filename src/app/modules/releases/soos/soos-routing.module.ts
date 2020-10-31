@@ -4,15 +4,6 @@ import {RouterModule, Routes} from "@angular/router";
 
 const routes: Routes = [
     {
-        path: "",
-        loadChildren: () => import(
-            "src/app/modules/pages/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
-        data: {
-            title: "ADASTRA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
-            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
-        }
-    },
-    {
         path: "about",
         loadChildren: () => import(
             "src/app/modules/pages/about-page/about-page.module").then(mod => mod.AsbAboutPageModule),
@@ -53,8 +44,10 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/search-pages/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
-            title: "ADASTRA - search",
-            description: "ADASTRA search page for allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: (tfs: string) => "ADASTRA - search" + (tfs ? ` for ${tfs}` : ''),
+            description: (tfs: string) => "ADASTRA search page for allele-specific binding sites" +
+                " recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD" +
+                (tfs ? `. Transcription factors: ${tfs}` : '')
         }
     },
     {
@@ -73,6 +66,15 @@ const routes: Routes = [
         data: {
             title: "Page not found",
             description: "Page not found"
+        }
+    },
+    {
+        path: "",
+        loadChildren: () => import(
+            "src/app/modules/pages/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
+        data: {
+            title: "ADASTRA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
+            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
     },
     {

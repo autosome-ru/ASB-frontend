@@ -17,7 +17,6 @@ import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {GeneModel, SearchQueryModel, SearchResultsModel} from "../../../models/search-query.model";
 import {SearchComponent} from "../../shared/search-template/search.component";
-import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
 import {AsbServerSideModel} from "../../../models/table.model";
 import {initialServerParams} from "../../../helpers/constants/constants";
@@ -70,7 +69,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
-        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
+        this.seoService.updateSeoInfo({
+            title: this.route.snapshot.data.title(this.route.snapshot.queryParams.tf)
+        });
+
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.isAdvancedSearch = !this.router.url.includes("search/simple");
         if (this.route.snapshot.queryParams.rs ||
@@ -97,6 +99,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             this.tourSteps = [
                 'search-by',
                 'search-rs',
+                'search-gene',
                 'search-pos',
                 'search-example',
                 'search-nearby',

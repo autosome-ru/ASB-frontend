@@ -10,7 +10,7 @@
                 <dt>BAD</dt>
                 <dd>Background Allelic Dosage (BAD) is the expected ratio
                     of major to minor allelic frequencies in a particular genomic region.
-                    <br><br>
+                    <br>
                     For example, if a the same copy number of two alternating alleles
                     is the same,  alleles,  (e.g. 1:1 (diploid), 2:2, or 3:3,) then
                     the respective region has BAD=1, i.e. the expected ratio of
@@ -33,10 +33,11 @@
                     For each candidate ASB site, the P-values for Reference and
                     Alternative allele are calculated separately according to the
                     fitted Negative Binomial Mixture model.
-                    <br><br>
+                    <br>
                     For a particular SNV, the The P-values from individual data sets
-                    are aggregated for each TF (for ChIP-Seq data from all cell types)
-                    and cell types (for ChIP-Seq data from all TFs). The aggregated
+                    are aggregated for each <b>T</b>ranscription <b>F</b>actor (for ChIP-Seq data from all cell types),
+                    providing <b>TF-ASBs</b>
+                    and cell types (for ChIP-Seq data from all TFs), providing <b>cell type ASBs</b>. The aggregated
                     P-values are then corrected for multiple tested SNPs using
                     Benjamini-Hochberg (FDR) procedure.
                     <br>
@@ -48,7 +49,7 @@
                     with weights being -log10 of the respective P-values.
                     The expected read counts are estimated from the fitted
                     Negative Binomial Mixture model.
-                    <br><br>
+                    <br>
                     The Effect Size is not assigned (n/a) if all of the raw
                     individual P-values of an SNV on a particular genome position
                     are equal to 1, considering Ref- and Alt-ASBs separately.
@@ -75,7 +76,6 @@
                     >SPRY-SARUS</a>.
                     The motif position was fixed  according to the best hit considering
                     both the Reference and the Alternative alleles on both DNA strands.
-
                     <br>
                 </dd>
                 <dt>Motif Fold Change</dt>

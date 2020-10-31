@@ -36,7 +36,32 @@
                                 BABACHI</a>:
                         </strong>
                         <span>
-                            <a [href]="'/assets/' + release.badMapsPath" [download]="_getBadmapsName(release)">{{_getBadmapsName(release)}}</a>
+                            <a [href]="'/assets/' + release.badMapsPath"
+                               [download]="_getBadmapsName(release)"
+                            >
+                                {{_getBadmapsName(release)}}
+                            </a>
+                        </span>
+                    </li>
+                    <li>
+                        <strong>
+                            Sitemaps:
+                        </strong>
+                        <span>
+                            <a [href]="'/sitemap/' + release.api + '/tfs'"
+                               rel="noopener noreferrer"
+                               target="_blank"
+                            >
+                                TFs
+                            </a>
+                        </span>,
+                        <span>
+                            <a [href]="'/sitemap/' + release.api + '/snps'"
+                               rel="noopener noreferrer"
+                               target="_blank"
+                            >
+                                ASBs
+                            </a>
                         </span>
                     </li>
                 </ul>

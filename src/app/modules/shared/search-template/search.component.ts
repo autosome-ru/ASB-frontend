@@ -177,6 +177,11 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.searchForm.get("searchBy").valueChanges.subscribe(
                 (s: "id" | "pos" | "geneId" | "geneName") => {
                     let patchValue: Partial<SearchQueryModel> = {};
+                    if (this.searchForm.invalid) {
+                        patchValue = {
+                            chromPos: new ChromPos('', '')
+                        }
+                    }
                     if (checkOneResult(this.searchData)) {
                         switch (s) {
                             case "pos":
@@ -509,9 +514,18 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.nextStep.emit();
     }
 
-    searchById() {
-        if (!this.isAdvanced) {
-            this.searchForm.patchValue({searchBy: "id"});
+    setSearchBy(id: 'gene' | 'pos' | 'id') {
+        switch (id) {
+            case "id":
+                if (!this.isAdvanced) {
+                    this.searchForm.patchValue({searchBy: "id"});
+                }
+                break;
+            case "pos":
+                this.searchForm.patchValue({searchBy: 'pos', });
+                break;
+            case "gene":
+                this.searchForm.patchValue({searchBy: 'geneName'})
         }
     }
 
