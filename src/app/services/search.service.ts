@@ -80,7 +80,7 @@ export class SearchService {
     }
     getSearchResultsCsv(filter: SearchQueryModel): Observable<Blob> {
         return this.http.get(
-            `${this.urlService.getUrlForQuery("search")}/advanced/csv`, {
+            `${this.urlService.getUrlForQuery("search")}/advanced/tsv`, {
                 params: makeParamsForAdvancedSearchResults(filter),
                 responseType: "blob"
             });
