@@ -21,16 +21,13 @@ import {SortDirection} from "@angular/material/sort";
 })
 export class InnerTableComponent implements OnInit {
     @ViewChild("alignTemplate", {static: true})
-    public expViewTemplate: TemplateRef<{value: number}>;
+    public expViewTemplate: TemplateRef<{value: string}>;
 
     @Input()
     innerTableData: ExpSnpModel[];
 
     @Input()
     isCl: boolean;
-
-
-
 
     @Input()
     sortColumn: 'ref' | 'alt' | '';
@@ -53,7 +50,7 @@ export class InnerTableComponent implements OnInit {
             bad: {view: "Estimated BAD", valueConverter: v => v},
             refReadCount: {view: "Ref read counts", valueConverter: v => "" + v, isDesc: true},
             altReadCount: {view: "Alt read counts", valueConverter: v => "" + v, isDesc: true},
-            expId: {view: "GTRD experiment ID", columnTemplate: this.expViewTemplate},
+            expId: {view: "GTRD experiment ID"},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
             rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2), isDesc: true},
@@ -75,19 +72,4 @@ export class InnerTableComponent implements OnInit {
         return getPaginatorOptions(this.innerTableData.length);
     }
 
-    convertClId(id: number) {
-        return 'EXP' + addZeros(id);
-
-    }
-
-}
-
-function addZeros(id: number) {
-    let result: string = '' + id;
-    let len: number = result.length;
-    while (len < 6) {
-        result = '0' + result;
-        len += 1;
-    }
-    return result;
 }

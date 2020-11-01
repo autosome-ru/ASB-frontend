@@ -16,8 +16,8 @@
         *ngIf="value"
         target="_blank"
         rel="noopener noreferrer"
-        [href]="'http://gtrd.biouml.org/#!experiment/'+ convertClId(value)"
+        [href]="'http://gtrd.biouml.org/#!table/gtrd_current.experiments/Details/ID='+ value"
     >
-        {{convertClId(value)}}
+        {{value}}
     </a>
 </ng-template>

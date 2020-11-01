@@ -134,7 +134,7 @@ export interface ExpSnpBackendModel {
     p_value_alt: number;
     bad: string;
     experiment: {
-        exp_id: number,
+        exp_id: number | string,
         align: number,
         tf_name: string,
         cl_name: string
@@ -147,7 +147,7 @@ export interface ExpSnpModel {
     rawPValueRef: number;
     rawPValueAlt: number;
     bad: string;
-    expId: number;
+    expId: string;
     align: number;
     tfName: string;
     clName: string;

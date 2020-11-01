@@ -167,6 +167,23 @@ function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSn
         pValueAlt: s.log_p_value_alt,
     };
 }
+function convertExpId(id: number | string): string {
+    if (typeof id === 'string') {
+        return id
+    } else {
+        return 'EXP' + addZeros(id);
+    }
+}
+
+function addZeros(id: number) {
+    let result: string = '' + id;
+    let len: number = result.length;
+    while (len < 6) {
+        result = '0' + result;
+        len += 1;
+    }
+    return result;
+}
 
 function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
     return {
@@ -176,7 +193,7 @@ function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
         altReadCount: s.alt_readcount,
         refReadCount: s.ref_readcount,
         align: s.experiment.align,
-        expId: s.experiment.exp_id,
+        expId: convertExpId(s.experiment.exp_id),
         clName: s.experiment.cl_name,
         tfName: s.experiment.tf_name,
     };
