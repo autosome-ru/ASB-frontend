@@ -1,4 +1,4 @@
-import {SearchParamsModel, SearchQueryModel} from "../../models/search-query.model";
+import {GeneModel, SearchParamsModel, SearchQueryModel} from "../../models/search-query.model";
 import {formCheckboxesToList} from "../converter/search-model.converter";
 import {SnpSearchModel, TfSnpModel} from "../../models/data.model";
 import {MatSort} from "@angular/material/sort";
@@ -42,7 +42,7 @@ export function checkOneResult(searchData: SnpSearchModel[]): boolean {
 }
 
 export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: boolean,
-                                    searchData?: SnpSearchModel[]): Partial<SearchParamsModel> {
+                                    searchData?: SnpSearchModel[], selectedGene?: GeneModel): Partial<SearchParamsModel> {
 
     if (form && !form.isAdvanced) {
         if (form.searchBy) {
@@ -81,8 +81,13 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
         if (form) {
             const result: Partial<SearchParamsModel> = {};
             if (form.clList.length > 0) { result.cl = form.clList.join(","); }
+            if (!oldIsAdvanced && selectedGene && selectedGene.chr && (form.geneName || form.geneId)) {
+                result.pos = `${selectedGene.startPos}-${selectedGene.endPos}`
+                result.chr = selectedGene.chr.slice(3)
+            }
             if (form.chromPos.pos ) {
-                if (checkOneResult(searchData) && !oldIsAdvanced && form.searchBy === 'id' &&
+                if (checkOneResult(searchData) && !oldIsAdvanced &&
+                    form.searchBy === 'id' &&
                     !isValidPosInterval(form.chromPos.pos.trim())) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr.slice(3);

@@ -324,10 +324,10 @@ export class SearchComponent implements OnInit, OnDestroy {
                     case "id":
                         return !this.searchDataLoading && checkOneResult(this.searchData);
                     default:
-                        return !!this.selectedGene
+                        return !!this.selectedGene && !this._isSearchDisabled()
                 }
             } else {
-                return searchForm.searchBy === id;
+                return searchForm.searchBy === id || id === '';
             }
         }
 
@@ -384,7 +384,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
         this.searchForm.patchValue({isAdvanced});
-        return convertFormToParams(this.searchForm.value, this.isAdvanced, this.searchData);
+        return convertFormToParams(this.searchForm.value, this.isAdvanced, this.searchData, this.selectedGene);
     }
 
     _convertParamsToForm(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {

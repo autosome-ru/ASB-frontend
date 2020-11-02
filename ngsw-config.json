@@ -9,7 +9,7 @@
         "/sitemap/**"
       ],
       "cacheConfig": {
-        "maxAge": "2d",
+        "maxAge": "15m",
         "maxSize": 20
       }
     }
