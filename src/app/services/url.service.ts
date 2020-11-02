@@ -9,7 +9,7 @@ import {isPlatformBrowser} from "@angular/common";
 @Injectable()
 export class UrlService {
 
-    private readonly hostName: string = '';
+    public readonly hostName: string = '';
     public currentRelease: ReleaseModel = recentRelease
     private readonly isBrowser: boolean;
     constructor(@Inject(PLATFORM_ID) private platformId: Object) {

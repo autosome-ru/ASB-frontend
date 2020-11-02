@@ -19,6 +19,7 @@ import {FileSaverService} from "ngx-filesaver";
 import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
 import {isPlatformBrowser} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
+import {ReleaseModel} from "../../../../models/releases.model";
 
 @Component({
     selector: "asb-motifs",
@@ -49,6 +50,8 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     set transcriptionFactors(value: TfSnpModel[]) {
         this._transcriptionFactors = value;
     }
+    @Input()
+    public release: ReleaseModel;
 
     ngOnInit(): void {
         this._transcriptionFactors.forEach(s => this.revCompStateArray[s.id] = false);
@@ -79,7 +82,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     makeImagePath(tf: TfSnpModel, isSvg?: boolean): string {
-        return `${isSvg ? 'svgs' : 'pngs'}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`;
+        return `${isSvg ? 'svgs' : 'pngs'}/${this.release.api}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`;
     }
 
     changeRevCompState(tf: TfSnpModel) {

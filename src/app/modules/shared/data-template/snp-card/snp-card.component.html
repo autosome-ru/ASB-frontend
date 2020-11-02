@@ -76,6 +76,7 @@
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
     >
         <div
+            class="mr-1 mt-1 mt-md-0"
             joyrideStep="search-nearby"
             [stepContent]="stepTemplate"
             (next)="nextStep()"
@@ -95,15 +96,15 @@
             </a>
         </div>
         <div
+            class="mt-1 mt-md-0"
             joyrideStep="genome-browser"
             [stepContent]="stepTemplate"
             [stepContentParams]="getTextByStepName('genome-browser')"
-            style="margin: -10px -10px -10px 0; padding: 10px; display: inline-flex; overflow: auto"
+            style="margin: -10px; padding: 10px; display: inline-flex; overflow: auto"
         >
         <a
             joyrideStep="genome-browser"
             style="overflow: auto"
-            class="mt-0 mt-md-1 mt-lg-0"
             mat-raised-button
             target="_blank"
             rel="noopener noreferrer"
@@ -112,7 +113,7 @@
             + '-' + (snpData.pos + 100) +
             '&hgct_customText=track%20type=bigBed%20name=ADASTra_ASB_SNPs%20' +
              'description=%22ADASTra%20ASB%20SNPs%22%20visibility=full%20bigDataUrl=' +
-             serverUrl + '/assets/ADASTra_SNPs.bb&knownGene=full&' +
+             url + 'assets/ucsc-files/' + (release$ | async).ucscFileName +'&knownGene=full&' +
              'omimAvSnp=full&varsInPubs=full&snpedia=full&hgmd=full'"
         >
             Show in UCSC Genome Browser

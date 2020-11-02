@@ -100,6 +100,7 @@
                     <asb-motifs
                         #asbMotifsComponent
                         [transcriptionFactors]="_getGoodTfs((snpData.transFactors))"
+                        [release]="release$ | async"
                     >
 
                     </asb-motifs>

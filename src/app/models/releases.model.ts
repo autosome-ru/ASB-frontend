@@ -7,5 +7,6 @@ export interface ReleaseModel {
     api: string;
     gtrdExpsPath: string;
     badMapsPath: string;
+    ucscFileName: string;
     notes?: string;
 }

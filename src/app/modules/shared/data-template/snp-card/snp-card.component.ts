@@ -9,13 +9,13 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
-import {environment} from "src/environments/environment";
 import * as fromSelectors from "src/app/store/selector";
 import {ReleaseModel} from "../../../../models/releases.model";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer";
 import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
+import {UrlService} from "../../../../services/url.service";
 
 @Component({
     selector: "asb-snp-card",
@@ -40,12 +40,13 @@ export class AsbSnpCardComponent implements OnInit {
 
     public showMoreCellLines = false;
     public showMoreTfs = false;
-    public serverUrl: string = environment.serverUrlPort;
     public release$: Observable<ReleaseModel>;
+    public url: string;
 
-    constructor(private store: Store<AppState>) { }
+    constructor(private store: Store<AppState>, private urlService: UrlService) { }
 
     ngOnInit() {
+        this.url = this.urlService.hostName
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
 

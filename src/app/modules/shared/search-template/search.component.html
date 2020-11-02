@@ -136,7 +136,8 @@
                     <mat-option *ngFor="let option of searchGeneOptions$ | async"
                                 [value]="option.name"
                     >
-                        <span>{{option.name}}</span>
+                        <span>{{option.name + " | "}}</span>
+                        <small>&nbsp;ASBs in locus: {{option.snpsCount}}</small>
                     </mat-option>
                     </ng-container>
                     <mat-option *ngIf="searchGeneOptionsLoading$ | async">
@@ -301,7 +302,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
                         <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total snps: {{option.aggregatedSnpCount}}</small>
+                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}}</small>
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).tf">
@@ -354,7 +355,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
                         <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total snps: {{option.aggregatedSnpCount}}</small>
+                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}}</small>
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).cl">

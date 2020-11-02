@@ -7,7 +7,7 @@
                     Release
                     <a [href]="'/' + release.url">{{release.name}}</a>
                     {{release.version}}, {{release.date}}
-                    <span *ngIf="release.recent">(current)</span>
+                    <span *ngIf="release.recent">(stable)</span>
                 </h5>
                 <ul style="padding: 0 0 0 40px; list-style-type: none">
                     <li *ngIf="release.notes">
@@ -23,7 +23,11 @@
                             List of <a href="http://gtrd.biouml.org/" target="_blank" rel="noopener noreferrer">GTRD</a> data used:
                         </strong>
                         <span>
-                            <a [href]="'/assets/' + release.gtrdExpsPath" [download]="_getGtrdExpsName(release)">{{_getGtrdExpsName(release)}}</a>
+                            <a [href]="'/assets/exps/' + release.gtrdExpsPath"
+                               [download]="_getGtrdExpsName(release)"
+                            >
+                                {{_getGtrdExpsName(release)}}
+                            </a>
                         </span>
                     </li>
                     <li >
@@ -36,7 +40,7 @@
                                 BABACHI</a>:
                         </strong>
                         <span>
-                            <a [href]="'/assets/' + release.badMapsPath"
+                            <a [href]="'/assets/badmaps/' + release.badMapsPath"
                                [download]="_getBadmapsName(release)"
                             >
                                 {{_getBadmapsName(release)}}

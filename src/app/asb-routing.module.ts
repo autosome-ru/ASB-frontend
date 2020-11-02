@@ -19,10 +19,16 @@ const routes: Routes = [
         loadChildren: () => import("src/app/modules/releases/soos/soos.module").then(mod => mod.SoosModule)
     },
     {
+        path: "ford",
+        component: DeprecatedComponent,
+        loadChildren: () => import("src/app/modules/releases/ford/ford.module").then(mod => mod.FordModule)
+    },
+    {
         path: "beta",
         component: DeprecatedComponent,
         loadChildren: () => import("src/app/modules/releases/deprecated/test/test.module").then(mod => mod.TestModule)
     },
+
     {
         path: "",
         pathMatch: "full",

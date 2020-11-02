@@ -28,6 +28,7 @@ export interface SearchByGeneNameHintBackendModel {
     chromosome: string;
     start_pos: number;
     end_pos: number;
+    snps_count: number;
 }
 
 export interface SearchHintModel {
@@ -41,6 +42,7 @@ export interface GeneModel {
     chr: string;
     startPos: number;
     endPos: number;
+    snpsCount: number
 }
 
 export interface SearchParamsModel {
