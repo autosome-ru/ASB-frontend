@@ -53,7 +53,7 @@ export class HelpPageComponent implements OnInit, AfterViewInit {
         return value.replace(" ", "-");
     }
 
-    getApiUrl(release: ReleaseModel): string {
-        return `https://adastra.autosome.ru/api/${release.api}`
+    getApiUrl(): string {
+        return `https://adastra.autosome.ru/api/`
     }
 }
