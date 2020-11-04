@@ -15,12 +15,12 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
     {
         path: "soos",
-        component: RecentComponent,
+        component: DeprecatedComponent,
         loadChildren: () => import("src/app/modules/releases/soos/soos.module").then(mod => mod.SoosModule)
     },
     {
         path: "ford",
-        component: DeprecatedComponent,
+        component: RecentComponent,
         loadChildren: () => import("src/app/modules/releases/ford/ford.module").then(mod => mod.FordModule)
     },
     {
