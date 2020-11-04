@@ -16,7 +16,7 @@ const routes: Routes = [
     {
         path: "soos",
         component: DeprecatedComponent,
-        loadChildren: () => import("src/app/modules/releases/soos/soos.module").then(mod => mod.SoosModule)
+        loadChildren: () => import("src/app/modules/releases/deprecated/soos/soos.module").then(mod => mod.SoosModule)
     },
     {
         path: "ford",
