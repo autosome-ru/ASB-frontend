@@ -159,8 +159,12 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.subscriptions.add(
             this.searchForm.get('geneName').valueChanges.pipe(debounceTime(200)).subscribe(
-                (s: string) => this.store.dispatch(
-                    new fromActions.search.LoadSearchByGeneNameOptionsAction(s))
+                (s: string) => {
+                    if (this.searchForm.get('searchBy').value == 'geneName') {
+                        this.store.dispatch(
+                            new fromActions.search.LoadSearchByGeneNameOptionsAction(s))
+                    }
+                }
             )
         )
         this.subscriptions.add(

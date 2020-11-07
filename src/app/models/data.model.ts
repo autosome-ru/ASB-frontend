@@ -1,4 +1,5 @@
 export interface SnpGenPosModel {
+    hasConcordance?: boolean;
     rsId: string;
     chr: string;
     pos: number;
@@ -12,6 +13,7 @@ export interface SnpGenPosBackendModel {
     position: number;
     ref: string;
     alt: string;
+    has_concordance?: boolean;
     rs_id: number;
     context: string;
 }

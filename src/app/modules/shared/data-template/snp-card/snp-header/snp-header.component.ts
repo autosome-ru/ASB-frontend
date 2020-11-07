@@ -16,6 +16,9 @@ export class AsbSnpHeaderComponent implements OnInit {
 
     @Input()
     public data: SnpSearchModel | SnpInfoModel;
+
+    @Input()
+    public hasConcordance: boolean = false;
     @Input()
     public snpCard = true;
     colors: {[base: string]: string} = baseToColors;

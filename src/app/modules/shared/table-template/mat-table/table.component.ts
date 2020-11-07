@@ -82,6 +82,9 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public action: (row: T) => boolean;
 
     @Input()
+    public actionTemplate: TemplateRef<{value: T}>;
+
+    @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;
 
 

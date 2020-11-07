@@ -4,7 +4,7 @@ import {
     EventEmitter,
     Input, OnDestroy,
     OnInit,
-    Output,
+    Output, TemplateRef,
     ViewChild, ViewEncapsulation
 } from "@angular/core";
 
@@ -42,6 +42,9 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
     @Input()
     action: (row: T) => boolean;
+
+    @Input()
+    public actionTemplate: TemplateRef<{value: T}>;
 
     @Input()
     public readonly getSnpName: (row: T) => string;

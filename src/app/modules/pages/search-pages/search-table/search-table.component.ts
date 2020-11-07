@@ -35,6 +35,9 @@ export class SearchPageTableComponent implements OnInit {
     @ViewChild("tableView", {static: true})
     public tableView: AsbServerTableComponent<SnpSearchModel>;
 
+    @ViewChild("starViewTemplate", {static: true})
+    public starViewTemplate: TemplateRef<{value: boolean}>;
+
     @ViewChild("manyValuesViewTemplate", {static: true})
     public manyTransFactorsViewTemplate: TemplateRef<{value: TfSnpCutModel[]}>;
 
@@ -84,6 +87,11 @@ export class SearchPageTableComponent implements OnInit {
 
     ngOnInit() {
         this.columnModel = {
+            hasConcordance: {
+                view: '',
+                columnTemplate: this.starViewTemplate,
+                isSticky: true
+            },
             pos: {
                 view: "Genome position",
                 columnTemplate: this.genomePositionViewTemplate,
@@ -132,6 +140,7 @@ export class SearchPageTableComponent implements OnInit {
                 ...this.paramsToData(e)
             };
         })));
+        this.displayedColumns.push("hasConcordance")
     }
 
     _handleTableRowClick(row: SnpSearchModel) {

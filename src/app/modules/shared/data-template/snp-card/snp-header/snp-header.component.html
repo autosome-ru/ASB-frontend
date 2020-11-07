@@ -14,8 +14,10 @@
     <ng-container *ngTemplateOutlet="colorLettersTemplate"></ng-container>
 </h4>
 <h4 *ngIf="!snpCard">
+    <span>
     <span>{{data.rsId}}</span>
     <ng-container *ngTemplateOutlet="colorLettersTemplate"></ng-container>
+    </span>
 </h4>
 
 <ng-template #colorLettersTemplate>

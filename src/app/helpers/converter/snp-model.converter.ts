@@ -107,6 +107,7 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
     const result: Partial<SnpGenPosModel> = {};
     result.chr = model.chromosome;
     result.pos = model.position;
+    result.hasConcordance = model.has_concordance;
     result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;
     result.altBase = model.alt;

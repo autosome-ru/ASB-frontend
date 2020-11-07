@@ -71,17 +71,16 @@
                                     asbElevation
                                     role="group"
                                 >
-                                    <mat-card-header class="layout border--radius-top-8 row wrap theme--dark">
-                                        <mat-card-title>
+                                    <mat-card-header >
+                                        <mat-card-title
+                                        >
                                             <asb-snp-header
                                                 [data]="snp"
                                                 [snpCard]="false"
                                             >
                                             </asb-snp-header>
                                         </mat-card-title>
-                                        <mat-card-subtitle>
-
-                                        </mat-card-subtitle>
+                                        <asb-view-star class="ml-auto" *ngIf="snp.hasConcordance"></asb-view-star>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <asb-snp-card

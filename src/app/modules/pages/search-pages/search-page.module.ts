@@ -17,6 +17,7 @@ import {AsbTourModule} from "../../shared/tour-template/tour-module";
 import {AsbSnpDataModule} from "../../shared/data-template/data.module";
 import {AsbDirectivesModule} from "../../../directives/directives.module";
 import {AsbSearchModule} from "../../shared/search-template/search.module";
+import {ViewStarModule} from "../../shared/view-star/view-star.module";
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import {AsbSearchModule} from "../../shared/search-template/search.module";
         AsbDirectivesModule,
         AsbSearchModule,
         MatCardModule,
+        ViewStarModule,
     ],
     declarations: [
         SearchPageComponent,
