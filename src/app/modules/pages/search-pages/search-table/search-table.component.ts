@@ -89,6 +89,7 @@ export class SearchPageTableComponent implements OnInit {
         this.columnModel = {
             hasConcordance: {
                 view: '',
+                isDesc: true,
                 columnTemplate: this.starViewTemplate,
                 isSticky: true
             },
