@@ -81,11 +81,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
         if (form) {
             const result: Partial<SearchParamsModel> = {};
             if (form.clList.length > 0) { result.cl = form.clList.join(","); }
-            if (!oldIsAdvanced && selectedGene && selectedGene.chr && (form.geneName || form.geneId)) {
-                result.pos = `${selectedGene.startPos}-${selectedGene.endPos}`
-                result.chr = selectedGene.chr.slice(3)
-            }
-            if (form.chromPos.pos ) {
+            if (form.chromPos.pos) {
                 if (checkOneResult(searchData) && !oldIsAdvanced &&
                     form.searchBy === 'id' &&
                     !isValidPosInterval(form.chromPos.pos.trim())) {
@@ -99,6 +95,11 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
             } else if (form.chromPos.chr) {
                 result.chr = form.chromPos.chr;
             }
+            if (!oldIsAdvanced && selectedGene && selectedGene.chr && (form.geneName || form.geneId)) {
+                result.pos = `${selectedGene.startPos}-${selectedGene.endPos}`
+                result.chr = selectedGene.chr.slice(3)
+            }
+
             if (form.tfList.length > 0) {
                 result.tf = form.tfList.join(",");
             }
