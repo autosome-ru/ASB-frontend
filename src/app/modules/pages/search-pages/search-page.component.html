@@ -80,7 +80,10 @@
                                             >
                                             </asb-snp-header>
                                         </mat-card-title>
-                                        <asb-view-star class="ml-auto" *ngIf="snp.hasConcordance"></asb-view-star>
+                                        <asb-view-star
+                                            class="ml-auto"
+                                            *ngIf="snp.hasConcordance && !isAdvancedSearch"
+                                        ></asb-view-star>
                                     </mat-card-header>
                                     <mat-card-content>
                                         <asb-snp-card
@@ -152,6 +155,7 @@
                 *ngIf="(searchSnpResults$ | async)?.results.length > 0"
                 [searchResults$]="searchSnpResults$"
                 [paginator]="paginator"
+                [isAdvanced]="isAdvancedSearch"
                 [initialSort]="{active: pagination.active, direction: pagination.direction}"
                 [dataChanged]="searchSnpResultsChanged$ | async"
                 (snpClicked)="_navigateToSnp($event.rsId, $event.alt)"

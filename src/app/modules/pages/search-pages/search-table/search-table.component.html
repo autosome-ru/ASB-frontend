@@ -75,5 +75,5 @@
 </ng-template>
 
 <ng-template #starViewTemplate let-value="value">
-    <asb-view-star *ngIf="value"></asb-view-star>
+    <asb-view-star *ngIf="value && !isAdvanced"></asb-view-star>
 </ng-template>

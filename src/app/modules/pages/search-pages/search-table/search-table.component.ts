@@ -54,6 +54,9 @@ export class SearchPageTableComponent implements OnInit {
     readonly searchResults$: Observable<SearchResultsModel>;
 
     @Input()
+    public isAdvanced: boolean;
+
+    @Input()
     public paginator: MatPaginator;
 
     @Input()
@@ -91,6 +94,7 @@ export class SearchPageTableComponent implements OnInit {
                 view: '',
                 isDesc: true,
                 columnTemplate: this.starViewTemplate,
+                disabledSort: true,
                 isSticky: true
             },
             pos: {
