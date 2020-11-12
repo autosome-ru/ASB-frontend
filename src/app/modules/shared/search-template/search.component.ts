@@ -452,22 +452,24 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     _isSearchDisabled(): boolean {
         const sF = this.searchForm.value as SearchQueryModel;
+        if (!this.isAdvanced) {
+            if (sF.searchBy == "id") {
+                return !sF.rsId;
+            }
+            if (sF.searchBy == "geneId") {
+                return !sF.geneId;
+            }
+            if (sF.searchBy == "geneName") {
+                return !sF.geneName;
+            }
+        }
         if (!this.searchForm.invalid) {
             if (this.isAdvanced) {
                 return !sF.chromPos.chr && sF.tfList.length === 0 &&
                     sF.clList.length === 0 && !checkIfCheckpointSelected(sF);
             } else {
-                if (sF.searchBy == "id") {
-                    return !sF.rsId;
-                }
                 if (sF.searchBy == "pos") {
                     return !sF.chromPos.chr;
-                }
-                if (sF.searchBy == "geneId") {
-                    return !sF.geneId;
-                }
-                if (sF.searchBy == "geneName") {
-                    return !sF.geneName;
                 }
             }
         }
