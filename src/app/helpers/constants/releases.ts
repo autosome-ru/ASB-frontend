@@ -17,7 +17,7 @@ export const releasesList: ReleaseModel[] = [
     {
         name: "Soos",
         url: "soos",
-        date: "22.06.2020",
+        date: "06.22.2020",
         recent: false,
         version: "v1.6.9",
         api: "v1",
