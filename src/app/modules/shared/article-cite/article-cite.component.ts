@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'asb-article-cite',
@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArticleCiteComponent implements OnInit {
 
-  constructor() { }
+    @Input()
+    public isAbout: boolean;
+    constructor() { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
 
 }
