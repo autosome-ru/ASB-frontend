@@ -35,6 +35,9 @@ export class SearchPageTableComponent implements OnInit {
     @ViewChild("tableView", {static: true})
     public tableView: AsbServerTableComponent<SnpSearchModel>;
 
+    @ViewChild('fdrViewTemplate', {static: true})
+    private fdrViewTemplate: TemplateRef<{value: number}>;
+
     @ViewChild("starViewTemplate", {static: true})
     public starViewTemplate: TemplateRef<{value: boolean}>;
 
@@ -160,13 +163,11 @@ export class SearchPageTableComponent implements OnInit {
                 s => {
                     result[convertTfNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
-                        valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log₁₀FDR", isDesc: true
+                        columnTemplate: this.fdrViewTemplate
                     };
                     result[convertTfNameToValue(s, "Alt")] = {
                         view: convertNameToView(s, "Alt"),
-                        valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log₁₀FDR", isDesc: true
+                        columnTemplate: this.fdrViewTemplate
                     };
                 });
         }
@@ -175,13 +176,11 @@ export class SearchPageTableComponent implements OnInit {
                 s => {
                     result[convertClNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
-                        valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log₁₀FDR", isDesc: true
+                        columnTemplate: this.fdrViewTemplate
                     };
                     result[convertClNameToValue(s, "Alt")] = {
                         view: convertNameToView(s, "Alt"),
-                        valueConverter: v => v || v === 0 ? v.toFixed(2) : "NaN",
-                        helpMessage: "-log₁₀FDR", isDesc: true
+                        columnTemplate: this.fdrViewTemplate
                     };
                 });
         }

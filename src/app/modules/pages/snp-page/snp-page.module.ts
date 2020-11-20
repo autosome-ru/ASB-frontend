@@ -22,6 +22,7 @@ import {AsbTablesModule} from "../../shared/table-template/table.module";
 import {AsbSnpDataModule} from "../../shared/data-template/data.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
+import {SciNotationModule} from "../../shared/sci-notation/sci-notation.module";
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
         AsbTablesModule,
         AsbSnpDataModule,
         MatTooltipModule,
+        SciNotationModule,
     ],
     declarations: [
         SnpPageComponent,

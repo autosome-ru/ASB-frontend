@@ -18,6 +18,7 @@ import {AsbSnpDataModule} from "../../shared/data-template/data.module";
 import {AsbDirectivesModule} from "../../../directives/directives.module";
 import {AsbSearchModule} from "../../shared/search-template/search.module";
 import {ViewStarModule} from "../../shared/view-star/view-star.module";
+import {SciNotationModule} from "../../shared/sci-notation/sci-notation.module";
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import {ViewStarModule} from "../../shared/view-star/view-star.module";
         AsbSearchModule,
         MatCardModule,
         ViewStarModule,
+        SciNotationModule,
     ],
     declarations: [
         SearchPageComponent,

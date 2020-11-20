@@ -22,7 +22,8 @@ import {SortDirection} from "@angular/material/sort";
 export class InnerTableComponent implements OnInit {
     @ViewChild("alignTemplate", {static: true})
     public expViewTemplate: TemplateRef<{value: string}>;
-
+    @ViewChild('fdrViewTemplate', {static: true})
+    private fdrViewTemplate: TemplateRef<{value: number}>;
     @Input()
     innerTableData: ExpSnpModel[];
 
@@ -53,8 +54,8 @@ export class InnerTableComponent implements OnInit {
             expId: {view: "GTRD experiment ID", columnTemplate: this.expViewTemplate},
             clName: {view: "Cell type", valueConverter: v => "" + v},
             tfName: {view: "Uniprot ID", valueConverter: v => "" + v},
-            rawPValueAlt: {view: "-log₁₀ P-value Alt", valueConverter: v => v.toFixed(2), isDesc: true},
-            rawPValueRef: {view: "-log₁₀ P-value Ref", valueConverter: v => v.toFixed(2), isDesc: true}
+            rawPValueAlt: {view: "P-value Alt", columnTemplate: this.fdrViewTemplate},
+            rawPValueRef: {view: "P-value Ref", columnTemplate: this.fdrViewTemplate}
         };
         if (this.isCl) {
             this.displayedColumns = ["expId", "tfName", "refReadCount",
@@ -64,7 +65,7 @@ export class InnerTableComponent implements OnInit {
            this.displayedColumns = ["expId", "clName", "refReadCount",
                 "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"];
         }
-        this.initialSorting = {direction: "desc",
+        this.initialSorting = {direction: "asc",
             active: this.sortColumn == 'ref' ? "rawPValueRef" : "rawPValueAlt"};
     }
 

@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     OnDestroy,
-    OnInit,
+    OnInit, TemplateRef,
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
@@ -38,11 +38,14 @@ import {ReleaseModel} from "../../../models/releases.model";
     encapsulation: ViewEncapsulation.None
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
-
     @ViewChild("cellLines", {static: true})
     public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
+
     @ViewChild("transcriptionFactors", {static: true})
     public tfStats: AsbStatisticsComponent<TfSnpModel>;
+
+    @ViewChild('fdrViewTemplate', {static: true})
+    private fdrViewTemplate: TemplateRef<{value: number}>;
 
     @ViewChild('tabGroup', {static: true})
     public tabGroup: MatTabGroup;
@@ -188,16 +191,14 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 isDesc: true
             },
             pValueRef: {
-                view: "-log₁₀FDR Ref",
-                valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
+                view: "FDR Ref",
                 colorStyle: row => this._calculateColor(row, "ref"),
-                isDesc: true
+                columnTemplate: this.fdrViewTemplate
             },
             pValueAlt: {
-                view: "-log₁₀FDR Alt",
-                valueConverter: v => v !== null ? v.toFixed(2) : "NaN",
+                view: "FDR Alt",
                 colorStyle: row => this._calculateColor(row, "alt"),
-                isDesc: true
+                columnTemplate: this.fdrViewTemplate
             },
             meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2)}
         };
@@ -216,14 +217,12 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 isDesc: true
             },
             motifPRef: {
-                view: "-log₁₀ Motif Ref p-value",
-                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                isDesc: true
+                view: "Motif Ref p-value",
+                columnTemplate: this.fdrViewTemplate,
             },
             motifPAlt: {
-                view: "-log₁₀ Motif Alt p-value",
-                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                isDesc: true
+                view: "Motif Alt p-value",
+                columnTemplate: this.fdrViewTemplate,
             },
             motifOrientation: {
                 view: 'Motif orientation',

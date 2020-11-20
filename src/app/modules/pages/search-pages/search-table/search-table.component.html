@@ -73,7 +73,9 @@
     </span>
     </div>
 </ng-template>
-
+<ng-template #fdrViewTemplate let-value="value">
+    <asb-sci-notation [value]="value" [toInvert]="true"></asb-sci-notation>
+</ng-template>
 <ng-template #starViewTemplate let-value="value">
     <asb-view-star *ngIf="value && !isAdvanced"></asb-view-star>
 </ng-template>

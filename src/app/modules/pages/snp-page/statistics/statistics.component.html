@@ -106,7 +106,7 @@
         *ngIf="row"
         [innerTableData]="row.expSnps"
         [isCl]="isCl"
-        [sortColumn]="row.pValueRef > row.pValueAlt ? 'ref' : 'alt'"
+        [sortColumn]="row.pValueRef < row.pValueAlt ? 'ref' : 'alt'"
     ></asb-inner-table>
 </ng-template>
 

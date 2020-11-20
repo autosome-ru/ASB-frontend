@@ -202,3 +202,11 @@
 
     </asb-step-template>
 </ng-template>
+<ng-template #fdrViewTemplate let-value="value">
+    <span *ngIf="value == null">n/a</span>
+    <asb-sci-notation
+        *ngIf="value !== null"
+        [value]="value"
+        [toInvert]="true"
+    ></asb-sci-notation>
+</ng-template>

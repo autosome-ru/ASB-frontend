@@ -127,11 +127,14 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpMod
         name: s.cell_line.name,
         effectSizeRef: s.es_ref,
         effectSizeAlt: s.es_alt,
-        pValueRef: s.log_p_value_ref,
-        pValueAlt: s.log_p_value_alt,
+        pValueRef: checkAndInvert(s.log_p_value_ref),
+        pValueAlt: checkAndInvert(s.log_p_value_alt),
         meanBad: s.mean_bad,
         expSnps: s.exp_snps.map(convertBackendExpSnp)
     };
+}
+function checkAndInvert(number: number): number {
+    return number ? -number : number
 }
 function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel> {
     return {
@@ -139,14 +142,14 @@ function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel
         name: s.transcription_factor.name,
         effectSizeRef: s.es_ref,
         effectSizeAlt: s.es_alt,
-        pValueRef: s.log_p_value_ref,
-        pValueAlt: s.log_p_value_alt,
+        pValueRef: checkAndInvert(s.log_p_value_ref),
+        pValueAlt: checkAndInvert(s.log_p_value_alt),
         meanBad: s.mean_bad,
         motifConcordance: s.motif_concordance,
         motifFc: s.motif_log_2_fc,
         motifOrientation: s.motif_orientation,
-        motifPAlt: s.motif_log_p_alt,
-        motifPRef: s.motif_log_p_ref,
+        motifPAlt: checkAndInvert(s.motif_log_p_alt),
+        motifPRef: checkAndInvert(s.motif_log_p_ref),
         motifPosition: s.motif_position,
         expSnps: s.exp_snps.map(convertBackendExpSnp)
     };
@@ -156,16 +159,16 @@ function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSn
     return {
         id: "" + s.cell_line.cl_id,
         name: s.cell_line.name,
-        pValueRef: s.log_p_value_ref,
-        pValueAlt: s.log_p_value_alt,
+        pValueRef: checkAndInvert(s.log_p_value_ref),
+        pValueAlt: checkAndInvert(s.log_p_value_alt),
     };
 }
 function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSnpCutModel> {
     return {
         id: s.transcription_factor.uniprot_ac,
         name: s.transcription_factor.name,
-        pValueRef: s.log_p_value_ref,
-        pValueAlt: s.log_p_value_alt,
+        pValueRef: checkAndInvert(s.log_p_value_ref),
+        pValueAlt: checkAndInvert(s.log_p_value_alt),
     };
 }
 function convertExpId(id: number | string): string {
@@ -188,8 +191,8 @@ function addZeros(id: number) {
 
 function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
     return {
-        rawPValueAlt: -Math.log10(s.p_value_alt),
-        rawPValueRef: -Math.log10(s.p_value_ref),
+        rawPValueAlt: Math.log10(s.p_value_alt),
+        rawPValueRef: Math.log10(s.p_value_ref),
         bad: s.bad,
         altReadCount: s.alt_readcount,
         refReadCount: s.ref_readcount,
@@ -234,6 +237,7 @@ function convertOrderByToBackend(active: string, direction: SortDirection) {
         const parsedName: {name: string, allele: "ref" | "alt", tfOrCl: TfOrCl} = parseFieldName(active);
         if (active.endsWith(altSuffix) || active.endsWith(refSuffix)) {
             fieldName = `${parsedName.tfOrCl.toUpperCase()}@log_p_value_${parsedName.allele}@${parsedName.name}`;
+            return (direction === "desc" ? "" : "-") + fieldName;
         } else {
             fieldName = camelCaseToSnakeCase(active);
         }

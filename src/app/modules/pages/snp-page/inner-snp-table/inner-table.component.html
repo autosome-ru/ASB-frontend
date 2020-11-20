@@ -21,3 +21,6 @@
         {{value}}
     </a>
 </ng-template>
+<ng-template #fdrViewTemplate let-value="value">
+    <asb-sci-notation *ngIf="value !== null" [toInvert]="true" [value]="value"></asb-sci-notation>
+</ng-template>

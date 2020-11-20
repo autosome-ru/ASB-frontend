@@ -7,6 +7,8 @@ export function calculateColor(pValueRef: number,
                                pValueAlt: number,
                                refBase: string,
                                altBase: string): string {
+    pValueRef = Math.abs(pValueRef)
+    pValueAlt = Math.abs(pValueAlt)
     if (pValueAlt < pValueRef) {
         return calculateColorForOne(pValueRef, refBase);
     } else {
@@ -17,7 +19,7 @@ export function calculateColorForOne(pValue: number,
                                      base: string): string {
 
     return baseToColors[base] + Math.round(
-        Math.min(pValue / 20 * 255,
+        Math.min(Math.abs(pValue) / 20 * 255,
             255)).toString(16);
 
 }
