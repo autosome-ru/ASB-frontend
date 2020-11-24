@@ -93,7 +93,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.subscriptions.add(
             this.dataService.downloadSvg(path).subscribe(
                 (blob) =>
-                    this.saverService.save(blob, path.slice(5)),
+                    this.saverService.save(blob, path.slice(8)),
                 (error: HttpErrorResponse) =>
                     this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`, )
             )
