@@ -1,0 +1,110 @@
+<div class="container mat-elevation-z2 pb-3">
+  <h4 class="border-bottom border-info"
+      [matTooltip]="(fileStatisticsLoading$ | async) ? '' :
+      'Ticket will be available till ' +
+      ((fileStatistics$ | async)?.expirationDate | date: 'medium')"
+  >ANANASTra report ({{ticket}})
+    <span
+      *ngIf="!(fileStatisticsLoading$ | async)"
+    >
+      {{(fileStatistics$ | async)?.dateCreated | date: 'medium'}}
+    </span>
+  </h4>
+  <div class="centered-spinner" *ngIf="fileStatisticsLoading$ | async">
+    <div class="help-message">
+
+    Please wait, the annotation of your list may take a few minutes depending on the number of submitted SNPs.
+    </div>
+    <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
+  <div *ngIf="!(fileStatisticsLoading$ | async) && (fileStatistics$ | async) as fileStatistics">
+    <ng-container *ngIf="fileStatistics?.status !== 'Failed'; else failedTemplate">
+      <h5 >{{fileStatistics.metaInfo.asbCount}} SNPs exhibiting allele-specific binding of
+        transcription factors found among user-submitted
+        {{fileStatistics.metaInfo.totalSNPs}} SNPs</h5>
+      <astra-ticket-stats
+        [chartData]="fileStatistics$ | async"
+      ></astra-ticket-stats>
+      <h6 *ngIf="fileStatistics.metaInfo.asbCount > 1000">
+        Found more than 1000 ASBs, please download the results for offline analysis. (First 1000 entries shown)
+      </h6>
+      <asb-motifs
+        [transcriptionFactors]="fileStatistics.metaInfo.concordantAsbs"
+      ></asb-motifs>
+      <mat-tab-group
+        #tabGroup
+        mat-align-tabs="center"
+        dynamicHeight
+        (selectedIndexChange)="tabIndexChanged($event)"
+        animationDuration="0ms"
+      >
+        <mat-tab label="Transcription factors">
+          <ng-template matTabContent>
+            <div class="mx-1 pt-1">
+              <ng-container *ngIf="groupValue && (tfTableData$ | async) as tfTableData">
+                <astra-ticket-table-preview
+                  *ngIf="!tfTableData?.loading; else loadingTemplate"
+                  (groupValueEmitter)="groupValueChanged($event)"
+                  (downloadTableEmitter)="downloadTable('tf')"
+                  [groupValue]="groupValue"
+                  [data]="tfTableData?.data"
+                  [tfOrCl]="'tf'"
+                >
+                </astra-ticket-table-preview>
+              </ng-container>
+              <ng-container *ngIf="!groupValue && (tfTableDataSum$ | async) as tfTableData">
+                <astra-ticket-table-preview
+                  *ngIf="!tfTableData?.loading; else loadingTemplate"
+                  (groupValueEmitter)="groupValueChanged($event)"
+                  (downloadTableEmitter)="downloadTable('tf')"
+                  [groupValue]="groupValue"
+                  [data]="tfTableData?.data"
+                  [tfOrCl]="'tf'"
+                >
+                </astra-ticket-table-preview>
+              </ng-container>
+            </div>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Cell types">
+          <ng-template matTabContent>
+            <div class="mx-1 pt-1">
+              <ng-container *ngIf="groupValue && (clTableData$ | async) as clTableData">
+                <astra-ticket-table-preview
+                  *ngIf="!clTableData?.loading; else loadingTemplate"
+                  (groupValueEmitter)="groupValueChanged($event)"
+                  (downloadTableEmitter)="downloadTable('cl')"
+                  [groupValue]="groupValue"
+                  [data]="clTableData?.data"
+                  [tfOrCl]="'cl'"
+                >
+                </astra-ticket-table-preview>
+              </ng-container>
+              <ng-container *ngIf="!groupValue && (clTableDataSum$ | async) as clTableData">
+                <astra-ticket-table-preview
+                  *ngIf="!clTableData?.loading; else loadingTemplate"
+                  (groupValueEmitter)="groupValueChanged($event)"
+                  (downloadTableEmitter)="downloadTable('cl')"
+                  [groupValue]="groupValue"
+                  [data]="clTableData?.data"
+                  [tfOrCl]="'cl'"
+                >
+                </astra-ticket-table-preview>
+              </ng-container>
+            </div>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <div>
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>
+
+<ng-template #failedTemplate>
+  <h5>Failed to annotate SNPs</h5>
+</ng-template>

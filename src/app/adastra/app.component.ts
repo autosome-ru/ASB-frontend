@@ -10,8 +10,8 @@ import {
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
-import {ReleasesService} from "./services/releases.service";
-import {AppState} from "./store/reducer";
+import {ReleasesService} from "../services/releases.service";
+import {AppState} from "../store/reducer";
 import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action";
 import {Subscription} from "rxjs";

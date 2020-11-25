@@ -6,6 +6,7 @@ import {MatIconRegistry} from "@angular/material/icon";
 const ICONS = [
     "add",
     "card",
+    'bin',
     "chevron-down",
     "clear",
     "copy",

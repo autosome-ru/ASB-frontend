@@ -7,11 +7,11 @@ import {
 } from "src/app/models/search-query.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
-} from "../../helpers/converter/snp-model.converter";
+} from "../../helpers/converters/snp-model.converter";
 import {
     convertSearchByGeneNameHintBackendToSearchByGeneHintModel,
     convertSearchHintBackendModelToSearchHintModel
-} from "../../helpers/converter/search-model.converter";
+} from "../../helpers/converters/search-model.converter";
 import {SnpSearchModel} from "../../models/data.model";
 
 export interface SearchState {

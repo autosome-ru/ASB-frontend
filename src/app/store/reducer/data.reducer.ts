@@ -10,7 +10,7 @@ import {
     convertSnpInfoBackendModelToSnpInfoModel,
     convertTfInfoBackendModelToTfInfoModel,
     convertTotalInfoBackendModelToTotalInfoModel
-} from "../../helpers/converter/snp-model.converter";
+} from "../../helpers/converters/snp-model.converter";
 
 export interface DataState {
     totalInfo: TotalInfoModel;

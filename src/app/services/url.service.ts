@@ -12,12 +12,12 @@ export class UrlService {
     public readonly hostName: string = '';
     public currentRelease: ReleaseModel = recentRelease
     private readonly isBrowser: boolean;
-    constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    constructor(@Inject(PLATFORM_ID) private platformId: object) {
         this.isBrowser = isPlatformBrowser(this.platformId);
         this.hostName = this.isBrowser ? this.getHostName() : ""
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
-        'searchOptAdv' | 'searchOptGene', tfOrCl?: TfOrCl): string {
+        'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl): string {
         const currentApi: string = `${this.hostName}api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
@@ -30,6 +30,8 @@ export class UrlService {
                 return `${currentApi}/search/${tfOrCl}/hint`
             case "searchOptGene":
                 return `${currentApi}/search/gene_name/hint`
+            case "ananastra":
+                return `${currentApi}/ananastra`
             default:
                 return ""
         }

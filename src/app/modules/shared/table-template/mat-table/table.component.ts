@@ -79,6 +79,9 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public paginatorOptions: number[];
 
     @Input()
+    public pageSize: number;
+
+    @Input()
     public action: (row: T) => boolean;
 
     @Input()

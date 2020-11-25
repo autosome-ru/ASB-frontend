@@ -6,9 +6,9 @@ import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "../models/search-query.model";
-import {formCheckboxesToList} from "../helpers/converter/search-model.converter";
+import {formCheckboxesToList} from "../helpers/converters/search-model.converter";
 import {AsbServerSideModel} from "../models/table.model";
-import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";
+import {convertServerSideModelToServerSideBackendModel} from "../helpers/converters/snp-model.converter";
 import {UrlService} from "./url.service";
 
 

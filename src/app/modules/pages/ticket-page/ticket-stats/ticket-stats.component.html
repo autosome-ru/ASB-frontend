@@ -1,0 +1,59 @@
+<div *ngIf="chartDatasets.length > 0; else loadingTemplate"
+     class="row px-0"
+>
+  <div class="col-12 wide-chart">
+    <div style="display: block;">
+      <canvas
+        width="100%" height="100%"
+        *ngIf="chartLoaded"
+        mdbChart
+        chartType="doughnut"
+        [datasets]="chartDatasets"
+        [labels]="chartLabels"
+        [colors]="chartColors"
+        [options]="chartOptions"
+        [legend]="true"
+        (chartHover)="chartHovered()"
+        (chartClick)="chartClicked()"
+      >
+      </canvas>
+    </div>
+  </div>
+  <div class="col-auto" style="display: flex; align-items: center">
+    <ul style="list-style-type: none; padding-inline-start: 0">
+      <li>
+        <b>ASB SNPs</b>: {{stats.asbCount}}
+        <span class="additional-selection">(incl. {{stats.tfAsbs}} TF-ASBs and {{stats.clAsbs}} Cell type-ASBs)</span>
+      </li>
+      <li>
+        <b>Non-ASB</b>: {{stats.candidatesCount}}
+      </li>
+      <li>
+        <b>Observed ASB fraction</b>: {{stats.ratio.toFixed(1)}}%
+      </li>
+      <li>
+        <b>ASB enrichment odds-ratio</b>: {{stats.oddsRatio.toFixed(2)}}
+        <span class="additional-selection">(TF-ASBs: {{stats.tfOdds.toFixed(2)}},
+          Cell type-ASBs: {{stats.clOdds.toFixed(2)}})</span>
+      </li>
+      <li>
+        <b>Fisher's exact test P-value</b>:
+        <span
+          [innerHTML]="writeScientificNum(stats.pValue, 2)"
+        ></span>
+        <span class="additional-selection"> (TF-ASBs:
+          <span
+            [innerHTML]="writeScientificNum(stats.tfPvalue, 2)"
+          ></span>,
+          Cell type-ASBs:
+          <span
+            [innerHTML]="writeScientificNum(stats.clPvalue, 2)"
+          ></span>)</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<ng-template #loadingTemplate>
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>

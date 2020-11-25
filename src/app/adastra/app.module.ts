@@ -1,37 +1,37 @@
 import {NgModule} from "@angular/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from "@ngrx/store";
-import {asbAppReducer, asbAppEffects} from "./store";
+import {asbAppReducer, asbAppEffects} from "../store";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "src/environments/environment";
-import {AsbAppIconsModule} from "./helpers/svg-icons-sanitizer";
+import {AsbAppIconsModule} from "../helpers/svg-icons-sanitizer";
 import {BrowserModule} from "@angular/platform-browser";
 import {AsbRoutingModule} from "./asb-routing.module";
 import {AppComponent} from "./app.component";
 import {ToastrModule} from "ngx-toastr";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
-import {ReleasesWrapperModule} from "./modules/releases-wrapper/releases-wrapper.module";
+import {ReleasesWrapperModule} from "../modules/releases-wrapper/releases-wrapper.module";
 import {JoyrideModule} from "ngx-joyride";
-import {AsbLayoutsModule} from "./modules/shared/layout-template/layout.module";
+import {AsbLayoutsModule} from "../modules/shared/layout-template/layout.module";
 
-import {DataService} from "./services/data.service";
-import {SearchService} from "./services/search.service";
-import {SeoService} from "./services/seo.servise";
-import {ReleasesService} from "./services/releases.service";
-import {ErrorsInterceptor} from "./interceptors/errors-interceptor";
+import {DataService} from "../services/data.service";
+import {SearchService} from "../services/search.service";
+import {SeoService} from "../services/seo.servise";
+import {ReleasesService} from "../services/releases.service";
+import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
-import {AsbPopoverComponent} from "./modules/shared/popover-template/popover.component";
+import {AsbPopoverComponent} from "../modules/shared/popover-template/popover.component";
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import {AsbConfirmDialogComponent} from "./modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
-import {CloseDialogOnRouteService} from "./interceptors/popup-interceptor";
-import {EncodeHttpParamsInterceptor} from "./interceptors/url-encode.interceptor";
+import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
+import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
+import {EncodeHttpParamsInterceptor} from "../interceptors/url-encode.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
-import {UrlService} from "./services/url.service";
+import {UrlService} from "../services/url.service";
 
 @NgModule({
     declarations: [

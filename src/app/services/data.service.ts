@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ClInfoBackendModel, SnpInfoBackendModel, TfInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
 import {AsbServerSideModel} from "../models/table.model";
-import {convertServerSideModelToServerSideBackendModel} from "../helpers/converter/snp-model.converter";
+import {convertServerSideModelToServerSideBackendModel} from "../helpers/converters/snp-model.converter";
 import {UrlService} from "./url.service";
 
 

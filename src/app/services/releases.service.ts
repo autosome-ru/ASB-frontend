@@ -10,7 +10,7 @@ import {UrlService} from "./url.service";
 @Injectable()
 export class ReleasesService {
 
-    constructor(private router: Router,private urlService: UrlService, private location: Location) {
+    constructor(private router: Router, private urlService: UrlService, private location: Location) {
     }
     private releases: ReleaseModel[] = releasesList;
 

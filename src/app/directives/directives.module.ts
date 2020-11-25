@@ -7,7 +7,7 @@ import {AsbElevationDirective} from "./elevation.directive";
         CommonModule,
     ],
     declarations: [
-        AsbElevationDirective
+        AsbElevationDirective,
     ],
     exports: [
         AsbElevationDirective

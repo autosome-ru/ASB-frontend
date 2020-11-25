@@ -7,7 +7,12 @@ export interface SnpGenPosModel {
     altBase: string;
     context: string;
 }
-
+export interface ConcordanceBackendModel {
+    rs_id: number;
+    tf_name: string;
+    alt: string;
+    concordance: string;
+}
 export interface SnpGenPosBackendModel {
     chromosome: string;
     position: number;

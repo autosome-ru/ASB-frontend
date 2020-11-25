@@ -1,5 +1,5 @@
 import {GeneModel, SearchParamsModel, SearchQueryModel} from "../../models/search-query.model";
-import {formCheckboxesToList} from "../converter/search-model.converter";
+import {formCheckboxesToList} from "../converters/search-model.converter";
 import {SnpSearchModel, TfSnpModel} from "../../models/data.model";
 import {MatSort} from "@angular/material/sort";
 import {compareConcordance} from "../constants/constants";

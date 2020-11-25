@@ -10,8 +10,8 @@ import {MatInputModule} from "@angular/material/input";
     exports: [AsbChrPosInputComponent],
     imports: [
         CommonModule,
-        ReactiveFormsModule,
-        MatInputModule
+        MatInputModule,
+        ReactiveFormsModule
     ]
 })
 export class FormFieldsModule { }
