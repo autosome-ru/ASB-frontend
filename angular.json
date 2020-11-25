@@ -20,7 +20,7 @@
             "allowedCommonJsDependencies": [
               "file-saver"
             ],
-            "outputPath": "dist/browser",
+            "outputPath": "dist/adastra/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -94,7 +94,6 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "assets": [
-              "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest"
             ],
@@ -132,7 +131,7 @@
         "server": {
           "builder": "@angular-devkit/build-angular:server",
           "options": {
-            "outputPath": "dist/server",
+            "outputPath": "dist/adastra/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json"
           },
@@ -193,7 +192,7 @@
             "allowedCommonJsDependencies": [
               "file-saver"
             ],
-            "outputPath": "dist/browser",
+            "outputPath": "dist/ananas",
             "index": "src/ananas.html",
             "main": "src/main.ananas.ts",
             "polyfills": "src/polyfills.ts",
