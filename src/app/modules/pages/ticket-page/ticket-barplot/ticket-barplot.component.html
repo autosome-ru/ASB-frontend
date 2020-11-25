@@ -1,0 +1,13 @@
+<div style="display: block">
+    <canvas *ngIf="chartLoaded"
+            width="100%" height="100%"
+            mdbChart
+            [chartType]="'bar'"
+            [datasets]="chartDatasets"
+            [labels]="chartLabels"
+            [colors]="chartColors"
+            [legend]="true"
+    >
+
+    </canvas>
+</div>

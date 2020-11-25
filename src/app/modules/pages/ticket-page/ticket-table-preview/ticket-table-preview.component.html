@@ -117,10 +117,27 @@
   <asb-sci-notation [value]="value" [toInvert]="true"></asb-sci-notation>
 </ng-template>
 <ng-template #dbSnpViewTemplate let-value="value">
-  <a
-    target="_blank"
-    rel="noopener noreferrer"
-    [href]="'https://www.ncbi.nlm.nih.gov/snp/' + value"
+  <div class="pseudo-link"
+    [matMenuTriggerFor]="linkMenu"
+    [matMenuTriggerData]="{value: value}"
   >
-    {{value}}</a>
+    {{value}}</div>
+    <mat-menu #linkMenu>
+        <ng-template matMenuContent let-value="value">
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                mat-menu-item
+                [href]="'https://www.ncbi.nlm.nih.gov/snp/' + value"
+            >
+                view in dbSNP</a>
+            <a
+                mat-menu-item
+                target="_blank"
+                rel="noopener noreferrer"
+                [href]="'https://adastra.autosome.ru/snps/' + value"
+            >
+                view in ADASTRA</a>
+        </ng-template>
+    </mat-menu>
 </ng-template>

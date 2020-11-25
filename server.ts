@@ -13,12 +13,14 @@ import { AppServerModule } from "./src/main.server";
 import { APP_BASE_HREF } from "@angular/common";
 import { existsSync } from "fs";
 import {RESPONSE} from "@nguniversal/express-engine/tokens";
+import {enableProdMode} from "@angular/core";
 // ssr DOM
+enableProdMode()
 const domino = require('domino');
 const fs = require('fs');
 const path = require('path');
 // index from browser build!
-const distFolder = join(process.cwd(), "dist/browser");
+const distFolder = join(process.cwd(), "dist/adastra/browser");
 const template = fs.readFileSync(path.join(distFolder, 'index.html')).toString();
 // for mock global window by domino
 const win = domino.createWindow(template);
@@ -48,7 +50,7 @@ export function app() {
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine("html", ngExpressEngine({
-    bootstrap: AppServerModule
+    bootstrap: AppServerModule,
   }));
 
   server.set("view engine", "html");

@@ -1,10 +1,10 @@
-<div class="container mat-elevation-z2 pb-3">
+<div class="container-fluid mat-elevation-z2 pb-3">
   <h4 class="border-bottom border-info"
       [matTooltip]="(fileStatisticsLoading$ | async) ? '' :
       'Ticket will be available till ' +
       ((fileStatistics$ | async)?.expirationDate | date: 'medium')"
   >ANANASTra report ({{ticket}})
-    <span
+    <span style="white-space: nowrap"
       *ngIf="!(fileStatisticsLoading$ | async)"
     >
       {{(fileStatistics$ | async)?.dateCreated | date: 'medium'}}
@@ -25,6 +25,7 @@
       <astra-ticket-stats
         [chartData]="fileStatistics$ | async"
       ></astra-ticket-stats>
+<!--      <asb-ticket-barplot></asb-ticket-barplot>-->
       <h6 *ngIf="fileStatistics.metaInfo.asbCount > 1000">
         Found more than 1000 ASBs, please download the results for offline analysis. (First 1000 entries shown)
       </h6>

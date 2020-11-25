@@ -58,6 +58,7 @@ export interface AnnotationDataBackendModel {
 export interface AnnotationSnpBackendModel {
   chromosome: string;
   position: number;
+  sequence: string;
   rs_id: number | string;
   ref: string;
   alt: string;
