@@ -12,9 +12,9 @@ import {
 } from "@angular/core";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
-import {AppState} from "src/app/store";
-import * as fromSelectors from "src/app/store/selector";
-import * as fromActions from "src/app/store/action";
+import {AppState} from "src/app/store/indexes";
+import * as fromSelectors from "src/app/store/selector/adastra";
+import * as fromActions from "src/app/store/action/adastra";
 import {
     GeneModel, SearchByModel,
     SearchHintModel,

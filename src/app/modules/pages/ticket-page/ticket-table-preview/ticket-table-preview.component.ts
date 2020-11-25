@@ -10,7 +10,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from '../../../../models/table.model';
-import {AnnotationSnpModel} from '../../../../models/annotation.model';
+import {AnnotationSnpModel} from 'src/app/models/annotation.model';
 import {TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';

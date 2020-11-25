@@ -1,5 +1,5 @@
 import {Action} from "@ngrx/store";
-import {ReleaseModel} from "../../models/releases.model";
+import {ReleaseModel} from "src/app/models/releases.model";
 
 export enum ActionTypes {
     GetCurrentRelease = "[Releases] get release name",

@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
-import {AnnotationDataBackendModel, AnnotationSnpBackendModel} from '../../models/annotation.model';
-import {TfOrCl} from '../../models/data.model';
+import {AnnotationDataBackendModel, AnnotationSnpBackendModel} from 'src/app/models/annotation.model';
+import {TfOrCl} from 'src/app/models/data.model';
 
 export enum ActionTypes {
     StartAnnotation = '[Annotation] Start annotation',

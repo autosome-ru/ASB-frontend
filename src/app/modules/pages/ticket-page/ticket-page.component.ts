@@ -1,8 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import * as fromActions from '../../../store/action';
-import * as fromSelectors from 'src/app/store/selector';
-import {AppState} from '../../../store/reducer';
+import * as fromActions from 'src/app/store/action/ananastra';
+import * as fromSelectors from 'src/app/store/selector/ananastra';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
 import {AnnotationDataModel, AnnotationSnpModel} from 'src/app/models/annotation.model';
@@ -10,6 +9,9 @@ import {MatTabGroup} from '@angular/material/tabs';
 import {TfOrCl} from '../../../models/data.model';
 import {DownloadService} from 'src/app/services/download.service';
 import {FileSaverService} from 'ngx-filesaver';
+import {AnnotationStoreState} from "../../../store/reducer/ananastra";
+import {ReleaseModel} from "../../../models/releases.model";
+import {recentRelease} from "../../../helpers/constants/releases";
 
 @Component({
   selector: 'astra-ticket-page',
@@ -33,14 +35,17 @@ export class TicketPageComponent implements OnInit, OnDestroy {
   public clTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
 
   public groupValue = false;
+  public recentRelease: ReleaseModel;
   private selectedTab: TfOrCl = 'tf';
 
+
   constructor(private route: ActivatedRoute,
-              private store: Store<AppState>,
+              private store: Store<AnnotationStoreState>,
               private downloadService: DownloadService,
               private fileSaverService: FileSaverService) { }
 
   ngOnInit(): void {
+    this.recentRelease = recentRelease
     this.subscriptions.add(
       this.route.paramMap.subscribe(
         s => {
@@ -49,7 +54,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
       )
     );
     this.fileStatistics$ = this.store.select(
-      fromSelectors.selectAnnotationDataById, this.ticket);
+        fromSelectors.selectAnnotationDataById, this.ticket);
     this.fileStatisticsLoading$ = this.store.select(
       fromSelectors.selectAnnotationLoadingById, this.ticket);
     this.intervalId = window.setInterval(

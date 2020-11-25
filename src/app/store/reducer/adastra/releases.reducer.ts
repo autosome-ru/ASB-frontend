@@ -1,6 +1,6 @@
-import * as fromActions from "src/app/store/action/releases.action";
-import {ReleaseModel} from "../../models/releases.model";
-import {recentRelease} from "../../helpers/constants/releases";
+import * as fromActions from "src/app/store/action/adastra/releases.action";
+import {ReleaseModel} from "../../../models/releases.model";
+import {recentRelease} from "../../../helpers/constants/releases";
 
 export interface ReleaseState {
     release: ReleaseModel;

@@ -1,6 +1,6 @@
 import {createSelector} from "@ngrx/store";
-import * as fromRoot from "../reducer";
-import * as fromSearch from "src/app/store/reducer/search.reducer";
+import * as fromRoot from "../../reducer/adastra";
+import * as fromSearch from "src/app/store/reducer/adastra/search.reducer";
 
 export const selectCurrentSearchOptions = createSelector(fromRoot.selectSearch, fromSearch.selectSearchOptions);
 export const selectCurrentSearchOptionsLoading = createSelector(fromRoot.selectSearch,

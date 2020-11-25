@@ -1,4 +1,4 @@
-import * as fromActions from "src/app/store/action/search.action";
+import * as fromActions from "src/app/store/action/adastra/search.action";
 import {
     GeneModel,
     SearchHintModel,
@@ -7,12 +7,12 @@ import {
 } from "src/app/models/search-query.model";
 import {
     convertSnpSearchBackendModelToSnpSearchModel
-} from "../../helpers/converters/snp-model.converter";
+} from "../../../helpers/converters/snp-model.converter";
 import {
     convertSearchByGeneNameHintBackendToSearchByGeneHintModel,
     convertSearchHintBackendModelToSearchHintModel
-} from "../../helpers/converters/search-model.converter";
-import {SnpSearchModel} from "../../models/data.model";
+} from "../../../helpers/converters/search-model.converter";
+import {SnpSearchModel} from "../../../models/data.model";
 
 export interface SearchState {
     searchOptions: {

@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, HostBinding, OnInit, ViewEncapsulation} from "@angular/core";
 import {ReleaseModel} from "../../../../models/releases.model";
-import * as fromSelectors from "src/app/store/selector";
+import * as fromSelectors from "src/app/store/selector/adastra";
 import {Observable} from "rxjs";
-import {AppState} from "../../../../store/reducer";
+import {AppState} from "../../../../store/reducer/adastra";
 import {Store} from "@ngrx/store";
 
 

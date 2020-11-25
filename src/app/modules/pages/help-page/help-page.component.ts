@@ -9,10 +9,10 @@ import {
 } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {SeoModel} from "../../../models/seo.model";
-import * as fromSelectors from "src/app/store/selector";
+import * as fromSelectors from "src/app/store/selector/adastra";
 import {SeoService} from "../../../services/seo.servise";
 import {isPlatformBrowser} from "@angular/common";
-import {AppState} from "../../../store/reducer";
+import {AppState} from "../../../store/reducer/adastra";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {ReleaseModel} from "../../../models/releases.model";

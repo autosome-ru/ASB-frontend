@@ -1,4 +1,4 @@
-import * as fromActions from "src/app/store/action/data.action";
+import * as fromActions from "src/app/store/action/adastra/data.action";
 import {ClInfoModel,
     PhenotypesBackendModel,
     PhenotypesModel,
@@ -10,7 +10,7 @@ import {
     convertSnpInfoBackendModelToSnpInfoModel,
     convertTfInfoBackendModelToTfInfoModel,
     convertTotalInfoBackendModelToTotalInfoModel
-} from "../../helpers/converters/snp-model.converter";
+} from "../../../helpers/converters/snp-model.converter";
 
 export interface DataState {
     totalInfo: TotalInfoModel;

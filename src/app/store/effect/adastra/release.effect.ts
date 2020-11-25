@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {Store} from "@ngrx/store";
-import {AppState} from "../reducer";
-import * as fromActions from "src/app/store/action/releases.action";
+import {AppState} from "../../reducer/adastra";
+import * as fromActions from "src/app/store/action/adastra/releases.action";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import { EMPTY, of} from "rxjs";
-import {ReleasesService} from "../../services/releases.service";
+import {ReleasesService} from "../../../services/releases.service";
 
 @Injectable()
 export class ReleaseEffect {
@@ -19,7 +19,7 @@ export class ReleaseEffect {
     @Effect()
     getCurrentRelease$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.GetCurrentRelease),
-        mergeMap((action: fromActions.GetCurrentReleaseAction) =>
+        mergeMap(() =>
             this.releasesService.getReleaseFromRoute().pipe(
                 map(release => new fromActions.GetCurrentReleaseActionSuccess(release)),
                 catchError(() => of(new fromActions.GetCurrentReleaseActionFail())),

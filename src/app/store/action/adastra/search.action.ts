@@ -4,7 +4,7 @@ import {
     SearchHintBackendModel,
     SearchQueryModel, SearchResultsBackendModel,
 } from "src/app/models/search-query.model";
-import {AsbServerSideModel} from "../../models/table.model";
+import {AsbServerSideModel} from "src/app/models/table.model";
 
 export enum ActionTypes {
     LoadSearchOptions = "[Search] loading search options",

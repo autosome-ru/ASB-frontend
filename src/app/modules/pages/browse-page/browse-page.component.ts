@@ -9,9 +9,9 @@ import {
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {AppState} from "src/app/store/reducer";
-import * as fromSelectors from "src/app/store/selector";
-import * as fromActions from "src/app/store/action";
+import {AppState} from "src/app/store/reducer/adastra";
+import * as fromSelectors from "src/app/store/selector/adastra";
+import * as fromActions from "src/app/store/action/adastra";
 import {Observable, Subscription} from "rxjs";
 import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../../models/data.model";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";

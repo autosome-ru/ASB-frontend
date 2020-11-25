@@ -4,7 +4,7 @@ import {
     SnpInfoBackendModel,
     TfInfoBackendModel,
     TotalInfoBackendModel} from "src/app/models/data.model";
-import {AsbServerSideModel} from "../../models/table.model";
+import {AsbServerSideModel} from "src/app/models/table.model";
 
 export enum ActionTypes {
     LoadTotalInfo = "[Data] load total info",

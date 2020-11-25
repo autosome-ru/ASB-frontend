@@ -1,7 +1,7 @@
 import {createSelector} from "@ngrx/store";
-import * as fromRoot from "../reducer";
-import * as fromData from "src/app/store/reducer/data.reducer";
-import {SnpInfoModel} from "../../models/data.model";
+import * as fromRoot from "../../reducer/adastra";
+import * as fromData from "src/app/store/reducer/adastra/data.reducer";
+import {SnpInfoModel} from "../../../models/data.model";
 
 export const selectTotalInfo = createSelector(fromRoot.selectData, fromData.selectTotalInfo);
 export const selectTotalInfoLoading = createSelector(fromRoot.selectData, fromData.selectTotalInfoLoading);

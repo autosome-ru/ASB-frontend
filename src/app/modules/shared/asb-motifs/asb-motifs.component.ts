@@ -1,4 +1,4 @@
-import {TfSnpModel} from "../../../../models/data.model";
+import {TfSnpModel} from "../../../models/data.model";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -11,11 +11,15 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import {MatExpansionPanel} from "@angular/material/expansion";
+import {DataService} from "../../../services/data.service";
 import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
+import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
+import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
 import {isPlatformBrowser} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
+import {ReleaseModel} from "../../../models/releases.model";
 
 @Component({
     selector: "asb-motifs",
@@ -33,6 +37,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     public openedTfName: string;
 
     constructor(
+        private dataService: DataService,
         private toastrService: ToastrService,
         private saverService: FileSaverService,
         private route: ActivatedRoute,
@@ -45,6 +50,8 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     set transcriptionFactors(value: Partial<TfSnpModel>[]) {
         this._transcriptionFactors = value as TfSnpModel[];
     }
+    @Input()
+    public release: ReleaseModel;
 
     ngOnInit(): void {
         this._transcriptionFactors.forEach(s => this.revCompStateArray[s.id] = false);
@@ -54,7 +61,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     }
 
-    ngAfterViewInit(): void {
+    ngAfterViewInit() {
         if (this.isBrowser && this.route.snapshot.fragment) {
             const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment);
             if (initialElement) {
@@ -64,34 +71,40 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
-    ngOnDestroy(): void {
+    ngOnDestroy() {
         this.subscriptions.unsubscribe();
     }
 
-    makeImagePath(tf: TfSnpModel, isSvg?: boolean): string {
-        return `${isSvg ? 'svgs' : 'pngs'}/v2/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`;
+    getTextByStepName(step: string) {
+        return getTextByStepName(step);
     }
 
-    changeRevCompState(tf: TfSnpModel): void {
+
+
+    makeImagePath(tf: TfSnpModel, isSvg?: boolean): string {
+        return `${isSvg ? 'svgs' : 'pngs'}/${this.release.api}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`;
+    }
+
+    changeRevCompState(tf: TfSnpModel) {
         this.revCompStateArray[tf.id] = !this.revCompStateArray[tf.id];
     }
 
-    // downloadSvg(path: string): void {
-    //     this.subscriptions.add(
-    //         this.dataService.downloadSvg(path).subscribe(
-    //             (blob) =>
-    //                 this.saverService.save(blob, path.slice(5)),
-    //             (error: HttpErrorResponse) =>
-    //                 this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`, )
-    //         )
-    //     );
-    // }
+    downloadSvg(path: string) {
+        this.subscriptions.add(
+            this.dataService.downloadSvg(path).subscribe(
+                (blob) =>
+                    this.saverService.save(blob, path.slice(8)),
+                (error: HttpErrorResponse) =>
+                    this.toastrService.error(`Image download failed. Please try again later.`, `${error.statusText} ${error.status}`, )
+            )
+        );
+    }
 
     checkExpanded(tf: TfSnpModel, i: number): boolean {
         if (this.openedTfName) {
-            return tf.name === this.openedTfName;
+            return tf.name == this.openedTfName;
         } else {
-            return i === 0;
+            return i == 0;
         }
     }
 }

@@ -1,9 +1,9 @@
-import * as fromActions from "src/app/store/action/annotation.action";
-import {AnnotationDataModel, AnnotationSnpModel} from '../../models/annotation.model';
+import * as fromActions from "src/app/store/action/ananastra/annotation.action";
+import {AnnotationDataModel, AnnotationSnpModel} from '../../../models/annotation.model';
 import {
   convertAnnotationBackendToAnnotationModel,
   convertAnnotationSnpBackendToAnnotationSnpModel
-} from '../../helpers/converters/annotation.converter';
+} from '../../../helpers/converters/annotation.converter';
 
 
 export interface AnnotationState {
@@ -65,7 +65,6 @@ export function annotationReducer(state: AnnotationState = initialState, action:
         }
       case fromActions.ActionTypes.LoadAnnotationInfoStatsSuccess: {
         const isLoading = action.payload.status === 'Processed' || action.payload.status === 'Failed';
-        console.log(isLoading, convertAnnotationBackendToAnnotationModel(action.payload));
         return {
           ...state,
           annotations: {

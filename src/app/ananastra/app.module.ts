@@ -7,9 +7,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AsbAppIconsModule} from '../helpers/svg-icons-sanitizer';
 import {MatIconModule} from '@angular/material/icon';
 import {UploadService} from '../services/upload.service';
-import {asbAppReducer} from '../store/reducer';
 import {EffectsModule} from '@ngrx/effects';
-import {asbAppEffects} from '../store/effect';
 import {ToastrModule} from 'ngx-toastr';
 import {StoreModule} from '@ngrx/store';
 import {ProcessingService} from '../services/processing.service';
@@ -17,11 +15,14 @@ import {ScriptService} from '../services/script.service';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {UrlService} from "../services/url.service";
-import {DataService} from "../services/data.service";
-import {SearchService} from "../services/search.service";
 import {ReleasesService} from "../services/releases.service";
+import {annotationStoreEffects} from "../store/effect/ananastra";
+import {annotationStoreReducer} from "../store/reducer/ananastra";
 import {AsbPopoverComponent} from "../modules/shared/popover-template/popover.component";
+import {FormFieldsModule} from "../modules/shared/form-fields/form-fields.module";
 import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
+import {DataService} from "../services/data.service";
+import {JoyrideModule} from "ngx-joyride";
 
 @NgModule({
   declarations: [
@@ -32,14 +33,16 @@ import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/conf
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(asbAppReducer),
-    EffectsModule.forRoot(asbAppEffects),
+    StoreModule.forRoot(annotationStoreReducer),
+    EffectsModule.forRoot(annotationStoreEffects),
     ToastrModule.forRoot(),
+    JoyrideModule.forRoot(),
     AppRoutingModule,
     AsbAppIconsModule,
     MatIconModule,
     MatDialogModule,
     MatButtonModule,
+    FormFieldsModule
   ],
   providers: [
     ProcessingService,
@@ -48,7 +51,6 @@ import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/conf
     ReleasesService,
     DataService,
     UrlService,
-    SearchService,
   ],
   bootstrap: [AppComponent]
 })

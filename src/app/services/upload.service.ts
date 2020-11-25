@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpEventType} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {mergeMap} from 'rxjs/operators';
-import { v4 as uuidv4 } from 'uuid';
 import {UrlService} from "./url.service";
-
+function getID() {
+    return '_' + Math.random().toString(36).substr(2, 9);
+}
 @Injectable()
 export class UploadService {
 
@@ -12,8 +13,10 @@ export class UploadService {
   private fileTicket$ = new BehaviorSubject<string>(null);
   private readonly uuid: string;
 
-  constructor(private http: HttpClient, private urlService: UrlService) {
-    this.uuid = uuidv4();
+  constructor(private http: HttpClient,
+              private urlService: UrlService) {
+      this.uuid = getID()
+
   }
 
   getFileTicket(): Observable<string> {

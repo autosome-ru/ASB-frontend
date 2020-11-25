@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {UploadService} from '../../../../services/upload.service';
+import {UploadService} from 'src/app/services/upload.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
 import {FormBuilder, FormControl} from '@angular/forms';
-import * as fromActions from '../../../../store/action';
-import {AppState} from '../../../../store/reducer';
+import * as fromActions from 'src/app/store/action/ananastra';
+import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 
@@ -23,7 +23,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public textAreaControl: FormControl;
   public file = null;
   constructor(private uploadService: UploadService,
-              private store: Store<AppState>,
+              private store: Store<AnnotationStoreState>,
               private router: Router,
               private formBuilder: FormBuilder) { }
 

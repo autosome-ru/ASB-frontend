@@ -9,10 +9,10 @@ import {
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
-import {AppState} from "../../../store/reducer";
-import * as fromActions from "src/app/store/action";
+import {AppState} from "../../../store/reducer/adastra";
+import * as fromActions from "src/app/store/action/adastra";
 import {Store} from "@ngrx/store";
-import * as fromSelectors from "src/app/store/selector";
+import * as fromSelectors from "src/app/store/selector/adastra";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {GeneModel, SearchQueryModel, SearchResultsModel} from "../../../models/search-query.model";

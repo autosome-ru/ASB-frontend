@@ -10,10 +10,11 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
     concordantAsbs: stats.concordant_asbs ? stats.concordant_asbs.map(
       s => {
         return {
-          rsId: 'rs' + s.rs_id,
-          altBase: s.alt,
-          name: s.tf_name,
-          motifConcordance: s.concordance
+            id: s.tf_name,
+            rsId: 'rs' + s.rs_id,
+            altBase: s.alt,
+            name: s.tf_name,
+            motifConcordance: s.concordance
         };
       }
     ) : null,

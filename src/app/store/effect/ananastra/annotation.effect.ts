@@ -1,19 +1,20 @@
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import * as fromActions from "src/app/store/action/annotation.action";
+import * as fromActions from "src/app/store/action/ananastra/annotation.action";
 import {catchError, map, mergeMap, switchMap, take} from "rxjs/operators";
 import {combineLatest, EMPTY, Observable, of} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
-import {AppState} from "src/app/store";
-import * as fromSelectors from "src/app/store/selector";
-import {ProcessingService} from '../../services/processing.service';
-import {AnnotationSnpModel} from '../../models/annotation.model';
+import {AppState} from "src/app/store/indexes";
+import * as fromSelectors from "src/app/store/selector/ananastra/";
+import {ProcessingService} from '../../../services/processing.service';
+import {AnnotationSnpModel} from '../../../models/annotation.model';
+import {AnnotationStoreState} from "../../reducer/ananastra";
 
 @Injectable()
 export class AnnotationEffect {
     constructor(
         private actions$: Actions,
-        private store: Store<AppState>,
+        private store: Store<AnnotationStoreState>,
         private processingService: ProcessingService,
     ) { }
     @Effect()

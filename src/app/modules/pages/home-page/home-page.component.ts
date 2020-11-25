@@ -12,10 +12,10 @@ import {
 } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
-import {AppState} from "../../../store/reducer";
-import * as fromSelectors from "src/app/store/selector";
+import {AppState} from "../../../store/reducer/adastra";
+import * as fromSelectors from "src/app/store/selector/adastra";
 import {Store} from "@ngrx/store";
-import * as fromActions from "src/app/store/action";
+import * as fromActions from "src/app/store/action/adastra";
 import {TotalInfoModel} from "../../../models/data.model";
 import {Observable} from "rxjs";
 import {SeoModel} from "../../../models/seo.model";

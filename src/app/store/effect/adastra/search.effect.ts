@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
 import {Store} from "@ngrx/store";
-import {AppState} from "../reducer";
+import {AppState} from "../../reducer/adastra";
 import {SearchService} from "src/app/services/search.service";
-import * as fromActions from "src/app/store/action/search.action";
-import * as fromSelectors from "src/app/store/selector";
+import * as fromActions from "src/app/store/action/adastra/search.action";
+import * as fromSelectors from "src/app/store/selector/adastra";
 import {catchError, map, mergeMap, take} from "rxjs/operators";
 import { EMPTY, of} from "rxjs";
 

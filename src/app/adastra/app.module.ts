@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {StoreModule} from "@ngrx/store";
-import {asbAppReducer, asbAppEffects} from "../store";
+import {asbAppReducer, asbAppEffects} from "../store/indexes";
 import {EffectsModule} from "@ngrx/effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "src/environments/environment";
@@ -32,6 +32,7 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "../interceptors/url-encode.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {UrlService} from "../services/url.service";
+import {ProcessingService} from "../services/processing.service";
 
 @NgModule({
     declarations: [

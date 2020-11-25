@@ -18,9 +18,9 @@ import {map} from "rxjs/operators";
 import {AsbServerTableComponent} from "../../../shared/table-template/server-side/table-server.component";
 import {SortDirection} from "@angular/material/sort";
 import {ReleaseModel} from "../../../../models/releases.model";
-import {AppState} from "../../../../store/reducer";
+import {AppState} from "../../../../store/reducer/adastra";
 import {Store} from "@ngrx/store";
-import * as fromSelectors from "src/app/store/selector";
+import * as fromSelectors from "src/app/store/selector/adastra";
 
 
 

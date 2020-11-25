@@ -21,14 +21,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {DownloadService} from '../../../services/download.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {SciNotationModule} from '../../shared/sci-notation/sci-notation.module';
-import {AsbMotifsComponent} from './asb-motifs/asb-motifs.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
 
 
 @NgModule({
     declarations: [
         TicketPageComponent,
-        AsbMotifsComponent,
         TicketStatsComponent,
         TicketTablePreviewComponent
     ],
@@ -51,8 +50,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatIconModule,
         MatDialogModule,
         MatTooltipModule,
-        SciNotationModule
+        SciNotationModule,
+        AsbMotifsModule
     ],
-  providers: [DownloadService]
+    providers: [DownloadService]
 })
 export class TicketPageModule { }

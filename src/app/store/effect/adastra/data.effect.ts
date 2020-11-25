@@ -1,12 +1,12 @@
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import * as fromActions from "src/app/store/action/data.action";
+import * as fromActions from "src/app/store/action/adastra/data.action";
 import {catchError, map, mergeMap, switchMap, take} from "rxjs/operators";
 import {combineLatest, EMPTY, of} from "rxjs";
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
-import {AppState} from "src/app/store";
+import {AppState} from "src/app/store/indexes";
 import {DataService} from "src/app/services/data.service";
-import * as fromSelectors from "src/app/store/selector";
+import * as fromSelectors from "src/app/store/selector/adastra";
 import {Router} from "@angular/router";
 
 @Injectable()

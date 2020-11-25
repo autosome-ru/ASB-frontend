@@ -28,9 +28,12 @@
       <h6 *ngIf="fileStatistics.metaInfo.asbCount > 1000">
         Found more than 1000 ASBs, please download the results for offline analysis. (First 1000 entries shown)
       </h6>
-      <asb-motifs
-        [transcriptionFactors]="fileStatistics.metaInfo.concordantAsbs"
-      ></asb-motifs>
+      <div style="margin-bottom: 5px">
+          <asb-motifs
+            [transcriptionFactors]="fileStatistics.metaInfo.concordantAsbs"
+            [release]="recentRelease"
+          ></asb-motifs>
+      </div>
       <mat-tab-group
         #tabGroup
         mat-align-tabs="center"

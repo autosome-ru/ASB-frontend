@@ -45,5 +45,4 @@ import {FormFieldsModule} from "../form-fields/form-fields.module";
     ],
     providers: [],
 })
-export class AsbSearchModule {
-}
+export class AsbSearchModule {}

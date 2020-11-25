@@ -11,9 +11,9 @@ import {
 import {ActivatedRoute, Router} from "@angular/router";
 import {isPlatformBrowser} from "@angular/common";
 import {ReleasesService} from "../services/releases.service";
-import {AppState} from "../store/reducer";
+import {AppState} from "../store/reducer/adastra";
 import {Store} from "@ngrx/store";
-import * as fromActions from "src/app/store/action";
+import * as fromActions from "src/app/store/action/adastra";
 import {Subscription} from "rxjs";
 import {JoyrideService} from "ngx-joyride";
 
