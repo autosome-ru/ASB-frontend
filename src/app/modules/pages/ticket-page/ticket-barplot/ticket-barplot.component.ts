@@ -37,12 +37,12 @@ export class TicketBarplotComponent implements OnInit {
     public chartColors: Array<any> = [
         {
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
+                'rgba(255, 99, 132)',
+                'rgba(54, 162, 235)',
+                'rgba(255, 206, 86)',
+                'rgba(75, 192, 192)',
+                'rgba(153, 102, 255)',
+                'rgba(255, 159, 64)'
             ],
             borderWidth: 2,
         }
@@ -55,13 +55,12 @@ export class TicketBarplotComponent implements OnInit {
         },
         tooltips: {
             callbacks: {
-                label: (tooltipItem, data) => {
+                label: (tooltipItem) => {
                    let label = this.chartLabels[tooltipItem.index] || '';
                    label = getShortLabel(label)
                     if (label) {
                         label += ': ';
                     }
-                    console.log(tooltipItem, data)
                     label += this.chartDatasets[0].data[tooltipItem.index];
                     return label;
                 }

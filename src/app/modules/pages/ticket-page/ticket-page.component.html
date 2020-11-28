@@ -25,20 +25,6 @@
             <astra-ticket-stats
                 [chartData]="fileStatistics$ | async"
             ></astra-ticket-stats>
-            <div style="display: flex; justify-content: space-around">
-                <div class="col-12 wide-chart">
-                <asb-ticket-barplot
-                    [data]="fileStatistics.metaInfo.tfAsbList"
-                    [tfOrCl]="'tf'"
-                ></asb-ticket-barplot>
-                </div>
-                <div class="col-12 wide-chart">
-                <asb-ticket-barplot
-                    [data]="fileStatistics.metaInfo.clAsbList"
-                    [tfOrCl]="'cl'"
-                ></asb-ticket-barplot>
-                </div>
-            </div>
             <h6 *ngIf="fileStatistics.metaInfo.asbCount > 1000">
                 Found more than 1000 ASBs, please download the results for offline analysis. (First 1000 entries shown)
             </h6>
@@ -52,6 +38,12 @@
                 <mat-tab label="Transcription factors">
                     <ng-template matTabContent>
                         <div class="mx-1 pt-1">
+                            <div class="col-12 wide-chart">
+                                <asb-ticket-barplot
+                                    [data]="fileStatistics.metaInfo.tfAsbList"
+                                    [tfOrCl]="'tf'"
+                                ></asb-ticket-barplot>
+                            </div>
                             <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!tfTableData?.loading; else loadingTemplate"
@@ -80,6 +72,12 @@
                 <mat-tab label="Cell types">
                     <ng-template matTabContent>
                         <div class="mx-1 pt-1">
+                            <div class="col-12 wide-chart">
+                                <asb-ticket-barplot
+                                    [data]="fileStatistics.metaInfo.clAsbList"
+                                    [tfOrCl]="'cl'"
+                                ></asb-ticket-barplot>
+                            </div>
                             <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!clTableData?.loading; else loadingTemplate"
