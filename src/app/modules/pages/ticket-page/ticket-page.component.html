@@ -26,13 +26,13 @@
                 [chartData]="fileStatistics$ | async"
             ></astra-ticket-stats>
             <div style="display: flex; justify-content: space-around">
-                <div class="col-12 col-sm-4 col-xl-3">
+                <div class="col-12 wide-chart">
                 <asb-ticket-barplot
                     [data]="fileStatistics.metaInfo.tfAsbList"
                     [tfOrCl]="'tf'"
                 ></asb-ticket-barplot>
                 </div>
-                <div class="col-12 col-sm-4 col-xl-3">
+                <div class="col-12 wide-chart">
                 <asb-ticket-barplot
                     [data]="fileStatistics.metaInfo.clAsbList"
                     [tfOrCl]="'cl'"

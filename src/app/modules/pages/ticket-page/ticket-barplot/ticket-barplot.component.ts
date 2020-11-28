@@ -17,7 +17,12 @@ export class TicketBarplotComponent implements OnInit {
     public chartLabels: Array<any>;
     @Input()
     set data(value: CountModel[]) {
-        this.chartDatasets = [{data: value.map(s => s.count), label: '1323' }]
+        this.chartDatasets = [
+            {
+                data: value.map(s => s.count),
+                label: '1323'
+            }
+        ]
         this.chartLabels = value.map(s => s.name)
     }
 
@@ -42,26 +47,24 @@ export class TicketBarplotComponent implements OnInit {
             borderWidth: 2,
         }
     ];
-    public effectColors = {
-        highlight: 'rgba(255, 255, 255, 0.75)',
-        shadow: 'rgba(0, 0, 0, 0.5)',
-        innerglow: 'rgba(255, 255, 0, 0.5)',
-        outerglow: 'rgb(255, 255, 0)'
-    };
     public chartOptions: any = {
-        options: {
-            responsive: true,
-            legend: {
-                display: true
-            },
-            tooltips: {
-                shadowOffsetX: 3,
-                shadowOffsetY: 3,
-                shadowBlur: 10,
-                shadowColor: this.effectColors.shadow,
-                bevelWidth: 2,
-                bevelHighlightColor: this.effectColors.highlight,
-                bevelShadowColor: this.effectColors.shadow
+        responsive: true,
+        legend: {
+            display: false,
+            position: 'bottom'
+        },
+        tooltips: {
+            callbacks: {
+                label: (tooltipItem, data) => {
+                   let label = this.chartLabels[tooltipItem.index] || '';
+                   label = getShortLabel(label)
+                    if (label) {
+                        label += ': ';
+                    }
+                    console.log(tooltipItem, data)
+                    label += this.chartDatasets[0].data[tooltipItem.index];
+                    return label;
+                }
             }
         }
     };
@@ -77,4 +80,11 @@ export class TicketBarplotComponent implements OnInit {
     chartHovered($event: any) {
         console.log($event)
     }
+}
+
+function getShortLabel(label: string): string {
+    if (label.includes('(')) {
+        return label.split('(')[0].trim()
+    }
+    return label.trim()
 }
