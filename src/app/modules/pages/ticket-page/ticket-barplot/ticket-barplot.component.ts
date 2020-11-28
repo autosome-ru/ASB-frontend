@@ -42,6 +42,29 @@ export class TicketBarplotComponent implements OnInit {
             borderWidth: 2,
         }
     ];
+    public effectColors = {
+        highlight: 'rgba(255, 255, 255, 0.75)',
+        shadow: 'rgba(0, 0, 0, 0.5)',
+        innerglow: 'rgba(255, 255, 0, 0.5)',
+        outerglow: 'rgb(255, 255, 0)'
+    };
+    public chartOptions: any = {
+        options: {
+            responsive: true,
+            legend: {
+                display: true
+            },
+            tooltips: {
+                shadowOffsetX: 3,
+                shadowOffsetY: 3,
+                shadowBlur: 10,
+                shadowColor: this.effectColors.shadow,
+                bevelWidth: 2,
+                bevelHighlightColor: this.effectColors.highlight,
+                bevelShadowColor: this.effectColors.shadow
+            }
+        }
+    };
 
     ngOnInit(): void {
         this.scriptService.load('charts').then(data => {
@@ -51,4 +74,7 @@ export class TicketBarplotComponent implements OnInit {
             "Can't load Chart.js library, check your internet connection", 'Error'));
     }
 
+    chartHovered($event: any) {
+        console.log($event)
+    }
 }

@@ -8,7 +8,8 @@
                 [datasets]="chartDatasets"
                 [labels]="chartLabels"
                 [colors]="chartColors"
-                [legend]="true"
+                [options]="chartOptions"
+                (chartHover)="chartHovered($event)"
         >
 
         </canvas>

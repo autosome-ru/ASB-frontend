@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AsbAppIconsModule} from '../helpers/svg-icons-sanitizer';
 import {MatIconModule} from '@angular/material/icon';
@@ -24,13 +24,15 @@ import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/conf
 import {DataService} from "../services/data.service";
 import {JoyrideModule} from "ngx-joyride";
 import {AnanastraHeaderModule} from "../modules/shared/ananastra-header/ananastra-header.module";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AsbPopoverComponent,
-    AsbConfirmDialogComponent
-  ],
+    declarations: [
+        AppComponent,
+        AsbPopoverComponent,
+        AsbConfirmDialogComponent
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -46,14 +48,20 @@ import {AnanastraHeaderModule} from "../modules/shared/ananastra-header/ananastr
         FormFieldsModule,
         AnanastraHeaderModule
     ],
-  providers: [
-    ProcessingService,
-    UploadService,
-    ScriptService,
-    ReleasesService,
-    DataService,
-    UrlService,
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        ProcessingService,
+        UploadService,
+        ScriptService,
+        ReleasesService,
+        DataService,
+        UrlService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorsInterceptor,
+            multi: true
+        },
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
