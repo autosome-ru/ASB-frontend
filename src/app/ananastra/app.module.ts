@@ -23,6 +23,7 @@ import {FormFieldsModule} from "../modules/shared/form-fields/form-fields.module
 import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
 import {DataService} from "../services/data.service";
 import {JoyrideModule} from "ngx-joyride";
+import {AnanastraHeaderModule} from "../modules/shared/ananastra-header/ananastra-header.module";
 
 @NgModule({
   declarations: [
@@ -30,20 +31,21 @@ import {JoyrideModule} from "ngx-joyride";
     AsbPopoverComponent,
     AsbConfirmDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    StoreModule.forRoot(annotationStoreReducer),
-    EffectsModule.forRoot(annotationStoreEffects),
-    ToastrModule.forRoot(),
-    JoyrideModule.forRoot(),
-    AppRoutingModule,
-    AsbAppIconsModule,
-    MatIconModule,
-    MatDialogModule,
-    MatButtonModule,
-    FormFieldsModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        StoreModule.forRoot(annotationStoreReducer),
+        EffectsModule.forRoot(annotationStoreEffects),
+        ToastrModule.forRoot(),
+        JoyrideModule.forRoot(),
+        AppRoutingModule,
+        AsbAppIconsModule,
+        MatIconModule,
+        MatDialogModule,
+        MatButtonModule,
+        FormFieldsModule,
+        AnanastraHeaderModule
+    ],
   providers: [
     ProcessingService,
     UploadService,

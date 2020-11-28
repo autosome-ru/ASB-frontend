@@ -1,0 +1,18 @@
+<nav class="navbar navbar-dark bg-dark mb-2">
+    <a class="navbar-brand" routerLink="/">ANANASTra</a>
+    <form [formGroup]="searchGroup" class="form-inline my-2 my-lg-0" style="flex-wrap: nowrap" (ngSubmit)="submit()">
+        <input class="form-control mr-sm-2 mr-1"
+               style="opacity: 1;"
+               formControlName="search"
+               type="search"
+               placeholder="Ticket id"
+               aria-label="Search"
+        >
+        <button
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="submit"
+        >
+            Search
+        </button>
+    </form>
+</nav>

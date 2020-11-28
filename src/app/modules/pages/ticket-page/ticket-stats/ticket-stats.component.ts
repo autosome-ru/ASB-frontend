@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Vi
 import {ScriptService} from 'src/app/services/script.service';
 import {AnnotationDataModel, StatsDataModel} from 'src/app/models/annotation.model';
 import {writeScientificNum} from '../../../../functions/scientific.helper';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'astra-ticket-stats',
@@ -43,13 +44,16 @@ export class TicketStatsComponent implements OnInit {
   };
   public chartLoaded: boolean;
 
-  constructor(private scriptService: ScriptService, private cd: ChangeDetectorRef) { }
+  constructor(private scriptService: ScriptService,
+              private toastrService: ToastrService,
+              private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.scriptService.load('charts').then(data => {
       this.chartLoaded = data.filter(v => v.script === 'charts')[0].loaded;
       this.cd.detectChanges();
-    }).catch(error => console.log(error));
+    }).catch(() => this.toastrService.error(
+        "Can't load Chart.js library, check your internet connection", 'Error'));
   }
 
 

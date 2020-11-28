@@ -121,7 +121,10 @@ export interface TfSnpCutModel extends AbstractSnpCutModel {
 
 export interface ClSnpCutModel extends AbstractSnpCutModel {
 }
-export interface TfSnpModel extends AbstractSnpModel {
+export interface TfSnpModel extends AbstractSnpModel, MotifSnpModel {
+
+}
+export interface MotifSnpModel {
     motifPRef: number;
     motifPAlt: number;
     motifFc: number;
@@ -129,7 +132,6 @@ export interface TfSnpModel extends AbstractSnpModel {
     motifPosition: number;
     motifConcordance: string;
 }
-
 export interface ClSnpModel extends AbstractSnpModel {
 }
 

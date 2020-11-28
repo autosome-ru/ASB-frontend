@@ -61,7 +61,7 @@
 <!--    </mat-menu>-->
     <mat-button-toggle-group
       class="mt-2 mt-sm-0"
-      [value]="groupValue"
+      [value]="isExpanded"
       (change)="_groupToggled($event)"
     >
       <mat-button-toggle
@@ -98,6 +98,17 @@
               </span>
           </span>
   </div>
+</ng-template>
+<ng-template #genomePositionViewSumTemplate let-row="row">
+    <div>
+          <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black">
+                  <span *ngFor="let base of row.alleles; let last=last"><strong
+                          [ngStyle]="{'color': colors[base]}"
+                      >{{base}}</strong><span *ngIf="!last">/</span>
+                  </span>
+              </span>
+          </span>
+    </div>
 </ng-template>
 <ng-template #downloadSelectType>
   <h1

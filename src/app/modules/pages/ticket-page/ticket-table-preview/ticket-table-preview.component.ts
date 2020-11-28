@@ -26,7 +26,11 @@ import {MatButtonToggleChange} from '@angular/material/button-toggle';
 })
 export class TicketTablePreviewComponent implements OnInit {
     @ViewChild("genomePositionViewTemplate", {static: true})
-    private genomePositionViewTemplate: TemplateRef<{ row: AnnotationSnpModel, value: any }>;
+    private genomePositionViewTemplate: TemplateRef<{ row: AnnotationSnpModel, value: string}>;
+
+    @ViewChild("genomePositionViewSumTemplate", {static: true})
+    private genomePositionViewSumTemplate: TemplateRef<{ row: AnnotationSnpModel, value: string}>;
+
     @ViewChild('downloadSelectType')
     private downloadSelectTemplate: TemplateRef<any>;
     @ViewChild('fdrViewTemplate', {static: true})
@@ -40,7 +44,7 @@ export class TicketTablePreviewComponent implements OnInit {
     private tfOrCl: TfOrCl;
 
     @Input()
-    public groupValue = false;
+    public isExpanded = false;
 
     @Output()
     private groupValueEmitter = new EventEmitter<boolean>();
@@ -69,7 +73,7 @@ export class TicketTablePreviewComponent implements OnInit {
             rsId: {view: 'rs ID', columnTemplate: this.dbSnpViewTemplate},
             chr: {
                 view: "Genome position",
-                columnTemplate: this.genomePositionViewTemplate,
+                columnTemplate: this.isExpanded ? this.genomePositionViewTemplate : this.genomePositionViewSumTemplate,
                 disabledSort: true
             },
             context: {
@@ -78,40 +82,76 @@ export class TicketTablePreviewComponent implements OnInit {
             }
         };
         if (this.tfOrCl === 'tf') {
-            this.displayedColumns = [
-                ...this.displayedColumns,
-                'transcriptionFactor',
-                'aggregatedCellTypes'
-            ];
-            this.columnModel = {
-                ...this.columnModel,
-                transcriptionFactor: {view: 'Transcription factor'},
-                aggregatedCellTypes: {view: 'Cell types', disabledSort: true}
-            };
+            this.displayedColumns.push('transcriptionFactor')
+            if (this.isExpanded) {
+                this.columnModel.transcriptionFactor = {view: 'Transcription factor'};
+            } else {
+                this.columnModel.transcriptionFactor = {view: 'Top transcription factor', helpMessage: 'By ASB significance'};
+            }
         } else {
-            this.displayedColumns = [
-                ...this.displayedColumns,
-                'cellType',
-                'aggregatedTFs'
-            ];
-            this.columnModel = {
-                ...this.columnModel,
-                cellType: {view: 'Cell type'},
-                aggregatedTFs: {view: this.groupValue ? 'Supporting TFs' : 'TFs'}
-            };
+            this.displayedColumns.push('cellType')
+            if (this.isExpanded) {
+                this.columnModel.cellType = {view: 'Cell type'};
+            } else {
+                this.columnModel.cellType = {view: 'Top cell type', helpMessage: 'By ASB significance'};
+            }
         }
         this.displayedColumns.push('fdrRef', 'fdrAlt');
-        this.columnModel = {
-            ...this.columnModel,
-            fdrRef: {
-                view: (this.groupValue ? '' : 'Best ') + 'FDR Ref',
-                columnTemplate: this.fdrViewTemplate
-            },
-            fdrAlt: {
-                view: (this.groupValue ? '' : 'Best ') + 'FDR Alt',
+        this.columnModel.fdrRef = {
+                view: (this.isExpanded ? '' : 'Best ') + 'FDR Ref',
                 columnTemplate: this.fdrViewTemplate
             }
-        };
+        this.columnModel.fdrAlt = {
+                view: (this.isExpanded ? '' : 'Best ') + 'FDR Alt',
+                columnTemplate: this.fdrViewTemplate
+            };
+        if (!this.isExpanded) {
+            this.columnModel.tfBindPref = {
+                view: 'TF binding preferences'
+            }
+            this.displayedColumns.push('tfBindPref');
+            this.columnModel.isEqtl = {
+                view: 'Is eQTL',
+                valueConverter: v => v ? 'Yes' : 'No'
+            };
+            this.columnModel.targetGenes = {
+                view: 'GTEx eQTL target genes'
+            }
+        } else {
+            if (this.tfOrCl === 'tf') {
+                this.columnModel = {
+                    ...this.columnModel,
+                    motifFc: {
+                        view: "Motif fold change",
+                        valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
+                        helpMessage: 'log₂(Alt/Ref motif p-value)',
+                        isDesc: true
+                    },
+                    motifPRef: {
+                        view: "Motif Ref P-value",
+                            columnTemplate: this.fdrViewTemplate,
+                    },
+                    motifPAlt: {
+                        view: "Motif Alt P-value",
+                            columnTemplate: this.fdrViewTemplate,
+                    },
+                    motifOrientation: {
+                        view: 'Motif orientation',
+                            valueConverter: v => v !== null ? v ? '+' : '-' : "n/a",
+                    },
+                    motifConcordance: {
+                        view: "Motif concordance",
+                            valueConverter: v => v !== null ? v : "n/a",
+                            isDesc: true
+                    },
+                    motifPosition: {
+                        view: "Motif position",
+                            valueConverter: v => v !== null ? '' + v : "n/a",
+                            helpMessage: 'SNP position relative to the TF motif (1-based)'
+                    },
+                }
+            }
+        }
         this.columnsControl = this.formBuilder.control(this.displayedColumns);
         this.initialDisplayedColumns = this.displayedColumns;
 
@@ -129,8 +169,8 @@ export class TicketTablePreviewComponent implements OnInit {
     }
 
     _groupToggled(event: MatButtonToggleChange): void {
-        this.groupValue = event.value;
-        this.groupValueEmitter.emit(this.groupValue);
+        this.isExpanded = event.value;
+        this.groupValueEmitter.emit(this.isExpanded);
     }
 
     // chooseFormat(format: string): void {

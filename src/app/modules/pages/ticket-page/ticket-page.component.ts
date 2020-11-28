@@ -34,7 +34,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
   public tfTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
   public clTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
 
-  public groupValue = false;
+  public isExpanded = false;
   public recentRelease: ReleaseModel;
   private selectedTab: TfOrCl = 'tf';
 
@@ -74,7 +74,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                 f => {
                   if (f && f.status === 'Processed') {
                     this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
-                      {tfOrCl: this.selectedTab, ticket: this.ticket, isExpanded: this.groupValue}
+                      {tfOrCl: this.selectedTab, ticket: this.ticket, isExpanded: this.isExpanded}
                     ));
                   }
                 }
@@ -110,19 +110,19 @@ export class TicketPageComponent implements OnInit, OnDestroy {
   }
 
   groupValueChanged(event: boolean): void {
-    this.groupValue = event;
+    this.isExpanded = event;
     this.initTableLoad();
   }
 
   initTableLoad(): void {
     this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
       {ticket: this.ticket,
-        tfOrCl: this.selectedTab, isExpanded: this.groupValue}));
+        tfOrCl: this.selectedTab, isExpanded: this.isExpanded}));
   }
 
   downloadTable(tfOrCl: TfOrCl): void {
     this.subscriptions.add(
-      this.downloadService.downloadTable(this.ticket, tfOrCl, this.groupValue, 'tsv').subscribe(
+      this.downloadService.downloadTable(this.ticket, tfOrCl, this.isExpanded, 'tsv').subscribe(
         b => this.fileSaverService.save(b, `ananastra_${this.ticket}.tsv`)
       )
     );
