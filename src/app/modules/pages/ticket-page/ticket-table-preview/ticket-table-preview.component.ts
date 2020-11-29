@@ -210,14 +210,23 @@ export class TicketTablePreviewComponent implements OnInit {
             this.tableData = this.data
         }
     }
+    getCountModel(): CountModel[] {
+        return this.tfOrCl === 'tf' ? this.ticketStatistics.metaInfo.tfAsbList : this.ticketStatistics.metaInfo.clAsbList;
+    }
     filterFunction(snp: AnnotationSnpModel, name: string): boolean {
         const snpField: string = this.tfOrCl === 'tf' ? snp.transcriptionFactor : snp.cellType;
         if (name === 'Other') {
-            const objList: CountModel[] = this.tfOrCl === 'tf' ? this.ticketStatistics.metaInfo.tfAsbList : this.ticketStatistics.metaInfo.clAsbList
+            const objList: CountModel[] = this.getCountModel()
             return objList.every(s => snpField !== s.name)
         } else {
             return snpField === name
         }
 
+    }
+
+    getSelectedNameIndex(selectedName: string): number {
+        return selectedName ? this.getCountModel().findIndex(
+            s => s.name === selectedName
+        ) : null
     }
 }

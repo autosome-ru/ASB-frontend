@@ -82,6 +82,7 @@
         <asb-ticket-barplot
             [data]="tfOrCl === 'tf' ? ticketStatistics?.metaInfo.tfAsbList : ticketStatistics?.metaInfo.clAsbList"
             [tfOrCl]="tfOrCl"
+            [selectedIndex]="getSelectedNameIndex(selectedName)"
             (chartClickEmitter)="chartClicked($event)"
         ></asb-ticket-barplot>
     </div>

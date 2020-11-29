@@ -37,6 +37,52 @@ export class TicketBarplotComponent implements OnInit {
     @Input()
     public tfOrCl: TfOrCl
 
+    @Input()
+    set selectedIndex(value: number) {
+        const backgroundColor = [
+                'rgba(255, 99, 132)',
+                'rgba(54, 162, 235)',
+                'rgba(255, 206, 86)',
+                'rgba(75, 192, 192)',
+                'rgba(153, 102, 255)',
+                'rgba(255, 159, 64)',
+                'rgba(229, 229, 229)'
+            ];
+        const backgroundOpacityColor = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(229, 229, 229, 0.2)'
+        ];
+        let bg: string[]
+        if (value !== null) {
+            if (value === 6) {
+                bg = [
+                    ...backgroundOpacityColor.slice(0, value),
+
+                ];
+            } else {
+                bg = [
+                    ...backgroundOpacityColor.slice(0, value),
+                    backgroundColor[value],
+                    ...backgroundOpacityColor.slice(value + 1),
+                ];
+            }
+
+        } else {
+            bg = backgroundColor;
+        }
+        this.chartColors = [
+            {
+                backgroundColor: bg,
+                borderWidth: 2,
+            }
+        ];
+    };
+
     @Output()
     private chartClickEmitter = new EventEmitter<any>()
 
@@ -45,19 +91,7 @@ export class TicketBarplotComponent implements OnInit {
                 private toastrService: ToastrService) {
     }
 
-    public chartColors: Array<any> = [
-        {
-            backgroundColor: [
-                'rgba(255, 99, 132)',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)',
-                'rgba(255, 159, 64)'
-            ],
-            borderWidth: 2,
-        }
-    ];
+    public chartColors: Array<any>;
     public chartOptions: any = {
         responsive: true,
         legend: {
