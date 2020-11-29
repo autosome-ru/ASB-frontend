@@ -71,7 +71,7 @@ export function annotationReducer(state: AnnotationState = initialState, action:
             ...state.annotations,
             [action.payload.ticket_id]: {
               loading: !isLoading,
-              annotationData: isLoading ? convertAnnotationBackendToAnnotationModel(action.payload) : null
+              annotationData: convertAnnotationBackendToAnnotationModel(action.payload)
             },
           }
         };

@@ -12,8 +12,9 @@
     </h4>
     <div class="centered-spinner" *ngIf="fileStatisticsLoading$ | async">
         <div class="help-message">
-
-            Please wait, the annotation of your list may take a few minutes depending on the number of submitted SNPs.
+            <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted SNPs.</h5>
+            <h6>Elapsed time: {{(fileStatistics$ | async).metaInfo.processingStartedAt | date: 'mm:ss'}}</h6>
+            <h6>Status: {{(fileStatistics$ | async).metaInfo.statusDetails}}</h6>
         </div>
         <mat-progress-bar mode="query"></mat-progress-bar>
     </div>
@@ -38,31 +39,29 @@
                 <mat-tab label="Transcription factors">
                     <ng-template matTabContent>
                         <div class="mx-1 pt-1">
-                            <div class="col-12 wide-chart">
-                                <asb-ticket-barplot
-                                    [data]="fileStatistics.metaInfo.tfAsbList"
-                                    [tfOrCl]="'tf'"
-                                ></asb-ticket-barplot>
-                            </div>
                             <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!tfTableData?.loading; else loadingTemplate"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('tf')"
+                                    [ticketStatistics]="fileStatistics"
                                     [isExpanded]="isExpanded"
                                     [data]="tfTableData?.data"
                                     [tfOrCl]="'tf'"
+                                    [(selectedName)]="selectedName.tf"
+                                    (groupValueEmitter)="groupValueChanged($event)"
+                                    (downloadTableEmitter)="downloadTable('tf')"
                                 >
                                 </astra-ticket-table-preview>
                             </ng-container>
                             <ng-container *ngIf="!isExpanded && (tfTableDataSum$ | async) as tfTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!tfTableData?.loading; else loadingTemplate"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('tf')"
+                                    [ticketStatistics]="fileStatistics"
                                     [isExpanded]="isExpanded"
                                     [data]="tfTableData?.data"
+                                    [(selectedName)]="selectedName.tf"
                                     [tfOrCl]="'tf'"
+                                    (groupValueEmitter)="groupValueChanged($event)"
+                                    (downloadTableEmitter)="downloadTable('tf')"
                                 >
                                 </astra-ticket-table-preview>
                             </ng-container>
@@ -72,31 +71,29 @@
                 <mat-tab label="Cell types">
                     <ng-template matTabContent>
                         <div class="mx-1 pt-1">
-                            <div class="col-12 wide-chart">
-                                <asb-ticket-barplot
-                                    [data]="fileStatistics.metaInfo.clAsbList"
-                                    [tfOrCl]="'cl'"
-                                ></asb-ticket-barplot>
-                            </div>
                             <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!clTableData?.loading; else loadingTemplate"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('cl')"
+                                    [ticketStatistics]="fileStatistics"
                                     [isExpanded]="isExpanded"
                                     [data]="clTableData?.data"
+                                    [(selectedName)]="selectedName.cl"
                                     [tfOrCl]="'cl'"
+                                    (groupValueEmitter)="groupValueChanged($event)"
+                                    (downloadTableEmitter)="downloadTable('cl')"
                                 >
                                 </astra-ticket-table-preview>
                             </ng-container>
                             <ng-container *ngIf="!isExpanded && (clTableDataSum$ | async) as clTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!clTableData?.loading; else loadingTemplate"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('cl')"
+                                    [ticketStatistics]="fileStatistics"
                                     [isExpanded]="isExpanded"
                                     [data]="clTableData?.data"
+                                    [(selectedName)]="selectedName.cl"
                                     [tfOrCl]="'cl'"
+                                    (groupValueEmitter)="groupValueChanged($event)"
+                                    (downloadTableEmitter)="downloadTable('cl')"
                                 >
                                 </astra-ticket-table-preview>
                             </ng-container>

@@ -24,6 +24,7 @@ import {SciNotationModule} from '../../shared/sci-notation/sci-notation.module';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
 import { TicketBarplotComponent } from './ticket-barplot/ticket-barplot.component';
+import {MatChipsModule} from "@angular/material/chips";
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { TicketBarplotComponent } from './ticket-barplot/ticket-barplot.componen
         MatDialogModule,
         MatTooltipModule,
         SciNotationModule,
-        AsbMotifsModule
+        AsbMotifsModule,
+        MatChipsModule
     ],
     providers: [DownloadService]
 })

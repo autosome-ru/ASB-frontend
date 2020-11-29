@@ -10,10 +10,8 @@
                 [colors]="chartColors"
                 [options]="chartOptions"
                 [legend]="true"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"
         >
-
         </canvas>
     </div>
 </div>

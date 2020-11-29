@@ -10,7 +10,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from '../../../../models/table.model';
-import {AnnotationSnpModel} from 'src/app/models/annotation.model';
+import {AnnotationDataModel, AnnotationSnpModel, CountModel} from 'src/app/models/annotation.model';
 import {TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
@@ -41,7 +41,10 @@ export class TicketTablePreviewComponent implements OnInit {
     public data: AnnotationSnpModel[] = [];
 
     @Input()
-    private tfOrCl: TfOrCl;
+    public ticketStatistics: AnnotationDataModel;
+
+    @Input()
+    public tfOrCl: TfOrCl;
 
     @Input()
     public isExpanded = false;
@@ -52,10 +55,17 @@ export class TicketTablePreviewComponent implements OnInit {
     @Output()
     private downloadTableEmitter = new EventEmitter<void>();
 
+    @Input()
+    public selectedName: string;
+
+    @Output()
+    private selectedNameChange = new EventEmitter<string>();
+
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
     public columnsControl: FormControl;
-    colors: { [base: string]: string } = {
+    public tableData: AnnotationSnpModel[];
+    public colors: { [base: string]: string } = {
         A: "#0074FF",
         T: "#7900C8",
         G: "#FF4500",
@@ -154,6 +164,7 @@ export class TicketTablePreviewComponent implements OnInit {
         }
         this.columnsControl = this.formBuilder.control(this.displayedColumns);
         this.initialDisplayedColumns = this.displayedColumns;
+        this.filterTable(this.selectedName)
 
     }
 
@@ -178,5 +189,35 @@ export class TicketTablePreviewComponent implements OnInit {
 
     downloadTable(): void {
         this.downloadTableEmitter.emit();
+    }
+    chartClicked(name: {event: MouseEvent, active: {_index: number}[]}) {
+        if (name.active && name.active.length > 0) {
+            if (this.tfOrCl == 'tf') {
+                const tf: CountModel = this.ticketStatistics.metaInfo.tfAsbList[name.active[0]._index]
+                this.filterTable(tf.name)
+            } else {
+                const cl: CountModel = this.ticketStatistics.metaInfo.clAsbList[name.active[0]._index]
+                this.filterTable(cl.name)
+            }
+        }
+    }
+    filterTable(name?: string) {
+        this.selectedNameChange.emit(name)
+        if (name) {
+            this.tableData = this.data.filter(s => this.filterFunction(s, name))
+        } else {
+
+            this.tableData = this.data
+        }
+    }
+    filterFunction(snp: AnnotationSnpModel, name: string): boolean {
+        const snpField: string = this.tfOrCl === 'tf' ? snp.transcriptionFactor : snp.cellType;
+        if (name === 'Other') {
+            const objList: CountModel[] = this.tfOrCl === 'tf' ? this.ticketStatistics.metaInfo.tfAsbList : this.ticketStatistics.metaInfo.clAsbList
+            return objList.every(s => snpField !== s.name)
+        } else {
+            return snpField === name
+        }
+
     }
 }

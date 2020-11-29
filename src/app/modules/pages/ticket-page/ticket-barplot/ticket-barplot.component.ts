@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component, EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewEncapsulation
+} from '@angular/core';
 import {ScriptService} from "../../../../services/script.service";
 import {ToastrService} from "ngx-toastr";
 import {CountModel} from "../../../../models/annotation.model";
@@ -28,6 +36,9 @@ export class TicketBarplotComponent implements OnInit {
 
     @Input()
     public tfOrCl: TfOrCl
+
+    @Output()
+    private chartClickEmitter = new EventEmitter<any>()
 
     constructor(private scriptService: ScriptService,
                 private cd: ChangeDetectorRef,
@@ -76,14 +87,21 @@ export class TicketBarplotComponent implements OnInit {
             "Can't load Chart.js library, check your internet connection", 'Error'));
     }
 
-    chartHovered($event: any) {
-        console.log($event)
+    chartClicked(event: any) {
+        this.chartClickEmitter.emit(event)
     }
 }
 
 function getShortLabel(label: string): string {
-    if (label.includes('(')) {
-        return label.split('(')[0].trim()
+    let result: string = label;
+    if (result.includes('(')) {
+        result = label.split('(')[0].trim()
     }
-    return label.trim()
+    if (result.length > 15) {
+        result = result.split(' ')[0].trim()
+        if (result.length > 15) {
+            result = result.slice(0, 12) + '...'
+        }
+    }
+    return result.trim()
 }

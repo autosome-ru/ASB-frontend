@@ -26,33 +26,39 @@ export interface StatsDataModel {
     clCandidates: number;
     clPvalue: number;
     clOdds: number;
-    processingTime: number;
+    processingTime: string;
     tfAsbs: number;
     tfCandidates: number;
     tfPvalue: number;
     tfOdds: number;
     tfAsbList: CountModel[];
     clAsbList: CountModel[];
+    lastStatusUpdateAt: string
+    processingStartedAt: Date
+    statusDetails: string
 }
 
 export interface StatsDataBackendModel {
     all_rs: number;
-    all_asbs: number;
-    all_candidates: number;
+    all_asbs_rs: number;
+    all_candidates_rs: number;
     all_log10_p_value: number;
     all_odds: number;
-    cl_asbs: number;
-    cl_candidates: number;
+    cl_asbs_rs: number;
+    cl_candidates_rs: number;
     cl_log10_p_value: number;
     cl_odds: number;
-    processing_time: number;
+    processing_time: string;
     concordant_asbs: ConcordanceBackendModel[];
-    tf_asbs: number;
-    tf_candidates: number;
+    tf_asbs_rs: number;
+    tf_candidates_rs: number;
     tf_log10_p_value: number;
     tf_odds: number;
     tf_asb_counts: CountModel[];
     cl_asb_counts: CountModel[];
+    last_status_update_at: string
+    processing_started_at: string
+    status_details: string
 }
 
 export interface AnnotationDataBackendModel {

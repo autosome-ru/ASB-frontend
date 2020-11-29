@@ -78,14 +78,44 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
+    <div class="col-12 wide-chart">
+        <asb-ticket-barplot
+            [data]="tfOrCl === 'tf' ? ticketStatistics?.metaInfo.tfAsbList : ticketStatistics?.metaInfo.clAsbList"
+            [tfOrCl]="tfOrCl"
+            (chartClickEmitter)="chartClicked($event)"
+        ></asb-ticket-barplot>
+    </div>
+    <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap">
+        <span>Filter:</span>
+        <mat-chip-list>
+            <mat-chip
+                *ngIf="selectedName"
+                removable
+                (removed)="filterTable()"
+            >
+                {{selectedName}}
+                <mat-icon
+                    style="font-size: 14px"
+                    matChipRemove
+                    svgIcon="clear"
+                ></mat-icon>
+            </mat-chip>
+            <mat-chip
+                *ngIf="!selectedName"
+            >
+                No filter
+            </mat-chip>
+        </mat-chip-list>
+    </div>
   <asb-table
     [displayedColumns]="displayedColumns"
     [columnModel]="columnModel"
-    [data]="data"
+    [data]="tableData"
     [pageSize]="50"
     [paginatorOptions]="[5, 10, 25, 100, 500, 1000]"
   ></asb-table>
 </div>
+
 <ng-template #genomePositionViewTemplate let-row="row">
   <div>
           <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
