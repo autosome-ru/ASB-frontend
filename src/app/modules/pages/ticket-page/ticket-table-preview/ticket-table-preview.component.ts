@@ -206,7 +206,6 @@ export class TicketTablePreviewComponent implements OnInit {
         if (name) {
             this.tableData = this.data.filter(s => this.filterFunction(s, name))
         } else {
-
             this.tableData = this.data
         }
     }
