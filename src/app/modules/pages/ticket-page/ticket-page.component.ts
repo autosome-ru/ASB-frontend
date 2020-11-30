@@ -34,7 +34,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public tfTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
     public clTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
 
-    public isExpanded = true;
+    public isExpanded = false;
     public recentRelease: ReleaseModel;
     public selectedTab: TfOrCl = 'tf';
     public selectedName: { tf: string, cl: string } = {tf: null, cl: null};
