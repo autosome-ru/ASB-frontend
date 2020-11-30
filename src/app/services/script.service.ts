@@ -10,7 +10,7 @@ export interface ScriptDownloadModel {
   status: string;
 }
 const ScriptStore: Script[] = [
-    {name: 'charts', src: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.min.js'},
+    {name: 'charts', src: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js'},
 ];
 
 declare var document: any;

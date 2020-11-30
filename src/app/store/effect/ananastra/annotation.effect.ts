@@ -4,7 +4,6 @@ import {catchError, map, mergeMap, switchMap, take} from "rxjs/operators";
 import {combineLatest, EMPTY, Observable, of} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
-import {AppState} from "src/app/store/indexes";
 import * as fromSelectors from "src/app/store/selector/ananastra/";
 import {ProcessingService} from '../../../services/processing.service';
 import {AnnotationSnpModel} from '../../../models/annotation.model';

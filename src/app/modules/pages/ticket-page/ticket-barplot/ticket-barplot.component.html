@@ -1,4 +1,4 @@
-<div style="max-width: 100%">
+<div style="max-width: 100%" *ngIf="chartDatasets[0]?.data.length > 0">
     <h6 style="font-weight: bold; white-space: nowrap">ASB in {{tfOrCl === 'tf' ? 'Transcription factors' : 'Cell types'}}</h6>
     <div style="display: block">
         <canvas *ngIf="chartLoaded"

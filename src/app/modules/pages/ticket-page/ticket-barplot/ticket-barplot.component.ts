@@ -21,14 +21,14 @@ import {TfOrCl} from "../../../../models/data.model";
 })
 export class TicketBarplotComponent implements OnInit {
     public chartLoaded: boolean;
-    public chartDatasets: Array<any>;
-    public chartLabels: Array<any>;
+    public chartDatasets: Array<any> =[];
+    public chartLabels: Array<any> = [];
     @Input()
     set data(value: CountModel[]) {
         this.chartDatasets = [
             {
                 data: value.map(s => s.count),
-                label: '1323'
+                label: '123'
             }
         ]
         this.chartLabels = value.map(s => s.name)
@@ -46,7 +46,7 @@ export class TicketBarplotComponent implements OnInit {
                 'rgba(75, 192, 192)',
                 'rgba(153, 102, 255)',
                 'rgba(255, 159, 64)',
-                'rgba(229, 229, 229)'
+                'rgba(105, 105, 105)'
             ];
         const backgroundOpacityColor = [
             'rgba(255, 99, 132, 0.2)',
@@ -55,14 +55,14 @@ export class TicketBarplotComponent implements OnInit {
             'rgba(75, 192, 192, 0.2)',
             'rgba(153, 102, 255, 0.2)',
             'rgba(255, 159, 64, 0.2)',
-            'rgba(229, 229, 229, 0.2)'
+            'rgba(105, 105, 105, 0.2)'
         ];
         let bg: string[]
         if (value !== null) {
             if (value === 6) {
                 bg = [
                     ...backgroundOpacityColor.slice(0, value),
-
+                    backgroundColor[value]
                 ];
             } else {
                 bg = [
@@ -75,6 +75,7 @@ export class TicketBarplotComponent implements OnInit {
         } else {
             bg = backgroundColor;
         }
+
         this.chartColors = [
             {
                 backgroundColor: bg,
@@ -92,26 +93,7 @@ export class TicketBarplotComponent implements OnInit {
     }
 
     public chartColors: Array<any>;
-    public chartOptions: any = {
-        responsive: true,
-        legend: {
-            display: false,
-            position: 'bottom'
-        },
-        tooltips: {
-            callbacks: {
-                label: (tooltipItem) => {
-                   let label = this.chartLabels[tooltipItem.index] || '';
-                   label = getShortLabel(label)
-                    if (label) {
-                        label += ': ';
-                    }
-                    label += this.chartDatasets[0].data[tooltipItem.index];
-                    return label;
-                }
-            }
-        }
-    };
+    public chartOptions: any;
 
     ngOnInit(): void {
         this.scriptService.load('charts').then(data => {
@@ -119,6 +101,26 @@ export class TicketBarplotComponent implements OnInit {
             this.cd.detectChanges();
         }).catch(() => this.toastrService.error(
             "Can't load Chart.js library, check your internet connection", 'Error'));
+        this.chartOptions = {
+            responsive: true,
+            legend: {
+                display: false,
+
+            },
+            tooltips: {
+                callbacks: {
+                    label: (tooltipItem) => {
+                        let label = this.chartLabels[tooltipItem.index] || '';
+                        label = getShortLabel(label)
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += this.chartDatasets[0].data[tooltipItem.index];
+                        return label;
+                    }
+                }
+            }
+        };
     }
 
     chartClicked(event: any) {

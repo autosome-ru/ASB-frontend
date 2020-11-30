@@ -80,13 +80,14 @@
   </div>
     <div class="col-12 wide-chart">
         <asb-ticket-barplot
+            *ngIf="ticketStatistics?.metaInfo"
             [data]="tfOrCl === 'tf' ? ticketStatistics?.metaInfo.tfAsbList : ticketStatistics?.metaInfo.clAsbList"
             [tfOrCl]="tfOrCl"
             [selectedIndex]="getSelectedNameIndex(selectedName)"
             (chartClickEmitter)="chartClicked($event)"
         ></asb-ticket-barplot>
     </div>
-    <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap">
+    <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
         <span>Filter:</span>
         <mat-chip-list>
             <mat-chip

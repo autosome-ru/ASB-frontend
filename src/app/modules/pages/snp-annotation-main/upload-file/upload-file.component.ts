@@ -55,19 +55,24 @@ export class UploadFileComponent implements OnInit, OnDestroy {
         );
         this.ticket = null;
       }
+      this.reinstallSubscription();
+    }
+  }
+  reinstallSubscription() {
       this.subscriptions.unsubscribe();
       this.subscriptions = new Subscription();
-    }
   }
   uploadFile(file: File, forceRedirect?: boolean): void {
     this.fileProgress$.next(0);
     this.subscriptions.add(
       this.uploadService.getFileTicket().subscribe(
         s => {
-          this.ticket = s;
-          if (forceRedirect && this.ticket) {
-            this.annotationStart();
-          }
+            if (s  && this.ticket !== s) {
+                this.ticket = s;
+                if (forceRedirect && this.ticket) {
+                    this.annotationStart();
+                }
+            }
         }
       )
     );
@@ -105,12 +110,16 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   annotationStart(): void {
     this.router.navigateByUrl(`/ticket/${this.ticket}`).then(
-      () => this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(this.ticket))
+      () => {
+          this.uploadService.removeFileTicket()
+          this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(this.ticket));
+      }
     );
   }
 
   submit(): void {
-    if (this.ticket) {
+    this.reinstallSubscription()
+    if (this.ticket && this.file) {
       this.annotationStart();
     } else {
       if (!!this.textAreaControl.value) {

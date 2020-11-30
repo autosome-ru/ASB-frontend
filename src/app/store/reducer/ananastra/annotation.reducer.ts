@@ -70,6 +70,7 @@ export function annotationReducer(state: AnnotationState = initialState, action:
           annotations: {
             ...state.annotations,
             [action.payload.ticket_id]: {
+              ...state.annotations[action.payload.ticket_id],
               loading: !isLoading,
               annotationData: convertAnnotationBackendToAnnotationModel(action.payload)
             },
@@ -89,6 +90,7 @@ export function annotationReducer(state: AnnotationState = initialState, action:
       }
 
       case fromActions.ActionTypes.LoadAnnotationTable: {
+          console.log(state, action.payload)
           return {
             ...state,
             annotations: {

@@ -23,6 +23,10 @@ export class UploadService {
     return this.fileTicket$.asObservable();
   }
 
+  removeFileTicket(): void {
+      this.fileTicket$.next(null)
+  }
+
   uploadFile(file, body): Observable<number> {
     this.file = {...file, progress: 0};
     return this.http.post<{ticket_id: string}>(`${this.urlService.getUrlForQuery("ananastra")}/commit`, body,
@@ -32,6 +36,7 @@ export class UploadService {
             case HttpEventType.UploadProgress:
               return of(this.constructLoadedPart(res.loaded, res.total));
             case HttpEventType.Response:
+                console.log(res.body.ticket_id)
               this.fileTicket$.next(res.body.ticket_id);
               return of(100);
             default:

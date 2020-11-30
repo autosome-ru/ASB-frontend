@@ -33,7 +33,7 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         clPvalue: stats.cl_log10_p_value,
         tfCandidates: stats.tf_candidates_rs - stats.tf_asbs_rs,
         processingTime: stats.processing_time,
-        processingStartedAt: new Date(new Date().getTime() - new Date(stats.processing_started_at).getTime()),
+        processingStartedAt: new Date(Date.now() - new Date(stats.processing_started_at).getTime()),
         lastStatusUpdateAt: stats.last_status_update_at,
         statusDetails: stats.status_details,
         tfPvalue: stats.tf_log10_p_value,
