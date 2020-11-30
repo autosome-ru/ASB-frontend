@@ -35,6 +35,9 @@ export class TicketBarplotComponent implements OnInit {
     }
 
     @Input()
+    public isExpanded: boolean
+
+    @Input()
     public tfOrCl: TfOrCl
 
     @Input()

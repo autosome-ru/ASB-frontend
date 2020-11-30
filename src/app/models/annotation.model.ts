@@ -33,6 +33,8 @@ export interface StatsDataModel {
     tfOdds: number;
     tfAsbList: CountModel[];
     clAsbList: CountModel[];
+    tfAsbListSum: CountModel[];
+    clAsbListSum: CountModel[];
     lastStatusUpdateAt: string
     processingStartedAt: Date
     statusDetails: string
@@ -56,6 +58,8 @@ export interface StatsDataBackendModel {
     tf_odds: number;
     tf_asb_counts: CountModel[];
     cl_asb_counts: CountModel[];
+    tf_asb_counts_rs: CountModel[];
+    cl_asb_counts_rs: CountModel[];
     last_status_update_at: string
     processing_started_at: string
     status_details: string

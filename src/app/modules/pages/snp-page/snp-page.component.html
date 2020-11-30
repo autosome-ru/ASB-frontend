@@ -165,7 +165,7 @@
         [tableColumnModel]="tfColumnModel"
         [sortData]="sortData"
         [initialDisplayedColumns]="tfDisplayedColumns"
-        [action]="snpData?.transFactors.filter(filterCondition).length > 0 ? filterCondition : null"
+        [actionFilter]="snpData?.transFactors.filter(filterCondition).length > 0 ? filterCondition : null"
         [getSnpName]="_createSnpName(snpData ,'tf')"
         [isCl]="false"
         (actionClicked)="openMotifAnalysis($event, _getGoodTfs(snpData.transFactors))"

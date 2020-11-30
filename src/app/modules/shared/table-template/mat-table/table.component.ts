@@ -82,9 +82,6 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     public pageSize: number;
 
     @Input()
-    public action: (row: T) => boolean;
-
-    @Input()
     public actionTemplate: TemplateRef<{value: T}>;
 
     @Input()
@@ -95,8 +92,6 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
     @Output()
     public rowClickEmitter = new EventEmitter<T>();
-    @Output()
-    actionClicked = new EventEmitter<T>();
 
 
     ngAfterViewInit() {
@@ -137,7 +132,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
     getDisplayedColumns(): string[] {
         const result = [];
         result.push(...this.displayedColumns);
-        if (this.action) {
+        if (this.actionTemplate) {
             result.push("__action__");
         }
         return result;

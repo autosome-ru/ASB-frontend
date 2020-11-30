@@ -89,10 +89,8 @@
             [isEmpty]="objectData.length == 0"
             [clickableRow]="true"
             [data]="filteredObjectData"
-            [action]="action"
             [actionTemplate]="actionTemplate"
             [sortData]="sortData"
-            (actionClicked)="actionClicked.emit($event)"
             [popoverContentTemplate]="popoverContentTemplate"
             [getTitle]="getSnpName"
             [paginatorOptions]="_getPaginatorOptions()"
@@ -100,7 +98,16 @@
         </asb-table>
     </div>
 </div>
-
+<ng-template #actionTemplate let-row="row">
+    <button
+        *ngIf="actionFilter(row)"
+        matTooltip="Go to motif analysis"
+        mat-icon-button
+        (click)="actionClicked.emit(row); $event.stopPropagation() && $event.preventDefault()"
+    >
+        <mat-icon svgIcon="stats"></mat-icon>
+    </button>
+</ng-template>
 <ng-template #popoverContentTemplate let-row="row">
     <asb-inner-table
         *ngIf="row"

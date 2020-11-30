@@ -81,8 +81,9 @@
     <div class="col-12 wide-chart">
         <asb-ticket-barplot
             *ngIf="ticketStatistics?.metaInfo"
-            [data]="tfOrCl === 'tf' ? ticketStatistics?.metaInfo.tfAsbList : ticketStatistics?.metaInfo.clAsbList"
+            [data]="getChartData(ticketStatistics?.metaInfo)"
             [tfOrCl]="tfOrCl"
+            [isExpanded]="isExpanded"
             [selectedIndex]="getSelectedNameIndex(selectedName)"
             (chartClickEmitter)="chartClicked($event)"
         ></asb-ticket-barplot>
@@ -165,22 +166,33 @@
     [matMenuTriggerData]="{value: value}"
   >
     {{value}}</div>
-    <mat-menu #linkMenu>
-        <ng-template matMenuContent let-value="value">
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                mat-menu-item
-                [href]="'https://www.ncbi.nlm.nih.gov/snp/' + value"
-            >
-                view in dbSNP</a>
-            <a
-                mat-menu-item
-                target="_blank"
-                rel="noopener noreferrer"
-                [href]="'https://adastra.autosome.ru/snps/' + value"
-            >
-                view in ADASTRA</a>
-        </ng-template>
-    </mat-menu>
+
+</ng-template>
+<mat-menu #linkMenu>
+    <ng-template matMenuContent let-value="value">
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            mat-menu-item
+            [href]="'https://www.ncbi.nlm.nih.gov/snp/' + value"
+        >
+            view in dbSNP</a>
+        <a
+            mat-menu-item
+            target="_blank"
+            rel="noopener noreferrer"
+            [href]="'https://adastra.autosome.ru/snps/' + value"
+        >
+            view in ADASTRA</a>
+    </ng-template>
+</mat-menu>
+<ng-template #gtexTemplate let-row="row" let-value="value">
+    <a
+        *ngIf="value"
+        target="_blank"
+        rel="noopener noreferrer"
+        [href]="'https://www.gtexportal.org/home/snp/' + row?.rsId"
+    >
+        <mat-icon svgIcon="new_open"></mat-icon>
+    </a>
 </ng-template>

@@ -60,28 +60,18 @@
                     </ng-template>
                 </td>
             </ng-container>
-            <ng-container *ngIf="action">
+            <ng-container *ngIf="actionTemplate">
                 <ng-container matColumnDef="__action__" stickyEnd>
-
                     <th mat-header-cell
-                        class="pl-0"
+                        class="px-0"
                         *matHeaderCellDef
                     >
                     </th>
-                    <td mat-cell *matCellDef="let element" class="pl-0">
-                        <ng-container *ngIf="action(element)">
-                            <ng-container *ngIf="actionTemplate">
-                                <ng-container [ngTemplateOutlet]="actionTemplate">
-                                </ng-container>
-                            </ng-container>
-                            <button
-                                *ngIf="!actionTemplate"
-                                matTooltip="Go to motif analysis"
-                                mat-icon-button
-                                (click)="actionClicked.emit(element); $event.stopPropagation() &&$event.preventDefault()"
-                            >
-                                <mat-icon svgIcon="stats"></mat-icon>
-                            </button>
+                    <td mat-cell *matCellDef="let element" class="px-0">
+                        <ng-container
+                            [ngTemplateOutlet]="actionTemplate"
+                            [ngTemplateOutletContext]="{row: element}"
+                        >
                         </ng-container>
                     </td>
                 </ng-container>

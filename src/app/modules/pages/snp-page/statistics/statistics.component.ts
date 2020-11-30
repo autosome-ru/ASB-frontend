@@ -41,7 +41,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     @Input()
     private readonly initialDisplayedColumns: AsbTableDisplayedColumns<T>;
     @Input()
-    action: (row: T) => boolean;
+    actionFilter: (row: T) => boolean;
 
     @Input()
     public actionTemplate: TemplateRef<{value: T}>;

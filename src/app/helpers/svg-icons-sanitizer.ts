@@ -10,6 +10,7 @@ const ICONS = [
     "chevron-down",
     "clear",
     "copy",
+    "new_open",
     "done",
     "dots-vert",
     "download",

@@ -10,7 +10,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from '../../../../models/table.model';
-import {AnnotationDataModel, AnnotationSnpModel, CountModel} from 'src/app/models/annotation.model';
+import {AnnotationDataModel, AnnotationSnpModel, CountModel, StatsDataModel} from 'src/app/models/annotation.model';
 import {TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
@@ -33,10 +33,16 @@ export class TicketTablePreviewComponent implements OnInit {
 
     @ViewChild('downloadSelectType')
     private downloadSelectTemplate: TemplateRef<any>;
+
     @ViewChild('fdrViewTemplate', {static: true})
     private fdrViewTemplate: TemplateRef<{ value: number }>;
+
     @ViewChild('dbSnpViewTemplate', {static: true})
     private dbSnpViewTemplate: TemplateRef<{ value: string }>;
+
+    @ViewChild('gtexTemplate', {static: true})
+    private gtexTemplate: TemplateRef<{ value: boolean, row: AnnotationSnpModel }>;
+
     @Input()
     public data: AnnotationSnpModel[] = [];
 
@@ -121,8 +127,8 @@ export class TicketTablePreviewComponent implements OnInit {
             }
             this.displayedColumns.push('tfBindPref');
             this.columnModel.isEqtl = {
-                view: 'Is eQTL',
-                valueConverter: v => v ? 'Yes' : 'No'
+                view: 'GTEx eQTL',
+                columnTemplate: this.gtexTemplate
             };
             this.columnModel.targetGenes = {
                 view: 'GTEx eQTL target genes'
@@ -233,5 +239,21 @@ export class TicketTablePreviewComponent implements OnInit {
         return selectedName ? this.getCountModel().findIndex(
             s => s.name === selectedName
         ) : null
+    }
+
+    getChartData(metaInfo: StatsDataModel): CountModel[] {
+        if (this.tfOrCl == 'tf') {
+            if (this.isExpanded) {
+                return metaInfo.tfAsbList
+            } else {
+                return metaInfo.tfAsbListSum
+            }
+        } else {
+            if (this.isExpanded) {
+                return metaInfo.clAsbList
+            } else {
+                return metaInfo.clAsbListSum
+            }
+        }
     }
 }

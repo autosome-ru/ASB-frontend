@@ -40,7 +40,9 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         tfOdds: stats.tf_odds,
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
-        clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : []
+        clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
+        tfAsbListSum: stats.tf_asb_counts_rs ? stats.tf_asb_counts_rs : [],
+        clAsbListSum: stats.cl_asb_counts_rs ? stats.cl_asb_counts_rs : [],
     };
 }
 
