@@ -58,8 +58,8 @@ export interface StatsDataBackendModel {
     tf_odds: number;
     tf_asb_counts: CountModel[];
     cl_asb_counts: CountModel[];
-    tf_asb_counts_rs: CountModel[];
-    cl_asb_counts_rs: CountModel[];
+    tf_asb_counts_top: CountModel[];
+    cl_asb_counts_top: CountModel[];
     last_status_update_at: string;
     processing_started_at: string;
     status_details: string;

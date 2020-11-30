@@ -41,8 +41,8 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
         clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
-        tfAsbListSum: stats.tf_asb_counts_rs ? stats.tf_asb_counts_rs : [],
-        clAsbListSum: stats.cl_asb_counts_rs ? stats.cl_asb_counts_rs : [],
+        tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
+        clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
     };
 }
 
