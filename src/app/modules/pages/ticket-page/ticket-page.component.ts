@@ -37,7 +37,23 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public isExpanded = false;
     public recentRelease: ReleaseModel;
     public selectedTab: TfOrCl = 'tf';
-    public selectedName: { tf: string, cl: string } = {tf: null, cl: null};
+    public selectedName: {
+        tf: {
+            expanded: string,
+            non: string
+        },
+        cl:  {
+            expanded: string,
+            non: string
+        }
+    } = {tf: {
+            expanded: null,
+            non: null
+        }, cl: {
+            expanded: null,
+            non: null
+        }
+    };
 
 
     constructor(private route: ActivatedRoute,
