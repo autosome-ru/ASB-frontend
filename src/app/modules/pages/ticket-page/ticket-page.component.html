@@ -33,7 +33,7 @@
                 #tabGroup
                 mat-align-tabs="center"
                 dynamicHeight
-                [selectedIndex]="calcSelectedIndex(fileStatistics)"
+                [selectedIndex]="selectedTab === 'tf' ? 0 : 1"
                 (selectedIndexChange)="tabIndexChanged($event)"
                 animationDuration="0ms"
             >

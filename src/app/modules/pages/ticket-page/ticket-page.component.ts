@@ -36,7 +36,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     public isExpanded = false;
     public recentRelease: ReleaseModel;
-    private selectedTab: TfOrCl = 'tf';
+    public selectedTab: TfOrCl = 'tf';
     public selectedName: { tf: string, cl: string } = {tf: null, cl: null};
 
 
@@ -75,6 +75,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                             this.fileStatistics$.subscribe(
                                 f => {
                                     if (f && f.status === 'Processed') {
+                                        this.selectedTab = f.metaInfo.tfAsbList.length == 0 && f.metaInfo.clAsbList.length > 0 ? 'cl' : 'tf';
                                         this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
                                             {tfOrCl: this.selectedTab, ticket: this.ticket, isExpanded: this.isExpanded}
                                         ));
@@ -132,9 +133,4 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    calcSelectedIndex(fileStatistics: AnnotationDataModel): number {
-        const val: boolean = fileStatistics.metaInfo.tfAsbList.length == 0 && fileStatistics.metaInfo.clAsbList.length > 0;
-        this.selectedTab = val ? 'cl' : 'tf';
-        return val ? 1 : 0
-    }
 }
