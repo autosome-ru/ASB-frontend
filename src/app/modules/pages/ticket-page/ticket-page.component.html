@@ -13,8 +13,8 @@
     <div class="centered-spinner" *ngIf="fileStatisticsLoading$ | async">
         <div class="help-message">
             <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted SNPs.</h5>
-            <h6>Elapsed time: {{(fileStatistics$ | async).metaInfo.processingStartedAt | date: 'mm:ss'}}</h6>
-            <h6>Status: {{(fileStatistics$ | async)?.metaInfo.statusDetails}}</h6>
+            <h6 *ngIf="fileStatistics$ | async">Elapsed time: {{(fileStatistics$ | async)?.metaInfo.processingStartedAt | date: 'mm:ss'}}</h6>
+            <h6 *ngIf="fileStatistics$ | async">Status: {{(fileStatistics$ | async)?.metaInfo.statusDetails}}</h6>
         </div>
         <mat-progress-bar mode="query"></mat-progress-bar>
     </div>
