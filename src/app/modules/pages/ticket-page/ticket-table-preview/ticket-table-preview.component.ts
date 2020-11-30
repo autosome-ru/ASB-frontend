@@ -229,13 +229,7 @@ export class TicketTablePreviewComponent implements OnInit {
     }
     chartClicked(name: {event: MouseEvent, active: {_index: number}[]}) {
         if (name.active && name.active.length > 0) {
-            if (this.tfOrCl == 'tf') {
-                const tf: CountModel = this.ticketStatistics.metaInfo.tfAsbList[name.active[0]._index]
-                this.filterTable(tf.name)
-            } else {
-                const cl: CountModel = this.ticketStatistics.metaInfo.clAsbList[name.active[0]._index]
-                this.filterTable(cl.name)
-            }
+            this.filterTable(this.getChartData(this.ticketStatistics.metaInfo)[name.active[0]._index].name)
         }
     }
     filterTable(name?: string) {
