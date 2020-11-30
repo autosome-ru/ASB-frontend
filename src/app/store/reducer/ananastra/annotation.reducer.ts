@@ -90,7 +90,6 @@ export function annotationReducer(state: AnnotationState = initialState, action:
       }
 
       case fromActions.ActionTypes.LoadAnnotationTable: {
-          console.log(state, action.payload)
           return {
             ...state,
             annotations: {

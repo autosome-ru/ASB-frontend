@@ -105,6 +105,7 @@ export class TicketBarplotComponent implements OnInit {
             responsive: true,
             legend: {
                 display: false,
+                position: 'right'
 
             },
             tooltips: {
