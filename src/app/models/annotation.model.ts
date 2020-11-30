@@ -37,7 +37,7 @@ export interface StatsDataModel {
     clAsbListSum: CountModel[];
     lastStatusUpdateAt: string
     processingStartedAt: Date
-    statusDetails: string
+    statusDetails: string;
 }
 
 export interface StatsDataBackendModel {
@@ -60,9 +60,10 @@ export interface StatsDataBackendModel {
     cl_asb_counts: CountModel[];
     tf_asb_counts_rs: CountModel[];
     cl_asb_counts_rs: CountModel[];
-    last_status_update_at: string
-    processing_started_at: string
-    status_details: string
+    last_status_update_at: string;
+    processing_started_at: string;
+    status_details: string;
+
 }
 
 export interface AnnotationDataBackendModel {
@@ -78,12 +79,17 @@ export interface AnnotationSnpBackendModel {
     position: number;
     sequence: string;
     rs_id: number | string;
+    effect_size_ref: number;
+    effect_size_alt: number;
+    top_effect_size: number;
     ref?: string;
     alt?: string;
     alleles?: string
     log10_fdr_ref: number;
     log10_fdr_alt: number;
+    log10_top_fdr: number;
     tf_binding_preferences: string;
+    preferred_allele: string;
     transcription_factor?: string;
     cell_type?: string;
     is_eqtl?: boolean;
@@ -100,9 +106,14 @@ export interface AnnotationSnpModel extends SnpGenPosModel, MotifSnpModel {
     cellType?: string;
     transcriptionFactor?: string;
     tfBindPref?: string;
+    prefAllele?: string;
     isEqtl?: boolean;
     targetGenes?: string;
     fdrRef: number;
     fdrAlt: number;
+    topFdr: number;
+    esRef: number;
+    esAlt: number;
+    topEs: number;
     alleles?: string[];
 }

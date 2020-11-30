@@ -65,11 +65,14 @@ export function convertAnnotationSnpBackendToAnnotationSnpModel(
         chr: model.chromosome,
         rsId: typeof model.rs_id === 'string' ? model.rs_id : 'rs' + model.rs_id,
         context: model.sequence,
+        esAlt: model.effect_size_alt,
+        esRef: model.effect_size_ref,
         fdrAlt: -model.log10_fdr_alt,
         fdrRef: -model.log10_fdr_ref,
         isEqtl: model.is_eqtl,
         targetGenes: model.gtex_eqtl_target_genes,
         tfBindPref: model.tf_binding_preferences,
+        prefAllele: model.preferred_allele,
         refBase: model.ref,
         alleles: model.alleles ? model.alleles.split('/') : [],
         pos: model.position,
@@ -81,5 +84,7 @@ export function convertAnnotationSnpBackendToAnnotationSnpModel(
         motifPosition: model.motif_position,
         motifPAlt: -model.motif_log_p_alt,
         motifPRef: -model.motif_log_p_ref,
+        topEs: model.top_effect_size ? model.top_effect_size : 0,
+        topFdr: model.log10_top_fdr ? - model.log10_top_fdr : 0
     };
 }

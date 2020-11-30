@@ -43,6 +43,9 @@ export class TicketTablePreviewComponent implements OnInit {
     @ViewChild('gtexTemplate', {static: true})
     private gtexTemplate: TemplateRef<{ value: boolean, row: AnnotationSnpModel }>;
 
+    @ViewChild('prefAlleleColumnTemplate', {static: true})
+    private prefAlleleColumnTemplate: TemplateRef<{ value: string }>;
+
     @Input()
     public data: AnnotationSnpModel[] = [];
 
@@ -108,24 +111,33 @@ export class TicketTablePreviewComponent implements OnInit {
             this.displayedColumns.push('cellType')
             if (this.isExpanded) {
                 this.columnModel.cellType = {view: 'Cell type'};
+
             } else {
-                this.columnModel.cellType = {view: 'Top cell type', helpMessage: 'By ASB significance'};
+                this.columnModel.cellType = {
+                    view: 'Top cell type',
+                    helpMessage: 'By ASB significance'};
             }
         }
-        this.displayedColumns.push('fdrRef', 'fdrAlt');
-        this.columnModel.fdrRef = {
-                view: (this.isExpanded ? '' : 'Best ') + 'FDR Ref',
-                columnTemplate: this.fdrViewTemplate
+
+        if (!this.isExpanded) {
+            this.columnModel.prefAllele = {
+                view: `Top ${this.tfOrCl === 'tf' ? 'TF' : 'cell type'} preferred allele`,
+                columnTemplate: this.prefAlleleColumnTemplate,
+                disabledSort: true
             }
-        this.columnModel.fdrAlt = {
-                view: (this.isExpanded ? '' : 'Best ') + 'FDR Alt',
+            this.columnModel.topEs = {
+                view: `Top ${this.tfOrCl === 'tf' ? 'TF' : 'cell type'} effect size`,
+                isDesc: true,
+                valueConverter: v => v !== null ? v.toFixed(2) : 'n/a'
+            };
+            this.columnModel.topFdr = {
+                view: `Top ${this.tfOrCl === 'tf' ? 'TF' : 'cell type'} FDR`,
                 columnTemplate: this.fdrViewTemplate
             };
-        if (!this.isExpanded) {
             this.columnModel.tfBindPref = {
                 view: 'TF binding preferences'
             }
-            this.displayedColumns.push('tfBindPref');
+            this.displayedColumns.push("topEs", "topFdr", 'tfBindPref');
             this.columnModel.isEqtl = {
                 view: 'GTEx eQTL',
                 columnTemplate: this.gtexTemplate
@@ -134,6 +146,25 @@ export class TicketTablePreviewComponent implements OnInit {
                 view: 'GTEx eQTL target genes'
             }
         } else {
+            this.columnModel.esRef = {
+                view: 'Effect size Ref',
+                isDesc: true,
+                valueConverter: v => v !== null ? v.toFixed(2) : 'n/a'
+            };
+            this.columnModel.esAlt = {
+                view: 'Effect size Alt',
+                isDesc: true,
+                valueConverter: v => v !== null ? v.toFixed(2) : 'n/a'
+            };
+            this.displayedColumns.push("esRef", "esAlt", 'fdrRef', 'fdrAlt');
+            this.columnModel.fdrRef = {
+                view: 'FDR Ref',
+                columnTemplate: this.fdrViewTemplate
+            };
+            this.columnModel.fdrAlt = {
+                view: 'FDR Alt',
+                columnTemplate: this.fdrViewTemplate
+            };
             if (this.tfOrCl === 'tf') {
                 this.columnModel = {
                     ...this.columnModel,
