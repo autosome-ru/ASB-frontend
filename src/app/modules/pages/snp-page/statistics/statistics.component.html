@@ -100,7 +100,7 @@
 </div>
 <ng-template #actionTemplate let-row="row">
     <button
-        *ngIf="actionFilter(row)"
+        *ngIf="actionFilter && actionFilter(row)"
         matTooltip="Go to motif analysis"
         mat-icon-button
         (click)="actionClicked.emit(row); $event.stopPropagation() && $event.preventDefault()"
