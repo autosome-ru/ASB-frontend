@@ -202,7 +202,13 @@ export class TicketTablePreviewComponent implements OnInit {
         }
     }
     filterTable(name?: string) {
-        this.selectedNameChange.emit(name)
+        if (this.selectedName !== name) {
+            this.selectedNameChange.emit(name)
+        } else {
+            this.selectedNameChange.emit(null)
+
+            name = null;
+        }
         if (name) {
             this.tableData = this.data.filter(s => this.filterFunction(s, name))
         } else {

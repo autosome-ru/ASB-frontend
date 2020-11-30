@@ -108,6 +108,17 @@ export class TicketBarplotComponent implements OnInit {
                 position: 'right'
 
             },
+            animation: {
+                duration: 500,
+                onComplete: () => {
+                    this.chartOptions = {
+                        ...this.chartOptions,
+                        animation: {
+                            duration: 0
+                        }
+                    }
+                }
+            },
             tooltips: {
                 callbacks: {
                     label: (tooltipItem) => {
