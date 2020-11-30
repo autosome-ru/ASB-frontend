@@ -22,16 +22,23 @@
         onclick="value = null"
         (change)="fileBrowseHandler($event.target?.files)"
       >
-      <img height="50px" src="/assets/images/cloud.svg" alt="">
-      <h5>Drag and drop file here</h5>
-      <h5>or</h5>
-      <button
-        style="border-radius: 25px; background: #db202f; color:white"
-        mat-button
-        (click)="fileDropRef.click()"
-      >
-        Browse for file
-      </button>
+        <div>
+            <img height="50px" src="/assets/images/cloud.svg" alt="" style="margin-right: 10px">
+
+            <span style="margin-right: 10px; font-size: 1.2rem"
+            >
+                Drag and drop file here or</span>
+
+            <button
+
+
+                mat-raised-button
+                color="primary"
+                (click)="fileDropRef.click()"
+            >
+                Browse for file
+            </button>
+        </div>
     </div>
 
     <div class="single-file" *ngIf="file !== null">
