@@ -253,7 +253,7 @@ export class TicketTablePreviewComponent implements OnInit {
         }
     }
     getCountModel(): CountModel[] {
-        return this.tfOrCl === 'tf' ? this.ticketStatistics.metaInfo.tfAsbList : this.ticketStatistics.metaInfo.clAsbList;
+        return this.getChartData(this.ticketStatistics.metaInfo);
     }
     filterFunction(snp: AnnotationSnpModel, name: string): boolean {
         const snpField: string = this.tfOrCl === 'tf' ? snp.transcriptionFactor : snp.cellType;
