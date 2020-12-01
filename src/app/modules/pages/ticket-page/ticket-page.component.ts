@@ -38,22 +38,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public recentRelease: ReleaseModel;
     public selectedTab: TfOrCl = 'tf';
     public selectedName: {
-        tf: {
-            expanded: string,
-            non: string
-        },
-        cl:  {
-            expanded: string,
-            non: string
-        }
-    } = {tf: {
-            expanded: null,
-            non: null
-        }, cl: {
-            expanded: null,
-            non: null
-        }
-    };
+        tfSum: string, tf: string, cl:  string, clSum: string,
+    } = {tf: null, tfSum: null, cl: null, clSum: null};
 
 
     constructor(private route: ActivatedRoute,

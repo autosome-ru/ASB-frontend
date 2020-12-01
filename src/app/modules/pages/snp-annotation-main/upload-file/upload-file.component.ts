@@ -130,4 +130,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   }
 
+    initDemo(id: number) {
+      const patchValue: string = id === 1 ? 'rs123' : 'rs123\nrs1234\nrs123455'
+      this.textAreaControl.patchValue(patchValue)
+    }
 }

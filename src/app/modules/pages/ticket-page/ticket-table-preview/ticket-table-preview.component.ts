@@ -201,7 +201,7 @@ export class TicketTablePreviewComponent implements OnInit {
         }
         this.columnsControl = this.formBuilder.control(this.displayedColumns);
         this.initialDisplayedColumns = this.displayedColumns;
-        this.filterTable(this.selectedName)
+        this.filterTable(this.selectedName, true)
 
     }
 
@@ -232,13 +232,14 @@ export class TicketTablePreviewComponent implements OnInit {
             this.filterTable(this.getChartData(this.ticketStatistics.metaInfo)[name.active[0]._index].name)
         }
     }
-    filterTable(name?: string) {
-        if (this.selectedName !== name) {
-            this.selectedNameChange.emit(name)
-        } else {
-            this.selectedNameChange.emit(null)
-
-            name = null;
+    filterTable(name?: string, onInit?: boolean) {
+        if (!onInit) {
+            if (this.selectedName !== name) {
+                this.selectedNameChange.emit(name)
+            } else {
+                this.selectedNameChange.emit(null)
+                name = null;
+            }
         }
         if (name) {
             this.tableData = this.data.filter(s => this.filterFunction(s, name))

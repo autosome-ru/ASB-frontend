@@ -1,10 +1,11 @@
 <div style="width: 100%;">
     <div style="display: flex; flex-direction: column; align-items: center">
-    <mat-form-field appearance="outline" style="width: 95%" floatLabel="auto">
-      <mat-label>Provide identifiers</mat-label>
+    <mat-form-field appearance="outline"  style="width: 95%" floatLabel="always">
+      <mat-label></mat-label>
       <textarea
         [formControl]="textAreaControl"
         matInput
+        placeholder="Provide a list of dbSNP rsIDs or genomic intervals in hg38 coordinates"
         cdkTextareaAutosize
         cdkAutosizeMinRows="10"
         cdkAutosizeMaxRows="15"
@@ -23,16 +24,20 @@
         (change)="fileBrowseHandler($event.target?.files)"
       >
         <div>
-            <img height="50px" src="/assets/images/cloud.svg" alt="" style="margin-right: 10px">
+            <img
+                height="50px"
+                class="d-none d-sm-inline"
+                src="/assets/images/cloud.svg"
+                alt=""
+                style="margin-right: 10px">
 
-            <span style="margin-right: 10px; font-size: 1.2rem"
+            <span style="margin-right: 10px; font-size: 1.2rem" class="d-none d-sm-inline"
             >
                 Drag and drop file here or</span>
 
             <button
-
-
-                mat-raised-button
+                style="border-radius: 20px"
+                mat-flat-button
                 color="primary"
                 (click)="fileDropRef.click()"
             >
@@ -41,48 +46,65 @@
         </div>
     </div>
 
-    <div class="single-file" *ngIf="file !== null">
-      <div class="file-icon" style="width: 50px">
-        <img src="/assets/images/file.svg" height="40px" alt="">
-      </div>
-      <div class="info">
-        <div style="display: flex; position: relative; justify-content: space-between; align-items: flex-end">
-          <div style="display: flex; flex-direction: column; align-items: flex-start">
-          <h4 class="name">
-            {{ file?.name }}
-          </h4>
-          <p class="size">
-            {{ formatBytes(file?.size, 2) }}
-          </p>
+        <div class="single-file" *ngIf="file !== null">
+          <div class="file-icon" style="width: 50px">
+            <img src="/assets/images/file.svg" height="40px" alt="">
           </div>
-          <h6
-            style="color: #db202f"
-            *ngIf="(fileProgress$ | async) === null">
-            Loading error
-          </h6>
+          <div class="info">
+            <div style="display: flex; position: relative; justify-content: space-between; align-items: flex-end">
+              <div style="display: flex; flex-direction: column; align-items: flex-start">
+              <h4 class="name">
+                {{ file?.name }}
+              </h4>
+              <p class="size">
+                {{ formatBytes(file?.size, 2) }}
+              </p>
+              </div>
+              <h6
+                style="color: #db202f"
+                *ngIf="(fileProgress$ | async) === null">
+                Loading error
+              </h6>
+            </div>
+            <mat-progress-bar
+              mode="determinate"
+              [color]="(fileProgress$ | async) == null ? 'warn' : 'primary'"
+              [value]="(fileProgress$ | async) == null ? 100 : (fileProgress$ | async)"
+            ></mat-progress-bar>
+          </div>
+
+          <button mat-icon-button
+                  (click)="deleteFile()"
+                  style="align-self: flex-end"
+          >
+            <mat-icon svgIcon="bin"></mat-icon>
+
+          </button>
         </div>
-        <mat-progress-bar
-          mode="determinate"
-          [color]="(fileProgress$ | async) == null ? 'warn' : 'primary'"
-          [value]="(fileProgress$ | async) == null ? 100 : (fileProgress$ | async)"
-        ></mat-progress-bar>
-      </div>
-
-      <button mat-icon-button
-              (click)="deleteFile()"
-              style="align-self: flex-end"
-      >
-        <mat-icon svgIcon="bin"></mat-icon>
-
-      </button>
-    </div>
-        <button
-          color="accent"
-          style="align-self: flex-start; margin-top: 15px; margin-left: calc(2.5% + 5px)"
-          mat-raised-button
-          (click)="submit()"
-        >
-          Submit
-        </button>
+        <div style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap">
+            <button
+              color="primary"
+              style="align-self: flex-start; margin-top: 15px; margin-left: calc(2.5% + 5px)"
+              mat-raised-button
+              (click)="submit()"
+            >
+              Submit
+            </button>
+            <div style="align-self: flex-end; margin-top: 15px; margin-right: calc(2.5% + 5px)">
+                <button
+                    style="margin-right: 10px"
+                    mat-raised-button
+                    (click)="initDemo(1)"
+                >
+                    Example1
+                </button>
+                <button
+                    mat-raised-button
+                    (click)="initDemo(2)"
+                >
+                    Example2
+                </button>
+            </div>
+        </div>
     </div>
 </div>
