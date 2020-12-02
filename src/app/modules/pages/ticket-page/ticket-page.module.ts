@@ -22,7 +22,6 @@ import {DownloadService} from '../../../services/download.service';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {SciNotationModule} from '../../shared/sci-notation/sci-notation.module';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
 import { TicketBarplotComponent } from './ticket-barplot/ticket-barplot.component';
 import {MatChipsModule} from "@angular/material/chips";
 
@@ -54,7 +53,6 @@ import {MatChipsModule} from "@angular/material/chips";
         MatDialogModule,
         MatTooltipModule,
         SciNotationModule,
-        AsbMotifsModule,
         MatChipsModule
     ],
     providers: [DownloadService]
