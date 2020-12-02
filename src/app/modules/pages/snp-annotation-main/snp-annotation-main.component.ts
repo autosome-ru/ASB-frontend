@@ -1,4 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {SeoService} from "../../../services/seo.servise";
+import {ActivatedRoute} from "@angular/router";
+import {SeoModel} from "../../../models/seo.model";
 
 @Component({
   selector: 'astra-snp-annotation-main',
@@ -8,8 +11,9 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@an
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SnpAnnotationMainComponent implements OnInit {
-  constructor() { }
+  constructor(private seoService: SeoService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+      this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel)
   }
 }

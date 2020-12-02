@@ -7,7 +7,11 @@ const routes: Routes = [
         pathMatch: 'full',
         loadChildren: () => import('src/app/modules/pages/snp-annotation-main/snp-annotation-main.module').then(
             mod => mod.SnpAnnotationMainModule
-        )
+        ),
+        data: {
+            title: "Ananastra",
+            description: ""
+        }
     },
     {
         path: 'ticket/:id',

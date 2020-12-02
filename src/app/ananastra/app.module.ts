@@ -26,6 +26,7 @@ import {JoyrideModule} from "ngx-joyride";
 import {AnanastraHeaderModule} from "../modules/shared/ananastra-header/ananastra-header.module";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
+import {SeoService} from "../services/seo.servise";
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
         ReleasesService,
         DataService,
         UrlService,
+        SeoService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorsInterceptor,
