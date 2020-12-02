@@ -202,7 +202,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles/theme/theme.sass",
+              "src/styles/theme/theme.ananas.sass",
               "src/styles.less",
               "node_modules/ngx-toastr/toastr.css"
             ],

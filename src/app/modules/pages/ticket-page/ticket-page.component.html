@@ -1,5 +1,5 @@
 <div class="container mat-elevation-z2 pb-3 pt-1">
-    <h4 class="border-bottom border-info"
+    <h4 class="theme-primary-border"
         [matTooltip]="(fileStatisticsLoading$ | async) ? '' :
       'Ticket will be available till ' +
       ((fileStatistics$ | async)?.expirationDate | date: 'medium')"
