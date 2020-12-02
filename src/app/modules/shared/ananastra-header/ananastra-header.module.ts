@@ -8,6 +8,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatRippleModule} from "@angular/material/core";
 
 
 
@@ -24,7 +25,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatMenuModule,
         MatButtonModule,
         MatIconModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatRippleModule
     ]
 })
 export class AnanastraHeaderModule { }
