@@ -11,6 +11,7 @@ import {ScriptService} from "../../../../services/script.service";
 import {ToastrService} from "ngx-toastr";
 import {CountModel} from "../../../../models/annotation.model";
 import {TfOrCl} from "../../../../models/data.model";
+import {ChartOptions} from "chart.js";
 
 @Component({
     selector: 'asb-ticket-barplot',
@@ -95,8 +96,8 @@ export class TicketBarplotComponent implements OnInit {
                 private toastrService: ToastrService) {
     }
 
-    public chartColors: Array<any>;
-    public chartOptions: any;
+    public chartColors: any[];
+    public chartOptions: ChartOptions;
 
     ngOnInit(): void {
         this.scriptService.load('charts').then(data => {
