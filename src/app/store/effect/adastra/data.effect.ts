@@ -84,7 +84,7 @@ export class DataEffect {
     loadSnpStatsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSnpInfoFail),
         mergeMap(() => {
-            this.router.navigate(["/page-not-found"]);
+            this.router.navigate(["/404"],{replaceUrl: true});
             return EMPTY;
         }),
     );
