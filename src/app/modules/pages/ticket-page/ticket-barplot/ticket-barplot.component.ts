@@ -50,7 +50,7 @@ export class TicketBarplotComponent implements OnInit {
                 'rgba(75, 192, 192)',
                 'rgba(153, 102, 255)',
                 'rgba(255, 159, 64)',
-                'rgba(105, 105, 105)'
+                'rgba(185, 185, 185)'
             ];
         const backgroundOpacityColor = [
             'rgba(255, 99, 132, 0.2)',
@@ -59,7 +59,7 @@ export class TicketBarplotComponent implements OnInit {
             'rgba(75, 192, 192, 0.2)',
             'rgba(153, 102, 255, 0.2)',
             'rgba(255, 159, 64, 0.2)',
-            'rgba(105, 105, 105, 0.2)'
+            'rgba(185, 185, 185, 0.2)'
         ];
         let bg: string[]
         if (value !== null) {

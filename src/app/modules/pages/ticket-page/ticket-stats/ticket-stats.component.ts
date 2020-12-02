@@ -20,18 +20,18 @@ export class TicketStatsComponent implements OnInit {
       this.stats = value.metaInfo;
       this.chartDatasets = [
         {data:
-            [value.metaInfo.notFound, value.metaInfo.asbCount, value.metaInfo.candidatesCount],
+            [value.metaInfo.asbCount, value.metaInfo.candidatesCount, value.metaInfo.notFound],
           label: 'All ASB'}
         ];
     }
   }
 
-  public chartLabels: string[] = ['Unknown', 'ASB SNPs', 'Non-ASB'];
+  public chartLabels: string[] = ['ASB SNPs', 'Non-ASB', 'Unknown'];
 
   public chartColors: Array<any> = [
     {
-      backgroundColor: ['#B8B8B8', '#46BFBD', '#FDB45C'],
-      hoverBackgroundColor: ['#BEBEBE', '#5AD3D1', '#FFC870'],
+      backgroundColor: ['#4ac1c1', '#ffc463', '#B8B8B8'],
+      hoverBackgroundColor: ['#51caca', '#FFC870', '#BEBEBE'],
       borderWidth: 2,
     }
   ];
