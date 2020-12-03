@@ -9,7 +9,7 @@ const routes: Routes = [
             mod => mod.SnpAnnotationMainModule
         ),
         data: {
-            title: "ANANASTra",
+            title: "ANANASTRA",
             description: ""
         }
     },

@@ -111,8 +111,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   annotationStart(): void {
     this.router.navigateByUrl(`/ticket/${this.ticket}`).then(
       () => {
-          this.uploadService.removeFileTicket()
           this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(this.ticket));
+          this.uploadService.removeFileTicket()
       }
     );
   }

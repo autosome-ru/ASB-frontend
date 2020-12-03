@@ -28,6 +28,9 @@ export class AsbTourComponent implements OnDestroy {
 
     @Input()
     public steps: string[];
+
+    @Input()
+    public buttonClass: string = null;
     public release: Observable<ReleaseModel>;
 
     constructor(private joyrideService: JoyrideService,

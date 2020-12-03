@@ -39,9 +39,24 @@ export class AnnotationEffect {
         }),
     );
     @Effect()
+    initAnnotationStart$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.InitAnnotationStart),
+        mergeMap((action: fromActions.InitAnnotationStartAction) =>
+            this.store.select(fromSelectors.selectProcessingById, action.payload)
+                .pipe(
+                    take(1),
+                    switchMap((d) =>
+                        !d ?
+                        of(new fromActions.StartAnnotationAction(action.payload))
+                        : EMPTY
+                    ),
+                ),
+        ),
+    );
+    @Effect()
     loadAnnotationStats$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationInfoStats),
-        mergeMap((action: fromActions.LoadAnnotationStatsAction) =>
+        mergeMap((action: fromActions.LoadAnnotationInfoStatsAction) =>
             this.processingService.getFileStatsByTicket(action.payload).pipe(
                 map(info => new fromActions.LoadAnnotationStatsSuccessAction(info)),
                 catchError(() => of(new fromActions.LoadAnnotationStatsFailAction(action.payload))),
@@ -52,25 +67,63 @@ export class AnnotationEffect {
     loadAnnotationStatsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationInfoStatsFail),
         mergeMap(() => {
-            this.router.navigate(["/404"], {replaceUrl: true});
             return EMPTY;
         }),
     );
     @Effect()
-    initAnnotationInfo$ = this.actions$.pipe(
-        ofType(fromActions.ActionTypes.InitAnnotationStart),
-        mergeMap((action: fromActions.InitAnnotationStartAction) =>
+    pingAnnotationStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.PingAnnotation),
+        mergeMap((action: fromActions.PingAnnotationAction) =>
+            this.processingService.pingStatsByTicket(action.payload).pipe(
+                map(info => new fromActions.PingAnnotationSuccessAction(info)),
+                catchError(() =>
+                    of(new fromActions.PingAnnotationFailAction(action.payload))),
+            )
+        )
+    );
+    @Effect()
+    initPingAnnotationStats$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.InitPingAnnotation),
+        mergeMap((action: fromActions.InitPingAnnotationAction) =>
             combineLatest([
-                this.store.select(fromSelectors.selectAnnotationDataById, action.payload),
-                this.store.select(fromSelectors.selectAnnotationLoadingById, action.payload),
+                this.store.select(fromSelectors.selectPingDataById, action.payload),
+                this.store.select(fromSelectors.selectPingDataLoadingById, action.payload)
             ]).pipe(
                 take(1),
-                switchMap(([snp, loading]) =>
-                    !loading && !snp
-                        ? of(new fromActions.StartAnnotationAction(action.payload))
-                        : EMPTY
+                switchMap(([data, loading]) => {
+                    console.log(data)
+                    if (!loading && (!data || data.status !== 'Processed')) {
+                        return of(new fromActions.PingAnnotationAction(action.payload))
+                    } else {
+                        return EMPTY
+                    }
+                }
+                )
+            )
+        )
+    );
+    @Effect()
+    pingAnnotationStatsFail$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadAnnotationInfoStatsFail),
+        mergeMap(() => {
+            this.router.navigate(["/404"], {replaceUrl: true});
+            return EMPTY;
+        }),
+    );
+
+    @Effect()
+    initAnnotationStatsInfoLoading$ = this.actions$.pipe(
+        ofType(fromActions.ActionTypes.InitAnnotationInfoStats),
+        mergeMap((action: fromActions.InitAnnotationInfoStatsAction) =>
+            this.store.select(fromSelectors.selectAnnotationDataById, action.payload)
+                .pipe(
+                    take(1),
+                    switchMap((d) =>
+                        !d || (!d.loading && !d.data)
+                            ? of(new fromActions.LoadAnnotationInfoStatsAction(action.payload))
+                            : EMPTY
+                    ),
                 ),
-            ),
         ),
     );
     @Effect()
@@ -103,7 +156,7 @@ export class AnnotationEffect {
     initAnnotationTable$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationTableLoad),
         mergeMap((action: fromActions.InitAnnotationTableAction) => {
-                let obs: Observable<{ data: AnnotationSnpModel[], loading: boolean }>;
+                let obs: Observable<{ data?: AnnotationSnpModel[], loading: boolean }>;
                 if (action.payload.tfOrCl === 'tf') {
                     obs = action.payload.isExpanded ?
                         this.store.select(fromSelectors.selectAnnotationTfTable, action.payload.ticket) :

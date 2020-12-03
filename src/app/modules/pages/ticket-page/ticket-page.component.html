@@ -1,34 +1,36 @@
 <div class="container mat-elevation-z2 pb-3 pt-1">
     <h4 class="theme-primary-border"
-        [matTooltip]="(fileStatisticsLoading$ | async) ? '' :
-      'Ticket will be available till ' +
-      ((fileStatistics$ | async)?.expirationDate | date: 'medium')"
-    >ANANASTra report ({{ticket}})
-        <span style="white-space: nowrap"
-              *ngIf="!(fileStatisticsLoading$ | async)"
-        >
-      {{(fileStatistics$ | async)?.dateCreated | date: 'medium'}}
+
+    >ANANASTRA report (<span [matTooltipClass]="'big-font'"
+                             [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
+    >{{ticket}}</span>)
+        <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
+      {{(pingData$ | async)?.dateCreated | date: 'medium'}}
     </span>
     </h4>
-    <div class="centered-spinner" *ngIf="fileStatisticsLoading$ | async">
+    <div class="centered-spinner" *ngIf="ticketProcessing$ | async; else failedTemplate">
         <div class="help-message">
-            <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted SNPs.</h5>
-            <h6 *ngIf="fileStatistics$ | async">Elapsed time: {{(fileStatistics$ | async)?.metaInfo.processingStartedAt | date: 'mm:ss'}}</h6>
-            <h6 *ngIf="fileStatistics$ | async">Status: {{(fileStatistics$ | async)?.metaInfo.statusDetails}}</h6>
+            <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted
+                SNPs.</h5>
+            <ng-container *ngIf="pingData$ | async as ping">
+                <h6 *ngIf="ping.processingStartedAt">
+                    Processing started at: {{ping.processingStartedAt | date: 'medium'}}
+                </h6>
+                <h6 *ngIf="ping.elapsedTime">Elapsed time: {{ping.elapsedTime}}s</h6>
+                <h6>Status: {{ping.statusDetails}}</h6>
+            </ng-container>
         </div>
         <mat-progress-bar mode="query"></mat-progress-bar>
     </div>
-    <div *ngIf="!(fileStatisticsLoading$ | async) && (fileStatistics$ | async) as fileStatistics">
-        <ng-container *ngIf="fileStatistics?.status !== 'Failed'; else failedTemplate">
-            <h5>{{fileStatistics.metaInfo.asbCount}} SNPs exhibiting allele-specific binding of
+    <div *ngIf="(fileStatistics$ | async) as fileStatistics">
+        <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
+
+            <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding of
                 transcription factors found among user-submitted
-                {{fileStatistics.metaInfo.totalSNPs}} SNPs</h5>
+                {{data.metaInfo.totalSNPs}} SNPs</h5>
             <astra-ticket-stats
-                [chartData]="fileStatistics$ | async"
+                [chartData]="data"
             ></astra-ticket-stats>
-            <h6 *ngIf="fileStatistics.metaInfo.asbCount > 1000">
-                Found more than 1000 ASBs, please download the results for offline analysis. (First 1000 entries shown)
-            </h6>
             <mat-tab-group
                 #tabGroup
                 mat-align-tabs="center"
@@ -43,7 +45,7 @@
                             <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!tfTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="fileStatistics"
+                                    [ticketStatistics]="data"
                                     [isExpanded]="isExpanded"
                                     [data]="tfTableData?.data"
                                     [tfOrCl]="'tf'"
@@ -56,7 +58,7 @@
                             <ng-container *ngIf="!isExpanded && (tfTableDataSum$ | async) as tfTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!tfTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="fileStatistics"
+                                    [ticketStatistics]="data"
                                     [isExpanded]="isExpanded"
                                     [data]="tfTableData?.data"
                                     [(selectedName)]="selectedName.tfSum"
@@ -75,7 +77,7 @@
                             <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!clTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="fileStatistics"
+                                    [ticketStatistics]="data"
                                     [isExpanded]="isExpanded"
                                     [data]="clTableData?.data"
                                     [(selectedName)]="selectedName.cl"
@@ -88,7 +90,7 @@
                             <ng-container *ngIf="!isExpanded && (clTableDataSum$ | async) as clTableData">
                                 <astra-ticket-table-preview
                                     *ngIf="!clTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="fileStatistics"
+                                    [ticketStatistics]="data"
                                     [isExpanded]="isExpanded"
                                     [data]="clTableData?.data"
                                     [(selectedName)]="selectedName.clSum"
@@ -104,15 +106,20 @@
             </mat-tab-group>
         </ng-container>
     </div>
+
 </div>
 
 <ng-template #loadingTemplate>
-    <div>
+    <div style="display: flex; justify-content: center" class="pt-3">
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
     </div>
 </ng-template>
 
 <ng-template #failedTemplate>
-    <h5>Failed to annotate SNPs</h5>
-    <h6 *ngIf="(fileStatistics$ | async)">{{(fileStatistics$ | async)?.metaInfo.statusDetails}}</h6>
+    <ng-container *ngIf="(pingData$ | async) as pData">
+        <ng-container *ngIf="pData.status === 'Failed'">
+            <h5>Failed to annotate SNPs</h5>
+            <h6>{{pData?.statusDetails}}</h6>
+        </ng-container>
+    </ng-container>
 </ng-template>

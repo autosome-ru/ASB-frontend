@@ -2,7 +2,7 @@ import {
     AnnotationDataBackendModel,
     AnnotationDataModel,
     AnnotationSnpBackendModel,
-    AnnotationSnpModel, StatsDataBackendModel, StatsDataModel
+    AnnotationSnpModel, PingDataBackendModel, PingDataModel, StatsDataBackendModel, StatsDataModel
 } from '../../models/annotation.model';
 
 function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBackendModel): StatsDataModel {
@@ -35,12 +35,13 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         processingTime: stats.processing_time,
         processingStartedAt: new Date(Date.now() - new Date(stats.processing_started_at).getTime()),
         lastStatusUpdateAt: stats.last_status_update_at,
-        statusDetails: stats.status_details,
         tfPvalue: stats.tf_log10_p_value_rs,
         tfOdds: stats.tf_odds_rs,
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
         clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
+        tfAsbData: stats.tf_asb_data ? stats.tf_asb_data : [],
+        clAsbData: stats.cl_asb_data ? stats.cl_asb_data : [],
         tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
         clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
     };
@@ -56,7 +57,18 @@ export function convertAnnotationBackendToAnnotationModel(
         metaInfo: convertAnnotationStatsBackendToAnnotationStatsModel(model.meta_info)
     };
 }
-
+export function convertPingBackendToPingModel(
+    model: PingDataBackendModel): PingDataModel {
+    return {
+        processingStartedAt: model.processing_started_at ? new Date(model.processing_started_at) : null,
+        expirationDate: model.expiration_date ? new Date(model.expiration_date) : null,
+        dateCreated: new Date(model.date_created),
+        ticketId: model.ticket_id,
+        status: model.status,
+        statusDetails: model.status_details,
+        elapsedTime: model.elapsed_time
+    };
+}
 export function convertAnnotationSnpBackendToAnnotationSnpModel(
     model: AnnotationSnpBackendModel): AnnotationSnpModel {
 

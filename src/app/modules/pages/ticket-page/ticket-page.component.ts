@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as fromActions from 'src/app/store/action/ananastra';
 import * as fromSelectors from 'src/app/store/selector/ananastra';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
-import {AnnotationDataModel, AnnotationSnpModel} from 'src/app/models/annotation.model';
+import {AnnotationDataModel, AnnotationSnpModel, PingDataModel} from 'src/app/models/annotation.model';
 import {MatTabGroup} from '@angular/material/tabs';
 import {TfOrCl} from '../../../models/data.model';
 import {DownloadService} from 'src/app/services/download.service';
@@ -24,28 +24,32 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     @ViewChild('tabGroup')
     private tabGroup: MatTabGroup;
     public ticket: string;
-    private intervalId: number = null;
     private subscriptions = new Subscription();
-    public fileStatistics$: Observable<AnnotationDataModel>;
-    public fileStatisticsLoading$: Observable<boolean>;
-    public tfTableData$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
-    public clTableData$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
+    public fileStatistics$: Observable<{ data?: AnnotationDataModel; loading: boolean }>;
+    public tfTableData$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
+    public clTableData$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
 
-    public tfTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
-    public clTableDataSum$: Observable<{ data: AnnotationSnpModel[]; loading: boolean }>;
+    public tfTableDataSum$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
+    public clTableDataSum$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
 
     public isExpanded = false;
     public recentRelease: ReleaseModel;
     public selectedTab: TfOrCl = 'tf';
+    public timeoutId: number = null;
     public selectedName: {
         tfSum: string, tf: string, cl:  string, clSum: string,
     } = {tf: null, tfSum: null, cl: null, clSum: null};
+    public pingLoading$: Observable<boolean>;
+    public pingData$: Observable<PingDataModel>;
+    public ticketProcessing$: Observable<boolean>;
 
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AnnotationStoreState>,
+                private router: Router,
                 private downloadService: DownloadService,
                 private fileSaverService: FileSaverService) {
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
     ngOnInit(): void {
@@ -57,38 +61,62 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                 }
             )
         );
+
         this.fileStatistics$ = this.store.select(
             fromSelectors.selectAnnotationDataById, this.ticket);
-        this.fileStatisticsLoading$ = this.store.select(
-            fromSelectors.selectAnnotationLoadingById, this.ticket);
-        this.intervalId = window.setInterval(
-            () => {
-                this.store.dispatch(new fromActions.annotation.LoadAnnotationStatsAction(
-                    this.ticket));
-            }, 500);
+        this.pingLoading$ = this.store.select(
+            fromSelectors.selectPingDataLoadingById, this.ticket);
+        this.pingData$ = this.store.select(
+            fromSelectors.selectPingDataById, this.ticket);
+        this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
+            this.ticket));
         this.subscriptions.add(
-            this.fileStatisticsLoading$.subscribe(
-                s => {
-                    if (s === false) {
-                        this.intervalId = this.clearInterval(this.intervalId);
-                        this.store.dispatch(new fromActions.annotation.LoadAnnotationStatsAction(
+            this.pingData$.subscribe(
+                f => {
+                    if (f) {
+                        switch (f.status) {
+                            case 'Processed':
+                                this.store.dispatch(new fromActions.annotation.InitAnnotationInfoStatsAction(
+                                    this.ticket));
+                                this.subscriptions.add(
+                                    this.fileStatistics$.subscribe(
+                                        s => {
+                                            if (s && !s.loading && s.data) {
+                                                this.selectedTab = s.data.metaInfo.tfAsbList.length == 0 && s.data.metaInfo.clAsbList.length > 0 ? 'cl' : 'tf';
+                                                this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
+                                                    {tfOrCl: this.selectedTab, ticket: this.ticket, isExpanded: this.isExpanded}
+                                                ));
+                                            }
+                                        }
+                                    )
+                                )
+
+                                break;
+                             case 'Processing':
+                                 window.clearInterval(this.timeoutId)
+                                 this.timeoutId = window.setTimeout(
+                                     () => this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
+                                         this.ticket)), 500
+                                 )
+                                break;
+                             case 'Created':
+                                 this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(
+                                     this.ticket));
+                                 this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
+                                     this.ticket));
+                                break;
+                             case 'Failed':
+                                break;
+
+                        }
+                    } else {
+                        this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
                             this.ticket));
-                        this.subscriptions.add(
-                            this.fileStatistics$.subscribe(
-                                f => {
-                                    if (f && f.status === 'Processed') {
-                                        this.selectedTab = f.metaInfo.tfAsbList.length == 0 && f.metaInfo.clAsbList.length > 0 ? 'cl' : 'tf';
-                                        this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
-                                            {tfOrCl: this.selectedTab, ticket: this.ticket, isExpanded: this.isExpanded}
-                                        ));
-                                    }
-                                }
-                            )
-                        );
                     }
                 }
             )
         );
+        this.ticketProcessing$ = this.store.select(fromSelectors.selectProcessingById, this.ticket)
         this.tfTableData$ = this.store.select(fromSelectors.selectAnnotationTfTable, this.ticket);
         this.clTableData$ = this.store.select(fromSelectors.selectAnnotationClTable, this.ticket);
         this.tfTableDataSum$ = this.store.select(fromSelectors.selectAnnotationTfTableSum, this.ticket);
@@ -96,17 +124,9 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     }
 
-    clearInterval(interval: number): null {
-        if (interval) {
-            window.clearInterval(interval);
-            interval = null;
-        }
-        return null;
-    }
-
     ngOnDestroy(): void {
+        window.clearTimeout(this.timeoutId)
         this.subscriptions.unsubscribe();
-        this.clearInterval(this.intervalId);
     }
 
     tabIndexChanged(index: number): void {
@@ -135,4 +155,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         );
     }
 
+    getTooltip(date: string): string {
+        return `This is your unique job ticked ID. You can use it to access the report on your query later upon completion.
+         Your results will be available until ${date}.`
+    }
 }

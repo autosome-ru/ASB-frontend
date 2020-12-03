@@ -1,0 +1,9 @@
+<asb-table
+    [data]="data"
+    [columnModel]="columnModel"
+    [displayedColumns]="displayedColumns"
+    [paginatorOptions]="[5, 10, 20, 50]"
+></asb-table>
+<ng-template #fdrViewTemplate let-value="value">
+    <asb-sci-notation [value]="value" ></asb-sci-notation>
+</ng-template>

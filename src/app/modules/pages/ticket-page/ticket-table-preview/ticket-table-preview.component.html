@@ -78,15 +78,21 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-    <div class="col-12 wide-chart">
-        <asb-ticket-barplot
-            *ngIf="ticketStatistics?.metaInfo"
-            [data]="getChartData(ticketStatistics?.metaInfo)"
-            [tfOrCl]="tfOrCl"
-            [isExpanded]="isExpanded"
-            [selectedIndex]="getSelectedNameIndex(selectedName)"
-            (chartClickEmitter)="chartClicked($event)"
-        ></asb-ticket-barplot>
+    <div class="col-12">
+        <div class="col-12 wide-chart">
+            <asb-ticket-barplot
+                *ngIf="ticketStatistics?.metaInfo"
+                [data]="getChartData(ticketStatistics?.metaInfo)"
+                [tfOrCl]="tfOrCl"
+                [isExpanded]="isExpanded"
+                [selectedIndex]="getSelectedNameIndex(selectedName)"
+                (chartClickEmitter)="chartClicked($event)"
+            ></asb-ticket-barplot>
+
+        </div>
+        <asb-ticket-table-tmp
+            [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
+        ></asb-ticket-table-tmp>
     </div>
     <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
         <span>Filter:</span>

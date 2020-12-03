@@ -1,5 +1,13 @@
 import {ConcordanceBackendModel, MotifSnpModel, SnpGenPosModel, TfSnpModel} from './data.model';
-
+export interface PingDataModel {
+    ticketId: string;
+    status: string;
+    dateCreated: Date;
+    processingStartedAt: Date;
+    expirationDate: Date;
+    statusDetails: string;
+    elapsedTime: number;
+}
 export interface AnnotationDataModel {
     ticketId: string;
     status: string;
@@ -33,11 +41,13 @@ export interface StatsDataModel {
     tfOdds: number;
     tfAsbList: CountModel[];
     clAsbList: CountModel[];
+    tfAsbData: AsbStatsDataModel[];
+    clAsbData: AsbStatsDataModel[];
     tfAsbListSum: CountModel[];
     clAsbListSum: CountModel[];
-    lastStatusUpdateAt: string
-    processingStartedAt: Date
-    statusDetails: string;
+    lastStatusUpdateAt: string;
+    processingStartedAt: Date;
+
 }
 
 export interface StatsDataBackendModel {
@@ -48,6 +58,8 @@ export interface StatsDataBackendModel {
     all_odds_rs: number;
     cl_asbs_rs: number;
     cl_candidates_rs: number;
+    tf_asb_data: AsbStatsDataModel[];
+    cl_asb_data: AsbStatsDataModel[];
     cl_log10_p_value_rs: number;
     cl_odds_rs: number;
     processing_time: string;
@@ -62,10 +74,26 @@ export interface StatsDataBackendModel {
     cl_asb_counts_top: CountModel[];
     last_status_update_at: string;
     processing_started_at: string;
-    status_details: string;
-
 }
-
+export interface AsbStatsDataModel {
+    'name': string;
+    'asbs': number;
+    'candidates': number;
+    'asbs_rs': number;
+    'candidates_rs': number;
+    'odds': number;
+    'log10_p_value': number;
+    'log10_fdr': number
+}
+export interface PingDataBackendModel {
+    ticket_id: string;
+    date_created: string;
+    expiration_date: string;
+    status: string;
+    processing_started_at: string;
+    elapsed_time: number;
+    status_details: string;
+}
 export interface AnnotationDataBackendModel {
     ticket_id: string;
     date_created: string;

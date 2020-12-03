@@ -11,19 +11,21 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
+import {AsbTourModule} from "../../shared/tour-template/tour-module";
 
 
 @NgModule({
   declarations: [SnpAnnotationMainComponent, UploadFileComponent, DragDropDirective],
-  imports: [
-    CommonModule,
-    SnpAnnotationMainRoutingModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatProgressBarModule,
-    MatIconModule
-  ]
+    imports: [
+        CommonModule,
+        SnpAnnotationMainRoutingModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatProgressBarModule,
+        MatIconModule,
+        AsbTourModule
+    ]
 })
 export class SnpAnnotationMainModule { }

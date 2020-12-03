@@ -1,33 +1,39 @@
 import * as fromActions from "src/app/store/action/ananastra/annotation.action";
-import {AnnotationDataModel, AnnotationSnpModel} from '../../../models/annotation.model';
+import {AnnotationDataModel, AnnotationSnpModel, PingDataModel} from '../../../models/annotation.model';
 import {
-  convertAnnotationBackendToAnnotationModel,
-  convertAnnotationSnpBackendToAnnotationSnpModel
+    convertAnnotationBackendToAnnotationModel,
+    convertAnnotationSnpBackendToAnnotationSnpModel, convertPingBackendToPingModel
 } from '../../../helpers/converters/annotation.converter';
 
+export interface TicketState {
+    processing: boolean
+    pingLoading: boolean,
+    pingData?: PingDataModel
+    annotationData?: {
+        data?: AnnotationDataModel,
+        loading: boolean
+    },
 
+    tf?: {
+        data?: AnnotationSnpModel[],
+        loading: boolean
+    },
+    cl?: {
+        data?: AnnotationSnpModel[],
+        loading: boolean
+    },
+    tfSum?: {
+        data?: AnnotationSnpModel[],
+        loading: boolean
+    },
+    clSum?: {
+        data?: AnnotationSnpModel[],
+        loading: boolean
+    }
+}
 export interface AnnotationState {
     annotations: {
-        [ticket: string]: {
-            loading: boolean,
-            annotationData?: AnnotationDataModel,
-            tf?: {
-              data?: AnnotationSnpModel[],
-              loading: boolean
-            },
-            cl?: {
-              data?: AnnotationSnpModel[],
-              loading: boolean
-            },
-            tfSum?: {
-              data?: AnnotationSnpModel[],
-              loading: boolean
-            },
-            clSum?: {
-              data?: AnnotationSnpModel[],
-              loading: boolean
-            }
-        },
+        [ticket: string]: TicketState
     };
 }
 
@@ -46,7 +52,8 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                 annotations: {
                     ...state.annotations,
                     [action.payload]: {
-                        loading: true,
+                        ...state.annotations[action.payload],
+                        processing: true,
                     },
                 }
 
@@ -58,83 +65,142 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                 annotations: {
                     ...state.annotations,
                     [action.payload]: {
-                        loading: false,
+                        ...state.annotations[action.payload],
+                        processing: false
                     },
                 }
             };
         }
-      case fromActions.ActionTypes.LoadAnnotationInfoStatsSuccess: {
-        const isLoading = action.payload.status === 'Processed' || action.payload.status === 'Failed';
-        return {
-          ...state,
-          annotations: {
-            ...state.annotations,
-            [action.payload.ticket_id]: {
-              ...state.annotations[action.payload.ticket_id],
-              loading: !isLoading,
-              annotationData: convertAnnotationBackendToAnnotationModel(action.payload)
-            },
-          }
-        };
-      }
-      case fromActions.ActionTypes.LoadAnnotationInfoStatsFail: {
-        return {
-          ...state,
-          annotations: {
-            ...state.annotations,
-            [action.payload]: {
-              loading: false,
-            },
-          }
-        };
-      }
-
-      case fromActions.ActionTypes.LoadAnnotationTable: {
-          return {
-            ...state,
-            annotations: {
-              ...state.annotations,
-              [action.payload.ticket]: {
-                ...state.annotations[action.payload.ticket],
-                [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
-                  loading: true
+        case fromActions.ActionTypes.PingAnnotation: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload]: {
+                        ...state.annotations[action.payload],
+                        pingLoading: true
+                    }
                 }
-              }
             }
-          };
         }
-      case fromActions.ActionTypes.LoadAnnotationTableFail: {
-        return {
-          ...state,
-          annotations: {
-            ...state.annotations,
-            [action.payload.ticket]: {
-              ...state.annotations[action.payload.ticket],
-              [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
-                loading: false
-              }
+        case fromActions.ActionTypes.PingAnnotationFail: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload]: {
+                        ...state.annotations[action.payload],
+                        pingLoading: false
+                    }
+                }
             }
-          }
-        };
-      }
-      case fromActions.ActionTypes.LoadAnnotationTableSuccess: {
-        return {
-          ...state,
-          annotations: {
-            ...state.annotations,
-            [action.payload.ticket]: {
-              ...state.annotations[action.payload.ticket],
-              [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
-                loading: false,
-                data: action.payload.snps.map(convertAnnotationSnpBackendToAnnotationSnpModel)
-              }
+        }
+        case fromActions.ActionTypes.PingAnnotationSuccess: {
+            let ticketData ={
+                ...state.annotations[action.payload.ticket_id],
+                pingLoading: false,
+                processing: action.payload.status !== 'Processed' && action.payload.status !== 'Failed',
+                pingData: convertPingBackendToPingModel(action.payload),
             }
-          }
-        };
-      }
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload.ticket_id]: ticketData
+                }
+            }
+        }
+        case fromActions.ActionTypes.LoadAnnotationInfoStats: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload]: {
+                        ...state.annotations[action.payload],
+                        annotationData: {
+                            loading: true
+                        }
+                    },
+                }
+            };
+        }
+        case fromActions.ActionTypes.LoadAnnotationInfoStatsSuccess: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload.ticket_id]: {
+                        ...state.annotations[action.payload.ticket_id],
+                        annotationData: {
+                            loading: false,
+                            data: convertAnnotationBackendToAnnotationModel(action.payload)
+                        }
+                    },
+                }
+            };
+        }
+        case fromActions.ActionTypes.LoadAnnotationInfoStatsFail: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload]: {
+                        ...state.annotations[action.payload],
+                        annotationData: {
+                            loading: false
+                        }
+                    },
+                }
+            };
+        }
 
-      default: {
-          return state;
-      }
+        case fromActions.ActionTypes.LoadAnnotationTable: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload.ticket]: {
+                        ...state.annotations[action.payload.ticket],
+                        [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
+                            loading: true
+                        }
+                    }
+                }
+            };
+        }
+        case fromActions.ActionTypes.LoadAnnotationTableSuccess: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload.ticket]: {
+                        ...state.annotations[action.payload.ticket],
+                        [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
+                            loading: false,
+                            data: action.payload.snps.map(convertAnnotationSnpBackendToAnnotationSnpModel)
+                        }
+                    }
+                }
+            };
+        }
+        case fromActions.ActionTypes.LoadAnnotationTableFail: {
+            return {
+                ...state,
+                annotations: {
+                    ...state.annotations,
+                    [action.payload.ticket]: {
+                        ...state.annotations[action.payload.ticket],
+                        [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
+                            loading: false
+                        }
+                    }
+                }
+            };
+        }
+
+
+        default: {
+            return state;
+        }
     }
 }

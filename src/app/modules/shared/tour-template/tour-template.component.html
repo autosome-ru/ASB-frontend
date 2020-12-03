@@ -6,20 +6,9 @@
     [defaultElevation]="4"
     [raisedElevation]="14"
     (click)="openTourPopover()"
-    color="accent"
     mat-mini-fab
-    class="d-xl-flex d-none"
-    style="position: sticky;
-                right: 16px;
-                bottom: 0;
-                background: #607d8bAA;
-                z-index: 2;
-                transform: translate3d(0, -20%, 0);
-                margin-left: auto;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transition: bottom .2s ease;">
+    class="d-xl-flex d-none default-button"
+    [ngClass]="buttonClass ? buttonClass : 'default-button-color'">
     <mat-icon style="display: flex;" svgIcon="help"></mat-icon>
 </button>
 

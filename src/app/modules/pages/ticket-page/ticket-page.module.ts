@@ -25,6 +25,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
 import { TicketBarplotComponent } from './ticket-barplot/ticket-barplot.component';
 import {MatChipsModule} from "@angular/material/chips";
+import { TicketTableTmpComponent } from './ticket-table-tmp/ticket-table-tmp.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {MatChipsModule} from "@angular/material/chips";
         TicketPageComponent,
         TicketStatsComponent,
         TicketTablePreviewComponent,
-        TicketBarplotComponent
+        TicketBarplotComponent,
+        TicketTableTmpComponent
     ],
     imports: [
         CommonModule,

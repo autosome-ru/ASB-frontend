@@ -1,5 +1,9 @@
 import {Action} from '@ngrx/store';
-import {AnnotationDataBackendModel, AnnotationSnpBackendModel} from 'src/app/models/annotation.model';
+import {
+    AnnotationDataBackendModel,
+    AnnotationSnpBackendModel,
+    PingDataBackendModel
+} from 'src/app/models/annotation.model';
 import {TfOrCl} from 'src/app/models/data.model';
 
 export enum ActionTypes {
@@ -7,6 +11,11 @@ export enum ActionTypes {
     StartAnnotationSuccess = "[Annotation] Annotation started successfully",
     StartAnnotationFail = "[Annotation] Annotation starting failed",
     InitAnnotationStart = "[Annotation] Init annotation start",
+
+    PingAnnotation = '[Annotation] Ping annotation',
+    PingAnnotationSuccess = "[Annotation] Annotation pinged successfully",
+    PingAnnotationFail = "[Annotation] Annotation pinging failed",
+    InitPingAnnotation = "[Annotation] Init ping annotation",
 
     LoadAnnotationTable = '[Annotation] Load table annotation',
     LoadAnnotationTableSuccess = "[Annotation] Annotation table loaded successfully",
@@ -16,6 +25,7 @@ export enum ActionTypes {
     LoadAnnotationInfoStats = '[Annotation] load annotation stats',
     LoadAnnotationInfoStatsSuccess = "[Annotation] Annotation stats loaded successfully",
     LoadAnnotationInfoStatsFail = "[Annotation] Load of annotation info stats failed",
+    InitAnnotationInfoStats = "[Annotation] Init annotation info stats",
 }
 
 export class StartAnnotationAction implements Action {
@@ -37,7 +47,13 @@ export class InitAnnotationStartAction implements Action {
     constructor(public payload: string) {}
 }
 
-export class LoadAnnotationStatsAction implements Action {
+export class InitAnnotationInfoStatsAction implements Action {
+    readonly type = ActionTypes.InitAnnotationInfoStats;
+
+    constructor(public payload: string) {}
+}
+
+export class LoadAnnotationInfoStatsAction implements Action {
   readonly type = ActionTypes.LoadAnnotationInfoStats;
 
   constructor(public payload: string) {}
@@ -52,7 +68,26 @@ export class LoadAnnotationStatsFailAction implements Action {
 
   constructor(public payload: string) {}
 }
+export class InitPingAnnotationAction implements Action {
+    readonly type = ActionTypes.InitPingAnnotation;
 
+    constructor(public payload: string) {}
+}
+export class PingAnnotationAction implements Action {
+    readonly type = ActionTypes.PingAnnotation;
+
+    constructor(public payload: string) {}
+}
+export class PingAnnotationSuccessAction implements Action {
+    readonly type = ActionTypes.PingAnnotationSuccess;
+
+    constructor(public payload: PingDataBackendModel) {}
+}
+export class PingAnnotationFailAction implements Action {
+    readonly type = ActionTypes.PingAnnotationFail;
+
+    constructor(public payload: string) {}
+}
 
 export class InitAnnotationTableAction implements Action {
   readonly type = ActionTypes.InitAnnotationTableLoad;
@@ -88,12 +123,18 @@ export type ActionUnion =
     | StartAnnotationSuccessAction
     | InitAnnotationStartAction
 
-    | LoadAnnotationStatsAction
+    | LoadAnnotationInfoStatsAction
     | LoadAnnotationStatsFailAction
     | LoadAnnotationStatsSuccessAction
+    | InitAnnotationInfoStatsAction
 
     | LoadAnnotationTableAction
     | LoadAnnotationTableFailAction
     | LoadAnnotationTableSuccessAction
     | InitAnnotationTableAction
+
+    | PingAnnotationAction
+    | PingAnnotationSuccessAction
+    | PingAnnotationFailAction
+    | InitPingAnnotationAction
     ;
