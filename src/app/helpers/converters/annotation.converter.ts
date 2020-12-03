@@ -81,6 +81,7 @@ export function convertPingBackendToPingModel(
         dateCreated: new Date(model.date_created),
         ticketId: model.ticket_id,
         status: model.status,
+        positionInQueue: model.position_in_queue,
         statusDetails: model.status_details,
         elapsedTime: model.elapsed_time
     };

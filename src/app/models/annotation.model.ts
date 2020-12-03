@@ -6,6 +6,7 @@ export interface PingDataModel {
     processingStartedAt: Date;
     expirationDate: Date;
     statusDetails: string;
+    positionInQueue: number;
     elapsedTime: number;
 }
 export interface AnnotationDataModel {
@@ -102,6 +103,7 @@ export interface PingDataBackendModel {
     status: string;
     processing_started_at: string;
     elapsed_time: number;
+    position_in_queue: number;
     status_details: string;
 }
 export interface AnnotationDataBackendModel {
