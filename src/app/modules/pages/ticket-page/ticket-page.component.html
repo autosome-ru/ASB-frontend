@@ -7,9 +7,18 @@
                              (click)="copyTicket()"
                              [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
     >{{ticket}}</span>)
-        <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
-      {{(pingData$ | async)?.dateCreated | date: 'medium'}}
-    </span>
+            <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
+          {{(pingData$ | async)?.dateCreated | date: 'medium'}}</span>
+        <span style="white-space: pre-wrap"
+              class="d-none d-sm-inline"
+              *ngIf="!(ticketProcessing$ | async)">
+             - based on ADASTRA release
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                [href]="'https://adastra.autosome.ru/' + recentRelease.url"
+            >{{recentRelease.name}}</a>
+        </span>
     </h4>
     <div class="centered-spinner container" *ngIf="ticketProcessing$ | async; else failedTemplate">
         <div class="help-message">

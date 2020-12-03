@@ -58,8 +58,8 @@ export interface StatsDataBackendModel {
     all_odds_rs: number;
     cl_asbs_rs: number;
     cl_candidates_rs: number;
-    tf_asb_data: AsbStatsDataModel[];
-    cl_asb_data: AsbStatsDataModel[];
+    tf_asb_data: AsbStatsBackendDataModel[];
+    cl_asb_data: AsbStatsBackendDataModel[];
     cl_log10_p_value_rs: number;
     cl_odds_rs: number;
     processing_time: string;
@@ -75,15 +75,25 @@ export interface StatsDataBackendModel {
     last_status_update_at: string;
     processing_started_at: string;
 }
+export interface AsbStatsBackendDataModel {
+    name: string;
+    asbs: number;
+    candidates: number;
+    asbs_rs: number;
+    candidates_rs: number;
+    odds: number;
+    log10_p_value: number;
+    log10_fdr: number
+}
 export interface AsbStatsDataModel {
-    'name': string;
-    'asbs': number;
-    'candidates': number;
-    'asbs_rs': number;
-    'candidates_rs': number;
-    'odds': number;
-    'log10_p_value': number;
-    'log10_fdr': number
+    name: string;
+    asbs: number;
+    candidates: number;
+    asbsRs: number;
+    candidatesRs: number;
+    odds: number;
+    pValue: number;
+    fdr: number
 }
 export interface PingDataBackendModel {
     ticket_id: string;

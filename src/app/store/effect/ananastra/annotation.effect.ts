@@ -91,7 +91,6 @@ export class AnnotationEffect {
             ]).pipe(
                 take(1),
                 switchMap(([data, loading]) => {
-                    console.log(data)
                     if (!loading && (!data || data.status !== 'Processed')) {
                         return of(new fromActions.PingAnnotationAction(action.payload))
                     } else {

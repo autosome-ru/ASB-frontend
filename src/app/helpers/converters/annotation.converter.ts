@@ -2,7 +2,12 @@ import {
     AnnotationDataBackendModel,
     AnnotationDataModel,
     AnnotationSnpBackendModel,
-    AnnotationSnpModel, PingDataBackendModel, PingDataModel, StatsDataBackendModel, StatsDataModel
+    AnnotationSnpModel,
+    AsbStatsBackendDataModel, AsbStatsDataModel,
+    PingDataBackendModel,
+    PingDataModel,
+    StatsDataBackendModel,
+    StatsDataModel
 } from '../../models/annotation.model';
 
 function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBackendModel): StatsDataModel {
@@ -40,13 +45,24 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
         clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
-        tfAsbData: stats.tf_asb_data ? stats.tf_asb_data : [],
-        clAsbData: stats.cl_asb_data ? stats.cl_asb_data : [],
+        tfAsbData: stats.tf_asb_data ? stats.tf_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
+        clAsbData: stats.cl_asb_data ? stats.cl_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
         tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
         clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
     };
 }
-
+function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel): AsbStatsDataModel {
+    return {
+        odds: model.odds,
+        asbs: model.asbs,
+        asbsRs: model.asbs_rs,
+        candidates: model.candidates,
+        candidatesRs: model.candidates_rs,
+        pValue: -model.log10_p_value,
+        fdr: -model.log10_fdr,
+        name: model.name
+    }
+}
 export function convertAnnotationBackendToAnnotationModel(
     model: AnnotationDataBackendModel): AnnotationDataModel {
     return {

@@ -22,7 +22,6 @@ export class ProcessingService {
     }
 
     pingStatsByTicket(ticket: string): Observable<PingDataBackendModel> {
-        console.log(ticket)
         return this.http.get<PingDataBackendModel>(`${this.urlService.getUrlForQuery("ananastra")}/ticket/ping/${ticket}`);
     }
 

@@ -1,4 +1,3 @@
-<span>Specifically enriched TFs or cell types:</span>
 <asb-table
     [data]="data"
     [columnModel]="columnModel"
@@ -6,5 +5,5 @@
     [paginatorOptions]="[5, 10, 20, 50]"
 ></asb-table>
 <ng-template #fdrViewTemplate let-value="value">
-    <asb-sci-notation [value]="value" ></asb-sci-notation>
+    <asb-sci-notation [value]="value" [toInvert]="true"></asb-sci-notation>
 </ng-template>

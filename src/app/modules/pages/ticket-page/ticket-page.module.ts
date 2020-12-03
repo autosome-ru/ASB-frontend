@@ -27,6 +27,7 @@ import { TicketBarplotComponent } from './ticket-barplot/ticket-barplot.componen
 import {MatChipsModule} from "@angular/material/chips";
 import { TicketTableTmpComponent } from './ticket-table-tmp/ticket-table-tmp.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         MatTooltipModule,
         SciNotationModule,
         AsbMotifsModule,
-        MatChipsModule
+        MatChipsModule,
+        MatDividerModule
     ],
     providers: [DownloadService]
 })
