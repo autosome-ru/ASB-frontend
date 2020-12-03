@@ -68,8 +68,9 @@
                 text-overflow: ellipsis;"
     >
         <span *ngIf="i < 3">
-            {{object?.name}}<span *ngIf="!last && i !== 4">;&nbsp;</span>
+            {{object?.name}}<span *ngIf="!last && i !== 2">;&nbsp;</span>
         </span>
+        <span *ngIf="i==3">...</span>
     </span>
     </div>
 </ng-template>
