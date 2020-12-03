@@ -1,4 +1,9 @@
 <div class="text-center asb-no-page">
-    <h1 class="error-code"><strong>404</strong></h1>
-    <span style="font-size: 2rem">This page does not exist</span>
+    <ng-container *ngIf="!ticketId; else ticketNotFoundTemplate">
+        <h1 class="error-code"><strong>404</strong></h1>
+        <span style="font-size: 2rem">This page does not exist</span>
+    </ng-container>
 </div>
+<ng-template #ticketNotFoundTemplate>
+    <span style="font-size: 2rem">The ticket <b>{{ticketId}}</b> does not exist.</span>
+</ng-template>

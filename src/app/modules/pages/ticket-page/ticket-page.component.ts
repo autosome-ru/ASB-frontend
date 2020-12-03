@@ -157,6 +157,6 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     getTooltip(date: string): string {
         return `This is your unique job ticked ID. You can use it to access the report on your query later upon completion.
-         Your results will be available until ${date}.`
+         Your results will be available until ${date ? date : ''}.`
     }
 }

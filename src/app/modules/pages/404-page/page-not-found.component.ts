@@ -14,6 +14,7 @@ import {Response} from "express";
 })
 export class PageNotFoundComponent implements OnInit {
     private readonly response: Response;
+    public ticketId: string;
     constructor(private route: ActivatedRoute,
                 private seoService: SeoService,
                 @Optional() @Inject(RESPONSE) response: any) {
@@ -25,5 +26,7 @@ export class PageNotFoundComponent implements OnInit {
             this.response.statusCode = 404;
             this.response.status(404);
         }
+        this.ticketId = this.route.snapshot.queryParams.ticket
+
     }
 }

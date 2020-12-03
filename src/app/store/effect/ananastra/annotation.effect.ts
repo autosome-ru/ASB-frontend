@@ -105,8 +105,10 @@ export class AnnotationEffect {
     @Effect()
     pingAnnotationStatsFail$ = this.actions$.pipe(
         ofType(fromActions.ActionTypes.PingAnnotationFail),
-        mergeMap(() => {
-            this.router.navigate(["/404"], {replaceUrl: true});
+        mergeMap((action: fromActions.PingAnnotationFailAction) => {
+            this.router.navigate([`/404`], {
+                queryParams: {ticket: action.payload},
+                replaceUrl: true});
             return EMPTY;
         }),
     );
