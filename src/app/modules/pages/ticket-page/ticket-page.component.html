@@ -1,14 +1,17 @@
-<div class="container mat-elevation-z2 pb-3 pt-1">
-    <h4 class="theme-primary-border"
-
+<div></div>
+<div class="mat-elevation-z2 pb-3 pt-0 container px-0">
+    <h4
+        class="theme-primary-border container"
+        style="overflow: auto;line-height: 1.5; margin-bottom: 0"
     >ANANASTRA report (<span [matTooltipClass]="'big-font'"
+                             (click)="copyTicket()"
                              [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
     >{{ticket}}</span>)
         <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
       {{(pingData$ | async)?.dateCreated | date: 'medium'}}
     </span>
     </h4>
-    <div class="centered-spinner" *ngIf="ticketProcessing$ | async; else failedTemplate">
+    <div class="centered-spinner container" *ngIf="ticketProcessing$ | async; else failedTemplate">
         <div class="help-message">
             <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted
                 SNPs.</h5>
@@ -22,7 +25,9 @@
         </div>
         <mat-progress-bar mode="query"></mat-progress-bar>
     </div>
-    <div *ngIf="(fileStatistics$ | async) as fileStatistics">
+    <div
+        class="container"
+        *ngIf="(fileStatistics$ | async) as fileStatistics">
         <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
 
             <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding of

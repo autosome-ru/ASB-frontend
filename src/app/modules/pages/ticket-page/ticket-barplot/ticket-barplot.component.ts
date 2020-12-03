@@ -150,10 +150,7 @@ function getShortLabel(label: string): string {
         result = label.split('(')[0].trim()
     }
     if (result.length > 15) {
-        result = result.split(' ')[0].trim()
-        if (result.length > 15) {
-            result = result.slice(0, 12) + '...'
-        }
+        result = result.slice(0, 12) + '...'
     }
     return result.trim()
 }

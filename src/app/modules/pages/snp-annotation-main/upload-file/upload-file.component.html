@@ -1,13 +1,13 @@
 <div style="width: 100%;">
     <div style="display: flex; flex-direction: column; align-items: center">
-    <mat-form-field appearance="outline"  style="width: 95%" floatLabel="always">
+    <mat-form-field appearance="outline"  style="width: 100%" floatLabel="always">
       <mat-label></mat-label>
       <textarea
         [formControl]="textAreaControl"
         matInput
         placeholder="Provide a list of dbSNP rsIDs or genomic interval in hg38 coordinates or a vcf file"
         cdkTextareaAutosize
-        cdkAutosizeMinRows="5"
+        cdkAutosizeMinRows="6"
         cdkAutosizeMaxRows="10"
       ></textarea>
     </mat-form-field>

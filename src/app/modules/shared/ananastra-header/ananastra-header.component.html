@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-0 justify-content-start my-0 py-md-0">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-start py-md-0"
+     style="margin-bottom: 1rem;overflow: auto;line-height: 1.5;"
+>
     <div style="display: flex; align-items: center" *ngIf="!searchOpened">
         <a
             style="padding-right: 0"
@@ -60,8 +62,9 @@
             mat-list-item
             target="_blank"
             rel="noopener noreferrer"
+            [matTooltipClass]="'big-font'"
             [href]="'https://adastra.autosome.ru'"
-            matTooltip="Allelic Dosage-corrected Allele-Specific human Transcription factor binding sites"
+            matTooltip="The database of Allelic Dosage-corrected Allele-Specific human Transcription factor binding sites"
         >
             ADASTRA
         </a>

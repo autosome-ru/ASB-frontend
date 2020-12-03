@@ -12,6 +12,9 @@ import {FileSaverService} from 'ngx-filesaver';
 import {AnnotationStoreState} from "../../../store/reducer/ananastra";
 import {ReleaseModel} from "../../../models/releases.model";
 import {recentRelease} from "../../../helpers/constants/releases";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {Clipboard} from "@angular/cdk/clipboard";
+import {SeoService} from "../../../services/seo.servise";
 
 @Component({
     selector: 'astra-ticket-page',
@@ -47,13 +50,16 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private store: Store<AnnotationStoreState>,
                 private router: Router,
+                private seoService: SeoService,
+                private clipboard: Clipboard,
+                private _snackBar: MatSnackBar,
                 private downloadService: DownloadService,
                 private fileSaverService: FileSaverService) {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
     ngOnInit(): void {
-        this.recentRelease = recentRelease
+        this.recentRelease = recentRelease;
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 s => {
@@ -157,6 +163,13 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     getTooltip(date: string): string {
         return `This is your unique job ticked ID. You can use it to access the report on your query later upon completion.
-         Your results will be available until ${date ? date : ''}.`
+         Your results will be available until ${date ? date : ''}. Click to copy.`
+    }
+
+    copyTicket() {
+        this.clipboard.copy(this.ticket);
+        this._snackBar.open('Copied!', null, {
+            duration: 2000,
+        });
     }
 }
