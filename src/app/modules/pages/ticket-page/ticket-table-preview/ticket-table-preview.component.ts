@@ -16,6 +16,7 @@ import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {MatSort} from "@angular/material/sort";
+import {compareData} from "../../../../helpers/helper/check-functions.helper";
 
 
 @Component({
@@ -75,8 +76,6 @@ export class TicketTablePreviewComponent implements OnInit {
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
     sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
         (data, field) => {
-        console.log(field)
-        let sortFunc;
         if (field.active === 'chr') {
             const chrToNum = (chr: string) => Number(chr.slice(3))
             function compareAnnSnpModel(a: AnnotationSnpModel, b: AnnotationSnpModel) {
@@ -90,13 +89,12 @@ export class TicketTablePreviewComponent implements OnInit {
                 }
 
             }
-            sortFunc = compareAnnSnpModel
+            return data.sort((a, b) =>
+                compareAnnSnpModel(a, b) * (field.direction === 'asc' ? 1 : -1))
         } else {
-            sortFunc = (a, b) =>
-                a[field.active] > b[field.active] ? 1 : -1
+            return data.sort((a,b) =>
+                compareData(a as any, b as any, field))
         }
-        return data.sort((a, b) =>
-            sortFunc(a, b) * (field.direction === 'asc' ? 1 : -1))
     }
     public columnsControl: FormControl;
     public tableData: AnnotationSnpModel[];
@@ -164,13 +162,7 @@ export class TicketTablePreviewComponent implements OnInit {
                 view: 'TF binding preferences'
             }
             this.displayedColumns.push("topEs", "topFdr", 'tfBindPref');
-            this.columnModel.isEqtl = {
-                view: 'GTEx eQTL',
-                columnTemplate: this.gtexTemplate
-            };
-            this.columnModel.targetGenes = {
-                view: 'GTEx eQTL target genes'
-            }
+
         } else {
             this.columnModel.esRef = {
                 view: 'Effect size Ref',
@@ -192,39 +184,22 @@ export class TicketTablePreviewComponent implements OnInit {
                 columnTemplate: this.fdrViewTemplate
             };
             if (this.tfOrCl === 'tf') {
-                this.columnModel = {
-                    ...this.columnModel,
-                    motifFc: {
-                        view: "Motif fold change",
-                        valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                        helpMessage: 'log₂(Alt/Ref motif p-value)',
+                this.columnModel.motifConcordance = {
+                    view: "Motif concordance",
+                        valueConverter: v => v !== null ? v : "n/a",
                         isDesc: true
-                    },
-                    motifPRef: {
-                        view: "Motif Ref P-value",
-                            columnTemplate: this.fdrViewTemplate,
-                    },
-                    motifPAlt: {
-                        view: "Motif Alt P-value",
-                            columnTemplate: this.fdrViewTemplate,
-                    },
-                    motifOrientation: {
-                        view: 'Motif orientation',
-                            valueConverter: v => v !== null ? v ? '+' : '-' : "n/a",
-                    },
-                    motifConcordance: {
-                        view: "Motif concordance",
-                            valueConverter: v => v !== null ? v : "n/a",
-                            isDesc: true
-                    },
-                    motifPosition: {
-                        view: "Motif position",
-                            valueConverter: v => v !== null ? '' + v : "n/a",
-                            helpMessage: 'SNP position relative to the TF motif (1-based)'
-                    },
                 }
+
             }
         }
+        this.columnModel.isEqtl = {
+            view: 'GTEx eQTL',
+            columnTemplate: this.gtexTemplate
+        };
+        this.columnModel.targetGenes = {
+            view: 'GTEx eQTL target genes'
+        }
+        this.displayedColumns.push("isEqtl")
         this.columnsControl = this.formBuilder.control(this.displayedColumns);
         this.initialDisplayedColumns = this.displayedColumns;
         this.filterTable(this.selectedName, true)
