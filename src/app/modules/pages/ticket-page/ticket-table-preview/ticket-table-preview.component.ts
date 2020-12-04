@@ -15,6 +15,7 @@ import {TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import {MatSort} from "@angular/material/sort";
 
 
 @Component({
@@ -72,6 +73,31 @@ export class TicketTablePreviewComponent implements OnInit {
 
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
+    sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
+        (data, field) => {
+        console.log(field)
+        let sortFunc;
+        if (field.active === 'chr') {
+            const chrToNum = (chr: string) => Number(chr.slice(3))
+            function compareAnnSnpModel(a: AnnotationSnpModel, b: AnnotationSnpModel) {
+                if (chrToNum(a.chr) > chrToNum(b.chr)) {
+                    return 1
+                } else {
+                    if (chrToNum(a.chr) == chrToNum(b.chr)) {
+                        return a.pos > b.pos ? 1 : -1
+                    }
+                    return -1
+                }
+
+            }
+            sortFunc = compareAnnSnpModel
+        } else {
+            sortFunc = (a, b) =>
+                a[field.active] > b[field.active] ? 1 : -1
+        }
+        return data.sort((a, b) =>
+            sortFunc(a, b) * (field.direction === 'asc' ? 1 : -1))
+    }
     public columnsControl: FormControl;
     public tableData: AnnotationSnpModel[];
     public colors: { [base: string]: string } = {
@@ -87,13 +113,13 @@ export class TicketTablePreviewComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
         this.displayedColumns = ['rsId', 'chr'];
         this.columnModel = {
             rsId: {view: 'rs ID', columnTemplate: this.dbSnpViewTemplate},
             chr: {
                 view: "Genome position",
                 columnTemplate: this.isExpanded ? this.genomePositionViewTemplate : this.genomePositionViewSumTemplate,
-                disabledSort: true
             },
             context: {
                 view: 'Sequence',
@@ -223,6 +249,7 @@ export class TicketTablePreviewComponent implements OnInit {
 
     // chooseFormat(format: string): void {
     // }
+
 
     downloadTable(): void {
         this.downloadTableEmitter.emit();

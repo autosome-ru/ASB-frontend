@@ -82,6 +82,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                     if (f) {
                         switch (f.status) {
                             case 'Processed':
+                                this.clearInterval()
                                 this.store.dispatch(new fromActions.annotation.InitAnnotationInfoStatsAction(
                                     this.ticket));
                                 this.subscriptions.add(
@@ -99,7 +100,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
                                 break;
                              case 'Processing':
-                                 window.clearInterval(this.timeoutId)
+                                 this.clearInterval()
                                  this.timeoutId = window.setTimeout(
                                      () => this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
                                          this.ticket)), 500
@@ -131,8 +132,11 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        window.clearTimeout(this.timeoutId)
+        this.clearInterval()
         this.subscriptions.unsubscribe();
+    }
+    clearInterval(): void {
+        window.clearInterval(this.timeoutId)
     }
 
     tabIndexChanged(index: number): void {
