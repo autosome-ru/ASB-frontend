@@ -12,6 +12,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 import {AsbTourModule} from "../../shared/tour-template/tour-module";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {AsbTourModule} from "../../shared/tour-template/tour-module";
         MatInputModule,
         MatProgressBarModule,
         MatIconModule,
-        AsbTourModule
+        AsbTourModule,
+        MatTooltipModule
     ]
 })
 export class SnpAnnotationMainModule { }
