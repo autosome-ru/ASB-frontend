@@ -39,114 +39,99 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
     </div>
-    <div style="margin-left: -16px; margin-right: -16px; margin-bottom: 10px">
-        <mat-divider></mat-divider>
-    <mat-accordion displayMode="flat" multi style="width: 100%; margin-top: 15px">
-        <mat-expansion-panel class="mat-elevation-z0">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <h6 style="padding-bottom: 0; margin-bottom: 0">Specifically enriched {{tfOrCl === 'tf' ? 'TFs' : 'cell types'}}</h6>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
+    <div style="margin-bottom: 10px">
+        <h6>
+            ASB in {{tfOrCl== 'tf' ? 'Transcription factors' : 'Cell types'}}
+        </h6>
+        <div>
+            <mat-form-field
+                style="margin-left: 5px; margin-right: 5px; width: 210px"
+            >
+                <mat-label>Selected columns</mat-label>
+                <mat-select [formControl]="columnsControl"
+                            multiple
+                            (selectionChange)="_changeColumns($event)"
+                >
+                    <mat-select-trigger>
+                        {{columnsControl.value ?
+                        columnModel[columnsControl.value[0]]?.view : ''}}
+                        <span *ngIf="columnsControl.value?.length > 1"
+                              class="additional-selection small-font"
+                        >
+                            (+{{columnsControl.value?.length - 1}}
+                            {{columnsControl.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option
+                        *ngFor="let column of columnModel | toList"
+                        [value]="column.key"
+                    >
+                        {{column.value.view}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button
+                style="margin-right: 5px"
+                mat-raised-button
+                (click)="_resetFilters()"
+            >
+                Reset
+            </button>
+            <button
+                mat-raised-button
+                (click)="downloadTable()"
+            >
+                <mat-icon svgIcon="download"></mat-icon>
+                Download table
+            </button>
+        </div>
+        <div class="row mx-0" style="display: flex; align-items: center; flex-wrap: wrap">
+        <div class="col-12 wide-chart" style="margin-top: 0.5rem">
+            <asb-ticket-barplot
+                *ngIf="ticketStatistics?.metaInfo"
+                [data]="getChartData(ticketStatistics?.metaInfo)"
+                [tfOrCl]="tfOrCl"
+                [isExpanded]="isExpanded"
+                [selectedIndex]="getSelectedNameIndex(selectedName)"
+                (chartClickEmitter)="chartClicked($event)"
+            ></asb-ticket-barplot>
+        </div>
+        <div class="col-auto" style="flex-grow: 1">
             <asb-ticket-table-tmp
                 [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
             ></asb-ticket-table-tmp>
-        </mat-expansion-panel>
-        <mat-divider></mat-divider>
-        <mat-expansion-panel class="mat-elevation-z0" expanded>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <h6>
-                        ASB in {{tfOrCl== 'tf' ? 'Transcription factors' : 'Cell types'}}
-                    </h6>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div>
-                <mat-form-field
-                    style="margin-left: 5px; margin-right: 5px; width: 210px"
+        </div>
+        </div>
+        <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
+            <span>Filter:</span>
+            <mat-chip-list>
+                <mat-chip
+                    *ngIf="selectedName"
+                    removable
+                    (removed)="filterTable()"
                 >
-                    <mat-label>Selected columns</mat-label>
-                    <mat-select [formControl]="columnsControl"
-                                multiple
-                                (selectionChange)="_changeColumns($event)"
-                    >
-                        <mat-select-trigger>
-                            {{columnsControl.value ?
-                            columnModel[columnsControl.value[0]]?.view : ''}}
-                            <span *ngIf="columnsControl.value?.length > 1"
-                                  class="additional-selection small-font"
-                            >
-                                (+{{columnsControl.value?.length - 1}}
-                                {{columnsControl.value?.length === 2 ? 'other' : 'others'}})
-                            </span>
-                        </mat-select-trigger>
-                        <mat-option
-                            *ngFor="let column of columnModel | toList"
-                            [value]="column.key"
-                        >
-                            {{column.value.view}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <button
-                    style="margin-right: 5px"
-                    mat-raised-button
-                    (click)="_resetFilters()"
+                    {{selectedName}}
+                    <mat-icon
+                        style="font-size: 14px"
+                        matChipRemove
+                        svgIcon="clear"
+                    ></mat-icon>
+                </mat-chip>
+                <mat-chip
+                    *ngIf="!selectedName"
                 >
-                    Reset
-                </button>
-                <button
-                    mat-raised-button
-                    (click)="downloadTable()"
-                >
-                    <mat-icon svgIcon="download"></mat-icon>
-                    Download table
-                </button>
-            </div>
-            <div class="col-12 wide-chart" style="margin-top: 0.5rem">
-                <asb-ticket-barplot
-                    *ngIf="ticketStatistics?.metaInfo"
-                    [data]="getChartData(ticketStatistics?.metaInfo)"
-                    [tfOrCl]="tfOrCl"
-                    [isExpanded]="isExpanded"
-                    [selectedIndex]="getSelectedNameIndex(selectedName)"
-                    (chartClickEmitter)="chartClicked($event)"
-                ></asb-ticket-barplot>
-
-            </div>
-            <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
-                <span>Filter:</span>
-                <mat-chip-list>
-                    <mat-chip
-                        *ngIf="selectedName"
-                        removable
-                        (removed)="filterTable()"
-                    >
-                        {{selectedName}}
-                        <mat-icon
-                            style="font-size: 14px"
-                            matChipRemove
-                            svgIcon="clear"
-                        ></mat-icon>
-                    </mat-chip>
-                    <mat-chip
-                        *ngIf="!selectedName"
-                    >
-                        No filter
-                    </mat-chip>
-                </mat-chip-list>
-            </div>
-            <asb-table
-                [displayedColumns]="displayedColumns"
-                [columnModel]="columnModel"
-                [sortData]="sortData"
-                [data]="tableData"
-                [pageSize]="50"
-                [paginatorOptions]="[5, 10, 25, 100, 500, 1000]"
-            ></asb-table>
-        </mat-expansion-panel>
-    </mat-accordion>
+                    No filter
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <asb-table
+            [displayedColumns]="displayedColumns"
+            [columnModel]="columnModel"
+            [sortData]="sortData"
+            [data]="tableData"
+            [pageSize]="50"
+            [paginatorOptions]="[5, 10, 25, 100, 500, 1000]"
+        ></asb-table>
     </div>
 
 </div>
