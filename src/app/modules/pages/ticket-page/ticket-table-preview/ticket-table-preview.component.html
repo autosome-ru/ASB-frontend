@@ -231,3 +231,36 @@
 <ng-template #prefAlleleColumnTemplate let-value="value">
     <span>{{value.slice(0, 3)}} (<span [ngStyle]="{color: colors[value[5]]}">{{value[5]}}</span>)</span>
 </ng-template>
+<ng-template #concordanceTemplate let-value="value" let-row="row">
+    <button
+        mat-stroked-button
+        class="p-1"
+
+        style="line-height: 0.8rem"
+        *ngIf="value && value !== 'No Hit'"
+        (click)="openDialog(row)"
+        matTooltip="Click to open panel"
+    >
+        {{value}}
+    </button>
+    <span
+        *ngIf="!value || value === 'No Hit'"
+    >{{value !== null ? value : 'n/a'}}</span>
+</ng-template>
+<ng-template #imagePopupTemplate let-data>
+    <mat-dialog-content>
+    <img
+        style="max-height: 65vh; max-width: 100%"
+        [src]="'https://adastra.autosome.ru/pngs/v2/' + data.transcriptionFactor + '_' + data.rsId.slice(2) + '_' + data.altBase +(revcompState ? '_revcomp' : '' ) + '.png'"
+    >
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button
+            mat-raised-button
+            color="accent"
+            (click)="changeRevcompClick()"
+        >
+            Show {{!revcompState ? 'reverse complement' : 'direct'}}
+        </button>
+    </mat-dialog-actions>
+</ng-template>

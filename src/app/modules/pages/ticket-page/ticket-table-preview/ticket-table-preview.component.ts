@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
-    Input,
+    Input, OnDestroy,
     OnInit,
     Output,
     TemplateRef,
@@ -17,6 +17,8 @@ import {FormBuilder, FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../../../helpers/helper/check-functions.helper";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {Subscription} from "rxjs";
 
 
 @Component({
@@ -26,7 +28,7 @@ import {compareData} from "../../../../helpers/helper/check-functions.helper";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TicketTablePreviewComponent implements OnInit {
+export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @ViewChild("genomePositionViewTemplate", {static: true})
     private genomePositionViewTemplate: TemplateRef<{ row: AnnotationSnpModel, value: string}>;
 
@@ -47,6 +49,12 @@ export class TicketTablePreviewComponent implements OnInit {
 
     @ViewChild('prefAlleleColumnTemplate', {static: true})
     private prefAlleleColumnTemplate: TemplateRef<{ value: string }>;
+
+    @ViewChild('concordanceTemplate', {static: true})
+    private concordanceTemplate: TemplateRef<{ value: string}>;
+
+    @ViewChild('imagePopupTemplate', {static: true})
+    private imagePopupTemplate: TemplateRef<{ value: string}>;
 
     @Input()
     public data: AnnotationSnpModel[] = [];
@@ -73,6 +81,7 @@ export class TicketTablePreviewComponent implements OnInit {
     private selectedNameChange = new EventEmitter<string>();
 
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
+    private subscriptions = new Subscription()
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
     sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
         (data, field) => {
@@ -105,9 +114,13 @@ export class TicketTablePreviewComponent implements OnInit {
         C: "#FFA500"
     };
     private initialDisplayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
+    private dialog: MatDialogRef<{ value: string }>;
+    public revcompState: boolean = false;
 
 
-    constructor(private formBuilder: FormBuilder) {
+
+    constructor(private formBuilder: FormBuilder,
+                private matDialog: MatDialog) {
     }
 
     ngOnInit(): void {
@@ -186,10 +199,10 @@ export class TicketTablePreviewComponent implements OnInit {
             if (this.tfOrCl === 'tf') {
                 this.columnModel.motifConcordance = {
                     view: "Motif concordance",
-                        valueConverter: v => v !== null ? v : "n/a",
-                        isDesc: true
+                    columnTemplate: this.concordanceTemplate,
+                    isDesc: true
                 }
-
+                this.displayedColumns.push("motifConcordance")
             }
         }
         this.columnModel.isEqtl = {
@@ -204,6 +217,10 @@ export class TicketTablePreviewComponent implements OnInit {
         this.initialDisplayedColumns = this.displayedColumns;
         this.filterTable(this.selectedName, true)
 
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe()
     }
 
     _resetFilters(): void {
@@ -283,5 +300,20 @@ export class TicketTablePreviewComponent implements OnInit {
                 return metaInfo.clAsbListSum
             }
         }
+    }
+
+    openDialog(row: AnnotationSnpModel) {
+        this.dialog = this.matDialog.open(this.imagePopupTemplate, {
+            autoFocus: false,
+            data: row,
+        })
+        this.subscriptions.add(
+            this.dialog.afterClosed().subscribe(
+                () => this.revcompState = false
+            )
+        )
+    }
+    changeRevcompClick() {
+        this.revcompState = !this.revcompState
     }
 }

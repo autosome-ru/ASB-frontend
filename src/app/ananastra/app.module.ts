@@ -12,7 +12,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {StoreModule} from '@ngrx/store';
 import {ProcessingService} from '../services/processing.service';
 import {ScriptService} from '../services/script.service';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {UrlService} from "../services/url.service";
 import {ReleasesService} from "../services/releases.service";
@@ -27,6 +27,7 @@ import {AnanastraHeaderModule} from "../modules/shared/ananastra-header/ananastr
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
 import {SeoService} from "../services/seo.servise";
+import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
 
 @NgModule({
     declarations: [
@@ -57,6 +58,13 @@ import {SeoService} from "../services/seo.servise";
         DataService,
         UrlService,
         SeoService,
+        CloseDialogOnRouteService,
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: {
+                hasBackdrop: true,
+                closeOnNavigation: false,
+            }
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorsInterceptor,

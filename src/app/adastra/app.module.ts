@@ -65,7 +65,6 @@ import {ProcessingService} from "../services/processing.service";
         SeoService,
         ReleasesService,
         CloseDialogOnRouteService,
-
         {provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {
                 hasBackdrop: true,
