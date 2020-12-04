@@ -107,10 +107,15 @@ export class TicketBarplotComponent implements OnInit {
             "Can't load Chart.js library, check your internet connection", 'Error'));
         this.chartOptions = {
             responsive: true,
+            maintainAspectRatio: false,
             legend: {
-                display: false,
-                position: 'right'
-
+                display: true,
+                position: 'bottom',
+                onClick: (e) => e.stopPropagation(),
+                labels: {
+                    boxWidth: 20,
+                    fontSize: this.tfOrCl === 'tf' ? 12 : 10
+                }
             },
             animation: {
                 duration: 500,
