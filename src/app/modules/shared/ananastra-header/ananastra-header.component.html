@@ -4,18 +4,33 @@
     <div style="display: flex; align-items: center" *ngIf="!searchOpened">
         <a
             style="padding-right: 0"
-            class="navbar-brand mr-0"
+            class="navbar-brand mr-0 py-0"
             [routerLink]="'/'"
             [routerLinkActive]="['active']"
             [routerLinkActiveOptions]="{exact:true}"
         >
             <div style="display: flex; align-items: center">
-                <img src="/assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
+                <img
+                    src="/assets/images/ANANAS_logo_small.svg"
+                    alt=""
+                    style="height:27px; margin-right: 0.7rem"
+                >
                 <div style="display: inline-block">
                     ANANASTRA
+
                 </div>
+
             </div>
-        </a>
+        </a><span style="color: rgba(255,255,255,.5); align-self: flex-end;padding-bottom: 0.1rem;">
+            &nbsp;based on&nbsp;<a
+                style="color: rgba(255,255,255,.5);"
+                target="_blank"
+                rel="noopener noreferrer"
+                [matTooltipClass]="'big-font'"
+                [href]="'https://adastra.autosome.ru'"
+                matTooltip="The database of Allelic Dosage-corrected Allele-Specific human Transcription factor binding sites"
+            >ADASTRA</a>
+        </span>
     </div>
     <div *ngIf="searchOpened" class="ml-auto mr-1">
         <ng-container [ngTemplateOutlet]="formTemplate"
@@ -57,17 +72,6 @@
 </nav>
 <ng-template #linksTemplate>
     <div class="navbar-nav mr-1">
-        <a
-            class="nav-item nav-link py-sm-0"
-            mat-list-item
-            target="_blank"
-            rel="noopener noreferrer"
-            [matTooltipClass]="'big-font'"
-            [href]="'https://adastra.autosome.ru'"
-            matTooltip="The database of Allelic Dosage-corrected Allele-Specific human Transcription factor binding sites"
-        >
-            ADASTRA
-        </a>
         <a
             class="nav-item nav-link py-sm-0"
             mat-list-item

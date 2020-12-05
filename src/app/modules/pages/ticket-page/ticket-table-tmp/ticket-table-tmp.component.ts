@@ -31,7 +31,7 @@ export class TicketTableTmpComponent implements OnInit {
                 isDesc: true
             },
             asbsRs: {
-                view: 'Num. of ASB SNPs'
+                view: '# of ASB SNPs'
             },
             pValue: {
                 view: 'P-value',
