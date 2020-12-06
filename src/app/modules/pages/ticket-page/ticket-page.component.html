@@ -40,8 +40,8 @@
         *ngIf="(fileStatistics$ | async) as fileStatistics">
         <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
 
-            <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among user-submitted
-                {{data.metaInfo.totalSNPs}} SNPs</h5>
+            <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
+                {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
             <astra-ticket-stats
                 [chartData]="data"
             ></astra-ticket-stats>

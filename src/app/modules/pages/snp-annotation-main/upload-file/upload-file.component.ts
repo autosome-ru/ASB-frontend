@@ -6,6 +6,7 @@ import * as fromActions from 'src/app/store/action/ananastra';
 import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
+import {demo} from "../../../../helpers/constants/demo.ananas";
 
 @Component({
   selector: 'astra-upload-file-component',
@@ -131,7 +132,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
     initDemo(id: number) {
-      const patchValue: string = id === 1 ? 'rs123' : 'rs123\nrs1234\nrs123455'
+      const patchValue: string = id === 1 ? demo : 'rs123\nrs1234\nrs123455'
       this.textAreaControl.patchValue(patchValue)
     }
 }
