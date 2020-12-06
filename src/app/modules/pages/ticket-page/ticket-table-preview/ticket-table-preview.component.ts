@@ -316,4 +316,14 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     changeRevcompClick() {
         this.revcompState = !this.revcompState
     }
+
+    constructAdastraLink(row: AnnotationSnpModel) {
+        let result = `https://adastra.autosome.ru/snps/${row.rsId}`
+        if (this.isExpanded) {
+            result += '/' + row.altBase
+        } else {
+            result += `${row?.alleles.length != 2 ? '' : '/' + row.alleles[1]}`
+        }
+        return result
+    }
 }
