@@ -28,7 +28,7 @@
                 <h6 *ngIf="ping.processingStartedAt">
                     Processing started at: {{ping.processingStartedAt | date: 'medium'}}
                 </h6>
-                <h6 *ngIf="ping.positionInQueue">Position in queue: {{ping.positionInQueue}}</h6>
+                <h6 *ngIf="ping.positionInQueue">Number of other queued jobs: {{ping.positionInQueue}}</h6>
                 <h6 *ngIf="ping.elapsedTime">Elapsed time: {{ping.elapsedTime}}s</h6>
                 <h6 *ngIf="!ping.positionInQueue">Status: {{ping.statusDetails}}</h6>
             </ng-container>

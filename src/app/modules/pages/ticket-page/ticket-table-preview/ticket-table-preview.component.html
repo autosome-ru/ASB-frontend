@@ -182,16 +182,16 @@
 <ng-template #fdrViewTemplate let-value="value">
   <asb-sci-notation [value]="value" [toInvert]="true"></asb-sci-notation>
 </ng-template>
-<ng-template #dbSnpViewTemplate let-value="value">
+<ng-template #dbSnpViewTemplate let-value="value" let-row="row">
   <div class="pseudo-link"
     [matMenuTriggerFor]="linkMenu"
-    [matMenuTriggerData]="{value: value}"
+    [matMenuTriggerData]="{value: value, row: row}"
   >
     {{value}}</div>
 
 </ng-template>
 <mat-menu #linkMenu>
-    <ng-template matMenuContent let-value="value">
+    <ng-template matMenuContent let-value="value" let-row="row">
         <a
             target="_blank"
             rel="noopener noreferrer"
@@ -203,7 +203,7 @@
             mat-menu-item
             target="_blank"
             rel="noopener noreferrer"
-            [href]="'https://adastra.autosome.ru/snps/' + value"
+            [href]="constructAdastraLink(row)"
         >
             view in ADASTRA</a>
     </ng-template>
