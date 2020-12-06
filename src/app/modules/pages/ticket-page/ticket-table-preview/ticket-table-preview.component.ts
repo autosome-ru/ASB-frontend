@@ -172,7 +172,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
                 columnTemplate: this.fdrViewTemplate
             };
             this.columnModel.tfBindPref = {
-                view: 'TF binding preferences'
+                view: 'Preferably bound allele'
             }
             this.displayedColumns.push("topEs", "topFdr", 'tfBindPref');
 

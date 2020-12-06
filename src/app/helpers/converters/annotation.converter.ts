@@ -42,6 +42,7 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         lastStatusUpdateAt: stats.last_status_update_at,
         tfPvalue: stats.tf_log10_p_value_rs,
         tfOdds: stats.tf_odds_rs,
+        expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
         clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],

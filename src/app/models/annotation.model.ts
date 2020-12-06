@@ -25,6 +25,7 @@ export interface StatsDataModel {
     concordantAsbs: Partial<TfSnpModel>[];
     candidatesCount: number;
     ratio: number;
+    expRatio: number;
     tfRatio: number;
     clRatio: number;
     pValue: number;
@@ -58,6 +59,7 @@ export interface StatsDataBackendModel {
     all_log10_p_value_rs: number;
     all_odds_rs: number;
     cl_asbs_rs: number;
+    expected_fraction_all: number;
     cl_candidates_rs: number;
     tf_asb_data: AsbStatsBackendDataModel[];
     cl_asb_data: AsbStatsBackendDataModel[];
