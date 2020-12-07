@@ -3,10 +3,11 @@
         <h4
             class="theme-primary-border container"
             style="overflow: auto;line-height: 1.5; margin-bottom: 0"
-        >ANANASTRA report (<span [matTooltipClass]="'big-font'"
+        >ANANASTRA report (<b [matTooltipClass]="'big-font'"
                                  (click)="copyTicket()"
                                  [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
-        >{{ticket}}</span>)
+                                 class="theme-accent-color-font"
+        >{{ticket}}</b>)
                 <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
               {{(pingData$ | async)?.dateCreated | date: 'medium'}}</span>
             <span style="white-space: pre-wrap"
