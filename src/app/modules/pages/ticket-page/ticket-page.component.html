@@ -1,139 +1,140 @@
-<div></div>
-<div class="mat-elevation-z2 pb-3 pt-0 container px-0">
-    <h4
-        class="theme-primary-border container"
-        style="overflow: auto;line-height: 1.5; margin-bottom: 0"
-    >ANANASTRA report (<span [matTooltipClass]="'big-font'"
-                             (click)="copyTicket()"
-                             [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
-    >{{ticket}}</span>)
-            <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
-          {{(pingData$ | async)?.dateCreated | date: 'medium'}}</span>
-        <span style="white-space: pre-wrap"
-              class="d-none d-sm-inline"
-              *ngIf="!(ticketProcessing$ | async)">
-             - based on ADASTRA release
-            <a
-                target="_blank"
-                rel="noopener noreferrer"
-                [href]="'https://adastra.autosome.ru/' + recentRelease.url"
-            >{{recentRelease.name}}</a>
-        </span>
-    </h4>
-    <div class="centered-spinner container" *ngIf="ticketProcessing$ | async; else failedTemplate">
-        <div class="help-message">
-            <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted
-                SNPs.</h5>
-            <ng-container *ngIf="pingData$ | async as ping">
-                <h6 *ngIf="ping.processingStartedAt">
-                    Processing started at: {{ping.processingStartedAt | date: 'medium'}}
-                </h6>
-                <h6 *ngIf="ping.positionInQueue">Number of other queued jobs: {{ping.positionInQueue}}</h6>
-                <h6 *ngIf="ping.elapsedTime">Elapsed time: {{ping.elapsedTime}}s</h6>
-                <h6 *ngIf="!ping.positionInQueue">Status: {{ping.statusDetails}}</h6>
+<div style="background: white" class="container px-0">
+    <div class="mat-elevation-z2 pb-3 pt-0 container px-0">
+        <h4
+            class="theme-primary-border container"
+            style="overflow: auto;line-height: 1.5; margin-bottom: 0"
+        >ANANASTRA report (<span [matTooltipClass]="'big-font'"
+                                 (click)="copyTicket()"
+                                 [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
+        >{{ticket}}</span>)
+                <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
+              {{(pingData$ | async)?.dateCreated | date: 'medium'}}</span>
+            <span style="white-space: pre-wrap"
+                  class="d-none d-sm-inline"
+                  *ngIf="!(ticketProcessing$ | async)">
+                 - based on ADASTRA release
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    [href]="'https://adastra.autosome.ru/' + recentRelease.url"
+                >{{recentRelease.name}}</a>
+            </span>
+        </h4>
+        <div class="centered-spinner container" *ngIf="ticketProcessing$ | async; else failedTemplate">
+            <div class="help-message">
+                <h5>Please wait, the annotation of your list may take a few minutes depending on the number of submitted
+                    SNPs.</h5>
+                <ng-container *ngIf="pingData$ | async as ping">
+                    <h6 *ngIf="ping.processingStartedAt">
+                        Processing started at: {{ping.processingStartedAt | date: 'medium'}}
+                    </h6>
+                    <h6 *ngIf="ping.positionInQueue">Number of other queued jobs: {{ping.positionInQueue}}</h6>
+                    <h6 *ngIf="ping.elapsedTime">Elapsed time: {{ping.elapsedTime}}s</h6>
+                    <h6 *ngIf="!ping.positionInQueue">Status: {{ping.statusDetails}}</h6>
+                </ng-container>
+            </div>
+            <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+        <div
+            class="container"
+            *ngIf="(fileStatistics$ | async) as fileStatistics">
+            <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
+
+                <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
+                    {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
+                <astra-ticket-stats
+                    [chartData]="data"
+                ></astra-ticket-stats>
+                <mat-tab-group
+                    #tabGroup
+                    mat-align-tabs="center"
+                    dynamicHeight
+                    [selectedIndex]="selectedTab === 'tf' ? 0 : 1"
+                    (selectedIndexChange)="tabIndexChanged($event)"
+                    animationDuration="0ms"
+                >
+                    <mat-tab label="Transcription factors">
+                        <ng-template matTabContent>
+                            <div class="mx-1 pt-1">
+                                <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
+                                    <astra-ticket-table-preview
+                                        *ngIf="!tfTableData?.loading; else loadingTemplate"
+                                        [ticketStatistics]="data"
+                                        [isExpanded]="isExpanded"
+                                        [data]="tfTableData?.data"
+                                        [tfOrCl]="'tf'"
+                                        [(selectedName)]="selectedName.tf"
+                                        (groupValueEmitter)="groupValueChanged($event)"
+                                        (downloadTableEmitter)="downloadTable('tf')"
+                                    >
+                                    </astra-ticket-table-preview>
+                                </ng-container>
+                                <ng-container *ngIf="!isExpanded && (tfTableDataSum$ | async) as tfTableData">
+                                    <astra-ticket-table-preview
+                                        *ngIf="!tfTableData?.loading; else loadingTemplate"
+                                        [ticketStatistics]="data"
+                                        [isExpanded]="isExpanded"
+                                        [data]="tfTableData?.data"
+                                        [(selectedName)]="selectedName.tfSum"
+                                        [tfOrCl]="'tf'"
+                                        (groupValueEmitter)="groupValueChanged($event)"
+                                        (downloadTableEmitter)="downloadTable('tf')"
+                                    >
+                                    </astra-ticket-table-preview>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Cell types">
+                        <ng-template matTabContent>
+                            <div class="mx-1 pt-1">
+                                <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
+                                    <astra-ticket-table-preview
+                                        *ngIf="!clTableData?.loading; else loadingTemplate"
+                                        [ticketStatistics]="data"
+                                        [isExpanded]="isExpanded"
+                                        [data]="clTableData?.data"
+                                        [(selectedName)]="selectedName.cl"
+                                        [tfOrCl]="'cl'"
+                                        (groupValueEmitter)="groupValueChanged($event)"
+                                        (downloadTableEmitter)="downloadTable('cl')"
+                                    >
+                                    </astra-ticket-table-preview>
+                                </ng-container>
+                                <ng-container *ngIf="!isExpanded && (clTableDataSum$ | async) as clTableData">
+                                    <astra-ticket-table-preview
+                                        *ngIf="!clTableData?.loading; else loadingTemplate"
+                                        [ticketStatistics]="data"
+                                        [isExpanded]="isExpanded"
+                                        [data]="clTableData?.data"
+                                        [(selectedName)]="selectedName.clSum"
+                                        [tfOrCl]="'cl'"
+                                        (groupValueEmitter)="groupValueChanged($event)"
+                                        (downloadTableEmitter)="downloadTable('cl')"
+                                    >
+                                    </astra-ticket-table-preview>
+                                </ng-container>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
             </ng-container>
         </div>
-        <mat-progress-bar mode="query"></mat-progress-bar>
-    </div>
-    <div
-        class="container"
-        *ngIf="(fileStatistics$ | async) as fileStatistics">
-        <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
 
-            <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
-                {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
-            <astra-ticket-stats
-                [chartData]="data"
-            ></astra-ticket-stats>
-            <mat-tab-group
-                #tabGroup
-                mat-align-tabs="center"
-                dynamicHeight
-                [selectedIndex]="selectedTab === 'tf' ? 0 : 1"
-                (selectedIndexChange)="tabIndexChanged($event)"
-                animationDuration="0ms"
-            >
-                <mat-tab label="Transcription factors">
-                    <ng-template matTabContent>
-                        <div class="mx-1 pt-1">
-                            <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
-                                <astra-ticket-table-preview
-                                    *ngIf="!tfTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="data"
-                                    [isExpanded]="isExpanded"
-                                    [data]="tfTableData?.data"
-                                    [tfOrCl]="'tf'"
-                                    [(selectedName)]="selectedName.tf"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('tf')"
-                                >
-                                </astra-ticket-table-preview>
-                            </ng-container>
-                            <ng-container *ngIf="!isExpanded && (tfTableDataSum$ | async) as tfTableData">
-                                <astra-ticket-table-preview
-                                    *ngIf="!tfTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="data"
-                                    [isExpanded]="isExpanded"
-                                    [data]="tfTableData?.data"
-                                    [(selectedName)]="selectedName.tfSum"
-                                    [tfOrCl]="'tf'"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('tf')"
-                                >
-                                </astra-ticket-table-preview>
-                            </ng-container>
-                        </div>
-                    </ng-template>
-                </mat-tab>
-                <mat-tab label="Cell types">
-                    <ng-template matTabContent>
-                        <div class="mx-1 pt-1">
-                            <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
-                                <astra-ticket-table-preview
-                                    *ngIf="!clTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="data"
-                                    [isExpanded]="isExpanded"
-                                    [data]="clTableData?.data"
-                                    [(selectedName)]="selectedName.cl"
-                                    [tfOrCl]="'cl'"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('cl')"
-                                >
-                                </astra-ticket-table-preview>
-                            </ng-container>
-                            <ng-container *ngIf="!isExpanded && (clTableDataSum$ | async) as clTableData">
-                                <astra-ticket-table-preview
-                                    *ngIf="!clTableData?.loading; else loadingTemplate"
-                                    [ticketStatistics]="data"
-                                    [isExpanded]="isExpanded"
-                                    [data]="clTableData?.data"
-                                    [(selectedName)]="selectedName.clSum"
-                                    [tfOrCl]="'cl'"
-                                    (groupValueEmitter)="groupValueChanged($event)"
-                                    (downloadTableEmitter)="downloadTable('cl')"
-                                >
-                                </astra-ticket-table-preview>
-                            </ng-container>
-                        </div>
-                    </ng-template>
-                </mat-tab>
-            </mat-tab-group>
+    </div>
+
+    <ng-template #loadingTemplate>
+        <div style="display: flex; justify-content: center" class="pt-3">
+            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        </div>
+    </ng-template>
+
+    <ng-template #failedTemplate>
+        <ng-container *ngIf="(pingData$ | async) as pData">
+            <div *ngIf="pData.status === 'Failed'" style="padding-left: 16px">
+                <h5>Failed to annotate SNPs</h5>
+                <h6>{{pData?.statusDetails}}</h6>
+            </div>
         </ng-container>
-    </div>
-
+    </ng-template>
 </div>
-
-<ng-template #loadingTemplate>
-    <div style="display: flex; justify-content: center" class="pt-3">
-        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    </div>
-</ng-template>
-
-<ng-template #failedTemplate>
-    <ng-container *ngIf="(pingData$ | async) as pData">
-        <ng-container *ngIf="pData.status === 'Failed'">
-            <h5>Failed to annotate SNPs</h5>
-            <h6>{{pData?.statusDetails}}</h6>
-        </ng-container>
-    </ng-container>
-</ng-template>
