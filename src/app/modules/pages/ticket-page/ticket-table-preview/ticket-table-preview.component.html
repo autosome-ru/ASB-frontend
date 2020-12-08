@@ -39,36 +39,40 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
     </div>
-        <h6
-            style="font-weight: bold; padding-left: 20px">
-            {{isExpanded ? 'A' : 'Top a'}}llele-specific binding events {{tfOrCl === 'tf' ? 'of' : 'in'}} particular {{tfOrCl === 'tf' ? 'transcription factors' : 'cell types'}}
-        </h6>
-        <div class="row mx-0" style="display: flex; align-items: center; flex-wrap: wrap">
+    <mat-divider></mat-divider>
+    <mat-expansion-panel class="mat-elevation-z0">
+        <mat-expansion-panel-header class="pl-2">
+            <mat-panel-title>
+                <h6
+                    class="mb-0"
+                    style="font-weight: bold">
+                    {{isExpanded ? 'A' : 'Top a'}}llele-specific binding events {{tfOrCl === 'tf' ? 'of' : 'in'}} particular {{tfOrCl === 'tf' ? 'transcription factors' : 'cell types'}}
+                </h6>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
 
-        <div class="wide-chart-big" style="margin-top: 0.5rem; width: 100%">
-            <asb-ticket-barplot
-                *ngIf="ticketStatistics?.metaInfo"
-                [data]="getChartData(ticketStatistics?.metaInfo)"
-                [tfOrCl]="tfOrCl"
-                [isExpanded]="isExpanded"
-                [selectedIndex]="getSelectedNameIndex(selectedName)"
-                (chartClickEmitter)="chartClicked($event)"
-            ></asb-ticket-barplot>
-        </div>
-        <div class="col-auto"
-             style="flex-grow: 1"
-             [ngStyle]="tableOpened ? {} : {'align-self': 'flex-start'}"
-        >
-            <button
-                mat-raised-button
-                (click)="tableOpened = !tableOpened"
-                style="margin-bottom: 5px"
-            >{{tableOpened ? 'Hide': 'Show'}} specifically enriched {{tfOrCl== 'tf' ? 'TFs' : 'cell-types'}} </button>
-            <asb-ticket-table-tmp
-                *ngIf="tableOpened"
-                [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
-            ></asb-ticket-table-tmp>
-        </div>
+    <div class="row mx-0" style="display: flex; align-items: center; flex-wrap: wrap">
+    <div class="wide-chart-big" style="margin-top: 0.5rem; width: 100%">
+        <asb-ticket-barplot
+            *ngIf="ticketStatistics?.metaInfo"
+            [data]="getChartData(ticketStatistics?.metaInfo)"
+            [tfOrCl]="tfOrCl"
+            [isExpanded]="isExpanded"
+            [selectedIndex]="getSelectedNameIndex(selectedName)"
+            (chartClickEmitter)="chartClicked($event)"
+        ></asb-ticket-barplot>
+    </div>
+    <div class="col-auto"
+         style="flex-grow: 1"
+    >
+        <asb-ticket-table-tmp
+            [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
+        ></asb-ticket-table-tmp>
+    </div>
+    </div>
+    </mat-expansion-panel>
+    <mat-divider class="mb-1"></mat-divider>
+    <div>
         <div style="margin-bottom: 10px; width: 100%">
 <!--            <h6>-->
 <!--                ASB in {{tfOrCl== 'tf' ? 'Transcription factors' : 'Cell types'}}-->
@@ -122,6 +126,7 @@
                 <mat-chip
                     *ngIf="selectedName"
                     removable
+                    [matMenuTriggerFor]="selectMenu"
                     (removed)="filterTable()"
                 >
                     {{selectedName}}
@@ -133,10 +138,22 @@
                 </mat-chip>
                 <mat-chip
                     *ngIf="!selectedName"
+                    [matMenuTriggerFor]="selectMenu"
                 >
                     No filter
                 </mat-chip>
             </mat-chip-list>
+            <mat-menu #selectMenu>
+                <div
+                    *ngFor="let value of getChartData(ticketStatistics.metaInfo)"
+                    mat-menu-item
+                    [ngClass]="selectedName == value.name ? 'theme-primary-color-font' : ''"
+                    [ngStyle]="value.name == selectedName ? {'background': 'rgba(0,0,0,.12)'} : {}"
+                    (click)="filterTable(value.name)"
+                >
+                    {{value.name}}
+                </div>
+            </mat-menu>
         </div>
         <asb-table
             [displayedColumns]="displayedColumns"
