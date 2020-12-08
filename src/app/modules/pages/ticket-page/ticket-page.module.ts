@@ -28,6 +28,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import { TicketTableTmpComponent } from './ticket-table-tmp/ticket-table-tmp.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDividerModule} from "@angular/material/divider";
+import {AsbTourModule} from "../../shared/tour-template/tour-module";
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import {MatDividerModule} from "@angular/material/divider";
         SciNotationModule,
         AsbMotifsModule,
         MatChipsModule,
-        MatDividerModule
+        MatDividerModule,
+        AsbTourModule
     ],
     providers: [DownloadService]
 })

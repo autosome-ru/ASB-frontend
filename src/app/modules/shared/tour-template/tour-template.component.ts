@@ -25,7 +25,6 @@ export class AsbTourComponent implements OnDestroy {
     private cssClass = true;
     private subscriptions = new Subscription();
 
-
     @Input()
     public steps: string[];
 

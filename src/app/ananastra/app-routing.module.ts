@@ -19,6 +19,15 @@ const routes: Routes = [
             mod => mod.TicketPageModule
         )
     },
+    // {
+    //     path: 'about',
+    //     loadChildren: () => import('src/app/modules/pages/about-page/about-page.module').then(
+    //         mod => mod.AsbAboutPageModule
+    //     ),
+    //     data: {
+    //         ananas: true
+    //     }
+    // },
     {
         path: "404",
         loadChildren: () => import(
