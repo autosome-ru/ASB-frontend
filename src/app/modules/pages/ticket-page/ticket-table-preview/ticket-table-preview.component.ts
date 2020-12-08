@@ -56,6 +56,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @ViewChild('imagePopupTemplate', {static: true})
     private imagePopupTemplate: TemplateRef<{ value: string}>;
 
+    @ViewChild('tfBindPrefTemplate', {static: true})
+    private tfBindPrefTemplate: TemplateRef<{ value: string }>;
+
     @Input()
     public data: AnnotationSnpModel[] = [];
 
@@ -173,7 +176,8 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
                 columnTemplate: this.fdrViewTemplate
             };
             this.columnModel.tfBindPref = {
-                view: 'Preferably bound allele'
+                view: 'Preferably bound allele',
+                columnTemplate: this.tfBindPrefTemplate
             }
             this.displayedColumns.push("topEs", "topFdr", 'tfBindPref');
 
@@ -325,5 +329,16 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             result += `${row?.alleles.length != 2 ? '' : '/' + row.alleles[1]}`
         }
         return result
+    }
+
+    getLetter(value: string, row: AnnotationSnpModel): string[] {
+        switch (value) {
+            case 'Ref':
+                return [row.alleles[0]]
+            case 'Both':
+                return row.alleles
+            case 'Alt':
+                return row.alleles.slice(1)
+        }
     }
 }

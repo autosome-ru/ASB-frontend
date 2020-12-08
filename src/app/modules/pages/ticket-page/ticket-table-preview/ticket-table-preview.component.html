@@ -281,3 +281,10 @@
         </button>
     </mat-dialog-actions>
 </ng-template>
+
+<ng-template #tfBindPrefTemplate let-value="value" let-row="row">
+    <span>{{value}}(<span
+            *ngFor="let letter of getLetter(value, row); let last=last"
+            [ngStyle]="{color: colors[letter]}"
+    >{{letter}}<span *ngIf="!last">/</span></span>)</span>
+</ng-template>

@@ -13,11 +13,13 @@ import {SeoService} from "src/app/services/seo.servise";
 })
 export class AboutPageComponent implements OnInit {
 
+    public isAnanas: boolean = false;
     constructor(private route: ActivatedRoute,
                 private seoService: SeoService) {}
 
     ngOnInit() {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
+        this.isAnanas = this.route.snapshot.data.ananas
     }
 
 }
