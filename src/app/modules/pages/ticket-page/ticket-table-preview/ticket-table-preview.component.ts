@@ -82,6 +82,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     private subscriptions = new Subscription()
+    public tableOpened: boolean;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
     sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
         (data, field) => {
@@ -241,7 +242,6 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     // chooseFormat(format: string): void {
     // }
-
 
     downloadTable(): void {
         this.downloadTableEmitter.emit();

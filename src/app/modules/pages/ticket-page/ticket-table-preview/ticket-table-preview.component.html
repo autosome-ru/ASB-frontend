@@ -55,8 +55,17 @@
                 (chartClickEmitter)="chartClicked($event)"
             ></asb-ticket-barplot>
         </div>
-        <div class="col-auto" style="flex-grow: 1">
+        <div class="col-auto"
+             style="flex-grow: 1"
+             [ngStyle]="tableOpened ? {} : {'align-self': 'flex-start'}"
+        >
+            <button
+                mat-raised-button
+                (click)="tableOpened = !tableOpened"
+                style="margin-bottom: 5px"
+            >{{tableOpened ? 'Hide': 'Show'}} specifically enriched {{tfOrCl== 'tf' ? 'TFs' : 'cell-types'}} </button>
             <asb-ticket-table-tmp
+                *ngIf="tableOpened"
                 [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
             ></asb-ticket-table-tmp>
         </div>
@@ -241,6 +250,7 @@
     <mat-dialog-content>
     <img
         style="max-height: 65vh; max-width: 100%"
+        alt=""
         [src]="'https://adastra.autosome.ru/pngs/v2/' + data.transcriptionFactor + '_' + data.rsId.slice(2) + '_' + data.altBase +(revcompState ? '_revcomp' : '' ) + '.png'"
     >
     </mat-dialog-content>
