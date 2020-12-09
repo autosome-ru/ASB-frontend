@@ -42,7 +42,7 @@
             *ngIf="(fileStatistics$ | async) as fileStatistics">
             <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
 
-                <h5>{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
+                <h5 class="help-message">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
                     {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
                 <astra-ticket-stats
                     [chartData]="data"
@@ -133,7 +133,7 @@
 
     <ng-template #failedTemplate>
         <ng-container *ngIf="(pingData$ | async) as pData">
-            <div *ngIf="pData.status === 'Failed'" style="padding-left: 16px">
+            <div class="help-message" *ngIf="pData.status === 'Failed'" style="padding-left: 16px">
                 <h5>Failed to annotate SNPs</h5>
                 <h6>{{pData?.statusDetails}}</h6>
             </div>
@@ -142,6 +142,7 @@
 </div>
 </div>
 <asb-tour-button
+    *ngIf="(pingData$ | async)?.status == 'Processed'"
     [buttonClass]="'tour-button'"
     [steps]="[]"
 ></asb-tour-button>
