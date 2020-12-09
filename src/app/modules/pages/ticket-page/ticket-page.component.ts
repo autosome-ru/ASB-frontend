@@ -19,7 +19,7 @@ import {SeoService} from "../../../services/seo.servise";
 @Component({
     selector: 'astra-ticket-page',
     templateUrl: './ticket-page.component.html',
-    styleUrls: ['./ticket-page.component.less'],
+    styleUrls: ['./ticket-page.component.less', '../snp-annotation-main/snp-annotation-main.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
@@ -45,6 +45,13 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public pingLoading$: Observable<boolean>;
     public pingData$: Observable<PingDataModel>;
     public ticketProcessing$: Observable<boolean>;
+    public steps: string[] = ['ticket', 'stats',
+        'col-button',
+        'odds-table-open',
+        'odds-table', 'pie-chart',
+        'columns-select', 'download-table',
+        'filter'
+    ];
 
 
     constructor(private route: ActivatedRoute,
@@ -175,5 +182,9 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         this._snackBar.open('Copied to clipboard', null, {
             duration: 2000,
         });
+    }
+
+    getTextByStepName(str: string) {
+        return {text: str}
     }
 }

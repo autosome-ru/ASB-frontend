@@ -135,4 +135,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
       const patchValue: string = id === 1 ? demo : 'rs123\nrs1234\nrs123455'
       this.textAreaControl.patchValue(patchValue)
     }
+
+    getTextByStepName(str: string) {
+        return {text: '123'}
+    }
 }

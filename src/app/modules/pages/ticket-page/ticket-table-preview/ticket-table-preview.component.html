@@ -2,46 +2,41 @@
   <div style="margin-bottom: 10px;
    display: flex; flex-wrap: wrap;
    align-items: center;
+   overflow: auto;
+    line-height: 2.5;
    justify-content: space-between" >
+        <mat-button-toggle-group
+            joyrideStep="col-button"
+            [stepContent]="stepTemplate"
+            [stepContentParams]="getTextByStepName('col-button')"
 
-<!--    <mat-menu #downloadMenu>-->
-<!--      <button-->
-<!--        mat-menu-item-->
-<!--        (click)="chooseFormat('excel')"-->
-<!--      >-->
-<!--        Excel-->
-<!--      </button>-->
-<!--      <button-->
-<!--        mat-menu-item-->
-<!--        (click)="chooseFormat('tab')"-->
-<!--      >-->
-<!--        Tab-separated-->
-<!--      </button>-->
-<!--    </mat-menu>-->
-    <mat-button-toggle-group
-      class="mt-2 mt-sm-0 ml-auto"
-      [value]="isExpanded"
-      (change)="_groupToggled($event)"
-    >
-      <mat-button-toggle
-        [value]="false"
-        [matTooltipClass]="'big-font'"
-        matTooltip="Show only the single most significant ASB per SNP"
-      >
-        Collapsed
-      </mat-button-toggle>
-      <mat-button-toggle
-        [value]="true"
-        [matTooltipClass]="'big-font'"
-        matTooltip="Show all individual ASB records per SNP"
-      >
-        Expanded
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+          class="mt-2 mt-sm-0 ml-auto"
+          [value]="isExpanded"
+          (change)="_groupToggled($event)"
+        >
+          <mat-button-toggle
+            [value]="false"
+            [matTooltipClass]="'big-font'"
+            matTooltip="Show only the single most significant ASB per SNP"
+          >
+            Collapsed
+          </mat-button-toggle>
+          <mat-button-toggle
+            [value]="true"
+            [matTooltipClass]="'big-font'"
+            matTooltip="Show all individual ASB records per SNP"
+          >
+            Expanded
+          </mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
     <mat-divider></mat-divider>
-    <mat-expansion-panel class="mat-elevation-z0">
-        <mat-expansion-panel-header class="pl-2">
+    <mat-expansion-panel class="mat-elevation-z0" #expansionPanel>
+        <mat-expansion-panel-header
+            joyrideStep="odds-table-open"
+            [stepContent]="stepTemplate"
+            (next)="expansionPanel.open()"
+            class="pl-2">
             <mat-panel-title>
                 <h6
                     class="mb-0"
@@ -51,8 +46,14 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
 
-    <div class="row mx-0" style="display: flex; align-items: center; flex-wrap: wrap">
-    <div class="wide-chart-big" style="margin-top: 0.5rem; width: 100%">
+    <div class="row mx-0"
+         style="display: flex; align-items: center; flex-wrap: wrap"
+    >
+    <div class="wide-chart-big"
+         style="margin-top: 0.5rem; width: 100%"
+         joyrideStep="pie-chart"
+         [stepContent]="stepTemplate"
+    >
         <asb-ticket-barplot
             *ngIf="ticketStatistics?.metaInfo"
             [data]="getChartData(ticketStatistics?.metaInfo)"
@@ -64,6 +65,8 @@
     </div>
     <div class="col-auto"
          style="flex-grow: 1"
+         joyrideStep="odds-table"
+         [stepContent]="stepTemplate"
     >
         <asb-ticket-table-tmp
             [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
@@ -77,9 +80,13 @@
 <!--            <h6>-->
 <!--                ASB in {{tfOrCl== 'tf' ? 'Transcription factors' : 'Cell types'}}-->
 <!--            </h6>-->
-            <div>
+            <div style="overflow:auto;">
                 <mat-form-field
                     style="margin-left: 5px; margin-right: 5px; width: 210px"
+                    joyrideStep="columns-select"
+                    [stepContent]="stepTemplate"
+                    [stepPosition]="'bottom'"
+                    [stepContentParams]="getTextByStepName('columns-select')"
                 >
                     <mat-label>Selected columns</mat-label>
                     <mat-select [formControl]="columnsControl"
@@ -112,15 +119,21 @@
                     Reset
                 </button>
                 <button
+                    style="overflow: auto"
                     mat-raised-button
                     (click)="downloadTable()"
+                    joyrideStep="download-table"
+                    [stepPosition]="'bottom'"
+                    [stepContent]="stepTemplate"
+                    [stepContentParams]="getTextByStepName('download-table')"
                 >
                     <mat-icon svgIcon="download"></mat-icon>
                     Download table
                 </button>
             </div>
         </div>
-        <div  style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
+        <div
+            style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
             <span>Filter:</span>
             <mat-chip-list>
                 <mat-chip
@@ -128,6 +141,10 @@
                     removable
                     [matMenuTriggerFor]="selectMenu"
                     (removed)="filterTable()"
+                    joyrideStep="filter"
+                    [stepContent]="stepTemplate"
+                    [stepPosition]="'bottom'"
+                    [stepContentParams]="getTextByStepName('filter')"
                 >
                     {{selectedName}}
                     <mat-icon
@@ -139,6 +156,10 @@
                 <mat-chip
                     *ngIf="!selectedName"
                     [matMenuTriggerFor]="selectMenu"
+                    joyrideStep="filter"
+                    [stepContent]="stepTemplate"
+                    [stepPosition]="'bottom'"
+                    [stepContentParams]="getTextByStepName('filter')"
                 >
                     No filter
                 </mat-chip>
@@ -287,4 +308,9 @@
             *ngFor="let letter of getLetter(value, row); let last=last"
             [ngStyle]="{color: colors[letter]}"
     >{{letter}}<span *ngIf="!last">/</span></span>)</span>
+</ng-template>
+<ng-template #stepTemplate let-text="text">
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
 </ng-template>

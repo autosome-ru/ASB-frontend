@@ -1,13 +1,21 @@
+<div>
 <div class="min-height-comp">
 <div style="background: white" class="container px-0">
     <div class="mat-elevation-z2 pb-3 pt-0 container px-0">
         <h4
             class="theme-primary-border container"
             style="overflow: auto;line-height: 1.5; margin-bottom: 0"
-        >ANANASTRA report (<b [matTooltipClass]="'big-font'"
-                                 (click)="copyTicket()"
-                                 [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
-                                 class="theme-accent-color-font"
+        >ANANASTRA report (<b
+            [matTooltipClass]="'big-font'"
+            (click)="copyTicket()"
+            [matTooltip]="getTooltip(((pingData$ | async)?.expirationDate | date: 'medium'))"
+            class="theme-accent-color-font"
+            joyrideStep="ticket"
+            [stepContent]="stepTemplate"
+            [stepContentParams]="getTextByStepName('ticket')"
+            [prevTemplate]="prevTemplate"
+            [nextTemplate]="nextTemplate"
+            [doneTemplate]="doneTemplate"
         >{{ticket}}</b>)
                 <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
               {{(pingData$ | async)?.dateCreated | date: 'medium'}}</span>
@@ -39,6 +47,7 @@
         </div>
         <div
             class="container"
+            style="overflow: auto"
             *ngIf="(fileStatistics$ | async) as fileStatistics">
             <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
 
@@ -125,24 +134,42 @@
 
     </div>
 
-    <ng-template #loadingTemplate>
-        <div style="display: flex; justify-content: center" class="pt-3">
-            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-        </div>
-    </ng-template>
-
-    <ng-template #failedTemplate>
-        <ng-container *ngIf="(pingData$ | async) as pData">
-            <div class="help-message" *ngIf="pData.status === 'Failed'" style="padding-left: 16px">
-                <h5>Failed to annotate SNPs</h5>
-                <h6>{{pData?.statusDetails}}</h6>
-            </div>
-        </ng-container>
-    </ng-template>
 </div>
 </div>
 <asb-tour-button
     *ngIf="(pingData$ | async)?.status == 'Processed'"
     [buttonClass]="'tour-button'"
-    [steps]="[]"
+    [steps]="steps"
 ></asb-tour-button>
+</div>
+
+<ng-template #loadingTemplate>
+    <div style="display: flex; justify-content: center" class="pt-3">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>
+
+<ng-template #failedTemplate>
+    <ng-container *ngIf="(pingData$ | async) as pData">
+        <div class="help-message" *ngIf="pData.status === 'Failed'" style="padding-left: 16px">
+            <h5>Failed to annotate SNPs</h5>
+            <h6>{{pData?.statusDetails}}</h6>
+        </div>
+    </ng-container>
+</ng-template>
+<ng-template #stepTemplate let-text="text">
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
+</ng-template>
+<ng-template #prevTemplate>
+    <button mat-stroked-button color="primary">Prev</button>
+</ng-template>
+
+<ng-template #nextTemplate>
+    <button mat-raised-button color="accent">Next</button>
+</ng-template>
+
+<ng-template #doneTemplate>
+    <button mat-raised-button color="accent">Exit</button>
+</ng-template>

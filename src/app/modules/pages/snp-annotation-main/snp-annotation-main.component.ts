@@ -11,7 +11,7 @@ import {SeoModel} from "../../../models/seo.model";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SnpAnnotationMainComponent implements OnInit {
-    steps: string[] = ['text-input', 'file-drop', 'examples'];
+    steps: string[] = ['text-input', 'file-drop', 'examples', 'job'];
 
     constructor(private seoService: SeoService, private route: ActivatedRoute) {
     }

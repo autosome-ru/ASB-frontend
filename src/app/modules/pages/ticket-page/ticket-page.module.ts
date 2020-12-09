@@ -29,6 +29,7 @@ import { TicketTableTmpComponent } from './ticket-table-tmp/ticket-table-tmp.com
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDividerModule} from "@angular/material/divider";
 import {AsbTourModule} from "../../shared/tour-template/tour-module";
+import {JoyrideModule} from "ngx-joyride";
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import {AsbTourModule} from "../../shared/tour-template/tour-module";
         AsbMotifsModule,
         MatChipsModule,
         MatDividerModule,
-        AsbTourModule
+        AsbTourModule,
+        JoyrideModule
     ],
     providers: [DownloadService]
 })

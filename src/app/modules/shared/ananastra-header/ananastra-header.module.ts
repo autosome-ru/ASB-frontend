@@ -9,6 +9,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatRippleModule} from "@angular/material/core";
+import {JoyrideModule} from "ngx-joyride";
+import {AsbTourModule} from "../tour-template/tour-module";
 
 
 
@@ -26,7 +28,9 @@ import {MatRippleModule} from "@angular/material/core";
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
-        MatRippleModule
+        MatRippleModule,
+        JoyrideModule,
+        AsbTourModule
     ]
 })
 export class AnanastraHeaderModule { }

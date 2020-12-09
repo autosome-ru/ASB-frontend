@@ -341,4 +341,8 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
                 return row.alleles.slice(1)
         }
     }
+
+    getTextByStepName(text: string) {
+        return {text}
+    }
 }

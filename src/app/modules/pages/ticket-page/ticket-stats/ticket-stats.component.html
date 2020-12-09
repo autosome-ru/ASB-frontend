@@ -1,5 +1,8 @@
 <div *ngIf="chartDatasets.length > 0; else loadingTemplate"
      style="padding-left: 16px; padding-right: 16px"
+     joyrideStep="stats"
+     [stepContent]="stepTemplate"
+     [stepContentParams]="getTextByStepName('stats')"
      class="row"
 >
   <div class="wide-chart" style="width: 100%" >
@@ -62,4 +65,9 @@
 
 <ng-template #loadingTemplate>
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>
+<ng-template #stepTemplate let-text="text">
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
 </ng-template>

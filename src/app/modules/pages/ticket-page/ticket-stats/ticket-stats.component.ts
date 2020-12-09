@@ -73,4 +73,8 @@ export class TicketStatsComponent implements OnInit {
 
     public chartHovered(): void {
     }
+
+    getTextByStepName(text: string) {
+        return {text: text}
+    }
 }

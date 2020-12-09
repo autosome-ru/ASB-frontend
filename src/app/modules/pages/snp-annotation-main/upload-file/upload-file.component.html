@@ -2,6 +2,11 @@
     <div style="display: flex; flex-direction: column; align-items: center">
     <mat-form-field
         joyrideStep="text-input"
+        [stepContent]="stepTemplate"
+        [stepContentParams]="getTextByStepName('text-input')"
+        [prevTemplate]="prevTemplate"
+        [nextTemplate]="nextTemplate"
+        [doneTemplate]="doneTemplate"
         appearance="outline"  style="width: 100%" floatLabel="always">
       <mat-label></mat-label>
       <textarea
@@ -16,6 +21,8 @@
 
     <div class="file-container"
          joyrideStep="file-drop"
+         [stepContent]="stepTemplate"
+         [stepContentParams]="getTextByStepName('text-input')"
          astraDragDrop
          (fileDropped)="fileDropped($event)"
     >
@@ -97,6 +104,8 @@
             </button>
             <div
                 joyrideStep="examples"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('text-input')"
                 style="align-self: flex-end; margin-top: 15px; margin-right: 5px">
                 <button
                     style="margin-right: 10px"
@@ -120,3 +129,19 @@
         </div>
     </div>
 </div>
+<ng-template #stepTemplate let-text="text">
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
+</ng-template>
+<ng-template #prevTemplate>
+    <button mat-stroked-button color="primary">Prev</button>
+</ng-template>
+
+<ng-template #nextTemplate>
+    <button mat-raised-button color="accent">Next</button>
+</ng-template>
+
+<ng-template #doneTemplate>
+    <button mat-raised-button color="accent">Exit</button>
+</ng-template>

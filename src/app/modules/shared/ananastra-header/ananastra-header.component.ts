@@ -44,4 +44,7 @@ export class AnanastraHeaderComponent implements OnInit {
             this.searchOpened = true;
         }
     }
+    getTextByStepName(str: string) {
+        return {text: str}
+    }
 }

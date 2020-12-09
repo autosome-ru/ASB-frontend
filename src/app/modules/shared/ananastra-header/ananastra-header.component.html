@@ -96,6 +96,9 @@
 </ng-template>
 <ng-template #formTemplate let-type="type">
     <form [formGroup]="searchGroup"
+          joyrideStep="job"
+          [stepContent]="stepTemplate"
+          [stepContentParams]="getTextByStepName('job')"
           class="my-0 pl-0 pl-md-1" style="display: flex; flex-wrap: nowrap;background: #f1f3f4; border-radius: .25rem "
           (ngSubmit)="submit()">
         <button
@@ -129,4 +132,9 @@
             <mat-icon color="primary" svgIcon="search"></mat-icon>
         </button>
     </form>
+</ng-template>
+<ng-template #stepTemplate let-text="text">
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
 </ng-template>
