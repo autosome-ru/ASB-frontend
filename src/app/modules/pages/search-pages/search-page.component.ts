@@ -22,7 +22,7 @@ import {AsbServerSideModel} from "../../../models/table.model";
 import {initialServerParams} from "../../../helpers/constants/constants";
 import {SearchPageTableComponent} from "./search-table/search-table.component";
 import {ReleaseModel} from "../../../models/releases.model";
-import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
+import {getTextByStepNameAdastra} from "../../../helpers/text-helpers/tour.adastra.helper";
 import {JoyrideService} from "ngx-joyride";
 import {SnpSearchModel} from "../../../models/data.model";
 
@@ -230,7 +230,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step);
+        return getTextByStepNameAdastra(step);
     }
 
     checkResult() {

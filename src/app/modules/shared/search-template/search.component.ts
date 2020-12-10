@@ -33,7 +33,7 @@ import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from 
 import {debounceTime} from "rxjs/operators";
 import {checkOneResult, convertFormToParams} from "../../../helpers/helper/check-functions.helper";
 import {ReleaseModel} from "src/app/models/releases.model";
-import {getTextByStepName} from "src/app/helpers/text-helpers/tour-text.helper";
+import {getTextByStepNameAdastra} from "src/app/helpers/text-helpers/tour.adastra.helper";
 import {ChromPos, validateGroup} from "../form-fields/form-fields.component";
 
 
@@ -513,7 +513,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(step: string, component?: string) {
-        return getTextByStepName(step, component);
+        return getTextByStepNameAdastra(step, component);
     }
 
     nextExampleStep() {

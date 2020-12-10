@@ -15,7 +15,7 @@ import {getPaginatorOptions} from "../../../../helpers/helper/check-functions.he
 import {AsbTableComponent} from "../../../shared/table-template/mat-table/table.component";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
-import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
+import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 
 
 @Component({
@@ -95,7 +95,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step);
+        return getTextByStepNameAdastra(step);
     }
 
     ngOnDestroy() {

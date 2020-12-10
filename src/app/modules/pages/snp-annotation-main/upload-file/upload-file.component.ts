@@ -7,6 +7,7 @@ import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {demo} from "../../../../helpers/constants/demo.ananas";
+import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 
 @Component({
   selector: 'astra-upload-file-component',
@@ -137,6 +138,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(str: string) {
-        return {text: '123'}
+        return getTextByStepNameAnanas(str)
     }
 }

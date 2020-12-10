@@ -35,6 +35,7 @@
         <mat-expansion-panel-header
             joyrideStep="odds-table-open"
             [stepContent]="stepTemplate"
+            [stepContentParams]="getTextByStepName('odds-table-open')"
             (next)="expansionPanel.open()"
             class="pl-2">
             <mat-panel-title>
@@ -53,6 +54,7 @@
          style="margin-top: 0.5rem; width: 100%"
          joyrideStep="pie-chart"
          [stepContent]="stepTemplate"
+         [stepContentParams]="getTextByStepName('pie-chart')"
     >
         <asb-ticket-barplot
             *ngIf="ticketStatistics?.metaInfo"
@@ -67,6 +69,7 @@
          style="flex-grow: 1"
          joyrideStep="odds-table"
          [stepContent]="stepTemplate"
+         [stepContentParams]="getTextByStepName('odds-table')"
     >
         <asb-ticket-table-tmp
             [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"

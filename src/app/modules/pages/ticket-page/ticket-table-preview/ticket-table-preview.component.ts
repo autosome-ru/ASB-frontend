@@ -19,6 +19,7 @@ import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../../../helpers/helper/check-functions.helper";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Subscription} from "rxjs";
+import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 
 
 @Component({
@@ -343,6 +344,6 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(text: string) {
-        return {text}
+        return getTextByStepNameAnanas(text)
     }
 }

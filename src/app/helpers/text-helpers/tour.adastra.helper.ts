@@ -1,4 +1,4 @@
-export function getTextByStepName(step: string, component?: string): {text: string} {
+export function getTextByStepNameAdastra(step: string, component?: string): {text: string} {
     return {text: getText(step, component)};
 }
 

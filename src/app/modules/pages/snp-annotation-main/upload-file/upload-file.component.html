@@ -22,7 +22,7 @@
     <div class="file-container"
          joyrideStep="file-drop"
          [stepContent]="stepTemplate"
-         [stepContentParams]="getTextByStepName('text-input')"
+         [stepContentParams]="getTextByStepName('file-drop')"
          astraDragDrop
          (fileDropped)="fileDropped($event)"
     >
@@ -105,7 +105,7 @@
             <div
                 joyrideStep="examples"
                 [stepContent]="stepTemplate"
-                [stepContentParams]="getTextByStepName('text-input')"
+                [stepContentParams]="getTextByStepName('examples')"
                 style="align-self: flex-end; margin-top: 15px; margin-right: 5px">
                 <button
                     style="margin-right: 10px"

@@ -16,7 +16,7 @@ import {Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {HttpErrorResponse} from "@angular/common/http";
 import {FileSaverService} from "ngx-filesaver";
-import {getTextByStepName} from "../../../helpers/text-helpers/tour-text.helper";
+import {getTextByStepNameAdastra} from "../../../helpers/text-helpers/tour.adastra.helper";
 import {isPlatformBrowser} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {ReleaseModel} from "../../../models/releases.model";
@@ -76,7 +76,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     getTextByStepName(step: string) {
-        return getTextByStepName(step);
+        return getTextByStepNameAdastra(step);
     }
 
 

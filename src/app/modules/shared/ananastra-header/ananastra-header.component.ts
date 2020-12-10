@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
 import {MediaMatcher} from "@angular/cdk/layout";
+import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
 
 @Component({
   selector: 'asb-ananastra-header',
@@ -45,6 +46,6 @@ export class AnanastraHeaderComponent implements OnInit {
         }
     }
     getTextByStepName(str: string) {
-        return {text: str}
+        return getTextByStepNameAnanas(str)
     }
 }

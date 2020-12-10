@@ -14,7 +14,7 @@ import {ReleaseModel} from "../../../../models/releases.model";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer/adastra";
-import {getTextByStepName} from "../../../../helpers/text-helpers/tour-text.helper";
+import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 import {UrlService} from "../../../../services/url.service";
 
 @Component({
@@ -58,7 +58,7 @@ export class AsbSnpCardComponent implements OnInit {
     }
 
     getTextByStepName(step: string, component?: string) {
-        return getTextByStepName(step, component);
+        return getTextByStepNameAdastra(step, component);
     }
 
     nextStep() {

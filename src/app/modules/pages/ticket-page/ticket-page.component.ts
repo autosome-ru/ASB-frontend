@@ -15,6 +15,7 @@ import {recentRelease} from "../../../helpers/constants/releases";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {SeoService} from "../../../services/seo.servise";
+import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
 
 @Component({
     selector: 'astra-ticket-page',
@@ -45,7 +46,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public pingLoading$: Observable<boolean>;
     public pingData$: Observable<PingDataModel>;
     public ticketProcessing$: Observable<boolean>;
-    public steps: string[] = ['ticket', 'stats',
+    public steps: string[] = [
+        'ticket', 'stats',
         'col-button',
         'odds-table-open',
         'odds-table', 'pie-chart',
@@ -185,6 +187,6 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     getTextByStepName(str: string) {
-        return {text: str}
+        return getTextByStepNameAnanas(str)
     }
 }
