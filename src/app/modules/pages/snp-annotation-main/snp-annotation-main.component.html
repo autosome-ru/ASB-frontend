@@ -3,7 +3,14 @@
     class="min-height-comp"
     style="display: flex; flex-direction: column; align-items: center"
 >
-    <div class="front-header theme-primary-border container px-0" style="width: 100%">
+    <img
+        #logo
+        src="assets/images/ANANAS.svg"
+        alt=""
+        style="max-height:28vh"
+        (click)="logoClicked()"
+    >
+    <div class="front-header theme-primary-border">
         <h5 class="help-message mt-3" style="text-align: center">
             ANANASTRA: <span class="bold-text">AN</span>alysis and <span class="bold-text">AN</span>not<span class="bold-text">A</span>tion of <span class="bold-text">S</span>NP sets with allele-specific <span class="bold-text">TRA</span>nscription factor binding
 
