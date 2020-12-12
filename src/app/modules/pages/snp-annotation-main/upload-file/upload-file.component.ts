@@ -6,7 +6,7 @@ import * as fromActions from 'src/app/store/action/ananastra';
 import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {demo} from "../../../../helpers/constants/demo.ananas";
+import {demo1, demo2} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 
 @Component({
@@ -133,11 +133,11 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
     initDemo(id: number) {
-      const patchValue: string = id === 1 ? demo : 'rs123\nrs1234\nrs123455'
-      this.textAreaControl.patchValue(patchValue)
+      const patchValue: string = id === 1 ? demo1 : demo2;
+      this.textAreaControl.patchValue(patchValue);
     }
 
     getTextByStepName(str: string) {
-        return getTextByStepNameAnanas(str)
+        return getTextByStepNameAnanas(str);
     }
 }

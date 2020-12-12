@@ -54,6 +54,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         'columns-select', 'download-table',
         'filter'
     ];
+    panelExpanded: boolean = false;
 
 
     constructor(private route: ActivatedRoute,

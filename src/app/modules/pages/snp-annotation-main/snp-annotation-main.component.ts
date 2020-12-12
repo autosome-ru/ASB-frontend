@@ -12,6 +12,8 @@ import {SeoModel} from "../../../models/seo.model";
 })
 export class SnpAnnotationMainComponent implements OnInit {
     public steps: string[] = ['text-input', 'file-drop', 'examples', 'job'];
+    text: string = 'This web service annotates a given list of SNPs with allele-specific binding events across' +
+        ' a wide range of transcription factors and cell types\nusing ADASTRA that is constructed through the meta-analysis of more than 15000 ChIP-Seq experiments.';
 
     constructor(private seoService: SeoService, private route: ActivatedRoute) {
     }

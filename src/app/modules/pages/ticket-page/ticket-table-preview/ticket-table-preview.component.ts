@@ -20,6 +20,7 @@ import {compareData} from "../../../../helpers/helper/check-functions.helper";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Subscription} from "rxjs";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
+import {recentRelease} from "../../../../helpers/constants/releases";
 
 
 @Component({
@@ -57,6 +58,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @ViewChild('imagePopupTemplate', {static: true})
     private imagePopupTemplate: TemplateRef<{ value: string}>;
 
+    @ViewChild('uscsColumnTemplate', {static: true})
+    private uscsColumnTemplate: TemplateRef<{row: AnnotationSnpModel, value: number}>
+
     @ViewChild('tfBindPrefTemplate', {static: true})
     private tfBindPrefTemplate: TemplateRef<{ value: string }>;
 
@@ -67,7 +71,13 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     public ticketStatistics: AnnotationDataModel;
 
     @Input()
+    public selectedName: string;
+
+    @Input()
     public tfOrCl: TfOrCl;
+
+    @Input()
+    public panelExpanded: boolean = false;
 
     @Input()
     public isExpanded = false;
@@ -78,8 +88,8 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @Output()
     private downloadTableEmitter = new EventEmitter<void>();
 
-    @Input()
-    public selectedName: string;
+    @Output()
+    private panelExpandedChange = new EventEmitter<boolean>();
 
     @Output()
     private selectedNameChange = new EventEmitter<string>();
@@ -87,6 +97,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     private subscriptions = new Subscription()
     public tableOpened: boolean;
+    public release = recentRelease;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
     sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
         (data, field) => {
@@ -122,15 +133,13 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     private dialog: MatDialogRef<{ value: string }>;
     public revcompState: boolean = false;
 
-
-
     constructor(private formBuilder: FormBuilder,
                 private matDialog: MatDialog) {
     }
 
     ngOnInit(): void {
 
-        this.displayedColumns = ['rsId', 'chr'];
+        this.displayedColumns = ['rsId', 'chr', 'pos'];
         this.columnModel = {
             rsId: {view: 'rs ID', columnTemplate: this.dbSnpViewTemplate},
             chr: {
@@ -140,6 +149,11 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             context: {
                 view: 'Sequence',
                 disabledSort: true
+            },
+            pos: {
+                view: 'UCSC',
+                disabledSort: true,
+                columnTemplate: this.uscsColumnTemplate
             }
         };
         if (this.tfOrCl === 'tf') {
@@ -345,5 +359,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     getTextByStepName(text: string) {
         return getTextByStepNameAnanas(text)
+    }
+
+    expandedChange(state: boolean): void {
+        this.panelExpandedChange.emit(state)
     }
 }

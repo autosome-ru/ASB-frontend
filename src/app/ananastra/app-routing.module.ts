@@ -29,6 +29,12 @@ const routes: Routes = [
         }
     },
     {
+        path: 'help',
+        loadChildren: () => import('src/app/modules/pages/ananas-help/ananas-help.module').then(
+            mod => mod.AnanasHelpModule
+        )
+    },
+    {
         path: "404",
         loadChildren: () => import(
             "src/app/modules/pages/404-page/page-not-found.module").then(mod => mod.AsbPageNotFoundModule),

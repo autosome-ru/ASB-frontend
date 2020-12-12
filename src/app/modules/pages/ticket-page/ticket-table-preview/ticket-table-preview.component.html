@@ -31,7 +31,12 @@
         </mat-button-toggle-group>
     </div>
     <mat-divider></mat-divider>
-    <mat-expansion-panel class="mat-elevation-z0" #expansionPanel>
+    <mat-expansion-panel
+        class="mat-elevation-z0"
+        #expansionPanel
+        [expanded]="panelExpanded"
+        (expandedChange)="expandedChange($event)"
+    >
         <mat-expansion-panel-header
             joyrideStep="odds-table-open"
             [stepContent]="stepTemplate"
@@ -47,7 +52,7 @@
             </mat-panel-title>
         </mat-expansion-panel-header>
 
-    <div class="row mx-0"
+    <div class="row mx-0 flex-lg-nowrap flex-wrap"
          style="display: flex; align-items: center; flex-wrap: wrap"
     >
     <div class="wide-chart-big"
@@ -65,7 +70,7 @@
             (chartClickEmitter)="chartClicked($event)"
         ></asb-ticket-barplot>
     </div>
-    <div class="col-auto"
+    <div
          style="flex-grow: 1"
          joyrideStep="odds-table"
          [stepContent]="stepTemplate"
@@ -228,6 +233,24 @@
   <div mat-dialog-content style="max-height: 80vh">
 
   </div>
+</ng-template>
+<ng-template #uscsColumnTemplate let-row="row">
+    <a
+        joyrideStep="genome-browser"
+        style="overflow: auto"
+        mat-icon-button
+        target="_blank"
+        rel="noopener noreferrer"
+        [href]="'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position='
+            + row.chr + ':' + (row.pos > 100 ? row.pos - 100 : '1')
+            + '-' + (row.pos + 100) +
+            '&hgct_customText=track%20type=bigBed%20name=ADASTra_ASB_SNPs%20' +
+             'description=%22ADASTra%20ASB%20SNPs%22%20visibility=full%20bigDataUrl=' +
+             'https://adastra.autosome.ru/assets/ucsc-files/' + release.ucscFileName +'&knownGene=full&' +
+             'omimAvSnp=full&varsInPubs=full&snpedia=full&hgmd=full'"
+    >
+        <mat-icon svgIcon="new_open"></mat-icon>
+    </a>
 </ng-template>
 <ng-template #fdrViewTemplate let-value="value">
   <asb-sci-notation [value]="value" [toInvert]="true"></asb-sci-notation>

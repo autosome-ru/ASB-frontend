@@ -1,4 +1,4 @@
-export const demo: string = 'rs150903340\n' +
+export const demo1: string = 'rs150903340\n' +
     'rs114168918\n' +
     'rs28381173\n' +
     'rs147085017\n' +
@@ -592,3 +592,5 @@ export const demo: string = 'rs150903340\n' +
     'rs5970777\n' +
     'rs5970599\n' +
     'rs6603626\n'
+
+export const demo2: string = '1:60860259-61462788'
