@@ -27,13 +27,15 @@
   <div class="col-auto" style="display: flex; align-items: center">
     <ul style="list-style-type: none; padding-inline-start: 0">
       <li>
-        <b [ngStyle]="{'color': chartColors[0].backgroundColor[0]}">ASB SNPs</b>: {{stats.asbCount}}
-        <span class="additional-selection">(incl. {{stats.tfAsbs}} TF-ASBs and {{stats.clAsbs}} Cell type-ASBs)</span>
+        <span matTooltip="≤ 5% FDR"
+        ><b [ngStyle]="{'color': chartColors[0].backgroundColor[0]}">ASB SNPs</b>: {{stats.asbCount}}</span>
+        <span class="additional-selection">&nbsp;(incl. {{stats.tfAsbs}} TF-ASBs and {{stats.clAsbs}} Cell type-ASBs)</span>
       </li>
       <li>
-        <b
+        <span matTooltip="> 5% FDR"
+        ><b
             [ngStyle]="{'color': chartColors[0].backgroundColor[1]}"
-        >Non-ASB</b>: {{stats.candidatesCount}}, <b
+        >Non-ASB</b>: {{stats.candidatesCount}}</span>, <b
           [ngStyle]="{'color': chartColors[0].backgroundColor[2]}"
       >&nbsp;No data:</b> {{stats.notFound}}
       </li>
