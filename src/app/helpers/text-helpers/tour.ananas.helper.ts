@@ -12,7 +12,7 @@ function getText(step: string): string {
         case 'file-drop':
             return 'Instead of copying-pasting\nyou can also upload a file (gzipped\nvcf is also supported).'
         case 'examples':
-            return 'We provide several examples\nto play with (hover over the\nbuttons to check the descriptions)'
+            return 'We provide several examples\nto play with (hover over the\nbuttons to check the descriptions).'
         case 'job':
             return 'A previously processed request\ncan be accessed by providing a ticket ID.\nPrevious jobs are saved for 2 days.'
         case 'ticket':
