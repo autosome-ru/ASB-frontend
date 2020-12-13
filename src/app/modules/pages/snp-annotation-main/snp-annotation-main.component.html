@@ -3,28 +3,36 @@
     class="min-height-comp"
     style="display: flex; flex-direction: column; align-items: center"
 >
-    <img
-        #logo
-        class="gear"
-        src="assets/images/ANANAS.svg"
-        alt=""
-        (click)="logoClicked()"
-    >
-    <div class="front-header theme-primary-border">
-        <h5 class="help-message mt-3" style="text-align: center">
-            ANANASTRA: <span class="bold-text">AN</span>alysis and <span class="bold-text">AN</span>not<span class="bold-text">A</span>tion of <span class="bold-text">S</span>NP sets with allele-specific <span class="bold-text">TRA</span>nscription factor binding
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; width: 100%; align-items: center">
+        <img
+            #logo
+            class="gear"
+            src="assets/images/ANANAS.svg"
+            alt=""
+            (click)="logoClicked()"
+        >
+        <div class="text-main container" style="width: auto">
+            <div style="display: flex; justify-content: center">
+            <div class="theme-primary-border px-2">
+                <h5 class="help-message mt-3" style="text-align: center">
+                    ANANASTRA: <span class="bold-text">AN</span>alysis and <span class="bold-text">AN</span>not<span class="bold-text">A</span>tion of <span class="bold-text">S</span>NP sets with allele-specific <span class="bold-text">TRA</span>nscription factor binding
 
-        </h5>
+                </h5>
+            </div>
+            </div>
+            <div class="mt-1 mb-3">
+                <div class="d-none d-xl-block" style="text-align: center; white-space: pre-wrap">
+                    <span>{{text}}
+                    </span>
+                </div>
+                <div class="d-block d-xl-none" style="text-align: center;">
+                    <span>{{text}}
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container mb-0 mb-xl-3 d-none d-xl-block mt-0 mt-xl-1" style="text-align: center; white-space: pre-wrap">
-        <span>{{text}}
-        </span>
-    </div>
-    <div class="container mb-3 mb-xl-0 d-block d-xl-none mt-1 mt-xl-0" style="text-align: center;">
-        <span>{{text}}
-        </span>
-    </div>
-    <div class="container mat-elevation-z2 py-3" style="background: white">
+    <div class="container mat-elevation-z2 py-3 mt-3" style="background: white">
       <div class="text-area">
         <astra-upload-file-component
         ></astra-upload-file-component>
