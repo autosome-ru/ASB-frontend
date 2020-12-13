@@ -36,7 +36,6 @@ export class UploadService {
             case HttpEventType.UploadProgress:
               return of(this.constructLoadedPart(res.loaded, res.total));
             case HttpEventType.Response:
-                console.log(res.body.ticket_id)
               this.fileTicket$.next(res.body.ticket_id);
               return of(100);
             default:

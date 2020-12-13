@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
 import {demo1, demo2} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'astra-upload-file-component',
@@ -27,6 +28,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
               private router: Router,
+              private toastr: ToastrService,
               private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
@@ -122,10 +124,14 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   submit(): void {
     this.reinstallSubscription()
     if (this.ticket && this.file) {
-      this.annotationStart();
+        if (this.file.progress == 100) {
+            this.annotationStart();
+        } else {
+            this.toastr.warning('Your file is still loading', 'Warning')
+        }
     } else {
       if (!!this.textAreaControl.value) {
-        const file = new File([this.textAreaControl.value], 'my-list');
+        const file = new File([this.textAreaControl.value], 'my-list.txt');
         this.uploadFile(file, true);
       }
     }
