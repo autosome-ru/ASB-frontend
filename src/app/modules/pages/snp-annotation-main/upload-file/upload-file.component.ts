@@ -124,25 +124,32 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
+      const loc = () => {
+          if (!!this.textAreaControl.value) {
+              this.firstSubmit = false;
+              const file = new File([this.textAreaControl.value], 'my-list.txt');
+              this.uploadFile(file, true);
+          } else {
+              this.toastr.warning('No data provided', 'Warning')
+          }
+      }
     if ((this.ticket && this.file) || this.firstSubmit) {
-        if (this.fileProgress$.value == 100) {
+        if (this.fileProgress$.value == 100 && this.ticket) {
             this.firstSubmit = false;
             this.annotationStart();
         } else {
             if (this.fileProgress$.value == null) {
-                this.toastr.error('The file failed to load', 'Error')
+                if (this.file) {
+                    this.toastr.error('The file failed to load', 'Error')
+                } else {
+                    loc()
+                }
             } else {
                 this.toastr.warning('The file is still loading', 'Warning')
             }
         }
     } else {
-      if (!!this.textAreaControl.value) {
-        this.firstSubmit = false;
-        const file = new File([this.textAreaControl.value], 'my-list.txt');
-        this.uploadFile(file, true);
-      } else {
-          this.toastr.warning('No data provided', 'Warning')
-      }
+        loc()
     }
 
   }
