@@ -8,7 +8,7 @@ function getText(step: string): string {
             return 'There are several options to supply the list of SNPs.\n' +
                 '(A) A list of dbSNP rs-IDs (one per line);\n' +
                 '(B)   Contents of a standard VCF file.\n' +
-                '(C) A single genomic interval as "chr:start-end"\n(hg38 1-based genomic coordinates). In this case, we will consider all SNPs with candidate ASBs within the given interval.'
+                '(C) A single genomic interval as "chr:start-end"\n(hg38 1-based genomic coordinates). In this case,\nwe will consider all SNPs with\ncandidate ASBs within the given interval.'
         case 'file-drop':
             return 'Instead of copying-pasting\nyou can also upload a file (gzipped\nvcf is also supported).'
         case 'examples':
