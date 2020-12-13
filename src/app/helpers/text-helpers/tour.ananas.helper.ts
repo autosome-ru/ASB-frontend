@@ -6,9 +6,9 @@ function getText(step: string): string {
     switch (step) {
         case 'text-input':
             return 'There are several options to supply the list of SNPs.\n' +
-                '(A) A list of dbSNP rs-IDs (one per line);\n' +
+                '(A) A list of dbSNP rs-IDs (one per line).\n' +
                 '(B)   Contents of a standard VCF file.\n' +
-                '(C) A single genomic interval as "chr:start-end"\n(hg38 1-based genomic coordinates). In this case,\nwe will consider all SNPs with\ncandidate ASBs within the given interval.'
+                '(C) A single genomic interval as "chr:start-end" to consider all SNPs with candidate ASBs within the interval.'
         case 'file-drop':
             return 'Instead of copying-pasting\nyou can also upload a file (gzipped\nvcf is also supported).'
         case 'examples':
@@ -18,7 +18,7 @@ function getText(step: string): string {
         case 'ticket':
             return 'This is your unique job ticket id.\nYou may save it to access this report\nlater (reports are accessible for 2 days\nsince completion).'
         case 'stats':
-            return 'General statistics and enrichment of allele-specific binding events detected in the submitted SNP list.\nNote, that enrichment estimates have limited value\nfor locus-centric analysis (i.e. if a genomic region\nwas submitted) as the analysis involves all ASBs\nand all candidate SNPs in a given region.'
+            return 'General statistics and enrichment of allele-specific\nbinding events detected in the submitted SNP list.\nNote, that enrichment estimates have limited value\nfor locus-centric analysis (i.e. if a genomic region\nwas submitted) as the analysis involves all ASBs\nand all candidate SNPs in a given region.'
         case 'col-button':
             return 'It is possible to switch between the TF- and cell type-centric reports. Each report is available in the expanded form (all ASB events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
         case 'odds-table-open':
