@@ -96,7 +96,7 @@
 </ng-template>
 <ng-template #formTemplate let-type="type">
     <form [formGroup]="searchGroup"
-          joyrideStep="job"
+          [joyrideStep]="'job' + (type ? 'type' : '')"
           [stepContent]="stepTemplate"
           [stepContentParams]="getTextByStepName('job')"
           class="my-0 pl-0 pl-md-1" style="display: flex; flex-wrap: nowrap;background: #f1f3f4; border-radius: .25rem "
