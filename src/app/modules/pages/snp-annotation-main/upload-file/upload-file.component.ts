@@ -124,7 +124,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   submit(): void {
     this.reinstallSubscription()
     if (this.ticket && this.file) {
-        if (this.file.progress == 100) {
+        if (this.fileProgress$.value == 100) {
             this.annotationStart();
         } else {
             this.toastr.warning('Your file is still loading', 'Warning')
@@ -133,6 +133,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
       if (!!this.textAreaControl.value) {
         const file = new File([this.textAreaControl.value], 'my-list.txt');
         this.uploadFile(file, true);
+      } else {
+          this.toastr.warning('No data provided', 'Warning')
       }
     }
 
