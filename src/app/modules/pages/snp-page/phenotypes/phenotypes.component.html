@@ -13,11 +13,15 @@
                 {{phenToView[db]}}
             </a>
         </dt>
-        <dd
-            *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
-            style="display: flex; flex-wrap: wrap"
-        >
-            {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
+        <dd>
+            <span>
+                <span
+                    *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
+                    style="display: flex; flex-wrap: wrap"
+                >
+                    {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
+                </span>
+            </span>
         </dd>
     </dl>
 </ng-container>
