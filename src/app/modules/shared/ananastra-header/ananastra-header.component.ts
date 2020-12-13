@@ -1,35 +1,38 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
-import {MediaMatcher} from "@angular/cdk/layout";
 import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
+import { BreakpointObserver} from '@angular/cdk/layout';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'asb-ananastra-header',
   templateUrl: './ananastra-header.component.html',
   styleUrls: ['./ananastra-header.component.less']
 })
-export class AnanastraHeaderComponent implements OnInit {
+export class AnanastraHeaderComponent implements OnInit, OnDestroy {
     public searchGroup: FormGroup;
     searchOpened: boolean = false;
-    mdq: MediaQueryList;
-    mediaQueryListener:()=>void;
-
+    private subscriptions = new Subscription()
     constructor(private formBuilder: FormBuilder, private router: Router,
-                changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-        this.mdq = media.matchMedia('(max-width: 765px)');
-        this.mediaQueryListener = () => {
-
-            if (!this.mdq.matches) {
-                this.searchOpened = false;
-            }
-            changeDetectorRef.detectChanges();
-        }
-        this.mdq.addEventListener('change', this.mediaQueryListener);
+                private changeDetectorRef: ChangeDetectorRef,
+                private breakpointObserver: BreakpointObserver) {
     }
 
     ngOnInit(): void {
-        this.searchGroup = this.formBuilder.group({search: ''})
+        this.searchGroup = this.formBuilder.group({search: ''});
+        this.subscriptions.add(
+            this.breakpointObserver.observe('(max-width: 765px)').subscribe(
+                () => {
+                    this.searchOpened = false;
+                    this.changeDetectorRef.detectChanges()
+                }
+            )
+        )
+    }
+
+    ngOnDestroy() {
+        this.subscriptions.unsubscribe();
     }
 
     submit() {
