@@ -122,7 +122,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    this.reinstallSubscription()
     if (this.ticket && this.file) {
         if (this.fileProgress$.value == 100) {
             this.annotationStart();
