@@ -24,6 +24,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   private ticket: string;
   public textAreaControl: FormControl;
+  private firstSubmit: boolean = true;
   public file = null;
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
@@ -84,7 +85,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     formData.append('file', file);
     this.subscriptions.add(
       this.uploadService.uploadFile(file, formData).subscribe(
-        percent => this.fileProgress$.next(percent)
+        percent => this.fileProgress$.next(percent),
+          () =>this.fileProgress$.next(null)
       )
     );
   }
@@ -122,14 +124,20 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    if (this.ticket && this.file) {
+    if ((this.ticket && this.file) || this.firstSubmit) {
         if (this.fileProgress$.value == 100) {
+            this.firstSubmit = false;
             this.annotationStart();
         } else {
-            this.toastr.warning('Your file is still loading', 'Warning')
+            if (this.fileProgress$.value == null) {
+                this.toastr.error('The file failed to load', 'Error')
+            } else {
+                this.toastr.warning('The file is still loading', 'Warning')
+            }
         }
     } else {
       if (!!this.textAreaControl.value) {
+        this.firstSubmit = false;
         const file = new File([this.textAreaControl.value], 'my-list.txt');
         this.uploadFile(file, true);
       } else {
