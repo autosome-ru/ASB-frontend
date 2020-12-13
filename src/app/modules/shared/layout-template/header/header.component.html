@@ -83,6 +83,17 @@
             Browse
         </a>
         <a
+            class="nav-item nav-link py-sm-0 header-link"
+            mat-list-item
+            href="https://ananastra.autosome.ru"
+            target="_blank"
+            matTooltip="SNP set annotation with ANANASTRA"
+            matTooltipClass="tooltip-bigger"
+            rel="noopener noreferrer"
+        >
+            Annotate
+        </a>
+        <a
             class="nav-item nav-link py-sm-0"
             mat-list-item
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/help'"
