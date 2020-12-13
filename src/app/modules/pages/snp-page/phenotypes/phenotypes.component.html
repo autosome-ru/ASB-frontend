@@ -1,9 +1,10 @@
 <ng-container *ngIf="phenotypesDb.length > 0; else emptyContentTemplate">
-    <dl class="row px-0 mx-0"
+    <div class="px-0 mx-0 py-1"
+          style="line-height: 1.8rem"
         *ngFor="let db of phenotypesDb"
     >
-        <dt
-            class="col-auto" style="padding-left: 0"
+        <b
+            class="col-auto" style="padding-left: 0;"
         >
             <a
                 [href]="phenToLink[db](snpData.rsId)"
@@ -12,18 +13,19 @@
             >
                 {{phenToView[db]}}
             </a>
-        </dt>
-        <dd>
+        </b>
+        <span >
             <span>
                 <span
+                    style="padding-bottom: 0.5rem"
                     *ngFor="let phenotype of snpData.phenotypes[db]; let last=last"
-                    style="display: flex; flex-wrap: wrap"
                 >
                     {{phenotype}}<span *ngIf="!last">,&nbsp;</span>
                 </span>
             </span>
-        </dd>
-    </dl>
+        </span>
+        <br>
+    </div>
 </ng-container>
 
 <ng-template #emptyContentTemplate>
