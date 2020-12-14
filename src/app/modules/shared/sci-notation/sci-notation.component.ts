@@ -7,8 +7,6 @@ import {writeScientificNum} from "../../../functions/scientific.helper";
   styleUrls: ['./sci-notation.component.less']
 })
 export class SciNotationComponent implements OnInit {
-    @ViewChild('fdrViewTemplate', {static: true})
-    private fdrViewTemplate: TemplateRef<{value: number}>;
     @Input()
     value: number;
     @Input()

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {AsbStatsDataModel} from "../../../../models/annotation.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
+import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 
 @Component({
     selector: 'asb-ticket-table-tmp',
@@ -27,7 +28,7 @@ export class TicketTableTmpComponent implements OnInit {
             },
             odds: {
                 view: 'Odds ratio',
-                valueConverter: v => v.toFixed(2),
+                valueConverter: v => stringOrNumberConverter(v),
                 isDesc: true
             },
             asbsRs: {

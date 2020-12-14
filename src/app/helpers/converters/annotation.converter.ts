@@ -9,6 +9,7 @@ import {
     StatsDataBackendModel,
     StatsDataModel
 } from '../../models/annotation.model';
+import {stringToNum} from "../helper/check-functions.helper";
 
 function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBackendModel): StatsDataModel {
     return {
@@ -28,20 +29,20 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
         ratio: stats.all_candidates_rs > 0 ? stats.all_asbs_rs / stats.all_candidates_rs * 100 : 0,
         tfRatio: stats.tf_candidates_rs > 0 ? stats.tf_asbs_rs / stats.tf_candidates_rs * 100 : 0,
         clRatio: stats.cl_candidates_rs > 0 ? stats.cl_asbs_rs / stats.cl_candidates_rs * 100 : 0,
-        pValue: stats.all_log10_p_value_rs,
-        oddsRatio: stats.all_odds_rs,
+        pValue: stringToNum(stats.all_log10_p_value_rs),
+        oddsRatio: stringToNum(stats.all_odds_rs),
         notFound: stats.all_rs - stats.all_candidates_rs,
         clCandidates: stats.cl_candidates_rs - stats.cl_asbs_rs,
         clAsbs: stats.cl_asbs_rs,
-        clOdds: stats.cl_odds_rs,
+        clOdds: stringToNum(stats.cl_odds_rs),
         totalSNPs: stats.all_rs,
-        clPvalue: stats.cl_log10_p_value_rs,
+        clPvalue: stringToNum(stats.cl_log10_p_value_rs),
         tfCandidates: stats.tf_candidates_rs - stats.tf_asbs_rs,
         processingTime: stats.processing_time,
         processingStartedAt: new Date(Date.now() - new Date(stats.processing_started_at).getTime()),
         lastStatusUpdateAt: stats.last_status_update_at,
-        tfPvalue: stats.tf_log10_p_value_rs,
-        tfOdds: stats.tf_odds_rs,
+        tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
+        tfOdds: stringToNum(stats.tf_odds_rs),
         expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
@@ -54,13 +55,13 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
 }
 function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel): AsbStatsDataModel {
     return {
-        odds: model.odds,
+        odds: stringToNum(model.odds),
         asbs: model.asbs,
         asbsRs: model.asbs_rs,
         candidates: model.candidates,
         candidatesRs: model.candidates_rs,
-        pValue: -model.log10_p_value,
-        fdr: -model.log10_fdr,
+        pValue: stringToNum(model.log10_p_value, true),
+        fdr: stringToNum(model.log10_fdr, true),
         name: model.name
     }
 }

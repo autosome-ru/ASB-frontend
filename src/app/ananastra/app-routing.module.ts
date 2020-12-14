@@ -30,7 +30,7 @@ const routes: Routes = [
     },
     {
         path: 'help',
-        loadChildren: () => import('src/app/modules/pages/ananas-help/ananas-help.module').then(
+        loadChildren: () => import('src/app/modules/pages/ananas-help-page/ananas-help.module').then(
             mod => mod.AnanasHelpModule
         )
     },

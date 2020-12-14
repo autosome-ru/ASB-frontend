@@ -10,6 +10,28 @@ export function getPaginatorOptions(len: number): number[] {
         [5, 10, 25, 50];
 }
 
+export function stringOrNumberConverter(v: number | string, fractionDigits: number = 2) {
+    if (v === null) {
+        return 'n/a'
+    }
+    if (typeof v == 'number') {
+        return v.toFixed(fractionDigits)
+    } else {
+        return v === 'infinity' ? 'ထ' : v
+    }
+}
+export function stringToNum(v: string, toInvert: boolean = false): string | number{
+
+    if (v === null) {
+        return v
+    }
+    const numV = Number(v)
+    if (!isNaN(numV)) {
+        return numV * (toInvert ? -1 : 1)
+    } else {
+        return v
+    }
+}
 export function checkIfNumberOrFrac(data: string ) {
     if (data.match(/^\d+$/)) {
         return Number(data);

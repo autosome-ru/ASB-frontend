@@ -28,19 +28,19 @@ export interface StatsDataModel {
     expRatio: number;
     tfRatio: number;
     clRatio: number;
-    pValue: number;
+    pValue: number | string;
     notFound: number;
     totalSNPs: number;
-    oddsRatio: number;
+    oddsRatio: number | string;
     clAsbs: number;
     clCandidates: number;
-    clPvalue: number;
-    clOdds: number;
+    clPvalue: number | string
+    clOdds: number | string;
     processingTime: string;
     tfAsbs: number;
     tfCandidates: number;
-    tfPvalue: number;
-    tfOdds: number;
+    tfPvalue: number | string;
+    tfOdds: number | string;
     tfAsbList: CountModel[];
     clAsbList: CountModel[];
     tfAsbData: AsbStatsDataModel[];
@@ -56,21 +56,21 @@ export interface StatsDataBackendModel {
     all_rs: number;
     all_asbs_rs: number;
     all_candidates_rs: number;
-    all_log10_p_value_rs: number;
-    all_odds_rs: number;
+    all_log10_p_value_rs: string;
+    all_odds_rs: string;
     cl_asbs_rs: number;
     expected_fraction_all: number;
     cl_candidates_rs: number;
     tf_asb_data: AsbStatsBackendDataModel[];
     cl_asb_data: AsbStatsBackendDataModel[];
-    cl_log10_p_value_rs: number;
-    cl_odds_rs: number;
+    cl_log10_p_value_rs: string;
+    cl_odds_rs: string;
     processing_time: string;
     concordant_asbs: ConcordanceBackendModel[];
     tf_asbs_rs: number;
     tf_candidates_rs: number;
-    tf_log10_p_value_rs: number;
-    tf_odds_rs: number;
+    tf_log10_p_value_rs: string;
+    tf_odds_rs: string;
     tf_asb_counts: CountModel[];
     cl_asb_counts: CountModel[];
     tf_asb_counts_top: CountModel[];
@@ -84,9 +84,9 @@ export interface AsbStatsBackendDataModel {
     candidates: number;
     asbs_rs: number;
     candidates_rs: number;
-    odds: number;
-    log10_p_value: number;
-    log10_fdr: number
+    odds: string;
+    log10_p_value: string;
+    log10_fdr: string;
 }
 export interface AsbStatsDataModel {
     name: string;
@@ -94,9 +94,9 @@ export interface AsbStatsDataModel {
     candidates: number;
     asbsRs: number;
     candidatesRs: number;
-    odds: number;
-    pValue: number;
-    fdr: number
+    odds: number | string;
+    pValue: number | string;
+    fdr: number | string;
 }
 export interface PingDataBackendModel {
     ticket_id: string;

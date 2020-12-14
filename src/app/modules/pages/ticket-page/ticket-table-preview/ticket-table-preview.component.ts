@@ -10,7 +10,13 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from '../../../../models/table.model';
-import {AnnotationDataModel, AnnotationSnpModel, CountModel, StatsDataModel} from 'src/app/models/annotation.model';
+import {
+    AnnotationDataModel,
+    AnnotationSnpModel,
+    AsbStatsDataModel,
+    CountModel,
+    StatsDataModel
+} from 'src/app/models/annotation.model';
 import {TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
@@ -363,5 +369,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     expandedChange(state: boolean): void {
         this.panelExpandedChange.emit(state)
+    }
+
+    getTfOrClData(metaInfo: StatsDataModel): AsbStatsDataModel[] {
+        return this.tfOrCl === 'tf' ? metaInfo.tfAsbData : metaInfo.clAsbData
     }
 }

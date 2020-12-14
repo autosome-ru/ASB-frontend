@@ -33,7 +33,7 @@ const routes: Routes = [
     {
         path: "help",
         loadChildren: () => import(
-            "src/app/modules/pages/help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
+            "src/app/modules/pages/adastra-help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
         data: {
             title: "ADASTRA - help",
             description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"

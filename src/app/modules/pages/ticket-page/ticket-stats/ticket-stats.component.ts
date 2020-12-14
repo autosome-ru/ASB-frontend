@@ -4,6 +4,7 @@ import {AnnotationDataModel, StatsDataModel} from 'src/app/models/annotation.mod
 import {writeScientificNum} from '../../../../functions/scientific.helper';
 import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
+import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 
 @Component({
     selector: 'astra-ticket-stats',
@@ -77,5 +78,8 @@ export class TicketStatsComponent implements OnInit {
 
     getTextByStepName(text: string) {
         return getTextByStepNameAnanas(text)
+    }
+    valueToView(value: string | number, precision: number = 2): string {
+        return stringOrNumberConverter(value, precision)
     }
 }

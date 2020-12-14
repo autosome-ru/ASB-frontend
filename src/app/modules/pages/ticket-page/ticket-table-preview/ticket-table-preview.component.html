@@ -55,6 +55,7 @@
     <div class="row mx-0 flex-lg-nowrap flex-wrap"
          style="display: flex; align-items: center; flex-wrap: wrap"
     >
+    <ng-container *ngIf="getTfOrClData(ticketStatistics.metaInfo).length > 0; else noDataTemplate">
     <div class="wide-chart-big"
          style="margin-top: 0.5rem; width: 100%"
          joyrideStep="pie-chart"
@@ -77,9 +78,10 @@
          [stepContentParams]="getTextByStepName('odds-table')"
     >
         <asb-ticket-table-tmp
-            [data]="tfOrCl === 'tf' ? ticketStatistics.metaInfo.tfAsbData : ticketStatistics.metaInfo.clAsbData"
+            [data]="getTfOrClData(ticketStatistics.metaInfo)"
         ></asb-ticket-table-tmp>
     </div>
+    </ng-container>
     </div>
     </mat-expansion-panel>
     <mat-divider class="mb-1"></mat-divider>
@@ -339,4 +341,8 @@
     <asb-step-template [text]="text">
 
     </asb-step-template>
+</ng-template>
+<ng-template #noDataTemplate>
+        <span style="padding-top: 10px;width: 100%;text-align: center; padding-bottom: 10px"
+        >No Data Available</span>
 </ng-template>

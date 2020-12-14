@@ -1,4 +1,7 @@
-export function writeScientificNum(num, precision): string {
+export function writeScientificNum(num: number, precision: number): string {
+  if (num === null) {
+      return  `<span>n/a</span>`
+  }
   const power = Math.ceil(num);
   const realNum = Math.pow(10, -num);
   if (num <= 2) {
