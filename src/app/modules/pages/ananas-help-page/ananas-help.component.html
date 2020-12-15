@@ -7,6 +7,53 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h4 style="margin-bottom: 0">
+                            Where to start?</h4>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="px-3">
+                    <dl>
+                        <dt>Page tour</dt>
+                        <dd>
+                            <div>
+                            <img
+                                style="height: 100px"
+                                src="assets/images/example.ananas.png"
+                                alt=""
+                            >
+                            </div>
+                            The home page and resulting report page include the 'page tours'. Use this icon!
+                        </dd>
+                        <dt>Examples</dt>
+                        <dd>
+                            The following examples (1-3) are provided for
+                            getting started with ANANASTRA:
+                            <br>
+                            (1) Significant SNPs found in COVID19-hg GWAS meta-analyses round 4
+                            <a
+                                href="https://www.covid19hg.org/results"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                            >
+                                www.covid19hg.org/results</a>, C1_ALL: Covid vs. lab/self-reported negative;
+                            <br>
+                            (2) Genomic region encompassing NFIA gene encoding Nuclear factor 1 A-type transcription factor;
+                            <br>
+                            (3) SNPs associated with Inflammatory bowel disease
+                            <a
+                                rel="noopener noreferrer"
+                                target="_blank"
+                                href="https://doi.org/10.1038/nature22969"
+                            >
+                                doi:10.1038/nature22969</a>.
+                        </dd>
+                    </dl>
+                </div>
+            </mat-expansion-panel>
+            <mat-divider></mat-divider>
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h4 style="margin-bottom: 0">
                             What is ASB
                         </h4>
                     </mat-panel-title>
@@ -149,7 +196,7 @@
                 </section>
                 <section id="ASB_enrichement" >
                     <h5
-                        [ngClass]="fragmentOpened ? 'theme-primary-border' : ''"
+                        [ngClass]="fragment == 'ASB_enrichment' ? 'theme-primary-border' : ''"
                     >ASB enrichment estimation</h5>
                     <dl class="px-3">
                         <dt>Overall enrichment for TF- and cell type-specific ASBs</dt>

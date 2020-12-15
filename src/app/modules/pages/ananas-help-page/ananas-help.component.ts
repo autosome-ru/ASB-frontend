@@ -14,21 +14,22 @@ export class AnanasHelpComponent implements OnInit, OnDestroy {
     @ViewChild('glossary')
     private glossary: MatExpansionPanel;
     private subscription = new Subscription();
-    public fragmentOpened: boolean;
+    public fragment: string;
 
     constructor(private router: Router,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
+        this.fragment = this.route.snapshot.fragment;
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe()
+        this.subscription.unsubscribe();
     }
 
     openGlossary(fragment: string) {
-        this.fragmentOpened = true;
+        this.fragment = fragment
         if (!this.glossary.expanded) {
             this.subscription = this.glossary._bodyAnimationDone.subscribe(
                 () => {
