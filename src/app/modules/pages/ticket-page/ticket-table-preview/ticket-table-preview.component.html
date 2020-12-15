@@ -191,7 +191,8 @@
             [columnModel]="columnModel"
             [sortData]="sortData"
             [data]="tableData"
-            [pageSize]="50"
+            [pageSize]="10"
+            [initialSorting]="{active: 'chr', direction: 'asc'}"
             [paginatorOptions]="[5, 10, 25, 100, 500, 1000]"
         ></asb-table>
     </div>

@@ -6,7 +6,7 @@ import * as fromActions from 'src/app/store/action/ananastra';
 import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {demo1, demo2} from "../../../../helpers/constants/demo.ananas";
+import {demo1, demo2, demo3} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {ToastrService} from "ngx-toastr";
 
@@ -26,6 +26,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public textAreaControl: FormControl;
   private firstSubmit: boolean = true;
   public file = null;
+  public isHovered: boolean;
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
               private router: Router,
@@ -155,11 +156,30 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
     initDemo(id: number) {
-      const patchValue: string = id === 1 ? demo1 : demo2;
+      let patchValue: string;
+      switch (id) {
+          case 1:
+              patchValue = demo1;
+              break;
+          case 2:
+              patchValue = demo2;
+              break;
+          case 3:
+              patchValue = demo3;
+              break;
+      }
       this.textAreaControl.patchValue(patchValue);
     }
 
     getTextByStepName(str: string) {
         return getTextByStepNameAnanas(str);
+    }
+
+    backgroundChanged(isHovered: boolean) {
+        this.isHovered = isHovered
+    }
+
+    countStrings(value: string): number {
+        return value.trim().split('\n').length
     }
 }

@@ -43,23 +43,25 @@
           <b>Observed ASB fraction</b>: {{stats.ratio.toFixed(1)}}% <span class="additional-selection">(Expected: {{stats.expRatio.toFixed(1)}}%)</span>
       </li>
       <li>
-        <b>ASB enrichment odds-ratio</b>: {{valueToView(stats.oddsRatio)}}
-        <span class="additional-selection">(SNPs with TF-ASBs: {{valueToView(stats.tfOdds)}},
-          SNPs with cell type-ASBs: {{valueToView(stats.clOdds)}})</span>
+          <b>ASB enrichment odds-ratio</b>:
+          <b>{{valueToView(stats.oddsRatio)}}</b>
+        <span class="additional-selection">
+            (SNPs with TF-ASBs: <b>{{valueToView(stats.tfOdds)}}</b>,
+          SNPs with cell type-ASBs: <b>{{valueToView(stats.clOdds)}}</b>)</span>
       </li>
       <li>
         <b>Fisher's exact test P-value</b>:
-        <span
+        <b><span
           [innerHTML]="writeScientificNum(stats.pValue, 2)"
-        ></span>
+        ></span></b>
         <span class="additional-selection"> (SNPs with TF-ASBs:
-          <span
+          <b><span
             [innerHTML]="writeScientificNum(stats.tfPvalue, 2)"
-          ></span>,
+          ></span></b>,
           SNPs with cell type-ASBs:
-          <span
+          <b><span
             [innerHTML]="writeScientificNum(stats.clPvalue, 2)"
-          ></span>)</span>
+          ></span></b>)</span>
       </li>
     </ul>
   </div>

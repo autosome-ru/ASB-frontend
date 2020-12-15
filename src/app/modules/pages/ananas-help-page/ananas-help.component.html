@@ -11,28 +11,31 @@
                         </h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
-                    <b>ASB</b> stands for <b>A</b>llele <b>S</b>pecific <b>B</b>inding -
-                    an event of a particular TF ... . ANANASTRA annotates provided SNPs with ASBs
-                    from <a href="https://adastra.autosome.ru"
-                            rel="noopener noreferrer" target="_blank"
-                >
-                    ADASTRA</a> database based on more than 15000
-                    <a href="https://en.wikipedia.org/wiki/ChIP_sequencing"
-                       rel="noopener noreferrer"
-                       target="_blank"
-                    >
-                        ChIP-seq</a>
-                    experiments from
+                <div class="px-3">
+                    <b>ASB</b> stands for <b>A</b>llele-<b>S</b>pecific <b>B</b>inding.
+                    A transcription factor might prefer to bind one of two alternative alleles of
+                    homologous chromosomes and thus exhibit allele-specific binding.
+                    ASB highlights regulatory SNPs with high potential to affect gene expression.
+                    Systematic dissection of ChIP-Seq data processed in the
                     <a href="http://gtrd.biouml.org/"
                        rel="noopener noreferrer"
                        target="_blank"
                     >
-                        GTRD</a>.
+                        GTRD</a>
+                    database allowed us to identify hundreds of thousands ASB events
+                    for a wide range of transcription factors.
+
+                    ANANASTRA annotates a set of user-submitted SNPs with ASBs
+                    from the
+                    <a href="https://adastra.autosome.ru"
+                       rel="noopener noreferrer"
+                       target="_blank"
+                    >
+                        ADASTRA</a> database.
                 </div>
             </mat-expansion-panel>
             <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel class="mat-elevation-z0" #glossary>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h4 style="padding-top: 0.5rem">Glossary</h4>
@@ -47,14 +50,18 @@
                         <dd>Background Allelic Dosage (BAD) is the expected ratio
                             of major to minor allelic frequencies in a particular genomic region.
                             <br>
-                            For example, if a the same copy number of two alternating alleles
-                            is the same,  alleles,  (e.g. 1:1 (diploid), 2:2, or 3:3,) then
+                            For example, if a copy number of two alternating alleles
+                            is the same (e.g. 1:1 (diploid), 2:2, or 3:3), then
                             the respective region has BAD=1, i.e. the expected ratio of
                             reads mapped to alternative alleles on heterozygous SNVs is 1.
                             All triploid regions have BAD=2 and the expected allelic read
                             ratio is either 2 or ½. In general, if BAD of a particular region
                             is known, then the expected frequencies of allelic reads
-                            are 1/(BAD +1) and BAD/(BAD + 1).
+                            are 1/(BAD +1) and BAD/(BAD + 1). More details can be found in the
+                            <a
+                                href="https://www.biorxiv.org/content/10.1101/2020.10.07.327643v3"
+                                rel="noopener noreferrer" target="_blank"
+                            >ADASTRA preprint</a>.
                             <br>
                         </dd>
                     </dl>
@@ -64,11 +71,15 @@
                 >
                     <h5>ASB properties</h5>
                     <dl class="px-3">
-                        <dt>ASB significance</dt>
+                        <dt id="sign">ASB significance</dt>
                         <dd>ASB calling is done separately for each ChIP-Seq experiment.
                             For each candidate ASB site, the P-values for Reference and
                             Alternative allele are calculated separately according to the
-                            fitted Negative Binomial Mixture model.
+                            fitted Negative Binomial Mixture model (see Methods in the
+                            <a
+                                href="https://www.biorxiv.org/content/10.1101/2020.10.07.327643v3"
+                                rel="noopener noreferrer" target="_blank"
+                            >ADASTRA preprint</a> for details).
                             <br>
                             For a particular SNV, the P-values from individual data sets
                             are aggregated for each <b>T</b>ranscription <b>F</b>actor (for ChIP-Seq data from all cell types),
@@ -91,11 +102,6 @@
                             are equal to 1, considering Ref- and Alt-ASBs separately.
                             <br>
                         </dd>
-                        <dt>ASB SNPs</dt>
-                        <dd>If there is at least one (TF- or cell type-) ASB event at SNP,
-                            this SNP is called an <b>ASB SNP</b>.
-                            <br>
-                        </dd>
                     </dl>
                 </section>
                 <section id="Motif_annotation">
@@ -112,79 +118,110 @@
                             <ul style="list-style-type: circle;">
                                 <li>
                                     <b>n/a:</b>
-                                    Motif is not available</li>
+                                    Motif is not available;</li>
                                 <li>
                                     <b>No hit:</b>
-                                    The best hit P-value is higher than 0.0005 threshold
+                                    The best hit P-value is higher than 0.0005 threshold;
                                 </li>
                                 <li>
                                     <b>Weak concordant:</b>
                                     The absolute value of FC is less than 2 but
-                                    consistent with the allelic read imbalance
+                                    consistent with the allelic read imbalance;
                                 </li>
                                 <li>
                                     <b>Weak discordant:</b>
                                     The absolute value of FC is less than 2 and
-                                    not consistent with the allelic read imbalance
+                                    not consistent with the allelic read imbalance;
                                 </li>
                                 <li>
                                     <b>Concordant:</b>
                                     The absolute value of FC is greater or equal
-                                    than 2 and consistent with allelic read imbalance
+                                    to 2 and consistent with allelic read imbalance;
                                 </li>
                                 <li>
                                     <b>Discordant:</b>
-                                    The absolute value of  FC is greater or equal than
-                                    2 but not consistent with allelic read imbalance
+                                    The absolute value of  FC is greater or equal to
+                                    2 but not consistent with allelic read imbalance.
                                 </li>
                             </ul>
                         </div>
                     </dl>
                 </section>
-                <section id="ASB_enrichement">
-                    <h5>ASB enrichment</h5>
+                <section id="ASB_enrichement" >
+                    <h5
+                        [ngClass]="fragmentOpened ? 'theme-primary-border' : ''"
+                    >ASB enrichment estimation</h5>
                     <dl class="px-3">
-                        <dt>Overall enrichment</dt>
+                        <dt>Overall enrichment for TF- and cell type-specific ASBs</dt>
                         <dd>
-                            One-sided Fisher's exact test is performed to assess the
+                            <div>
+                            Right-sided Fisher's exact test is performed to assess the
                             ASB enrichment significance. The following contingency table is
                             used
                             <table class="my-table">
                                 <tbody>
                                 <tr style="height:30px">
-                                    <td># of found ASB SNPs</td>
-                                    <td># of found non-ASB SNPs</td>
+                                    <td># of SNPs with ASBs in user-submitted list</td>
+                                    <td># of SNPs with ASBs in the database</td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td># of ASB SNPs in database</td>
-                                    <td># of non-ASB SNPs in database</td>
+                                    <td># of non-ASB SNPs in user-submitted list</td>
+                                    <td># of non-ASB SNPs in the database</td>
                                 </tr>
                                 </tbody>
                             </table>
-                        </dd>
-                        <dt>Particular TF or cell type enrichment</dt>
-                        <dd>text
-                            <br>
+                            Similar tests are performed to assess individual
+                                TF-ASB and cell type-ASB enrichment.
+                                To have a proper background, non-ASB SNPs are selected
+                                to pass the same read coverage thresholds
+                                as the genuine significant ASB SNPs, i.e. most of those
+                                are located within ChIP-Seq peaks of the respective TFs.
+                            </div>
                         </dd>
                     </dl>
                 </section>
             </mat-expansion-panel>
             <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0" expanded>
+            <mat-expansion-panel class="mat-elevation-z0">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <h4 style="margin-bottom: 0">
-                            Output specifications</h4>
+                        <h4 style="margin-bottom: 0" class="d-none d-md-block">
+                            Understanding ANANASTRA report pages</h4>
+                        <h4 style="margin-bottom: 0" class="d-block d-md-none">
+                            Report pages</h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div>
-                    ANANASTRA report page contains 3 main parts:
-                    <h5>Summary</h5>
-                    <h5>ASB events of particular TFs or cell types</h5>
-                    <h5>SNP annotation with ASB</h5>
-<!--                    <dl class="px-3">-->
-<!--                        <dt>Summary</dt>-->
-<!--                    </dl>-->
+                <div class="px-3">
+                    Each ANANASTRA report page contains 3 sections: (1) Summary, (2) ASB events related to particular TFs or cell types, and (3) Complete table of ASBs found at user-submitted SNPs.
+                    <dl>
+                        <dt>Summary</dt>
+                        <dd>
+                            This section is dedicated to general information on ASB events found in the submitted set of SNPs.
+                            Particularly, we report the observed fraction of ASBs
+                            (among all candidate ASB sites passing certain read coverage thresholds, see <>)
+                            ASB enrichment significance is calculated with the right-tail Fisher's exact test, see
+                            <a
+                                (click)="openGlossary('ASB_enrichement'); $event.preventDefault()"
+                                href="/help#ASB_enrichement"
+                            >
+                                here</a>.
+                        </dd>
+                        <dt>ASB events related to particular TFs or cell types</dt>
+                        <dd>The second section contains information about ASB events of particular
+                        TFs or cell types. For each TF and cell type, we compute a separate P-value
+                        using the same strategy as for the global enrichment, the P-values are then
+                        corrected for the number of tested TFs / cell types (with at least 1 observed
+                        ASB in the user's list) using Benjamini-Hogberg (FDR) procedure.
+                        The TFs / cell types with the lowest FDR are displayed on top by default.</dd>
+                        <dt>Complete table of ASBs found at user-submitted SNPs</dt>
+                        <dd>
+                            The final section provides a detailed table listing all ASB events
+                            (in the expanded view mode) or showing only the single most
+                            significant TF-/Cell type- ASB event per SNP (in the collapsed view mode).
+                            Each mode allows downloading a complete table (the list of columns visible
+                            in the online report can be adjusted when necessary).
+                        </dd>
+                    </dl>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
