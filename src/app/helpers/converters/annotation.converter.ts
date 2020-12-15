@@ -92,6 +92,11 @@ export function convertAnnotationSnpBackendToAnnotationSnpModel(
     model: AnnotationSnpBackendModel): AnnotationSnpModel {
 
     return {
+        clinvar: model.clinvar,
+        phewas: model.phewas,
+        grasp: model.grasp,
+        ebi: model.ebi,
+        finemapping: model.finemapping,
         altBase: model.alt,
         chr: model.chromosome,
         rsId: typeof model.rs_id === 'string' ? model.rs_id : 'rs' + model.rs_id,

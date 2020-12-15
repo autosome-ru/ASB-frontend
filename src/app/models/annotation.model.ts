@@ -142,6 +142,11 @@ export interface AnnotationSnpBackendModel {
     motif_position?: number;
     motif_orientation?: boolean;
     motif_concordance?: string;
+    clinvar: string;
+    ebi: string;
+    finemapping: string;
+    grasp: string;
+    phewas: string;
 }
 
 export interface AnnotationSnpModel extends SnpGenPosModel, MotifSnpModel {
@@ -158,4 +163,9 @@ export interface AnnotationSnpModel extends SnpGenPosModel, MotifSnpModel {
     esAlt: number;
     topEs: number;
     alleles?: string[];
+    clinvar: string;
+    ebi: string;
+    finemapping: string;
+    grasp: string;
+    phewas: string;
 }

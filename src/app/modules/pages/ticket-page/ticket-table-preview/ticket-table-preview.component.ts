@@ -223,6 +223,24 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
                 columnTemplate: this.fdrViewTemplate
             };
             if (this.tfOrCl === 'tf') {
+                this.columnModel.motifFc = {
+                    view: "Motif fold change",
+                        valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
+                        helpMessage: 'log₂(Alt/Ref motif p-value)',
+                        isDesc: true
+                };
+                this.columnModel.motifPRef = {
+                    view: "Motif Ref p-value",
+                        columnTemplate: this.fdrViewTemplate,
+                }
+                this.columnModel.motifPAlt = {
+                    view: "Motif Alt p-value",
+                        columnTemplate: this.fdrViewTemplate,
+                }
+                this.columnModel.motifOrientation = {
+                    view: 'Motif orientation',
+                        valueConverter: v => v !== null ? v ? '+' : '-' : "n/a",
+                }
                 this.columnModel.motifConcordance = {
                     view: "Motif concordance",
                     columnTemplate: this.concordanceTemplate,
@@ -236,8 +254,25 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             columnTemplate: this.gtexTemplate
         };
         this.columnModel.targetGenes = {
-            view: 'GTEx eQTL target genes'
-        }
+            view: 'GTEx eQTL target genes',
+            valueConverter: v => v ? v : ''
+        };
+        this.columnModel.clinvar = {
+            view: 'ClinVar phenotypes',
+            valueConverter: v => v ? v : ''
+        };
+        this.columnModel.ebi = {
+            view: 'EMBL-EBI phenotypes',
+            valueConverter: v => v ? v : ''
+        };
+        this.columnModel.grasp = {
+            view: 'GRASP phenotypes',
+            valueConverter: v => v ? v : ''
+        };
+        this.columnModel.phewas = {
+            view: 'PheWAS phenotypes',
+            valueConverter: v => v ? v : ''
+        };
         this.displayedColumns.push("isEqtl")
         this.columnsControl = this.formBuilder.control(this.displayedColumns);
         this.initialDisplayedColumns = this.displayedColumns;
