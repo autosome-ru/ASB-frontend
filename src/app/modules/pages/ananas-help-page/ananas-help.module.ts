@@ -5,6 +5,9 @@ import { AnanasHelpRoutingModule } from './ananas-help-routing.module';
 import { AnanasHelpComponent } from './ananas-help.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDividerModule} from "@angular/material/divider";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -13,7 +16,10 @@ import {MatDividerModule} from "@angular/material/divider";
         CommonModule,
         AnanasHelpRoutingModule,
         MatExpansionModule,
-        MatDividerModule
+        MatDividerModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatIconModule
     ]
 })
 export class AnanasHelpModule { }

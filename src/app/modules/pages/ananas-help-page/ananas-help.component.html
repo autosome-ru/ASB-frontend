@@ -240,7 +240,12 @@
                 <div class="px-3">
                     Each ANANASTRA report page contains 3 sections: (1) Summary, (2) ASB events related to particular TFs or cell types, and (3) Complete table of ASBs found at user-submitted SNPs.
                     <dl>
-                        <dt>Summary</dt>
+                        <dt>Summary
+                            <span
+                                class="preview d-none d-lg-inline"
+                                (click)="openPreview('summary')"
+                            >
+                                preview</span></dt>
                         <dd>
                             This section is dedicated to general information on ASB events found in the submitted set of SNPs.
                             Particularly, we report the observed fraction of ASBs
@@ -252,14 +257,26 @@
                             >
                                 here</a>.
                         </dd>
-                        <dt>ASB events related to particular TFs or cell types</dt>
+                        <dt>
+                            ASB events related to particular TFs or cell types
+                            <span
+                                class="preview d-none d-lg-inline"
+                                (click)="openPreview('enrichment')"
+                            >
+                                preview</span></dt>
                         <dd>The second section contains information about ASB events of particular
                         TFs or cell types. For each TF and cell type, we compute a separate P-value
                         using the same strategy as for the global enrichment, the P-values are then
                         corrected for the number of tested TFs / cell types (with at least 1 observed
                         ASB in the user's list) using Benjamini-Hogberg (FDR) procedure.
                         The TFs / cell types with the lowest FDR are displayed on top by default.</dd>
-                        <dt>Complete table of ASBs found at user-submitted SNPs</dt>
+                        <dt>
+                            Complete table of ASBs found at user-submitted SNPs
+                            <span
+                                class="preview d-none d-lg-inline"
+                                (click)="openPreview('table')"
+                            >
+                                preview</span></dt>
                         <dd>
                             The final section provides a detailed table listing all ASB events
                             (in the expanded view mode) or showing only the single most
@@ -273,3 +290,21 @@
         </mat-accordion>
     </div>
 </div>
+<ng-template #preview let-data>
+    <h1
+        style="display: flex; justify-content: space-between; margin-bottom: 0;"
+        mat-dialog-title
+    >
+        <span>{{getNameOfId(data)}} preview</span>
+        <button mat-dialog-close
+                mat-icon-button tabindex="-1">
+            <mat-icon svgIcon="clear"></mat-icon>
+        </button>
+    </h1>
+    <mat-dialog-content>
+        <img
+            style="max-width: 100%"
+            [src]="'/assets/images/' + data + '.help.png'"
+        >
+    </mat-dialog-content>
+</ng-template>
