@@ -35,26 +35,29 @@ export class AnanasHelpComponent implements AfterViewInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
+    navigateToFragment(fragment: string) {
+        this.router.navigate([],
+            {relativeTo: this.route, fragment, replaceUrl: true}).then(
+            () => {
+                this.scrollToFragment()
+            }
+        )
+    }
+
     openGlossary(fragment: string) {
         this.fragment = fragment
         if (this.fragment) {
             if (!this.glossary.expanded) {
                 this.subscription = this.glossary._bodyAnimationDone.subscribe(
                     () => {
-
-                        this.router.navigate([],
-                            {relativeTo: this.route, fragment, replaceUrl: true}).then(
-                            () => {
-                                this.subscription.unsubscribe();
-                                this.scrollToFragment()
-                            }
-                        )
-
+                        this.subscription.unsubscribe();
+                        this.navigateToFragment(fragment);
+                        this.subscription = new Subscription();
                     }
                 )
                 this.glossary.open()
             } else {
-                this.scrollToFragment()
+                this.navigateToFragment(fragment)
             }
         }
     }
