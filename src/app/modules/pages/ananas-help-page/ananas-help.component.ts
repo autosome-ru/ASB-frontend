@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import {MatExpansionPanel} from "@angular/material/expansion";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
@@ -10,7 +17,7 @@ import {Subscription} from "rxjs";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AnanasHelpComponent implements OnInit, OnDestroy {
+export class AnanasHelpComponent implements AfterViewInit, OnDestroy {
     @ViewChild('glossary')
     private glossary: MatExpansionPanel;
     private subscription = new Subscription();
@@ -20,8 +27,8 @@ export class AnanasHelpComponent implements OnInit, OnDestroy {
                 private route: ActivatedRoute) {
     }
 
-    ngOnInit(): void {
-        this.fragment = this.route.snapshot.fragment;
+    ngAfterViewInit(): void {
+        this.openGlossary(this.route.snapshot.fragment)
     }
 
     ngOnDestroy() {
@@ -30,24 +37,25 @@ export class AnanasHelpComponent implements OnInit, OnDestroy {
 
     openGlossary(fragment: string) {
         this.fragment = fragment
-        if (!this.glossary.expanded) {
-            this.subscription = this.glossary._bodyAnimationDone.subscribe(
-                () => {
+        if (this.fragment) {
+            if (!this.glossary.expanded) {
+                this.subscription = this.glossary._bodyAnimationDone.subscribe(
+                    () => {
 
-                    this.router.navigate([],
-                        {relativeTo: this.route, fragment, replaceUrl: true}).then(
-                        () => {
-                            this.subscription.unsubscribe();
-                            this.scrollToFragment()
-                        }
-                    )
+                        this.router.navigate([],
+                            {relativeTo: this.route, fragment, replaceUrl: true}).then(
+                            () => {
+                                this.subscription.unsubscribe();
+                                this.scrollToFragment()
+                            }
+                        )
 
-                }
-            )
-            this.glossary.open()
-        }
-        else {
-            this.scrollToFragment()
+                    }
+                )
+                this.glossary.open()
+            } else {
+                this.scrollToFragment()
+            }
         }
     }
 
