@@ -21,7 +21,7 @@
                             >
                             <span *ngIf="!isAdastra">The home page and resulting report page</span>
                             <span *ngIf="isAdastra">The home page, search page and SNP page</span>
-                            include the 'page tours'. Use this icon!
+                            &nbsp;include the 'page tours'. Use this icon!
                         </dd>
                         <ng-container *ngIf="!isAdastra">
                             <dt>Examples</dt>
@@ -81,7 +81,9 @@
                        target="_blank"
                     >
                         ADASTRA</a> database.</span>
-                    <img src="assets/images/what_is_asb.svg" width="100%" style="margin-top: 1rem">
+                    <img src="assets/images/what_is_asb.svg"
+                         alt=""
+                         width="100%" style="margin-top: 1rem">
                 </div>
             </mat-expansion-panel>
             <mat-divider></mat-divider>
@@ -354,6 +356,7 @@
     <mat-dialog-content>
         <img
             style="max-width: 100%"
+            alt=""
             [src]="'/assets/images/' + data + '.help.png'"
         >
     </mat-dialog-content>
