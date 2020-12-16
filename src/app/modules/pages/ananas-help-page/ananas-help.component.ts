@@ -1,8 +1,8 @@
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
-    Component,
-    OnDestroy, TemplateRef,
+    Component, Input,
+    OnDestroy, OnInit, TemplateRef,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -18,7 +18,7 @@ import {MatDialog} from "@angular/material/dialog";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AnanasHelpComponent implements AfterViewInit, OnDestroy {
+export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('glossary')
     private glossary: MatExpansionPanel;
 
@@ -26,10 +26,16 @@ export class AnanasHelpComponent implements AfterViewInit, OnDestroy {
     private preview: TemplateRef<{ data: string }>
     private subscription = new Subscription();
     public fragment: string;
+    @Input()
+    public isAdastra: boolean
 
     constructor(private router: Router,
                 public dialog: MatDialog,
                 private route: ActivatedRoute) {
+    }
+
+    ngOnInit() {
+
     }
 
     ngAfterViewInit(): void {

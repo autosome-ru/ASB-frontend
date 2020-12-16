@@ -11,7 +11,10 @@ import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
-  declarations: [AnanasHelpComponent],
+    declarations: [AnanasHelpComponent],
+    exports: [
+        AnanasHelpComponent
+    ],
     imports: [
         CommonModule,
         AnanasHelpRoutingModule,
