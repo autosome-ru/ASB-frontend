@@ -317,6 +317,16 @@
     >{{value !== null ? value : 'n/a'}}</span>
 </ng-template>
 <ng-template #imagePopupTemplate let-data>
+    <h1
+        style="display: flex; justify-content: flex-end; margin-bottom: 0;"
+        mat-dialog-title
+    >
+
+        <button mat-dialog-close
+                mat-icon-button tabindex="-1">
+            <mat-icon svgIcon="clear"></mat-icon>
+        </button>
+    </h1>
     <mat-dialog-content>
     <img
         style="max-height: 65vh; max-width: 100%"
