@@ -22,7 +22,7 @@ function getText(step: string): string {
         case 'col-button':
             return 'It is possible to switch between the TF- and cell type-centric reports. Each report is available in the expanded form (all ASB events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
         case 'odds-table-open':
-            return 'Click to show a pie chart and\nresults of enrichment analysis\nfor particular TFs or cell types.'
+            return 'Click to show results of enrichment\nanalysis for particular TFs or cell types.'
         case 'odds-table':
             return 'The Fisher\'s exact test P-values\nare FDR-corrected for the number\nof TFs/cell types that have at least\none ASB event at user-submitted SNPs.'
         case 'pie-chart':

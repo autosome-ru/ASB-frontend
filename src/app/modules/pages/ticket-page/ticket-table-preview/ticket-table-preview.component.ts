@@ -306,9 +306,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     downloadTable(): void {
         this.downloadTableEmitter.emit();
     }
-    chartClicked(name: {event: MouseEvent, active: {_index: number}[]}) {
-        if (name.active && name.active.length > 0) {
-            this.filterTable(this.getChartData(this.ticketStatistics.metaInfo)[name.active[0]._index].name)
+    chartClicked(index: number) {
+        if (index != null) {
+            this.filterTable(this.getChartData(this.ticketStatistics.metaInfo)[index].name)
         }
     }
     filterTable(name?: string, onInit?: boolean) {

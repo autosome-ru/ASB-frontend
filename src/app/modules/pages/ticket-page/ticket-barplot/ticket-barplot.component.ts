@@ -4,7 +4,7 @@ import {
     Component, EventEmitter,
     Input,
     OnInit,
-    Output,
+    Output, ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import {ScriptService} from "../../../../services/script.service";
@@ -12,6 +12,7 @@ import {ToastrService} from "ngx-toastr";
 import {CountModel} from "../../../../models/annotation.model";
 import {TfOrCl} from "../../../../models/data.model";
 import {ChartOptions} from "chart.js";
+import {BaseChartDirective} from "angular-bootstrap-md";
 
 @Component({
     selector: 'asb-ticket-barplot',
@@ -21,19 +22,14 @@ import {ChartOptions} from "chart.js";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketBarplotComponent implements OnInit {
+    @ViewChild(BaseChartDirective)
+    chartDirective: BaseChartDirective;
     public chartLoaded: boolean;
     public chartDatasets: Array<any> =[];
     public chartLabels: Array<any> = [];
+    private lastHovered: number;
     @Input()
-    set data(value: CountModel[]) {
-        this.chartDatasets = [
-            {
-                data: value.map(s => s.count),
-                label: '123'
-            }
-        ]
-        this.chartLabels = value.map(s => s.name)
-    }
+    data: CountModel[]
 
     @Input()
     public isExpanded: boolean
@@ -61,32 +57,14 @@ export class TicketBarplotComponent implements OnInit {
             'rgba(255, 159, 64, 0.2)',
             'rgba(185, 185, 185, 0.2)'
         ];
-        let bg: string[]
-        if (value !== null) {
-            if (value === 6) {
-                bg = [
-                    ...backgroundOpacityColor.slice(0, value),
-                    backgroundColor[value]
-                ];
-            } else {
-                bg = [
-                    ...backgroundOpacityColor.slice(0, value),
-                    backgroundColor[value],
-                    ...backgroundOpacityColor.slice(value + 1),
-                ];
+        this.chartColors = backgroundColor.map(
+            (s, i) => {
+                return {
+                    backgroundColor: i=== value || value === null ? s : backgroundOpacityColor[i]
+                }
             }
-
-        } else {
-            bg = backgroundColor;
-        }
-
-        this.chartColors = [
-            {
-                backgroundColor: bg,
-                borderWidth: 2,
-            }
-        ];
-    };
+        );
+    }
 
     @Output()
     private chartClickEmitter = new EventEmitter<any>()
@@ -96,26 +74,57 @@ export class TicketBarplotComponent implements OnInit {
                 private toastrService: ToastrService) {
     }
 
-    public chartColors: any[];
+    public chartColors: any[] = [];
     public chartOptions: ChartOptions;
 
     ngOnInit(): void {
+        this.chartLabels = this.tfOrCl == 'tf' ? ['TFs'] : ['Cell types']
         this.scriptService.load('charts').then(data => {
             this.chartLoaded = data.filter(v => v.script === 'charts')[0].loaded;
             this.cd.detectChanges();
         }).catch(() => this.toastrService.error(
-            "Can't load Chart.js library, check your internet connection", 'Error'));
+            "Can't load Chart.js library, check your internet connection", 'Error')
+        );
+        console.log()
+
         this.chartOptions = {
             responsive: true,
             maintainAspectRatio: false,
-            legend: {
+            title: {
                 display: true,
-                position: 'bottom',
-                onClick: (e) => e.stopPropagation(),
-                labels: {
-                    boxWidth: 20,
-                    fontSize: this.tfOrCl === 'tf' ? 12 : 10
-                }
+                fontSize: 16,
+                fontColor: 'rgba(0, 0, 0, 0.87)',
+                fontFamily: 'Roboto, "Helvetica Neue", sans-serif',
+                text: `List of allele-specific binding events`
+            },
+            layout: {
+              padding: {
+                  left: 10,
+                  right: 10
+              }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true,
+                    gridLines: {
+                        display: false,
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        display: false,
+                        max: this.data.reduce((s, b) => s + b.count, 0)
+                    },
+                }],
+                yAxes: [{
+                    stacked: true,
+                    ticks: {
+                        beginAtZero: true,
+                        display: false
+                    },
+                    gridLines: {
+                        display: false,
+                    },
+                }]
             },
             animation: {
                 duration: 500,
@@ -129,23 +138,37 @@ export class TicketBarplotComponent implements OnInit {
                 }
             },
             tooltips: {
+                mode: 'point',
+                position: 'nearest',
                 callbacks: {
-                    label: (tooltipItem) => {
-                        let label = this.chartLabels[tooltipItem.index] || '';
-                        label = getShortLabel(label)
+                    label: (tooltipItem, data) => {
+                        let label = data.datasets[tooltipItem.datasetIndex].data[0] || '';
+                        label = getShortLabel(`${label}`)
                         if (label) {
                             label += ': ';
                         }
-                        label += this.chartDatasets[0].data[tooltipItem.index];
+                        label += data.datasets[tooltipItem.datasetIndex].label;
+                        this.lastHovered = tooltipItem.datasetIndex
                         return label;
                     }
                 }
             }
         };
+        this.chartDatasets = this.data.map(
+            (s, i) => {
+                return {
+                    data: [s.count],
+                    label: s.name
+                }
+            }
+        );
+
     }
 
-    chartClicked(event: any) {
-        this.chartClickEmitter.emit(event)
+    chartClicked(event) {
+        if (this.chartDirective.getPointDataAtEvent(event)) {
+            this.chartClickEmitter.emit(this.lastHovered)
+        }
     }
 }
 

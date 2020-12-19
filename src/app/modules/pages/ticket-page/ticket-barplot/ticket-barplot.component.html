@@ -1,14 +1,14 @@
 <div style="max-width: 100%; height: 100%">
     <div style="display: block; width: 100%; height: 100%">
         <canvas *ngIf="chartLoaded"
-                height="350"
+                height="100"
                 mdbChart
-                chartType="doughnut"
+                chartType="horizontalBar"
                 [datasets]="chartDatasets"
                 [labels]="chartLabels"
                 [colors]="chartColors"
                 [options]="chartOptions"
-                [legend]="true"
+                [legend]="false"
                 (chartClick)="chartClicked($event)"
         >
         </canvas>

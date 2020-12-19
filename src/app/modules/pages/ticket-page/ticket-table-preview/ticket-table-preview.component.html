@@ -1,4 +1,44 @@
 <div class=" pt-2">
+    <mat-expansion-panel
+        class="mat-elevation-z0"
+        style="padding-bottom: 10px"
+        #expansionPanel
+        [expanded]="panelExpanded"
+        (expandedChange)="expandedChange($event)"
+    >
+        <mat-expansion-panel-header
+            joyrideStep="odds-table-open"
+            [stepContent]="stepTemplate"
+            [stepContentParams]="getTextByStepName('odds-table-open')"
+            (next)="expansionPanel.open()"
+            class="pl-2 header">
+            <mat-panel-title>
+                <h6
+                    class="mb-0"
+                    style="font-weight: bold">
+                    Enrichment of allele-specific binding events tested for particular {{tfOrCl == 'tf' ? 'TFs' : 'cell types'}}
+                </h6>
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="row mx-0 flex-lg-nowrap flex-wrap"
+             style="display: flex; align-items: center; flex-wrap: wrap"
+        >
+            <ng-container *ngIf="getTfOrClData(ticketStatistics.metaInfo).length > 0; else noDataTemplate">
+
+                <div
+                    style="flex-grow: 1"
+                    joyrideStep="odds-table"
+                    [stepContent]="stepTemplate"
+                    [stepContentParams]="getTextByStepName('odds-table')"
+                >
+                    <asb-ticket-table-tmp
+                        [data]="getTfOrClData(ticketStatistics.metaInfo)"
+                    ></asb-ticket-table-tmp>
+                </div>
+            </ng-container>
+        </div>
+    </mat-expansion-panel>
   <div style="margin-bottom: 10px;
    display: flex; flex-wrap: wrap;
    align-items: center;
@@ -30,37 +70,13 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
     </div>
-    <mat-divider></mat-divider>
-    <mat-expansion-panel
-        class="mat-elevation-z0"
-        #expansionPanel
-        [expanded]="panelExpanded"
-        (expandedChange)="expandedChange($event)"
-    >
-        <mat-expansion-panel-header
-            joyrideStep="odds-table-open"
-            [stepContent]="stepTemplate"
-            [stepContentParams]="getTextByStepName('odds-table-open')"
-            (next)="expansionPanel.open()"
-            class="pl-2 header">
-            <mat-panel-title>
-                <h6
-                    class="mb-0"
-                    style="font-weight: bold">
-                    {{isExpanded ? 'A' : 'Top a'}}llele-specific binding events {{tfOrCl === 'tf' ? 'of' : 'in'}} particular {{tfOrCl === 'tf' ? 'transcription factors' : 'cell types'}}
-                </h6>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
 
-    <div class="row mx-0 flex-lg-nowrap flex-wrap"
-         style="display: flex; align-items: center; flex-wrap: wrap"
-    >
-    <ng-container *ngIf="getTfOrClData(ticketStatistics.metaInfo).length > 0; else noDataTemplate">
-    <div class="wide-chart-big"
-         style="margin-top: 0.5rem; width: 100%"
-         joyrideStep="pie-chart"
-         [stepContent]="stepTemplate"
-         [stepContentParams]="getTextByStepName('pie-chart')"
+    <mat-divider></mat-divider>
+
+    <div
+        joyrideStep="pie-chart"
+        [stepContent]="stepTemplate"
+        [stepContentParams]="getTextByStepName('pie-chart')"
     >
         <asb-ticket-barplot
             *ngIf="ticketStatistics?.metaInfo"
@@ -71,19 +87,6 @@
             (chartClickEmitter)="chartClicked($event)"
         ></asb-ticket-barplot>
     </div>
-    <div
-         style="flex-grow: 1"
-         joyrideStep="odds-table"
-         [stepContent]="stepTemplate"
-         [stepContentParams]="getTextByStepName('odds-table')"
-    >
-        <asb-ticket-table-tmp
-            [data]="getTfOrClData(ticketStatistics.metaInfo)"
-        ></asb-ticket-table-tmp>
-    </div>
-    </ng-container>
-    </div>
-    </mat-expansion-panel>
     <mat-divider class="mb-1"></mat-divider>
     <div>
         <div style="margin-bottom: 10px; width: 100%">

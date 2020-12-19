@@ -48,9 +48,10 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public ticketProcessing$: Observable<boolean>;
     public steps: string[] = [
         'ticket', 'stats',
-        'col-button',
         'odds-table-open',
-        'odds-table', 'pie-chart',
+        'odds-table',
+        'col-button',
+        'pie-chart',
         'columns-select', 'download-table',
         'filter'
     ];
