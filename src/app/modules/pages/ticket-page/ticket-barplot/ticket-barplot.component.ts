@@ -99,7 +99,7 @@ export class TicketBarplotComponent implements OnInit {
             },
             layout: {
               padding: {
-                  left: 10,
+                  left: 2,
                   right: 10
               }
             },
@@ -140,6 +140,7 @@ export class TicketBarplotComponent implements OnInit {
             tooltips: {
                 mode: 'point',
                 position: 'nearest',
+                titleFontSize: 0,
                 callbacks: {
                     label: (tooltipItem, data) => {
                         let label = data.datasets[tooltipItem.datasetIndex].data[0] || '';
@@ -155,7 +156,7 @@ export class TicketBarplotComponent implements OnInit {
             }
         };
         this.chartDatasets = this.data.map(
-            (s, i) => {
+            (s) => {
                 return {
                     data: [s.count],
                     label: s.name
