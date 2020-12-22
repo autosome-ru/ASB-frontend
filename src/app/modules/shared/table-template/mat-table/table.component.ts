@@ -69,10 +69,11 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
     @Input()
     set data(value: T[]) {
-        this._dataSource = new MatTableDataSource<T>(value);
-        this.initialValue = value;
+        this._dataSource = new MatTableDataSource<T>([])
         this.checkDataSource();
         if (this.externalPaginator && !this.paginatorOptions) { this._dataSource.paginator = this.externalPaginator; }
+        this._dataSource.data = value;
+        this.initialValue = value;
     }
 
     @Input()
@@ -106,8 +107,12 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
             this._dataSource.sortData = ((data, sort) =>
                 sort.direction ? this.sortData(data, sort) : this.initialValue);
         }
-        if (this.sortingDataAccessor) { this._dataSource.sortingDataAccessor = this.sortingDataAccessor; }
-        if (this.paginatorOptions) { this._dataSource.paginator = this.paginator; }
+        if (this.sortingDataAccessor) {
+            this._dataSource.sortingDataAccessor = this.sortingDataAccessor;
+        }
+        if (this.paginatorOptions) {
+            this._dataSource.paginator = this.paginator;
+        }
     }
     ngOnChanges(changes: SimpleChanges) {
         if (changes.externalPaginator && this.externalPaginator) {
