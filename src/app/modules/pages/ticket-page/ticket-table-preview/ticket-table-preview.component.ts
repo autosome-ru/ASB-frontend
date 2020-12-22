@@ -321,9 +321,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             }
         }
         if (name) {
-            this.tableData = this.data.filter(s => this.filterFunction(s, name))
+            this.tableData = this.data.filter(s => this.filterFunction(s, name)).slice(0, 200)
         } else {
-            this.tableData = this.data
+            this.tableData = this.data.slice(0, 200)
         }
     }
     getCountModel(): CountModel[] {

@@ -95,7 +95,7 @@
                 </tr>
             </ng-container>
         </table>
-        <ng-container *ngIf="_dataSource.data.length == 0">
+        <ng-container *ngIf="!(_dataSource && _dataSource.data && _dataSource.data.length >= 0)">
             <span style="padding-top: 10px;width: 100%;text-align: center;"
             >No Data Available</span>
         </ng-container>

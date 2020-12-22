@@ -55,7 +55,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         'columns-select', 'download-table',
         'filter'
     ];
-    panelExpanded: boolean = false;
+    public panelExpanded: boolean = false;
 
 
     constructor(private route: ActivatedRoute,
@@ -102,7 +102,9 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                             if (s && !s.loading && s.data) {
                                                 this.selectedTab = s.data.metaInfo.tfAsbList.length == 0 && s.data.metaInfo.clAsbList.length > 0 ? 'cl' : 'tf';
                                                 this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
-                                                    {tfOrCl: this.selectedTab, ticket: this.ticket, isExpanded: this.isExpanded}
+                                                    {tfOrCl: this.selectedTab,
+                                                        ticket: this.ticket,
+                                                        isExpanded: this.isExpanded}
                                                 ));
                                             }
                                         }
@@ -164,7 +166,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
             {
                 ticket: this.ticket,
-                tfOrCl: this.selectedTab, isExpanded: this.isExpanded
+                tfOrCl: this.selectedTab,
+                isExpanded: this.isExpanded
             }));
     }
 

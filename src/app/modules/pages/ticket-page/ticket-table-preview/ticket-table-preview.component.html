@@ -72,7 +72,23 @@
     </div>
 
     <mat-divider></mat-divider>
+    <div *ngIf="data.length > 199"
+         style="border: 1px solid red; padding: 0.5rem; display: flex; justify-content: center; flex-direction: column; align-items: center"
+    >
+        <h5 style="margin-top: 0.5rem; text-align: center">
+            Too many ({{data.length}}) ASBs detected. First 200 are shown.
+            Consider downloading complete table for offline analysis.
 
+        </h5>
+        <button
+            style="overflow: auto"
+            mat-raised-button
+            (click)="downloadTable()"
+        >
+            <mat-icon svgIcon="download"></mat-icon>
+            Download table
+        </button>
+    </div>
     <div
         joyrideStep="pie-chart"
         [stepContent]="stepTemplate"
