@@ -11,6 +11,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {merge, Observable, Subscription} from "rxjs";
 import {AsbBackendDataSource} from "./server-side-table.component";
 import {tap} from "rxjs/operators";
+import {AsbPopoverComponent} from "../../popover-template/popover.component";
+import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({
@@ -80,7 +82,7 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     @Output()
     private tableChangesEmitter = new EventEmitter<AsbServerSideModel>();
 
-    constructor(private ref: ChangeDetectorRef) {}
+    constructor(private ref: ChangeDetectorRef, public dialog: MatDialog) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.paginatorLength && this._dataSource && this.paginatorLength) {
@@ -93,7 +95,19 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     public _handleRowClick(row: T): void {
-        this.rowClickEmitter.emit(row);
+        if (this.getTitle && this.getTitle(row)) {
+            this.dialog.open(AsbPopoverComponent, {
+                autoFocus: false,
+                panelClass: "custom-dialog-container",
+                data: {
+                    title: this.getTitle(row),
+                    template: this.popoverContentTemplate,
+                    templateContext: {row}
+                }
+            });
+        } else {
+            this.rowClickEmitter.emit(row);
+        }
     }
 
     public emitChanges(paginator: MatPaginator) {

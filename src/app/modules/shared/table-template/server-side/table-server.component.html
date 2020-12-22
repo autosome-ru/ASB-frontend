@@ -68,7 +68,7 @@
                 [class._clickable]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
                 [class._borderless]="expandCellContentTemplate || popoverContentTemplate || clickableRow"
                 [class._colorClick]="!expandCellContentTemplate && !popoverContentTemplate && clickableRow"
-                (click)="_handleRowClick(row)"
+                (click)="this.clickableRow ? _handleRowClick(row) : null"
             ></tr>
             <ng-container *ngIf="expandCellContentTemplate">
                 <tr
