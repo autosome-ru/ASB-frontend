@@ -102,7 +102,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
     } else {
         if (form) {
             const result: Partial<SearchParamsModel> = {};
-            if (form.clList.length > 0) { result.cl = form.clList.join(","); }
+            if (form.clList.length > 0) { result.cl = form.clList.join("@"); }
             if (form.chromPos.pos) {
                 if (checkOneResult(searchData) && !oldIsAdvanced &&
                     form.searchBy === 'id' &&

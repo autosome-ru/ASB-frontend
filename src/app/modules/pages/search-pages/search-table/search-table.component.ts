@@ -172,7 +172,7 @@ export class SearchPageTableComponent implements OnInit {
                 });
         }
         if (params.cl) {
-            params.cl.split(",").forEach(
+            params.cl.split("@").forEach(
                 s => {
                     result[convertClNameToValue(s, "Ref")] = {
                         view: convertNameToView(s, "Ref"),
@@ -198,7 +198,7 @@ export class SearchPageTableComponent implements OnInit {
                 });
         }
         if (params.cl) {
-            params.cl.split(",").forEach(
+            params.cl.split("@").forEach(
                 s => {
                     result.push(convertClNameToValue(s, "Ref"));
                     result.push(convertClNameToValue(s, "Alt"));
@@ -220,7 +220,7 @@ export class SearchPageTableComponent implements OnInit {
                 });
         }
         if (params.cl) {
-            params.cl.split(",").forEach(
+            params.cl.split("@").forEach(
                 p => {
                     result[convertClNameToValue(p, "Alt")] =
                         s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueAlt : "NaN";

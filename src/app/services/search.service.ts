@@ -120,7 +120,7 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
     const params: {[id: string]: string} = {};
 
     if (filter.clList && filter.clList.length > 0) {
-        params.cell_types = filter.clList.join(",");
+        params.cell_types = filter.clList.join("@");
     }
 
     if (filter.chromPos.chr) {

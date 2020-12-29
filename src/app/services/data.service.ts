@@ -52,7 +52,7 @@ export class DataService {
 function constructParams(columns: string[], filter: string, tfOrCl: TfOrCl):
     {[id: string]: string} {
     const params: {[id: string]: string} = {};
-    params.columns = columns.map(column => changeName(column, tfOrCl)).join(",");
+    params.columns = columns.map(column => changeName(column, tfOrCl)).join(tfOrCl == 'tf' ? "," :  "@");
     return params;
 }
 

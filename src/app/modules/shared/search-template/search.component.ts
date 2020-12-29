@@ -396,7 +396,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             if (searchParams) {
                 const result: Partial<SearchQueryModel> = {};
                 result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
-                result.clList = searchParams.cl ? searchParams.cl.split(",") : [];
+                result.clList = searchParams.cl ? searchParams.cl.split("@") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
