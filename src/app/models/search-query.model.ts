@@ -57,6 +57,7 @@ export interface SearchParamsModel {
     tf: string;
     motif_conc: string;
     phe_db: string;
+    fdr?: string
 }
 
 export interface SearchResultsModel {

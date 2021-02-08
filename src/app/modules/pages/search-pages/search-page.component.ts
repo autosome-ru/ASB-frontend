@@ -223,7 +223,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     _navigateToSnp(id: string, alt: string): void {
         this.subscriptions.add(
             this.release$.subscribe((s) =>
-                this.router.navigateByUrl(`${s.url}/snps/${id}/${alt}`).then(() => window.scrollTo(0, 0))
+                this.router.navigate([`${s.url}/snps/${id}/${alt}`], {queryParams: {fdr: this.fdr}}).then(() => window.scrollTo(0, 0))
             )
         );
     }
