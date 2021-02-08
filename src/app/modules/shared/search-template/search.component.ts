@@ -10,7 +10,7 @@ import {
     Output,
     ViewChild, ViewEncapsulation
 } from "@angular/core";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/indexes";
 import * as fromSelectors from "src/app/store/selector/adastra";
@@ -94,7 +94,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
     public downloadButtonColor: "primary" | null = null;
-    public showNearbyControl: FormControl;
     public currentRelease$: Observable<ReleaseModel>;
     public searchGeneOptions$: Observable<GeneModel[]>;
     public searchGeneOptionsLoading$: Observable<boolean>;
@@ -121,9 +120,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
-
-        this.showNearbyControl = this.formBuilder.control(100);
-
 
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
