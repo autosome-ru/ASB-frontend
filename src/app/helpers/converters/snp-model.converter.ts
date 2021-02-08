@@ -52,6 +52,17 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
     };
 }
 
+function makeTr(fdr: string): number {
+    if (!fdr) {
+        fdr = '0.05'
+    }
+    let tr: number = -Math.log10(Number(fdr))
+    if (!tr) {
+        tr = -Math.log10(0.05)
+    }
+    return tr
+}
+
 export function convertSnpInfoBackendModelToSnpInfoModel(
     model: SnpInfoBackendModel, fdr?: string
 ): SnpInfoModel;
@@ -61,14 +72,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 export function convertSnpInfoBackendModelToSnpInfoModel(
     model: Partial<SnpInfoBackendModel>, fdr?: string
 ): Partial<SnpInfoModel> {
-    if (! fdr) {
-        fdr = '0.05'
-    }
-    let tr: number = -Math.log10(Number(fdr))
-    if (!tr) {
-        tr = -Math.log10(0.05)
-    }
-    console.log({tr})
+    const tr = makeTr(fdr)
     const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
     result.cellLines = (model.cl_aggregated_snps.map(s => {
         return {
@@ -86,27 +90,28 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 }
 
 export function convertSnpSearchBackendModelToSnpSearchModel(
-    model: SnpSearchBackendModel
+    model: SnpSearchBackendModel, fdr?: string
 ): SnpSearchModel;
 export function convertSnpSearchBackendModelToSnpSearchModel(
-    model: Partial<SnpSearchBackendModel>
+    model: Partial<SnpSearchBackendModel>, fdr?: string
 ): Partial<SnpSearchModel>;
 export function convertSnpSearchBackendModelToSnpSearchModel(
-    model: Partial<SnpSearchBackendModel>
+    model: Partial<SnpSearchBackendModel>, fdr?: string
 ): Partial<SnpSearchModel> {
+    const tr = makeTr(fdr)
     const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
-    result.cellLines = model.cl_aggregated_snps.map(s => {
+    result.cellLines = (model.cl_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as ClSnpCutModel[];
-    result.transFactors = model.tf_aggregated_snps.map(s => {
+    }) as ClSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);;
+    result.transFactors = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpCutModel[];
+    }) as TfSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);;
     return result;
 }
 

@@ -106,9 +106,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         );
         this.subscriptions.add(
             this.route.queryParams.subscribe(
-                s => this.fdr = s['fdr'] ? s['fdr'] : 1
+                s => this.fdr = s['fdr']
             )
-        )
+        );
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 (p) => {

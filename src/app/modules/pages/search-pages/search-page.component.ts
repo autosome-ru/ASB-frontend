@@ -62,6 +62,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     results: SnpSearchModel[];
     public tourSteps: string[];
     public selectedGene$: Observable<GeneModel>;
+    private fdr: string;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
@@ -72,7 +73,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.seoService.updateSeoInfo({
             title: this.route.snapshot.data.title(this.route.snapshot.queryParams.tf)
         });
-
+        this.subscriptions.add(
+            this.route.queryParams.subscribe(
+                s => this.fdr = s['fdr']
+            )
+        );
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.isAdvancedSearch = !this.router.url.includes("search/simple");
         if (this.route.snapshot.queryParams.rs ||
@@ -178,7 +183,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.pagination = event;
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
-                params: event
+                params: event,
+                fdr: this.fdr
             })
         );
     }
@@ -195,6 +201,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             {
                 search: event,
                 params: this.pagination,
+                fdr: this.fdr
             }));
         if (this.paginator) {
             this.paginator.pageSize = this.pagination.pageSize;

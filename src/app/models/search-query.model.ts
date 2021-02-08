@@ -13,6 +13,7 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     searchTf: string;
     tfList: string[];
     clList: string[];
+    fdr: string;
 }
 
 export type SearchByModel = "id" | "pos" | "geneId" | "geneName";

@@ -35,7 +35,7 @@ export class SearchService {
             {params: {search: addPercents(filter)}});
     }
 
-    public getSearchResult(filter: SearchQueryModel, params: AsbServerSideModel):
+    public getSearchResult(filter: SearchQueryModel,fdr: string, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
         if (!filter) {
             if (!filter.isAdvanced &&
@@ -72,6 +72,7 @@ export class SearchService {
             return this.http.get<SearchResultsBackendModel>(
                 `${this.urlService.getUrlForQuery("search")}/advanced`, {
                     params: {
+                        fdr: fdr,
                         ...makeParamsForAdvancedSearchResults(filter),
                         ...convertServerSideModelToServerSideBackendModel(params)
                     }

@@ -179,11 +179,11 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             return {
                 ...state,
                 searchGene: convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
-                    action.payload.gene),
+                    action.payload.results.gene),
                 searchResults: {
-                    total: action.payload.total,
-                    results: action.payload.results.map(
-                        convertSnpSearchBackendModelToSnpSearchModel) as SnpSearchModel[]
+                    total: action.payload.results.total,
+                    results: action.payload.results.results.map(
+                        s => convertSnpSearchBackendModelToSnpSearchModel(s, action.payload.fdr)) as SnpSearchModel[]
                 },
                 searchResultsLoading: false,
                 searchChangeLoading: false
