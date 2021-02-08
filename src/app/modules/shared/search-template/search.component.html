@@ -166,7 +166,7 @@
 
             </mat-form-field>
         </ng-container>
-        <div style="margin-right: 15px" *ngIf="_checkToDisplay('pos')">
+        <div style="margin-right: 15px; display: flex; align-items: center; flex-wrap: wrap" *ngIf="_checkToDisplay('pos')">
             <div
                 style="display: inline-flex;overflow: auto; flex-wrap: wrap; align-items: center; min-width: 240px"
                 joyrideStep="search-pos"
@@ -206,7 +206,7 @@
                     </mat-hint>
                 </mat-form-field>
             </div>
-            <div *ngIf="isAdvanced" style="display: inline-flex">
+            <div *ngIf="isAdvanced" style="display: inline-flex; margin-left: auto">
                 <ng-container *ngIf="(currentRelease$ | async).name != 'soos'">
                     <mat-form-field
                     >
