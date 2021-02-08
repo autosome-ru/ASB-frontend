@@ -13,8 +13,8 @@ export class ProcessingService {
     constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
-    startProcessTicket(ticket: string): Observable<object> {
-        return this.http.post<object>(`${this.urlService.getUrlForQuery("ananastra")}/process/${ticket}`, {});
+    startProcessTicket(ticket: string, fdr: string): Observable<object> {
+        return this.http.post<object>(`${this.urlService.getUrlForQuery("ananastra")}/process/${ticket}`, {}, {params: {fdr}});
     }
 
     getFileStatsByTicket(ticket: string): Observable<AnnotationDataBackendModel> {

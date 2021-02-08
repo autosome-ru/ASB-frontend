@@ -27,6 +27,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   private firstSubmit: boolean = true;
   public file = null;
   public isHovered: boolean;
+  public fdrControl: FormControl;
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
               private router: Router,
@@ -35,6 +36,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.textAreaControl = this.formBuilder.control('');
+    this.fdrControl = this.formBuilder.control('0.05')
   }
 
   ngOnDestroy(): void {
@@ -87,7 +89,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.uploadService.uploadFile(file, formData).subscribe(
         percent => this.fileProgress$.next(percent),
-          () =>this.fileProgress$.next(null)
+          () => this.fileProgress$.next(null)
       )
     );
   }
@@ -118,7 +120,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   annotationStart(): void {
     this.router.navigateByUrl(`/ticket/${this.ticket}`).then(
       () => {
-          this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(this.ticket));
+          this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(
+              {ticket: this.ticket, fdr: this.fdrControl.value}));
           this.uploadService.removeFileTicket()
       }
     );

@@ -14,6 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {AsbTourModule} from "../../shared/tour-template/tour-module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {JoyrideModule} from "ngx-joyride";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {JoyrideModule} from "ngx-joyride";
         MatIconModule,
         AsbTourModule,
         MatTooltipModule,
-        JoyrideModule
+        JoyrideModule,
+        MatSelectModule
     ]
 })
 export class SnpAnnotationMainModule { }

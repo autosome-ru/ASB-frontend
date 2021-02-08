@@ -31,7 +31,7 @@ export enum ActionTypes {
 export class StartAnnotationAction implements Action {
     readonly type = ActionTypes.StartAnnotation;
 
-    constructor(public payload: string) {}
+    constructor(public payload: {fdr: string, ticket: string}) {}
 }
 export class StartAnnotationSuccessAction implements Action {
     readonly type = ActionTypes.StartAnnotationSuccess;
@@ -39,12 +39,12 @@ export class StartAnnotationSuccessAction implements Action {
 export class StartAnnotationFailAction implements Action {
     readonly type = ActionTypes.StartAnnotationFail;
 
-    constructor(public payload: string) {}
+    constructor(public payload: {fdr: string, ticket: string}) {}
 }
 export class InitAnnotationStartAction implements Action {
     readonly type = ActionTypes.InitAnnotationStart;
 
-    constructor(public payload: string) {}
+    constructor(public payload: {fdr: string, ticket: string}) {}
 }
 
 export class InitAnnotationInfoStatsAction implements Action {
