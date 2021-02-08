@@ -56,6 +56,7 @@ export class AsbSnpCardComponent implements OnInit {
                 private urlService: UrlService) { }
 
     ngOnInit() {
+        this.fdrControl = this.formBuilder.control(this.fdr)
         this.url = this.urlService.hostName;
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
