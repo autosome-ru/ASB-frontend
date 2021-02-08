@@ -8,8 +8,9 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterModule} from "@angular/router";
 import {AsbTourModule} from "../tour-template/tour-module";
-import {MatSelectModule} from "@angular/material/select";
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -20,8 +21,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         MatButtonModule,
         RouterModule,
         AsbTourModule,
-        MatSelectModule,
         ReactiveFormsModule,
+        MatFormFieldModule,
+        MatSelectModule,
     ],
     declarations: [
         AsbSnpCardComponent,
