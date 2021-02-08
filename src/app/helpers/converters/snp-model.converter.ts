@@ -53,27 +53,34 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
 }
 
 export function convertSnpInfoBackendModelToSnpInfoModel(
-    model: SnpInfoBackendModel
+    model: SnpInfoBackendModel, fdr?: string
 ): SnpInfoModel;
 export function convertSnpInfoBackendModelToSnpInfoModel(
-    model: Partial<SnpInfoBackendModel>
+    model: Partial<SnpInfoBackendModel>, fdr?: string
 ): Partial<SnpInfoModel>;
 export function convertSnpInfoBackendModelToSnpInfoModel(
-    model: Partial<SnpInfoBackendModel>
+    model: Partial<SnpInfoBackendModel>, fdr?: string
 ): Partial<SnpInfoModel> {
+    if (! fdr) {
+        fdr = '0.05'
+    }
+    let tr: number = -Math.log10(Number(fdr))
+    if (!tr) {
+        tr = -Math.log10(0.05)
+    }
     const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
-    result.cellLines = model.cl_aggregated_snps.map(s => {
+    result.cellLines = (model.cl_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as ClSnpModel[];
-    result.transFactors = model.tf_aggregated_snps.map(s => {
+    }) as ClSnpModel[]).filter(s => s.pValueRef > tr || s.pValueAlt > tr);
+    result.transFactors = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpModel[];
+    }) as TfSnpModel[]).filter(s => s.pValueRef > tr || s.pValueAlt > tr);
     return result;
 }
 

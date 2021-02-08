@@ -82,7 +82,7 @@ export class LoadSnpInfoAction implements Action {
 export class LoadSnpInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoSuccess;
 
-    constructor(public payload: SnpInfoBackendModel) {}
+    constructor(public payload: {info: SnpInfoBackendModel, fdr: string}) {}
 }
 export class LoadSnpInfoFailAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoFail;
