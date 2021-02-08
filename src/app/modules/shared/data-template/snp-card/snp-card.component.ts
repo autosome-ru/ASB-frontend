@@ -62,7 +62,7 @@ export class AsbSnpCardComponent implements OnInit {
             s => {
                 console.log(s)
                 this.router.navigate([],
-                    {relativeTo: this.route, queryParams: {fdr: s}})
+                    {relativeTo: this.route, queryParams: {fdr: s.fdr}})
             }
         )
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);

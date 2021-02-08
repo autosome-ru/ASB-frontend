@@ -121,7 +121,7 @@
         </div>
         <form [formGroup]="fdrGroup" style="display: inline-flex; margin-left: auto">
             <ng-container *ngIf="(release$ | async).name != 'soos'">
-                <mat-form-field formControlName="fdrControl"
+                <mat-form-field formControlName="fdr"
                 >
                     <mat-label>FDR threshold</mat-label>
                     <mat-select >
