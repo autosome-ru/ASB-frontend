@@ -63,9 +63,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     public isAdvanced: boolean;
 
     @Input()
-    public fdrControl: FormControl;
-
-    @Input()
     public searchData: SnpSearchModel[];
 
     @Input()
@@ -131,6 +128,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             chromPos: [new ChromPos("", ""), [validateGroup]],
             searchBy: "id",
             geneId: "",
+            fdr: '0.05',
             geneName: "",
             searchTf: null,
             searchCl: null,
@@ -387,14 +385,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
-        this.searchForm.patchValue({isAdvanced, fdr: this.fdrControl.value});
+        this.searchForm.patchValue({isAdvanced});
         return convertFormToParams(this.searchForm.value, this.isAdvanced, this.searchData, this.selectedGene);
     }
 
     _convertParamsToForm(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
         if (this.isAdvanced) {
             if (searchParams) {
-                const result: Partial<SearchQueryModel> = {};
+                const result: Partial<SearchQueryModel> = searchParams.fdr ? {fdr: searchParams.fdr} : {};
                 result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
                 result.clList = searchParams.cl ? searchParams.cl.split("@") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
