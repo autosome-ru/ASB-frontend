@@ -20,6 +20,6 @@ export function calculateColorForOne(pValue: number,
 
     return baseToColors[base] + Math.round(
         Math.min(Math.abs(pValue) / 20 * 255,
-            255)).toString(16);
+            255)).toString(16).padStart(2, '0');
 
 }
