@@ -77,7 +77,7 @@ export class LoadClInfoFailAction implements Action {
 export class LoadSnpInfoAction implements Action {
     readonly type = ActionTypes.LoadSnpInfo;
 
-    constructor(public payload: {rsId: string, alt: string}) {}
+    constructor(public payload: {rsId: string, alt: string, fdr: string}) {}
 }
 export class LoadSnpInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoSuccess;
@@ -87,12 +87,12 @@ export class LoadSnpInfoSuccessAction implements Action {
 export class LoadSnpInfoFailAction implements Action {
     readonly type = ActionTypes.LoadSnpInfoFail;
 
-    constructor(public payload: {rsId: string, alt: string}) {}
+    constructor(public payload: {rsId: string, alt: string, fdr: string}) {}
 }
 export class InitSnpInfoAction implements Action {
     readonly type = ActionTypes.InitSnpInfo;
 
-    constructor(public payload: {rsId: string, alt: string}) {}
+    constructor(public payload: {rsId: string, alt: string, fdr: string}) {}
 }
 
 

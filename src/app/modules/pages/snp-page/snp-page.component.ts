@@ -84,6 +84,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     private release: ReleaseModel;
     public tourSteps: string[];
     public release$: Observable<ReleaseModel>;
+    private fdr: string;
 
     constructor(
         private store: Store<AppState>,
@@ -104,15 +105,21 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             )
         );
         this.subscriptions.add(
+            this.route.queryParams.subscribe(
+                s => this.fdr = s['fdr'] ? s['fdr'] : 1
+            )
+        )
+        this.subscriptions.add(
             this.route.paramMap.subscribe(
                 (p) => {
                     this.id = p.get("rsId");
                     this.alt = p.get("alt");
                     if (!this.alt) {
-                        this.router.navigate([`/${this.release.url}/search/simple`], {queryParams: {rs: this.id}})
+                        this.router.navigate([`/${this.release.url}/search/simple`],
+                            {queryParams: {rs: this.id}}).then()
                     } else {
                         this.store.dispatch(new fromActions.data.InitSnpInfoAction(
-                            {rsId: this.id, alt: this.alt}));
+                            {rsId: this.id, alt: this.alt, fdr: this.fdr}));
                     }
                 }
 
@@ -269,7 +276,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     _downloadPage() {
         this.subscriptions.add(
-            this.dataService.getSnpInfoById({rsId: this.id, alt: this.alt}).subscribe(
+            this.dataService.getSnpInfoById({rsId: this.id, alt: this.alt, fdr: this.fdr}).subscribe(
                 (res) => {
                     const blob = new Blob([JSON.stringify(res)],
                         {type: "application/json"});

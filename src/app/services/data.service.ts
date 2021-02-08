@@ -13,9 +13,12 @@ export class DataService {
     constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
-    public getSnpInfoById({rsId: id, alt: altBase}:
-                              {rsId: string, alt: string}): Observable<SnpInfoBackendModel> {
-        return this.http.get<SnpInfoBackendModel>(`${this.urlService.getUrlForQuery("snp")}/${id.slice(2)}/${altBase}`);
+    public getSnpInfoById({rsId, alt, fdr}:
+                              {rsId: string, alt: string, fdr: string}): Observable<SnpInfoBackendModel> {
+        return this.http.get<SnpInfoBackendModel>(
+            `${this.urlService.getUrlForQuery("snp")}/${rsId.slice(2)}/${alt}`,
+            {params: {fdr}}
+        );
     }
 
     public getSnpInfoByIdCsv(id: string, alt: string, tfOrCl: TfOrCl,
