@@ -77,7 +77,7 @@
             </div>
         </form>
     </div>
-    <div class="snp-page__table-elevation"
+    <div [ngClass]="objectData.length > 0 ?'snp-page__table-elevation' : ''"
          [joyrideStep]="'table' + (isCl ? '1' : '0')"
          [stepContent]="stepTemplate"
          [stepContentParams]="getTextByStepName('table')"
