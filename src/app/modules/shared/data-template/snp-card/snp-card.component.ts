@@ -16,7 +16,7 @@ import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer/adastra";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 import {UrlService} from "../../../../services/url.service";
-import {FormBuilder, FormControl} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -47,7 +47,7 @@ export class AsbSnpCardComponent implements OnInit {
     public showMoreTfs = false;
     public release$: Observable<ReleaseModel>;
     public url: string;
-    public fdrControl: FormControl;
+    public fdrGroup: FormGroup;
 
     constructor(private store: Store<AppState>,
                 private formBuilder: FormBuilder,
@@ -57,8 +57,8 @@ export class AsbSnpCardComponent implements OnInit {
 
     ngOnInit() {
         this.url = this.urlService.hostName;
-        this.fdrControl = this.formBuilder.control(this.fdr)
-        this.fdrControl.valueChanges.subscribe(
+        this.fdrGroup = this.formBuilder.group({fdr: this.fdr})
+        this.fdrGroup.valueChanges.subscribe(
             s => {
                 console.log(s)
                 this.router.navigate([],

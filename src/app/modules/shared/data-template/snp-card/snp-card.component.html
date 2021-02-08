@@ -119,9 +119,9 @@
             Show in UCSC Genome Browser
         </a>
         </div>
-        <div style="display: inline-flex; margin-left: auto">
+        <form [formGroup]="fdrGroup" style="display: inline-flex; margin-left: auto">
             <ng-container *ngIf="(release$ | async).name != 'soos'">
-                <mat-form-field [formControl]="fdrControl"
+                <mat-form-field formControlName="fdrControl"
                 >
                     <mat-label>FDR threshold</mat-label>
                     <mat-select >
@@ -132,7 +132,7 @@
                     </mat-select>
                 </mat-form-field>
             </ng-container>
-        </div>
+        </form>
     </dd>
 </dl>
 
