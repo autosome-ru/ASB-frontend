@@ -70,7 +70,6 @@
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/search/' + ((searchQuery | async) && (searchQuery | async).isAdvanced ? 'advanced' : 'simple')"
             [queryParams]="_convertFormToParams((searchQuery | async))"
             [routerLinkActive]="['active']"
-            queryParamsHandling="merge"
         >
             Search
         </a>
