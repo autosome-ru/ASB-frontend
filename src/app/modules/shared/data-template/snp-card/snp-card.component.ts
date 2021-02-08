@@ -16,6 +16,8 @@ import {Observable} from "rxjs";
 import {AppState} from "../../../../store/reducer/adastra";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 import {UrlService} from "../../../../services/url.service";
+import {FormBuilder, FormControl} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: "asb-snp-card",
@@ -45,11 +47,21 @@ export class AsbSnpCardComponent implements OnInit {
     public showMoreTfs = false;
     public release$: Observable<ReleaseModel>;
     public url: string;
+    public fdrControl: FormControl;
 
-    constructor(private store: Store<AppState>, private urlService: UrlService) { }
+    constructor(private store: Store<AppState>,
+                private formBuilder: FormBuilder,
+                private router: Router,
+                private route: ActivatedRoute,
+                private urlService: UrlService) { }
 
     ngOnInit() {
-        this.url = this.urlService.hostName
+        this.url = this.urlService.hostName;
+        this.fdrControl = this.formBuilder.control(this.fdr)
+        this.fdrControl.valueChanges.subscribe(
+            s => this.router.navigate([],
+                {relativeTo: this.route, queryParams: {fdr: s}})
+        )
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
 

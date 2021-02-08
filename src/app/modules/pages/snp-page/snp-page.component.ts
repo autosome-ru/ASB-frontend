@@ -84,7 +84,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     private release: ReleaseModel;
     public tourSteps: string[];
     public release$: Observable<ReleaseModel>;
-    private fdr: string;
+    public fdr: string;
 
     constructor(
         private store: Store<AppState>,
