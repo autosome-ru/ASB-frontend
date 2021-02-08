@@ -28,6 +28,7 @@ export interface DataState {
         [snpId: string]: {
             loading: boolean,
             snpData?: SnpInfoModel,
+            fdr?: string
         },
     };
 }
@@ -142,6 +143,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                     ...state.snps,
                     [snpId]: {
                         loading: true,
+                        fdr: action.payload.fdr
                     },
                 }
 
@@ -168,6 +170,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 snps: {
                     ...state.snps,
                     [snpId]: {
+                        ...state.snps[snpId],
                         snpData: {
                             ...convertSnpInfoBackendModelToSnpInfoModel(action.payload.info, action.payload.fdr),
                             phenotypes: newPhenotypes,

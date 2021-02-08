@@ -95,11 +95,12 @@ export class DataEffect {
         mergeMap((action: fromActions.InitSnpInfoAction) =>
             combineLatest([
                 this.store.select(fromSelectors.selectSnpInfoDataById, action.payload.rsId + action.payload.alt),
+                this.store.select(fromSelectors.selectSnpInfoFdrById, action.payload.rsId + action.payload.alt),
                 this.store.select(fromSelectors.selectSnpInfoDataLoadingById, action.payload.rsId + action.payload.alt),
             ]).pipe(
                 take(1),
-                switchMap(([snp, loading]) =>
-                    !loading && !snp
+                switchMap(([snp, fdr, loading]) =>
+                    !loading && (!snp || action.payload.fdr !== fdr)
                         ? of(new fromActions.LoadSnpInfoAction(action.payload))
                         : EMPTY
                 ),
