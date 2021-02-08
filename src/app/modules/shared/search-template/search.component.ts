@@ -387,7 +387,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
-        this.searchForm.patchValue({isAdvanced});
+        this.searchForm.patchValue({isAdvanced, fdr: this.fdrControl.value});
         return convertFormToParams(this.searchForm.value, this.isAdvanced, this.searchData, this.selectedGene);
     }
 
