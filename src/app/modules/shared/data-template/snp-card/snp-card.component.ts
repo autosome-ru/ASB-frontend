@@ -35,6 +35,9 @@ export class AsbSnpCardComponent implements OnInit {
     @Input()
     public index = 0;
 
+    @Input()
+    public fdr: string;
+
     @Output()
     public emitNextStep = new EventEmitter<void>();
 

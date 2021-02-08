@@ -116,7 +116,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                     this.alt = p.get("alt");
                     if (!this.alt) {
                         this.router.navigate([`/${this.release.url}/search/simple`],
-                            {queryParams: {rs: this.id}}).then()
+                            {queryParams: {rs: this.id, fdr: this.fdr}}).then()
                     } else {
                         this.store.dispatch(new fromActions.data.InitSnpInfoAction(
                             {rsId: this.id, alt: this.alt, fdr: this.fdr}));
