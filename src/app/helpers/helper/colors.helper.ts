@@ -19,7 +19,7 @@ export function calculateColorForOne(pValue: number,
                                      base: string): string {
 
     return baseToColors[base] + Math.round(
-        Math.min(Math.abs(pValue) / 10 * 255,
+        Math.min(Math.abs(pValue) / 20 * 255,
             255)).toString(16);
 
 }
