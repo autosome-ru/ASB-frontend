@@ -3,7 +3,7 @@ import {
     Component,
     EventEmitter,
     HostBinding,
-    Input,
+    Input, OnDestroy,
     OnInit,
     Output,
     ViewEncapsulation
@@ -12,7 +12,7 @@ import {SnpInfoModel, SnpSearchModel} from "src/app/models/data.model";
 import * as fromSelectors from "src/app/store/selector/adastra";
 import {ReleaseModel} from "../../../../models/releases.model";
 import {Store} from "@ngrx/store";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../../../store/reducer/adastra";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 import {UrlService} from "../../../../services/url.service";
@@ -26,7 +26,7 @@ import {ActivatedRoute, Router} from "@angular/router";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class AsbSnpCardComponent implements OnInit {
+export class AsbSnpCardComponent implements OnInit, OnDestroy {
     @HostBinding("class.snp-card")
     private readonly cssClass = true;
     @Input()
@@ -45,6 +45,7 @@ export class AsbSnpCardComponent implements OnInit {
 
     public showMoreCellLines = false;
     public showMoreTfs = false;
+    private subscription = new Subscription()
     public release$: Observable<ReleaseModel>;
     public url: string;
     public fdrControl: FormControl;
@@ -57,8 +58,18 @@ export class AsbSnpCardComponent implements OnInit {
 
     ngOnInit() {
         this.fdrControl = this.formBuilder.control(this.fdr)
+        this.subscription.add(
+            this.fdrControl.valueChanges.subscribe(
+                s => this.router.navigate([],
+                    {relativeTo: this.route, queryParams: {fdr: s}})
+            )
+        );
         this.url = this.urlService.hostName;
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe()
     }
 
     _showMoreCellLines(value: boolean) {
