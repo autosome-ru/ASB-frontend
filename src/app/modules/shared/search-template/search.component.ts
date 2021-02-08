@@ -10,7 +10,7 @@ import {
     Output,
     ViewChild, ViewEncapsulation
 } from "@angular/core";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/indexes";
 import * as fromSelectors from "src/app/store/selector/adastra";
@@ -61,6 +61,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     @Input()
     public isAdvanced: boolean;
+
+    @Input()
+    public fdrControl: FormControl;
 
     @Input()
     public searchData: SnpSearchModel[];
@@ -142,6 +145,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             ...concordanceModelExample
         }
         );
+
         // Search options and patching form in simple search
         this.subscriptions.add(
             this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(200)).subscribe(

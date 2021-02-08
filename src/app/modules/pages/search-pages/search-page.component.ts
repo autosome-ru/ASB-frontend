@@ -25,6 +25,7 @@ import {ReleaseModel} from "../../../models/releases.model";
 import {getTextByStepNameAdastra} from "../../../helpers/text-helpers/tour.adastra.helper";
 import {JoyrideService} from "ngx-joyride";
 import {SnpSearchModel} from "../../../models/data.model";
+import {FormBuilder, FormControl} from "@angular/forms";
 
 @Component({
     selector: "asb-search-page",
@@ -63,10 +64,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public tourSteps: string[];
     public selectedGene$: Observable<GeneModel>;
     public fdr: string;
+    public fdrControl: FormControl;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private joyrideService: JoyrideService,
+                private formBuilder: FormBuilder,
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
@@ -78,6 +81,14 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 s => this.fdr = s['fdr'] ? s['fdr'] : '0.05'
             )
         );
+        this.fdrControl = this.formBuilder.control(this.fdr)
+        this.fdrControl.valueChanges.subscribe(
+            s => {
+                console.log(s)
+                this.router.navigate([],
+                    {relativeTo: this.route, queryParams: {fdr: s}})
+            }
+        )
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.isAdvancedSearch = !this.router.url.includes("search/simple");
         if (this.route.snapshot.queryParams.rs ||

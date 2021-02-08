@@ -11,6 +11,7 @@ import {AsbTourModule} from "../tour-template/tour-module";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSelectModule} from "@angular/material/select";
+import {FdrSelectModule} from "../fdr-select/fdr-select.module";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {MatSelectModule} from "@angular/material/select";
         ReactiveFormsModule,
         MatFormFieldModule,
         MatSelectModule,
+        FdrSelectModule,
     ],
     declarations: [
         AsbSnpCardComponent,

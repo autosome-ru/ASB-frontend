@@ -206,6 +206,11 @@
                     </mat-hint>
                 </mat-form-field>
             </div>
+            <div *ngIf="isAdvanced">
+                <ng-container *ngIf="(currentRelease$ | async).name != 'soos'">
+                    <asb-fdr-select [control]="fdrControl"></asb-fdr-select>
+                </ng-container>
+            </div>
         </div>
 
         <div
