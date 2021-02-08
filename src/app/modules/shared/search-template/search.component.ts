@@ -10,7 +10,7 @@ import {
     Output,
     ViewChild, ViewEncapsulation
 } from "@angular/core";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {AppState} from "src/app/store/indexes";
 import * as fromSelectors from "src/app/store/selector/adastra";
