@@ -75,13 +75,13 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
             ...convertClAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as ClSnpModel[]).filter(s => s.pValueRef > tr || s.pValueAlt > tr);
+    }) as ClSnpModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);
     result.transFactors = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpModel[]).filter(s => s.pValueRef > tr || s.pValueAlt > tr);
+    }) as TfSnpModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);
     return result;
 }
 
