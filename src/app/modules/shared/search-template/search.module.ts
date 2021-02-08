@@ -15,7 +15,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSelectModule} from "@angular/material/select";
 import {RouterModule} from "@angular/router";
 import {FormFieldsModule} from "../form-fields/form-fields.module";
-import {FdrSelectModule} from "../fdr-select/fdr-select.module";
 
 
 
@@ -36,8 +35,6 @@ import {FdrSelectModule} from "../fdr-select/fdr-select.module";
         MatSelectModule,
         RouterModule,
         FormFieldsModule,
-        FdrSelectModule,
-
     ],
     declarations: [
         SearchComponent,
