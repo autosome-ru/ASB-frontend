@@ -68,6 +68,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
     if (!tr) {
         tr = -Math.log10(0.05)
     }
+    console.log({tr})
     const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
     result.cellLines = (model.cl_aggregated_snps.map(s => {
         return {
