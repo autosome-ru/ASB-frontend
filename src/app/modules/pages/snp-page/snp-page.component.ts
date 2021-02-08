@@ -95,7 +95,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private releasesService: ReleasesService,
         private seoService: SeoService
-    ) {this.router.routeReuseStrategy.shouldReuseRoute = () => false;}
+    ) {}
 
     ngOnInit() {
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
