@@ -84,9 +84,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.fdrControl = this.formBuilder.control(this.fdr)
         this.fdrControl.valueChanges.subscribe(
             s => {
-                console.log(s)
-                this.router.navigate([],
-                    {relativeTo: this.route, queryParams: {fdr: s}})
+                this.fdr = s
             }
         )
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);

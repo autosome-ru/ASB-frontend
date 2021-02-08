@@ -206,7 +206,7 @@
                     </mat-hint>
                 </mat-form-field>
             </div>
-            <div *ngIf="isAdvanced">
+            <div *ngIf="isAdvanced" style="display: inline-flex">
                 <ng-container *ngIf="(currentRelease$ | async).name != 'soos'">
                     <asb-fdr-select [control]="fdrControl"></asb-fdr-select>
                 </ng-container>
