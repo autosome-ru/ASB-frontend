@@ -154,11 +154,13 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         }
         case fromActions.ActionTypes.LoadSearchResults: {
             return {
+
                 ...state,
                 searchResultsLoading: true,
                 searchQuery: {
                     ...action.payload.search,
-                    ...action.payload.params
+                    ...action.payload.params,
+                    fdr: action.payload.fdr
                 },
                 searchChangeLoading: true,
             };
@@ -170,7 +172,8 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 searchChangeLoading: true,
                 searchQuery: {
                     ...state.searchQuery,
-                    ...action.payload.params
+                    ...action.payload.params,
+                    fdr: action.payload.fdr
                 }
             };
         }

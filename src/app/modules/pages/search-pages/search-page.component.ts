@@ -62,7 +62,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     results: SnpSearchModel[];
     public tourSteps: string[];
     public selectedGene$: Observable<GeneModel>;
-    private fdr: string;
+    public fdr: string;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
