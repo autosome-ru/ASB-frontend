@@ -51,8 +51,8 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                 ...state,
                 annotations: {
                     ...state.annotations,
-                    [action.payload]: {
-                        ...state.annotations[action.payload],
+                    [action.payload.ticket]: {
+                        ...state.annotations[action.payload.ticket],
                         processing: true,
                     },
                 }
@@ -64,8 +64,8 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                 ...state,
                 annotations: {
                     ...state.annotations,
-                    [action.payload]: {
-                        ...state.annotations[action.payload],
+                    [action.payload.ticket]: {
+                        ...state.annotations[action.payload.ticket],
                         processing: false
                     },
                 }
