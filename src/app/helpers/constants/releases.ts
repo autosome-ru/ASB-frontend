@@ -2,10 +2,22 @@ import {ReleaseModel} from "../../models/releases.model";
 // All available releases. Don't forget to change app-routing module
 export const releasesList: ReleaseModel[] = [
     {
+        name: "Dan",
+        url: "dan",
+        date: "2.12.2021",
+        recent: true,
+        version: "v3.0.0",
+        api: "v3",
+        gtrdExpsPath: "ADASTRA_GTRD_exps.dan.tsv",
+        badMapsPath: "BADmaps.dan.zip",
+        ucscFileName: 'ADASTRA_SNPs.dan.bb',
+        notes: ""
+    },
+    {
         name: "Ford",
         url: "ford",
         date: "11.02.2020",
-        recent: true,
+        recent: false,
         version: "v2.1.6",
         api: "v2",
         gtrdExpsPath: "ADASTRA_GTRD_exps.ford.tsv",
