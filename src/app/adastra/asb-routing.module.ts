@@ -22,7 +22,12 @@ const routes: Routes = [
     {
         path: "ford",
         component: RecentComponent,
-        loadChildren: () => import("src/app/modules/releases/ford/ford.module").then(mod => mod.FordModule)
+        loadChildren: () => import("src/app/modules/releases/deprecated/ford/ford.module").then(mod => mod.FordModule)
+    },
+    {
+        path: "dan",
+        component: DeprecatedComponent,
+        loadChildren: () => import("src/app/modules/releases/dan/dan.module").then(mod => mod.DanModule)
     },
     {
         path: "beta",
@@ -33,7 +38,7 @@ const routes: Routes = [
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "ford",
+        redirectTo: "dan",
     },
 
     {
