@@ -6,7 +6,6 @@
             #searchComponent
             [width]="'full'"
             [isAdvanced]="isAdvancedSearch"
-            [fdrControl]="fdrControl"
             [searchData]="(searchSnpResults$ | async).results"
             [selectedGene]="selectedGene$ | async"
             (searchPressed)="_handleSearchTemplateChanges($event)"
