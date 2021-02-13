@@ -225,7 +225,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             motifFc: {
                 view: "Motif fold change",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                helpMessage: 'log₂(Alt/Ref motif p-value)',
+                helpMessage: 'log2(Alt/Ref motif p-value)',
                 isDesc: true
             },
             motifPRef: {
