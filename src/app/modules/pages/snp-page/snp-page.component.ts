@@ -192,13 +192,13 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.commonColumnModel = {
             effectSizeRef: {
                 view: "Effect size Ref",
-                helpMessage: 'log₂-scale',
+                helpMessage: 'log2-scale',
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 isDesc: true
             },
             effectSizeAlt: {
                 view: "Effect size Alt",
-                helpMessage: 'log₂-scale',
+                helpMessage: 'log2-scale',
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 isDesc: true
             },
