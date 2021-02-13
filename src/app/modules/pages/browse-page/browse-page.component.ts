@@ -133,7 +133,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
         console.log(this.route.snapshot.url)
-        if (this.route.snapshot.url[0] == 'dan') {
+        if (this.route.snapshot.url[0].path == 'dan') {
 
             this.clDisplayedColumns.push('aggregatedSnpsCount005')
             this.tfDisplayedColumns.push('aggregatedSnpsCount005')
