@@ -21,12 +21,12 @@ const routes: Routes = [
     },
     {
         path: "ford",
-        component: RecentComponent,
+        component: DeprecatedComponent,
         loadChildren: () => import("src/app/modules/releases/deprecated/ford/ford.module").then(mod => mod.FordModule)
     },
     {
         path: "dan",
-        component: DeprecatedComponent,
+        component: RecentComponent,
         loadChildren: () => import("src/app/modules/releases/dan/dan.module").then(mod => mod.DanModule)
     },
     {
