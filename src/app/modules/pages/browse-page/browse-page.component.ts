@@ -132,8 +132,8 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
-        console.log(this.route.url)
-        if (this.route.url[0] == 'dan') {
+        console.log(this.route.snapshot.url)
+        if (this.route.snapshot.url[0] == 'dan') {
 
             this.clDisplayedColumns.push('aggregatedSnpsCount005')
             this.tfDisplayedColumns.push('aggregatedSnpsCount005')
