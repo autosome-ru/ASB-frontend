@@ -40,7 +40,7 @@ export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         uniprotAc: model.uniprot_ac,
         name: model.name,
-        aggregatedSnpsCount005: model.aggregated_snps_count_005
+        aggregatedSnpsCount005: model.aggregated_snps_count005
     };
 }
 
@@ -50,7 +50,7 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         clId: "" + model.cl_id,
         name: model.name,
-        aggregatedSnpsCount005: model.aggregated_snps_count_005
+        aggregatedSnpsCount005: model.aggregated_snps_count005
     };
 }
 
@@ -107,13 +107,13 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
             ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as ClSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);;
+    }) as ClSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);
     result.transFactors = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);;
+    }) as TfSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);
     return result;
 }
 

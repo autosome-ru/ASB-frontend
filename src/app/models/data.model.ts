@@ -181,7 +181,7 @@ export interface TfInfoBackendModel {
     uniprot_ac: string;
     aggregated_snps_count: number;
     experiments_count: number;
-    aggregated_snps_count_005: number;
+    aggregated_snps_count005: number;
 }
 
 export interface ClInfoBackendModel {
@@ -189,7 +189,7 @@ export interface ClInfoBackendModel {
     name: string;
     aggregated_snps_count: number;
     experiments_count: number;
-    aggregated_snps_count_005: number;
+    aggregated_snps_count005: number;
 }
 
 
