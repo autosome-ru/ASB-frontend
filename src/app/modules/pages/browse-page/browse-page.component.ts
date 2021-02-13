@@ -21,7 +21,6 @@ import {SeoService} from "src/app/services/seo.servise";
 import {AsbServerTableComponent} from "../../shared/table-template/server-side/table-server.component";
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
-import {ReleaseModel} from "../../../models/releases.model";
 
 
 @Component({
@@ -72,7 +71,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public browseClInfoInitialized$: Observable<boolean>;
 
     private subscriptions: Subscription = new Subscription();
-    private release$: Observable<ReleaseModel>;
     constructor(
         private router: Router,
         private store: Store<AppState>,
@@ -88,7 +86,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
-        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
@@ -120,19 +117,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             })
         );
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());
-        this.subscriptions.add(
-            this.release$.subscribe(
-                s => {
-                    if (s.name == 'dan') {
-                        console.log(s)
-                        this.clDisplayedColumns.push('aggregatedSnpsCount005')
-                        this.tfDisplayedColumns.push('aggregatedSnpsCount005')
-                        this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
-                        this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
-                    }
-                }
-            )
-        )
+
         this.tfColumnModel = {
             uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
             name: {view: "Name"},
@@ -147,6 +132,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
+        if (this.route.url[0] == 'dan') {
+            console.log(this.route.url)
+            this.clDisplayedColumns.push('aggregatedSnpsCount005')
+            this.tfDisplayedColumns.push('aggregatedSnpsCount005')
+            this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+            this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+        }
+
 
     }
 
