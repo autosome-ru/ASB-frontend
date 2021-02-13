@@ -40,6 +40,7 @@ export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         uniprotAc: model.uniprot_ac,
         name: model.name,
+        aggregatedSnpsCount005: model.aggregated_snps_count_005
     };
 }
 
@@ -49,6 +50,7 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         clId: "" + model.cl_id,
         name: model.name,
+        aggregatedSnpsCount005: model.aggregated_snps_count_005
     };
 }
 

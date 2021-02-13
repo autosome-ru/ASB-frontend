@@ -21,6 +21,7 @@ import {SeoService} from "src/app/services/seo.servise";
 import {AsbServerTableComponent} from "../../shared/table-template/server-side/table-server.component";
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
+import {ReleaseModel} from "../../../models/releases.model";
 
 
 @Component({
@@ -53,15 +54,15 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public clDisplayedColumns: AsbTableDisplayedColumns<ClInfoModel> = [
         "name",
         "clId",
-        "aggregatedSnpsCount",
         "experimentsCount",
+        "aggregatedSnpsCount",
     ];
     public clColumnModel: AsbTableColumnModel<ClInfoModel>;
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfInfoModel> = [
         "name",
         "uniprotAc",
-        "aggregatedSnpsCount",
         "experimentsCount",
+        "aggregatedSnpsCount",
     ];
 
     public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
@@ -71,6 +72,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public browseClInfoInitialized$: Observable<boolean>;
 
     private subscriptions: Subscription = new Subscription();
+    private release$: Observable<ReleaseModel>;
     constructor(
         private router: Router,
         private store: Store<AppState>,
@@ -86,9 +88,8 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
-
+        this.release$ = this.store.select(fromSelectors.selectCurrentRelease)
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
-
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
         this.browseTfInfoInitialized$ = this.store.select(fromSelectors.selectTfInfoInitialized);
@@ -119,18 +120,30 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             })
         );
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());
-
-
+        this.subscriptions.add(
+            this.release$.subscribe(
+                s => {
+                    if (s.name == 'dan') {
+                        this.clDisplayedColumns.push('aggregatedSnpsCount005')
+                        this.tfDisplayedColumns.push('aggregatedSnpsCount005')
+                        this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+                        this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+                    }
+                }
+            )
+        )
         this.tfColumnModel = {
             uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
             name: {view: "Name"},
             aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
-            experimentsCount: {view: "Experiments count", isDesc: true}
+            experimentsCount: {view: "Experiments count", isDesc: true},
+            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
         };
         this.clColumnModel = {
             clId: {view: "GTRD ID", columnTemplate: this.cellTypeViewTemplate},
             name: {view: "Cell type name"},
             aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
+            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
 

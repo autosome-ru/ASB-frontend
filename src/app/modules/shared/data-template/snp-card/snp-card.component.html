@@ -120,7 +120,8 @@
         </a>
         </div>
         <div style="display: inline-flex; margin-left: auto">
-            <ng-container *ngIf="(release$ | async).name != 'soos'">
+            <ng-container *ngIf="(release$ | async).name as name ">
+                <ng-container *ngIf="name != 'soos' && name != 'ford">
                 <mat-form-field
                 >
                     <mat-label>FDR threshold</mat-label>
@@ -131,6 +132,7 @@
                         <mat-option value="0.25">0.25</mat-option>
                     </mat-select>
                 </mat-form-field>
+                </ng-container>
             </ng-container>
         </div>
     </dd>

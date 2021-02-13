@@ -43,6 +43,7 @@
                     {{totalInfo.cellTypesCount}}</a>
                 </span>
                 <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
+                <span *ngIf="(release$ | async).name == 'dan'">at 5% FDR</span>
             </h6>
 
         </ng-container>
