@@ -133,7 +133,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
         console.log(this.router.url)
-        if (this.router.url.startsWith('dan')) {
+        if (this.router.url.startsWith('/dan') || this.router.url.startsWith('dan')) {
 
             this.clDisplayedColumns.push('aggregatedSnpsCount005')
             this.tfDisplayedColumns.push('aggregatedSnpsCount005')
