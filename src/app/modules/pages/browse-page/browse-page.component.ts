@@ -124,6 +124,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             this.release$.subscribe(
                 s => {
                     if (s.name == 'dan') {
+                        console.log(s)
                         this.clDisplayedColumns.push('aggregatedSnpsCount005')
                         this.tfDisplayedColumns.push('aggregatedSnpsCount005')
                         this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
