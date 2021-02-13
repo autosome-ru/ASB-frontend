@@ -4,7 +4,7 @@ export const releasesList: ReleaseModel[] = [
     {
         name: "Dan",
         url: "dan",
-        date: "2.12.2021",
+        date: "2021.02.12",
         recent: true,
         version: "v3.0.0",
         api: "v3",
@@ -16,7 +16,7 @@ export const releasesList: ReleaseModel[] = [
     {
         name: "Ford",
         url: "ford",
-        date: "11.02.2020",
+        date: "2020.11.02",
         recent: false,
         version: "v2.1.6",
         api: "v2",
@@ -29,7 +29,7 @@ export const releasesList: ReleaseModel[] = [
     {
         name: "Soos",
         url: "soos",
-        date: "06.22.2020",
+        date: "2020.06.22",
         recent: false,
         version: "v1.6.10",
         api: "v1",
@@ -40,14 +40,14 @@ export const releasesList: ReleaseModel[] = [
     {
         name: "Beta",
         url: "beta",
-        date: "11.02.2020",
+        date: "2021.02.12",
         recent: false,
-        version: "v2.2.0",
-        api: "v2",
-        gtrdExpsPath: "ADASTRA_GTRD_exps.ford.tsv",
-        badMapsPath: "BADmaps.ford.zip",
+        version: "v3.1.0",
+        api: "v3",
+        gtrdExpsPath: "ADASTRA_GTRD_exps.dan.tsv",
+        badMapsPath: "BADmaps.dan.zip",
         notes: "For development usage only.",
-        ucscFileName: 'ADASTRA_SNPs.ford.bb',
+        ucscFileName: 'ADASTRA_SNPs.dan.bb',
     },
 ];
 
