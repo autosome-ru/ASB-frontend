@@ -22,11 +22,13 @@ export interface CountModel {
 }
 export interface StatsDataModel {
     asbCount: number;
+    undefinedCount: number;
     concordantAsbs: Partial<TfSnpModel>[];
     candidatesCount: number;
     ratio: number;
     expRatio: number;
     tfRatio: number;
+    fdr: number;
     clRatio: number;
     pValue: number | string;
     notFound: number;
