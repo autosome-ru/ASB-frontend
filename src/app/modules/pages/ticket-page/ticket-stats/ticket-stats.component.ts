@@ -42,8 +42,8 @@ export class TicketStatsComponent implements OnInit {
 
     public chartColors: Array<any> = [
         {
-            backgroundColor: ['#06cd99', '#f8c80b', '#B8B8B8'],
-            hoverBackgroundColor: ['#06dca3', '#f9ce24', '#BEBEBE'],
+            backgroundColor: ['#06cd99', '#06cd69', '#f8c80b', '#B8B8B8'],
+            hoverBackgroundColor: ['#06dca3', '#06dcd3', '#f9ce24', '#BEBEBE'],
             borderWidth: 2,
         }
     ];

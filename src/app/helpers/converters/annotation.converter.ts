@@ -6,12 +6,12 @@ import {
     AsbStatsBackendDataModel, AsbStatsDataModel,
     PingDataBackendModel,
     PingDataModel,
-    StatsDataBackendModel,
     StatsDataModel
 } from '../../models/annotation.model';
 import {stringToNum} from "../helper/check-functions.helper";
 
-function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBackendModel): StatsDataModel {
+function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDataBackendModel): StatsDataModel {
+    const stats = model.meta_info
     return {
         concordantAsbs: stats.concordant_asbs ? stats.concordant_asbs.map(
             s => {
@@ -24,6 +24,8 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(stats: StatsDataBac
                 };
             }
         ) : null,
+        fdr: model.fdr,
+        undefinedCount: stats.undefined_count,
         asbCount: stats.all_asbs_rs,
         candidatesCount: stats.all_candidates_rs - stats.all_asbs_rs,
         ratio: stats.all_candidates_rs > 0 ? stats.all_asbs_rs / stats.all_candidates_rs * 100 : 0,
@@ -72,7 +74,7 @@ export function convertAnnotationBackendToAnnotationModel(
         dateCreated: new Date(model.date_created),
         ticketId: model.ticket_id,
         status: model.status,
-        metaInfo: convertAnnotationStatsBackendToAnnotationStatsModel(model.meta_info)
+        metaInfo: convertAnnotationStatsBackendToAnnotationStatsModel(model)
     };
 }
 export function convertPingBackendToPingModel(

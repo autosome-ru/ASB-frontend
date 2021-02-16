@@ -57,6 +57,7 @@ export interface StatsDataModel {
 export interface StatsDataBackendModel {
     all_rs: number;
     all_asbs_rs: number;
+    undefined_count: number;
     all_candidates_rs: number;
     all_log10_p_value_rs: string;
     all_odds_rs: string;
@@ -112,6 +113,7 @@ export interface PingDataBackendModel {
 }
 export interface AnnotationDataBackendModel {
     ticket_id: string;
+    fdr: number;
     date_created: string;
     expiration_date: string;
     status: string;
