@@ -57,7 +57,7 @@ export interface StatsDataModel {
 export interface StatsDataBackendModel {
     all_rs: number;
     all_asbs_rs: number;
-    undefined_count: number;
+    undefined_rs: number;
     all_candidates_rs: number;
     all_log10_p_value_rs: string;
     all_odds_rs: string;

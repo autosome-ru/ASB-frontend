@@ -25,7 +25,7 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
             }
         ) : null,
         fdr: model.fdr,
-        undefinedCount: stats.undefined_count,
+        undefinedCount: stats.undefined_rs,
         asbCount: stats.all_asbs_rs,
         candidatesCount: stats.all_candidates_rs - stats.all_asbs_rs,
         ratio: stats.all_candidates_rs > 0 ? stats.all_asbs_rs / stats.all_candidates_rs * 100 : 0,
