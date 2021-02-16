@@ -33,7 +33,7 @@
       </li>
         <li>
         <span matTooltip="≤ 5% FDR"
-        ><b [ngStyle]="{'color': chartColors[0].backgroundColor[1]}">SNPs with undefined.. ASBs</b>: {{stats.undefinedCount}}</span>
+        ><b [ngStyle]="{'color': chartColors[0].backgroundColor[1]}">SNPs with undefined ASB status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>
         </li>
       <li>
         <span matTooltip="> 5% FDR"
