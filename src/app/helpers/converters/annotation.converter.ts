@@ -33,7 +33,7 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         clRatio: stats.cl_candidates_rs > 0 ? stats.cl_asbs_rs / stats.cl_candidates_rs * 100 : 0,
         pValue: stringToNum(stats.all_log10_p_value_rs),
         oddsRatio: stringToNum(stats.all_odds_rs),
-        notFound: stats.all_rs - stats.all_candidates_rs,
+        notFound: stats.all_rs - stats.all_candidates_rs - stats.undefined_rs,
         clCandidates: stats.cl_candidates_rs - stats.cl_asbs_rs,
         clAsbs: stats.cl_asbs_rs,
         clOdds: stringToNum(stats.cl_odds_rs),
