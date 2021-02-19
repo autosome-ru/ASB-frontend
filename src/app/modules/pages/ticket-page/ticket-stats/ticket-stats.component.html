@@ -40,10 +40,15 @@
         </li>
       <li>
                 <span
-                ><b [ngStyle]="{'color': chartColors[0].backgroundColor[2]}">SNPs with undefined ASB status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>, <b
-          [ngStyle]="{'color': chartColors[0].backgroundColor[3]}"
-      >&nbsp;No data on allele-specificity:</b> {{stats.notFound}}
+                ><b [ngStyle]="{'color': chartColors[0].backgroundColor[2]}">SNPs with undefined ASB status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>
       </li>
+        <li>
+            <span>
+                <b
+                    [ngStyle]="{'color': chartColors[0].backgroundColor[3]}"
+                >&nbsp;No data on allele-specificity:</b> {{stats.notFound}}
+            </span>
+        </li>
       <li>
           <b>Observed ASB fraction</b>: {{stats.ratio.toFixed(1)}}% <span class="additional-selection">(Expected: {{stats.expRatio.toFixed(1)}}%)</span>
       </li>

@@ -50,22 +50,26 @@ export class SearchService {
             }
         }
         if (!filter.isAdvanced && filter.searchBy !== "pos") {
+            const serverParams = {
+                fdr: fdr,
+                ...convertServerSideModelToServerSideBackendModel(params)}
             switch (filter.searchBy) {
+
                 case "geneId":
                     return this.http.get<SearchResultsBackendModel>(
                         `${this.urlService.getUrlForQuery("search")}/gene_id/${filter.geneId}`, {
-                            params: convertServerSideModelToServerSideBackendModel(params)
+                            params: serverParams
                         });
                 case "id":
                     const rsId: string = filter.rsId.match(/^rs\d+$/) ? filter.rsId.slice(2) : filter.rsId;
                     return this.http.get<SearchResultsBackendModel>(
                         `${this.urlService.getUrlForQuery("search")}/rs/${rsId}`, {
-                            params: convertServerSideModelToServerSideBackendModel(params)
+                            params: serverParams
                         });
                 case "geneName":
                     return this.http.get<SearchResultsBackendModel>(
                         `${this.urlService.getUrlForQuery("search")}/gene_name/${filter.geneName}`, {
-                            params: convertServerSideModelToServerSideBackendModel(params)
+                            params: serverParams
                         });
             }
         } else {

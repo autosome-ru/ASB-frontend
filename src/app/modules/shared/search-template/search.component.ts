@@ -396,6 +396,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
                 result.clList = searchParams.cl ? searchParams.cl.split("@") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
+                result.fdr = searchParams.fdr ? searchParams.fdr : defaultFdr
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
                 }
@@ -411,6 +412,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                         searchBy: "id",
                         geneId: "",
                         geneName: "",
+                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         rsId: searchParams.rs,
                         chromPos: new ChromPos(searchParams.chr, searchParams.pos)
                     };
@@ -420,6 +422,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                         searchBy: "pos",
                         geneId: "",
                         geneName: "",
+                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         rsId: "",
                         chromPos: new ChromPos(searchParams.chr, searchParams.pos)
                     };
@@ -427,12 +430,14 @@ export class SearchComponent implements OnInit, OnDestroy {
                 if (searchParams.hasOwnProperty("g_id")) {
                     return {
                         searchBy: "geneId",
+                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         geneId: searchParams.g_id
                     };
                 }
                 if (searchParams.hasOwnProperty("g_name")) {
                     return {
                         searchBy: "geneName",
+                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         geneName: searchParams.g_name
                     };
                 } else {
@@ -441,6 +446,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             } else {
                 return {
                     searchBy: "id",
+                    fdr: defaultFdr,
                     geneId: "",
                     geneName: ""
                 };
@@ -557,3 +563,4 @@ function checkIfCheckpointSelected(sF: SearchQueryModel) {
     return result;
 }
 
+const defaultFdr: string = '0.05'

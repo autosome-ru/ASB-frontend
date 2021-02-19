@@ -110,33 +110,35 @@
 
           </button>
         </div>
-        <mat-form-field
-            style="align-self: flex-start"
-        >
-            <mat-label>FDR threshold</mat-label>
-            <mat-select [formControl]="fdrControl">
-                <mat-option value="0.01">0.01</mat-option>
-                <mat-option value="0.05">0.05</mat-option>
-                <mat-option value="0.1">0.1</mat-option>
-                <mat-option value="0.15">0.15</mat-option>
-            </mat-select>
-        </mat-form-field>
         <div style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap">
-            <button
-              color="accent"
-              style="align-self: flex-start; margin-top: 15px; margin-left: 5px; margin-right: 5px"
-              mat-raised-button
-              matTooltipClass="big-font"
-              matTooltip="Please note, that we accept no more than 10000 SNP IDs in a single request."
-              (click)="submit()"
-            >
-              Submit
-            </button>
+            <div style="display: flex; align-items: center">
+                <mat-form-field
+                    style="max-width: 80px; margin-right: 10px"
+                >
+                    <mat-label>FDR threshold</mat-label>
+                    <mat-select [formControl]="fdrControl">
+                        <mat-option value="0.01">0.01</mat-option>
+                        <mat-option value="0.05">0.05</mat-option>
+                        <mat-option value="0.1">0.1</mat-option>
+                        <mat-option value="0.15">0.15</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button
+                  color="accent"
+                  style="align-self: flex-start; margin-top: 15px; margin-right: 5px"
+                  mat-raised-button
+                  matTooltipClass="big-font"
+                  matTooltip="Please note, that we accept no more than 10000 SNP IDs in a single request."
+                  (click)="submit()"
+                >
+                  Submit
+                </button>
+            </div>
             <div
                 joyrideStep="examples"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('examples')"
-                style="align-self: flex-end; margin-top: 15px; margin-right: 5px">
+                style="margin-top: 15px; margin-right: 5px">
                 <button
                     style="margin-right: 10px"
                     mat-raised-button

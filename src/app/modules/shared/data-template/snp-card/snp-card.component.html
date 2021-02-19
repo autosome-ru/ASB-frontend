@@ -123,6 +123,7 @@
             <ng-container *ngIf="(release$ | async).name as name ">
                 <ng-container *ngIf="name != 'Soos' && name != 'Ford'">
                 <mat-form-field
+                    style="max-width: 80px"
                 >
                     <mat-label>FDR threshold</mat-label>
                     <mat-select [formControl]="fdrControl">

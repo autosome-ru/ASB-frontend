@@ -137,7 +137,7 @@
                                 [value]="option.name"
                     >
                         <span>{{option.name + " | "}}</span>
-                        <small>&nbsp;ASBs in locus: {{option.snpsCount}}</small>
+                        <small>&nbsp;ASBs in locus: {{option.snpsCount}}<span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
                     </mat-option>
                     </ng-container>
                     <mat-option *ngIf="searchGeneOptionsLoading$ | async">
@@ -172,7 +172,7 @@
             *ngIf="_checkToDisplay('pos')"
         >
             <div
-                style="display: inline-flex;overflow: auto; flex-wrap: wrap; align-items: center; min-width: 240px"
+                style="display: inline-flex;overflow: auto; flex-wrap: wrap; align-items: center; min-width: 240px; margin-right: 15px"
                 joyrideStep="search-pos"
                 [stepContent]="stepTemplate"
                 [prevTemplate]="prevTemplate"
@@ -210,10 +210,11 @@
                     </mat-hint>
                 </mat-form-field>
             </div>
-            <div *ngIf="isAdvanced" style="display: inline-flex; margin-left: auto">
+            <div *ngIf="isAdvanced" style="display: inline-flex" class="ml-sm-auto">
                 <ng-container *ngIf="(currentRelease$ | async).name as name ">
                     <ng-container *ngIf="name != 'Soos' && name != 'Ford'">
                     <mat-form-field
+                        style="max-width: 80px"
                     >
                         <mat-label>FDR threshold</mat-label>
                         <mat-select formControlName="fdr">
@@ -228,7 +229,24 @@
                 </ng-container>
             </div>
         </div>
-
+        <div *ngIf="!isAdvanced" style="display: inline-flex; margin-right: 15px">
+            <ng-container *ngIf="(currentRelease$ | async).name as name ">
+                <ng-container *ngIf="name != 'Soos' && name != 'Ford'">
+                    <mat-form-field
+                        style="max-width: 80px"
+                    >
+                        <mat-label>FDR threshold</mat-label>
+                        <mat-select formControlName="fdr">
+                            <mat-option value="0.01">0.01</mat-option>
+                            <mat-option value="0.05">0.05</mat-option>
+                            <mat-option value="0.1">0.1</mat-option>
+                            <mat-option value="0.15">0.15</mat-option>
+                            <mat-option value="0.25">0.25</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </ng-container>
+            </ng-container>
+        </div>
         <div
             *ngIf="!isAdvanced"
 
@@ -323,7 +341,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
                         <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}}</small>
+                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}} <span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).tf">
@@ -376,7 +394,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
                         <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}}</small>
+                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}}<span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).cl">

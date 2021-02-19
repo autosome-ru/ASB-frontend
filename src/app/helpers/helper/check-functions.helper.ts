@@ -68,17 +68,18 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
 
     if (form && !form.isAdvanced) {
         if (form.searchBy) {
+            const startValue = {fdr: form.fdr}
             if (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced) {
                 form.searchBy = "pos";
             }
+            let result = {};
             switch (form.searchBy) {
                 case "id":
-                    return form.rsId ? {rs: form.rsId.trim()} : {};
+                    result =  form.rsId ? {rs: form.rsId.trim()} : {};
+                    break;
                 case "pos":
-                    let result = {};
                     if (form.chromPos.pos) {
                         result = {
-                            ...result,
                             pos: form.chromPos.pos.trim()
                         };
                     }
@@ -88,17 +89,18 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                             chr: form.chromPos.chr.trim()
                         };
                     }
-                    return result;
+                    break;
                 case "geneId":
-                    return form.geneId ? {g_id: form.geneId.trim()} : {};
+                    result = form.geneId ? {g_id: form.geneId.trim()} : {};
+                    break;
                 case "geneName":
-                    return form.geneName ? {g_name: form.geneName.trim()} : {};
+                    result = form.geneName ? {g_name: form.geneName.trim()} : {};
+                   break;
             }
-
+            return {...startValue, ...result}
         } else {
             return form.rsId ? {pos: form.chromPos.pos, chr: form.chromPos.chr} : {};
         }
-
     } else {
         if (form) {
             const result: Partial<SearchParamsModel> = form.fdr ? {fdr: form.fdr} : {};
