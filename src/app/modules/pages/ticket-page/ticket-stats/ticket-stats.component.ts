@@ -26,8 +26,8 @@ export class TicketStatsComponent implements OnInit {
                     data:
                         [
                             value.metaInfo.asbCount,
-                            value.metaInfo.undefinedCount,
                             value.metaInfo.candidatesCount,
+                            value.metaInfo.undefinedCount,
                             value.metaInfo.notFound
                         ],
                     label: 'All ASB'
@@ -36,9 +36,7 @@ export class TicketStatsComponent implements OnInit {
         }
     }
 
-    public chartLabels: string[] = [
-        'ASB SNPs', 'Undefined SNPs',
-        'Non-ASB SNPs', 'N/A'];
+    public chartLabels: string[] = ['ASB SNPs', 'Non-ASB SNPs', 'Undefined SNPs', 'N/A'];
 
     public chartColors: Array<any> = [
         {

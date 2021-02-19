@@ -32,14 +32,15 @@
         <span class="additional-selection">&nbsp;(incl. {{stats.tfAsbs}} SNPs with TF-ASBs and {{stats.clAsbs}} SNPs with cell type-ASBs)</span>
       </li>
         <li>
-        <span
-        ><b [ngStyle]="{'color': chartColors[0].backgroundColor[1]}">SNPs with undefined ASB status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>
+            <span
+            ><b
+                [ngStyle]="{'color': chartColors[0].backgroundColor[1]}"
+            >SNPs without any significant ASBs</b>: {{stats.candidatesCount}}</span>
+
         </li>
       <li>
-        <span
-        ><b
-            [ngStyle]="{'color': chartColors[0].backgroundColor[2]}"
-        >SNPs without any significant ASBs</b>: {{stats.candidatesCount}}</span>, <b
+                <span
+                ><b [ngStyle]="{'color': chartColors[0].backgroundColor[2]}">SNPs with undefined ASB status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>, <b
           [ngStyle]="{'color': chartColors[0].backgroundColor[3]}"
       >&nbsp;No data on allele-specificity:</b> {{stats.notFound}}
       </li>
