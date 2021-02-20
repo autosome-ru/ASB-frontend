@@ -23,7 +23,7 @@
         style="display: flex; align-items: center; flex-wrap: wrap"
     >
         <mat-form-field
-            style="margin-right: 15px; overflow: auto"
+            style="margin-right: 15px; overflow: auto; min-width: 205px"
             class="field-without-hint"
             *ngIf="!isAdvanced"
             joyrideStep="search-by"
@@ -38,10 +38,12 @@
             <mat-select
                 formControlName="searchBy"
             >
-                <mat-option value="id">rs ID</mat-option>
-                <mat-option value="pos">Genome position</mat-option>
-                <mat-option value="geneId">Gene ID</mat-option>
-                <mat-option value="geneName">Gene name</mat-option>
+                <mat-option value="id">dbSNP rsID</mat-option>
+                <mat-option value="pos">Genome position (hg 38)</mat-option>
+                <mat-option value="geneId">Gene locus (by name)</mat-option>
+                <mat-option value="geneName">Gene locus (by ID)</mat-option>
+                <mat-option value="geneId">eQTLs (by target gene ID)</mat-option>
+                <mat-option value="geneName">eQTLs (by target gene name)</mat-option>
             </mat-select>
         </mat-form-field>
 

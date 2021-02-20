@@ -119,7 +119,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                  }
             })
         );
-        this.store.dispatch(new fromActions.data.InitTotalInfoAction());
 
         this.tfColumnModel = {
             uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
@@ -135,7 +134,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
-        console.log(this.router.url)
         if (this.router.url.startsWith('/dan') || this.router.url.startsWith('dan')) {
 
             this.clDisplayedColumns.push('aggregatedSnpsCount005')
