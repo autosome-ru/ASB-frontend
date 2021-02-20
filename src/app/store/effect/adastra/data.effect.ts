@@ -1,4 +1,4 @@
-import {Actions, createEffect, Effect, ofType} from "@ngrx/effects";
+import {Actions, createEffect, ofType} from "@ngrx/effects";
 import * as fromActions from "src/app/store/action/adastra/data.action";
 import {catchError, map, mergeMap, switchMap, take, tap} from "rxjs/operators";
 import {combineLatest, EMPTY, of} from "rxjs";

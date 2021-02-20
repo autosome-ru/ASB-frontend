@@ -1,6 +1,6 @@
-import {Actions, Effect, ofType} from "@ngrx/effects";
+import {Actions, createEffect, ofType} from "@ngrx/effects";
 import * as fromActions from "src/app/store/action/ananastra/annotation.action";
-import {catchError, map, mergeMap, switchMap, take} from "rxjs/operators";
+import {catchError, map, mergeMap, switchMap, take, tap} from "rxjs/operators";
 import {combineLatest, EMPTY, Observable, of} from 'rxjs';
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
@@ -21,8 +21,7 @@ export class AnnotationEffect {
     ) {
     }
 
-    @Effect()
-    loadAnnotationInfoStart$ = this.actions$.pipe(
+    loadAnnotationInfoStart$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.StartAnnotation),
         mergeMap((action: fromActions.StartAnnotationAction) =>
             this.processingService.startProcessTicket(action.payload.ticket, action.payload.fdr).pipe(
@@ -30,16 +29,15 @@ export class AnnotationEffect {
                 catchError(() => of(new fromActions.StartAnnotationFailAction(action.payload))),
             )
         )
-    );
-    @Effect()
-    loadAnnotationInfoStartFail$ = this.actions$.pipe(
+    ));
+    loadAnnotationInfoStartFail$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.StartAnnotationFail),
-        mergeMap(() => {
-            return EMPTY;
+        tap(() => {
+            console.log('Error with annotation')
         }),
-    );
-    @Effect()
-    initAnnotationStart$ = this.actions$.pipe(
+    ), {dispatch: false});
+
+    initAnnotationStart$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationStart),
         mergeMap((action: fromActions.InitAnnotationStartAction) =>
             this.store.select(fromSelectors.selectProcessingById, action.payload.ticket)
@@ -52,9 +50,9 @@ export class AnnotationEffect {
                     ),
                 ),
         ),
-    );
-    @Effect()
-    loadAnnotationStats$ = this.actions$.pipe(
+    ));
+
+    loadAnnotationStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationInfoStats),
         mergeMap((action: fromActions.LoadAnnotationInfoStatsAction) =>
             this.processingService.getFileStatsByTicket(action.payload).pipe(
@@ -62,16 +60,16 @@ export class AnnotationEffect {
                 catchError(() => of(new fromActions.LoadAnnotationStatsFailAction(action.payload))),
             )
         )
-    );
-    @Effect()
-    loadAnnotationStatsFail$ = this.actions$.pipe(
+    ));
+
+    loadAnnotationStatsFail$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationInfoStatsFail),
-        mergeMap(() => {
-            return EMPTY;
+        tap(() => {
+            console.log('Load annotation fail')
         }),
-    );
-    @Effect()
-    pingAnnotationStats$ = this.actions$.pipe(
+    ), {dispatch: false});
+
+    pingAnnotationStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.PingAnnotation),
         mergeMap((action: fromActions.PingAnnotationAction) =>
             this.processingService.pingStatsByTicket(action.payload).pipe(
@@ -80,9 +78,9 @@ export class AnnotationEffect {
                     of(new fromActions.PingAnnotationFailAction(action.payload))),
             )
         )
-    );
-    @Effect()
-    initPingAnnotationStats$ = this.actions$.pipe(
+    ));
+
+    initPingAnnotationStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitPingAnnotation),
         mergeMap((action: fromActions.InitPingAnnotationAction) =>
             combineLatest([
@@ -100,20 +98,19 @@ export class AnnotationEffect {
                 )
             )
         )
-    );
-    @Effect()
-    pingAnnotationStatsFail$ = this.actions$.pipe(
+    ));
+
+    pingAnnotationStatsFail$ = createEffect( () => this.actions$.pipe(
         ofType(fromActions.ActionTypes.PingAnnotationFail),
-        mergeMap((action: fromActions.PingAnnotationFailAction) => {
+        tap((action: fromActions.PingAnnotationFailAction) => {
             this.router.navigate([`/404`], {
                 queryParams: {ticket: action.payload},
                 replaceUrl: true});
-            return EMPTY;
         }),
-    );
+    ), {dispatch: false});
 
-    @Effect()
-    initAnnotationStatsInfoLoading$ = this.actions$.pipe(
+
+    initAnnotationStatsInfoLoading$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationInfoStats),
         mergeMap((action: fromActions.InitAnnotationInfoStatsAction) =>
             this.store.select(fromSelectors.selectAnnotationDataById, action.payload)
@@ -126,9 +123,9 @@ export class AnnotationEffect {
                     ),
                 ),
         ),
-    );
-    @Effect()
-    loadAnnotationTable$ = this.actions$.pipe(
+    ), {dispatch: false});
+
+    loadAnnotationTable$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationTable),
         mergeMap((action: fromActions.LoadAnnotationTableAction) =>
             this.processingService.getTableData(action.payload.ticket,
@@ -145,16 +142,15 @@ export class AnnotationEffect {
                         action.payload))),
                 )
         )
-    );
-    @Effect()
-    loadAnnotationTableFail$ = this.actions$.pipe(
+    ));
+    loadAnnotationTableFail$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationInfoStatsFail),
-        mergeMap(() => {
-            return EMPTY;
+        tap(() => {
+            console.log('table loading failed')
         }),
-    );
-    @Effect()
-    initAnnotationTable$ = this.actions$.pipe(
+    ), {dispatch: false});
+
+    initAnnotationTable$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationTableLoad),
         mergeMap((action: fromActions.InitAnnotationTableAction) => {
                 let obs: Observable<{ data?: AnnotationSnpModel[], loading: boolean }>;
@@ -177,5 +173,5 @@ export class AnnotationEffect {
                 );
             }
         ),
-    );
+    ));
 }

@@ -1,9 +1,9 @@
 import {Injectable} from "@angular/core";
-import {Actions, Effect, ofType} from "@ngrx/effects";
+import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../reducer/adastra";
 import * as fromActions from "src/app/store/action/adastra/releases.action";
-import {catchError, map, mergeMap} from "rxjs/operators";
+import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import { EMPTY, of} from "rxjs";
 import {ReleasesService} from "../../../services/releases.service";
 
@@ -16,8 +16,7 @@ export class ReleaseEffect {
     ) {
     }
 
-    @Effect()
-    getCurrentRelease$ = this.actions$.pipe(
+    getCurrentRelease$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.GetCurrentRelease),
         mergeMap(() =>
             this.releasesService.getReleaseFromRoute().pipe(
@@ -25,16 +24,15 @@ export class ReleaseEffect {
                 catchError(() => of(new fromActions.GetCurrentReleaseActionFail())),
             )
         )
-    );
+    ));
 
-
-    @Effect()
-    getCurrentReleaseFail$ = this.actions$.pipe(
+    getCurrentReleaseFail$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.GetCurrentReleaseFail),
-        mergeMap(() => {
+        tap(() => {
             console.log("Something went wrong");
             return EMPTY;
-        }),
+        })),
+        {dispatch: false}
     );
 
 }
