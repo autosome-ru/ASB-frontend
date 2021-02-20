@@ -25,7 +25,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
 import { TicketBarplotComponent } from './ticket-barplot/ticket-barplot.component';
 import {MatChipsModule} from "@angular/material/chips";
-import { TicketTableTmpComponent } from './ticket-table-tmp/ticket-table-tmp.component';
+import { TicketTableTmpComponent } from './ticket-table-enrichments/ticket-table-tmp.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDividerModule} from "@angular/material/divider";
 import {AsbTourModule} from "../../shared/tour-template/tour-module";
