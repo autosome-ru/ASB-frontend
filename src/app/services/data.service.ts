@@ -36,15 +36,15 @@ export class DataService {
     }
 
 
-    public getTfInfo(params: AsbServerSideModel): Observable<TfInfoBackendModel[]> {
-        return this.http.get<TfInfoBackendModel[]>(this.urlService.getUrlForQuery("browse") + "/tf",
+    public getTfInfo(params: AsbServerSideModel): Observable<{results:TfInfoBackendModel[], total: number}> {
+        return this.http.get<{results:TfInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/tf",
         {
             params: convertServerSideModelToServerSideBackendModel(params)
         });
     }
 
-    public getClInfo(params: AsbServerSideModel): Observable<ClInfoBackendModel[]> {
-        return this.http.get<ClInfoBackendModel[]>(this.urlService.getUrlForQuery("browse") + "/cl",
+    public getClInfo(params: AsbServerSideModel): Observable<{results: ClInfoBackendModel[], total: number}> {
+        return this.http.get<{results:ClInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/cl",
             {
                 params: convertServerSideModelToServerSideBackendModel(params)
             });
