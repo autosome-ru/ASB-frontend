@@ -1,6 +1,6 @@
-import {Actions, Effect, ofType} from "@ngrx/effects";
+import {Actions, createEffect, Effect, ofType} from "@ngrx/effects";
 import * as fromActions from "src/app/store/action/adastra/data.action";
-import {catchError, map, mergeMap, switchMap, take} from "rxjs/operators";
+import {catchError, map, mergeMap, switchMap, take, tap} from "rxjs/operators";
 import {combineLatest, EMPTY, of} from "rxjs";
 import {Injectable} from "@angular/core";
 import {Store} from "@ngrx/store";
@@ -18,8 +18,7 @@ export class DataEffect {
         private router: Router,
     ) { }
 
-    @Effect()
-    loadTotalStats$ = this.actions$.pipe(
+    loadTotalStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadTotalInfo),
         mergeMap(() =>
             this.dataService.getTotalInfo().pipe(
@@ -27,10 +26,9 @@ export class DataEffect {
                 catchError(() => of(new fromActions.LoadTotalInfoFailAction())),
             )
         )
-    );
+    ));
 
-    @Effect()
-    initTotalStats$ = this.actions$.pipe(
+    initTotalStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitTotalInfo),
         mergeMap(() =>
             combineLatest([
@@ -45,10 +43,9 @@ export class DataEffect {
                 ),
             ),
         ),
-    );
+    ));
 
-    @Effect()
-    loadTfStats$ = this.actions$.pipe(
+    loadTfStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadTfInfo),
         mergeMap((action: fromActions.LoadTfInfoAction) =>
             this.dataService.getTfInfo(action.payload).pipe(
@@ -56,11 +53,8 @@ export class DataEffect {
                 catchError(() => of(new fromActions.LoadTfInfoFailAction())),
             )
         )
-    );
-
-
-    @Effect()
-    loadClStats$ = this.actions$.pipe(
+    ));
+    loadClStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadClInfo),
         mergeMap((action: fromActions.LoadClInfoAction) =>
             this.dataService.getClInfo(action.payload).pipe(
@@ -68,10 +62,9 @@ export class DataEffect {
                 catchError(() => of(new fromActions.LoadClInfoFailAction())),
             )
         )
-    );
+    ));
 
-    @Effect()
-    loadSnpStats$ = this.actions$.pipe(
+    loadSnpStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSnpInfo),
         mergeMap((action: fromActions.LoadSnpInfoAction) =>
             this.dataService.getSnpInfoById(action.payload).pipe(
@@ -79,18 +72,17 @@ export class DataEffect {
                 catchError(() => of(new fromActions.LoadSnpInfoFailAction(action.payload))),
             )
         )
-    );
-    @Effect()
-    loadSnpStatsFail$ = this.actions$.pipe(
+    ));
+
+    loadSnpStatsFail$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSnpInfoFail),
-        mergeMap(() => {
+        tap(() => {
             this.router.navigate(["/404"],{replaceUrl: true});
-            return EMPTY;
-        }),
+        }
+        )), {dispatch: false}
     );
 
-    @Effect()
-    initSnpStats$ = this.actions$.pipe(
+    initSnpStats$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitSnpInfo),
         mergeMap((action: fromActions.InitSnpInfoAction) =>
             combineLatest([
@@ -106,5 +98,5 @@ export class DataEffect {
                 ),
             ),
         ),
-    );
+    ));
 }
