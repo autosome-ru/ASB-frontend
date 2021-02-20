@@ -50,7 +50,7 @@ export class LoadTfInfoAction implements Action {
 export class LoadTfInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadTfInfoSuccess;
 
-    constructor(public payload: TfInfoBackendModel[]) {}
+    constructor(public payload: {results: TfInfoBackendModel[], total: number}) {}
 }
 export class LoadTfInfoFailAction implements Action {
     readonly type = ActionTypes.LoadTfInfoFail;
@@ -65,7 +65,7 @@ export class LoadClInfoAction implements Action {
 export class LoadClInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadClInfoSuccess;
 
-    constructor(public payload: ClInfoBackendModel[]) {}
+    constructor(public payload: {results: ClInfoBackendModel[], total: number}) {}
 }
 export class LoadClInfoFailAction implements Action {
     readonly type = ActionTypes.LoadClInfoFail;

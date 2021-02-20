@@ -34,14 +34,14 @@
             <asb-table-server
                 #tableTfView
                 *ngIf="browseTfInfoInitialized$ | async"
-                [data]="browseTfInfo$"
+                [data]="tableTfData$"
                 [dataLoading]="browseTfInfoLoading$ | async"
                 [displayedColumns]="tfDisplayedColumns"
                 [columnModel]="tfColumnModel"
                 [paginatorPageSize]="25"
-                [paginatorOptions]="_getPaginatorOptions(((totalInfo$ | async) && (totalInfo$ | async).transcriptionFactorsCount))"
+                [paginatorOptions]="_getPaginatorOptions(((browseTfInfo$ | async) && (browseTfInfo$ | async).total))"
                 [clickableRow]="true"
-                [paginatorLength]="(totalInfo$ | async) && (totalInfo$ | async).transcriptionFactorsCount"
+                [paginatorLength]="(browseTfInfo$ | async) && (browseTfInfo$ | async).total"
                 (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
                 (tableChangesEmitter)="_handleTableChange($event, 'tf')"
             >
@@ -85,14 +85,14 @@
     <asb-table-server
         #tableClView
         *ngIf="browseClInfoInitialized$ | async"
-        [data]="browseClInfo$"
+        [data]="tableClData$"
         [dataLoading]="browseClInfoLoading$ | async"
         [displayedColumns]="clDisplayedColumns"
         [columnModel]="clColumnModel"
         [paginatorPageSize]="25"
-        [paginatorOptions]="_getPaginatorOptions(((totalInfo$ | async) && (totalInfo$ | async).cellTypesCount))"
+        [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async) && (browseClInfo$ | async).total)"
         [clickableRow]="true"
-        [paginatorLength]="(totalInfo$ | async) && (totalInfo$ | async).cellTypesCount"
+        [paginatorLength]="(browseClInfo$ | async) && (browseClInfo$ | async).total"
         (rowClickEmitter)="_handleTableRowClick($event, 'cl')"
         (tableChangesEmitter)="_handleTableChange($event, 'cl')"
     >

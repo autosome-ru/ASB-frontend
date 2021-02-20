@@ -16,11 +16,11 @@ export interface DataState {
     totalInfo: TotalInfoModel;
     totalInfoLoading: boolean;
 
-    tfInfo: TfInfoModel[];
+    tfInfo: {results: TfInfoModel[], total: number};
     tfInfoLoading: boolean;
     tfInfoInitialized: boolean;
 
-    clInfo: ClInfoModel[];
+    clInfo: {results: ClInfoModel[], total: number};
     clInfoLoading: boolean;
     clInfoInitialized: boolean;
 
@@ -49,8 +49,8 @@ export const selectSnps = (state: DataState) => state.snps;
 
 export const initialState: DataState = {
     totalInfo: null,
-    tfInfo: [],
-    clInfo: [],
+    tfInfo: {results: [], total: 0},
+    clInfo: {results: [], total: 0},
 
     totalInfoLoading: false,
     tfInfoLoading: false,
@@ -100,7 +100,10 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 ...state,
                 tfInfoLoading: false,
                 tfInfoInitialized: true,
-                tfInfo: action.payload.map(convertTfInfoBackendModelToTfInfoModel)
+                tfInfo: {
+                    total: action.payload.total,
+                    results: action.payload.results.map(convertTfInfoBackendModelToTfInfoModel)
+                }
             };
         }
 
@@ -123,7 +126,10 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 ...state,
                 clInfoLoading: false,
                 clInfoInitialized: true,
-                clInfo: action.payload.map(convertClInfoBackendModelToClInfoModel)
+                clInfo: {
+                    total: action.payload.total,
+                    results: action.payload.results.map(convertClInfoBackendModelToClInfoModel)
+                }
             };
         }
 

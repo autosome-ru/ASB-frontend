@@ -13,7 +13,7 @@ import {AppState} from "src/app/store/reducer/adastra";
 import * as fromSelectors from "src/app/store/selector/adastra";
 import * as fromActions from "src/app/store/action/adastra";
 import {Observable, Subscription} from "rxjs";
-import {ClInfoModel, TfInfoModel, TfOrCl, TotalInfoModel} from "../../../models/data.model";
+import {ClInfoModel, TfInfoModel, TfOrCl} from "../../../models/data.model";
 import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SeoModel} from "src/app/models/seo.model";
@@ -21,6 +21,7 @@ import {SeoService} from "src/app/services/seo.servise";
 import {AsbServerTableComponent} from "../../shared/table-template/server-side/table-server.component";
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
+import {map} from "rxjs/operators";
 
 
 @Component({
@@ -43,11 +44,11 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     @ViewChild("uniprotViewTemplate", {static: true})
     public uniprotViewTemplate: TemplateRef<{value: string}>;
 
-    public browseTfInfo$: Observable<TfInfoModel[]>;
+    public browseTfInfo$: Observable<{results: TfInfoModel[], total: number}>;
     public browseTfInfoLoading$: Observable<boolean>;
 
 
-    public browseClInfo$: Observable<ClInfoModel[]>;
+    public browseClInfo$: Observable<{results: ClInfoModel[], total: number}>;
     public browseClInfoLoading$: Observable<boolean>;
 
     public clDisplayedColumns: AsbTableDisplayedColumns<ClInfoModel> = [
@@ -66,11 +67,12 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
     public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
     public initialGroupValue: TfOrCl;
-    public totalInfo$: Observable<TotalInfoModel>;
     public browseTfInfoInitialized$: Observable<boolean>;
     public browseClInfoInitialized$: Observable<boolean>;
 
     private subscriptions: Subscription = new Subscription();
+    public tableTfData$: Observable<TfInfoModel[]>;
+    public tableClData$: Observable<ClInfoModel[]>;
     constructor(
         private router: Router,
         private store: Store<AppState>,
@@ -83,15 +85,16 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
-        this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
         this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
         this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
         this.browseTfInfoInitialized$ = this.store.select(fromSelectors.selectTfInfoInitialized);
         this.browseClInfoInitialized$ = this.store.select(fromSelectors.selectClInfoInitialized);
-
+        this.tableTfData$ = this.browseTfInfo$.pipe(map(s => s.results))
+        this.tableClData$ = this.browseClInfo$.pipe(map(s => s.results))
         this.subscriptions.add(
             this.route.queryParams.subscribe(
             params => {

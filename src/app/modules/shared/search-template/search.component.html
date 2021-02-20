@@ -341,7 +341,14 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
                         <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}} <span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
+                            <small>&nbsp;Total ASBs:
+                                <span *ngIf="(currentRelease$ | async).name == 'Dan'">
+                                    {{option.aggregatedSnpCount005}} &nbsp;@ 5% FDR
+                                </span>
+                                <span *ngIf="(currentRelease$ | async).name != 'Dan'">
+                                    {{option.aggregatedSnpCount}}
+                                </span>
+                            </small>
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).tf">
@@ -394,7 +401,12 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
                         <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs: {{option.aggregatedSnpCount}}<span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
+                            <span *ngIf="(currentRelease$ | async).name == 'Dan'">
+                                    {{option.aggregatedSnpCount005}} &nbsp;@ 5% FDR
+                                </span>
+                            <span *ngIf="(currentRelease$ | async).name != 'Dan'">
+                                    {{option.aggregatedSnpCount}}
+                                </span>
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).cl">

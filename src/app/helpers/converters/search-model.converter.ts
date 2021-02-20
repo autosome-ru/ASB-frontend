@@ -17,6 +17,7 @@ export function convertSearchHintBackendModelToSearchHintModel(
 ): Partial<SearchHintModel> {
     return {
         name: model.name,
+        aggregatedSnpCount005: model.aggregated_snps_count005,
         aggregatedSnpCount: model.aggregated_snps_count,
     };
 }

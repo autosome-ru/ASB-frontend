@@ -21,6 +21,7 @@ export type SearchByModel = "id" | "pos" | "geneId" | "geneName";
 export interface SearchHintBackendModel {
     name: string;
     aggregated_snps_count: number;
+    aggregated_snps_count005: number;
 }
 
 export interface SearchByGeneNameHintBackendModel {
@@ -35,6 +36,7 @@ export interface SearchByGeneNameHintBackendModel {
 export interface SearchHintModel {
     name: string;
     aggregatedSnpCount: number;
+    aggregatedSnpCount005: number;
 }
 
 export interface GeneModel {
