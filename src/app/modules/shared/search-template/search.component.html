@@ -40,10 +40,10 @@
             >
                 <mat-option value="id">dbSNP rsID</mat-option>
                 <mat-option value="pos">Genome position (hg 38)</mat-option>
-                <mat-option value="geneId">Gene locus (by name)</mat-option>
-                <mat-option value="geneName">Gene locus (by ID)</mat-option>
-                <mat-option value="geneId">eQTLs (by target gene ID)</mat-option>
-                <mat-option value="geneName">eQTLs (by target gene name)</mat-option>
+                <mat-option value="geneId">Gene locus (by ID)</mat-option>
+                <mat-option value="geneName">Gene locus (by name)</mat-option>
+                <mat-option value="eqtlGeneId">eQTLs (by target gene ID)</mat-option>
+                <mat-option value="eqtlGeneName">eQTLs (by target gene name)</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -139,7 +139,18 @@
                                 [value]="option.name"
                     >
                         <span>{{option.name + " | "}}</span>
-                        <small>&nbsp;ASBs in locus: {{option.snpsCount}}<span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
+                        <small>&nbsp;ASBs in locus:
+                            <span
+                                *ngIf="(currentRelease$ | async).majorVersion >= 3"
+                            >
+                                {{option.snpsCount005}}&nbsp;@ 5% FDR
+                            </span>
+                            <span
+                                *ngIf="(currentRelease$ | async).majorVersion < 3"
+                            >
+                                {{option.snpsCount}}&nbsp;@ 5% FDR
+                            </span>
+                        </small>
                     </mat-option>
                     </ng-container>
                     <mat-option *ngIf="searchGeneOptionsLoading$ | async">
@@ -167,6 +178,89 @@
                 </button>
 
             </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="(currentRelease$ | async).majorVersion >= 3">
+            <ng-container *ngIf="_checkToDisplay('eqtlGeneId')">
+                <mat-form-field
+                    floatLabel="always"
+                    style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
+                    appearance="outline"
+                    class="search-field field-without-hint"
+                >
+                    <input placeholder="e.g. ENSG00000185010.15"
+                           matInput
+                           name="Search SNPs"
+                           aria-label="search"
+                           formControlName="eqtlGeneId"
+                    >
+                    <button
+                        type="submit"
+                        style="display:none"
+                        (click)="_navigateToSearch()"
+                    >hidden submit</button>
+                    <button
+                        mat-icon-button
+                        [hidden]="!searchForm.get('eqtlGeneId').value"
+                        matSuffix
+                        style="height: 100%; width: 100%"
+                        (click)="_clearSearchField('eqtlGeneId')"
+                    >
+                        <mat-icon svgIcon="clear"></mat-icon>
+                    </button>
+
+                </mat-form-field>
+            </ng-container>
+            <ng-container *ngIf="_checkToDisplay('eqtlGeneName')">
+                <mat-form-field
+                    floatLabel="always"
+                    style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
+                    appearance="outline"
+                    class="search-field field-without-hint"
+                >
+                    <input placeholder="e.g. AGAP1"
+                           matInput
+                           name="Search SNPs"
+                           aria-label="search"
+                           formControlName="eqtlGeneName"
+                           [matAutocomplete]="auto1"
+                    >
+                    <mat-autocomplete
+                        #auto1="matAutocomplete"
+                    >
+                        <ng-container *ngIf="!(searchGeneOptionsLoading$ | async)">
+                            <mat-option *ngFor="let option of searchGeneOptions$ | async"
+                                        [value]="option.name"
+                            >
+                                <span>{{option.name + " | "}}</span>
+                                <small>&nbsp;ASBs in locus: {{option.eqtlCount}}<span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
+                            </mat-option>
+                        </ng-container>
+                        <mat-option *ngIf="searchGeneOptionsLoading$ | async">
+                            Loading...
+                            <mat-spinner
+                                matSuffix
+                                color="accent"
+                                [diameter]="12"
+                            ></mat-spinner>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <button
+                        type="submit"
+                        style="display:none"
+                        (click)="_navigateToSearch()"
+                    >hidden submit</button>
+                    <button
+                        mat-icon-button
+                        [hidden]="!searchForm.get('eqtlGeneName').value"
+                        matSuffix
+                        style="height: 100%; width: 100%"
+                        (click)="_clearSearchField('eqtlGeneName')"
+                    >
+                        <mat-icon svgIcon="clear"></mat-icon>
+                    </button>
+
+                </mat-form-field>
+            </ng-container>
         </ng-container>
         <div
             [ngStyle]="isAdvanced ? {'width': '100%'} : {}"
@@ -213,8 +307,8 @@
                 </mat-form-field>
             </div>
             <div *ngIf="isAdvanced" style="display: inline-flex" class="ml-sm-auto">
-                <ng-container *ngIf="(currentRelease$ | async).name as name ">
-                    <ng-container *ngIf="name != 'Soos' && name != 'Ford'">
+                <ng-container *ngIf="(currentRelease$ | async).majorVersion as majorVersion">
+                    <ng-container *ngIf="majorVersion >= 3">
                     <mat-form-field
                         style="max-width: 80px"
                     >
@@ -232,21 +326,19 @@
             </div>
         </div>
         <div *ngIf="!isAdvanced" style="display: inline-flex; margin-right: 15px">
-            <ng-container *ngIf="(currentRelease$ | async).name as name ">
-                <ng-container *ngIf="name != 'Soos' && name != 'Ford'">
-                    <mat-form-field
-                        style="max-width: 80px"
-                    >
-                        <mat-label>FDR threshold</mat-label>
-                        <mat-select formControlName="fdr">
-                            <mat-option value="0.01">0.01</mat-option>
-                            <mat-option value="0.05">0.05</mat-option>
-                            <mat-option value="0.1">0.1</mat-option>
-                            <mat-option value="0.15">0.15</mat-option>
-                            <mat-option value="0.25">0.25</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </ng-container>
+            <ng-container *ngIf="(currentRelease$ | async).majorVersion  >= 3">
+                <mat-form-field
+                    style="max-width: 80px"
+                >
+                    <mat-label>FDR threshold</mat-label>
+                    <mat-select formControlName="fdr">
+                        <mat-option value="0.01">0.01</mat-option>
+                        <mat-option value="0.05">0.05</mat-option>
+                        <mat-option value="0.1">0.1</mat-option>
+                        <mat-option value="0.15">0.15</mat-option>
+                        <mat-option value="0.25">0.25</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </ng-container>
         </div>
         <div

@@ -96,6 +96,12 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                 case "geneName":
                     result = form.geneName ? {g_name: form.geneName.trim()} : {};
                    break;
+                case "eqtlGeneId":
+                    result = form.eqtlGeneId ? {eqtl_g_id: form.eqtlGeneId.trim()} : {};
+                    break;
+                case "eqtlGeneName":
+                    result = form.eqtlGeneName ? {eqtl_g_name: form.eqtlGeneName.trim()} : {};
+                    break;
             }
             return {...startValue, ...result}
         } else {

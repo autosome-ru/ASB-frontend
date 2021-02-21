@@ -120,8 +120,8 @@
         </a>
         </div>
         <div style="display: inline-flex; margin-left: auto">
-            <ng-container *ngIf="(release$ | async).name as name ">
-                <ng-container *ngIf="name != 'Soos' && name != 'Ford'">
+            <ng-container *ngIf="(release$ | async).majorVersion as version">
+                <ng-container *ngIf="version >= 3">
                 <mat-form-field
                     style="max-width: 80px"
                 >

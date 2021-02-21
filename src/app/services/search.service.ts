@@ -30,8 +30,8 @@ export class SearchService {
             {params});
     }
 
-    public getSearchOptionsByGeneName(filter: string): Observable<SearchByGeneNameHintBackendModel[]> {
-        return this.http.get<SearchByGeneNameHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptGene'),
+    public getSearchOptionsByGeneName(filter: string, isEqtl: boolean): Observable<SearchByGeneNameHintBackendModel[]> {
+        return this.http.get<SearchByGeneNameHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptGene', 'tf', isEqtl),
             {params: {search: addPercents(filter)}});
     }
 
@@ -69,6 +69,16 @@ export class SearchService {
                 case "geneName":
                     return this.http.get<SearchResultsBackendModel>(
                         `${this.urlService.getUrlForQuery("search")}/gene_name/${filter.geneName}`, {
+                            params: serverParams
+                        });
+                case "eqtlGeneId":
+                    return this.http.get<SearchResultsBackendModel>(
+                        `${this.urlService.getUrlForQuery("search")}/eqtl_gene_id/${filter.eqtlGeneId}`, {
+                            params: serverParams
+                        });
+                case "eqtlGeneName":
+                    return this.http.get<SearchResultsBackendModel>(
+                        `${this.urlService.getUrlForQuery("search")}/eqtl_gene_name/${filter.geneName}`, {
                             params: serverParams
                         });
             }

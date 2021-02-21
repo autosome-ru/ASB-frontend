@@ -22,6 +22,7 @@ import {AsbServerTableComponent} from "../../shared/table-template/server-side/t
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
 import {map} from "rxjs/operators";
+import {ReleasesService} from "../../../services/releases.service";
 
 
 @Component({
@@ -77,6 +78,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         private router: Router,
         private store: Store<AppState>,
         private route: ActivatedRoute,
+        private releaseService: ReleasesService,
         private seoService: SeoService) {}
 
 
@@ -85,7 +87,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
@@ -134,7 +135,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
-        if (this.router.url.startsWith('/dan') || this.router.url.startsWith('dan')) {
+        if (this.releaseService.getReleaseFromFullPath().majorVersion >= 3) {
 
             this.clDisplayedColumns.push('aggregatedSnpsCount005')
             this.tfDisplayedColumns.push('aggregatedSnpsCount005')

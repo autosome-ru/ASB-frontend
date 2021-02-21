@@ -78,6 +78,8 @@ export class SearchComponent implements OnInit, OnDestroy {
         rsId: "",
         geneId: "",
         geneName: "",
+        eqtlGeneId: "",
+        eqtlGeneName: "",
         chromPos: new ChromPos("", "")
     };
     private searchParams: SearchParamsModel;
@@ -128,6 +130,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             chromPos: [new ChromPos("", ""), [validateGroup]],
             searchBy: "id",
             geneId: "",
+            eqtlGeneId: "",
+            eqtlGeneName: "",
             fdr: '0.05',
             geneName: "",
             searchTf: null,
@@ -160,11 +164,21 @@ export class SearchComponent implements OnInit, OnDestroy {
                 (s: string) => {
                     if (this.searchForm.get('searchBy').value == 'geneName') {
                         this.store.dispatch(
-                            new fromActions.search.LoadSearchByGeneNameOptionsAction(s))
+                            new fromActions.search.LoadSearchByGeneNameOptionsAction({name: s, isEqtl: false}))
                     }
                 }
             )
-        )
+        );
+        this.subscriptions.add(
+            this.searchForm.get('eqtlGeneName').valueChanges.pipe(debounceTime(200)).subscribe(
+                (s: string) => {
+                    if (this.searchForm.get('searchBy').value == 'eqtlGeneName') {
+                        this.store.dispatch(
+                            new fromActions.search.LoadSearchByGeneNameOptionsAction({name: s, isEqtl: true}))
+                    }
+                }
+            )
+        );
         this.subscriptions.add(
             this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(200)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
@@ -177,7 +191,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.subscriptions.add(
             this.searchForm.get("searchBy").valueChanges.subscribe(
-                (s: "id" | "pos" | "geneId" | "geneName") => {
+                (s: SearchByModel) => {
                     let patchValue: Partial<SearchQueryModel> = {};
                     if (this.searchForm.invalid) {
                         patchValue = {
@@ -313,7 +327,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     _checkToDisplay(id: string): boolean {
         const searchForm = this.searchForm.value as SearchQueryModel;
         if (this.isAdvanced) {
-            if (id === "searchNear" || id === "geneName" || id === "geneId") {
+            if (id === "searchNear" || id === "geneName" || id === "geneId"
+                || id === "eqtlGeneName" || id === "eqtlGeneId") {
                 return false;
             } else {
                 return id !== "id";

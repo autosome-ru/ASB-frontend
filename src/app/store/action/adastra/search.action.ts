@@ -25,7 +25,7 @@ export enum ActionTypes {
 export class LoadSearchByGeneNameOptionsAction implements Action {
     readonly type = ActionTypes.LoadSearchByGeneNameOptions;
 
-    constructor(public payload: string) {}
+    constructor(public payload: {name: string, isEqtl: boolean}) {}
 }
 export class LoadSearchByGeneNameOptionsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchByGeneNameOptionsSuccess;
@@ -35,7 +35,7 @@ export class LoadSearchByGeneNameOptionsSuccessAction implements Action {
 export class LoadSearchByGeneNameOptionsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchByGeneNameOptionsFail;
 
-    constructor(public payload: string) {}
+    constructor(public payload: {name: string, isEqtl: boolean}) {}
 }
 
 

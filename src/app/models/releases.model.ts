@@ -3,6 +3,7 @@ export interface ReleaseModel {
     date: string;
     url: string;
     version: string;
+    majorVersion: number;
     recent: boolean;
     api: string;
     gtrdExpsPath: string;

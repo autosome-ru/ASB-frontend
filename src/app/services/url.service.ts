@@ -17,7 +17,7 @@ export class UrlService {
         this.hostName = this.isBrowser ? this.getHostName() : ""
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
-        'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl): string {
+        'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl, isEqtl?: boolean): string {
         const currentApi: string = `${this.hostName}api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
@@ -29,7 +29,8 @@ export class UrlService {
             case "searchOptAdv":
                 return `${currentApi}/search/${tfOrCl}/hint`
             case "searchOptGene":
-                return `${currentApi}/search/gene_name/hint`
+                return `${currentApi}/search/${isEqtl ?
+                    'eqtl_gene_name' : 'gene_name'}/hint`
             case "ananastra":
                 return `${currentApi}/ananastra`
             default:

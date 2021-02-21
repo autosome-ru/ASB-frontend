@@ -40,7 +40,7 @@ export class SearchEffect {
     loadSearchOptionsByGeneName$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSearchByGeneNameOptions),
         mergeMap((action: fromActions.LoadSearchByGeneNameOptionsAction) =>
-            this.searchService.getSearchOptionsByGeneName(action.payload).pipe(
+            this.searchService.getSearchOptionsByGeneName(action.payload.name, action.payload.isEqtl).pipe(
                 map(options => new fromActions.LoadSearchByGeneNameOptionsSuccessAction(
                     options)),
                 catchError(() => of(new fromActions.LoadSearchByGeneNameOptionsFailAction(action.payload))),

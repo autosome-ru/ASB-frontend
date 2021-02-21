@@ -23,17 +23,20 @@ export class ReleasesService {
 
         return recentRelease;
     }
-
-
-    getReleaseFromRoute(): Observable<ReleaseModel> {
-        let path = "";
+    getReleaseFromFullPath(): ReleaseModel {
         const url: string = this.location ? this.location.path() : "";
+        let path = "";
         if ( url != "" && url != "/") {
             path = url.split("/")[1];
         }
         const currentRelease = this.getReleaseFromPrefix(path)
         this.urlService.currentRelease = currentRelease
-        return of(currentRelease);
+        return currentRelease
+    }
+
+    getReleaseFromRoute(): Observable<ReleaseModel> {
+
+        return of(this.getReleaseFromFullPath());
     }
 
 

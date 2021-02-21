@@ -7,6 +7,8 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     rsId: string;
     geneId: string;
     geneName: string;
+    eqtlGeneName: string;
+    eqtlGeneId: string;
     chromPos: ChromPos;
     searchBy: SearchByModel;
     searchCl: string;
@@ -16,7 +18,7 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     fdr: string;
 }
 
-export type SearchByModel = "id" | "pos" | "geneId" | "geneName";
+export type SearchByModel = "id" | "pos" | "geneId" | "geneName" | "eqtlGeneId" | "eqtlGeneName";
 
 export interface SearchHintBackendModel {
     name: string;
@@ -31,6 +33,9 @@ export interface SearchByGeneNameHintBackendModel {
     start_pos: number;
     end_pos: number;
     snps_count: number;
+    snps_count005: number;
+    eqtl_snps_count005: number;
+    eqtl_snps_count: number;
 }
 
 export interface SearchHintModel {
@@ -45,7 +50,10 @@ export interface GeneModel {
     chr: string;
     startPos: number;
     endPos: number;
-    snpsCount: number
+    snpsCount: number;
+    snpsCount005: number;
+    eqtlCount005: number;
+    eqtlCount: number;
 }
 
 export interface SearchParamsModel {
@@ -55,6 +63,8 @@ export interface SearchParamsModel {
     by: string;
     g_id: string;
     g_name: string;
+    eqtl_g_name: string;
+    eqtl_g_id: string;
     cl: string;
     tf: string;
     motif_conc: string;
