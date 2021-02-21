@@ -140,15 +140,8 @@
                     >
                         <span>{{option.name + " | "}}</span>
                         <small>&nbsp;ASBs in locus:
-                            <span
-                                *ngIf="(currentRelease$ | async).majorVersion >= 3"
-                            >
-                                {{option.snpsCount005}}&nbsp;@ 5% FDR
-                            </span>
-                            <span
-                                *ngIf="(currentRelease$ | async).majorVersion < 3"
-                            >
-                                {{option.snpsCount}}&nbsp;@ 5% FDR
+                            <span>
+                                {{option.snpsCount}}
                             </span>
                         </small>
                     </mat-option>
@@ -232,7 +225,7 @@
                                         [value]="option.name"
                             >
                                 <span>{{option.name + " | "}}</span>
-                                <small>&nbsp;ASBs in locus: {{option.eqtlCount}}<span *ngIf="(currentRelease$ | async).name == 'Dan'">&nbsp;@ 5% FDR</span></small>
+                                <small>&nbsp;ASBs in locus: {{option.eqtlCount}}</small>
                             </mat-option>
                         </ng-container>
                         <mat-option *ngIf="searchGeneOptionsLoading$ | async">
@@ -436,10 +429,10 @@
                         <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
                             <small>&nbsp;Total ASBs:
-                                <span *ngIf="(currentRelease$ | async).name == 'Dan'">
-                                    {{option.aggregatedSnpCount005}} &nbsp;@ 5% FDR
+                                <span *ngIf="(currentRelease$ | async).majorVersion >= 3">
+                                    {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                 </span>
-                                <span *ngIf="(currentRelease$ | async).name != 'Dan'">
+                                <span *ngIf="(currentRelease$ | async).majorVersion < 3">
                                     {{option.aggregatedSnpCount}}
                                 </span>
                             </small>
@@ -495,10 +488,10 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
                         <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <span *ngIf="(currentRelease$ | async).name == 'Dan'">
-                                    {{option.aggregatedSnpCount005}} &nbsp;@ 5% FDR
+                            <span *ngIf="(currentRelease$ | async).majorVersion >= 3">
+                                    {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                 </span>
-                            <span *ngIf="(currentRelease$ | async).name != 'Dan'">
+                            <span *ngIf="(currentRelease$ | async).majorVersion < 3">
                                     {{option.aggregatedSnpCount}}
                                 </span>
                         </mat-option>
