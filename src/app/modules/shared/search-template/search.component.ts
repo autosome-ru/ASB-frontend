@@ -481,6 +481,12 @@ export class SearchComponent implements OnInit, OnDestroy {
             if (sF.searchBy == "geneName") {
                 return !sF.geneName;
             }
+            if (sF.searchBy == "eqtlGeneName") {
+                return !sF.eqtlGeneName;
+            }
+            if (sF.searchBy == "eqtlGeneId") {
+                return !sF.eqtlGeneId;
+            }
         }
         if (!this.searchForm.invalid) {
             if (this.isAdvanced) {
