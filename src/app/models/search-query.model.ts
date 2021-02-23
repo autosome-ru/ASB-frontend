@@ -30,8 +30,8 @@ export interface SearchByGeneNameHintBackendModel {
     gene_name: string;
     gene_id: string;
     chromosome: string;
-    start_pos: number;
-    end_pos: number;
+    locus_start: number;
+    locus_end: number;
     snps_count: number;
     snps_count005: number;
     eqtl_snps_count005: number;
