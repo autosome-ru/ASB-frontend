@@ -231,6 +231,22 @@ export class SearchComponent implements OnInit, OnDestroy {
                                 patchValue = {
                                     geneName: this.selectedGene.name
                                 }
+                                this.store.dispatch(
+                                    new fromActions.search.LoadSearchByGeneNameOptionsAction(
+                                        {name: this.selectedGene.name, isEqtl: false}))
+                                break;
+                            case "eqtlGeneName":
+                                patchValue = {
+                                    eqtlGeneName: this.selectedGene.name
+                                }
+                                this.store.dispatch(
+                                    new fromActions.search.LoadSearchByGeneNameOptionsAction(
+                                        {name: this.selectedGene.name, isEqtl: true}))
+                                break;
+                            case "eqtlGeneId":
+                                patchValue = {
+                                    eqtlGeneId: this.selectedGene.id
+                                }
                                 break;
                         }
                     }
