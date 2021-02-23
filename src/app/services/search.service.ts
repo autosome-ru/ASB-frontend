@@ -78,7 +78,7 @@ export class SearchService {
                         });
                 case "eqtlGeneName":
                     return this.http.get<SearchResultsBackendModel>(
-                        `${this.urlService.getUrlForQuery("search")}/eqtl_gene_name/${filter.geneName}`, {
+                        `${this.urlService.getUrlForQuery("search")}/eqtl_gene_name/${filter.eqtlGeneName}`, {
                             params: serverParams
                         });
             }
