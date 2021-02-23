@@ -449,6 +449,20 @@ export class SearchComponent implements OnInit, OnDestroy {
                         geneId: searchParams.g_id
                     };
                 }
+                if (searchParams.hasOwnProperty("eqtl_g_id")) {
+                    return {
+                        searchBy: "eqtlGeneId",
+                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
+                        eqtlGeneId: searchParams.eqtl_g_id
+                    };
+                }
+                if (searchParams.hasOwnProperty("eqtl_g_name")) {
+                    return {
+                        searchBy: "eqtlGeneName",
+                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
+                        eqtlGeneName: searchParams.eqtl_g_name
+                    };
+                }
                 if (searchParams.hasOwnProperty("g_name")) {
                     return {
                         searchBy: "geneName",
