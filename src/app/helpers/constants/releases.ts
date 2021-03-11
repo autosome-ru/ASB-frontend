@@ -40,19 +40,19 @@ export const releasesList: ReleaseModel[] = [
         badMapsPath: "BADmaps.soos.zip",
         ucscFileName: 'ADASTRA_SNPs.soos.bb',
     },
-    {
-        name: "Beta",
-        url: "beta",
-        date: "2021.02.12",
-        recent: false,
-        majorVersion: 3,
-        version: "v3.1.0",
-        api: "v3",
-        gtrdExpsPath: "ADASTRA_GTRD_exps.dan.tsv",
-        badMapsPath: "BADmaps.dan.zip",
-        notes: "For development usage only.",
-        ucscFileName: 'ADASTRA_SNPs.dan.bb',
-    },
+    // {
+    //     name: "Beta",
+    //     url: "beta",
+    //     date: "2021.02.12",
+    //     recent: false,
+    //     majorVersion: 3,
+    //     version: "v3.1.0",
+    //     api: "v3",
+    //     gtrdExpsPath: "ADASTRA_GTRD_exps.dan.tsv",
+    //     badMapsPath: "BADmaps.dan.zip",
+    //     notes: "For development usage only.",
+    //     ucscFileName: 'ADASTRA_SNPs.dan.bb',
+    // },
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0];

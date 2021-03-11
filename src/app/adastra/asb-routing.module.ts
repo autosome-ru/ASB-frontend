@@ -29,11 +29,11 @@ const routes: Routes = [
         component: RecentComponent,
         loadChildren: () => import("src/app/modules/releases/dan/dan.module").then(mod => mod.DanModule)
     },
-    {
-        path: "beta",
-        component: DeprecatedComponent,
-        loadChildren: () => import("src/app/modules/releases/deprecated/test/test.module").then(mod => mod.TestModule)
-    },
+    // {
+    //     path: "beta",
+    //     component: DeprecatedComponent,
+    //     loadChildren: () => import("src/app/modules/releases/deprecated/test/test.module").then(mod => mod.TestModule)
+    // },
 
     {
         path: "",
