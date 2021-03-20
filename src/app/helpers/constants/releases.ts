@@ -9,31 +9,34 @@ export const releasesList: ReleaseModel[] = [
         recent: true,
         version: "v3.0.0",
         api: "v3",
+        releaseLink: '',
         gtrdExpsPath: "ADASTRA_GTRD_exps.dan.tsv",
         badMapsPath: "BADmaps.dan.zip",
         ucscFileName: 'ADASTRA_SNPs.dan.bb',
-        notes: ""
-    },
-    {
-        name: "Ford",
-        url: "ford",
-        date: "2020.11.02",
-        majorVersion: 2,
-        recent: false,
-        version: "v2.1.6",
-        api: "v2",
-        gtrdExpsPath: "ADASTRA_GTRD_exps.ford.tsv",
-        badMapsPath: "BADmaps.ford.zip",
-        ucscFileName: 'ADASTRA_SNPs.ford.bb',
         notes: "Number of experimental data sets increased from 7668 to 15931, based on " +
             "GTRD v20.06."
     },
+    // {
+    //     name: "Ford",
+    //     url: "ford",
+    //     date: "2020.11.02",
+    //     majorVersion: 2,
+    //     recent: false,
+    //     version: "v2.1.6",
+    //     api: "v2",
+    //     gtrdExpsPath: "ADASTRA_GTRD_exps.ford.tsv",
+    //     badMapsPath: "BADmaps.ford.zip",
+    //     ucscFileName: 'ADASTRA_SNPs.ford.bb',
+    //     notes: "Number of experimental data sets increased from 7668 to 15931, based on " +
+    //         "GTRD v20.06."
+    // },
     {
         name: "Soos",
         url: "soos",
         date: "2020.06.22",
         majorVersion: 1,
         recent: false,
+        releaseLink: '',
         version: "v1.6.10",
         api: "v1",
         gtrdExpsPath: "ADASTRA_GTRD_exps.soos.tsv",

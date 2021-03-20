@@ -19,11 +19,11 @@ const routes: Routes = [
         component: DeprecatedComponent,
         loadChildren: () => import("src/app/modules/releases/deprecated/soos/soos.module").then(mod => mod.SoosModule)
     },
-    {
-        path: "ford",
-        component: DeprecatedComponent,
-        loadChildren: () => import("src/app/modules/releases/deprecated/ford/ford.module").then(mod => mod.FordModule)
-    },
+    // {
+    //     path: "ford",
+    //     component: DeprecatedComponent,
+    //     loadChildren: () => import("src/app/modules/releases/deprecated/ford/ford.module").then(mod => mod.FordModule)
+    // },
     {
         path: "dan",
         component: RecentComponent,
