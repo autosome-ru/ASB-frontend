@@ -92,14 +92,18 @@ export class PingAnnotationFailAction implements Action {
 export class InitAnnotationTableAction implements Action {
   readonly type = ActionTypes.InitAnnotationTableLoad;
 
-  constructor(public payload: {tfOrCl: TfOrCl,
-      ticket: string, isExpanded: boolean}) {}
+  constructor(public payload: {
+      tfOrCl: TfOrCl,
+      fdr: number,
+      ticket: string,
+      isExpanded: boolean}) {}
 }
 
 export class LoadAnnotationTableAction implements Action {
   readonly type = ActionTypes.LoadAnnotationTable;
 
   constructor(public payload: {tfOrCl: TfOrCl,
+      fdr: number,
       ticket: string,
       isExpanded: boolean}) {}
 }
@@ -108,6 +112,7 @@ export class LoadAnnotationTableSuccessAction implements Action {
 
   constructor(public payload: {
     tfOrCl: TfOrCl,
+    fdr: number,
     ticket: string,
     isExpanded: boolean,
     snps: AnnotationSnpBackendModel[]

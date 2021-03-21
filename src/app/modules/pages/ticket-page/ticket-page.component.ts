@@ -56,6 +56,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         'filter'
     ];
     public panelExpanded: boolean = false;
+    private fdr: number;
 
 
     constructor(private route: ActivatedRoute,
@@ -100,10 +101,12 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                     this.fileStatistics$.subscribe(
                                         s => {
                                             if (s && !s.loading && s.data) {
+                                                this.fdr = -Math.log10(s.data.metaInfo.fdr)
                                                 this.selectedTab = s.data.metaInfo.tfAsbList.length == 0 && s.data.metaInfo.clAsbList.length > 0 ? 'cl' : 'tf';
                                                 this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
                                                     {tfOrCl: this.selectedTab,
                                                         ticket: this.ticket,
+                                                        fdr: this.fdr,
                                                         isExpanded: this.isExpanded}
                                                 ));
                                             }
@@ -167,6 +170,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
             {
                 ticket: this.ticket,
                 tfOrCl: this.selectedTab,
+                fdr: this.fdr,
                 isExpanded: this.isExpanded
             }));
     }

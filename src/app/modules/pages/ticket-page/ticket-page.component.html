@@ -40,7 +40,7 @@
                     </h6>
                     <ng-container *ngIf="ping.positionInQueue">
                         <h6> ETA to start: {{(ping.positionInQueue * 1.5).toFixed(0)}}min</h6>
-                        <h6 >Number of other queued jobs: {{ping.positionInQueue}}</h6>
+                        <h6>Number of other queued jobs: {{ping.positionInQueue}}</h6>
                     </ng-container>
                     <h6 *ngIf="ping.elapsedTime">Elapsed time: {{ping.elapsedTime}}s</h6>
                     <h6 *ngIf="!ping.positionInQueue">Status: {{ping.statusDetails}}</h6>

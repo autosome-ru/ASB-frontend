@@ -134,6 +134,7 @@ export class AnnotationEffect {
                     map(snps => new fromActions.LoadAnnotationTableSuccessAction(
                         {
                             snps,
+                            fdr: action.payload.fdr,
                             tfOrCl: action.payload.tfOrCl,
                             ticket: action.payload.ticket,
                             isExpanded: action.payload.isExpanded
