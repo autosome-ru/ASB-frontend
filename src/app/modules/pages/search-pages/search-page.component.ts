@@ -26,6 +26,7 @@ import {getTextByStepNameAdastra} from "../../../helpers/text-helpers/tour.adast
 import {JoyrideService} from "ngx-joyride";
 import {SnpSearchModel} from "../../../models/data.model";
 import {FormBuilder, FormControl} from "@angular/forms";
+import {ReleasesService} from "../../../services/releases.service";
 
 @Component({
     selector: "asb-search-page",
@@ -70,6 +71,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private store: Store<AppState>,
                 private joyrideService: JoyrideService,
                 private formBuilder: FormBuilder,
+                private releaseService: ReleasesService,
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
@@ -99,7 +101,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         if (this.isAdvancedSearch) {
             this.tourSteps = [
                 'search-pos',
-                'fdr-simple',
+                ]
+            const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+            if (releaseVersion >= 3) {
+                this.tourSteps.push('fdr-simple')
+            }
+            this.tourSteps.push(
                 'search-tf-list',
                 'search-cl-list',
                 'search-concordance',
@@ -109,21 +116,29 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 'search-view',
                 'cell-types-buttons',
                 'transcription-factors-buttons',
-            ];
+            );
         } else {
             this.tourSteps = [
                 'search-by',
                 'search-rs',
                 'search-gene',
-                'search-pos',
-                'fdr-simple',
+                ]
+            const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+            if (releaseVersion >= 3) {
+                this.tourSteps.push('search-eqtl')
+            }
+            this.tourSteps.push('search-pos')
+            if (releaseVersion >= 3) {
+                this.tourSteps.push('fdr-simple')
+            }
+            this.tourSteps.push(
                 'search-example',
                 'search-nearby',
                 'search-view',
                 'cell-types-buttons',
                 'transcription-factors-buttons',
                 'search-adv'
-            ];
+            )
         }
         this.subscriptions.add(
             this.store.select(fromSelectors.selectCurrentSearchResults).subscribe(

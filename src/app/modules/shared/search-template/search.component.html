@@ -113,11 +113,12 @@
             </mat-form-field>
         </ng-container>
         <ng-container *ngIf="_checkToDisplay('geneName')">
+            <ng-container *ngIf="(currentRelease$ | async).majorVersion as mj">
             <mat-form-field
                 joyrideStep="search-gene"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('search-gene')"
-                (next)="setSearchBy('pos')"
+                (next)="setSearchBy(mj >= 3 ? 'eqtlGene' : 'pos')"
                 (prev)="setSearchBy('id')"
                 floatLabel="always"
                 style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
@@ -171,6 +172,7 @@
                 </button>
 
             </mat-form-field>
+            </ng-container>
         </ng-container>
         <ng-container *ngIf="(currentRelease$ | async).majorVersion >= 3">
             <ng-container *ngIf="_checkToDisplay('eqtlGeneId')">
@@ -205,6 +207,11 @@
             </ng-container>
             <ng-container *ngIf="_checkToDisplay('eqtlGeneName')">
                 <mat-form-field
+                    joyrideStep="search-eqtl"
+                    [stepContent]="stepTemplate"
+                    [stepContentParams]="getTextByStepName('search-eqtl')"
+                    (next)="setSearchBy('pos')"
+                    (prev)="setSearchBy('gene')"
                     floatLabel="always"
                     style="padding: 0; margin-right: 15px; width: 230px; margin-top: 0.8em;  overflow: auto"
                     appearance="outline"
@@ -260,6 +267,7 @@
             style="margin-right: 15px; display: flex; align-items: center; flex-wrap: wrap"
             *ngIf="_checkToDisplay('pos')"
         >
+            <ng-container *ngIf="(currentRelease$ | async).majorVersion as mj">
             <div
                 style="display: inline-flex;overflow: auto; flex-wrap: wrap; align-items: center; min-width: 240px; margin-right: 15px"
                 joyrideStep="search-pos"
@@ -267,7 +275,7 @@
                 [prevTemplate]="prevTemplate"
                 [nextTemplate]="nextTemplate"
                 [doneTemplate]="doneTemplate"
-                (prev)="setSearchBy('gene')"
+                (prev)="setSearchBy(mj >=3 ? 'eqtlGene' : 'gene')"
                 [stepContentParams]="getTextByStepName('search-pos',isAdvanced? 'advanced' : 'search')"
             >
                 <mat-form-field
@@ -299,6 +307,7 @@
                     </mat-hint>
                 </mat-form-field>
             </div>
+            </ng-container>
             <div *ngIf="isAdvanced"
                  style="display: inline-flex" class="ml-sm-auto"
                  joyrideStep="fdr-simple"

@@ -21,6 +21,7 @@ import {Observable} from "rxjs";
 import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
 import {ReleaseModel} from "../../../models/releases.model";
+import {ReleasesService} from "../../../services/releases.service";
 
 @Component({
     selector: "home-page",
@@ -43,6 +44,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private seoService: SeoService,
+                private releaseService: ReleasesService,
                 @Inject(PLATFORM_ID) private platformId: Object) {
                         this.isBrowser = isPlatformBrowser(this.platformId);
     }
@@ -84,7 +86,20 @@ export class HomePageComponent implements OnInit, OnDestroy {
                     }
                 });
         }
-        this.tourSteps = ["search-by", "search-rs", 'search-gene', "search-pos", 'fdr-simple', "search-example"];
+        this.tourSteps = [
+            "search-by",
+            "search-rs",
+            'search-gene'
+        ];
+        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+        if (releaseVersion >= 3) {
+            this.tourSteps.push('search-eqtl')
+        }
+        this.tourSteps.push('search-pos')
+        if (releaseVersion >= 3) {
+            this.tourSteps.push('fdr-simple')
+        }
+        this.tourSteps.push("search-example")
 
     }
 

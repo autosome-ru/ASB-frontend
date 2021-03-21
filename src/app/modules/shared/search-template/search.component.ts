@@ -575,7 +575,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.nextStep.emit();
     }
 
-    setSearchBy(id: 'gene' | 'pos' | 'id') {
+    setSearchBy(id: 'gene' | 'pos' | 'id' | 'eqtlGene') {
         switch (id) {
             case "id":
                 if (!this.isAdvanced) {
@@ -587,6 +587,10 @@ export class SearchComponent implements OnInit, OnDestroy {
                 break;
             case "gene":
                 this.searchForm.patchValue({searchBy: 'geneName'})
+                break;
+            case "eqtlGene":
+                this.searchForm.patchValue({searchBy: 'eqtlGeneName'})
+                break;
         }
     }
 

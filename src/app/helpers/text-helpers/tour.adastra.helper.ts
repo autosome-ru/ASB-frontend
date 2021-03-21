@@ -76,6 +76,9 @@ function getText(step: string, component?: string): string {
             return 'Here you can set desired ASB FDR threshold.\n' +
                 'Our test suggest ASBs at 5% FDR are very reliable\n' +
                 'in terms of motif annotation.'
+        case "search-eqtl":
+            return 'It is possible to specifically look for ASBs\n' +
+                'which act as eQTLs for a particular gene'
         default:
             return "";
     }
