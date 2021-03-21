@@ -72,6 +72,10 @@ function getText(step: string, component?: string): string {
         case "search-gene":
             return "Search for ASB sites within a particular\ngene locus (within the gene body and\n 5000bp upstream of the TSS).\n" +
                 "GENCODE gene symbols are used as gene\nnames, start typing and use autocomplete."
+        case "fdr-simple":
+            return 'Here you can set desired ASB FDR threshold.\n' +
+                'Our test suggest ASBs at 5% FDR are very reliable\n' +
+                'in terms of motif annotation.'
         default:
             return "";
     }

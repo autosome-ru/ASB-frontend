@@ -84,7 +84,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
                     }
                 });
         }
-        this.tourSteps = ["search-by", "search-rs", 'search-gene', "search-pos", "search-example"];
+        this.tourSteps = ["search-by", "search-rs", 'search-gene', "search-pos", 'fdr-simple', "search-example"];
 
     }
 

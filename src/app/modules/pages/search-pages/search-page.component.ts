@@ -99,6 +99,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         if (this.isAdvancedSearch) {
             this.tourSteps = [
                 'search-pos',
+                'fdr-simple',
                 'search-tf-list',
                 'search-cl-list',
                 'search-concordance',
@@ -115,6 +116,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 'search-rs',
                 'search-gene',
                 'search-pos',
+                'fdr-simple',
                 'search-example',
                 'search-nearby',
                 'search-view',

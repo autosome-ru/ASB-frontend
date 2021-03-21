@@ -299,7 +299,12 @@
                     </mat-hint>
                 </mat-form-field>
             </div>
-            <div *ngIf="isAdvanced" style="display: inline-flex" class="ml-sm-auto">
+            <div *ngIf="isAdvanced"
+                 style="display: inline-flex" class="ml-sm-auto"
+                 joyrideStep="fdr-simple"
+                 [stepContent]="stepTemplate"
+                 [stepContentParams]="getTextByStepName('fdr-simple')"
+            >
                 <ng-container *ngIf="(currentRelease$ | async).majorVersion as majorVersion">
                     <ng-container *ngIf="majorVersion >= 3">
                     <mat-form-field
@@ -318,9 +323,16 @@
                 </ng-container>
             </div>
         </div>
-        <div *ngIf="!isAdvanced" style="display: inline-flex; margin-right: 15px">
+        <div *ngIf="!isAdvanced"
+             style="display: inline-flex; margin-right: 15px"
+             joyrideStep="fdr-simple"
+             [stepContent]="stepTemplate"
+             [stepContentParams]="getTextByStepName('fdr-simple')"
+        >
             <ng-container *ngIf="(currentRelease$ | async).majorVersion  >= 3">
                 <mat-form-field
+
+
                     style="max-width: 80px"
                 >
                     <mat-label>FDR threshold</mat-label>
