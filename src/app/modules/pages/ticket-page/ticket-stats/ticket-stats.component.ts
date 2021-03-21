@@ -63,7 +63,8 @@ export class TicketStatsComponent implements OnInit {
 
     ngOnInit(): void {
         this.scriptService.load('charts').then(data => {
-            this.chartLoaded = data.filter(v => v.script === 'charts')[0].loaded;
+            this.chartLoaded = data.filter(v =>
+                v.script === 'charts')[0].loaded;
             this.cd.detectChanges();
         }).catch(() => this.toastrService.error(
             "Can't load Chart.js library, check your internet connection", 'Error'));

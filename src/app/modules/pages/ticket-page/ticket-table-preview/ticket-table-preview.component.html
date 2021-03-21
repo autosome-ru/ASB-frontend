@@ -95,7 +95,7 @@
         [stepContentParams]="getTextByStepName('pie-chart')"
     >
         <asb-ticket-barplot
-            *ngIf="ticketStatistics?.metaInfo"
+            *ngIf="ticketStatistics?.metaInfo && getChartData(ticketStatistics?.metaInfo).length > 0"
             [data]="getChartData(ticketStatistics?.metaInfo)"
             [tfOrCl]="tfOrCl"
             [isExpanded]="isExpanded"
