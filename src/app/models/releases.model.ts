@@ -6,6 +6,7 @@ export interface ReleaseModel {
     majorVersion: number;
     recent: boolean;
     api: string;
+    size: string;
     releaseLink: string;
     gtrdExpsPath: string;
     badMapsPath: string;

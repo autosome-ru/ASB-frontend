@@ -81,8 +81,8 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-    makeImagePath(tf: TfSnpModel, isSvg?: boolean): string {
-        return `${isSvg ? 'svgs' : 'pngs'}/${this.release.api}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.${isSvg ? 'svg' : 'png'}`;
+    makeImagePath(tf: TfSnpModel): string {
+        return `svgs/${this.release.api}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.svg`;
     }
 
     changeRevCompState(tf: TfSnpModel) {
