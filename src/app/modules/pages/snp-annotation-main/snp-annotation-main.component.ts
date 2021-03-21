@@ -22,7 +22,8 @@ export class SnpAnnotationMainComponent implements OnInit, OnDestroy {
     @ViewChild('logo')
     private logo: ElementRef<HTMLImageElement>;
 
-    public steps: string[] = ['text-input', 'file-drop', 'examples', 'job'];
+    public steps: string[] = ['text-input', 'file-drop',
+        'examples', 'fdr-simple', 'job'];
     public text: string = 'This webserver annotates a given list of SNPs with allele-specific binding events across' +
         ' a wide range of transcription factors and cell types\nusing ADASTRA that is constructed through the meta-analysis of more than 15000 ChIP-Seq experiments.';
     private rotationAngle: number = 0;

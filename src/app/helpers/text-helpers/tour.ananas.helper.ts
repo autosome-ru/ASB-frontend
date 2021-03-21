@@ -33,6 +33,10 @@ function getText(step: string): string {
             return 'The table can be downloaded in\n.tsv format for further analysis.'
         case 'filter':
             return 'It is possible to apply the\nTF/cell type-wise filtering.'
+        case "fdr-simple":
+            return 'Here you can set desired ASB FDR threshold.\n' +
+                'Our test suggest ASBs at 5% FDR are very reliable\n' +
+                'in terms of motif annotation.'
         default:
             return "";
     }

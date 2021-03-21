@@ -113,6 +113,9 @@
         <div style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap">
             <div style="display: flex; align-items: center">
                 <mat-form-field
+                    joyrideStep="fdr-simple"
+                    [stepContent]="stepTemplate"
+                    [stepContentParams]="getTextByStepName('fdr-simple')"
                     style="max-width: 80px; margin-right: 10px"
                 >
                     <mat-label>FDR threshold</mat-label>
