@@ -123,7 +123,7 @@ export class AnnotationEffect {
                     ),
                 ),
         ),
-    ), {dispatch: false});
+    ));
 
     loadAnnotationTable$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadAnnotationTable),
