@@ -36,7 +36,7 @@ export class TicketStatsComponent implements OnInit {
         }
     }
 
-    public chartLabels: string[] = ['ASB SNPs', 'Non-ASB SNPs', 'Undefined SNPs', 'N/A'];
+    public chartLabels: string[] = ['ASB SNPs', 'Non-ASB SNPs', 'Undefined ASBs', 'N/A'];
 
     public chartColors: Array<any> = [
         {
