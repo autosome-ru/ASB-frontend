@@ -11,14 +11,19 @@
             [stepContent]="stepTemplate"
             [stepContentParams]="getTextByStepName('odds-table-open')"
             (next)="expansionPanel.open()"
-            class="pl-2 header">
+            class="pl-2"
+            [ngClass]="panelExpanded ? '' : 'header'"
+        >
             <mat-panel-title>
                 <h6
                     class="mb-0"
                     style="font-weight: bold">
-                    Enrichment of allele-specific binding events tested for particular {{tfOrCl == 'tf' ? 'TFs' : 'cell types'}}
+                    Enrichment of allele-specific binding events of particular {{tfOrCl == 'tf' ? 'TFs' : 'cell types'}}
                 </h6>
             </mat-panel-title>
+            <mat-panel-description style="justify-content: flex-end;">
+                Click to expand
+            </mat-panel-description>
         </mat-expansion-panel-header>
 
         <div class="row mx-0 flex-lg-nowrap flex-wrap"
@@ -83,6 +88,8 @@
         <button
             style="overflow: auto"
             mat-raised-button
+            matTooltip="Complete table including all ASBs above 0.25 FDR"
+            matTooltipClass="big-font"
             (click)="downloadTable()"
         >
             <mat-icon svgIcon="download"></mat-icon>
@@ -150,6 +157,8 @@
                 <button
                     style="overflow: auto"
                     mat-raised-button
+                    matTooltip="Complete table including all ASBs above 0.25 FDR"
+                    matTooltipClass="big-font"
                     (click)="downloadTable()"
                     joyrideStep="download-table"
                     [stepPosition]="'bottom'"
@@ -339,15 +348,15 @@
     >
 
         <button mat-dialog-close
-                mat-icon-button tabindex="-1">
+                mat-icon-button tabindex="1">
             <mat-icon svgIcon="clear"></mat-icon>
         </button>
     </h1>
     <mat-dialog-content>
     <img
-        style="max-height: 65vh; max-width: 100%"
+        style="max-height: 65vh; max-width: 100%; width: 50vw"
         alt=""
-        [src]="'https://adastra.autosome.ru/svgs/v3/' + data.transcriptionFactor + '_' + data.rsId.slice(2) + '_' + data.altBase +(revcompState ? '_revcomp' : '' ) + '.svg'"
+        [src]="'https://adastra.autosome.ru/svgs/' + release.api + '/' + data.transcriptionFactor + '_' + data.rsId.slice(2) + '_' + data.altBase +(revcompState ? '_revcomp' : '' ) + '.svg'"
     >
     </mat-dialog-content>
     <mat-dialog-actions>
