@@ -168,12 +168,14 @@ export interface TotalInfoBackendModel {
     cell_types_count: number;
     transcription_factors_count: number;
     snps_count: number;
+    asbs_count: number;
 }
 
 export interface TotalInfoModel {
     cellTypesCount: number;
     transcriptionFactorsCount: number;
     snpsCount: number;
+    asbsCount: number;
 }
 
 export interface TfInfoBackendModel {

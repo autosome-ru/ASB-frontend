@@ -42,8 +42,12 @@
                 >
                     {{totalInfo.cellTypesCount}}</a>
                 </span>
-                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
-                <span *ngIf="(release$ | async).majorVersion >= 3" style="white-space: nowrap">&nbsp;&nbsp;at 5% FDR</span>
+
+                <span
+                    *ngIf="(release$ | async).majorVersion < 3"
+                    style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
+                <span *ngIf="(release$ | async).majorVersion >= 3" style="white-space: nowrap">
+                    &nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount}} ASBs passing 5% FDR at {{totalInfo.snpsCount}} SNPs</span>
             </h6>
 
         </ng-container>

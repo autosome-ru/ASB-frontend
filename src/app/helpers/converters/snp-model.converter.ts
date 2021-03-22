@@ -31,6 +31,7 @@ export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBac
         cellTypesCount: model.cell_types_count,
         transcriptionFactorsCount: model.transcription_factors_count,
         snpsCount: model.snps_count,
+        asbsCount: model.asbs_count
     };
 }
 
