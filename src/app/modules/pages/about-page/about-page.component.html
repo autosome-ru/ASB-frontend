@@ -1,14 +1,16 @@
 <div class="container mat-elevation-z2 pb-3" style="background-color: white">
     <h4 style="padding-top: 0.5rem">About</h4>
     <div class="container">
-                <span class="asb-contacts__section-name">
-            If you encounter any technical issues please report them to
-        <img
-            class="asb-contacts__section-image"
-            [src]="'assets/images/serj_abramov.svg'"
-            alt="email pic"
-        ><span style="margin-left: -17px">we will do our best to investigate the situation.</span>
-            </span>
+        <div style="margin-bottom: .5rem">
+            <span class="asb-contacts__section-name">
+                If you encounter any technical issues please report them to
+            <img
+                class="asb-contacts__section-image"
+                [src]="'assets/images/serj_abramov.svg'"
+                alt="email pic"
+            ><span style="margin-left: -17px">and we will do our best to investigate the situation.</span>
+                </span>
+        </div>
         <ng-container *ngIf="!isAnanas">
         <h5 >Publications</h5>
         <div>
