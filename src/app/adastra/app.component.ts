@@ -41,9 +41,13 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.updates.available.subscribe(event => {
-            this.updates.activateUpdate().then(() => document.location.reload());
-        });
+        this.subscriptions.add(
+            this.updates.available.subscribe(() => {
+                this.updates.activateUpdate().then(() => document.location.reload());
+            })
+        );
+        this.updates.checkForUpdate().then(() => null,
+        () => console.log('sw not supported'))
         this.subscriptions.add(
             this.router.events.subscribe(() => {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
