@@ -16,6 +16,7 @@ import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action/adastra";
 import {Subscription} from "rxjs";
 import {JoyrideService} from "ngx-joyride";
+import {SwUpdate} from "@angular/service-worker";
 
 @Component({
     selector: "app-root",
@@ -33,12 +34,14 @@ export class AppComponent implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private joyrideService: JoyrideService,
                 private store: Store<AppState>,
+                private updates: SwUpdate,
                 private releasesService: ReleasesService,
                 @Inject(PLATFORM_ID) private platformId) {
         this.isBrowser = isPlatformBrowser(platformId);
     }
 
     ngOnInit() {
+        this.updates.activateUpdate().then(() => document.location.reload());
         this.subscriptions.add(
             this.router.events.subscribe(() => {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
