@@ -18,6 +18,8 @@ import {Subscription} from "rxjs";
 import {JoyrideService} from "ngx-joyride";
 import {SwUpdate} from "@angular/service-worker";
 import {ToastrService} from "ngx-toastr";
+import {CheckForUpdateService} from "../services/update.service";
+import {updateCheckInterval} from "../helpers/constants/constants";
 
 @Component({
     selector: "app-root",
@@ -36,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 private joyrideService: JoyrideService,
                 private store: Store<AppState>,
                 private updates: SwUpdate,
+                private checkForUpdatesService: CheckForUpdateService,
                 private toastrService: ToastrService,
                 private releasesService: ReleasesService,
                 @Inject(PLATFORM_ID) private platformId) {
@@ -43,16 +46,16 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscriptions.add(
-            this.updates.available.subscribe(() =>
-            this.toastrService.info(
-                'ADASTRA has been updated to a new version.' +
-                ' Please reload the page.', 'Info')
-        ));
-        this.updates.checkForUpdate().then(
-            () => null,
-            () => console.log('sw not supported')
-        )
+        if (this.isBrowser) {
+            this.subscriptions.add(
+                this.updates.available.subscribe(() =>
+                    this.toastrService.info(
+                        'ADASTRA has been updated to a new version.' +
+                        ' Please reload the page.', 'Info',
+                        {timeOut: updateCheckInterval})
+                ));
+            this.checkForUpdatesService.startSubscription();
+        }
         this.subscriptions.add(
             this.router.events.subscribe(() => {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
@@ -62,5 +65,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
+        this.checkForUpdatesService.cancelSubscription();
     }
 }

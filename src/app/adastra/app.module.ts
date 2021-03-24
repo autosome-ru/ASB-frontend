@@ -32,7 +32,7 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "../interceptors/url-encode.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {UrlService} from "../services/url.service";
-import {ProcessingService} from "../services/processing.service";
+import {CheckForUpdateService} from "../services/update.service";
 
 @NgModule({
     declarations: [
@@ -64,6 +64,7 @@ import {ProcessingService} from "../services/processing.service";
         SearchService,
         SeoService,
         ReleasesService,
+        CheckForUpdateService,
         CloseDialogOnRouteService,
         {provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {

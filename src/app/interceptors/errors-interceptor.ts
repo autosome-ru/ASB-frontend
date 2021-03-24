@@ -21,7 +21,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
                 if (error instanceof HttpErrorResponse && error.status !== 404 && this.isBrowser) {
                     this.toastr.error(
                         `Database lookup failed. Please try again later.`,
-                        `${error.statusText} ${error.status}`,
+                        `${error.statusText} ${error.status}`
                     );
                 }
                 return throwError(error);

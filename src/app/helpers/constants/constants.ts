@@ -1,7 +1,7 @@
 import {MotifConcordanceModel, PhenotypesModel} from "../../models/data.model";
 import {AsbServerSideModel} from "../../models/table.model";
 
-
+export const updateCheckInterval: number = 24 * 60 * 60 * 1000
 export const phenotypesToView: {[name: string]: string} = {
     ebi: "EMBL-EBI",
     grasp: "GRASP",
