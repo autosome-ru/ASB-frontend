@@ -41,7 +41,9 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.updates.activateUpdate().then(() => document.location.reload());
+        this.updates.available.subscribe(event => {
+            this.updates.activateUpdate().then(() => document.location.reload());
+        });
         this.subscriptions.add(
             this.router.events.subscribe(() => {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
