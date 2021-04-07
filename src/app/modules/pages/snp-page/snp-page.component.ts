@@ -98,7 +98,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
         this.subscriptions.add(
