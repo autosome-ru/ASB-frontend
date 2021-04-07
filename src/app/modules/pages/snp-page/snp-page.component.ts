@@ -93,12 +93,14 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private saverService: FileSaverService,
         private dataService: DataService,
         private toastr: ToastrService,
-        private releasesService: ReleasesService,
-        private seoService: SeoService
+        private releaseService: ReleasesService,
+        private seoService: SeoService,
     ) {}
 
     ngOnInit() {
+
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
+        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
         this.subscriptions.add(
             this.release$.subscribe(
                 s => this.release = s
@@ -107,7 +109,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => {
-                    this.fdr = s['fdr'] ? s['fdr'] : '0.05';
+                    this.fdr = s['fdr'] ? s['fdr'] :
+                        (releaseVersion >= 4 ? '0.1' : '0.05');
                     this.subscriptions.add(
                         this.route.paramMap.subscribe(
                             (p) => {
@@ -127,8 +130,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 }
             )
         );
-
-
 
         this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
         this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
@@ -270,7 +271,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 this.id, this.alt, where, options.columns, options.filter).subscribe(
                 (res) => {
                     this.saverService.save(res,
-                        `AD_ASTRA_${this.id}_${this.alt}_SNP_details.tsv`);
+                        `ADASTRA_${this.id}_${this.alt}_SNP_details.tsv`);
                 },
                 (err) => {
                     this.toastr.error(err.message, "Error");

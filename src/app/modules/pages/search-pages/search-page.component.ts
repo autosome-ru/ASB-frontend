@@ -75,12 +75,14 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
+        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
         this.seoService.updateSeoInfo({
             title: this.route.snapshot.data.title(this.route.snapshot.queryParams.tf)
         });
         this.subscriptions.add(
             this.route.queryParams.subscribe(
-                s => this.fdr = s['fdr'] ? s['fdr'] : '0.05'
+                s => this.fdr = s['fdr'] ? s['fdr'] :
+                (releaseVersion >= 4 ? '0.1' : '0.05')
             )
         );
         this.fdrControl = this.formBuilder.control(this.fdr)
@@ -102,7 +104,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             this.tourSteps = [
                 'search-pos',
                 ]
-            const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+
             if (releaseVersion >= 3) {
                 this.tourSteps.push('fdr-simple')
             }
