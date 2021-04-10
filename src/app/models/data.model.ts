@@ -183,7 +183,7 @@ export interface TfInfoBackendModel {
     uniprot_ac: string;
     aggregated_snps_count: number;
     experiments_count: number;
-    aggregated_snps_count005: number;
+    aggregated_snps_count010: number;
 }
 
 export interface ClInfoBackendModel {
@@ -191,7 +191,7 @@ export interface ClInfoBackendModel {
     name: string;
     aggregated_snps_count: number;
     experiments_count: number;
-    aggregated_snps_count005: number;
+    aggregated_snps_count010: number;
 }
 
 
@@ -200,13 +200,13 @@ export interface TfInfoModel {
     name: string;
     aggregatedSnpsCount: number;
     experimentsCount: number;
-    aggregatedSnpsCount005: number;
+    aggregatedSnpsCount010: number;
 }
 
 export interface ClInfoModel {
     clId: string;
     name: string;
-    aggregatedSnpsCount005: number;
+    aggregatedSnpsCount010: number;
     aggregatedSnpsCount: number;
     experimentsCount: number;
 }

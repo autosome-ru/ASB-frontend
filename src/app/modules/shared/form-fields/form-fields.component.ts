@@ -127,7 +127,7 @@ export class AsbChrPosInputComponent implements OnInit,
     @Input()
     get value(): ChromPos | null {
         const n = this.chromPos.value as ChromPos;
-        return new ChromPos(n.chr || "", n.pos || "");
+        return new ChromPos(n.chr.trim() || "", n.pos.trim() || "");
     }
     set value(chrPos: ChromPos | null) {
         chrPos = chrPos || new ChromPos("", "");
@@ -228,33 +228,35 @@ export class AsbChrPosInputComponent implements OnInit,
         pos: [""],
         chr: [""]
         },
-        {validator: validateGroup}
+        {validators: validateGroup}
     );
     this.subscriptions.add(
         this.chromPos.get("pos").valueChanges.subscribe(
             (s: string) => {
-            if (!!s) {
-                this.previousPos = s;
-            }
-            this.patchGroupOnPaste(s);
-            }
+                if (s.trim().length != s.length) {
+                    this.chromPos.patchValue({pos: s.trim()})
+                }
+                if (!!s) {
+                    this.previousPos = s;
+                }
+                this.patchGroupOnPaste(s);
+                }
         )
     );
     this.subscriptions.add(
         this.chromPos.get("chr").valueChanges.subscribe(
-        (s: string) => {
-                if (s.length > 1 && s.match(/^0\d$/)) {
-                    this.chromPos.patchValue({chr: s.slice(1)});
-                    this._focusMonitor.focusVia(this.posInput, "program");
-                }
-                this.patchGroupOnPaste(s, "chr");
+            (s: string) => {
+            if (s.length > 1 && s.match(/^0\d$/)) {
+                this.chromPos.patchValue({chr: s.slice(1)});
+                this._focusMonitor.focusVia(this.posInput, "program");
+            }
+            this.patchGroupOnPaste(s, "chr");
             }
         )
     );
 
     }
     patchGroupOnPaste(s: string, from?: keyof ChromPos) {
-
         if (s && s.includes(":")) {
             const sList = s.trim().split(":");
             if (!sList[0]) {
@@ -268,6 +270,7 @@ export class AsbChrPosInputComponent implements OnInit,
     }
     autoFocusNext(control: AbstractControl, type?: keyof ChromPos, nextElement?: HTMLInputElement): void {
         if (!control.errors && type == "chr" && !this.chromPos.get("pos").value && control.value.length == 2 && nextElement) {
+            control.patchValue(control.value.trim(), {emitEvent: false})
             this._focusMonitor.focusVia(nextElement, "program");
         }
     }

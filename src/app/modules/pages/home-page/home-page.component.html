@@ -47,7 +47,7 @@
                     *ngIf="(release$ | async).majorVersion < 3"
                     style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
                 <span *ngIf="(release$ | async).majorVersion >= 3" style="white-space: nowrap">
-                    &nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount}} ASBs passing 5% FDR at {{totalInfo.snpsCount}} SNPs</span>
+                    &nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount}} ASBs passing 10% FDR at {{totalInfo.snpsCount}} SNPs</span>
             </h6>
 
         </ng-container>
@@ -67,6 +67,16 @@
             style="margin-top: 20px; background: #E7EBEC; margin-bottom: 5px">
             <h5>News & updates</h5>
             <ul style="list-style: none; padding-inline-start: 0; max-height: 100px; overflow: auto">
+                <li>
+                    <span><b>2021.04.11</b> Revamped release
+                        3.5 with bugfixes and better ASB scoring, see <a
+                            [href]="'/assets/readme/readme.susan.txt'"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >release notes</a>.
+                    </span>
+                </li>
+
                 <li>
                     <span><b>2021.03.21</b> ADASTRA release 3.0 online.
                         Now we support search by eQTL targets and user-defined

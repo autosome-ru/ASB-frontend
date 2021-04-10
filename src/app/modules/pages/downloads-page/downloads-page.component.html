@@ -6,8 +6,16 @@
                 <h5>
                     Release
                     <a [href]="'/' + release.url">{{release.name}}</a>
-                    {{release.version}}, {{release.date}}
-                    <span *ngIf="release.recent">(stable)</span>
+                    {{release.version}}, {{release.date}}:
+                    <a
+                        [href]="release.releaseLink"
+                        rel="noopener noreferrer"
+                        target="_blank">Complete data download</a> ({{release.size}}),
+                    <a
+                        [href]="'/assets/readme/' + release.notesPath"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >readme</a>
                 </h5>
                 <ul style="padding: 0 0 0 40px; list-style-type: none">
                     <li *ngIf="release.notes">
@@ -17,6 +25,7 @@
                         <span>
                             {{release.notes}}
                         </span>
+
                     </li>
                     <li >
                         <strong>
@@ -45,20 +54,6 @@
                             >
                                 {{_getBadmapsName(release)}}
                             </a>
-                        </span>
-                    </li>
-                    <li >
-                        <span>
-                            <a
-                                [href]="release.releaseLink"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                            >
-                                <strong>
-                                    Complete ASB data
-                                </strong>
-                            </a>
-                            ({{release.size}})
                         </span>
                     </li>
                     <li>

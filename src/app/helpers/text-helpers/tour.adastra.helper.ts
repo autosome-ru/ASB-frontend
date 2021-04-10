@@ -18,6 +18,8 @@ function getText(step: string, component?: string): string {
                 "either\nrelative to dbSNP ID, if found, or\nrelative to a given genomic interval)."}`;
         case "genome-browser":
             return "Open the surrounding region\n in the UCSC Genome Browser.";
+        case "phelige":
+            return 'Explore phenotype associations\nwith PheLiGe'
         case "color-scales":
             return "Color scales used for visual representation\n" +
                 " of the ASB significance thoughout\n the whole SNV report page";
@@ -74,7 +76,7 @@ function getText(step: string, component?: string): string {
                 "GENCODE gene symbols are used as gene\nnames, start typing and use autocomplete."
         case "fdr-simple":
             return 'Here you can set desired ASB FDR threshold.\n' +
-                'Our test suggest ASBs at 5% FDR are very reliable\n' +
+                'Our test suggest ASBs at 10% FDR are very reliable\n' +
                 'in terms of motif annotation.'
         case "search-eqtl":
             return 'It is possible to specifically look for ASBs\n' +

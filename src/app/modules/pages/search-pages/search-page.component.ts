@@ -82,7 +82,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => this.fdr = s['fdr'] ? s['fdr'] :
-                (releaseVersion >= 4 ? '0.1' : '0.05')
+                (releaseVersion >= 3 ? '0.1' : '0.05')
             )
         );
         this.fdrControl = this.formBuilder.control(this.fdr)

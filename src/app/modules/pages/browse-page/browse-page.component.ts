@@ -126,19 +126,19 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             name: {view: "Name"},
             aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true},
-            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
+            aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true}
         };
         this.clColumnModel = {
             clId: {view: "GTRD ID", columnTemplate: this.cellTypeViewTemplate},
             name: {view: "Cell type name"},
             aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
-            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true},
+            aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
         if (this.releaseService.getReleaseFromFullPath().majorVersion >= 3) {
 
-            this.clDisplayedColumns.push('aggregatedSnpsCount005')
-            this.tfDisplayedColumns.push('aggregatedSnpsCount005')
+            this.clDisplayedColumns.push('aggregatedSnpsCount010')
+            this.tfDisplayedColumns.push('aggregatedSnpsCount010')
             this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
             this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
         }

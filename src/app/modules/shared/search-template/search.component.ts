@@ -132,7 +132,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             geneId: "",
             eqtlGeneId: "",
             eqtlGeneName: "",
-            fdr: '0.05',
+            fdr: '0.1',
             geneName: "",
             searchTf: null,
             searchCl: null,

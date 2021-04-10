@@ -33,8 +33,8 @@ export interface SearchByGeneNameHintBackendModel {
     locus_start: number;
     locus_end: number;
     snps_count: number;
-    snps_count005: number;
-    eqtl_snps_count005: number;
+    snps_count010: number;
+    eqtl_snps_count010: number;
     eqtl_snps_count: number;
 }
 
@@ -51,8 +51,8 @@ export interface GeneModel {
     startPos: number;
     endPos: number;
     snpsCount: number;
-    snpsCount005: number;
-    eqtlCount005: number;
+    snpsCount010: number;
+    eqtlCount010: number;
     eqtlCount: number;
 }
 

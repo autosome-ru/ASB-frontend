@@ -109,7 +109,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             this.route.queryParams.subscribe(
                 s => {
                     this.fdr = s['fdr'] ? s['fdr'] :
-                        (releaseVersion >= 4 ? '0.1' : '0.05');
+                        (releaseVersion >= 3 ? '0.1' : '0.05');
                     this.subscriptions.add(
                         this.route.paramMap.subscribe(
                             (p) => {
@@ -151,6 +151,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             'transcription-factors-buttons',
             'search-nearby',
             'genome-browser',
+            'phelige',
             'color-scales',
             'transcription-factors-stats',
             'transcription-factors-columns',

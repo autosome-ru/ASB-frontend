@@ -12,4 +12,5 @@ export interface ReleaseModel {
     badMapsPath: string;
     ucscFileName: string;
     notes?: string;
+    notesPath: string;
 }

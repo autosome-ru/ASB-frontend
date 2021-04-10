@@ -32,9 +32,9 @@ export function convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
         name: model.gene_name,
         endPos: model.locus_end,
         snpsCount: model.snps_count,
-        snpsCount005: model.snps_count005,
+        snpsCount010: model.snps_count010,
         eqtlCount: model.eqtl_snps_count,
-        eqtlCount005: model.eqtl_snps_count005
+        eqtlCount010: model.eqtl_snps_count010
     }
 }
 

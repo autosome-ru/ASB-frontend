@@ -124,34 +124,37 @@
                     <h5>ASB properties</h5>
                     <dl class="px-3">
                         <dt id="sign">ASB significance</dt>
-                        <dd>ASB calling is done separately for each ChIP-Seq experiment.
+                        <dd>ASB significance
+                            ASB calling is done separately for each ChIP-Seq experiment.
                             For each candidate ASB site, the P-values for Reference and
                             Alternative allele are calculated separately according to the
-                            fitted Negative Binomial Mixture model (see Methods in the
-                            <a
-                                href="https://www.biorxiv.org/content/10.1101/2020.10.07.327643v3"
-                                rel="noopener noreferrer" target="_blank"
-                            >ADASTRA preprint</a> for details).
+                            fitted Negative Binomial Mixture model accounting for different
+                            assignment of the alleles to the higher or lower DNA copies in
+                            genomic regions with BAD > 1. Prior mixture weights obtained
+                            with the global fit across SNVs were updated with Bayesian
+                            estimation separately for each SNV.
                             <br>
-                            For a particular SNV, the P-values from individual data sets
-                            are aggregated for each <b>T</b>ranscription <b>F</b>actor (for ChIP-Seq data from all cell types),
-                            providing <b>TF-ASBs</b>
-                            and cell types (for ChIP-Seq data from all TFs), providing <b>cell type-ASBs</b>. The aggregated
-                            P-values are then corrected for multiple tested SNPs using
-                            Benjamini-Hochberg (FDR) procedure.
+                            For a particular SNV, the P-values from individual data sets are
+                            aggregated with the logit (Mudholkar-George) method for each TF
+                            (using ChIP-Seq data from all cell types) and cell type (using ChIP-Seq data from
+                            all TFs) and FDR-corrected with the Benjamini-Hochberg procedure for SNVs
+                            (for each TF and each cell type separately).
+
                             <br>
                         </dd>
                         <dt>ASB effect size</dt>
-                        <dd>The Effect Size of ASB is calculated separately for Reference
-                            and Alternative alleles and is defined as the weighted mean of
-                            log-ratios of observed and expected allelic read counts,
-                            with weights being -log10 of the respective P-values.
-                            The expected read counts are estimated from the fitted
-                            Negative Binomial Mixture model. Effect size estimates are given in log2-scale.
+                        <dd>The Effect Size of an ASB event is calculated separately for Reference
+                            and Alternative alleles and is defined as the weighted mean of log-ratios
+                            of observed and expected allelic read counts, with weights being -log<sub>10</sub>
+                            of the respective P-values. The expected read counts are estimated from
+                            the fitted Negative Binomial Mixture model accounting for different
+                            assignments of the allies to the higher or lower DNA copies in genomic
+                            regions with BAD > 1. Prior mixture weights obtained with the global fit
+                            across SNVs were updated with Bayesian estimation separately for each SNV.
                             <br>
-                            The Effect Size is not assigned (n/a) if all of the raw
-                            individual P-values of an SNV on a particular genome position
-                            are equal to 1, considering Ref- and Alt-ASBs separately.
+                            The Effect Size is not assigned (n/a) if all of the raw individual
+                            P-values of an SNV on a particular genome position are equal to 1,
+                            considering Ref- and Alt-ASBs separately.
                             <br>
                         </dd>
                     </dl>
