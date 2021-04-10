@@ -125,6 +125,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
             name: {view: "Name"},
             aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
+
             experimentsCount: {view: "Experiments count", isDesc: true},
             aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true}
         };
@@ -137,10 +138,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         };
         if (this.releaseService.getReleaseFromFullPath().majorVersion >= 3) {
 
-            this.clDisplayedColumns.push('aggregatedSnpsCount010')
-            this.tfDisplayedColumns.push('aggregatedSnpsCount010')
-            this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+            this.clDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005')
+            this.tfDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005')
+            this.tfColumnModel.aggregatedSnpsCount005 = {view: 'ASBs at 5% FDR', isDesc: true}
+            this.tfColumnModel.aggregatedSnpsCount010 = {view: 'ASBs at 10% FDR', isDesc: true}
+            this.clColumnModel.aggregatedSnpsCount005 = {view: 'ASBs at 5% FDR', isDesc: true}
+            this.clColumnModel.aggregatedSnpsCount010 = {view: 'ASBs at 10% FDR', isDesc: true}
             this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+            this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
         }
 
 

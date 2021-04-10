@@ -31,7 +31,11 @@ export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBac
         cellTypesCount: model.cell_types_count,
         transcriptionFactorsCount: model.transcription_factors_count,
         snpsCount: model.snps_count,
-        asbsCount: model.asbs_count
+        asbsCount: model.asbs_count,
+        snpsCount005: model.snps_count005,
+        asbsCount005: model.asbs_count005,
+        snpsCount010: model.snps_count010,
+        asbsCount010: model.asbs_count010,
     };
 }
 
@@ -41,6 +45,7 @@ export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         uniprotAc: model.uniprot_ac,
         name: model.name,
+        aggregatedSnpsCount005: model.aggregated_snps_count005,
         aggregatedSnpsCount010: model.aggregated_snps_count010
     };
 }
@@ -51,6 +56,7 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         clId: "" + model.cl_id,
         name: model.name,
+        aggregatedSnpsCount005: model.aggregated_snps_count005,
         aggregatedSnpsCount010: model.aggregated_snps_count010
     };
 }

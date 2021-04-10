@@ -24,6 +24,7 @@ export interface SearchHintBackendModel {
     name: string;
     aggregated_snps_count: number;
     aggregated_snps_count005: number;
+    aggregated_snps_count010: number;
 }
 
 export interface SearchByGeneNameHintBackendModel {
@@ -42,6 +43,7 @@ export interface SearchHintModel {
     name: string;
     aggregatedSnpCount: number;
     aggregatedSnpCount005: number;
+    aggregatedSnpCount010: number;
 }
 
 export interface GeneModel {

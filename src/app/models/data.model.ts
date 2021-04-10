@@ -169,13 +169,22 @@ export interface TotalInfoBackendModel {
     transcription_factors_count: number;
     snps_count: number;
     asbs_count: number;
+    snps_count005: number;
+    asbs_count005: number;
+    snps_count010: number;
+    asbs_count010: number;
 }
 
 export interface TotalInfoModel {
     cellTypesCount: number;
     transcriptionFactorsCount: number;
     snpsCount: number;
+    snpsCount005: number;
+    snpsCount010: number;
+
     asbsCount: number;
+    asbsCount005: number;
+    asbsCount010: number;
 }
 
 export interface TfInfoBackendModel {
@@ -184,6 +193,7 @@ export interface TfInfoBackendModel {
     aggregated_snps_count: number;
     experiments_count: number;
     aggregated_snps_count010: number;
+    aggregated_snps_count005: number;
 }
 
 export interface ClInfoBackendModel {
@@ -192,6 +202,7 @@ export interface ClInfoBackendModel {
     aggregated_snps_count: number;
     experiments_count: number;
     aggregated_snps_count010: number;
+    aggregated_snps_count005: number;
 }
 
 
@@ -201,6 +212,7 @@ export interface TfInfoModel {
     aggregatedSnpsCount: number;
     experimentsCount: number;
     aggregatedSnpsCount010: number;
+    aggregatedSnpsCount005: number;
 }
 
 export interface ClInfoModel {
@@ -209,4 +221,5 @@ export interface ClInfoModel {
     aggregatedSnpsCount010: number;
     aggregatedSnpsCount: number;
     experimentsCount: number;
+    aggregatedSnpsCount005: number;
 }

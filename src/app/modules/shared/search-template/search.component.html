@@ -449,7 +449,7 @@
                             <span>{{option.name + " | "}}</span>
                             <small>&nbsp;Total ASBs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion >= 3">
-                                    {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
+                                    {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                 </span>
                                 <span *ngIf="(currentRelease$ | async).majorVersion < 3">
                                     {{option.aggregatedSnpCount}}
@@ -508,7 +508,7 @@
                         <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
                             <span *ngIf="(currentRelease$ | async).majorVersion >= 3">
-                                    {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
+                                    {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                 </span>
                             <span *ngIf="(currentRelease$ | async).majorVersion < 3">
                                     {{option.aggregatedSnpCount}}
