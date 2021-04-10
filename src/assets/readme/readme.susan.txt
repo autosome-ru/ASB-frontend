@@ -1,5 +1,5 @@
 ADASTRA release Susan (Apr 2021): README
-This release includes allele-specific binding sites (ASBs) for 1225 transcription factors and other DNA-binding proteins and 712 cell types obtained by meta-analysis of 15970 read alignments of GTRD ver. 20.06.
+This release includes allele-specific binding sites (ASBs) for 1171 transcription factors and other DNA-binding proteins and 707 cell types obtained by meta-analysis of 15970 read alignments of GTRD ver. 20.06.
 
 NOTE: In comparison to the previous major release Soos (described in detail in doi:10.1101/2020.10.07.327643) this release uses the updated estimates of the statistical significance, which are simultaneously more precise and more strict. We recommend our users to use as default thresholds 10% FDR for TF-ASBs and 5% or 10% FDR for cell type-ASBs.
 
