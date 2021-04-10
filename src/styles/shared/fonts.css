@@ -2,6 +2,9 @@
 .big-font {
   font-size: 16px;
 }
+.custom-ws {
+  white-space: pre-line;
+}
 .tooltip-bigger {
   font-size: 13px;
 }
