@@ -15,7 +15,7 @@
             [routerLink]="'/' + (currentRelease$ | async).url + '/' + (isAdvanced ? '/search/simple' : '/search/advanced')"
             [queryParams]="_convertFormToParams(!isAdvanced)"
         >
-            {{isAdvanced ? 'Simple search' : 'Advanced search'}}
+            {{isAdvanced ? 'Basic search' : 'Advanced search'}}
         </a>
     </div>
     <form

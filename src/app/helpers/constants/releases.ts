@@ -8,7 +8,7 @@ export const releasesList: ReleaseModel[] = [
         date: "2021.04.11",
         recent: true,
         version: "v3.5.0",
-        size: '1.54GB',
+        size: '727.5MB',
         api: "v3",
         releaseLink: 'https://disk.yandex.ru/d/YKOdzHeHFVa0Hw?w=1',
         gtrdExpsPath: "ADASTRA_GTRD_exps.susan.tsv",
