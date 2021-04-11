@@ -48,7 +48,7 @@
                     style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
                 <span *ngIf="(release$ | async).majorVersion >= 3" style="white-space: nowrap"
                     [matTooltip]="constructTooltipText(totalInfo)"
-                      matTooltipClass="big-font custom-ws"
+                      matTooltipClass="tooltip-bigger custom-ws"
                 >
                     &nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount010}} ASBs passing 10% FDR at {{totalInfo.snpsCount010}} SNPs</span>
             </h6>
