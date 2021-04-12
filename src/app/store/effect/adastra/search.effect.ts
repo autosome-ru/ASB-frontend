@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Actions, createEffect, Effect, ofType} from "@ngrx/effects";
+import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../reducer/adastra";
 import {SearchService} from "src/app/services/search.service";
@@ -62,10 +62,9 @@ export class SearchEffect {
         mergeMap((action: fromActions.LoadSearchResultsAction) =>
             this.searchService.getSearchResult(
                 action.payload.search,
-                action.payload.fdr,
                 action.payload.params).pipe(
                 map(results => new fromActions.LoadSearchResultsSuccessAction(
-                    {results, fdr: action.payload.fdr})),
+                    {results, fdr: action.payload.search.fdr, es: action.payload.search.es})),
                 catchError(() => of(new fromActions.LoadSearchResultsFailAction())),
             )
         ))
@@ -77,9 +76,9 @@ export class SearchEffect {
         mergeMap((action: fromActions.LoadSearchResultsWithPaginationAction) =>
             this.store.select(fromSelectors.selectCurrentSearchQuery).pipe(
                 take(1),
-                mergeMap((query) => this.searchService.getSearchResult(query, action.payload.fdr, action.payload.params).pipe(
+                mergeMap((query) => this.searchService.getSearchResult(query, action.payload.params).pipe(
                             map(results => new fromActions.LoadSearchResultsSuccessAction(
-                                {results, fdr: action.payload.fdr})),
+                                {results, fdr: query.fdr, es: query.es})),
                             catchError(() => of(new fromActions.LoadSearchResultsFailAction()))
                         )
                     )

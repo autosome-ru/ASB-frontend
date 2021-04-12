@@ -263,7 +263,6 @@
             </ng-container>
         </ng-container>
         <div
-            [ngStyle]="isAdvanced ? {'width': '100%'} : {}"
             style="margin-right: 15px; display: flex; align-items: center; flex-wrap: wrap"
             *ngIf="_checkToDisplay('pos')"
         >
@@ -308,39 +307,18 @@
                 </mat-form-field>
             </div>
             </ng-container>
-            <div *ngIf="isAdvanced"
-                 style="display: inline-flex" class="ml-sm-auto"
+
+        </div>
+        <ng-container *ngIf="(currentRelease$ | async).majorVersion as majorVersion">
+            <div *ngIf="majorVersion >= 3"
+                 style="display: inline-flex"
+                 [ngClass]="isAdvanced ? 'ml-sm-auto': ''"
                  joyrideStep="fdr-simple"
                  [stepContent]="stepTemplate"
                  [stepContentParams]="getTextByStepName('fdr-simple')"
             >
-                <ng-container *ngIf="(currentRelease$ | async).majorVersion as majorVersion">
-                    <ng-container *ngIf="majorVersion >= 3">
-                    <mat-form-field
-                        style="max-width: 80px"
-                    >
-                        <mat-label>FDR threshold</mat-label>
-                        <mat-select formControlName="fdr">
-                            <mat-option value="0.01">0.01</mat-option>
-                            <mat-option value="0.05">0.05</mat-option>
-                            <mat-option value="0.1">0.1</mat-option>
-                            <mat-option value="0.15">0.15</mat-option>
-                            <mat-option value="0.25">0.25</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    </ng-container>
-                </ng-container>
-            </div>
-        </div>
-        <div *ngIf="!isAdvanced"
-             style="display: inline-flex; margin-right: 15px"
-             joyrideStep="fdr-simple"
-             [stepContent]="stepTemplate"
-             [stepContentParams]="getTextByStepName('fdr-simple')"
-        >
-            <ng-container *ngIf="(currentRelease$ | async).majorVersion  >= 3">
                 <mat-form-field
-                    style="max-width: 80px"
+                    style="max-width: 80px; margin-right: 5px"
                 >
                     <mat-label>FDR threshold</mat-label>
                     <mat-select formControlName="fdr">
@@ -351,8 +329,50 @@
                         <mat-option value="0.25">0.25</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </ng-container>
-        </div>
+                <mat-form-field
+                    style="max-width: 80px"
+                    [ngStyle]="isAdvanced ? {} : {'margin-right': '15px'}"
+                >
+                    <mat-label>ES threshold</mat-label>
+                    <mat-select formControlName="es">
+                        <mat-option value="0">0</mat-option>
+                        <mat-option value="0.6">0.6</mat-option>
+                        <mat-option value="1.2">1.2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </ng-container>
+<!--        <div *ngIf="!isAdvanced"-->
+<!--             style="display: inline-flex; margin-right: 15px"-->
+<!--             joyrideStep="fdr-simple"-->
+<!--             [stepContent]="stepTemplate"-->
+<!--             [stepContentParams]="getTextByStepName('fdr-simple')"-->
+<!--        >-->
+<!--            <ng-container *ngIf="(currentRelease$ | async).majorVersion  >= 3">-->
+<!--                <mat-form-field-->
+<!--                    style="max-width: 80px"-->
+<!--                >-->
+<!--                    <mat-label>FDR threshold</mat-label>-->
+<!--                    <mat-select formControlName="fdr">-->
+<!--                        <mat-option value="0.01">0.01</mat-option>-->
+<!--                        <mat-option value="0.05">0.05</mat-option>-->
+<!--                        <mat-option value="0.1">0.1</mat-option>-->
+<!--                        <mat-option value="0.15">0.15</mat-option>-->
+<!--                        <mat-option value="0.25">0.25</mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
+<!--                <mat-form-field-->
+<!--                    style="max-width: 90px"-->
+<!--                >-->
+<!--                    <mat-label>ES threshold</mat-label>-->
+<!--                    <mat-select formControlName="es">-->
+<!--                        <mat-option value="0">0</mat-option>-->
+<!--                        <mat-option value="0.6">0.6</mat-option>-->
+<!--                        <mat-option value="1.2">1.2</mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
+<!--            </ng-container>-->
+<!--        </div>-->
         <div
             *ngIf="!isAdvanced"
 

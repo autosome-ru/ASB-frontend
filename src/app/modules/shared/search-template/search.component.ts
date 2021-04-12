@@ -35,6 +35,7 @@ import {checkOneResult, convertFormToParams} from "../../../helpers/helper/check
 import {ReleaseModel} from "src/app/models/releases.model";
 import {getTextByStepNameAdastra} from "src/app/helpers/text-helpers/tour.adastra.helper";
 import {ChromPos, validateGroup} from "../form-fields/form-fields.component";
+import {ReleasesService} from "../../../services/releases.service";
 
 
 @Component({
@@ -99,6 +100,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     public currentRelease$: Observable<ReleaseModel>;
     public searchGeneOptions$: Observable<GeneModel[]>;
     public searchGeneOptionsLoading$: Observable<boolean>;
+    private defaultParams: {fdr: string, es: string};
 
 
     private static convertPosToInterval(searchInput: string): string {
@@ -118,11 +120,14 @@ export class SearchComponent implements OnInit, OnDestroy {
         private saverService: FileSaverService,
         private searchService: SearchService,
         private toastr: ToastrService,
+        private releaseService: ReleasesService
     ) {}
 
     ngOnInit() {
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
-
+        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion;
+        this.defaultParams = releaseVersion >= 3 ?
+            {fdr: '0.1', es: '0.6'} : {fdr: '0.05', es: '0'};
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             isAdvanced: this.isAdvanced,
@@ -132,7 +137,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             geneId: "",
             eqtlGeneId: "",
             eqtlGeneName: "",
-            fdr: '0.1',
+            es: this.defaultParams.es,
+            fdr: this.defaultParams.fdr,
             geneName: "",
             searchTf: null,
             searchCl: null,
@@ -270,7 +276,6 @@ export class SearchComponent implements OnInit, OnDestroy {
             fromSelectors.selectCurrentSearchByGeneNameOptions)
         this.searchGeneOptionsLoading$ = this.store.select(
             fromSelectors.selectCurrentSearchByGeneNameOptionsLoading)
-
         this.searchOptions$ = this.store.select(fromSelectors.selectCurrentSearchOptions);
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
     }
@@ -421,13 +426,15 @@ export class SearchComponent implements OnInit, OnDestroy {
     }
 
     _convertParamsToForm(searchParams: Partial<SearchParamsModel>): Partial<SearchQueryModel> {
-        if (this.isAdvanced) {
-            if (searchParams) {
-                const result: Partial<SearchQueryModel> = searchParams.fdr ? {fdr: searchParams.fdr} : {};
+        let result: Partial<SearchQueryModel> = {
+            fdr: searchParams.fdr ? searchParams.fdr : this.defaultParams.fdr,
+            es: searchParams.es ? searchParams.es : this.defaultParams.es
+        };
+        if (searchParams) {
+            if (this.isAdvanced) {
                 result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
                 result.clList = searchParams.cl ? searchParams.cl.split("@") : [];
                 result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
-                result.fdr = searchParams.fdr ? searchParams.fdr : defaultFdr
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
                 }
@@ -435,68 +442,58 @@ export class SearchComponent implements OnInit, OnDestroy {
                     searchParams.motif_conc.split(",").forEach(s => result[s] = true);
                 }
                 return result;
-            } else { return {}; }
-        } else {
-            if (searchParams) {
+            } else {
                 if (searchParams.hasOwnProperty("rs")) {
-                    return {
+                    result = {
+                        ...result,
                         searchBy: "id",
                         geneId: "",
                         geneName: "",
-                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         rsId: searchParams.rs,
                         chromPos: new ChromPos(searchParams.chr, searchParams.pos)
                     };
                 }
                 if (searchParams.hasOwnProperty("chr")) {
-                    return {
+                    result = {
+                        ...result,
                         searchBy: "pos",
                         geneId: "",
                         geneName: "",
-                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         rsId: "",
                         chromPos: new ChromPos(searchParams.chr, searchParams.pos)
                     };
                 }
                 if (searchParams.hasOwnProperty("g_id")) {
-                    return {
+                    result = {
+                        ...result,
                         searchBy: "geneId",
-                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         geneId: searchParams.g_id
                     };
                 }
                 if (searchParams.hasOwnProperty("eqtl_g_id")) {
-                    return {
+                    result = {
+                        ...result,
                         searchBy: "eqtlGeneId",
-                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         eqtlGeneId: searchParams.eqtl_g_id
                     };
                 }
                 if (searchParams.hasOwnProperty("eqtl_g_name")) {
-                    return {
+                    result = {
+                        ...result,
                         searchBy: "eqtlGeneName",
-                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         eqtlGeneName: searchParams.eqtl_g_name
                     };
                 }
                 if (searchParams.hasOwnProperty("g_name")) {
-                    return {
+                    result = {
+                        ...result,
                         searchBy: "geneName",
-                        fdr:  searchParams.fdr ? searchParams.fdr : defaultFdr,
                         geneName: searchParams.g_name
                     };
-                } else {
-                    return {}
                 }
-            } else {
-                return {
-                    searchBy: "id",
-                    fdr: defaultFdr,
-                    geneId: "",
-                    geneName: ""
-                };
             }
         }
+        return result
     }
 
     _isSearchDisabled(): boolean {
@@ -617,5 +614,3 @@ function checkIfCheckpointSelected(sF: SearchQueryModel) {
     Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);
     return result;
 }
-
-const defaultFdr: string = '0.05'

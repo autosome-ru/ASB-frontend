@@ -35,7 +35,7 @@ export class SearchService {
             {params: {search: addPercents(filter)}});
     }
 
-    public getSearchResult(filter: SearchQueryModel,fdr: string, params: AsbServerSideModel):
+    public getSearchResult(filter: SearchQueryModel, params: AsbServerSideModel):
         Observable<SearchResultsBackendModel> {
         if (!filter) {
             if (!filter.isAdvanced &&
@@ -49,10 +49,11 @@ export class SearchService {
                 return of({results: [], total: null});
             }
         }
+        const serverParams = {
+            fdr: filter.fdr,
+            es: filter.es,
+            ...convertServerSideModelToServerSideBackendModel(params)}
         if (!filter.isAdvanced && filter.searchBy !== "pos") {
-            const serverParams = {
-                fdr: fdr,
-                ...convertServerSideModelToServerSideBackendModel(params)}
             switch (filter.searchBy) {
 
                 case "geneId":
@@ -86,9 +87,8 @@ export class SearchService {
             return this.http.get<SearchResultsBackendModel>(
                 `${this.urlService.getUrlForQuery("search")}/advanced`, {
                     params: {
-                        fdr: fdr,
+                        ...serverParams,
                         ...makeParamsForAdvancedSearchResults(filter),
-                        ...convertServerSideModelToServerSideBackendModel(params)
                     }
                 });
         }

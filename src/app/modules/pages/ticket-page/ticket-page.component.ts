@@ -124,7 +124,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                 break;
                              case 'Created':
                                  this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(
-                                     {ticket: this.ticket, fdr: '0.05'}));
+                                     {ticket: this.ticket, fdr: '0.1', es: '0.6'}));
                                  this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
                                      this.ticket));
                                 break;

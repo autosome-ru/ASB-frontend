@@ -229,7 +229,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             {
                 search: event,
                 params: this.pagination,
-                fdr: this.fdr
             }));
         if (this.paginator) {
             this.paginator.pageSize = this.pagination.pageSize;

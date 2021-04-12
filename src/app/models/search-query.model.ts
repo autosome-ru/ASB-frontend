@@ -16,6 +16,7 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     tfList: string[];
     clList: string[];
     fdr: string;
+    es: string;
 }
 
 export type SearchByModel = "id" | "pos" | "geneId" | "geneName" | "eqtlGeneId" | "eqtlGeneName";
@@ -71,7 +72,8 @@ export interface SearchParamsModel {
     tf: string;
     motif_conc: string;
     phe_db: string;
-    fdr?: string
+    fdr?: string;
+    es?: string;
 }
 
 export interface SearchResultsModel {

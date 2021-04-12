@@ -13,8 +13,9 @@ export class ProcessingService {
     constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
-    startProcessTicket(ticket: string, fdr: string): Observable<object> {
-        return this.http.post<object>(`${this.urlService.getUrlForQuery("ananastra")}/process/${ticket}`, {}, {params: {fdr}});
+    startProcessTicket(ticket: string, fdr: string, es: string): Observable<object> {
+        return this.http.post<object>(`${this.urlService.getUrlForQuery("ananastra")}/process/${ticket}`,
+            {}, {params: {fdr, es}});
     }
 
     getFileStatsByTicket(ticket: string): Observable<AnnotationDataBackendModel> {

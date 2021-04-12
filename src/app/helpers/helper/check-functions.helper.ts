@@ -65,60 +65,66 @@ export function checkOneResult(searchData: SnpSearchModel[]): boolean {
 
 export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: boolean,
                                     searchData?: SnpSearchModel[], selectedGene?: GeneModel): Partial<SearchParamsModel> {
-
-    if (form && !form.isAdvanced) {
-        if (form.searchBy) {
-            const startValue = {fdr: form.fdr}
-            if (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced) {
-                form.searchBy = "pos";
-            }
-            let result = {};
-            switch (form.searchBy) {
-                case "id":
-                    result =  form.rsId ? {rs: form.rsId.trim()} : {};
-                    break;
-                case "pos":
-                    if (form.chromPos.pos) {
-                        result = {
-                            pos: form.chromPos.pos.trim()
-                        };
-                    }
-                    if (form.chromPos.chr) {
-                        result = {
-                            ...result,
-                            chr: form.chromPos.chr.trim()
-                        };
-                    }
-                    break;
-                case "geneId":
-                    result = form.geneId ? {g_id: form.geneId.trim()} : {};
-                    break;
-                case "geneName":
-                    result = form.geneName ? {g_name: form.geneName.trim()} : {};
-                   break;
-                case "eqtlGeneId":
-                    result = form.eqtlGeneId ? {eqtl_g_id: form.eqtlGeneId.trim()} : {};
-                    break;
-                case "eqtlGeneName":
-                    result = form.eqtlGeneName ? {eqtl_g_name: form.eqtlGeneName.trim()} : {};
-                    break;
-            }
-            return {...startValue, ...result}
-        } else {
-            return form.rsId ? {pos: form.chromPos.pos, chr: form.chromPos.chr} : {};
+    if (form) {
+        let result: Partial<SearchParamsModel> = form.fdr ? {fdr: form.fdr} : {};
+        if (form.es) {
+            result.es = form.es
         }
-    } else {
-        if (form) {
-            const result: Partial<SearchParamsModel> = form.fdr ? {fdr: form.fdr} : {};
-            if (form.clList.length > 0) { result.cl = form.clList.join("@"); }
+        if (!form.isAdvanced) {
+            if (form.searchBy) {
+                if (oldIsAdvanced && form.isAdvanced !== oldIsAdvanced) {
+                    form.searchBy = "pos";
+                }
+                switch (form.searchBy) {
+                    case "id":
+                        if (form.rsId) {
+                            result.rs = form.rsId.trim()
+                        }
+                        break;
+                    case "pos":
+                        if (form.chromPos.pos) {
+                            result.pos = form.chromPos.pos.trim()
+                        }
+                        if (form.chromPos.chr) {
+                            result.chr = form.chromPos.chr.trim()
+                        }
+                        break;
+                    case "geneId":
+                        if (form.geneId) {
+                            result.g_id = form.geneId.trim()
+                        }
+                        break;
+                    case "geneName":
+                        if (form.geneName) {
+                            result.g_name = form.geneName.trim()
+                        }
+                       break;
+                    case "eqtlGeneId":
+                        if (form.eqtlGeneId) {
+                            result.eqtl_g_id = form.eqtlGeneId.trim()
+                        }
+                        break;
+                    case "eqtlGeneName":
+                        if (form.eqtlGeneName) {
+                            result.eqtl_g_name = form.eqtlGeneName.trim()
+                        }
+                        break;
+                }
+                return result
+            } else {
+                return form.rsId ? {pos: form.chromPos.pos, chr: form.chromPos.chr} : {};
+            }
+        } else {
+            if (form.clList.length > 0) {
+                result.cl = form.clList.join("@");
+            }
             if (form.chromPos.pos) {
                 if (checkOneResult(searchData) && !oldIsAdvanced &&
                     form.searchBy === 'id' &&
                     !isValidPosInterval(form.chromPos.pos.trim())) {
                     result.pos = "" + searchData[0].pos;
                     result.chr = searchData[0].chr.slice(3);
-                }
-                else {
+                } else {
                     result.pos = form.chromPos.pos.trim();
                     result.chr = form.chromPos.chr.trim();
                 }
@@ -142,8 +148,11 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                 result.motif_conc = concList;
             }
             return result;
-        } else { return {}; }
+        }
+    } else {
+            return {};
     }
+
 }
 
 function applyFunction(a: string | number, b: string | number, isBadElem: ((x: string | number) => boolean)): number {

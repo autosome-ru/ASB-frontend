@@ -24,7 +24,10 @@ export class AnnotationEffect {
     loadAnnotationInfoStart$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.StartAnnotation),
         mergeMap((action: fromActions.StartAnnotationAction) =>
-            this.processingService.startProcessTicket(action.payload.ticket, action.payload.fdr).pipe(
+            this.processingService.startProcessTicket(action.payload.ticket,
+                action.payload.fdr,
+                action.payload.es
+                ).pipe(
                 map(() => new fromActions.StartAnnotationSuccessAction()),
                 catchError(() => of(new fromActions.StartAnnotationFailAction(action.payload))),
             )

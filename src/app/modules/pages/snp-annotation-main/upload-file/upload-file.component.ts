@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {UploadService} from 'src/app/services/upload.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {FormBuilder, FormControl} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import * as fromActions from 'src/app/store/action/ananastra';
 import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
@@ -23,11 +23,12 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public fileProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   private subscriptions = new Subscription();
   private ticket: string;
-  public textAreaControl: FormControl;
   private firstSubmit: boolean = true;
   public file = null;
   public isHovered: boolean;
-  public fdrControl: FormControl;
+  public formGroup: FormGroup;
+
+
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
               private router: Router,
@@ -35,8 +36,11 @@ export class UploadFileComponent implements OnInit, OnDestroy {
               private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.textAreaControl = this.formBuilder.control('');
-    this.fdrControl = this.formBuilder.control('0.05')
+    this.formGroup = this.formBuilder.group({
+        textArea: '',
+        fdr: '0.1',
+        es: '0.6'
+    })
   }
 
   ngOnDestroy(): void {
@@ -121,7 +125,10 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/ticket/${this.ticket}`).then(
       () => {
           this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(
-              {ticket: this.ticket, fdr: this.fdrControl.value}));
+              {ticket: this.ticket,
+                  fdr: this.formGroup.get('fdr').value,
+                  es: this.formGroup.get('es').value
+              }));
           this.uploadService.removeFileTicket()
       }
     );
@@ -129,9 +136,10 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
   submit(): void {
       const loc = () => {
-          if (!!this.textAreaControl.value) {
+          const value = this.formGroup.get('textArea').value
+          if (!!value) {
               this.firstSubmit = false;
-              const file = new File([this.textAreaControl.value], 'my-list.txt');
+              const file = new File([value], 'my-list.txt');
               this.uploadFile(file, true);
           } else {
               this.toastr.warning('No data provided', 'Warning')
@@ -171,7 +179,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
               patchValue = demo3;
               break;
       }
-      this.textAreaControl.patchValue(patchValue);
+      this.formGroup.patchValue({textArea: patchValue});
     }
 
     getTextByStepName(str: string) {

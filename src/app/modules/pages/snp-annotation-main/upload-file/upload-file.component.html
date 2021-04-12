@@ -1,9 +1,11 @@
 <div style="width: 100%;">
-    <div
+    <form
+        [formGroup]="formGroup"
         style="display: flex; flex-direction: column; align-items: center"
     >
         <div
             style="display: flex; flex-direction: column; align-items: center; width: 100%;"
+
             astraDragDrop
             (fileDropped)="fileDropped($event)"
             (backgroundChange)="backgroundChanged($event)"
@@ -22,17 +24,17 @@
                 floatLabel="always">
               <mat-label></mat-label>
               <textarea
-                [formControl]="textAreaControl"
+                formControlName="textArea"
                 matInput
                 placeholder="Provide a list of dbSNP rsIDs or a genomic interval in hg38 coordinates or a vcf file"
                 cdkTextareaAutosize
                 cdkAutosizeMinRows="6"
                 cdkAutosizeMaxRows="6"
               ></textarea>
-                <mat-hint *ngIf="textAreaControl.value"
+                <mat-hint *ngIf="formGroup.get('textArea').value as val"
                 >
-                    {{countStrings(textAreaControl.value)}}
-                    line{{countStrings(textAreaControl.value) > 1 ?
+                    {{countStrings(val)}}
+                    line{{countStrings(val) > 1 ?
                     's detected in input, will treat them as dbSNP IDs.'
                     : ''}}
 
@@ -111,7 +113,9 @@
           </button>
         </div>
         <div style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap">
-            <div style="display: flex; align-items: center">
+            <div
+                style="display: flex; align-items: center"
+            >
                 <mat-form-field
                     joyrideStep="fdr-simple"
                     [stepContent]="stepTemplate"
@@ -119,11 +123,21 @@
                     style="max-width: 80px; margin-right: 10px"
                 >
                     <mat-label>FDR threshold</mat-label>
-                    <mat-select [formControl]="fdrControl">
+                    <mat-select formControlName="fdr">
                         <mat-option value="0.01">0.01</mat-option>
                         <mat-option value="0.05">0.05</mat-option>
                         <mat-option value="0.1">0.1</mat-option>
                         <mat-option value="0.15">0.15</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field
+                    style="max-width: 80px; margin-right: 10px"
+                >
+                    <mat-label>ES threshold</mat-label>
+                    <mat-select formControlName="es">
+                        <mat-option value="0">0</mat-option>
+                        <mat-option value="0.6">0.6</mat-option>
+                        <mat-option value="1.2">1.2</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <button
@@ -171,7 +185,7 @@
                 </button>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 <ng-template #stepTemplate let-text="text">
     <asb-step-template [text]="text">

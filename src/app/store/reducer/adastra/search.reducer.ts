@@ -160,7 +160,6 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 searchQuery: {
                     ...action.payload.search,
                     ...action.payload.params,
-                    fdr: action.payload.fdr
                 },
                 searchChangeLoading: true,
             };
