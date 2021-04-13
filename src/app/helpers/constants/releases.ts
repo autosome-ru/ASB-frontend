@@ -25,7 +25,7 @@ export const releasesList: ReleaseModel[] = [
         majorVersion: 1,
         recent: false,
         releaseLink: 'https://disk.yandex.ru/d/8iaZCprOYNLQsQ',
-        size: '870,5 МБ',
+        size: '453.7 МБ',
         version: "v1.6.11",
         api: "v1",
         gtrdExpsPath: "ADASTRA_GTRD_exps.soos.tsv",

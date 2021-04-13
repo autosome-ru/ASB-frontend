@@ -10,7 +10,7 @@
                             Where to start?</h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="px-3">
+                <div class="px-1">
                     <dl>
                         <dt>Page tour</dt>
                         <dd style="display:flex; align-items: center">
@@ -60,7 +60,7 @@
                         </h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <div class="px-3">
+                <div class="px-1">
                     <b>ASB</b> stands for <b>A</b>llele-<b>S</b>pecific <b>B</b>inding.
                     A <b>T</b>ranscription <b>F</b>actor (<b>TF</b>) might prefer to bind one of two alternative alleles of
                     homologous chromosomes and thus exhibit allele-specific binding.
@@ -121,7 +121,7 @@
                 <section
                     id="ASB_properties"
                 >
-                    <h5>ASB properties</h5>
+                    <h5 class="px-1">ASB properties</h5>
                     <dl class="px-3">
                         <dt id="sign">ASB significance</dt>
                         <dd>ASB significance
@@ -324,12 +324,14 @@
             <mat-expansion-panel *ngIf="isAdastra" class="mat-elevation-z0">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <h4 style="margin-bottom: 0"> API</h4>
+                        <h4 style="margin-bottom: 0">Software</h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <section id="API">
                     <div class="px-3">
-                            <span>For programmatic access,
+                        <dl>
+                            <dt>API</dt>
+                            <dd>For programmatic access,
                                 ADASTRA API is available at
                                 <a
                                     href="https://adastra.autosome.ru/api/"
@@ -338,7 +340,28 @@
                                 >
                                     {{'https://adastra.autosome.ru/api/'}}
                                 </a>
-                            </span>
+                            </dd>
+                            <dt>BABACHI</dt>
+                            <dd>BABACHI is available on
+                                <a
+                                    href="https://github.com/autosome-ru/BABACHI"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    GitHub
+                                </a>
+                            </dd>
+                            <dt>ADASTRA pipeline</dt>
+                            <dd>ADASTRA pipeline is available on
+                                <a
+                                    href="https://github.com/autosome-ru/ADASTRA-pipeline"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    GitHub
+                                </a>
+                            </dd>
+                        </dl>
                     </div>
                 </section>
             </mat-expansion-panel>
