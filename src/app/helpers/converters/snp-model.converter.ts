@@ -92,7 +92,7 @@ function compareTr(value: number, tr: number): boolean {
 }
 
 function compareThresholds(value1, tr1, value2, tr2): boolean {
-    return compareTr(value1, tr1) && compareTr(value2, tr2)
+    return compareTr(value1, tr1) || compareTr(value2, tr2)
 }
 
 
