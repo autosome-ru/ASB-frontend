@@ -28,7 +28,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public file = null;
   public isHovered: boolean;
   public formGroup: FormGroup;
-  public fdrOptions: string[] = fdrOptions;
+  public fdrOptions: string[] = fdrOptions.filter(d => d != '0.25');
   public esOptions: string[] = esOptions;
 
   constructor(private uploadService: UploadService,
