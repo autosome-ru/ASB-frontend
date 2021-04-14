@@ -179,8 +179,6 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
         }
 
         case fromActions.ActionTypes.LoadSearchResultsSuccess: {
-            console.log(action.payload.results.results.map(
-                s => convertSnpSearchBackendModelToSnpSearchModel(s, action.payload.fdr, action.payload.es)) as SnpSearchModel[])
             return {
                 ...state,
                 searchGene: convertSearchByGeneNameHintBackendToSearchByGeneHintModel(

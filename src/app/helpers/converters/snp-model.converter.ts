@@ -80,7 +80,6 @@ function makeEsTr(es: string): number {
     if (!tr) {
         tr = 0
     }
-    console.log('TR', tr)
     return tr
 }
 
