@@ -85,6 +85,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public tourSteps: string[];
     public release$: Observable<ReleaseModel>;
     public fdr: string;
+    public es: string;
 
     constructor(
         private store: Store<AppState>,
@@ -110,6 +111,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 s => {
                     this.fdr = s['fdr'] ? s['fdr'] :
                         (releaseVersion >= 3 ? '0.1' : '0.05');
+                    this.es = s['es'] ? s['es'] : '0'
                     this.subscriptions.add(
                         this.route.paramMap.subscribe(
                             (p) => {
@@ -117,10 +119,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                                 this.alt = p.get("alt");
                                 if (!this.alt) {
                                     this.router.navigate([`/${this.release.url}/search/simple`],
-                                        {queryParams: {rs: this.id, fdr: this.fdr}}).then()
+                                        {queryParams: {rs: this.id, fdr: this.fdr, es: this.es}}).then()
                                 } else {
                                     this.store.dispatch(new fromActions.data.InitSnpInfoAction(
-                                        {rsId: this.id, alt: this.alt, fdr: this.fdr}));
+                                        {rsId: this.id, alt: this.alt, fdr: this.fdr, es: this.es}));
                                 }
                             }
 

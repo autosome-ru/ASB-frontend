@@ -127,7 +127,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
         const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion;
         this.defaultParams = releaseVersion >= 3 ?
-            {fdr: '0.1', es: '0.6'} : {fdr: '0.05', es: '0'};
+            {fdr: '0.1', es: '0'} : {fdr: '0.05', es: '0'};
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             isAdvanced: this.isAdvanced,

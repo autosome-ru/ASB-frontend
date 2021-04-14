@@ -68,7 +68,10 @@ export class DataEffect {
         ofType(fromActions.ActionTypes.LoadSnpInfo),
         mergeMap((action: fromActions.LoadSnpInfoAction) =>
             this.dataService.getSnpInfoById(action.payload).pipe(
-                map(info => new fromActions.LoadSnpInfoSuccessAction({info, fdr: action.payload.fdr})),
+                map(info => new fromActions.LoadSnpInfoSuccessAction({info,
+                    fdr: action.payload.fdr,
+                    es: action.payload.es})
+                ),
                 catchError(() => of(new fromActions.LoadSnpInfoFailAction(action.payload))),
             )
         )
@@ -88,11 +91,12 @@ export class DataEffect {
             combineLatest([
                 this.store.select(fromSelectors.selectSnpInfoDataById, action.payload.rsId + action.payload.alt),
                 this.store.select(fromSelectors.selectSnpInfoFdrById, action.payload.rsId + action.payload.alt),
+                this.store.select(fromSelectors.selectSnpInfoEsById, action.payload.rsId + action.payload.alt),
                 this.store.select(fromSelectors.selectSnpInfoDataLoadingById, action.payload.rsId + action.payload.alt),
             ]).pipe(
                 take(1),
-                switchMap(([snp, fdr, loading]) =>
-                    !loading && (!snp || action.payload.fdr !== fdr)
+                switchMap(([snp, fdr, es, loading]) =>
+                    !loading && (!snp || action.payload.fdr !== fdr || action.payload.es !== es)
                         ? of(new fromActions.LoadSnpInfoAction(action.payload))
                         : EMPTY
                 ),

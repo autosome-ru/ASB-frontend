@@ -16,7 +16,7 @@ import {Observable, Subscription} from "rxjs";
 import {AppState} from "../../../../store/reducer/adastra";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 import {UrlService} from "../../../../services/url.service";
-import {FormBuilder, FormControl} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -40,6 +40,9 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
     @Input()
     public fdr: string;
 
+    @Input()
+    public es: string;
+
     @Output()
     public emitNextStep = new EventEmitter<void>();
 
@@ -48,7 +51,7 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
     private subscription = new Subscription()
     public release$: Observable<ReleaseModel>;
     public url: string;
-    public fdrControl: FormControl;
+    public thresholdsGroup: FormGroup;
 
     constructor(private store: Store<AppState>,
                 private formBuilder: FormBuilder,
@@ -57,11 +60,20 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
                 private urlService: UrlService) { }
 
     ngOnInit() {
-        this.fdrControl = this.formBuilder.control(this.fdr)
+        this.thresholdsGroup = this.formBuilder.group({
+            fdr: this.fdr,
+            es: this.es
+        })
         this.subscription.add(
-            this.fdrControl.valueChanges.subscribe(
+            this.thresholdsGroup.get('fdr').valueChanges.subscribe(
                 s => this.router.navigate([],
-                    {relativeTo: this.route, queryParams: {fdr: s}})
+                    {relativeTo: this.route, queryParams: {fdr: s}, queryParamsHandling: "merge"})
+            )
+        );
+        this.subscription.add(
+            this.thresholdsGroup.get('es').valueChanges.subscribe(
+                s => this.router.navigate([],
+                    {relativeTo: this.route, queryParams: {es: s}, queryParamsHandling: "merge"},)
             )
         );
         this.url = this.urlService.hostName;

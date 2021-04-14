@@ -28,7 +28,8 @@ export interface DataState {
         [snpId: string]: {
             loading: boolean,
             snpData?: SnpInfoModel,
-            fdr?: string
+            fdr?: string,
+            es?: string
         },
     };
 }
@@ -149,7 +150,8 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                     ...state.snps,
                     [snpId]: {
                         loading: true,
-                        fdr: action.payload.fdr
+                        fdr: action.payload.fdr,
+                        es: action.payload.es
                     },
                 }
 
@@ -178,7 +180,11 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                     [snpId]: {
                         ...state.snps[snpId],
                         snpData: {
-                            ...convertSnpInfoBackendModelToSnpInfoModel(action.payload.info, action.payload.fdr),
+                            ...convertSnpInfoBackendModelToSnpInfoModel(
+                                action.payload.info,
+                                action.payload.fdr,
+                                action.payload.es
+                            ),
                             phenotypes: newPhenotypes,
                         },
                         loading: false,

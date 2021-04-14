@@ -21,9 +21,10 @@ const _selectSnpsDataById = createSelector(_selectSnpInfoData,
                 [snpId: number]: {
                     snpData?: SnpInfoModel,
                     loading: boolean,
-                    fdr: string
+                    fdr: string,
+                    es: string
                 };
-            }, id: string) => snps[id] as {loading: boolean, fdr: string, snpData?: SnpInfoModel},
+            }, id: string) => snps[id] as {loading: boolean, fdr: string, snpData?: SnpInfoModel, es: string},
 );
 export const selectSnpInfoDataById = createSelector(
     _selectSnpsDataById,
@@ -32,6 +33,10 @@ export const selectSnpInfoDataById = createSelector(
 export const selectSnpInfoFdrById = createSelector(
     _selectSnpsDataById,
     snp => snp && snp.fdr,
+);
+export const selectSnpInfoEsById = createSelector(
+    _selectSnpsDataById,
+    snp => snp && snp.es,
 );
 export const selectSnpInfoDataLoadingById = createSelector(
     _selectSnpsDataById,
