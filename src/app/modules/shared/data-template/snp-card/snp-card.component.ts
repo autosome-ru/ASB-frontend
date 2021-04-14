@@ -18,6 +18,7 @@ import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.ad
 import {UrlService} from "../../../../services/url.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
+import {fdrOptions, esOptions} from "../../../../helpers/constants/constants";
 
 @Component({
     selector: "asb-snp-card",
@@ -52,6 +53,8 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
     public release$: Observable<ReleaseModel>;
     public url: string;
     public thresholdsGroup: FormGroup;
+    public fdrOptions: string[] = fdrOptions;
+    public esOptions: string[] = esOptions;
 
     constructor(private store: Store<AppState>,
                 private formBuilder: FormBuilder,

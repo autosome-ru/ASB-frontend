@@ -29,7 +29,12 @@ import {MatAutocomplete, MatAutocompleteSelectedEvent} from "@angular/material/a
 import {FileSaverService} from "ngx-filesaver";
 import {SearchService} from "src/app/services/search.service";
 import {ToastrService} from "ngx-toastr";
-import {concordanceModelExample, phenotypesModelExample, phenotypesToView} from "../../../helpers/constants/constants";
+import {
+    concordanceModelExample,
+    esOptions, fdrOptions,
+    phenotypesModelExample,
+    phenotypesToView
+} from "../../../helpers/constants/constants";
 import {debounceTime} from "rxjs/operators";
 import {checkOneResult, convertFormToParams} from "../../../helpers/helper/check-functions.helper";
 import {ReleaseModel} from "src/app/models/releases.model";
@@ -100,6 +105,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     public currentRelease$: Observable<ReleaseModel>;
     public searchGeneOptions$: Observable<GeneModel[]>;
     public searchGeneOptionsLoading$: Observable<boolean>;
+    public esOptions: string[] = esOptions;
+    public fdrOptions: string[] = fdrOptions;
     private defaultParams: {fdr: string, es: string};
 
 
