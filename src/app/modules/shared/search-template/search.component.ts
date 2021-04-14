@@ -340,6 +340,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 finemapping: false,
                 clinvar: false,
                 QTL: false,
+                es: '0',
                 ...concordanceModelExample
             };
         } else {
