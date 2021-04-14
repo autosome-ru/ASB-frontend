@@ -92,7 +92,7 @@ function compareTr(value: number, tr: number): boolean {
     return value >= tr
 }
 
-function compareThresholds(value1, tr1, value2, tr2): boolean {
+function compareThresholds(value1: number, tr1: number, value2: number, tr2: number): boolean {
     return compareTr(value1, tr1) && compareTr(value2, tr2)
 }
 
@@ -123,7 +123,8 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
             ...convertTfAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpModel[]).filter(s => compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
+    }) as TfSnpModel[]).filter(s =>
+        compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
         compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
     return result;
 }
