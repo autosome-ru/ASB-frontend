@@ -172,7 +172,8 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 searchQuery: {
                     ...state.searchQuery,
                     ...action.payload.params,
-                    fdr: action.payload.fdr
+                    fdr: action.payload.fdr,
+                    es: action.payload.es
                 }
             };
         }
@@ -185,7 +186,7 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
                 searchResults: {
                     total: action.payload.results.total,
                     results: action.payload.results.results.map(
-                        s => convertSnpSearchBackendModelToSnpSearchModel(s, action.payload.fdr)) as SnpSearchModel[]
+                        s => convertSnpSearchBackendModelToSnpSearchModel(s, action.payload.fdr, action.payload.es)) as SnpSearchModel[]
                 },
                 searchResultsLoading: false,
                 searchChangeLoading: false

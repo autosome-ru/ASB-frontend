@@ -69,13 +69,13 @@ export interface ClSnpBackendCutModel {
     };
     log_p_value_ref: number;
     log_p_value_alt: number;
+    es_ref: number;
+    es_alt: number;
     mean_bad: number;
     is_asb: boolean;
 }
 
 export interface ClSnpBackendModel extends ClSnpBackendCutModel {
-    es_ref: number;
-    es_alt: number;
     exp_snps: ExpSnpBackendModel[];
 }
 
@@ -89,12 +89,12 @@ export interface TfSnpBackendCutModel {
     };
     log_p_value_ref: number;
     log_p_value_alt: number;
+    es_ref: number;
+    es_alt: number;
     is_asb: boolean;
 }
 export interface TfSnpBackendModel extends TfSnpBackendCutModel {
     mean_bad: number;
-    es_ref: number;
-    es_alt: number;
     motif_log_p_ref: number;
     motif_log_p_alt: number;
     motif_log_2_fc: number;
@@ -109,11 +109,11 @@ interface AbstractSnpCutModel extends SnpGenPosModel {
     id: string;
     pValueRef: number;
     pValueAlt: number;
+    effectSizeRef: number;
+    effectSizeAlt: number;
 }
 interface AbstractSnpModel extends AbstractSnpCutModel {
     meanBad: number;
-    effectSizeRef: number;
-    effectSizeAlt: number;
     expSnps: ExpSnpModel[];
 }
 export interface TfSnpCutModel extends AbstractSnpCutModel {

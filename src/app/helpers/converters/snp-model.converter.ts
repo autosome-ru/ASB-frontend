@@ -80,6 +80,7 @@ function makeEsTr(es: string): number {
     if (!tr) {
         tr = 0
     }
+    console.log('TR', tr)
     return tr
 }
 
@@ -128,28 +129,31 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 }
 
 export function convertSnpSearchBackendModelToSnpSearchModel(
-    model: SnpSearchBackendModel, fdr?: string
+    model: SnpSearchBackendModel, fdr?: string, es?: string
 ): SnpSearchModel;
 export function convertSnpSearchBackendModelToSnpSearchModel(
-    model: Partial<SnpSearchBackendModel>, fdr?: string
+    model: Partial<SnpSearchBackendModel>, fdr?: string, es?: string
 ): Partial<SnpSearchModel>;
 export function convertSnpSearchBackendModelToSnpSearchModel(
-    model: Partial<SnpSearchBackendModel>, fdr?: string
+    model: Partial<SnpSearchBackendModel>, fdr?: string, es?: string
 ): Partial<SnpSearchModel> {
-    const tr = makeFdrTr(fdr)
+    const fdrTr = makeFdrTr(fdr)
+    const esTr = makeEsTr(es)
     const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
     result.cellLines = (model.cl_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as ClSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);
+    }) as ClSnpCutModel[]).filter(
+        s => compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
+            compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
     result.transFactors = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > tr || Math.abs(s.pValueAlt) > tr);
+    }) as TfSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > fdrTr || Math.abs(s.pValueAlt) > fdrTr);
     return result;
 }
 

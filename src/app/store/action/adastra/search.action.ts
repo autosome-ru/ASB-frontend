@@ -68,7 +68,7 @@ export class LoadSearchResultsAction implements Action {
 export class LoadSearchResultsWithPaginationAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsWithPagination;
 
-    constructor(public payload: {params: AsbServerSideModel, fdr: string}) {}
+    constructor(public payload: {params: AsbServerSideModel, fdr: string, es: string}) {}
 }
 export class LoadSearchResultsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchResultsSuccess;

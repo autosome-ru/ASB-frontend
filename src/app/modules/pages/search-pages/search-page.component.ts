@@ -206,7 +206,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
                 params: event,
-                fdr: this.fdr
+                fdr: this.fdr,
+                es: this.es
             })
         );
     }
