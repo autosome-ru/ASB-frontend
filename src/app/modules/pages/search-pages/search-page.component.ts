@@ -25,7 +25,6 @@ import {ReleaseModel} from "../../../models/releases.model";
 import {getTextByStepNameAdastra} from "../../../helpers/text-helpers/tour.adastra.helper";
 import {JoyrideService} from "ngx-joyride";
 import {SnpSearchModel} from "../../../models/data.model";
-import {FormBuilder, FormControl} from "@angular/forms";
 import {ReleasesService} from "../../../services/releases.service";
 
 @Component({
@@ -65,12 +64,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public tourSteps: string[];
     public selectedGene$: Observable<GeneModel>;
     public fdr: string;
-    public fdrControl: FormControl;
+    public es: string;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<AppState>,
                 private joyrideService: JoyrideService,
-                private formBuilder: FormBuilder,
                 private releaseService: ReleasesService,
                 private router: Router,
                 private seoService: SeoService) {}
@@ -81,16 +79,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         });
         this.subscriptions.add(
             this.route.queryParams.subscribe(
-                s => this.fdr = s['fdr'] ? s['fdr'] :
-                (releaseVersion >= 3 ? '0.1' : '0.05')
+                s => {
+                    this.fdr = s['fdr'] ? s['fdr'] : (releaseVersion >= 3 ? '0.1' : '0.05');
+                    this.es = s['es'] ? s['es'] : '0';
+                }
             )
         );
-        this.fdrControl = this.formBuilder.control(this.fdr)
-        this.fdrControl.valueChanges.subscribe(
-            s => {
-                this.fdr = s
-            }
-        )
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.isAdvancedSearch = !this.router.url.includes("search/simple");
         if (this.route.snapshot.queryParams.rs ||
@@ -250,7 +244,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     _navigateToSnp(id: string, alt: string): void {
         this.subscriptions.add(
             this.release$.subscribe((s) =>
-                this.router.navigate([`${s.url}/snps/${id}/${alt}`], {queryParams: {fdr: this.fdr}}).then(() => window.scrollTo(0, 0))
+                this.router.navigate([`${s.url}/snps/${id}/${alt}`], {queryParams: {fdr: this.fdr, es: this.es}}).then(() => window.scrollTo(0, 0))
             )
         );
     }

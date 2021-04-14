@@ -64,7 +64,7 @@
                              *ngFor="let snp of (searchSnpResults$ | async).results; let i = index">
                             <a
                                 [routerLink]="'/' + (release$ | async).url + '/snps/' + snp.rsId + '/' + snp.altBase"
-                                [queryParams]="{fdr: fdr}"
+                                [queryParams]="{fdr: fdr, es: es}"
                             >
                                 <mat-card
 
