@@ -76,7 +76,7 @@ function makeEsTr(es: string): number {
     if (!es) {
         es = '0'
     }
-    let tr: number = -Math.log10(Number(es))
+    let tr: number = Number(es)
     if (!tr) {
         tr = 0
     }
