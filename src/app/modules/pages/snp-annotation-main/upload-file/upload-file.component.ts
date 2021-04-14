@@ -9,6 +9,7 @@ import {Store} from '@ngrx/store';
 import {demo1, demo2, demo3} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {ToastrService} from "ngx-toastr";
+import {esOptions, fdrOptions} from "../../../../helpers/constants/constants";
 
 @Component({
   selector: 'astra-upload-file-component',
@@ -27,7 +28,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public file = null;
   public isHovered: boolean;
   public formGroup: FormGroup;
-
+  public fdrOptions: string[] = fdrOptions;
+  public esOptions: string[] = esOptions;
 
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
