@@ -211,6 +211,7 @@ export class SearchPageTableComponent implements OnInit {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
         const result = {};
         if (params.tf) {
+            console.log(s.transFactors, params.tf)
             params.tf.split(",").forEach(
                 p => {
                     result[convertTfNameToValue(p, "Alt")] =
