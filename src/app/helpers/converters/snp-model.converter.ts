@@ -153,7 +153,9 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
             ...convertTfAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpCutModel[]).filter(s => Math.abs(s.pValueRef) > fdrTr || Math.abs(s.pValueAlt) > fdrTr);
+    }) as TfSnpCutModel[]).filter(s =>
+        compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
+        compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
     return result;
 }
 
@@ -214,6 +216,8 @@ function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSn
     return {
         id: "" + s.cell_line.cl_id,
         name: s.cell_line.name,
+        effectSizeRef: s.es_ref,
+        effectSizeAlt: s.es_alt,
         pValueRef: checkAndInvert(s.log_p_value_ref),
         pValueAlt: checkAndInvert(s.log_p_value_alt),
     };
@@ -222,6 +226,8 @@ function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSn
     return {
         id: s.transcription_factor.uniprot_ac,
         name: s.transcription_factor.name,
+        effectSizeRef: s.es_ref,
+        effectSizeAlt: s.es_alt,
         pValueRef: checkAndInvert(s.log_p_value_ref),
         pValueAlt: checkAndInvert(s.log_p_value_alt),
     };
