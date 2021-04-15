@@ -41,7 +41,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     this.formGroup = this.formBuilder.group({
         textArea: '',
         fdr: '0.1',
-        es: '0.6'
+        es: '0'
     })
   }
 
