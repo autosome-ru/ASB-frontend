@@ -118,7 +118,11 @@
 </ng-template>
 
 <ng-template #emptyContentTemplate>
-    <h6>No data available</h6>
+    <div
+        style="display: flex;justify-content: center;"
+    >
+        <h6 style="margin-bottom: 0">No data available</h6>
+    </div>
 </ng-template>
 
 <ng-template #stepTemplate let-text="text">
