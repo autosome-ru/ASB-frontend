@@ -177,11 +177,7 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                         ...state.annotations[action.payload.ticket],
                         [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
                             loading: false,
-                            data: action.payload.snps.map(convertAnnotationSnpBackendToAnnotationSnpModel).filter(
-                                s => action.payload.isExpanded ?
-                                    Math.abs(s.fdrRef) >= action.payload.fdr || Math.abs(s.fdrAlt)  >= action.payload.fdr :
-                                    Math.abs(s.topFdr) >= action.payload.fdr
-                                    )
+                            data: action.payload.snps.map(convertAnnotationSnpBackendToAnnotationSnpModel)
                         }
                     }
                 }
@@ -201,8 +197,6 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                 }
             };
         }
-
-
         default: {
             return state;
         }

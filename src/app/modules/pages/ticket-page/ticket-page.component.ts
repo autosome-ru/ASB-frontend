@@ -106,7 +106,6 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                                 this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
                                                     {tfOrCl: this.selectedTab,
                                                         ticket: this.ticket,
-                                                        fdr: this.fdr,
                                                         isExpanded: this.isExpanded}
                                                 ));
                                             }
@@ -170,7 +169,6 @@ export class TicketPageComponent implements OnInit, OnDestroy {
             {
                 ticket: this.ticket,
                 tfOrCl: this.selectedTab,
-                fdr: this.fdr,
                 isExpanded: this.isExpanded
             }));
     }
