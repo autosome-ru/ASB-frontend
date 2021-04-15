@@ -52,8 +52,4 @@ export class HelpPageComponent implements OnInit, AfterViewInit {
     getId(value: string) {
         return value.replace(" ", "-");
     }
-
-    getApiUrl(): string {
-        return `https://adastra.autosome.ru/api/`
-    }
 }

@@ -100,7 +100,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 ]
 
             if (releaseVersion >= 3) {
-                this.tourSteps.push('fdr-simple')
+                this.tourSteps.push('fdr-simple', 'effect-size')
             }
             this.tourSteps.push(
                 'search-tf-list',
@@ -125,7 +125,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             }
             this.tourSteps.push('search-pos')
             if (releaseVersion >= 3) {
-                this.tourSteps.push('fdr-simple')
+                this.tourSteps.push('fdr-simple', 'effect-size')
             }
             this.tourSteps.push(
                 'search-example',

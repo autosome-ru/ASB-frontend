@@ -313,10 +313,12 @@
             <div *ngIf="majorVersion >= 3"
                  style="display: inline-flex"
                  [ngClass]="isAdvanced ? 'ml-sm-auto': ''"
-                 joyrideStep="fdr-simple"
-                 [stepContent]="stepTemplate"
-                 [stepContentParams]="getTextByStepName('fdr-simple')"
             >
+                <div
+                    joyrideStep="fdr-simple"
+                    [stepContent]="stepTemplate"
+                    [stepContentParams]="getTextByStepName('fdr-simple')"
+                >
                 <mat-form-field
                     style="max-width: 80px; margin-right: 5px"
                 >
@@ -330,6 +332,12 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                </div>
+                <div
+                    joyrideStep="effect-size"
+                    [stepContent]="esTemplate"
+
+                >
                 <mat-form-field
                     style="max-width: 80px"
                     [ngStyle]="isAdvanced ? {} : {'margin-right': '15px'}"
@@ -344,6 +352,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+                </div>
             </div>
         </ng-container>
 <!--        <div *ngIf="!isAdvanced"-->
@@ -676,5 +685,17 @@
     >
         HOCOMOCO
     </a>
+    </div>
+</ng-template>
+<ng-template #esTemplate>
+    <div
+        style="text-align: center; white-space: pre-line; padding: 10px 20px 10px 10px"
+    >
+        ASB effect size threshold, log2<br>
+        see <a
+        rel="noopener noreferrer" target="_blank"
+        href="/help#ASB_es"
+    >
+        Help>Glossary</a> for details
     </div>
 </ng-template>

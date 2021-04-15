@@ -59,10 +59,10 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
         this.fragment = fragment
         if (this.fragment) {
             if (!this.glossary.expanded) {
-                this.subscription = this.glossary._bodyAnimationDone.subscribe(
+                this.subscription = this.glossary.afterExpand.subscribe(
                     () => {
-                        this.subscription.unsubscribe();
                         this.navigateToFragment(fragment);
+                        this.subscription.unsubscribe();
                         this.subscription = new Subscription();
                     }
                 )

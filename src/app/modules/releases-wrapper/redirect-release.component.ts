@@ -16,6 +16,8 @@ export class RedirectReleaseComponent implements OnInit {
         if (!path.startsWith("/")) {
             path = "/" + path;
         }
-        this.router.navigateByUrl(`/${recentRelease.url}${path}`).then(() => null);
+        this.router.navigate([`/${recentRelease.url}${path}`], {
+            queryParamsHandling: "preserve", preserveFragment: true
+        }).then(() => null);
     }
 }
