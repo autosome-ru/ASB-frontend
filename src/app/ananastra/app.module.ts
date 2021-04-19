@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -40,7 +39,10 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
         BrowserAnimationsModule,
         StoreModule.forRoot(annotationStoreReducer),
         EffectsModule.forRoot(annotationStoreEffects),
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot({
+            preventDuplicates: true,
+            includeTitleDuplicates: true
+        }),
         JoyrideModule.forRoot(),
         AppRoutingModule,
         AsbAppIconsModule,

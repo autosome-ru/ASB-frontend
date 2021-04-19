@@ -45,7 +45,10 @@ import {CheckForUpdateService} from "../services/update.service";
         BrowserAnimationsModule,
         StoreModule.forRoot(asbAppReducer),
         EffectsModule.forRoot(asbAppEffects),
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot({
+            preventDuplicates: true,
+            includeTitleDuplicates: true
+        }),
         JoyrideModule.forRoot(),
         environment.production ? [] : StoreDevtoolsModule.instrument(),
         AsbRoutingModule,
