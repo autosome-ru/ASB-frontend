@@ -13,6 +13,7 @@ import * as fromSelectors from "src/app/store/selector/adastra";
 import {ReleaseModel} from "../../../../models/releases.model";
 import {Observable} from "rxjs";
 import {releasesList} from "../../../../helpers/constants/releases";
+import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
 
 
 @Component({
@@ -53,5 +54,9 @@ export class AsbHeaderComponent implements OnInit {
 
     selectRelease() {
         this.releaseOpened = true
+    }
+
+    getTextByStepName(step: string) {
+        return getTextByStepNameAdastra(step);
     }
 }

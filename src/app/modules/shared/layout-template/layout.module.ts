@@ -9,6 +9,8 @@ import {MatListModule} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {JoyrideModule} from "ngx-joyride";
+import {AsbTourModule} from "../tour-template/tour-module";
 
 
 @NgModule({
@@ -20,6 +22,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
+        JoyrideModule,
+        AsbTourModule,
 
     ],
     declarations: [

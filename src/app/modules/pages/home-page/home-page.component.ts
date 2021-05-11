@@ -99,7 +99,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         if (releaseVersion >= 3) {
             this.tourSteps.push('fdr-simple', 'effect-size')
         }
-        this.tourSteps.push("search-example")
+        this.tourSteps.push("search-example", 'switch-release')
 
     }
 

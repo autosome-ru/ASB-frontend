@@ -65,6 +65,8 @@ function getText(step: string, component?: string): string {
                 " at the \"Browse\" page.";
         case "search-download":
             return "Download search results in TSV format.";
+        case "switch-release":
+            return 'Switch ADASTRA release';
         case "search-view":
             return "Allows switching between card\n and table view of search results.";
         case "search-associations":
