@@ -324,7 +324,8 @@
                     </dl>
                 </div>
             </mat-expansion-panel>
-            <mat-expansion-panel *ngIf="isAdastra" class="mat-elevation-z0">
+            <ng-container *ngIf="isAdastra">
+            <mat-expansion-panel  class="mat-elevation-z0">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h4 style="margin-bottom: 0">Software</h4>
@@ -368,6 +369,114 @@
                     </div>
                 </section>
             </mat-expansion-panel>
+            <mat-divider></mat-divider>
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h4 style="margin-bottom: 0">External resources</h4>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <section id="used-soft">
+                    <h5>Resources and databases used to annotate ADASTRA ASBs</h5>
+                    <div class="px-3">
+                        <ul class="list-circle">
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://www.ncbi.nlm.nih.gov/snp/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        dbSNP
+                                    </a>
+                                </b> build 151
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://www.gencodegenes.org/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GENCODE</a>
+                                </b> v35
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://hocomoco11.autosome.ru/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        HOCOMOCO</a>
+                                </b> v11
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://www.gtexportal.org/home/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GTEx</a>
+                                </b> release V8
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://www.ncbi.nlm.nih.gov/clinvar/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        ClinVar</a>
+                                </b> release 9/05/2019
+                            </li>
+
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://www.ebi.ac.uk/gwas/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        NHGRI-EBI GWAS</a>
+                                </b> release 8/27/2019 with EFO mappings
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://phewascatalog.org/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        PheWAS catalog</a>
+                                </b> release V8
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="https://grasp.nhlbi.nih.gov/Overview.aspx"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        GRASP</a>
+                                </b> build 2.0.0.0
+                            </li>
+                            <li>
+                                <b>
+                                    <a
+                                        href="http://pubs.broadinstitute.org/pubs/finemapping/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        BROAD fine-mapping</a>
+                                </b>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </mat-expansion-panel>
+            </ng-container>
         </mat-accordion>
     </div>
 </div>
