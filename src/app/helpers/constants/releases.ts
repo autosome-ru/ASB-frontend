@@ -2,6 +2,22 @@ import {ReleaseModel} from "../../models/releases.model";
 // All available releases. Don't forget to change app-routing module
 export const releasesList: ReleaseModel[] = [
     {
+        name: "Zanthar",
+        url: "zanthar",
+        majorVersion: 4,
+        date: "2021.09.01",
+        recent: true,
+        version: "v4.0.0",
+        size: '727.5MB',
+        api: "v4",
+        releaseLink: 'https://disk.yandex.ru/d/YKOdzHeHFVa0Hw?w=1',
+        gtrdExpsPath: "ADASTRA_GTRD_exps.zanthar.tsv",
+        badMapsPath: "BADmaps.zanthar.zip",
+        ucscFileName: 'ADASTRA_SNPs.zanthar.bb',
+        notes: "New 'permissive' strategy for BAD calling with simplified 'integer' set of allowed BADs resulting in nearly 2x better ASB calling sensitivity",
+        notesPath: 'readme.zanthar.txt',
+    },
+    {
         name: "Susan",
         url: "susan",
         majorVersion: 3,

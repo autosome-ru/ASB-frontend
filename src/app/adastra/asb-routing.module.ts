@@ -29,6 +29,11 @@ const routes: Routes = [
         component: RecentComponent,
         loadChildren: () => import("src/app/modules/releases/susan/susan.module").then(mod => mod.SusanModule)
     },
+    {
+        path: "zanthar",
+        component: RecentComponent,
+        loadChildren: () => import("src/app/modules/releases/zanthar/zanthar.module").then(mod => mod.ZantharModule)
+    },
     // {
     //     path: "beta",
     //     component: DeprecatedComponent,
@@ -38,7 +43,7 @@ const routes: Routes = [
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "susan",
+        redirectTo: "zanthar",
     },
 
     {
