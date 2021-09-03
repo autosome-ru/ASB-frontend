@@ -10,7 +10,7 @@ export const releasesList: ReleaseModel[] = [
         version: "v4.0.0",
         size: '727.5MB',
         api: "v4",
-        releaseLink: 'https://disk.yandex.ru/d/YKOdzHeHFVa0Hw?w=1',
+        releaseLink: 'https://disk.yandex.ru/d/Uwc-uw-sLkfk9g',
         gtrdExpsPath: "ADASTRA_GTRD_exps.zanthar.tsv",
         badMapsPath: "BADmaps.zanthar.zip",
         ucscFileName: 'ADASTRA_SNPs.zanthar.bb',
