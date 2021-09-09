@@ -73,14 +73,14 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private seoService: SeoService) {}
     ngOnInit() {
-        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+        const chosenRelease = this.releaseService.getReleaseFromFullPath()
         this.seoService.updateSeoInfo({
             title: this.route.snapshot.data.title(this.route.snapshot.queryParams.tf)
         });
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => {
-                    this.fdr = s['fdr'] ? s['fdr'] : (releaseVersion >= 3 ? '0.1' : '0.05');
+                    this.fdr = s['fdr'] ? s['fdr'] : chosenRelease.defaultFdrThreshold;
                     this.es = s['es'] ? s['es'] : '0';
                 }
             )
@@ -99,7 +99,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 'search-pos',
                 ]
 
-            if (releaseVersion >= 3) {
+            if (chosenRelease.majorVersion >= 3) {
                 this.tourSteps.push('fdr-simple', 'effect-size')
             }
             this.tourSteps.push(
@@ -119,12 +119,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 'search-rs',
                 'search-gene',
                 ]
-            const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
-            if (releaseVersion >= 3) {
+            if (chosenRelease.majorVersion >= 3) {
                 this.tourSteps.push('search-eqtl')
             }
             this.tourSteps.push('search-pos')
-            if (releaseVersion >= 3) {
+            if (chosenRelease.majorVersion >= 3) {
                 this.tourSteps.push('fdr-simple', 'effect-size')
             }
             this.tourSteps.push(

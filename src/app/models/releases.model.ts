@@ -13,4 +13,5 @@ export interface ReleaseModel {
     ucscFileName: string;
     notes?: string;
     notesPath: string;
+    defaultFdrThreshold: string;
 }

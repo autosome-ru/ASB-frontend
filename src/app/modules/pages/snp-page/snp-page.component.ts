@@ -100,7 +100,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
-        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+        const chosenRelease = this.releaseService.getReleaseFromFullPath()
         this.subscriptions.add(
             this.release$.subscribe(
                 s => this.release = s
@@ -109,8 +109,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => {
-                    this.fdr = s['fdr'] ? s['fdr'] :
-                        (releaseVersion >= 3 ? '0.1' : '0.05');
+                    this.fdr = s['fdr'] ? s['fdr'] : chosenRelease.defaultFdrThreshold;
                     this.es = s['es'] ? s['es'] : '0'
                     this.subscriptions.add(
                         this.route.paramMap.subscribe(

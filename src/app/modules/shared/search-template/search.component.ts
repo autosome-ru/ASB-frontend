@@ -92,8 +92,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription = new Subscription();
 
-
-    listOfChrs: string[];
     readonly phenToView: { [p: string]: string } = phenotypesToView;
     readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
     readonly concordances: string[] = Object.keys(concordanceModelExample);
@@ -101,7 +99,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     public searchForm: FormGroup;
     public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
     public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
-    public downloadButtonColor: "primary" | null = null;
     public currentRelease$: Observable<ReleaseModel>;
     public searchGeneOptions$: Observable<GeneModel[]>;
     public searchGeneOptionsLoading$: Observable<boolean>;
@@ -132,9 +129,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
-        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion;
-        this.defaultParams = releaseVersion >= 3 ?
-            {fdr: '0.1', es: '0'} : {fdr: '0.05', es: '0'};
+        const chosenRelease = this.releaseService.getReleaseFromFullPath();
+        this.defaultParams = {fdr: chosenRelease.defaultFdrThreshold, es: '0'};
         // Create form and patch it from url params
         this.searchForm = this.formBuilder.group({
             isAdvanced: this.isAdvanced,

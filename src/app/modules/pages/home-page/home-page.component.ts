@@ -107,8 +107,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     }
 
-    constructTooltipText(info: TotalInfoModel) {
-        return `${info.asbsCount005} ASBs passing 5% FDR at ${info.snpsCount005} SNPs
+    constructTooltipText(info: TotalInfoModel, version: number) {
+        if (version === 3) {
+            return `${info.asbsCount005} ASBs passing 5% FDR at ${info.snpsCount005} SNPs
         ${info.asbsCount} ASBs passing 25% FDR at ${info.snpsCount} SNPs`
+        } else {
+            return `${info.asbsCount010} ASBs passing 10% FDR at ${info.snpsCount010} SNPs
+        ${info.asbsCount} ASBs passing 25% FDR at ${info.snpsCount} SNPs`
+        }
+
     }
 }
