@@ -61,6 +61,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public clColumnModel: AsbTableColumnModel<ClInfoModel>;
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfInfoModel> = [
         "name",
+        "geneName",
         "uniprotAc",
         "experimentsCount",
         "aggregatedSnpsCount",
@@ -122,10 +123,9 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         );
 
         this.tfColumnModel = {
-            uniprotAc: {view: "Uniprot AC", columnTemplate: this.uniprotViewTemplate},
+            uniprotAc: {view: "UniProt AC", columnTemplate: this.uniprotViewTemplate},
             name: {view: "Name"},
             aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
-
             experimentsCount: {view: "Experiments count", isDesc: true},
             aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true}
         };
@@ -136,16 +136,20 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true}
         };
-        if (this.releaseService.getReleaseFromFullPath().majorVersion >= 3) {
-
+        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+        if (releaseVersion >= 3) {
             this.clDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005')
             this.tfDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005')
+            this.tfColumnModel.geneName = {view: 'Gene symbol'}
             this.tfColumnModel.aggregatedSnpsCount005 = {view: 'ASBs at 5% FDR', isDesc: true}
             this.tfColumnModel.aggregatedSnpsCount010 = {view: 'ASBs at 10% FDR', isDesc: true}
             this.clColumnModel.aggregatedSnpsCount005 = {view: 'ASBs at 5% FDR', isDesc: true}
             this.clColumnModel.aggregatedSnpsCount010 = {view: 'ASBs at 10% FDR', isDesc: true}
             this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
             this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
+        }
+        if (releaseVersion <= 3) {
+            this.tfDisplayedColumns = this.tfDisplayedColumns.filter(v => v !== 'geneName')
         }
 
 

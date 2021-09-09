@@ -45,6 +45,7 @@ export function convertTfInfoBackendModelToTfInfoModel(model: TfInfoBackendModel
         aggregatedSnpsCount: model.aggregated_snps_count,
         uniprotAc: model.uniprot_ac,
         name: model.name,
+        geneName: model.gene_name,
         aggregatedSnpsCount005: model.aggregated_snps_count005,
         aggregatedSnpsCount010: model.aggregated_snps_count010
     };
