@@ -32,7 +32,8 @@ export class UrlService {
                 return `${currentApi}/search/${isEqtl ?
                     'eqtl_gene_name' : 'gene_name'}/hint`
             case "ananastra":
-                return `v3/ananastra`
+                //FIXME
+                return `api/v3/ananastra`
             default:
                 return ""
         }
