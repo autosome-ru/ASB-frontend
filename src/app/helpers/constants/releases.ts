@@ -55,3 +55,4 @@ export const releasesList: ReleaseModel[] = [
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0];
+export const ananastraRelease: ReleaseModel = releasesList.filter(s => s.name === 'Susan')[0]

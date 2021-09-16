@@ -1,5 +1,5 @@
 import {Inject, Injectable, PLATFORM_ID} from "@angular/core";
-import {recentRelease} from "../helpers/constants/releases";
+import {ananastraRelease, recentRelease} from "../helpers/constants/releases";
 import {ReleaseModel} from "../models/releases.model";
 import {TfOrCl} from "../models/data.model";
 import {environment} from "../../environments/environment";
@@ -18,6 +18,7 @@ export class UrlService {
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
         'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl, isEqtl?: boolean): string {
+        this.currentRelease = ananastraRelease
         const currentApi: string = `${this.hostName}api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
@@ -33,7 +34,8 @@ export class UrlService {
                     'eqtl_gene_name' : 'gene_name'}/hint`
             case "ananastra":
                 //FIXME
-                return `api/v3/ananastra`
+                this.currentRelease = ananastraRelease
+                return `${this.hostName}api/${this.currentRelease.api}/ananastra`
             default:
                 return ""
         }

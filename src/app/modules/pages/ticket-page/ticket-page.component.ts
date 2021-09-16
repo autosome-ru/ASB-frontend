@@ -11,7 +11,7 @@ import {DownloadService} from 'src/app/services/download.service';
 import {FileSaverService} from 'ngx-filesaver';
 import {AnnotationStoreState} from "../../../store/reducer/ananastra";
 import {ReleaseModel} from "../../../models/releases.model";
-import {recentRelease} from "../../../helpers/constants/releases";
+import {ananastraRelease} from "../../../helpers/constants/releases";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {SeoService} from "../../../services/seo.servise";
@@ -71,7 +71,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.recentRelease = recentRelease;
+        this.recentRelease = ananastraRelease;
         this.subscriptions.add(
             this.route.paramMap.subscribe(
                 s => {
@@ -123,7 +123,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                 break;
                              case 'Created':
                                  this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(
-                                     {ticket: this.ticket, fdr: '0.1', es: '0.6'}));
+                                     {ticket: this.ticket, fdr: '0.1', es: '0'}));
                                  this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
                                      this.ticket));
                                 break;

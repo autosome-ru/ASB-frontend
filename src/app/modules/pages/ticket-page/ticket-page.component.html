@@ -53,12 +53,6 @@
             style="overflow: auto"
             *ngIf="(fileStatistics$ | async) as fileStatistics">
             <ng-container *ngIf="!fileStatistics.loading && fileStatistics.data as data; else loadingTemplate">
-
-                <h5 class="help-message">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
-                    {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
-                <astra-ticket-stats
-                    [chartData]="data"
-                ></astra-ticket-stats>
                 <mat-tab-group
                     #tabGroup
                     mat-align-tabs="center"
@@ -67,6 +61,17 @@
                     (selectedIndexChange)="tabIndexChanged($event)"
                     animationDuration="0ms"
                 >
+                    <mat-tab label="Summary">
+                        <ng-template matTabContent>
+                            <div class="mx-1 pt-1">
+                                <h5 class="help-message">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
+                                    {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
+                                <astra-ticket-stats
+                                    [chartData]="data"
+                                ></astra-ticket-stats>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
                     <mat-tab label="Transcription factors">
                         <ng-template matTabContent>
                             <div class="mx-1 pt-1">

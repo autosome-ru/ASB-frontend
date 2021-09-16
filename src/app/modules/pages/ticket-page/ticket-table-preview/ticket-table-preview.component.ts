@@ -26,7 +26,8 @@ import {compareData} from "../../../../helpers/helper/check-functions.helper";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {Subscription} from "rxjs";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
-import {recentRelease} from "../../../../helpers/constants/releases";
+import {ReleaseModel} from "../../../../models/releases.model";
+import {ananastraRelease} from "../../../../helpers/constants/releases";
 
 
 @Component({
@@ -103,7 +104,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     private subscriptions = new Subscription()
     public tableOpened: boolean;
-    public release = recentRelease;
+    public release: ReleaseModel = ananastraRelease;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
     sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
         (data, field) => {
