@@ -30,9 +30,10 @@ export class TicketStatsComponent implements OnInit {
     public stats: StatsDataModel;
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>;
     public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [
-        'name',
-        'odds'
-    ];
+        "name",
+        "asbsRs",
+        "odds",
+        "pValue"]
     public chromosomalData: AsbStatsDataModel[] = []
 
     @Input()
@@ -104,10 +105,10 @@ export class TicketStatsComponent implements OnInit {
                 view: 'P-value',
                 columnTemplate: this.fdrViewTemplate
             },
-            fdr: {
-                view: 'FDR',
-                columnTemplate: this.fdrViewTemplate
-            }
+            // fdr: {
+            //     view: 'FDR',
+            //     columnTemplate: this.fdrViewTemplate
+            // }
         }
     }
 
