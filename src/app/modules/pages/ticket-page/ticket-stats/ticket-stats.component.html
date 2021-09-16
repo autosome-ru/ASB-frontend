@@ -76,10 +76,11 @@
     </ul>
   </div>
     <div style="width: 100%">
-
-        <span class="additional-selection">Bla-bla pValue <b><span
+        <span> Enrichment by chromosome:
+        <span class="additional-selection">(P-value <b><span
             [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
-        ></span></b></span>
+        ></span></b>)</span>
+            </span>
         <asb-table
             [columnModel]="columnModel"
             [displayedColumns]="displayedColumns"
