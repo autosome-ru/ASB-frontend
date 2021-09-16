@@ -225,3 +225,7 @@ export interface ClInfoModel {
     experimentsCount: number;
     aggregatedSnpsCount005: number;
 }
+
+export interface ChromosomalTestModel {
+
+}

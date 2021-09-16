@@ -18,7 +18,11 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         const cookiesConsent = localStorage.getItem('cookieConsent')
         if (!cookiesConsent || cookiesConsent !== 'true') {
-            this.dialog.open(this.cookiesDialogTemplate)
+            this.dialog.open(this.cookiesDialogTemplate, {
+                hasBackdrop: false,
+                maxWidth: 430,
+                position: {bottom: '24px', left: '24px'}
+                })
         }
     }
 

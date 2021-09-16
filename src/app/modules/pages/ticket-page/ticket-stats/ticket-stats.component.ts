@@ -5,6 +5,8 @@ import {writeScientificNum} from '../../../../functions/scientific.helper';
 import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
+import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
+import {ChromosomalTestModel} from "../../../../models/data.model";
 
 @Component({
     selector: 'astra-ticket-stats',
@@ -16,6 +18,8 @@ import {stringOrNumberConverter} from "../../../../helpers/helper/check-function
 export class TicketStatsComponent implements OnInit {
     public chartDatasets: Array<any> = [];
     public stats: StatsDataModel;
+    public columnModel: AsbTableColumnModel<ChromosomalTestModel>;
+    public displayedColumns: AsbTableDisplayedColumns<ChromosomalTestModel>;
 
     @Input()
     set chartData(value: AnnotationDataModel) {
@@ -68,6 +72,8 @@ export class TicketStatsComponent implements OnInit {
             this.cd.detectChanges();
         }).catch(() => this.toastrService.error(
             "Can't load Chart.js library, check your internet connection", 'Error'));
+
+        this.columnModel = {}
     }
 
 

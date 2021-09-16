@@ -75,6 +75,15 @@
       </li>
     </ul>
   </div>
+    <div>
+        <asb-table
+            [columnModel]="columnModel"
+            [displayedColumns]="displayedColumns"
+            [data]="chromosomalData"
+            [pageSize]="10"
+            [paginatorOptions]="[10, 20, 23]"
+        ></asb-table>
+    </div>
 </div>
 
 <ng-template #loadingTemplate>
