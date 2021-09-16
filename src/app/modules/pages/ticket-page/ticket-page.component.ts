@@ -38,7 +38,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     public isExpanded = true;
     public recentRelease: ReleaseModel;
-    public selectedTab: TfOrCl = 'tf';
+    public selectedTab: tabEnum;
     public timeoutId: number = null;
     public selectedName: {
         tfSum: string, tf: string, cl:  string, clSum: string,
@@ -102,12 +102,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                         s => {
                                             if (s && !s.loading && s.data) {
                                                 this.fdr = -Math.log10(s.data.metaInfo.fdr)
-                                                this.selectedTab = s.data.metaInfo.tfAsbList.length == 0 && s.data.metaInfo.clAsbList.length > 0 ? 'cl' : 'tf';
-                                                this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
-                                                    {tfOrCl: this.selectedTab,
-                                                        ticket: this.ticket,
-                                                        isExpanded: this.isExpanded}
-                                                ));
+                                                this.selectedTab = tabEnum.sum
                                             }
                                         }
                                     )
@@ -155,7 +150,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     tabIndexChanged(index: number): void {
-        this.selectedTab = index === 0 ? 'tf' : 'cl';
+        this.selectedTab = index;
         this.initTableLoad();
     }
 
@@ -165,12 +160,14 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     initTableLoad(): void {
-        this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
-            {
-                ticket: this.ticket,
-                tfOrCl: this.selectedTab,
-                isExpanded: this.isExpanded
-            }));
+        if (this.selectedTab !== tabEnum.sum) {
+            this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
+                {
+                    ticket: this.ticket,
+                    tfOrCl: this.selectedTab === tabEnum.cl ? 'cl' : 'tf',
+                    isExpanded: this.isExpanded
+                }));
+        }
     }
 
     downloadTable(tfOrCl: TfOrCl): void {
@@ -196,4 +193,10 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     getTextByStepName(str: string) {
         return getTextByStepNameAnanas(str)
     }
+}
+
+enum tabEnum {
+    'sum' = 0,
+    'tf' = 1,
+    'cl' = 2
 }
