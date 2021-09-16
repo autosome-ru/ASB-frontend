@@ -54,7 +54,7 @@ export class TicketTableTmpComponent implements OnInit {
                 columnTemplate: this.fdrViewTemplate
             }
         }
-        this.displayedColumns = ["name", "asbsRs", "candidatesRs", "odds", "pValue", "fdr"]
+        this.displayedColumns = ["name", "asbsRs", "odds", "pValue", "fdr"]
 
     }
 

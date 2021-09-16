@@ -32,6 +32,7 @@ export class TicketStatsComponent implements OnInit {
     public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [
         "name",
         "asbsRs",
+        "candidatesRs",
         "odds",
         "pValue"]
 
