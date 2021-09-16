@@ -76,10 +76,12 @@
     </ul>
   </div>
     <div style="width: 100%">
+
+        <h5 class="help-message">Bla-bla pValue {{stats.chrPvalue}}</h5>
         <asb-table
             [columnModel]="columnModel"
             [displayedColumns]="displayedColumns"
-            [data]="chromosomalData"
+            [data]="stats.chrAsbData"
             [initialSorting]="{active: 'pValue', direction: 'asc'}"
         ></asb-table>
     </div>

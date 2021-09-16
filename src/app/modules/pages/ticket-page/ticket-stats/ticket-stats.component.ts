@@ -34,13 +34,11 @@ export class TicketStatsComponent implements OnInit {
         "asbsRs",
         "odds",
         "pValue"]
-    public chromosomalData: AsbStatsDataModel[] = []
 
     @Input()
     set chartData(value: AnnotationDataModel) {
         if (value && value.status === 'Processed') {
             this.stats = value.metaInfo;
-            this.chromosomalData = value.metaInfo.chrAsbData
             this.chartDatasets = [
                 {
                     data:
