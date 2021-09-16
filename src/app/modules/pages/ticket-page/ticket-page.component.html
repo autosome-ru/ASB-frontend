@@ -18,7 +18,7 @@
             [doneTemplate]="doneTemplate"
         >{{ticket}}</b>)
                 <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
-              {{(pingData$ | async)?.dateCreated | date: 'medium'}}</span>
+              {{(pingData$ | async)?.dateCreated | date: 'MMM d, y, h:mm a'}}</span>
             <span style="white-space: pre-wrap"
                   class="d-none d-sm-inline"
                   *ngIf="!(ticketProcessing$ | async)">
