@@ -45,12 +45,15 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         lastStatusUpdateAt: stats.last_status_update_at,
         tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
         tfOdds: stringToNum(stats.tf_odds_rs),
+        chrPvalue: stringToNum(stats.chr_log10_p_value_rs),
         expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
         clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
         tfAsbData: stats.tf_asb_data ? stats.tf_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
         clAsbData: stats.cl_asb_data ? stats.cl_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
+        chrAsbData: stats.chr_asb_data ? stats.chr_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
+
         tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
         clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
     };

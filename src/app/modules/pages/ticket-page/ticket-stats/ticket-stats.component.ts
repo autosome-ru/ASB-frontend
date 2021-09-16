@@ -1,12 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {ScriptService} from 'src/app/services/script.service';
-import {AnnotationDataModel, StatsDataModel} from 'src/app/models/annotation.model';
+import {AnnotationDataModel, AsbStatsDataModel, StatsDataModel} from 'src/app/models/annotation.model';
 import {writeScientificNum} from '../../../../functions/scientific.helper';
 import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
-import {ChromosomalTestModel} from "../../../../models/data.model";
 
 @Component({
     selector: 'astra-ticket-stats',
@@ -18,14 +17,15 @@ import {ChromosomalTestModel} from "../../../../models/data.model";
 export class TicketStatsComponent implements OnInit {
     public chartDatasets: Array<any> = [];
     public stats: StatsDataModel;
-    public columnModel: AsbTableColumnModel<ChromosomalTestModel>;
-    public displayedColumns: AsbTableDisplayedColumns<ChromosomalTestModel>;
-    public chromosomalData: ChromosomalTestModel[] = []
+    public columnModel: AsbTableColumnModel<AsbStatsDataModel>;
+    public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
+    public chromosomalData: AsbStatsDataModel[] = []
 
     @Input()
     set chartData(value: AnnotationDataModel) {
         if (value && value.status === 'Processed') {
             this.stats = value.metaInfo;
+            this.chromosomalData = value.metaInfo.chrAsbData
             this.chartDatasets = [
                 {
                     data:
