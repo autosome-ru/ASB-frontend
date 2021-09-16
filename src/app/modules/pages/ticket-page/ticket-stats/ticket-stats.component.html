@@ -90,8 +90,8 @@
                 <b>Aggregated P-value:&nbsp;<span
                 [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
                 ></span></b>&nbsp;
-                <span class="additional-selection">(TF-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrClPvalue, 2)"></span></b>,
-                    cell type-ASBs <b><span [innerHTML]="writeScientificNum(stats.chrTfPvalue, 2)"></span></b>)</span>
+                <span class="additional-selection">(SNPs with TF-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrClPvalue, 2)"></span></b>,
+                    SNPs with cell type-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrTfPvalue, 2)"></span></b>)</span>
             </span>
             </div>
             <asb-table
