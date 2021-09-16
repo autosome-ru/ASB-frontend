@@ -18,7 +18,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/
 @Component({
     selector: 'astra-ticket-stats',
     templateUrl: './ticket-stats.component.html',
-    styleUrls: ['./ticket-stats.component.less'],
+    styleUrls: ['./ticket-stats.component.less', '../ticket-table-enrichments/ticket-table-tmp.component.html'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
