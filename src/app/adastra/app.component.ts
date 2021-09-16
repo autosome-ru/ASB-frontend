@@ -1,4 +1,5 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
     HostBinding,
@@ -21,6 +22,7 @@ import {ToastrService} from "ngx-toastr";
 import {CheckForUpdateService} from "../services/update.service";
 import {updateCheckInterval} from "../helpers/constants/constants";
 import {MatDialog} from "@angular/material/dialog";
+import {Overlay} from "@angular/cdk/overlay";
 
 @Component({
     selector: "app-root",
@@ -28,7 +30,7 @@ import {MatDialog} from "@angular/material/dialog";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     @HostBinding("class.asb-app")
     private cssClass = true;
     @ViewChild('cookiesDialogTemplate')
@@ -42,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 private store: Store<AppState>,
                 private updates: SwUpdate,
                 private dialog: MatDialog,
+                private overlay: Overlay,
                 private checkForUpdatesService: CheckForUpdateService,
                 private toastrService: ToastrService,
                 private releasesService: ReleasesService,
@@ -51,14 +54,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.isBrowser) {
-            const cookiesConsent = localStorage.getItem('cookieConsent')
-            if (!cookiesConsent || cookiesConsent !== 'true') {
-                this.dialog.open(this.cookiesDialogTemplate, {
-                    hasBackdrop: false,
-                    maxWidth: 430,
-                    position: {bottom: '24px', left: '24px'}
-                })
-            }
             this.subscriptions.add(
                 this.updates.available.subscribe(() =>
                     this.toastrService.info(
@@ -73,6 +68,23 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
             })
         );
+    }
+    ngAfterViewInit() {
+        const cookiesConsent = localStorage.getItem('cookieConsent')
+        if (!cookiesConsent || cookiesConsent !== 'true') {
+            this.dialog.open(this.cookiesDialogTemplate, {
+                hasBackdrop: false,
+                closeOnNavigation: false,
+                disableClose: true,
+                scrollStrategy: this.overlay.scrollStrategies.noop(),
+                position: {
+                    bottom: '16px',
+                    left: '16px'
+                },
+                maxWidth: 430,
+
+            })
+        }
     }
 
     ngOnDestroy() {

@@ -20,6 +20,7 @@ export class TicketStatsComponent implements OnInit {
     public stats: StatsDataModel;
     public columnModel: AsbTableColumnModel<ChromosomalTestModel>;
     public displayedColumns: AsbTableDisplayedColumns<ChromosomalTestModel>;
+    public chromosomalData: ChromosomalTestModel[] = []
 
     @Input()
     set chartData(value: AnnotationDataModel) {
