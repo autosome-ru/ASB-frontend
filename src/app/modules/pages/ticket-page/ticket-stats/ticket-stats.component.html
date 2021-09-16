@@ -85,12 +85,12 @@
             <mat-expansion-panel-header [ngClass]="panel.expanded ? '' : 'header'">
                 <mat-panel-title><b>ASB enrichment at individual chromosomes</b></mat-panel-title>
             </mat-expansion-panel-header>
-            <span>
+            <span class="pl-3">
                 <b>Aggregated P-value:<span
                 [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
                 ></span></b>&nbsp;
-                <span class="additional-selection">(TF-ASBs: <b>{{writeScientificNum(stats.chrClPvalue, 2)}}</b>,
-                    cell type-ASBs <b>{{writeScientificNum(stats.chrTfPvalue, 2)}}</b>)</span>
+                <span class="additional-selection">(TF-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrClPvalue, 2)"></span></b>,
+                    cell type-ASBs <b><span [innerHTML]="writeScientificNum(stats.chrTfPvalue, 2)"></span></b>)</span>
             </span>
             <asb-table
                 [columnModel]="columnModel"
