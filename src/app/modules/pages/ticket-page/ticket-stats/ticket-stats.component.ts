@@ -91,10 +91,12 @@ export class TicketStatsComponent implements OnInit {
         this.columnModel = {
             name: {
                 view: 'Chromosome',
+                colorStyle: this.getRowColor,
             },
             odds: {
                 view: 'Odds ratio',
                 valueConverter: v => stringOrNumberConverter(v),
+                colorStyle: this.getRowColor,
                 isDesc: true
             },
             asbsRs: {
@@ -104,11 +106,13 @@ export class TicketStatsComponent implements OnInit {
             },
             candidatesRs: {
                 isDesc: true,
-                view: '# of non-ASB SNPs'
+                view: '# of non-ASB SNPs',
+                colorStyle: this.getRowColor,
             },
             pValue: {
                 view: 'P-value',
-                columnTemplate: this.fdrViewTemplate
+                columnTemplate: this.fdrViewTemplate,
+                colorStyle: this.getRowColor,
             },
             // fdr: {
             //     view: 'FDR',
