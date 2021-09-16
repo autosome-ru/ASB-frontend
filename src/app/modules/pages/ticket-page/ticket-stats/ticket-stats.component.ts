@@ -97,7 +97,12 @@ export class TicketStatsComponent implements OnInit {
                 isDesc: true
             },
             asbsRs: {
+                isDesc: true,
                 view: '# of ASB SNPs'
+            },
+            candidatesRs: {
+                isDesc: true,
+                view: '# of non-ASBs'
             },
             pValue: {
                 view: 'P-value',
