@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnInit, TemplateRef,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import {ScriptService} from 'src/app/services/script.service';
 import {AnnotationDataModel, AsbStatsDataModel, StatsDataModel} from 'src/app/models/annotation.model';
 import {writeScientificNum} from '../../../../functions/scientific.helper';
@@ -15,10 +23,16 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/
     encapsulation: ViewEncapsulation.None,
 })
 export class TicketStatsComponent implements OnInit {
+    @ViewChild('fdrViewTemplate', {static: true})
+    private fdrViewTemplate: TemplateRef<{ value: number }>;
+
     public chartDatasets: Array<any> = [];
     public stats: StatsDataModel;
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>;
-    public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
+    public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [
+        'name',
+        'odds'
+    ];
     public chromosomalData: AsbStatsDataModel[] = []
 
     @Input()
@@ -74,7 +88,27 @@ export class TicketStatsComponent implements OnInit {
         }).catch(() => this.toastrService.error(
             "Can't load Chart.js library, check your internet connection", 'Error'));
 
-        this.columnModel = {}
+        this.columnModel = {
+            name: {
+                view: 'Chromosome',
+            },
+            odds: {
+                view: 'Odds ratio',
+                valueConverter: v => stringOrNumberConverter(v),
+                isDesc: true
+            },
+            asbsRs: {
+                view: '# of ASB SNPs'
+            },
+            pValue: {
+                view: 'P-value',
+                columnTemplate: this.fdrViewTemplate
+            },
+            fdr: {
+                view: 'FDR',
+                columnTemplate: this.fdrViewTemplate
+            }
+        }
     }
 
 
