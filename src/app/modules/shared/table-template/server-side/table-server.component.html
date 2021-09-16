@@ -45,7 +45,7 @@
                     mat-cell
                     *matCellDef="let row"
                     [ngStyle]="column.value.colorStyle ?
-                     {'background': column.value.colorStyle.background(row)} : null"
+                     {'background': column.value.colorStyle(row)?.background} : null"
                 >
                     <ng-container
                         *ngIf="column.value.columnTemplate; else valueConverterTemplate"
