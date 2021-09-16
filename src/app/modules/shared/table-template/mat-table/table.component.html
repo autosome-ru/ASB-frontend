@@ -46,8 +46,8 @@
                     mat-cell
                     *matCellDef="let row"
                     [ngStyle]="column.value.colorStyle ?
-                     {'background': column.value.colorStyle?.backround(row),
-                     'color': column.value.colorStyle?.color(row)
+                     {'background': column.value.colorStyle(row)?.background,
+                     'color': column.value.colorStyle(row)?.color
                      } : null"
                 >
                     <ng-container
