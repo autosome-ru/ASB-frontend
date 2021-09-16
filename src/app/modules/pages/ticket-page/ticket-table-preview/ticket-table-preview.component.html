@@ -11,6 +11,7 @@
             [stepContent]="stepTemplate"
             [stepContentParams]="getTextByStepName('odds-table-open')"
             (next)="expansionPanel.open()"
+            (prev)="openPreviousTab()"
             class="pl-2"
             [ngClass]="panelExpanded ? '' : 'header'"
         >

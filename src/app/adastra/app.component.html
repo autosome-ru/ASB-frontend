@@ -1,3 +1,13 @@
 <asb-layout>
     <router-outlet></router-outlet>
 </asb-layout>
+
+<ng-template #cookiesDialogTemplate>
+    <div mat-dialog-content style="max-width: 430px">
+        This site uses cookies from Google to deliver its services and to analyze traffic.
+    </div>
+    <mat-dialog-actions align="end">
+        <a mat-button href="https://policies.google.com/technologies/cookies">More details</a>
+        <button mat-button [mat-dialog-close]="true" (click)="saveCookiesConsent()">Ok, got it</button>
+    </mat-dialog-actions>
+</ng-template>

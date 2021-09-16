@@ -101,6 +101,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @Output()
     private selectedNameChange = new EventEmitter<string>();
 
+    @Output()
+    private changeTab = new EventEmitter<void>();
+
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     private subscriptions = new Subscription()
     public tableOpened: boolean;
@@ -409,5 +412,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     getTfOrClData(metaInfo: StatsDataModel): AsbStatsDataModel[] {
         return this.tfOrCl === 'tf' ? metaInfo.tfAsbData : metaInfo.clAsbData
+    }
+
+    openPreviousTab() {
+        this.changeTab.emit()
     }
 }

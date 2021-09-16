@@ -84,6 +84,7 @@
                                         [(panelExpanded)]="panelExpanded"
                                         [tfOrCl]="'tf'"
                                         [(selectedName)]="selectedName.tf"
+                                        (changeTab)="selectFirstTab()"
                                         (groupValueEmitter)="groupValueChanged($event)"
                                         (downloadTableEmitter)="downloadTable('tf')"
                                     >
@@ -95,6 +96,7 @@
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
                                         [data]="tfTableData?.data"
+                                        (changeTab)="selectFirstTab()"
                                         [(panelExpanded)]="panelExpanded"
                                         [(selectedName)]="selectedName.tfSum"
                                         [tfOrCl]="'tf'"

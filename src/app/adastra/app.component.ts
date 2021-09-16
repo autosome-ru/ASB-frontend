@@ -5,7 +5,7 @@ import {
     Inject,
     OnDestroy,
     OnInit,
-    PLATFORM_ID,
+    PLATFORM_ID, TemplateRef, ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -20,6 +20,7 @@ import {SwUpdate} from "@angular/service-worker";
 import {ToastrService} from "ngx-toastr";
 import {CheckForUpdateService} from "../services/update.service";
 import {updateCheckInterval} from "../helpers/constants/constants";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
     selector: "app-root",
@@ -30,6 +31,8 @@ import {updateCheckInterval} from "../helpers/constants/constants";
 export class AppComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-app")
     private cssClass = true;
+    @ViewChild('cookiesDialogTemplate')
+    private cookiesDialogTemplate: TemplateRef<MatDialog>
     private readonly isBrowser: boolean;
     private subscriptions = new Subscription();
 
@@ -38,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 private joyrideService: JoyrideService,
                 private store: Store<AppState>,
                 private updates: SwUpdate,
+                private dialog: MatDialog,
                 private checkForUpdatesService: CheckForUpdateService,
                 private toastrService: ToastrService,
                 private releasesService: ReleasesService,
@@ -47,6 +51,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         if (this.isBrowser) {
+            const cookiesConsent = localStorage.getItem('cookieConsent')
+            if (!cookiesConsent || cookiesConsent !== 'true') {
+                this.dialog.open(this.cookiesDialogTemplate)
+            }
             this.subscriptions.add(
                 this.updates.available.subscribe(() =>
                     this.toastrService.info(
@@ -66,5 +74,9 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
         this.checkForUpdatesService.cancelSubscription();
+    }
+
+    saveCookiesConsent() {
+        localStorage.setItem('cookieConsent', 'true')
     }
 }

@@ -194,6 +194,10 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     getTextByStepName(str: string) {
         return getTextByStepNameAnanas(str)
     }
+
+    selectFirstTab() {
+        this.selectedTab = tabEnum.sum
+    }
 }
 
 enum tabEnum {
