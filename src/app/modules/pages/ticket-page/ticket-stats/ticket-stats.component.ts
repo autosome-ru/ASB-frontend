@@ -140,7 +140,7 @@ export class TicketStatsComponent implements OnInit {
         return stringOrNumberConverter(value, precision)
     }
 
-    getRowColor(p: AsbStatsDataModel) {
-        return p.asbsRs === 0 ? '#E8E8E8' : ''
+    getRowColor(p: AsbStatsDataModel): {background?: string, color?: string} {
+        return p.asbsRs === 0 ? {background: '#F9F9F9', color: '#A0A0A0'} : {}
     };
 }

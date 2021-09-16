@@ -7,7 +7,7 @@ export type ColumnConfigModel<T, key extends keyof T> = {
         disabledSort?: boolean,
         isSticky?: boolean,
         isDesc?: boolean,
-        colorStyle?: (row: T) => string
+        colorStyle?: (row: T) => {color?: string, background?: string}
     }
     | { view: string,
     columnTemplate: TemplateRef<{value: T[key], row?: T}>,

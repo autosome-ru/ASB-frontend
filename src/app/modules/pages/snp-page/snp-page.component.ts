@@ -206,12 +206,12 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             },
             pValueRef: {
                 view: "FDR Ref",
-                colorStyle: row => this._calculateColor(row, "ref"),
+                colorStyle: row => ({background: this._calculateColor(row, "ref")}),
                 columnTemplate: this.fdrViewTemplate
             },
             pValueAlt: {
                 view: "FDR Alt",
-                colorStyle: row => this._calculateColor(row, "alt"),
+                colorStyle: row => ({background: this._calculateColor(row, "alt")}),
                 columnTemplate: this.fdrViewTemplate
             },
             meanBad: {view: "Mean BAD", valueConverter: v => v.toFixed(2)}
