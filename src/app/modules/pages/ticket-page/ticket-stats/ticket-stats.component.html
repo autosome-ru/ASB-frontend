@@ -77,7 +77,9 @@
   </div>
     <div style="width: 100%">
 
-        <h5 class="help-message">Bla-bla pValue {{stats.chrPvalue}}</h5>
+        <h5 class="help-message">Bla-bla pValue <b><span
+            [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
+        ></span></b></h5>
         <asb-table
             [columnModel]="columnModel"
             [displayedColumns]="displayedColumns"
