@@ -186,6 +186,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     copyTicket() {
         this.clipboard.copy(this.ticket);
         this._snackBar.open('Copied to clipboard', null, {
+            verticalPosition: 'top',
+            panelClass: 'centered-snackbar',
             duration: 2000,
         });
     }
