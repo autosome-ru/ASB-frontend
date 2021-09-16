@@ -82,12 +82,18 @@
             [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
         ></span></b>)</span>
             </span>
-        <asb-table
-            [columnModel]="columnModel"
-            [displayedColumns]="displayedColumns"
-            [data]="stats.chrAsbData"
-            [initialSorting]="{active: 'pValue', direction: 'asc'}"
-        ></asb-table>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>ASB enrichment at individual chromosomes</mat-panel-title>
+            </mat-expansion-panel-header>
+            <asb-table
+                [columnModel]="columnModel"
+                [displayedColumns]="displayedColumns"
+                [data]="stats.chrAsbData"
+                [initialSorting]="{active: 'pValue', direction: 'asc'}"
+            ></asb-table>
+        </mat-expansion-panel>
+
     </div>
 </div>
 
