@@ -77,18 +77,13 @@
   </div>
     <div style="width: 100%">
         <mat-divider></mat-divider>
-        <span><b> Enrichment by chromosome:</b><br>
-        <span class="additional-selection">(P-value <b><span
-            [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
-        ></span></b>)</span>
-            </span>
         <mat-expansion-panel #panel
                              expanded
                              class="mat-elevation-z0"
                              style="padding-bottom: 10px"
         >
             <mat-expansion-panel-header [ngClass]="panel.expanded ? '' : 'header'">
-                <mat-panel-title>ASB enrichment at individual chromosomes&nbsp;<span class="additional-selection">(P-value <b><span
+                <mat-panel-title><b>ASB enrichment at individual chromosomes</b>&nbsp;&nbsp;<span class="additional-selection">(P-value <b><span
                     [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
                 ></span></b>)</span></mat-panel-title>
             </mat-expansion-panel-header>
