@@ -19,6 +19,7 @@ import {AsbDirectivesModule} from "../../../directives/directives.module";
 import {AsbSearchModule} from "../../shared/search-template/search.module";
 import {ViewStarModule} from "../../shared/view-star/view-star.module";
 import {SciNotationModule} from "../../shared/sci-notation/sci-notation.module";
+import {CloseDialogOnRouteService} from "../../../interceptors/popup-interceptor";
 
 @NgModule({
     imports: [
@@ -45,6 +46,9 @@ import {SciNotationModule} from "../../shared/sci-notation/sci-notation.module";
         SearchPageComponent,
         SearchPageTableComponent,
     ],
+    providers: [
+        CloseDialogOnRouteService
+    ]
 })
 export class AsbSearchPageModule {
 }

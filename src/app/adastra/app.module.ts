@@ -24,21 +24,21 @@ import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
 import {AsbPopoverComponent} from "../modules/shared/popover-template/popover.component";
-import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
-import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
 import {EncodeHttpParamsInterceptor} from "../interceptors/url-encode.interceptor";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {UrlService} from "../services/url.service";
 import {CheckForUpdateService} from "../services/update.service";
+import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
 
 @NgModule({
     declarations: [
         AppComponent,
         AsbPopoverComponent,
-        AsbConfirmDialogComponent
+        AsbConfirmDialogComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({appId: "serverApp"}),
@@ -59,7 +59,6 @@ import {CheckForUpdateService} from "../services/update.service";
         MatButtonModule,
         MatIconModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-
     ],
     providers: [
         DataService,
@@ -69,12 +68,6 @@ import {CheckForUpdateService} from "../services/update.service";
         ReleasesService,
         CheckForUpdateService,
         CloseDialogOnRouteService,
-        {provide: MAT_DIALOG_DEFAULT_OPTIONS,
-            useValue: {
-                hasBackdrop: true,
-                closeOnNavigation: false,
-            }
-        },
         {
             provide: MAT_CHIPS_DEFAULT_OPTIONS,
             useValue: {

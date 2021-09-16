@@ -70,28 +70,24 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
     ngAfterViewInit() {
-        const cookiesConsent = localStorage.getItem('cookieConsent')
-        if (!cookiesConsent || cookiesConsent !== 'true') {
-            this.dialog.open(this.cookiesDialogTemplate, {
-                hasBackdrop: false,
-                closeOnNavigation: false,
-                disableClose: true,
-                scrollStrategy: this.overlay.scrollStrategies.reposition(),
-                position: {
-                    bottom: '16px',
-                    left: '16px'
-                },
-                maxWidth: 430,
-            })
-        }
+        // const cookiesConsent = localStorage.getItem('cookieConsent')
+        // if (!cookiesConsent || cookiesConsent !== 'true') {
+        //     this.dialog.open(CookiesConsentComponent, {
+        //         hasBackdrop: false,
+        //         closeOnNavigation: false,
+        //         disableClose: true,
+        //         scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        //         position: {
+        //             bottom: '16px',
+        //             left: '16px'
+        //         },
+        //         maxWidth: 430,
+        //     })
+        // }
     }
 
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
         this.checkForUpdatesService.cancelSubscription();
-    }
-
-    saveCookiesConsent() {
-        localStorage.setItem('cookieConsent', 'true')
     }
 }
