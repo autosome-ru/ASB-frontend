@@ -82,8 +82,12 @@
             [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
         ></span></b>)</span>
             </span>
-        <mat-expansion-panel expanded>
-            <mat-expansion-panel-header>
+        <mat-expansion-panel #panel
+                             expanded
+                             class="mat-elevation-z0"
+                             style="padding-bottom: 10px"
+        >
+            <mat-expansion-panel-header [ngClass]="panel.expanded ? '' : 'header'">
                 <mat-panel-title>ASB enrichment at individual chromosomes</mat-panel-title>
             </mat-expansion-panel-header>
             <asb-table
