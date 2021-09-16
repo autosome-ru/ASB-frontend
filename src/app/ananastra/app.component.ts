@@ -32,13 +32,12 @@ export class AppComponent implements AfterViewInit {
                 hasBackdrop: false,
                 closeOnNavigation: false,
                 disableClose: true,
-                scrollStrategy: this.overlay.scrollStrategies.noop(),
+                scrollStrategy: this.overlay.scrollStrategies.reposition(),
                 position: {
                     bottom: '16px',
                     left: '16px'
                 },
                 maxWidth: 430,
-
             })
         }
     }
