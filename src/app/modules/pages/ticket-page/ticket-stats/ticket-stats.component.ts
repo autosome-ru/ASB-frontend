@@ -99,7 +99,8 @@ export class TicketStatsComponent implements OnInit {
             },
             asbsRs: {
                 isDesc: true,
-                view: '# of ASB SNPs'
+                view: '# of ASB SNPs',
+                colorStyle: this.getRowColor,
             },
             candidatesRs: {
                 isDesc: true,
@@ -134,4 +135,8 @@ export class TicketStatsComponent implements OnInit {
     valueToView(value: string | number, precision: number = 2): string {
         return stringOrNumberConverter(value, precision)
     }
+
+    getRowColor(p: AsbStatsDataModel) {
+        return p.asbsRs === 0 ? '#E8E8E8' : ''
+    };
 }
