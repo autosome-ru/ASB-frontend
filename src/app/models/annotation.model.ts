@@ -49,6 +49,8 @@ export interface StatsDataModel {
     clAsbData: AsbStatsDataModel[];
     chrAsbData: AsbStatsDataModel[];
     chrPvalue: number | string;
+    chrTfPvalue: number | string;
+    chrClPvalue: number | string;
     tfAsbListSum: CountModel[];
     clAsbListSum: CountModel[];
     lastStatusUpdateAt: string;
@@ -78,6 +80,8 @@ export interface StatsDataBackendModel {
     tf_log10_p_value_rs: string;
     tf_odds_rs: string;
     chr_log10_p_value_rs: string;
+    chr_tf_log10_p_value_rs: string;
+    chr_cl_log10_p_value_rs: string;
     tf_asb_counts: CountModel[];
     cl_asb_counts: CountModel[];
     tf_asb_counts_top: CountModel[];

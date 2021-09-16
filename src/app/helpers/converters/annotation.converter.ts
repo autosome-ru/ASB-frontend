@@ -46,6 +46,8 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
         tfOdds: stringToNum(stats.tf_odds_rs),
         chrPvalue: stringToNum(stats.chr_log10_p_value_rs),
+        chrTfPvalue: stringToNum(stats.chr_tf_log10_p_value_rs),
+        chrClPvalue: stringToNum(stats.chr_cl_log10_p_value_rs),
         expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
         tfAsbs: stats.tf_asbs_rs,
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
