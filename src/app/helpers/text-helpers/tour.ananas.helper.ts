@@ -17,10 +17,20 @@ function getText(step: string): string {
             return 'A previously processed request\ncan be accessed by providing a ticket ID.\nPrevious jobs are saved for 2 days.'
         case 'ticket':
             return 'This is your unique job ticket id.\nYou may save it to access this report\nlater (reports are accessible for 2 days\nsince completion).'
+        case 'sum-head':
+            return "The first tab (Summary) contains an overview\nof the ASBs and their relative enrichment\nin the user-submitted list against\nnon-ASB 'candidate' sites."
+        case 'chrom-agg':
+            return "Logit-aggregated P-value considering\neach ASB-carrying chromosome\nas an independent 'experiment'."
+        case 'chrom-table':
+            return "Chromosome-level ASB enrichment estimates."
+        case 'tf-head':
+            return 'Detailed information on ASBs of particular transcription factors.'
+        case 'cl-head':
+            return 'Detailed information on ASBs in particular cell types.'
         case 'stats':
             return 'General statistics and enrichment of allele-specific\nbinding events detected in the submitted SNP list.\nNote, that enrichment estimates have limited value\nfor locus-centric analysis (i.e. if a genomic region\nwas submitted) as the analysis involves all ASBs\nand all candidate SNPs in a given region.'
         case 'col-button':
-            return 'It is possible to switch between the TF- and cell type-centric reports. Each report is available in the expanded form (all ASB events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
+            return 'Each report is available in the expanded form (all ASB events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
         case 'odds-table-open':
             return 'Click to show results of enrichment\nanalysis for particular TFs or cell types.'
         case 'odds-table':
@@ -38,6 +48,6 @@ function getText(step: string): string {
                 'Our test suggest ASBs at 5% FDR are very reliable\n' +
                 'in terms of motif annotation.'
         default:
-            return "";
+            return "No step with name " + step + " found";
     }
 }

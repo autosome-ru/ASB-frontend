@@ -15,6 +15,7 @@
             [stepContentParams]="getTextByStepName('ticket')"
             [prevTemplate]="prevTemplate"
             [nextTemplate]="nextTemplate"
+            (next)="initTableLoad(true)"
             [doneTemplate]="doneTemplate"
         >{{ticket}}</b>)
                 <span style="white-space: nowrap" *ngIf="(pingData$ | async)?.dateCreated">
@@ -61,18 +62,34 @@
                     (selectedIndexChange)="tabIndexChanged($event)"
                     animationDuration="0ms"
                 >
-                    <mat-tab label="Summary">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span
+                                joyrideStep="sum-head"
+                                [stepContent]="stepTemplate"
+                                [stepContentParams]="getTextByStepName('sum-head')"
+                            >Summary</span>
+                        </ng-template>
                         <ng-template matTabContent>
                             <div class="mx-1 pt-1">
                                 <h5 class="help-message">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
                                     {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
                                 <astra-ticket-stats
                                     [chartData]="data"
+                                    (statsLastStep)="selectTabById(1)"
                                 ></astra-ticket-stats>
                             </div>
                         </ng-template>
                     </mat-tab>
-                    <mat-tab label="Transcription factors">
+                    <mat-tab >
+                        <ng-template mat-tab-label>
+                        <span
+                          joyrideStep="tf-head"
+                          [stepContent]="stepTemplate"
+                          [stepContentParams]="getTextByStepName('tf-head')"
+                          (prev)="selectTabById()"
+                        >Transcription factors</span>
+                        </ng-template>
                         <ng-template matTabContent>
                             <div class="mx-1 pt-1">
                                 <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
@@ -84,7 +101,6 @@
                                         [(panelExpanded)]="panelExpanded"
                                         [tfOrCl]="'tf'"
                                         [(selectedName)]="selectedName.tf"
-                                        (changeTab)="selectFirstTab()"
                                         (groupValueEmitter)="groupValueChanged($event)"
                                         (downloadTableEmitter)="downloadTable('tf')"
                                     >
@@ -96,7 +112,6 @@
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
                                         [data]="tfTableData?.data"
-                                        (changeTab)="selectFirstTab()"
                                         [(panelExpanded)]="panelExpanded"
                                         [(selectedName)]="selectedName.tfSum"
                                         [tfOrCl]="'tf'"
@@ -108,7 +123,14 @@
                             </div>
                         </ng-template>
                     </mat-tab>
-                    <mat-tab label="Cell types">
+                    <mat-tab >
+                        <ng-template mat-tab-label>
+                        <span
+                            joyrideStep="cl-head"
+                            [stepContent]="stepTemplate"
+                            [stepContentParams]="getTextByStepName('cl-head')"
+                        >Cell types</span>
+                        </ng-template>
                         <ng-template matTabContent>
                             <div class="mx-1 pt-1">
                                 <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
@@ -154,6 +176,7 @@
     *ngIf="(pingData$ | async)?.status == 'Processed'"
     [buttonClass]="'tour-button'"
     [steps]="steps"
+    (tourStarted)="selectTabById()"
 ></asb-tour-button>
 </div>
 

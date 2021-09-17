@@ -1,8 +1,8 @@
 import {
     ChangeDetectionStrategy,
-    Component,
+    Component, EventEmitter,
     HostBinding,
-    Input, OnDestroy,
+    Input, OnDestroy, Output,
     ViewEncapsulation
 } from "@angular/core";
 import {JoyrideService} from "ngx-joyride";
@@ -30,6 +30,9 @@ export class AsbTourComponent implements OnDestroy {
 
     @Input()
     public buttonClass: string = null;
+
+    @Output()
+    public tourStarted = new EventEmitter<void>()
     public release: Observable<ReleaseModel>;
 
     constructor(private joyrideService: JoyrideService,
@@ -51,6 +54,7 @@ export class AsbTourComponent implements OnDestroy {
         this.subscriptions.add(
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    this.tourStarted.emit()
                     this.startTour();
                 }
             })

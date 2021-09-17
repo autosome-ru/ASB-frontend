@@ -47,7 +47,13 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public pingData$: Observable<PingDataModel>;
     public ticketProcessing$: Observable<boolean>;
     public steps: string[] = [
-        'ticket', 'stats',
+        'ticket',
+        'sum-head',
+        'stats',
+        'chrom-agg',
+        'chrom-table',
+        'tf-head',
+        'cl-head',
         'odds-table-open',
         'odds-table',
         'col-button',
@@ -159,8 +165,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         this.initTableLoad();
     }
 
-    initTableLoad(): void {
-        if (this.selectedTab !== tabEnum.sum) {
+    initTableLoad(force:boolean=false): void {
+        if (this.selectedTab !== tabEnum.sum || force) {
             this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
                 {
                     ticket: this.ticket,
@@ -195,8 +201,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         return getTextByStepNameAnanas(str)
     }
 
-    selectFirstTab() {
-        this.selectedTab = tabEnum.sum
+    selectTabById(id:tabEnum=tabEnum.sum) {
+        this.selectedTab = id
     }
 }
 

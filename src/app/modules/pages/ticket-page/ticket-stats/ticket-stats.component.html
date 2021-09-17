@@ -1,4 +1,7 @@
-<div *ngIf="chartDatasets.length > 0; else loadingTemplate"
+<div
+    *ngIf="chartDatasets.length > 0; else loadingTemplate"
+>
+<div
      style="padding-left: 16px; padding-right: 16px"
      joyrideStep="stats"
      [stepContent]="stepTemplate"
@@ -75,6 +78,8 @@
       </li>
     </ul>
   </div>
+
+</div>
     <div style="width: 100%">
         <mat-divider></mat-divider>
         <mat-expansion-panel #panel
@@ -85,23 +90,34 @@
             <mat-expansion-panel-header [ngClass]="panel.expanded ? '' : 'header'">
                 <mat-panel-title><b style="font-size: 1rem">ASB enrichment at individual chromosomes</b></mat-panel-title>
             </mat-expansion-panel-header>
-            <div style="padding-left: 24px">
+            <div
+                style="padding-left: 24px"
+                joyrideStep="chrom-agg"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('chrom-agg')"
+            >
             <span >
                 <b>Logit-aggregated P-value:&nbsp;<span
-                [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
+                    [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
                 ></span></b>&nbsp;
                 <span class="additional-selection">(SNPs with TF-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrClPvalue, 2)"></span></b>,
                     SNPs with cell type-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrTfPvalue, 2)"></span></b>)</span>
             </span>
             </div>
+            <div
+                joyrideStep="chrom-table"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('chrom-table')"
+                (next)="statsNextStep()"
+            >
             <asb-table
                 [columnModel]="columnModel"
                 [displayedColumns]="displayedColumns"
                 [data]="stats.chrAsbData"
                 [initialSorting]="{active: 'pValue', direction: 'asc'}"
             ></asb-table>
+            </div>
         </mat-expansion-panel>
-
     </div>
 </div>
 

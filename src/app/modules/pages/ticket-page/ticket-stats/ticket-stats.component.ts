@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, EventEmitter,
     Input,
-    OnInit, TemplateRef,
+    OnInit, Output, TemplateRef,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -25,6 +25,9 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/
 export class TicketStatsComponent implements OnInit {
     @ViewChild('fdrViewTemplate', {static: true})
     private fdrViewTemplate: TemplateRef<{ value: number }>;
+
+    @Output()
+    private statsLastStep = new EventEmitter<void>()
 
     public chartDatasets: Array<any> = [];
     public stats: StatsDataModel;
@@ -143,4 +146,8 @@ export class TicketStatsComponent implements OnInit {
     getRowColor(p: AsbStatsDataModel): {background?: string, color?: string} {
         return p.asbsRs === 0 ? {background: '#F9F9F9', color: '#A0A0A0'} : {}
     };
+
+    statsNextStep() {
+        this.statsLastStep.emit()
+    }
 }
