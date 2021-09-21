@@ -19,12 +19,23 @@
     font: inherit;
     letter-spacing: normal;
 }
-
+.mat-snack-bar-container {
+    min-width: 150px !important;
+}
 .centered-snackbar {
+
     display: flex;
     span {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+    }
+}
+
+.header {
+    border: inset  1px darkgray;
+    background: rgba(0, 0, 0, 0.02);
+    &:hover {
+        background: rgba(0, 0, 0, 0.04);
     }
 }

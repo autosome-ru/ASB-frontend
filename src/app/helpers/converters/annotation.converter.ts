@@ -13,51 +13,48 @@ import {stringToNum} from "../helper/check-functions.helper";
 function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDataBackendModel): StatsDataModel {
     const stats = model.meta_info
     return {
-        concordantAsbs: stats.concordant_asbs ? stats.concordant_asbs.map(
-            s => {
-                return {
-                    id: s.tf_name,
-                    rsId: 'rs' + s.rs_id,
-                    altBase: s.alt,
-                    name: s.tf_name,
-                    motifConcordance: s.concordance
-                };
-            }
-        ) : null,
+        // Ticket info
         fdr: model.fdr,
-        undefinedCount: stats.undefined_rs,
-        asbCount: stats.all_asbs_rs,
-        candidatesCount: stats.all_candidates_rs - stats.all_asbs_rs,
-        ratio: stats.all_candidates_rs > 0 ? stats.all_asbs_rs / stats.all_candidates_rs * 100 : 0,
-        tfRatio: stats.tf_candidates_rs > 0 ? stats.tf_asbs_rs / stats.tf_candidates_rs * 100 : 0,
-        clRatio: stats.cl_candidates_rs > 0 ? stats.cl_asbs_rs / stats.cl_candidates_rs * 100 : 0,
-        pValue: stringToNum(stats.all_log10_p_value_rs),
-        oddsRatio: stringToNum(stats.all_odds_rs),
-        notFound: stats.all_rs - stats.all_candidates_rs - stats.undefined_rs,
-        clCandidates: stats.cl_candidates_rs - stats.cl_asbs_rs,
-        clAsbs: stats.cl_asbs_rs,
-        clOdds: stringToNum(stats.cl_odds_rs),
-        totalSNPs: stats.all_rs,
-        clPvalue: stringToNum(stats.cl_log10_p_value_rs),
-        tfCandidates: stats.tf_candidates_rs - stats.tf_asbs_rs,
         processingTime: stats.processing_time,
         processingStartedAt: new Date(Date.now() - new Date(stats.processing_started_at).getTime()),
         lastStatusUpdateAt: stats.last_status_update_at,
-        tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
+        // Other fields
+        totalSNPs: stats.all_rs,
+        undefinedCount: stats.undefined_rs,
+        notFound: stats.all_rs - stats.all_candidates_rs - stats.undefined_rs,
+        expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
+        // Overall stats
+        asbCount: stats.all_asbs_rs,
+        candidatesCount: stats.all_candidates_rs - stats.all_asbs_rs,
+        ratio: stats.all_candidates_rs > 0 ? stats.all_asbs_rs / stats.all_candidates_rs * 100 : 0,
+        oddsRatio: stringToNum(stats.all_odds_rs),
+        pValue: stringToNum(stats.all_log10_p_value_rs),
+        // TF-wise stats
+        tfCandidates: stats.tf_candidates_rs - stats.tf_asbs_rs,
+        tfAsbs: stats.tf_asbs_rs,
+        tfRatio: stats.tf_candidates_rs > 0 ? stats.tf_asbs_rs / stats.tf_candidates_rs * 100 : 0,
         tfOdds: stringToNum(stats.tf_odds_rs),
+        tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
+        // CL-wise stats
+        clCandidates: stats.cl_candidates_rs - stats.cl_asbs_rs,
+        clAsbs: stats.cl_asbs_rs,
+        clRatio: stats.cl_candidates_rs > 0 ? stats.cl_asbs_rs / stats.cl_candidates_rs * 100 : 0,
+        clOdds: stringToNum(stats.cl_odds_rs),
+        clPvalue: stringToNum(stats.cl_log10_p_value_rs),
+        // Chromosome-wise stats
         chrPvalue: stringToNum(stats.chr_log10_p_value_rs),
         chrTfPvalue: stringToNum(stats.chr_tf_log10_p_value_rs),
         chrClPvalue: stringToNum(stats.chr_cl_log10_p_value_rs),
-        expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
-        tfAsbs: stats.tf_asbs_rs,
+        // Charts
         tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
         clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
+        tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
+        clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
+        // Enrichment
         tfAsbData: stats.tf_asb_data ? stats.tf_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
         clAsbData: stats.cl_asb_data ? stats.cl_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
         chrAsbData: stats.chr_asb_data ? stats.chr_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
 
-        tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
-        clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
     };
 }
 function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel): AsbStatsDataModel {

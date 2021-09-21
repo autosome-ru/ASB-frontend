@@ -1,4 +1,4 @@
-import {ConcordanceBackendModel, MotifSnpModel, SnpGenPosModel, TfSnpModel} from './data.model';
+import {ConcordanceBackendModel, MotifSnpModel, SnpGenPosModel} from './data.model';
 export interface PingDataModel {
     ticketId: string;
     status: string;
@@ -23,7 +23,6 @@ export interface CountModel {
 export interface StatsDataModel {
     asbCount: number;
     undefinedCount: number;
-    concordantAsbs: Partial<TfSnpModel>[];
     candidatesCount: number;
     ratio: number;
     expRatio: number;

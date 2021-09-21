@@ -18,7 +18,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/
 @Component({
     selector: 'astra-ticket-stats',
     templateUrl: './ticket-stats.component.html',
-    styleUrls: ['./ticket-stats.component.less', '../ticket-table-enrichments/ticket-table-tmp.component.html'],
+    styleUrls: ['./ticket-stats.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
@@ -77,6 +77,7 @@ export class TicketStatsComponent implements OnInit {
         }
     };
     public chartLoaded: boolean;
+    public panelExpanded: boolean = false;
 
     constructor(private scriptService: ScriptService,
                 private toastrService: ToastrService,
