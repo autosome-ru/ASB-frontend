@@ -593,8 +593,7 @@ export const demo1: string = 'rs150903340\n' +
     'rs5970599\n' +
     'rs6603626\n'
 
-export const demo2: string = '1:60860259-61462788'
-export const demo3: string = 'rs7307562\n' +
+export const demo2: string = 'rs7307562\n' +
     'rs2066844\n' +
     'rs2066845\n' +
     'rs6017342\n' +

@@ -4,8 +4,9 @@ import {SeoModel} from "../models/seo.model";
 
 @Injectable()
 export class SeoService {
-    constructor(private titleService: Title, private metaService: Meta) {
-    }
+    constructor(private titleService: Title,
+                private metaService: Meta,
+                ) {}
 
     updateSeoInfo(model: SeoModel) {
         this.updateTitle(model.title);

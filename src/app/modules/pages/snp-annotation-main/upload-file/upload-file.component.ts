@@ -6,7 +6,7 @@ import * as fromActions from 'src/app/store/action/ananastra';
 import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
 import {Store} from '@ngrx/store';
-import {demo1, demo2, demo3} from "../../../../helpers/constants/demo.ananas";
+import {demo1, demo2} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {ToastrService} from "ngx-toastr";
 import {esOptions, fdrOptions} from "../../../../helpers/constants/constants";
@@ -180,7 +180,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
               patchValue = demo2;
               break;
           case 3:
-              patchValue = demo3;
+              patchValue = demo2;
               break;
       }
       this.formGroup.patchValue({textArea: patchValue});

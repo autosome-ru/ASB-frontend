@@ -60,7 +60,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public searchQuery$: Observable<SearchQueryModel>;
     private firstTimeOpen: boolean;
     public release$: Observable<ReleaseModel>;
-    results: SnpSearchModel[];
+    public results: SnpSearchModel[];
     public tourSteps: string[];
     public selectedGene$: Observable<GeneModel>;
     public fdr: string;
