@@ -10,6 +10,7 @@ import {demo1, demo2, demo3} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {ToastrService} from "ngx-toastr";
 import {esOptions, fdrOptions} from "../../../../helpers/constants/constants";
+import {BackgroundSelect} from "../../../../models/annotation.model";
 
 @Component({
   selector: 'astra-upload-file-component',
@@ -30,6 +31,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public formGroup: FormGroup;
   public fdrOptions: string[] = fdrOptions.filter(d => d != '0.25');
   public esOptions: string[] = esOptions;
+  public backgroundOptions: BackgroundSelect[] = ['WG', 'LD-EUR', 'LD-AFR', 'LD-ASN', 'LOCAL' ]
 
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
@@ -40,7 +42,8 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
         textArea: '',
-        fdr: '0.1',
+        fdr: '0.05',
+        background: 'WG',
         es: '0'
     })
   }
@@ -69,10 +72,10 @@ export class UploadFileComponent implements OnInit, OnDestroy {
         );
         this.ticket = null;
       }
-      this.reinstallSubscription();
+      this.reinitSubscription();
     }
   }
-  reinstallSubscription() {
+  reinitSubscription() {
       this.subscriptions.unsubscribe();
       this.subscriptions = new Subscription();
   }
@@ -128,8 +131,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
       () => {
           this.store.dispatch(new fromActions.annotation.InitAnnotationStartAction(
               {ticket: this.ticket,
-                  fdr: this.formGroup.get('fdr').value,
-                  es: this.formGroup.get('es').value
+                  ...this.formGroup.value
               }));
           this.uploadService.removeFileTicket()
       }
@@ -194,5 +196,20 @@ export class UploadFileComponent implements OnInit, OnDestroy {
 
     countStrings(value: string): number {
         return value.trim().split('\n').length
+    }
+
+    optionToView(option: BackgroundSelect) {
+        switch (option) {
+            case 'LD-EUR':
+                return 'LD-islands (EUR)'
+            case 'LD-ASN':
+                return 'LD-islands (ASN)'
+            case 'LD-AFR':
+                return 'LD-islands (AFR)'
+            case 'LOCAL':
+                return 'Local (1 Mbase)'
+            case 'WG':
+                return 'Whole genome'
+        }
     }
 }

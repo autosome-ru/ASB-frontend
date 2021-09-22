@@ -145,6 +145,17 @@
 <!--                        </mat-option>-->
 <!--                    </mat-select>-->
 <!--                </mat-form-field>-->
+                <mat-form-field style="margin-right: 10px; max-width: 140px">
+                    <mat-label>Background</mat-label>
+                    <mat-select formControlName="background">
+                        <mat-option
+                            *ngFor="let option of backgroundOptions"
+                            [value]="option"
+                        >
+                            {{optionToView(option)}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
                 <button
                   color="accent"
                   style="align-self: flex-start; margin-top: 15px; margin-right: 5px"

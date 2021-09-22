@@ -180,3 +180,6 @@ export interface AnnotationSnpModel extends SnpGenPosModel, MotifSnpModel {
     grasp: string;
     phewas: string;
 }
+
+
+export type BackgroundSelect = 'WG' | 'LD-EUR' | 'LD-AFR' | 'LD-ASN' | 'LOCAL'

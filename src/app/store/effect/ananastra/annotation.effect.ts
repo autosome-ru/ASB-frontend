@@ -26,7 +26,8 @@ export class AnnotationEffect {
         mergeMap((action: fromActions.StartAnnotationAction) =>
             this.processingService.startProcessTicket(action.payload.ticket,
                 action.payload.fdr,
-                action.payload.es
+                action.payload.es,
+                action.payload.background
                 ).pipe(
                 map(() => new fromActions.StartAnnotationSuccessAction()),
                 catchError(() => of(new fromActions.StartAnnotationFailAction(action.payload))),

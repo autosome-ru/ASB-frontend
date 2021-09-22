@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {
-    AnnotationDataBackendModel, AnnotationSnpBackendModel, PingDataBackendModel
+    AnnotationDataBackendModel, AnnotationSnpBackendModel, BackgroundSelect, PingDataBackendModel
 } from '../models/annotation.model';
 import {TfOrCl} from '../models/data.model';
 import {UrlService} from "./url.service";
@@ -13,7 +13,7 @@ export class ProcessingService {
     constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
-    startProcessTicket(ticket: string, fdr: string, es: string): Observable<object> {
+    startProcessTicket(ticket: string, fdr: string, es: string, background: BackgroundSelect): Observable<object> {
         return this.http.post<object>(`${this.urlService.getUrlForQuery("ananastra")}/process/${ticket}`,
             {}, {params: {fdr, es}});
     }
