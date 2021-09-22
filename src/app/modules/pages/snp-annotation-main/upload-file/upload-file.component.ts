@@ -11,7 +11,7 @@ import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ana
 import {ToastrService} from "ngx-toastr";
 import {esOptions, fdrOptions} from "../../../../helpers/constants/constants";
 import {BackgroundSelect} from "../../../../models/annotation.model";
-import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/convertBackgroundChoices.helper";
+import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/convert-background-choices.helper";
 
 @Component({
   selector: 'astra-upload-file-component',

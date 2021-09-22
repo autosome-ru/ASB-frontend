@@ -19,7 +19,7 @@ import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
-import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/convertBackgroundChoices.helper";
+
 
 @Component({
     selector: 'astra-ticket-stats',

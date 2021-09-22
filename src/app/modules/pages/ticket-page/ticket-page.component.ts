@@ -21,7 +21,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {SeoService} from "../../../services/seo.servise";
 import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
-import {convertBackgroundChoicesHelper} from "../../../helpers/text-helpers/convertBackgroundChoices.helper";
+import {convertBackgroundChoicesHelper} from "../../../helpers/text-helpers/convert-background-choices.helper";
 
 @Component({
     selector: 'astra-ticket-page',
