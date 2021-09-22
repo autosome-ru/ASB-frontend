@@ -23,7 +23,11 @@ const routes: Routes = [
         path: 'ticket/:id',
         loadChildren: () => import('src/app/modules/pages/ticket-page/ticket-page.module').then(
             mod => mod.TicketPageModule
-        )
+        ),
+        data: {
+            title: (ticket: string) => `Report ${ticket}`,
+            description: ""
+        }
     },
     {
         path: 'about',
@@ -31,14 +35,20 @@ const routes: Routes = [
             mod => mod.AsbAboutPageModule
         ),
         data: {
-            ananas: true
+            ananas: true,
+            title: "ANANASTRA - About",
+            description: ""
         }
     },
     {
         path: 'help',
         loadChildren: () => import('src/app/modules/pages/ananas-help-page/ananas-help.module').then(
             mod => mod.AnanasHelpModule
-        )
+        ),
+        data: {
+            title: "ANANASTRA - Help",
+            description: ""
+        }
     },
     {
         path: "404",

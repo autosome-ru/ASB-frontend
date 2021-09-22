@@ -131,8 +131,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             )
         );
 
-        this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById, this.id + this.alt);
-        this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById, this.id + this.alt);
+        this.snpData$ = this.store.select(fromSelectors.selectSnpInfoDataById(this.id + this.alt));
+        this.snpDataLoading$ = this.store.select(fromSelectors.selectSnpInfoDataLoadingById(this.id + this.alt));
         this.subscriptions.add(
             this.snpData$.subscribe(s => {
                 if (s) {

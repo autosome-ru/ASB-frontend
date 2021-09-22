@@ -82,16 +82,20 @@ export class TicketPageComponent implements OnInit, OnDestroy {
             this.route.paramMap.subscribe(
                 s => {
                     this.ticket = s.get('id');
+                    this.seoService.updateSeoInfo({
+                        title: this.route.snapshot.data.title(this.ticket),
+                        description: this.route.snapshot.data.description
+                    })
                 }
             )
         );
 
         this.fileStatistics$ = this.store.select(
-            fromSelectors.selectAnnotationDataById, this.ticket);
+            fromSelectors.selectAnnotationDataById(this.ticket));
         this.pingLoading$ = this.store.select(
-            fromSelectors.selectPingDataLoadingById, this.ticket);
+            fromSelectors.selectPingDataLoadingById(this.ticket));
         this.pingData$ = this.store.select(
-            fromSelectors.selectPingDataById, this.ticket);
+            fromSelectors.selectPingDataById(this.ticket));
         this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
             this.ticket));
         this.subscriptions.add(
@@ -143,11 +147,11 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                 }
             )
         );
-        this.ticketProcessing$ = this.store.select(fromSelectors.selectProcessingById, this.ticket)
-        this.tfTableData$ = this.store.select(fromSelectors.selectAnnotationTfTable, this.ticket);
-        this.clTableData$ = this.store.select(fromSelectors.selectAnnotationClTable, this.ticket);
-        this.tfTableDataSum$ = this.store.select(fromSelectors.selectAnnotationTfTableSum, this.ticket);
-        this.clTableDataSum$ = this.store.select(fromSelectors.selectAnnotationClTableSum, this.ticket);
+        this.ticketProcessing$ = this.store.select(fromSelectors.selectProcessingById(this.ticket));
+        this.tfTableData$ = this.store.select(fromSelectors.selectAnnotationTfTable(this.ticket));
+        this.clTableData$ = this.store.select(fromSelectors.selectAnnotationClTable(this.ticket));
+        this.tfTableDataSum$ = this.store.select(fromSelectors.selectAnnotationTfTableSum(this.ticket));
+        this.clTableDataSum$ = this.store.select(fromSelectors.selectAnnotationClTableSum(this.ticket));
 
     }
 

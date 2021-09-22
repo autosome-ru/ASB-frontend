@@ -1,59 +1,43 @@
 import {createSelector} from "@ngrx/store";
 import * as fromRoot from "src/app/store/reducer/ananastra";
 import * as fromAnnotation from "src/app/store/reducer/ananastra/annotation.reducer";
-import {AnnotationDataModel, AnnotationSnpModel, PingDataModel} from 'src/app/models/annotation.model';
-import {TicketState} from "src/app/store/reducer/ananastra/annotation.reducer";
+
 
 const _selectAnnotationData = createSelector(fromRoot.selectAnnotation, fromAnnotation.selectAnnotations);
-const _selectAnnotationById = createSelector(_selectAnnotationData,
-    (annotations: {
-         [ticket: number]: {
-             annotationData?: {
-                 data?: AnnotationDataModel,
-                 loading: boolean
-             },
-             processing: boolean,
-             pingLoading: boolean,
-             pingData: PingDataModel,
-             cl: {data: AnnotationSnpModel[], loading: boolean},
-             tf: {data: AnnotationSnpModel[], loading: boolean},
-             clSum: {data: AnnotationSnpModel[], loading: boolean},
-             tfSum: {data: AnnotationSnpModel[], loading: boolean}
-         };
-     },
-     id: string) => annotations[id] as TicketState,
+const _selectAnnotationById = (id: string) => createSelector(_selectAnnotationData,
+    (annotations) => annotations[id],
 );
-export const selectAnnotationDataById = createSelector(
-    _selectAnnotationById,
+export const selectAnnotationDataById = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.annotationData,
 );
-export const selectProcessingById = createSelector(
-    _selectAnnotationById,
+export const selectProcessingById = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.processing,
 );
-export const selectPingDataById = createSelector(
-    _selectAnnotationById,
+export const selectPingDataById = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.pingData,
 );
-export const selectPingDataLoadingById = createSelector(
-    _selectAnnotationById,
+export const selectPingDataLoadingById = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.pingLoading,
 );
-export const selectAnnotationTfTable = createSelector(
-    _selectAnnotationById,
+export const selectAnnotationTfTable = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.tf
 );
 
-export const selectAnnotationClTable = createSelector(
-    _selectAnnotationById,
+export const selectAnnotationClTable = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.cl
 );
-export const selectAnnotationTfTableSum = createSelector(
-    _selectAnnotationById,
+export const selectAnnotationTfTableSum = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.tfSum
 );
 
-export const selectAnnotationClTableSum = createSelector(
-    _selectAnnotationById,
+export const selectAnnotationClTableSum = (id: string) => createSelector(
+    _selectAnnotationById(id),
     ann => ann && ann.clSum
 );

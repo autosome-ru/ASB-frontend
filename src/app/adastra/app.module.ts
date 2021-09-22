@@ -24,7 +24,7 @@ import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MAT_CHIPS_DEFAULT_OPTIONS} from "@angular/material/chips";
 import {AsbPopoverComponent} from "../modules/shared/popover-template/popover.component";
-import {MatDialogModule} from "@angular/material/dialog";
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {AsbConfirmDialogComponent} from "../modules/shared/popover-template/confirm-dialog/confirm-dialog.component";
@@ -68,6 +68,12 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
         ReleasesService,
         CheckForUpdateService,
         CloseDialogOnRouteService,
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS,
+            useValue: {
+                hasBackdrop: true,
+                closeOnNavigation: false,
+            }
+        },
         {
             provide: MAT_CHIPS_DEFAULT_OPTIONS,
             useValue: {

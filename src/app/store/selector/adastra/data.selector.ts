@@ -1,7 +1,6 @@
 import {createSelector} from "@ngrx/store";
 import * as fromRoot from "../../reducer/adastra";
 import * as fromData from "src/app/store/reducer/adastra/data.reducer";
-import {SnpInfoModel} from "../../../models/data.model";
 
 export const selectTotalInfo = createSelector(fromRoot.selectData, fromData.selectTotalInfo);
 export const selectTotalInfoLoading = createSelector(fromRoot.selectData, fromData.selectTotalInfoLoading);
@@ -16,29 +15,22 @@ export const selectClInfoInitialized = createSelector(fromRoot.selectData, fromD
 
 
 const _selectSnpInfoData = createSelector(fromRoot.selectData, fromData.selectSnps);
-const _selectSnpsDataById = createSelector(_selectSnpInfoData,
-    (snps: {
-                [snpId: number]: {
-                    snpData?: SnpInfoModel,
-                    loading: boolean,
-                    fdr: string,
-                    es: string
-                };
-            }, id: string) => snps[id] as {loading: boolean, fdr: string, snpData?: SnpInfoModel, es: string},
+const _selectSnpsDataById = (id: string) => createSelector(_selectSnpInfoData,
+    (snps) => snps[id],
 );
-export const selectSnpInfoDataById = createSelector(
-    _selectSnpsDataById,
+export const selectSnpInfoDataById = (id: string) => createSelector(
+    _selectSnpsDataById(id),
     snp => snp && snp.snpData,
 );
-export const selectSnpInfoFdrById = createSelector(
-    _selectSnpsDataById,
+export const selectSnpInfoFdrById = (id: string) => createSelector(
+    _selectSnpsDataById(id),
     snp => snp && snp.fdr,
 );
-export const selectSnpInfoEsById = createSelector(
-    _selectSnpsDataById,
+export const selectSnpInfoEsById = (id: string) => createSelector(
+    _selectSnpsDataById(id),
     snp => snp && snp.es,
 );
-export const selectSnpInfoDataLoadingById = createSelector(
-    _selectSnpsDataById,
+export const selectSnpInfoDataLoadingById = (id: string) => createSelector(
+    _selectSnpsDataById(id),
     snp => snp && snp.loading,
 );

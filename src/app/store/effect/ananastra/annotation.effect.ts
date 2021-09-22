@@ -44,7 +44,7 @@ export class AnnotationEffect {
     initAnnotationStart$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationStart),
         mergeMap((action: fromActions.InitAnnotationStartAction) =>
-            this.store.select(fromSelectors.selectProcessingById, action.payload.ticket)
+            this.store.select(fromSelectors.selectProcessingById(action.payload.ticket))
                 .pipe(
                     take(1),
                     switchMap((d) =>
@@ -88,8 +88,8 @@ export class AnnotationEffect {
         ofType(fromActions.ActionTypes.InitPingAnnotation),
         mergeMap((action: fromActions.InitPingAnnotationAction) =>
             combineLatest([
-                this.store.select(fromSelectors.selectPingDataById, action.payload),
-                this.store.select(fromSelectors.selectPingDataLoadingById, action.payload)
+                this.store.select(fromSelectors.selectPingDataById(action.payload)),
+                this.store.select(fromSelectors.selectPingDataLoadingById(action.payload))
             ]).pipe(
                 take(1),
                 switchMap(([data, loading]) => {
@@ -117,7 +117,7 @@ export class AnnotationEffect {
     initAnnotationStatsInfoLoading$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationInfoStats),
         mergeMap((action: fromActions.InitAnnotationInfoStatsAction) =>
-            this.store.select(fromSelectors.selectAnnotationDataById, action.payload)
+            this.store.select(fromSelectors.selectAnnotationDataById(action.payload))
                 .pipe(
                     take(1),
                     switchMap((d) =>
@@ -160,12 +160,12 @@ export class AnnotationEffect {
                 let obs: Observable<{ data?: AnnotationSnpModel[], loading: boolean }>;
                 if (action.payload.tfOrCl === 'tf') {
                     obs = action.payload.isExpanded ?
-                        this.store.select(fromSelectors.selectAnnotationTfTable, action.payload.ticket) :
-                        this.store.select(fromSelectors.selectAnnotationTfTableSum, action.payload.ticket);
+                        this.store.select(fromSelectors.selectAnnotationTfTable(action.payload.ticket)) :
+                        this.store.select(fromSelectors.selectAnnotationTfTableSum(action.payload.ticket));
                 } else {
                     obs = action.payload.isExpanded ?
-                        this.store.select(fromSelectors.selectAnnotationClTable, action.payload.ticket) :
-                        this.store.select(fromSelectors.selectAnnotationClTableSum, action.payload.ticket);
+                        this.store.select(fromSelectors.selectAnnotationClTable(action.payload.ticket)) :
+                        this.store.select(fromSelectors.selectAnnotationClTableSum(action.payload.ticket));
                 }
                 return obs.pipe(
                     take(1),

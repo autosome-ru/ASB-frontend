@@ -10,6 +10,8 @@ import {MatExpansionPanel} from "@angular/material/expansion";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
+import {SeoModel} from "../../../models/seo.model";
+import {SeoService} from "../../../services/seo.servise";
 
 @Component({
     selector: 'asb-ananas-help',
@@ -31,11 +33,14 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private router: Router,
                 public dialog: MatDialog,
+                public seoService: SeoService,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-
+        if (!this.isAdastra) {
+            this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
+        }
     }
 
     ngAfterViewInit(): void {
