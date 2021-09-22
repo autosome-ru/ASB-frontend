@@ -4,7 +4,7 @@
     <div class="mat-elevation-z2 pb-3 pt-0 container px-0">
         <h4
             class="theme-primary-border container"
-            style="overflow: auto;line-height: 1.5; margin-bottom: 0"
+            style="overflow: auto;line-height: 1.5; margin-bottom: 0; text-align: center"
         >ANANASTRA report (<b
             [matTooltipClass]="'big-font'"
             (click)="copyTicket()"
@@ -72,8 +72,11 @@
                         </ng-template>
                         <ng-template matTabContent>
                             <div class="mx-1 pt-1">
-                                <h5 class="help-message">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
-                                    {{data.metaInfo.totalSNPs}} user-submitted SNPs.</h5>
+                                <h5 class="help-message" style="text-align: center">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
+                                    {{data.metaInfo.totalSNPs}} user-submitted SNPs. <span>Background: <u>{{optionToView(data.metaInfo.background)}}</u></span>
+                                    <mat-icon style="margin-left: 3px; cursor: pointer; transform: scale(0.85)"
+                                              (click)="helpIconClicked()"
+                                              svgIcon="help"></mat-icon></h5>
                                 <astra-ticket-stats
                                     [chartData]="data"
                                     (statsLastStep)="selectTabById(1)"

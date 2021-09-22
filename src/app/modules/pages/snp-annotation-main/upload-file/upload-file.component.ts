@@ -11,6 +11,7 @@ import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ana
 import {ToastrService} from "ngx-toastr";
 import {esOptions, fdrOptions} from "../../../../helpers/constants/constants";
 import {BackgroundSelect} from "../../../../models/annotation.model";
+import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/convertBackgroundChoices.helper";
 
 @Component({
   selector: 'astra-upload-file-component',
@@ -199,17 +200,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     }
 
     optionToView(option: BackgroundSelect) {
-        switch (option) {
-            case 'LD-EUR':
-                return 'LD-islands (EUR)'
-            case 'LD-ASN':
-                return 'LD-islands (ASN)'
-            case 'LD-AFR':
-                return 'LD-islands (AFR)'
-            case 'LOCAL':
-                return 'Local (1 Mbase)'
-            case 'WG':
-                return 'Whole genome'
-        }
+        return convertBackgroundChoicesHelper(option)
     }
 }

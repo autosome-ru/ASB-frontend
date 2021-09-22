@@ -28,6 +28,7 @@ export interface StatsDataModel {
     expRatio: number;
     tfRatio: number;
     fdr: number;
+    background: BackgroundSelect;
     clRatio: number;
     pValue: number | string;
     notFound: number;
@@ -121,6 +122,7 @@ export interface PingDataBackendModel {
 export interface AnnotationDataBackendModel {
     ticket_id: string;
     fdr: number;
+    background: BackgroundSelect;
     date_created: string;
     expiration_date: string;
     status: string;

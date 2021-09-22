@@ -8,12 +8,18 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {ScriptService} from 'src/app/services/script.service';
-import {AnnotationDataModel, AsbStatsDataModel, StatsDataModel} from 'src/app/models/annotation.model';
+import {
+    AnnotationDataModel,
+    AsbStatsDataModel,
+    BackgroundSelect,
+    StatsDataModel
+} from 'src/app/models/annotation.model';
 import {writeScientificNum} from '../../../../functions/scientific.helper';
 import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
+import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/convertBackgroundChoices.helper";
 
 @Component({
     selector: 'astra-ticket-stats',
@@ -151,4 +157,5 @@ export class TicketStatsComponent implements OnInit {
     statsNextStep() {
         this.statsLastStep.emit()
     }
+
 }

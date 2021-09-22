@@ -15,7 +15,7 @@ export class ProcessingService {
 
     startProcessTicket(ticket: string, fdr: string, es: string, background: BackgroundSelect): Observable<object> {
         return this.http.post<object>(`${this.urlService.getUrlForQuery("ananastra")}/process/${ticket}`,
-            {}, {params: {fdr, es}});
+            {}, {params: {fdr, es, background}});
     }
 
     getFileStatsByTicket(ticket: string): Observable<AnnotationDataBackendModel> {

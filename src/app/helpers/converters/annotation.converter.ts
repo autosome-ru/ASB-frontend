@@ -15,6 +15,7 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
     return {
         // Ticket info
         fdr: model.fdr,
+        background: model.background || 'WG',
         processingTime: stats.processing_time,
         processingStartedAt: new Date(Date.now() - new Date(stats.processing_started_at).getTime()),
         lastStatusUpdateAt: stats.last_status_update_at,

@@ -4,7 +4,12 @@ import * as fromActions from 'src/app/store/action/ananastra';
 import * as fromSelectors from 'src/app/store/selector/ananastra';
 import {Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
-import {AnnotationDataModel, AnnotationSnpModel, PingDataModel} from 'src/app/models/annotation.model';
+import {
+    AnnotationDataModel,
+    AnnotationSnpModel,
+    BackgroundSelect,
+    PingDataModel
+} from 'src/app/models/annotation.model';
 import {MatTabGroup} from '@angular/material/tabs';
 import {TfOrCl} from '../../../models/data.model';
 import {DownloadService} from 'src/app/services/download.service';
@@ -16,6 +21,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {SeoService} from "../../../services/seo.servise";
 import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
+import {convertBackgroundChoicesHelper} from "../../../helpers/text-helpers/convertBackgroundChoices.helper";
 
 @Component({
     selector: 'astra-ticket-page',
@@ -211,6 +217,16 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     selectTabById(id:tabEnum=tabEnum.sum) {
         this.selectedTab = id
+    }
+
+
+    optionToView(option: BackgroundSelect) {
+        return convertBackgroundChoicesHelper(option)
+    }
+
+
+    helpIconClicked() {
+        console.log('Click')
     }
 }
 
