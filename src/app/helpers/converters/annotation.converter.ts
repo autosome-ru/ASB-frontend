@@ -17,48 +17,46 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         fdr: model.fdr,
         background: model.background || 'WG',
         processingTime: stats.processing_time,
-        processingStartedAt: new Date(Date.now() - new Date(stats.processing_started_at).getTime()),
-        lastStatusUpdateAt: stats.last_status_update_at,
         // Other fields
         totalSNPs: stats.all_rs,
         undefinedCount: stats.undefined_rs,
-        notFound: stats.all_rs - stats.all_negatives_rs - stats.undefined_rs - stats.all_asbs_rs,
-        expRatio: (stats.expected_asbs_all_rs + stats.expected_negatives_all_rs) ?
-            stats.expected_asbs_all_rs / (stats.expected_asbs_all_rs + stats.expected_negatives_all_rs) * 100 : 0,
+        notFound: stats.all_rs - stats.all.negatives_rs - stats.undefined_rs - stats.all.asbs_rs,
+        expRatio: stats.all.expected_asbs_rs + stats.all.expected_negatives_rs > 0 ?
+            stats.all.expected_asbs_rs / (stats.all.expected_asbs_rs + stats.all.expected_negatives_rs) * 100 : 0,
         // Overall stats
-        asbCount: stats.all_asbs_rs,
-        negativesCount: stats.all_negatives_rs,
-        ratio: stats.all_negatives_rs + stats.all_asbs_rs > 0 ?
-            stats.all_asbs_rs / (stats.all_negatives_rs + stats.all_asbs_rs) * 100 : 0,
-        oddsRatio: stringToNum(stats.all_odds_rs),
-        pValue: stringToNum(stats.all_log10_p_value_rs),
+        asbCount: stats.all.asbs_rs,
+        negativesCount: stats.all.negatives_rs,
+        ratio: stats.all.negatives_rs + stats.all.asbs_rs > 0 ?
+            stats.all.asbs_rs / (stats.all.negatives_rs + stats.all.asbs_rs) * 100 : 0,
+        oddsRatio: stringToNum(stats.all.odds_rs),
+        pValue: stringToNum(stats.all.log10_p_value_rs),
         // TF-wise stats
-        tfNegativesCount: stats.tf_negatives_rs,
-        tfAsbs: stats.tf_asbs_rs,
-        tfRatio: stats.tf_negatives_rs + stats.tf_asbs_rs > 0 ?
-            stats.tf_asbs_rs / (stats.tf_negatives_rs + stats.tf_asbs_rs) * 100 : 0,
-        tfOdds: stringToNum(stats.tf_odds_rs),
-        tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
+        tfNegativesCount: stats.tf.negatives_rs,
+        tfAsbs: stats.tf.asbs_rs,
+        tfRatio: stats.tf.negatives_rs + stats.tf.asbs_rs > 0 ?
+            stats.tf.asbs_rs / (stats.tf.negatives_rs + stats.tf.asbs_rs) * 100 : 0,
+        tfOdds: stringToNum(stats.tf.odds_rs),
+        tfPvalue: stringToNum(stats.tf.log10_p_value_rs),
         // CL-wise stats
-        clNegativesCount: stats.cl_negatives_rs,
-        clAsbs: stats.cl_asbs_rs,
-        clRatio: stats.cl_negatives_rs + stats.cl_asbs_rs > 0 ?
-            stats.cl_asbs_rs / (stats.cl_negatives_rs + stats.cl_asbs_rs) * 100 : 0,
-        clOdds: stringToNum(stats.cl_odds_rs),
-        clPvalue: stringToNum(stats.cl_log10_p_value_rs),
+        clNegativesCount: stats.cl.negatives_rs,
+        clAsbs: stats.cl.asbs_rs,
+        clRatio: stats.cl.negatives_rs + stats.cl.asbs_rs > 0 ?
+            stats.cl.asbs_rs / (stats.cl.negatives_rs + stats.cl.asbs_rs) * 100 : 0,
+        clOdds: stringToNum(stats.cl.odds_rs),
+        clPvalue: stringToNum(stats.cl.log10_p_value_rs),
         // Chromosome-wise stats
-        chrPvalue: stringToNum(stats.chr_log10_p_value_rs),
-        chrTfPvalue: stringToNum(stats.chr_tf_log10_p_value_rs),
-        chrClPvalue: stringToNum(stats.chr_cl_log10_p_value_rs),
+        chrPvalue: stringToNum(stats.chr.log10_p_value_rs),
+        chrTfPvalue: stringToNum(stats.chr.tf_log10_p_value_rs),
+        chrClPvalue: stringToNum(stats.chr.cl_log10_p_value_rs),
         // Charts
-        tfAsbList: stats.tf_asb_counts ? stats.tf_asb_counts : [],
-        clAsbList: stats.cl_asb_counts ? stats.cl_asb_counts : [],
-        tfAsbListSum: stats.tf_asb_counts_top ? stats.tf_asb_counts_top : [],
-        clAsbListSum: stats.cl_asb_counts_top ? stats.cl_asb_counts_top : [],
+        tfAsbList: stats.tf.asb_counts ? stats.tf.asb_counts : [],
+        clAsbList: stats.cl.asb_counts ? stats.cl.asb_counts : [],
+        tfAsbListSum: stats.tf.asb_counts_top ? stats.tf.asb_counts_top : [],
+        clAsbListSum: stats.cl.asb_counts_top ? stats.cl.asb_counts_top : [],
         // Enrichment
-        tfAsbData: stats.tf_asb_data ? stats.tf_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
-        clAsbData: stats.cl_asb_data ? stats.cl_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
-        chrAsbData: stats.chr_asb_data ? stats.chr_asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
+        tfAsbData: stats.tf.asb_data ? stats.tf.asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
+        clAsbData: stats.cl.asb_data ? stats.cl.asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
+        chrAsbData: stats.chr.asb_data ? stats.chr.asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
 
     };
 }
@@ -66,7 +64,7 @@ function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel):
     return {
         odds: stringToNum(model.odds),
         asbsRs: model.asbs_rs,
-        negativesRs: model.candidates_rs,
+        negativesRs: model.negatives_rs,
         pValue: stringToNum(model.log10_p_value, true),
         fdr: stringToNum(model.log10_fdr, true),
         name: model.name

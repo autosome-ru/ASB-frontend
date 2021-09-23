@@ -53,49 +53,53 @@ export interface StatsDataModel {
     chrClPvalue: number | string;
     tfAsbListSum: CountModel[];
     clAsbListSum: CountModel[];
-    lastStatusUpdateAt: string;
-    processingStartedAt: Date;
-
 }
 
 export interface StatsDataBackendModel {
     all_rs: number;
-    all_asbs_rs: number;
-    undefined_rs: number;
-    all_negatives_rs: number;
-    all_log10_p_value_rs: string;
-    all_odds_rs: string;
-    cl_asbs_rs: number;
-    expected_asbs_all_rs: number;
-    expected_negatives_all_rs: number;
-    cl_negatives_rs: number;
-    tf_asb_data: AsbStatsBackendDataModel[];
-    cl_asb_data: AsbStatsBackendDataModel[];
-    chr_asb_data: AsbStatsBackendDataModel[];
-    cl_log10_p_value_rs: string;
-    cl_odds_rs: string;
     processing_time: string;
-    concordant_asbs: ConcordanceBackendModel[];
-    tf_asbs_rs: number;
-    tf_negatives_rs: number;
-    tf_log10_p_value_rs: string;
-    tf_odds_rs: string;
-    chr_log10_p_value_rs: string;
-    chr_tf_log10_p_value_rs: string;
-    chr_cl_log10_p_value_rs: string;
-    tf_asb_counts: CountModel[];
-    cl_asb_counts: CountModel[];
-    tf_asb_counts_top: CountModel[];
-    cl_asb_counts_top: CountModel[];
-    last_status_update_at: string;
-    processing_started_at: string;
+    undefined_rs: number;
+    all: {
+        asbs_rs: number;
+        negatives_rs: number;
+        log10_p_value_rs: string;
+        odds_rs: string;
+        expected_asbs_rs: number;
+        expected_negatives_rs: number;
+    },
+    cl: {
+        asbs_rs: number;
+        negatives_rs: number;
+        log10_p_value_rs: string;
+        odds_rs: string;
+        expected_asbs_rs: number;
+        expected_negatives_rs: number;
+        asb_counts: CountModel[];
+        asb_counts_top: CountModel[];
+        asb_data: AsbStatsBackendDataModel[];
+    },
+    tf: {
+        asbs_rs: number;
+        negatives_rs: number;
+        log10_p_value_rs: string;
+        odds_rs: string;
+        expected_asbs_rs: number;
+        expected_negatives_rs: number;
+        asb_counts: CountModel[];
+        asb_counts_top: CountModel[];
+        asb_data: AsbStatsBackendDataModel[];
+    },
+    chr: {
+        asb_data: AsbStatsBackendDataModel[];
+        log10_p_value_rs: string;
+        tf_log10_p_value_rs: string;
+        cl_log10_p_value_rs: string;
+    }
 }
 export interface AsbStatsBackendDataModel {
     name: string;
-    asbs: number;
-    candidates: number;
     asbs_rs: number;
-    candidates_rs: number;
+    negatives_rs: number;
     odds: string;
     log10_p_value: string;
     log10_fdr: string;

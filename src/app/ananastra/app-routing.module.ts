@@ -25,7 +25,7 @@ const routes: Routes = [
             mod => mod.TicketPageModule
         ),
         data: {
-            title: (ticket: string) => `Report ${ticket}`,
+            title: (ticket: string) => `${ticket} - ANANASTRA`,
             description: ""
         }
     },
