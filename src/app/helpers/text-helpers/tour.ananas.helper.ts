@@ -34,7 +34,7 @@ function getText(step: string): string {
         case 'odds-table-open':
             return 'Click to show results of enrichment\nanalysis for particular TFs or cell types.'
         case 'odds-table':
-            return 'The Fisher\'s exact test P-values\nare FDR-corrected for the number\nof TFs/cell types that have at least\none ASB event at user-submitted SNPs.'
+            return 'TF- and cell type-level enrichment is\nalways performed against genome-wide background\nrestricted to a particular TF or cell type.\nThe Fisher\'s exact test P-values\nare FDR-corrected for the number\nof TFs/cell types that have at least\none ASB event at user-submitted SNPs.'
         case 'pie-chart':
             return 'Click on individual segments\nof the chart to filter ASBs\nrelated to a particular TF\nor a cell type.'
         case 'columns-select':

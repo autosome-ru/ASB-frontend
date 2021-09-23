@@ -53,11 +53,25 @@ export class TicketTableTmpComponent implements OnInit {
             fdr: {
                 view: 'FDR',
                 columnTemplate: this.fdrViewTemplate
+            },
+            expectedNegativesRs: {
+                view: 'Expected # of non-ASB SNPs',
+                isDesc: true
+            },
+            expectedAsbsRs: {
+                view: 'Expected # of ASB SNPs',
+                isDesc: true
+            },
+            negativesRs: {
+                view: '# of non-ASB SNPs',
+                isDesc: true
             }
         }
         this.defaultDisplayedColumns = ["name", "asbsRs", "odds", "pValue", "fdr"]
         this.displayedColumns = [
-            ...this.defaultDisplayedColumns,
+            "name", "asbsRs", "negativesRs",
+            "expectedAsbsRs", "expectedNegativesRs",
+            "odds", "pValue", "fdr"
         ]
 
     }

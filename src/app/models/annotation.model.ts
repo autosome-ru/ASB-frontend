@@ -1,4 +1,4 @@
-import {ConcordanceBackendModel, MotifSnpModel, SnpGenPosModel} from './data.model';
+import {MotifSnpModel, SnpGenPosModel} from './data.model';
 export interface PingDataModel {
     ticketId: string;
     status: string;
@@ -100,6 +100,8 @@ export interface AsbStatsBackendDataModel {
     name: string;
     asbs_rs: number;
     negatives_rs: number;
+    expected_asbs_rs: number;
+    expected_negatives_rs: number;
     odds: string;
     log10_p_value: string;
     log10_fdr: string;
@@ -108,6 +110,8 @@ export interface AsbStatsDataModel {
     name: string;
     asbsRs: number;
     negativesRs: number;
+    expectedAsbsRs: number;
+    expectedNegativesRs: number;
     odds: number | string;
     pValue: number | string;
     fdr: number | string;

@@ -65,6 +65,8 @@ function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel):
         odds: stringToNum(model.odds),
         asbsRs: model.asbs_rs,
         negativesRs: model.negatives_rs,
+        expectedNegativesRs: model.expected_negatives_rs,
+        expectedAsbsRs: model.expected_asbs_rs,
         pValue: stringToNum(model.log10_p_value, true),
         fdr: stringToNum(model.log10_fdr, true),
         name: model.name

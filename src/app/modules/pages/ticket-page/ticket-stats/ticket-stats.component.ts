@@ -125,12 +125,26 @@ export class TicketStatsComponent implements OnInit {
                 columnTemplate: this.fdrViewTemplate,
                 colorStyle: this.getRowColor,
             },
-            // fdr: {
-            //     view: 'FDR',
-            //     columnTemplate: this.fdrViewTemplate
-            // }
+            expectedNegativesRs: {
+                view: 'Expected # of non-ASB SNPs',
+                isDesc: true,
+                colorStyle: this.getRowColor,
+            },
+            expectedAsbsRs: {
+                view: 'Expected # of ASB SNPs',
+                isDesc: true,
+                colorStyle: this.getRowColor,
+            },
         }
-        this.displayedColumns = [...this.defaultDisplayedColumns]
+        this.displayedColumns = [
+            "name",
+            "asbsRs",
+            "negativesRs",
+            "expectedAsbsRs",
+            "expectedNegativesRs",
+            "odds",
+            "pValue"
+        ]
     }
 
 
