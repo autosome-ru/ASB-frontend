@@ -19,7 +19,7 @@ export class UrlService {
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
         'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl, isEqtl?: boolean): string {
         this.currentRelease = ananastraRelease
-        const currentApi: string = `https://d44c-109-252-131-230.ngrok.io/api/${this.currentRelease.api}`
+        const currentApi: string = `https://3feb-109-252-131-230.ngrok.io/api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
                 return `${currentApi}/browse`

@@ -77,7 +77,13 @@ export class AnnotationEffect {
         ofType(fromActions.ActionTypes.PingAnnotation),
         mergeMap((action: fromActions.PingAnnotationAction) =>
             this.processingService.pingStatsByTicket(action.payload).pipe(
-                map(info => new fromActions.PingAnnotationSuccessAction(info)),
+                map(info => {
+                    const url = `/ticket/${action.payload}`
+                    if (this.router.url !== url) {
+                        this.router.navigateByUrl(url)
+                    }
+                    return new fromActions.PingAnnotationSuccessAction(info)
+                }),
                 catchError(() =>
                     of(new fromActions.PingAnnotationFailAction(action.payload))),
             )

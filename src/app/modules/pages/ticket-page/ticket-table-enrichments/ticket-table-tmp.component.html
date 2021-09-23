@@ -3,6 +3,8 @@
     [columnModel]="columnModel"
     [initialSorting]="{active: 'fdr', direction: 'asc'}"
     [displayedColumns]="displayedColumns"
+    [defaultColumns]="defaultDisplayedColumns"
+    [columnsSelectStyle]="{'margin': '0rem 10px -1rem'}"
     [paginatorOptions]="[5, 10, 20, 50]"
 ></asb-table>
 <ng-template #fdrViewTemplate let-value="value">

@@ -38,12 +38,13 @@ export class TicketStatsComponent implements OnInit {
     public chartDatasets: Array<any> = [];
     public stats: StatsDataModel;
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>;
-    public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [
+    public defaultDisplayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [
         "name",
         "asbsRs",
-        "candidatesRs",
+        "negativesRs",
         "odds",
         "pValue"]
+    public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [];
 
     @Input()
     set chartData(value: AnnotationDataModel) {
@@ -54,7 +55,7 @@ export class TicketStatsComponent implements OnInit {
                     data:
                         [
                             value.metaInfo.asbCount,
-                            value.metaInfo.candidatesCount,
+                            value.metaInfo.negativesCount,
                             value.metaInfo.undefinedCount,
                             value.metaInfo.notFound
                         ],
@@ -114,7 +115,7 @@ export class TicketStatsComponent implements OnInit {
                 view: '# of ASB SNPs',
                 colorStyle: this.getRowColor,
             },
-            candidatesRs: {
+            negativesRs: {
                 isDesc: true,
                 view: '# of non-ASB SNPs',
                 colorStyle: this.getRowColor,
@@ -129,6 +130,7 @@ export class TicketStatsComponent implements OnInit {
             //     columnTemplate: this.fdrViewTemplate
             // }
         }
+        this.displayedColumns = [...this.defaultDisplayedColumns]
     }
 
 

@@ -2,7 +2,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy,
     Component, ElementRef, EventEmitter,
     HostBinding,
-    Input, OnChanges, Output, SimpleChanges,
+    Input, OnChanges, OnInit, Output, SimpleChanges,
     TemplateRef, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "src/app/models/table.model";
@@ -11,6 +11,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {AsbPopoverComponent} from "../../popover-template/popover.component";
 import {MatDialog} from "@angular/material/dialog";
+import {FormBuilder, FormControl} from "@angular/forms";
 
 
 @Component({
@@ -21,19 +22,25 @@ import {MatDialog} from "@angular/material/dialog";
     encapsulation: ViewEncapsulation.None
 })
 
-export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
+export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnInit {
     @HostBinding("class.asb-table")
     private readonly cssClass = true;
     @ViewChild("table", {static: true, read: ElementRef}) tableRef: ElementRef<HTMLTableElement>;
     @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
     @ViewChild("sort", {static: false}) sort: MatSort;
 
-    constructor(
-        public dialog: MatDialog,
-    ) {}
+    public _defaultColumns: AsbTableDisplayedColumns<T>;
 
     @Input()
     public columnModel: AsbTableColumnModel<T>;
+
+    @Input()
+    public columnsSelectStyle: {[id: string]: string} = {}
+
+    @Input()
+    set defaultColumns(value: AsbTableDisplayedColumns<T>) {
+        this._defaultColumns = value;
+    };
 
     @Input()
     private sortingDataAccessor: ((data: T, s: string ) => string | number);
@@ -93,7 +100,18 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
     @Output()
     public rowClickEmitter = new EventEmitter<T>();
+    public columnsControl: FormControl;
 
+
+
+    constructor(
+        private dialog: MatDialog,
+        private formBuilder: FormBuilder
+    ) {}
+
+    ngOnInit() {
+        this.columnsControl = this.formBuilder.control(this._defaultColumns)
+    }
 
     ngAfterViewInit() {
         if (this._dataSource) {
@@ -136,13 +154,20 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges {
 
     getDisplayedColumns(): string[] {
         const result = [];
-        result.push(...this.displayedColumns);
+        if (this._defaultColumns) {
+            result.push(...this.columnsControl.value)
+        } else {
+            result.push(...this.displayedColumns);
+        }
         if (this.actionTemplate) {
             result.push("__action__");
         }
         return result;
     }
 
+    resetColumns(): void {
+        this.columnsControl.patchValue(this._defaultColumns)
+    }
 }
 
 

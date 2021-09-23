@@ -10,6 +10,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AsbPipesModule} from "../../../pipes/pipe.module";
+import {MatSelectModule} from "@angular/material/select";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
     imports: [
@@ -22,6 +24,8 @@ import {AsbPipesModule} from "../../../pipes/pipe.module";
         MatPaginatorModule,
         MatProgressSpinnerModule,
         AsbPipesModule,
+        MatSelectModule,
+        ReactiveFormsModule,
     ],
     declarations: [
         AsbTableComponent,

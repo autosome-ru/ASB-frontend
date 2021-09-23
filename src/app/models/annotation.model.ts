@@ -23,7 +23,7 @@ export interface CountModel {
 export interface StatsDataModel {
     asbCount: number;
     undefinedCount: number;
-    candidatesCount: number;
+    negativesCount: number;
     ratio: number;
     expRatio: number;
     tfRatio: number;
@@ -35,12 +35,12 @@ export interface StatsDataModel {
     totalSNPs: number;
     oddsRatio: number | string;
     clAsbs: number;
-    clCandidates: number;
+    clNegativesCount: number;
     clPvalue: number | string
     clOdds: number | string;
     processingTime: string;
     tfAsbs: number;
-    tfCandidates: number;
+    tfNegativesCount: number;
     tfPvalue: number | string;
     tfOdds: number | string;
     tfAsbList: CountModel[];
@@ -62,12 +62,13 @@ export interface StatsDataBackendModel {
     all_rs: number;
     all_asbs_rs: number;
     undefined_rs: number;
-    all_candidates_rs: number;
+    all_negatives_rs: number;
     all_log10_p_value_rs: string;
     all_odds_rs: string;
     cl_asbs_rs: number;
-    expected_fraction_all: number;
-    cl_candidates_rs: number;
+    expected_asbs_all_rs: number;
+    expected_negatives_all_rs: number;
+    cl_negatives_rs: number;
     tf_asb_data: AsbStatsBackendDataModel[];
     cl_asb_data: AsbStatsBackendDataModel[];
     chr_asb_data: AsbStatsBackendDataModel[];
@@ -76,7 +77,7 @@ export interface StatsDataBackendModel {
     processing_time: string;
     concordant_asbs: ConcordanceBackendModel[];
     tf_asbs_rs: number;
-    tf_candidates_rs: number;
+    tf_negatives_rs: number;
     tf_log10_p_value_rs: string;
     tf_odds_rs: string;
     chr_log10_p_value_rs: string;
@@ -101,10 +102,8 @@ export interface AsbStatsBackendDataModel {
 }
 export interface AsbStatsDataModel {
     name: string;
-    asbs: number;
-    candidates: number;
     asbsRs: number;
-    candidatesRs: number;
+    negativesRs: number;
     odds: number | string;
     pValue: number | string;
     fdr: number | string;

@@ -22,24 +22,28 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         // Other fields
         totalSNPs: stats.all_rs,
         undefinedCount: stats.undefined_rs,
-        notFound: stats.all_rs - stats.all_candidates_rs - stats.undefined_rs,
-        expRatio: stats.expected_fraction_all ? stats.expected_fraction_all * 100 : 0,
+        notFound: stats.all_rs - stats.all_negatives_rs - stats.undefined_rs - stats.all_asbs_rs,
+        expRatio: (stats.expected_asbs_all_rs + stats.expected_negatives_all_rs) ?
+            stats.expected_asbs_all_rs / (stats.expected_asbs_all_rs + stats.expected_negatives_all_rs) * 100 : 0,
         // Overall stats
         asbCount: stats.all_asbs_rs,
-        candidatesCount: stats.all_candidates_rs - stats.all_asbs_rs,
-        ratio: stats.all_candidates_rs > 0 ? stats.all_asbs_rs / stats.all_candidates_rs * 100 : 0,
+        negativesCount: stats.all_negatives_rs,
+        ratio: stats.all_negatives_rs + stats.all_asbs_rs > 0 ?
+            stats.all_asbs_rs / (stats.all_negatives_rs + stats.all_asbs_rs) * 100 : 0,
         oddsRatio: stringToNum(stats.all_odds_rs),
         pValue: stringToNum(stats.all_log10_p_value_rs),
         // TF-wise stats
-        tfCandidates: stats.tf_candidates_rs - stats.tf_asbs_rs,
+        tfNegativesCount: stats.tf_negatives_rs,
         tfAsbs: stats.tf_asbs_rs,
-        tfRatio: stats.tf_candidates_rs > 0 ? stats.tf_asbs_rs / stats.tf_candidates_rs * 100 : 0,
+        tfRatio: stats.tf_negatives_rs + stats.tf_asbs_rs > 0 ?
+            stats.tf_asbs_rs / (stats.tf_negatives_rs + stats.tf_asbs_rs) * 100 : 0,
         tfOdds: stringToNum(stats.tf_odds_rs),
         tfPvalue: stringToNum(stats.tf_log10_p_value_rs),
         // CL-wise stats
-        clCandidates: stats.cl_candidates_rs - stats.cl_asbs_rs,
+        clNegativesCount: stats.cl_negatives_rs,
         clAsbs: stats.cl_asbs_rs,
-        clRatio: stats.cl_candidates_rs > 0 ? stats.cl_asbs_rs / stats.cl_candidates_rs * 100 : 0,
+        clRatio: stats.cl_negatives_rs + stats.cl_asbs_rs > 0 ?
+            stats.cl_asbs_rs / (stats.cl_negatives_rs + stats.cl_asbs_rs) * 100 : 0,
         clOdds: stringToNum(stats.cl_odds_rs),
         clPvalue: stringToNum(stats.cl_log10_p_value_rs),
         // Chromosome-wise stats
@@ -61,10 +65,8 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
 function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel): AsbStatsDataModel {
     return {
         odds: stringToNum(model.odds),
-        asbs: model.asbs,
         asbsRs: model.asbs_rs,
-        candidates: model.candidates,
-        candidatesRs: model.candidates_rs,
+        negativesRs: model.candidates_rs,
         pValue: stringToNum(model.log10_p_value, true),
         fdr: stringToNum(model.log10_fdr, true),
         name: model.name

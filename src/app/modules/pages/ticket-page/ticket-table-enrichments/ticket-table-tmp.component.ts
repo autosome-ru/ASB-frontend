@@ -27,6 +27,7 @@ export class TicketTableTmpComponent implements OnInit {
 
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>
     public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
+    public defaultDisplayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
 
     constructor() {
     }
@@ -54,7 +55,10 @@ export class TicketTableTmpComponent implements OnInit {
                 columnTemplate: this.fdrViewTemplate
             }
         }
-        this.displayedColumns = ["name", "asbsRs", "odds", "pValue", "fdr"]
+        this.defaultDisplayedColumns = ["name", "asbsRs", "odds", "pValue", "fdr"]
+        this.displayedColumns = [
+            ...this.defaultDisplayedColumns,
+        ]
 
     }
 
