@@ -236,9 +236,8 @@
                         <dt>Overall enrichment for TF- and cell type-specific ASBs</dt>
                         <dd>
                             <div>
-                            Right-sided Fisher's exact test is performed to assess the
-                            ASB enrichment significance. The following contingency table is
-                            used
+                            Right-tailed Fisher's exact test is performed to assess the
+                            ASB enrichment with following contingency table:
                             <table class="my-table">
                                 <tbody>
                                 <tr style="height:30px">
@@ -246,19 +245,39 @@
                                     <td># of SNPs with ASBs in the database</td>
                                 </tr>
                                 <tr style="height:30px">
-                                    <td># of non-ASB SNPs in user-submitted list</td>
-                                    <td># of non-ASB SNPs in the database</td>
+                                    <td># of non-ASB SNPs* in user-submitted list</td>
+                                    <td># of non-ASB SNPs* in the database</td>
                                 </tr>
                                 </tbody>
                             </table>
-                            Similar tests are performed to assess individual
-                                TF-ASB and cell type-ASB enrichment.
+                                *Non-ASB SNPs are SNPs without any significant ASBs passing 25% FDR.<br><br>
+                                Similar tests are performed to assess enrichment at the
+                                level of individual chromosomes (with the individual chromosome P-values
+                                being aggregated using the
+                                <a href="https://link.springer.com/article/10.1007/BF02056895" rel="noopener noreferrer" target="_blank">‘logit’ method</a>), and for particular
+                                TFs or cell types.
+
                                 To have a proper background, non-ASB SNPs are selected
                                 to pass the same read coverage thresholds
                                 as the genuine significant ASB SNPs, i.e. most of those
                                 are located within ChIP-Seq peaks of the respective TFs.
                             </div>
                         </dd>
+                        <dt>Background SNP set</dt>
+                        <dd>
+                            The following types of background SNP sets are available to assess the overall ASB enrichment:
+                            <ul style="list-style-type: circle;">
+                                <li>
+                                    <b>Whole genome:</b> All ADASTRA 'candidate' SNPs eligible for ASB assessment (i.e. passing ? coverage threshold);
+                                </li>
+                                <li>
+                                    <b>LD-islands:</b> ADASTRA 'candidate' SNPs located in the same LD-islands as the ‘test’ SNPs of the user-submitted list;
+                                </li>
+                                <li>
+                                    <b>Local:</b> ADASTRA 'candidate' SNPs located within the same 1 Mbp windows as the ‘test’ SNPs of the user-submitted list.
+                                </li>
+                            </ul>
+                            <b>[!] Note</b>, that chromosome-level and TF-/cell type-specific tests <b>always</b> use the respective subsets of the <b>'whole genome'</b> background set.</dd>
                     </dl>
                 </section>
             </mat-expansion-panel>
@@ -273,51 +292,63 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="px-3">
-                    Each ANANASTRA report page contains 3 sections: (1) Summary, (2) ASB events related to particular TFs or cell types, and (3) Complete table of ASBs found at user-submitted SNPs.
+                    Each ANANASTRA report page contains 3 tabs:
+                    (1) Summary, (2) ASB events of particular TFs, and (3) ASB events found in particular
+                    cell types.<br><br>
                     <dl>
-                        <dt>Summary
-                            <span
-                                class="preview d-none d-lg-inline"
-                                (click)="openPreview('summary')"
-                            >
-                                preview</span></dt>
+                        <dt>Summary</dt>
                         <dd>
-                            This section is dedicated to general information on ASB events found in the submitted set of SNPs.
-                            Particularly, we report the observed fraction of ASBs
-                            (among all candidate ASB sites passing certain read coverage thresholds, see <>)
-                            ASB enrichment significance is calculated with the right-tail Fisher's exact test, see
+                            This section is dedicated to general enrichment on ASB events in the submitted
+                            set of SNPs against the chosen background set. We report the observed fraction
+                            of ASBs (among ASB-carrying and ASB-less SNPs passing certain read coverage thresholds,
+                            see <>) ASB enrichment significance is calculated with the right-tailed Fisher's exact
+                            test as
                             <a
                                 (click)="openGlossary('ASB_enrichment'); $event.preventDefault()"
                                 href="/help#ASB_enrichement"
                             >
                                 here</a>.
+                            <span
+                            class="preview d-none d-lg-inline"
+                            (click)="openPreview('summary')"
+                        >
+                                preview
+                        </span><br><br>
+                            Below the overal statistics, there is a collapsible table of chromosome-wise ASB enrichment data.
+                            <span
+                                class="preview d-none d-lg-inline"
+                                (click)="openPreview('summary')"
+                            >
+                                    preview
+                            </span>
                         </dd>
                         <dt>
                             ASB events related to particular TFs or cell types
+                            </dt>
+                        <dd>The second and the third tabs contain information about ASB events of particular
+                            TFs or cell types. For each TF and cell type, we compute a separate P-value using
+                            the same strategy as for the global enrichment (except the respective background
+                            sets are always subsetted from the genome-wide set of 'candidate' SNPs). The results
+                            P-values are then corrected for the number of tested TFs / cell types (with at least
+                            1 observed ASB in the user's list) using Benjamini-Hogberg (FDR) procedure.
+                            The TFs / cell types with the lowest FDR are displayed on top by default.
                             <span
                                 class="preview d-none d-lg-inline"
                                 (click)="openPreview('enrichment')"
                             >
-                                preview</span></dt>
-                        <dd>The second section contains information about ASB events of particular
-                        TFs or cell types. For each TF and cell type, we compute a separate P-value
-                        using the same strategy as for the global enrichment, the P-values are then
-                        corrected for the number of tested TFs / cell types (with at least 1 observed
-                        ASB in the user's list) using Benjamini-Hogberg (FDR) procedure.
-                        The TFs / cell types with the lowest FDR are displayed on top by default.</dd>
-                        <dt>
-                            Complete table of ASBs found at user-submitted SNPs
+                                preview</span><br><br>
+
+                            At the bottom of each tab there is a detailed table listing all ASB events
+                            (in the expanded view mode) or showing only the single top-significant
+                            TF-/cell type- ASB event per SNP (in the collapsed view mode). Each mode
+                            allows downloading a complete table (the list of columns visible in the
+                            online report can be easily adjusted).
                             <span
-                                class="preview d-none d-lg-inline"
-                                (click)="openPreview('table')"
-                            >
-                                preview</span></dt>
-                        <dd>
-                            The final section provides a detailed table listing all ASB events
-                            (in the expanded view mode) or showing only the single most
-                            significant TF-/Cell type- ASB event per SNP (in the collapsed view mode).
-                            Each mode allows downloading a complete table (the list of columns visible
-                            in the online report can be adjusted when necessary).
+                            class="preview d-none d-lg-inline"
+                            (click)="openPreview('table')"
+                        >
+                                preview</span><br><br>
+                            <b>[!] Note</b>, that the lists longer than 200 ASBs are not browsable online, but can be downloaded for offline exploration.
                         </dd>
                     </dl>
                 </div>

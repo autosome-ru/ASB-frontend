@@ -228,6 +228,10 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     helpIconClicked() {
         console.log('Click')
     }
+
+    getHelpTooltip(bg: BackgroundSelect): string {
+        return bg
+    }
 }
 
 enum tabEnum {
