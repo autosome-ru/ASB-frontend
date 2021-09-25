@@ -99,7 +99,7 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
             case 'table':
                 return 'Complete table of ASBs found at user-submitted SNPs'
             case 'chromosomes':
-                return 'Enrichment analysis of ASBs at individual chromosomes'
+                return 'Analysis of ASB enrichment at individual chromosomes'
             default:
                 return ''
         }
