@@ -263,7 +263,9 @@
                                 are located within ChIP-Seq peaks of the respective TFs.
                             </div>
                         </dd>
-                        <dt>Background SNP set</dt>
+                        <dt id="background"
+                            [ngClass]="fragment == 'background' ? 'theme-primary-border' : ''"
+                        >Background SNP set</dt>
                         <dd>
                             The following types of background SNP sets are available to assess the overall ASB enrichment:
                             <ul style="list-style-type: circle;">
@@ -305,7 +307,8 @@
                             test as
                             <a
                                 (click)="openGlossary('ASB_enrichment'); $event.preventDefault()"
-                                href="/help#ASB_enrichement"
+                                routerLink="/help"
+                                fragment="ASB_enrichement"
                             >
                                 here</a>.
                             <span

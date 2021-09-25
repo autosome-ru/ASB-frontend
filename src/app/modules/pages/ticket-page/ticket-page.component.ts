@@ -224,13 +224,15 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         return convertBackgroundChoicesHelper(option)
     }
 
-
-    helpIconClicked() {
-        console.log('Click')
-    }
-
     getHelpTooltip(bg: BackgroundSelect): string {
-        return bg
+        switch (bg) {
+            case "LOCAL":
+                return 'ADASTRA \'candidate\' SNPs located within the same 1 Mbp windows as the ‘test’ SNPs of the user-submitted list.'
+            case "WG":
+                return 'All ADASTRA \'candidate\' SNPs eligible for ASB assessment.'
+            default:
+                return 'ADASTRA \'candidate\' SNPs located in the same LD-islands as the ‘test’ SNPs of the user-submitted list.'
+        }
     }
 }
 

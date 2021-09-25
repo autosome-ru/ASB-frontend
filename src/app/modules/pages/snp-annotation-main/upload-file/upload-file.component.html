@@ -145,7 +145,7 @@
 <!--                        </mat-option>-->
 <!--                    </mat-select>-->
 <!--                </mat-form-field>-->
-                <mat-form-field style="margin-right: 10px; max-width: 140px">
+                <mat-form-field style="margin-right: 5px; max-width: 140px">
                     <mat-label>Background</mat-label>
                     <mat-select formControlName="background">
                         <mat-option
@@ -156,6 +156,16 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
+                <mat-icon
+                    style="margin-right: 10px; cursor: pointer; transform: scale(0.85)"
+                    svgIcon="help"
+                    routerLink="/help"
+                    fragment="background"
+                    matTooltipClass="big-font"
+                    matTooltip="Background SNP set used to assess the overall ASB enrichment. Click to open help page."
+
+                ></mat-icon>
                 <button
                   color="accent"
                   style="align-self: flex-start; margin-top: 15px; margin-right: 5px"

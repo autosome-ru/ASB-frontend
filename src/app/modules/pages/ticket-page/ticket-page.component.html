@@ -75,8 +75,9 @@
                                 <h5 class="help-message" style="text-align: center">{{data.metaInfo.asbCount}} SNPs exhibiting allele-specific binding found among
                                     {{data.metaInfo.totalSNPs}} user-submitted SNPs. <span style="white-space: nowrap">Background: <u>{{optionToView(data.metaInfo.background)}}</u>
                                     <mat-icon style="margin-left: 3px; cursor: pointer; transform: scale(0.85)"
-                                              (click)="helpIconClicked()"
-                                              [matTooltip]="getHelpTooltip(data.metaInfo.background)"
+                                              routerLink="/help"
+                                              fragment="background"
+                                              [matTooltip]="getHelpTooltip(data.metaInfo.background) + ' Click to open help page.'"
                                               svgIcon="help"></mat-icon></span></h5>
                                 <astra-ticket-stats
                                     [chartData]="data"
