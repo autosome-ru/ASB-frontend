@@ -115,6 +115,18 @@
                             >ADASTRA paper</a>.
                             <br>
                         </dd>
+                        <dt id="coverage_filter">ADASTRA coverage filters</dt>
+                        <dd>
+                            ADASTRA pipeline utilizes several SNV filters before statistical evaluations of ASB:<br>
+                            <ul style="list-style-type: circle;">
+                                <li>Heterozygous biallelic SNVs (according to GATK ‘GT’ annotation);</li>
+                                <li>Having ≥ 5 reads at each of the alleles;</li>
+                                <li>Present in dbSNP build151 ‘common’ collection;</li>
+                                <li>Belonging to the regions with BABACHI-estimated BAD;</li>
+                                <li>Having a total read coverage of ≥ 20 in at least one of the experiments (for a particular TF or cell type).</li>
+                            </ul>
+                            More details can be found in the ADASTRA paper.
+                        </dd>
                     </dl>
                 </section>
                 <section
@@ -122,7 +134,7 @@
                 >
                     <h5 class="px-1">ASB properties</h5>
                     <dl class="px-3">
-                        <dt id="ASB-significance">ASB significance</dt>
+                        <dt id="asb_significance">ASB significance</dt>
                         <dd>ASB significance
                             ASB calling is done separately for each ChIP-Seq experiment.
                             For each candidate ASB site, the P-values for Reference and
@@ -269,7 +281,10 @@
                             The following types of background SNP sets are available to assess the overall ASB enrichment:
                             <ul style="list-style-type: circle;">
                                 <li>
-                                    <b>Whole genome:</b> All ADASTRA 'candidate' SNPs eligible for ASB assessment (i.e. passing ? coverage threshold);
+                                    <b>Whole genome:</b> All ADASTRA 'candidate' SNPs eligible for ASB assessment (see <a (click)="openGlossary('coverage_filter'); $event.preventDefault()"
+                                                                                                                          routerLink="/help"
+                                                                                                                          fragment="coverage_filter">
+                                    here</a>);
                                 </li>
                                 <li>
                                     <b>LD-islands:</b> ADASTRA 'candidate' SNPs located in the same LD-islands as the ‘test’ SNPs of the user-submitted list;
@@ -302,7 +317,11 @@
                             This section is dedicated to general enrichment on ASB events in the submitted
                             set of SNPs against the chosen background set. We report the observed fraction
                             of ASBs (among ASB-carrying and ASB-less SNPs passing certain read coverage thresholds,
-                            see <>) ASB enrichment significance is calculated with the right-tailed Fisher's exact
+                            see
+                            <a (click)="openGlossary('coverage_filter'); $event.preventDefault()"
+                                   routerLink="/help"
+                                   fragment="coverage_filter">
+                                here</a>). ASB enrichment significance is calculated with the right-tailed Fisher's exact
                             test as
                             <a
                                 (click)="openGlossary('ASB_enrichment'); $event.preventDefault()"
