@@ -142,7 +142,6 @@
                             <br>
                         </dd>
                         <dt id="ASB_es"
-                            [ngClass]="fragment === 'ASB_es' ? 'theme-primary-border' : ''"
                         >ASB effect size</dt>
                         <dd>The Effect Size of an ASB event is calculated separately for Reference
                             and Alternative alleles and is defined as the weighted mean of log-ratios
@@ -160,8 +159,8 @@
                         </dd>
                     </dl>
                 </section>
-                <section id="Motif_annotation">
-                    <h5>Motif annotation</h5>
+                <section >
+                    <h5 id="motif_annotation">Motif annotation</h5>
                     <dl class="px-3">
                         <dt>Motif P-value</dt>
                         <dd>For transcription factors with motifs available in
@@ -188,14 +187,13 @@
                             Negative values indicate Ref-ASBs. The value is not assigned
                             (n/a) in case the sequence motif model was not available.
                         </dd>
-                        <div id="Motif_Concordance">
-                            <b>Motif Concordance</b><br>
-                            <span>
+                        <dt id="motif_concordance">
+                            Motif Concordance</dt>
+                        <dd>
                         Motif Concordance indicates whether the allelic read
                         imbalance is consistent with the transcription factor
                         motif Fold Change (FC, predicted from sequence analysis).
                         The following notation is used:
-                        </span>
                             <ul style="list-style-type: circle;">
                                 <li>
                                     <b>n/a:</b>
@@ -225,12 +223,12 @@
                                     2 but not consistent with allelic read imbalance.
                                 </li>
                             </ul>
-                        </div>
+                        </dd>
                     </dl>
                 </section>
-                <section id="ASB_enrichment" *ngIf="!isAdastra">
+                <section  *ngIf="!isAdastra">
                     <h5
-                        [ngClass]="fragment == 'ASB_enrichment' ? 'theme-primary-border' : ''"
+                        id="ASB_enrichment"
                     >ASB enrichment estimation</h5>
                     <dl class="px-3">
                         <dt>Overall enrichment for TF- and cell type-specific ASBs</dt>
@@ -264,8 +262,9 @@
                             </div>
                         </dd>
                         <dt id="background"
-                            [ngClass]="fragment == 'background' ? 'theme-primary-border' : ''"
-                        >Background SNP set</dt>
+                        >
+                            Background SNP set
+                        </dt>
                         <dd>
                             The following types of background SNP sets are available to assess the overall ASB enrichment:
                             <ul style="list-style-type: circle;">
@@ -408,8 +407,8 @@
                         <h4 style="margin-bottom: 0">External resources</h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <section id="used-soft">
-                    <h5>Resources and databases used to annotate ADASTRA ASBs</h5>
+                <section >
+                    <h5 id="used-software">Resources and databases used to annotate ADASTRA ASBs</h5>
                     <div class="px-3">
                         <ul class="list-circle">
                             <li>

@@ -32,7 +32,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public formGroup: FormGroup;
   public fdrOptions: string[] = fdrOptions.filter(d => d != '0.25');
   public esOptions: string[] = esOptions;
-  public backgroundOptions: BackgroundSelect[] = ['WG', 'LD-EUR', 'LD-AFR', 'LD-ASN', 'LOCAL' ]
+  public backgroundOptions: BackgroundSelect[] = ['LD-EUR', 'LD-AFR', 'LD-ASN', 'LOCAL', 'WG']
 
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,

@@ -82,6 +82,7 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
         const initialElement: HTMLElement = document.getElementById(this.route.snapshot.fragment);
         if (initialElement) {
             initialElement.scrollIntoView({behavior: "smooth"});
+            initialElement.classList.add('theme-primary-border')
         }
     }
 
