@@ -252,7 +252,7 @@
                         <dd>
                             <div>
                             Right-tailed Fisher's exact test is performed to assess the
-                            ASB enrichment with following contingency table:
+                            ASB enrichment with the following contingency table:
                             <table class="my-table">
                                 <tbody>
                                 <tr style="height:30px">
@@ -532,6 +532,64 @@
                 </section>
             </mat-expansion-panel>
             </ng-container>
+            <mat-divider></mat-divider>
+            <mat-expansion-panel class="mat-elevation-z0" *ngIf="!isAdastra">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h4 style="margin-bottom: 0">
+                            Browser compatibility</h4>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                Browser compatibility was checked using
+                <a
+                    href="https://saucelabs.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >Sauce Labs</a> and
+                <a
+                    href="https://www.browserstack.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >BrowserStack</a>.
+                <table class="my-table">
+                    <tr>
+                        <th>OS</th>
+                        <th>Version</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Microsoft Edge</th>
+                        <th>Opera</th>
+                        <th>Safari</th>
+                    </tr>
+                    <tr>
+                        <td>Linux</td>
+                        <td>Ubuntu 18.04</td>
+                        <td>93</td>
+                        <td>92</td>
+                        <td>n/a</td>
+                        <td>not tested</td>
+                        <td>n/a</td>
+                    </tr>
+                    <tr>
+                        <td>MacOS</td>
+                        <td>Catalina, Mojave</td>
+                        <td>93</td>
+                        <td>92</td>
+                        <td>n/a</td>
+                        <td>79</td>
+                        <td>11.1</td>
+                    </tr>
+                    <tr>
+                        <td>Windows</td>
+                        <td>10</td>
+                        <td>93</td>
+                        <td>92</td>
+                        <td>93</td>
+                        <td>79</td>
+                        <td>n/a</td>
+                    </tr>
+                </table>
+            </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>
