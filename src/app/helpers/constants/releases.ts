@@ -15,7 +15,7 @@ export const releasesList: ReleaseModel[] = [
         gtrdExpsPath: "ADASTRA_GTRD_exps.zanthar.tsv",
         badMapsPath: "BADmaps.zanthar.zip",
         ucscFileName: 'ADASTRA_SNPs.zanthar.bb',
-        notes: "New 'permissive' strategy for BAD calling with simplified 'integer' set of allowed BADs resulting in nearly 2x better ASB calling sensitivity",
+        notes: "New 'permissive' strategy for BAD calling with simplified 'integer' set of allowed BADs resulting in nearly 2x better ASB calling sensitivity.",
         notesPath: 'readme.zanthar.txt',
     },
     {
@@ -44,6 +44,7 @@ export const releasesList: ReleaseModel[] = [
         defaultFdrThreshold: '0.05',
         recent: false,
         releaseLink: 'https://disk.yandex.ru/d/8iaZCprOYNLQsQ',
+        notes: 'Legacy release described in Abramov et al. doi: 10.1038/s41467-021-23007-0.',
         size: '453.7 МБ',
         version: "v1.6.10",
         api: "v1",
