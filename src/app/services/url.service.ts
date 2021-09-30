@@ -18,7 +18,6 @@ export class UrlService {
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
         'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl, isEqtl?: boolean): string {
-        this.currentRelease = recentRelease
         const currentApi: string = `${this.hostName}api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
