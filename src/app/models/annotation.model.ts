@@ -56,7 +56,7 @@ export interface StatsDataModel {
 }
 
 export interface StatsDataBackendModel {
-    all_rs: number;
+    unique_submitted_snps_count: number;
     processing_time: string;
     undefined_rs: number;
     all: {

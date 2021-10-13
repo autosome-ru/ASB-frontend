@@ -170,6 +170,39 @@
                             </div>
                         </ng-template>
                     </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <span
+                                joyrideStep="downloads"
+                                [stepContent]="stepTemplate"
+                                [stepContentParams]="getTextByStepName('downloads')"
+                            >Downloads</span>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div style="margin-top: 0.5rem">
+                            <ul style="list-style: circle">
+                                <li>
+                                    <a><b>Annotated list</b></a>
+                                </li>
+                                <li>
+                                    <b>Not found</b>
+                                </li>
+                                <li>
+                                    <b>Annotation with TF-ASBs collapsed</b>
+                                </li>
+                                <li>
+                                    <b>Annotation with TF-ASBs expanded</b>
+                                </li>
+                                <li>
+                                    <b>Annotation with cell type-ASBs collapsed</b>
+                                </li>
+                                <li>
+                                    <b>Annotation with cell type-ASBs expanded</b>
+                                </li>
+                            </ul>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
                 </mat-tab-group>
             </ng-container>
         </div>

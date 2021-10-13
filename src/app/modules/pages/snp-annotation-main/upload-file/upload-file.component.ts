@@ -9,7 +9,7 @@ import {Store} from '@ngrx/store';
 import {demo1, demo2} from "../../../../helpers/constants/demo.ananas";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {ToastrService} from "ngx-toastr";
-import {esOptions, fdrOptions} from "../../../../helpers/constants/constants";
+import {fdrOptions} from "../../../../helpers/constants/constants";
 import {BackgroundSelect} from "../../../../models/annotation.model";
 import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/convert-background-choices.helper";
 
@@ -31,7 +31,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public isHovered: boolean;
   public formGroup: FormGroup;
   public fdrOptions: string[] = fdrOptions.filter(d => d != '0.25');
-  public esOptions: string[] = esOptions;
+  // public esOptions: string[] = esOptions;
   public backgroundOptions: BackgroundSelect[] = ['LD-EUR', 'LD-AFR', 'LD-ASN', 'LOCAL', 'WG']
 
   constructor(private uploadService: UploadService,
@@ -44,7 +44,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
     this.formGroup = this.formBuilder.group({
         textArea: '',
         fdr: '0.05',
-        background: 'LD-EUR',
+        background: 'LOCAL',
         es: '0'
     })
   }
