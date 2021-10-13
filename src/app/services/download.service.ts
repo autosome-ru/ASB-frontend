@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable} from 'rxjs';
-import {TfOrCl} from '../models/data.model';
+import {DownloadTableType, TfOrCl} from '../models/data.model';
 import {UrlService} from "./url.service";
 
 
@@ -11,14 +11,13 @@ export class DownloadService {
   constructor(private http: HttpClient, private urlService: UrlService) {
   }
 
-  downloadTable(ticket: string, tfOrCl: TfOrCl,
-                isExpanded: boolean,
-                format: string): Observable<Blob> {
+  downloadTable(ticket: string, downloadType: DownloadTableType,
+                isExpanded: boolean): Observable<Blob> {
     return this.http.get(`${this.urlService.getUrlForQuery("ananastra")}/result/${ticket}`,
       {
         responseType: 'blob',
         params: {
-          result_param: tfOrCl + (isExpanded ? '' : '_sum'),
+          result_param: downloadType + (isExpanded ? '' : '_sum'),
           format: 'tsv'
         }});
   }

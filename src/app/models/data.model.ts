@@ -164,6 +164,7 @@ export interface ExpSnpModel {
 
 export type TfOrCl = "tf" | "cl";
 
+export type DownloadTableType = TfOrCl | 'all' | 'not_found'
 export interface TotalInfoBackendModel {
     cell_types_count: number;
     transcription_factors_count: number;

@@ -11,7 +11,7 @@ import {
     PingDataModel
 } from 'src/app/models/annotation.model';
 import {MatTabGroup} from '@angular/material/tabs';
-import {TfOrCl} from '../../../models/data.model';
+import {DownloadTableType, TfOrCl} from '../../../models/data.model';
 import {DownloadService} from 'src/app/services/download.service';
 import {FileSaverService} from 'ngx-filesaver';
 import {AnnotationStoreState} from "../../../store/reducer/ananastra";
@@ -189,11 +189,17 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                 }));
         }
     }
+    getFileName(downloadType: DownloadTableType, isExpanded?: boolean): string {
+        return `ananastra_${this.ticket}.${downloadType + (isExpanded ? '' : '_collapsed')}.tsv`
+    }
 
-    downloadTable(tfOrCl: TfOrCl): void {
+    downloadTable(downloadType: DownloadTableType, isExpanded?: boolean): void {
+        if (isExpanded === undefined) {
+            isExpanded = this.isExpanded
+        }
         this.subscriptions.add(
-            this.downloadService.downloadTable(this.ticket, tfOrCl, this.isExpanded, 'tsv').subscribe(
-                b => this.fileSaverService.save(b, `ananastra_${this.ticket}.tsv`)
+            this.downloadService.downloadTable(this.ticket, downloadType, isExpanded).subscribe(
+                b => this.fileSaverService.save(b, this.getFileName(downloadType, isExpanded))
             )
         );
     }

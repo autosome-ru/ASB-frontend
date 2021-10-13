@@ -182,22 +182,51 @@
                             <div style="margin-top: 0.5rem">
                             <ul style="list-style: circle">
                                 <li>
-                                    <a><b>Annotated list</b></a>
+                                    <b>ADASTRA annotation of SNPs:</b>
+                                    <a
+                                        href="#"
+                                        (click)="downloadTable('all', true); $event.preventDefault()">
+                                        {{getFileName('all', true)}}
+                                    </a>
                                 </li>
                                 <li>
-                                    <b>Not found</b>
+                                    <b>Unmapped IDs (not found in ANANASTRA):</b>
+                                    <a
+                                        href="#"
+                                        (click)="downloadTable('not_found', true); $event.preventDefault()">
+                                        {{getFileName('not_found', true)}}
+                                    </a>
                                 </li>
                                 <li>
-                                    <b>Annotation with TF-ASBs collapsed</b>
+                                    <b>Annotation with TF-ASBs, collapsed by SNP:</b>
+                                    <a
+                                        href="#"
+                                        (click)="downloadTable('tf', false); $event.preventDefault()">
+                                        {{getFileName('tf', false)}}
+                                    </a>
                                 </li>
                                 <li>
-                                    <b>Annotation with TF-ASBs expanded</b>
+                                    <b>Annotation with TF-ASBs, one record per ASB:</b>
+                                    <a href="#"
+                                        (click)="downloadTable('tf', true); $event.preventDefault()">
+                                        {{getFileName('tf', true)}}
+                                    </a>
                                 </li>
                                 <li>
-                                    <b>Annotation with cell type-ASBs collapsed</b>
+                                    <b>Annotation with cell type-ASBs, collapsed by SNP:</b>
+                                    <a
+                                        href="#"
+                                        (click)="downloadTable('cl', false); $event.preventDefault()">
+                                        {{getFileName('cl', false)}}
+                                    </a>
                                 </li>
                                 <li>
-                                    <b>Annotation with cell type-ASBs expanded</b>
+                                    <b>Annotation with cell type-ASBs, one record per ASB:</b>
+                                    <a
+                                        href="#"
+                                        (click)="downloadTable('cl', true); $event.preventDefault()">
+                                        {{getFileName('cl', true)}}
+                                    </a>
                                 </li>
                             </ul>
                             </div>
