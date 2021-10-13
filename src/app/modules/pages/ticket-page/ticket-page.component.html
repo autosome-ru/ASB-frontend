@@ -179,56 +179,56 @@
                             >Downloads</span>
                         </ng-template>
                         <ng-template matTabContent>
-                            <div style="margin-top: 0.5rem">
-                            <ul style="list-style: circle">
-                                <li>
-                                    <b>ADASTRA annotation of SNPs:</b>
-                                    <a
+                            <div style="margin-top: 0.5rem; display: flex; justify-content: center">
+                            <table class="cute-table">
+                                <tr>
+                                    <td>ADASTRA annotation of SNPs</td>
+                                    <td><a
                                         href="#"
                                         (click)="downloadTable('all', true); $event.preventDefault()">
                                         {{getFileName('all', true)}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <b>Unmapped IDs (not found in ANANASTRA):</b>
-                                    <a
+                                    </a></td>
+                                </tr>
+                                <tr>
+                                    <td>Unmapped IDs (not found in ANANASTRA)</td>
+                                    <td><a
                                         href="#"
                                         (click)="downloadTable('not_found', true); $event.preventDefault()">
                                         {{getFileName('not_found', true)}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <b>Annotation with TF-ASBs, collapsed by SNP:</b>
-                                    <a
+                                    </a></td>
+                                </tr>
+                                <tr>
+                                    <td>Annotation with TF-ASBs, collapsed by SNP</td>
+                                    <td><a
                                         href="#"
                                         (click)="downloadTable('tf', false); $event.preventDefault()">
                                         {{getFileName('tf', false)}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <b>Annotation with TF-ASBs, one record per ASB:</b>
-                                    <a href="#"
+                                    </a></td>
+                                </tr>
+                                <tr>
+                                    <td>Annotation with TF-ASBs, one record per ASB</td>
+                                    <td><a href="#"
                                         (click)="downloadTable('tf', true); $event.preventDefault()">
                                         {{getFileName('tf', true)}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <b>Annotation with cell type-ASBs, collapsed by SNP:</b>
-                                    <a
+                                    </a></td>
+                                </tr>
+                                <tr>
+                                    <td>Annotation with cell type-ASBs, collapsed by SNP</td>
+                                    <td><a
                                         href="#"
                                         (click)="downloadTable('cl', false); $event.preventDefault()">
                                         {{getFileName('cl', false)}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <b>Annotation with cell type-ASBs, one record per ASB:</b>
-                                    <a
+                                    </a></td>
+                                </tr>
+                                <tr>
+                                    <td>Annotation with cell type-ASBs, one record per ASB</td>
+                                    <td><a
                                         href="#"
                                         (click)="downloadTable('cl', true); $event.preventDefault()">
                                         {{getFileName('cl', true)}}
-                                    </a>
-                                </li>
-                            </ul>
+                                    </a></td>
+                                </tr>
+                            </table>
                             </div>
                         </ng-template>
                     </mat-tab>
