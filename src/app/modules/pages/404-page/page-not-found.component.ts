@@ -14,7 +14,7 @@ import {Store} from "@ngrx/store";
     templateUrl: "page-not-found.component.html",
     styleUrls: ["./page-not-found.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
 })
 export class PageNotFoundComponent implements OnInit {
     private readonly response: Response;
@@ -22,8 +22,8 @@ export class PageNotFoundComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private seoService: SeoService,
                 private router: Router,
-                private store: Store<AnnotationStoreState>,
-                private processingService: ProcessingService,
+                @Optional() private store: Store<AnnotationStoreState>,
+                @Optional() private processingService: ProcessingService,
                 @Optional() @Inject(RESPONSE) response: any) {
         this.response = response;
     }
