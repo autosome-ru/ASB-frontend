@@ -75,10 +75,10 @@ $box-shadow2: ();
     @include animation((1s bang ease-out 1 backwards, 1s gravity ease-in 1 backwards, 5s position linear 1 backwards));
 }
 
-.fireworks > .after {
-    @include animation-delay((1.25s, 1.25s, 1.25s));
-    @include animation-duration((1.25s, 1.25s, 6.25s));
-}
+//.fireworks > .after {
+//    @include animation-delay((1.25s, 1.25s, 1.25s));
+//    @include animation-duration((1.25s, 1.25s, 6.25s));
+//}
 
 @include keyframes(bang) {
     to {
