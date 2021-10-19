@@ -64,7 +64,7 @@ $box-shadow2: ();
     -ms-transform: $settings;
 }
 .fireworks {
-    position: absolute;
+    position: fixed;
 }
 .fireworks > .before, .fireworks > .after {
     position: absolute;

@@ -12,7 +12,7 @@ export class NewsSectionComponent implements OnInit {
     public fireworksStyle: {left: string, bottom: string};
     @HostListener('mousemove', ['$event']) onMouseMove(event: MouseEvent) {
         if (!this.showFireworks) {
-            this.fireworksStyle = {left: `${event.offsetX}px`, bottom: `calc(100vh-${event.offsetY}px)`}
+            this.fireworksStyle = {left: `${event.clientX}px`, bottom: `calc(100vh - ${event.clientY}px)`}
         }
     }
 
