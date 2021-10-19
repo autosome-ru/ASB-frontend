@@ -242,7 +242,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     countTooltip(metaInfo: StatsDataModel): string {
-        return `${metaInfo.totalSNPs} unique IDs of ${metaInfo.totalUnqiueSNPs} submitted, ${metaInfo.notFound} IDs not found in ADASTRA`
+        return `${metaInfo.totalUnqiueSNPs} unique IDs of ${metaInfo.totalSNPs} submitted, ${metaInfo.notFound} IDs not found in ADASTRA`
     }
 }
 
