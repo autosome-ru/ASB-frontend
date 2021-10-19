@@ -1,23 +1,21 @@
 <div style="position: relative">
 <h5>News & updates</h5>
 <div
-    *ngIf="showFireworks"
-    class="fireworks"
+    [ngClass]="showFireworks ? 'fireworks' : ''"
     [ngStyle]="fireworksStyle"
 >
     <div class="before"></div>
-    <div class="after"></div>
 </div>
 <ul
     style="list-style: none; padding-inline-start: 0; max-height: 100px; overflow: auto"
-
 >
     <li>
+
         <span><b>2021.10.18</b>
                         The ADASTRA team won
                         <span
-                            (mouseenter)="showFireworks = true"
-                            (mouseleave)="showFireworks = false"
+                            (mouseover)="showFireworks = true"
+                            (mouseout)="mouseOut()"
                         ><a
                             [href]="'https://twitter.com/UlrichBetz/status/1448914849615040518'"
                             target="_blank"
@@ -37,8 +35,8 @@
                         ADASTRA paper (describing release
                         <a [href]="'/soos'">Soos</a>) is finally published in
                         <a
-                            (mouseenter)="showFireworks = true"
-                            (mouseleave)="showFireworks = false"
+                            (mouseover)="showFireworks = true"
+                            (mouseout)="mouseOut()"
                             href="https://www.nature.com/articles/s41467-021-23007-0"
                             target="_blank"
                             rel="noopener noreferer"

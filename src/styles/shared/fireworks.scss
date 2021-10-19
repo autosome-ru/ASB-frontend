@@ -68,6 +68,7 @@ $box-shadow2: ();
 }
 .fireworks > .before, .fireworks > .after {
     position: absolute;
+    @include animation-delay((0.05s, 0.05s, 0.05s));
     width: 5px;
     height: 5px;
     border-radius: 50%;
