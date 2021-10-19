@@ -35,6 +35,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private readonly cssClass = true;
     @ViewChild("svgContainer", {static: true})
     public svgContainer: ElementRef<HTMLObjectElement>;
+
+    @ViewChild('winnersLink', {static: true})
+    public winnersLink: ElementRef<HTMLObjectElement>
     isBrowser: boolean;
     public totalInfo$: Observable<TotalInfoModel>;
     public release$: Observable<ReleaseModel>;
@@ -85,6 +88,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
                     }
                 });
+            // this.winnersLink.nativeElement.classList.add('fireworks')
         }
         this.tourSteps = [
             "search-by",

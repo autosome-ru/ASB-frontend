@@ -7,6 +7,7 @@ import {AsbSearchModule} from "../../shared/search-template/search.module";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { NewsSectionComponent } from './news-section/news-section.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         ArticleCiteModule,
         MatTooltipModule,
     ],
-    declarations: [HomePageComponent],
+    declarations: [HomePageComponent, NewsSectionComponent],
 })
 export class AsbHomePageModule {
 }
