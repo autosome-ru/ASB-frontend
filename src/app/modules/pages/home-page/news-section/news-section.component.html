@@ -1,11 +1,17 @@
+<div style="position: relative">
 <h5>News & updates</h5>
 <div
     *ngIf="showFireworks"
-    class="fireworks" style="position: absolute; bottom: 100px">
+    class="fireworks"
+    [ngStyle]="fireworksStyle"
+>
     <div class="before"></div>
     <div class="after"></div>
 </div>
-<ul style="list-style: none; padding-inline-start: 0; max-height: 100px; overflow: auto">
+<ul
+    style="list-style: none; padding-inline-start: 0; max-height: 100px; overflow: auto"
+
+>
     <li>
         <span><b>2021.10.18</b>
                         The ADASTRA team won
@@ -77,3 +83,4 @@
                             bioRxiv</a>.</span>
     </li>
 </ul>
+</div>

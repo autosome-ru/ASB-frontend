@@ -8,7 +8,7 @@ $box-shadow2: ();
 @for $i from 0 through $particles {
     $box-shadow: $box-shadow,
     random($width)-$width / 2  + px
-    random($height)-$height / 1.2 + 30 + px
+    random($height)-$height / 1.2 + px
     hsl(random(360), 100, 50);
     $box-shadow2: $box-shadow2, 0 0 #fff
 }
@@ -38,7 +38,6 @@ $box-shadow2: ();
     -moz-animation-delay: $settings;
     -webkit-animation-delay: $settings;
     -o-animation-delay: $settings;
-    -ms-animation-delay: $settings;
     animation-delay: $settings;
 }
 
@@ -46,7 +45,6 @@ $box-shadow2: ();
     -moz-animation-duration: $settings;
     -webkit-animation-duration: $settings;
     -o-animation-duration: $settings;
-    -ms-animation-duration: $settings;
     animation-duration: $settings;
 }
 
@@ -54,7 +52,6 @@ $box-shadow2: ();
     -moz-animation: $settings;
     -webkit-animation: $settings;
     -o-animation: $settings;
-    -ms-animation: $settings;
     animation: $settings;
 }
 
@@ -65,7 +62,9 @@ $box-shadow2: ();
     -o-transform: $settings;
     -ms-transform: $settings;
 }
-
+.fireworks {
+    position: absolute;
+}
 .fireworks > .before, .fireworks > .after {
     position: absolute;
     width: 5px;

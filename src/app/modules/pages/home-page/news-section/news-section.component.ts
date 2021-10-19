@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, HostListener, OnInit, ViewEncapsulation} from '@angular/core';
 
 @Component({
     selector: 'asb-news-section',
@@ -9,6 +9,12 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@an
 })
 export class NewsSectionComponent implements OnInit {
     public showFireworks: boolean = false;
+    public fireworksStyle: {left: string, bottom: string};
+    @HostListener('mousemove', ['$event']) onMouseMove(event: MouseEvent) {
+        if (!this.showFireworks) {
+            this.fireworksStyle = {left: `${event.offsetX}px`, bottom: `calc(100vh-${event.offsetY}px)`}
+        }
+    }
 
   constructor() { }
 
