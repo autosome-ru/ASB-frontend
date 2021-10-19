@@ -18,7 +18,8 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         background: model.background || 'WG',
         processingTime: stats.processing_time,
         // Other fields
-        totalSNPs: stats.unique_submitted_snps_count,
+        totalSNPs: stats.submitted_snps_count,
+        totalUnqiueSNPs: stats.unique_submitted_snps_count,
         undefinedCount: stats.undefined_rs,
         notFound: stats.unique_submitted_snps_count - stats.all.negatives_rs - stats.undefined_rs - stats.all.asbs_rs,
         expRatio: stats.all.expected_asbs_rs + stats.all.expected_negatives_rs > 0 ?

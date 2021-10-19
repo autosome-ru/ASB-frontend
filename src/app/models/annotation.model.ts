@@ -33,6 +33,7 @@ export interface StatsDataModel {
     pValue: number | string;
     notFound: number;
     totalSNPs: number;
+    totalUnqiueSNPs: number;
     oddsRatio: number | string;
     clAsbs: number;
     clNegativesCount: number;
@@ -57,6 +58,7 @@ export interface StatsDataModel {
 
 export interface StatsDataBackendModel {
     unique_submitted_snps_count: number;
+    submitted_snps_count: number;
     processing_time: string;
     undefined_rs: number;
     all: {

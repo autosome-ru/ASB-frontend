@@ -8,7 +8,7 @@ import {
     AnnotationDataModel,
     AnnotationSnpModel,
     BackgroundSelect,
-    PingDataModel
+    PingDataModel, StatsDataModel
 } from 'src/app/models/annotation.model';
 import {MatTabGroup} from '@angular/material/tabs';
 import {DownloadTableType, TfOrCl} from '../../../models/data.model';
@@ -239,6 +239,10 @@ export class TicketPageComponent implements OnInit, OnDestroy {
             default:
                 return 'ADASTRA \'candidate\' SNPs located in the same LD-islands as the ‘test’ SNPs of the user-submitted list.'
         }
+    }
+
+    countTooltip(metaInfo: StatsDataModel): string {
+        return `${metaInfo.totalSNPs} unique IDs of ${metaInfo.totalUnqiueSNPs} submitted, ${metaInfo.notFound} IDs not found`
     }
 }
 
