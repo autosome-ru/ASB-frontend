@@ -31,7 +31,7 @@ export class NewsSectionComponent implements OnInit, OnDestroy {
         this.timeoutId = window.setTimeout(() => {
             this.showFireworks = false;
             this.clearFireworksTimeout()
-        }, 100)
+        }, 500)
 
     }
     ngOnDestroy() {
