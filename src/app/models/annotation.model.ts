@@ -20,6 +20,7 @@ export interface CountModel {
     name: string;
     count: number
 }
+export type pValueString = number | 'infinity'
 export interface StatsDataModel {
     asbCount: number;
     undefinedCount: number;
@@ -30,28 +31,28 @@ export interface StatsDataModel {
     fdr: number;
     background: BackgroundSelect;
     clRatio: number;
-    pValue: number | string;
+    pValue: pValueString;
     notFound: number;
     totalSNPs: number;
     totalUnqiueSNPs: number;
-    oddsRatio: number | string;
+    oddsRatio: pValueString;
     clAsbs: number;
     clNegativesCount: number;
-    clPvalue: number | string
-    clOdds: number | string;
+    clPvalue: pValueString;
+    clOdds: pValueString;
     processingTime: string;
     tfAsbs: number;
     tfNegativesCount: number;
-    tfPvalue: number | string;
-    tfOdds: number | string;
+    tfPvalue: pValueString;
+    tfOdds: pValueString;
     tfAsbList: CountModel[];
     clAsbList: CountModel[];
     tfAsbData: AsbStatsDataModel[];
     clAsbData: AsbStatsDataModel[];
     chrAsbData: AsbStatsDataModel[];
-    chrPvalue: number | string;
-    chrTfPvalue: number | string;
-    chrClPvalue: number | string;
+    chrPvalue: pValueString;
+    chrTfPvalue: pValueString;
+    chrClPvalue: pValueString;
     tfAsbListSum: CountModel[];
     clAsbListSum: CountModel[];
 }
@@ -114,9 +115,9 @@ export interface AsbStatsDataModel {
     negativesRs: number;
     expectedAsbsRs: number;
     expectedNegativesRs: number;
-    odds: number | string;
-    pValue: number | string;
-    fdr: number | string;
+    odds: pValueString;
+    pValue: pValueString;
+    fdr: pValueString;
 }
 export interface PingDataBackendModel {
     ticket_id: string;
@@ -142,7 +143,7 @@ export interface AnnotationSnpBackendModel {
     chromosome: string;
     position: number;
     sequence: string;
-    rs_id: number | string;
+    rs_id: pValueString;
     effect_size_ref: number;
     effect_size_alt: number;
     top_effect_size: number;

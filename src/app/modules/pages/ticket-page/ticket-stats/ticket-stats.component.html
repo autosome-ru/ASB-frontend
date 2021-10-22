@@ -64,17 +64,17 @@
       </li>
       <li>
         <b>Fisher's exact test P-value</b>:
-        <b><span
-          [innerHTML]="writeScientificNum(stats.pValue, 2)"
-        ></span></b>
+        <b><asb-sci-notation
+          [value]="stats.pValue"
+        ></asb-sci-notation></b>
         <span class="additional-selection"> (SNPs with TF-ASBs:
-          <b><span
-            [innerHTML]="writeScientificNum(stats.tfPvalue, 2)"
-          ></span></b>,
+          <b><asb-sci-notation
+              [value]="stats.tfPvalue"
+          ></asb-sci-notation></b>,
           SNPs with cell type-ASBs:
-          <b><span
-            [innerHTML]="writeScientificNum(stats.clPvalue, 2)"
-          ></span></b>)</span>
+          <b><asb-sci-notation
+              [value]="stats.clPvalue"
+          ></asb-sci-notation></b>)</span>
       </li>
     </ul>
   </div>
@@ -95,11 +95,15 @@
                 [stepContentParams]="getTextByStepName('chrom-agg')"
             >
             <span >
-                <b>Logit-aggregated P-value:&nbsp;<span
-                    [innerHTML]="writeScientificNum(stats.chrPvalue, 2)"
-                ></span></b>&nbsp;
-                <span class="additional-selection">(SNPs with TF-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrClPvalue, 2)"></span></b>,
-                    SNPs with cell type-ASBs: <b><span [innerHTML]="writeScientificNum(stats.chrTfPvalue, 2)"></span></b>)</span>
+                <b>Logit-aggregated P-value:&nbsp;<asb-sci-notation
+                    [value]="stats.chrPvalue"
+                ></asb-sci-notation></b>&nbsp;
+                <span class="additional-selection">(SNPs with TF-ASBs: <b><asb-sci-notation
+                    [value]="stats.chrTfPvalue"
+                ></asb-sci-notation></b>,
+                    SNPs with cell type-ASBs: <b><asb-sci-notation
+                        [value]="stats.chrClPvalue"
+                    ></asb-sci-notation></b>)</span>
             </span>
             </div>
             <div

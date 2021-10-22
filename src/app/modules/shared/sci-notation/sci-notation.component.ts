@@ -1,5 +1,6 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {writeScientificNum} from "../../../functions/scientific.helper";
+import {pValueString} from "../../../models/annotation.model";
 
 @Component({
   selector: 'asb-sci-notation',
@@ -8,15 +9,17 @@ import {writeScientificNum} from "../../../functions/scientific.helper";
 })
 export class SciNotationComponent implements OnInit {
     @Input()
-    value: number;
+    value: pValueString;
+    @Input()
+    precision: number = 2;
     @Input()
     toInvert: boolean = false;
     constructor() { }
 
     ngOnInit(): void {
     }
-    writeScientificNum(num, precision): string {
-        return writeScientificNum((this.toInvert ? -1 : 1) * num, precision);
+    writeScientificNum(num): string {
+        return writeScientificNum((this.toInvert ? -1 : 1) * num, this.precision);
     }
 
 }

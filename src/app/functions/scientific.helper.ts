@@ -1,6 +1,11 @@
-export function writeScientificNum(num: number, precision: number): string {
+import {pValueString} from "../models/annotation.model";
+
+export function writeScientificNum(num: pValueString, precision: number): string {
   if (num === null) {
-      return  `<span>n/a</span>`
+      return `<span>n/a</span>`
+  }
+  if (num == 'infinity') {
+      return `<span><10<sup>-300</sup></span>`
   }
   let power = Math.ceil(num);
   const realNum = Math.pow(10, -num);

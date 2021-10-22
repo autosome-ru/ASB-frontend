@@ -10,11 +10,9 @@ import {
 import {ScriptService} from 'src/app/services/script.service';
 import {
     AnnotationDataModel,
-    AsbStatsDataModel,
-    BackgroundSelect,
+    AsbStatsDataModel, pValueString,
     StatsDataModel
 } from 'src/app/models/annotation.model';
-import {writeScientificNum} from '../../../../functions/scientific.helper';
 import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
@@ -147,12 +145,6 @@ export class TicketStatsComponent implements OnInit {
         ]
     }
 
-
-    writeScientificNum(num, precision): string {
-        return writeScientificNum(num, precision);
-    }
-
-
     public chartClicked(): void {
     }
 
@@ -162,7 +154,7 @@ export class TicketStatsComponent implements OnInit {
     getTextByStepName(text: string) {
         return getTextByStepNameAnanas(text)
     }
-    valueToView(value: string | number, precision: number = 2): string {
+    valueToView(value: pValueString, precision: number = 2): string {
         return stringOrNumberConverter(value, precision)
     }
 

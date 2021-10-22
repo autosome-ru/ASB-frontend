@@ -3,6 +3,7 @@ import {formCheckboxesToList} from "../converters/search-model.converter";
 import {SnpSearchModel, TfSnpModel} from "../../models/data.model";
 import {MatSort} from "@angular/material/sort";
 import {compareConcordance} from "../constants/constants";
+import {pValueString} from "../../models/annotation.model";
 
 export function getPaginatorOptions(len: number): number[] {
     return len > 50 ?
@@ -10,7 +11,7 @@ export function getPaginatorOptions(len: number): number[] {
         [5, 10, 25, 50];
 }
 
-export function stringOrNumberConverter(v: number | string, fractionDigits: number = 2) {
+export function stringOrNumberConverter(v: pValueString, fractionDigits: number = 2) {
     if (v === null) {
         return 'n/a'
     }
@@ -20,17 +21,14 @@ export function stringOrNumberConverter(v: number | string, fractionDigits: numb
         return v === 'infinity' ? 'ထ' : v
     }
 }
-export function stringToNum(v: string, toInvert: boolean = false): string | number{
-
+export function stringToNum(v: string, toInvert: boolean = false): pValueString {
     if (v === null) {
-        return v
+        return null
     }
-    const numV = Number(v)
-    if (!isNaN(numV)) {
-        return numV * (toInvert ? -1 : 1)
-    } else {
-        return v
+    if (v === 'infinity') {
+        return 'infinity'
     }
+    return Number(v) * (toInvert ? -1 : 1)
 }
 export function checkIfNumberOrFrac(data: string ) {
     if (data.match(/^\d+$/)) {
