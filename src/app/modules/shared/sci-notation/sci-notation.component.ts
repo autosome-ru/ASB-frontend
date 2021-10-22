@@ -19,7 +19,7 @@ export class SciNotationComponent implements OnInit {
     ngOnInit(): void {
     }
     writeScientificNum(num): string {
-        return writeScientificNum((this.toInvert ? -1 : 1) * num, this.precision);
+        return writeScientificNum(num, this.precision, this.toInvert);
     }
 
 }

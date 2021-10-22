@@ -1,12 +1,13 @@
 import {pValueString} from "../models/annotation.model";
 
-export function writeScientificNum(num: pValueString, precision: number): string {
-  if (num === null) {
+export function writeScientificNum(numStr: pValueString, precision: number, toInvert: boolean = false): string {
+  if (numStr === null) {
       return `<span>n/a</span>`
   }
-  if (num == 'infinity') {
+  if (numStr === 'infinity') {
       return `<span><10<sup>-300</sup></span>`
   }
+  let num = (toInvert ? -1 : 1 ) * Number(numStr)
   let power = Math.ceil(num);
   const realNum = Math.pow(10, -num);
   if (num <= 2) {
