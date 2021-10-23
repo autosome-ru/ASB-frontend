@@ -11,7 +11,7 @@ import {
     PingDataModel, StatsDataModel
 } from 'src/app/models/annotation.model';
 import {MatTabGroup} from '@angular/material/tabs';
-import {DownloadTableType, TfOrCl} from '../../../models/data.model';
+import {DownloadTableType} from '../../../models/data.model';
 import {DownloadService} from 'src/app/services/download.service';
 import {FileSaverService} from 'ngx-filesaver';
 import {AnnotationStoreState} from "../../../store/reducer/ananastra";
@@ -110,7 +110,6 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                     if (f) {
                         switch (f.status) {
                             case 'Processed':
-                                this.clearInterval()
                                 this.store.dispatch(new fromActions.annotation.InitAnnotationInfoStatsAction(
                                     this.ticket));
                                 this.subscriptions.add(
@@ -126,10 +125,12 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
                                 break;
                              case 'Processing':
-                                 this.clearInterval()
                                  this.timeoutId = window.setTimeout(
-                                     () => this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
-                                         this.ticket)), 500
+                                     () => {
+                                         this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
+                                             this.ticket));
+                                         this.clearInterval()
+                                     }, 1000
                                  )
                                 break;
                              case 'Created':
@@ -137,7 +138,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                                      {
                                          ticket: this.ticket,
                                          background: 'WG',
-                                         fdr: '0.1',
+                                         fdr: this.recentRelease.defaultFdrThreshold,
                                          es: '0'}));
                                  this.store.dispatch(new fromActions.annotation.InitPingAnnotationAction(
                                      this.ticket));
@@ -166,7 +167,11 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         this.subscriptions.unsubscribe();
     }
     clearInterval(): void {
-        window.clearInterval(this.timeoutId)
+        if (this.timeoutId) {
+            window.clearInterval(this.timeoutId);
+            this.timeoutId = null;
+        }
+
     }
 
     tabIndexChanged(index: number): void {
