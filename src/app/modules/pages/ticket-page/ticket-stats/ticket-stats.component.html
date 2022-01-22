@@ -82,7 +82,7 @@
 </div>
     <div style="width: 100%">
         <mat-expansion-panel #panel
-                             expanded
+                            [(expanded)]="chrPanelOpened"
                              class="mat-elevation-z0"
         >
             <mat-expansion-panel-header [ngClass]="panel.expanded ? '' : 'header'">

@@ -13,8 +13,9 @@
     //width: 100%;
 
     color: #202122;
-    margin: 0.5em 0 0 0;
+    margin: 0.5em auto 0 auto;
     border: 1px solid #a2a9b1;
+    table-layout: fixed;
     border-collapse: collapse;
     & > tr > th,
     & > tr > td,
@@ -23,4 +24,25 @@
         border: 1px solid #a2a9b1;
         padding: 0.2em 0.4em;
     }
+}
+
+.pre-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.fixed-table {
+    /* magic */
+    width: 100%;
+    table-layout: fixed;
+
+    /*not really necessary, removes extra white space */
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+}
+.fixed-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -29,7 +29,8 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/
 export class TicketStatsComponent implements OnInit {
     @ViewChild('fdrViewTemplate', {static: true})
     private fdrViewTemplate: TemplateRef<{ value: number }>;
-
+    @Input()
+    chrPanelOpened: boolean = false;
     @Output()
     private statsLastStep = new EventEmitter<void>()
 
@@ -82,7 +83,6 @@ export class TicketStatsComponent implements OnInit {
         }
     };
     public chartLoaded: boolean;
-    public panelExpanded: boolean = false;
 
     constructor(private scriptService: ScriptService,
                 private toastrService: ToastrService,

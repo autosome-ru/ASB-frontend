@@ -32,7 +32,7 @@
             <ng-container *ngIf="getTfOrClData(ticketStatistics.metaInfo).length > 0; else noDataTemplate">
 
                 <div
-                    style="flex-grow: 1"
+                    style="flex-grow: 1; overflow:auto;"
                     joyrideStep="odds-table"
                     [stepContent]="stepTemplate"
                     [stepContentParams]="getTextByStepName('odds-table')"
@@ -148,12 +148,14 @@
                 <button
                     style="margin-right: 5px"
                     mat-raised-button
+                    class="ml-1 ml-sm-1"
                     (click)="_resetFilters()"
                 >
                     Reset
                 </button>
                 <button
                     style="overflow: auto"
+                    class="mb-1 mb-sm-0 ml-1 ml-sm-1"
                     mat-raised-button
                     (click)="downloadTable()"
                     joyrideStep="download-table"

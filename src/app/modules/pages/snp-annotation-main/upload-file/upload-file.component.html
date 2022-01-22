@@ -26,7 +26,7 @@
               <textarea
                 formControlName="textArea"
                 matInput
-                placeholder="Provide a list of dbSNP rsIDs or a vcf file"
+                placeholder="Provide a list of dbSNP rsIDs or a vcf file based on hg38 human genome assembly"
                 cdkTextareaAutosize
                 cdkAutosizeMinRows="6"
                 cdkAutosizeMaxRows="6"
@@ -185,9 +185,9 @@
                 <button
                     style="margin-right: 10px"
                     mat-raised-button
-                    (click)="initDemo(1)"
+                    (click)="initDemo(2)"
                     matTooltipClass="big-font"
-                    matTooltip="Top 500 significant SNPs found in COVID19-hg GWAS meta-analyses round 6 [www.covid19hg.org/results/], B2: hospitalized covid vs. population"
+                    matTooltip="SNPs associated with Inflammatory bowel disease [doi:10.1038/nature22969]"
                 >
                     Example1
                 </button>
@@ -202,9 +202,9 @@
 <!--                </button>-->
                 <button
                     mat-raised-button
-                    (click)="initDemo(3)"
+                    (click)="initDemo(1)"
                     matTooltipClass="big-font"
-                    matTooltip="SNPs associated with Inflammatory bowel disease [doi:10.1038/nature22969]"
+                    matTooltip="Top 500 significant SNPs found in COVID19-hg GWAS meta-analyses round 6 [www.covid19hg.org/results/], B2: hospitalized covid vs. population"
                 >
                     Example2
                 </button>

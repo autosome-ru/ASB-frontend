@@ -22,6 +22,7 @@ import {Clipboard} from "@angular/cdk/clipboard";
 import {SeoService} from "../../../services/seo.servise";
 import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
 import {convertBackgroundChoicesHelper} from "../../../helpers/text-helpers/convert-background-choices.helper";
+import {TicketStatsComponent} from "./ticket-stats/ticket-stats.component";
 
 @Component({
     selector: 'astra-ticket-page',
@@ -33,6 +34,8 @@ import {convertBackgroundChoicesHelper} from "../../../helpers/text-helpers/conv
 export class TicketPageComponent implements OnInit, OnDestroy {
     @ViewChild('tabGroup')
     private tabGroup: MatTabGroup;
+    @ViewChild(TicketStatsComponent)
+    private ticketStats: TicketStatsComponent;
     public ticket: string;
     private subscriptions = new Subscription();
     public fileStatistics$: Observable<{ data?: AnnotationDataModel; loading: boolean }>;
@@ -69,6 +72,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     ];
     public panelExpanded: boolean = false;
     private fdr: number;
+    public chrPanelOpened: boolean = false;
 
 
     constructor(private route: ActivatedRoute,

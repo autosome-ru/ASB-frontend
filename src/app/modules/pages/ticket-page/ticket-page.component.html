@@ -68,6 +68,7 @@
                                 joyrideStep="sum-head"
                                 [stepContent]="stepTemplate"
                                 [stepContentParams]="getTextByStepName('sum-head')"
+                                (next)="chrPanelOpened = true"
                             >Summary</span>
                         </ng-template>
                         <ng-template matTabContent>
@@ -78,7 +79,7 @@
                                         [matTooltip]="countTooltip(data.metaInfo)"
                                         matTooltipClass="big-font"
                                     >
-                                        {{data.metaInfo.totalUnqiueSNPs}} user-submitted SNPs.</span> <span style="white-space: nowrap">Background: <u>{{optionToView(data.metaInfo.background)}}</u>
+                                        {{data.metaInfo.totalUnqiueSNPs}} user-submitted SNPs.</span> <span style="white-space: nowrap">&nbsp;Background: <u>{{optionToView(data.metaInfo.background)}}</u>
                                     <mat-icon style="margin-left: 3px; cursor: pointer; transform: scale(0.85)"
                                               routerLink="/help"
                                               fragment="background"
@@ -87,6 +88,7 @@
                                               svgIcon="help"></mat-icon></span></h5>
                                 <astra-ticket-stats
                                     [chartData]="data"
+                                    [chrPanelOpened]="chrPanelOpened"
                                     (statsLastStep)="selectTabById(1)"
                                 ></astra-ticket-stats>
                             </div>
@@ -184,55 +186,57 @@
                             >Downloads</span>
                         </ng-template>
                         <ng-template matTabContent>
-                            <div style="margin-top: 0.5rem; display: flex; justify-content: center">
+                            <div style="margin-top: 0.5rem">
                             <table class="cute-table">
+                                <tbody>
                                 <tr>
                                     <td>ADASTRA annotation of SNPs</td>
                                     <td><a
                                         href="#"
-                                        (click)="downloadTable('all', true); $event.preventDefault()">
-                                        {{getFileName('all', true)}}
+                                        (click)="downloadTable('all', true); $event.preventDefault()"
+                                    >{{getFileName('all', true)}}
                                     </a></td>
                                 </tr>
                                 <tr>
                                     <td>Unmapped IDs (not found in ANANASTRA)</td>
                                     <td><a
                                         href="#"
-                                        (click)="downloadTable('not_found', true); $event.preventDefault()">
-                                        {{getFileName('not_found', true)}}
+                                        (click)="downloadTable('not_found', true); $event.preventDefault()"
+                                    >{{getFileName('not_found', true)}}
                                     </a></td>
                                 </tr>
                                 <tr>
                                     <td>Annotation with TF-ASBs, collapsed by SNP</td>
                                     <td><a
                                         href="#"
-                                        (click)="downloadTable('tf', false); $event.preventDefault()">
-                                        {{getFileName('tf', false)}}
+                                        (click)="downloadTable('tf', false); $event.preventDefault()"
+                                    >{{getFileName('tf', false)}}
                                     </a></td>
                                 </tr>
                                 <tr>
                                     <td>Annotation with TF-ASBs, one record per ASB</td>
                                     <td><a href="#"
-                                        (click)="downloadTable('tf', true); $event.preventDefault()">
-                                        {{getFileName('tf', true)}}
+                                        (click)="downloadTable('tf', true); $event.preventDefault()"
+                                    >{{getFileName('tf', true)}}
                                     </a></td>
                                 </tr>
                                 <tr>
                                     <td>Annotation with cell type-ASBs, collapsed by SNP</td>
                                     <td><a
                                         href="#"
-                                        (click)="downloadTable('cl', false); $event.preventDefault()">
-                                        {{getFileName('cl', false)}}
+                                        (click)="downloadTable('cl', false); $event.preventDefault()"
+                                    >{{getFileName('cl', false)}}
                                     </a></td>
                                 </tr>
                                 <tr>
                                     <td>Annotation with cell type-ASBs, one record per ASB</td>
                                     <td><a
                                         href="#"
-                                        (click)="downloadTable('cl', true); $event.preventDefault()">
-                                        {{getFileName('cl', true)}}
+                                        (click)="downloadTable('cl', true); $event.preventDefault()"
+                                    >{{getFileName('cl', true)}}
                                     </a></td>
                                 </tr>
+                                </tbody>
                             </table>
                             </div>
                         </ng-template>

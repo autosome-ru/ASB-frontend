@@ -180,9 +180,6 @@ export class UploadFileComponent implements OnInit, OnDestroy {
           case 2:
               patchValue = demo2;
               break;
-          case 3:
-              patchValue = demo2;
-              break;
       }
       this.formGroup.patchValue({textArea: patchValue});
     }
