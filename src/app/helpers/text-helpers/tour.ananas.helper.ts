@@ -13,9 +13,9 @@ function getText(step: string): string {
         case 'examples':
             return 'We provide several examples\nto play with (hover over the\nbuttons to check the descriptions).'
         case 'job':
-            return 'A previously processed request\ncan be accessed by providing a ticket ID.\nPrevious jobs are saved for 2 days.'
+            return 'A previously processed request\ncan be accessed by providing a ticket ID.\nPrevious jobs are saved for 3 days.'
         case 'ticket':
-            return 'This is your unique job ticket id.\nYou may save it to access this report\nlater (reports are accessible for 2 days\nsince completion).'
+            return 'This is your unique job ticket id.\nYou may save it to access this report\nlater (reports are accessible for 3 days\nsince completion).'
         case 'sum-head':
             return "The first tab (Summary) contains an overview\nof the ASBs and their relative enrichment\nin the user-submitted list against\nnon-ASB 'candidate' sites."
         case 'chrom-agg':
