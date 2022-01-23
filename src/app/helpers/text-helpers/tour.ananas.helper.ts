@@ -27,7 +27,7 @@ function getText(step: string): string {
         case 'cl-head':
             return 'Detailed information on ASBs in particular cell types.'
         case 'stats':
-            return 'General statistics and enrichment of allele-specific\nbinding events detected in the submitted SNP list.\nNote, that enrichment estimates have limited value\nfor locus-centric analysis (i.e. if a genomic region\nwas submitted) as the analysis involves all ASBs\nand all candidate SNPs in a given region.'
+            return 'General statistics and enrichment of allele-specific\nbinding events detected in the submitted SNP list.'
         case 'col-button':
             return 'Each report is available in the expanded form (all ASB events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
         case 'odds-table-open':
