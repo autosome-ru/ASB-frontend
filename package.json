@@ -13,7 +13,7 @@
     "dev:ssr": "ng run ad-astra:serve-ssr",
     "serve:ssr": "node dist/adastra/server/main.js",
     "analyze": "ng build --configuration production --stats-json && webpack-bundle-analyzer dist/adastra/browser/stats.json",
-    "build:ssr": "node --max_old_space_size=1000 ./node_modules/@angular/cli/bin/ng build --configuration production --output-hashing=all && ng run ad-astra:server:production",
+    "build:ssr": "node --max_old_space_size=1000 ./node_modules/@angular/cli/bin/ng build --configuration production --output-hashing=all && node --max_old_space_size=1000 ./node_modules/@angular/cli/bin/ng run ad-astra:server:production",
     "prerender": "ng run ad-astra:prerender"
   },
   "private": true,
