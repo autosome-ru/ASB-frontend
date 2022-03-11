@@ -51,6 +51,17 @@ const routes: Routes = [
         }
     },
     {
+        path: "browse",
+        loadChildren: () => import(
+            "src/app/modules/pages/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
+        data: {
+            title: "ANANASTRA -  browse",
+            isAnanas: true,
+            description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+        }
+
+    },
+    {
         path: "404",
         loadChildren: () => import(
             "src/app/modules/pages/404-page/page-not-found.module").then(

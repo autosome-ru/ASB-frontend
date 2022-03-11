@@ -87,6 +87,11 @@
                 [diameter]="100"
             ></mat-spinner>
         </div>
+        <div *ngIf="(tableLength | async) === 0 && isSearched"
+            style="padding: 16px; margin: auto;"
+        >
+            No data found
+        </div>
     </div>
     <mat-paginator
         *ngIf="paginatorLength"

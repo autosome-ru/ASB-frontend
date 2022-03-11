@@ -1,14 +1,11 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component, EventEmitter,
     Input,
     OnInit,
     Output, ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {ScriptService} from "../../../../services/script.service";
-import {ToastrService} from "ngx-toastr";
 import {CountModel} from "../../../../models/annotation.model";
 import {TfOrCl} from "../../../../models/data.model";
 import {ChartOptions} from "chart.js";
@@ -24,10 +21,15 @@ import {BaseChartDirective} from "angular-bootstrap-md";
 export class TicketBarplotComponent implements OnInit {
     @ViewChild(BaseChartDirective)
     chartDirective: BaseChartDirective;
-    public chartLoaded: boolean;
-    public chartDatasets: Array<any> =[];
+
+
+    public chartDatasets: Array<any> = [];
     public chartLabels: Array<any> = [];
     private lastHovered: number;
+
+    @Input()
+    public chartLoaded: boolean;
+
     @Input()
     data: CountModel[]
 
@@ -39,15 +41,25 @@ export class TicketBarplotComponent implements OnInit {
 
     @Input()
     set selectedIndex(value: number) {
-        const backgroundColor = [
-                'rgba(255, 99, 132)',
-                'rgba(54, 162, 235)',
-                'rgba(255, 206, 86)',
-                'rgba(75, 192, 192)',
-                'rgba(153, 102, 255)',
-                'rgba(255, 159, 64)',
-                'rgba(185, 185, 185)'
-            ];
+        const backgroundColor1 = [
+            'rgba(255, 99, 132)',
+            'rgba(54, 162, 235)',
+            'rgba(255, 206, 86)',
+            'rgba(75, 192, 192)',
+            'rgba(153, 102, 255)',
+            'rgba(255, 159, 64)',
+            'rgba(185, 185, 185)'
+        ];
+        const backgroundColor2 = [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(185, 185, 185, 0.7)'
+        ];
+
         const backgroundOpacityColor = [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -57,10 +69,11 @@ export class TicketBarplotComponent implements OnInit {
             'rgba(255, 159, 64, 0.2)',
             'rgba(185, 185, 185, 0.2)'
         ];
-        this.chartColors = backgroundColor.map(
+        this.chartColors = backgroundColor1.map(
             (s, i) => {
                 return {
-                    backgroundColor: i=== value || value === null ? s : backgroundOpacityColor[i]
+                    backgroundColor: i === value || value === null ?
+                        [backgroundColor2[i], s] : backgroundOpacityColor[i]
                 }
             }
         );
@@ -69,23 +82,14 @@ export class TicketBarplotComponent implements OnInit {
     @Output()
     private chartClickEmitter = new EventEmitter<any>()
 
-    constructor(private scriptService: ScriptService,
-                private cd: ChangeDetectorRef,
-                private toastrService: ToastrService) {
+    constructor() {
     }
 
     public chartColors: any[] = [];
     public chartOptions: ChartOptions;
 
     ngOnInit(): void {
-        this.chartLabels = this.tfOrCl == 'tf' ? ['TFs'] : ['Cell types']
-        this.scriptService.load('charts').then(data => {
-            this.chartLoaded = data.filter(v => v.script === 'charts')[0].loaded;
-            this.cd.detectChanges();
-        }).catch(() => this.toastrService.error(
-            "Can't load Chart.js library, check your internet connection", 'Error')
-        );
-        console.log()
+        this.chartLabels = ['Expected', 'Observed']
 
         this.chartOptions = {
             responsive: true,
@@ -112,14 +116,14 @@ export class TicketBarplotComponent implements OnInit {
                     ticks: {
                         beginAtZero: true,
                         display: false,
-                        max: this.data.reduce((s, b) => s + b.count, 0)
+                        max: 1
                     },
                 }],
                 yAxes: [{
                     stacked: true,
                     ticks: {
                         beginAtZero: true,
-                        display: false
+                        display: true
                     },
                     gridLines: {
                         display: false,
@@ -138,12 +142,15 @@ export class TicketBarplotComponent implements OnInit {
                 }
             },
             tooltips: {
-                mode: 'point',
+                mode: 'nearest',
                 position: 'nearest',
                 titleFontSize: 0,
                 callbacks: {
                     label: (tooltipItem, data) => {
-                        let label = data.datasets[tooltipItem.datasetIndex].data[0] || '';
+
+                        let label = (tooltipItem.index == 0 ?
+                            this.data[tooltipItem.datasetIndex].expCount :
+                            this.data[tooltipItem.datasetIndex].count) || '' ;
                         label = getShortLabel(`${label}`)
                         if (label) {
                             label += ': ';
@@ -155,11 +162,17 @@ export class TicketBarplotComponent implements OnInit {
                 }
             }
         };
+        const sumCounts = this.data.reduce(
+            (s, pr) => s + pr.count, 0)
+        const expCounts = this.data.reduce(
+            (s, pr) => s + pr.expCount, 0)
         this.chartDatasets = this.data.map(
             (s) => {
                 return {
-                    data: [s.count],
-                    label: s.name
+                    data: [s.expCount/expCounts,
+                        s.count/sumCounts],
+                    label: s.name,
+                    barThickness: [15, 35]
                 }
             }
         );

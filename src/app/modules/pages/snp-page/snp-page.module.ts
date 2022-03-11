@@ -20,9 +20,9 @@ import {AsbTourModule} from "../../shared/tour-template/tour-module";
 import {AsbTablesModule} from "../../shared/table-template/table.module";
 import {AsbSnpDataModule} from "../../shared/data-template/data.module";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {InnerTableComponent} from "./inner-snp-table/inner-table.component";
 import {SciNotationModule} from "../../shared/sci-notation/sci-notation.module";
 import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
+import {InnerTableModule} from "../../shared/inner-table/inner-table.module";
 
 @NgModule({
     imports: [
@@ -45,14 +45,14 @@ import {AsbMotifsModule} from "../../shared/asb-motifs/asb-motifs.module";
         MatTooltipModule,
         SciNotationModule,
         AsbMotifsModule,
+        InnerTableModule,
     ],
     declarations: [
         SnpPageComponent,
         AsbStatisticsComponent,
         PhenotypesComponent,
         ColorScalesComponent,
-        InnerTableComponent,
-    ],
+    ]
 })
 export class AsbSnpPageModule {
 }

@@ -10,7 +10,7 @@ import {MatSort, SortDirection} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {merge, Observable, Subscription} from "rxjs";
 import {AsbBackendDataSource} from "./server-side-table.component";
-import {tap} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {AsbPopoverComponent} from "../../popover-template/popover.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -40,10 +40,13 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     public getTitle: (row: T) => string = null;
 
     @Input()
-    public popoverContentTemplate: TemplateRef<{row: T}> = null ;
+    public popoverContentTemplate: TemplateRef<{row: T}> = null;
 
     @Input()
     public clickableRow = false;
+
+    @Input()
+    public initialSorting: { active: string; direction: SortDirection };
 
     @Input()
     public displayedColumns: AsbTableDisplayedColumns<T>;
@@ -51,10 +54,12 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     public _dataSource: AsbBackendDataSource<T>;
     public popoverRow: T;
     private subscriptionMade = false;
+    public tableLength: Observable<number>;
 
     @Input()
     set data(value: Observable<T[]>) {
         this._dataSource = new AsbBackendDataSource(value);
+        this.tableLength = value.pipe(map(s => s && s.length))
     }
 
     @Input()
@@ -69,6 +74,9 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
     public paginatorLength: number;
     @Input()
     public paginatorPageSize: number | null;
+
+    @Input()
+    public isSearched: boolean = false;
 
     @Input()
     public expandCellContentTemplate: TemplateRef<{row: T}>;
@@ -105,9 +113,8 @@ export class AsbServerTableComponent<T> implements OnChanges, OnDestroy {
                     templateContext: {row}
                 }
             });
-        } else {
-            this.rowClickEmitter.emit(row);
         }
+        this.rowClickEmitter.emit(row);
     }
 
     public emitChanges(paginator: MatPaginator) {

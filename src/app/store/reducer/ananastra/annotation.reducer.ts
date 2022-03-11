@@ -4,6 +4,7 @@ import {
     convertAnnotationBackendToAnnotationModel,
     convertAnnotationSnpBackendToAnnotationSnpModel, convertPingBackendToPingModel
 } from '../../../helpers/converters/annotation.converter';
+import {AsbServerSideModel} from "../../../models/table.model";
 
 export interface TicketState {
     processing: boolean
@@ -16,18 +17,26 @@ export interface TicketState {
 
     tf?: {
         data?: AnnotationSnpModel[],
-        loading: boolean
+        loading: boolean,
+        total: number,
+        pagination?: AsbServerSideModel,
     },
     cl?: {
         data?: AnnotationSnpModel[],
-        loading: boolean
+        loading: boolean,
+        total: number,
+        pagination?: AsbServerSideModel,
     },
     tfSum?: {
         data?: AnnotationSnpModel[],
+        pagination?: AsbServerSideModel,
+        total: number,
         loading: boolean
     },
     clSum?: {
         data?: AnnotationSnpModel[],
+        pagination?: AsbServerSideModel,
+        total: number,
         loading: boolean
     }
 }
@@ -118,7 +127,7 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                     [action.payload]: {
                         ...state.annotations[action.payload],
                         annotationData: {
-                            loading: true
+                            loading: true,
                         }
                     },
                 }
@@ -155,13 +164,15 @@ export function annotationReducer(state: AnnotationState = initialState, action:
         }
 
         case fromActions.ActionTypes.LoadAnnotationTable: {
+            const tableId = action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')
             return {
                 ...state,
                 annotations: {
                     ...state.annotations,
                     [action.payload.ticket]: {
                         ...state.annotations[action.payload.ticket],
-                        [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
+                        [tableId]: {
+                            ...state.annotations[action.payload.ticket][tableId],
                             loading: true
                         }
                     }
@@ -177,6 +188,8 @@ export function annotationReducer(state: AnnotationState = initialState, action:
                         ...state.annotations[action.payload.ticket],
                         [action.payload.tfOrCl + (action.payload.isExpanded ? '' : 'Sum')]: {
                             loading: false,
+                            pagination: action.payload.pagination,
+                            total: action.payload.total,
                             data: action.payload.snps.map(convertAnnotationSnpBackendToAnnotationSnpModel)
                         }
                     }

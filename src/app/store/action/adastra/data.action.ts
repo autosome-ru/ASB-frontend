@@ -4,7 +4,7 @@ import {
     SnpInfoBackendModel,
     TfInfoBackendModel,
     TotalInfoBackendModel} from "src/app/models/data.model";
-import {AsbServerSideModel} from "src/app/models/table.model";
+import {AsbServerSideFilterModel, AsbServerSideModel} from "src/app/models/table.model";
 
 export enum ActionTypes {
     LoadTotalInfo = "[Data] load total info",
@@ -45,7 +45,7 @@ export class InitTotalInfoAction implements Action {
 export class LoadTfInfoAction implements Action {
     readonly type = ActionTypes.LoadTfInfo;
 
-    constructor(public payload: AsbServerSideModel) {}
+    constructor(public payload: AsbServerSideFilterModel) {}
 }
 export class LoadTfInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadTfInfoSuccess;
@@ -60,7 +60,7 @@ export class LoadTfInfoFailAction implements Action {
 export class LoadClInfoAction implements Action {
     readonly type = ActionTypes.LoadClInfo;
 
-    constructor(public payload: AsbServerSideModel) {}
+    constructor(public payload: AsbServerSideFilterModel) {}
 }
 export class LoadClInfoSuccessAction implements Action {
     readonly type = ActionTypes.LoadClInfoSuccess;

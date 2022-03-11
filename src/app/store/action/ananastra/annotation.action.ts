@@ -5,6 +5,7 @@ import {
     PingDataBackendModel
 } from 'src/app/models/annotation.model';
 import {TfOrCl} from 'src/app/models/data.model';
+import {AsbServerSideFilterModel, AsbServerSideModel} from "../../../models/table.model";
 
 export enum ActionTypes {
     StartAnnotation = '[Annotation] Start annotation',
@@ -106,6 +107,7 @@ export class InitAnnotationTableAction implements Action {
 
   constructor(public payload: {
       tfOrCl: TfOrCl,
+      pagination: AsbServerSideModel,
       ticket: string,
       isExpanded: boolean}) {}
 }
@@ -113,8 +115,10 @@ export class InitAnnotationTableAction implements Action {
 export class LoadAnnotationTableAction implements Action {
   readonly type = ActionTypes.LoadAnnotationTable;
 
-  constructor(public payload: {tfOrCl: TfOrCl,
+  constructor(public payload: {
+      tfOrCl: TfOrCl,
       ticket: string,
+      pagination: AsbServerSideFilterModel,
       isExpanded: boolean}) {}
 }
 export class LoadAnnotationTableSuccessAction implements Action {
@@ -123,6 +127,8 @@ export class LoadAnnotationTableSuccessAction implements Action {
   constructor(public payload: {
     tfOrCl: TfOrCl,
     ticket: string,
+    total: number,
+    pagination: AsbServerSideFilterModel,
     isExpanded: boolean,
     snps: AnnotationSnpBackendModel[]
   }){}
@@ -130,7 +136,11 @@ export class LoadAnnotationTableSuccessAction implements Action {
 export class LoadAnnotationTableFailAction implements Action {
   readonly type = ActionTypes.LoadAnnotationTableFail;
 
-  constructor(public payload: {tfOrCl: TfOrCl, ticket: string, isExpanded: boolean}) {}
+  constructor(public payload: {
+      tfOrCl: TfOrCl,
+      pagination: AsbServerSideFilterModel,
+      ticket: string,
+      isExpanded: boolean}) {}
 }
 
 

@@ -39,6 +39,7 @@
                 >
                     <asb-ticket-table-tmp
                         [data]="getTfOrClData(ticketStatistics.metaInfo)"
+                        [chartsLoaded]="chartsLoaded"
                     ></asb-ticket-table-tmp>
                 </div>
             </ng-container>
@@ -77,23 +78,6 @@
     </div>
 
     <mat-divider></mat-divider>
-    <div *ngIf="data.length > 199"
-         style="border: 1px solid red; padding: 0.5rem; display: flex; justify-content: center; flex-direction: column; align-items: center"
-    >
-        <h5 style="margin-top: 0.5rem; text-align: center">
-            Too many ({{data.length}}) ASBs detected. First 200 are shown.
-            Consider downloading complete table for offline analysis.
-
-        </h5>
-        <button
-            style="overflow: auto"
-            mat-raised-button
-            (click)="downloadTable()"
-        >
-            <mat-icon svgIcon="download"></mat-icon>
-            Download table
-        </button>
-    </div>
     <div
         joyrideStep="pie-chart"
         [stepContent]="stepTemplate"
@@ -103,10 +87,15 @@
             *ngIf="ticketStatistics?.metaInfo && getChartData(ticketStatistics?.metaInfo).length > 0"
             [data]="getChartData(ticketStatistics?.metaInfo)"
             [tfOrCl]="tfOrCl"
+            [chartLoaded]="chartsLoaded"
             [isExpanded]="isExpanded"
             [selectedIndex]="getSelectedNameIndex(selectedName)"
             (chartClickEmitter)="chartClicked($event)"
         ></asb-ticket-barplot>
+    </div>
+    <div
+    >
+
     </div>
     <mat-divider class="mb-1"></mat-divider>
     <div>
@@ -212,22 +201,29 @@
                 </div>
             </mat-menu>
         </div>
-        <asb-table
+        <asb-table-server
             [displayedColumns]="displayedColumns"
             [columnModel]="columnModel"
-            [sortData]="sortData"
-            [data]="tableData"
-            [pageSize]="10"
+            [data]="data"
+            [dataLoading]="dataLoading"
+            [paginatorPageSize]="10"
+            (rowClickEmitter)="rowClicked($event)"
+            (tableChangesEmitter)="emitTableChanges($event)"
+            [getTitle]="getRowTitle()"
+            [popoverContentTemplate]="popoverContentTemplate"
+            [clickableRow]="true"
             [initialSorting]="{active: 'chr', direction: 'asc'}"
+            [paginatorLength]="paginatorLength"
             [paginatorOptions]="[5, 10, 25, 100, 500, 1000]"
-        ></asb-table>
+        ></asb-table-server>
     </div>
 
 </div>
 
+
 <ng-template #genomePositionViewTemplate let-row="row">
   <div>
-          <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
+          <span>{{row?.genomePosition}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
             [ngStyle]="{'color': colors[row.refBase]}"
           >{{row.refBase}}</strong>
                   <span>></span>
@@ -240,7 +236,7 @@
 </ng-template>
 <ng-template #genomePositionViewSumTemplate let-row="row">
     <div>
-          <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black">
+          <span>{{row?.genomePosition}}:{{row?.pos}}&nbsp;<span style="color: black">
                   <span *ngFor="let base of row.alleles; let last=last"><strong
                           [ngStyle]="{'color': colors[base]}"
                       >{{base}}</strong><span *ngIf="!last">/</span>
@@ -270,6 +266,7 @@
         mat-icon-button
         target="_blank"
         rel="noopener noreferrer"
+        (click)="$event.stopPropagation()"
         [href]="'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position='
             + row.chr + ':' + (row.pos > 100 ? row.pos - 100 : '1')
             + '-' + (row.pos + 100) +
@@ -287,6 +284,7 @@
 <ng-template #dbSnpViewTemplate let-value="value" let-row="row">
   <div class="pseudo-link"
     [matMenuTriggerFor]="linkMenu"
+    (click)="$event.stopPropagation()"
     [matMenuTriggerData]="{value: value, row: row}"
   >
     {{value}}</div>
@@ -314,6 +312,7 @@
     <a
         *ngIf="value"
         target="_blank"
+        (click)="$event.stopPropagation()"
         rel="noopener noreferrer"
         [href]="'https://www.gtexportal.org/home/snp/' + row?.rsId"
     >
@@ -330,7 +329,7 @@
 
         style="line-height: 0.8rem"
         *ngIf="value && value !== 'No Hit'"
-        (click)="openDialog(row)"
+        (click)="openDialog(row); $event.stopPropagation()"
         matTooltip="Click to open panel"
     >
         {{value}}
@@ -382,4 +381,68 @@
 <ng-template #noDataTemplate>
         <span style="padding-top: 10px;width: 100%;text-align: center; padding-bottom: 10px"
         >No Data Available</span>
+</ng-template>
+
+<ng-template #popoverContentTemplate let-row="row">
+    <asb-inner-table
+        *ngIf="!(innerTableLoading$ | async) else loadingTemplate"
+        [innerTableData]="innerTableData"
+        [isCl]="tfOrCl === 'cl'"
+        [sortColumn]="row.pValueRef < row.pValueAlt ? 'ref' : 'alt'"
+    ></asb-inner-table>
+</ng-template>
+
+<ng-template #loadingTemplate>
+    <div style="min-width: 20vw; min-height: 25vh">
+    <div style="display: flex; justify-content: center" class="pt-3">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+    </div>
+</ng-template>
+
+
+<ng-template #clViewTemplate let-row="row" let-value="value">
+    <a
+        (click)="$event.stopPropagation()"
+        target="_blank"
+        rel="noopener noreferrer"
+        [href]="'http://gtrd.biouml.org/#!table/gtrd_current.cells/Details/ID=' + row.cellTypeId"
+    >
+        {{value}}
+    </a>
+</ng-template>
+
+<ng-template #tfViewTemplate let-row="row" let-value="value">
+    <a
+        (click)="$event.stopPropagation(); $event.preventDefault()"
+        [matMenuTriggerFor]="tfLinks"
+        [matMenuTriggerData]="{value, row}"
+        [href]="'#'"
+    >{{value}}</a>
+    <mat-menu #tfLinks>
+        <ng-template matMenuContent let-value="value" let-row="row">
+            <a
+                target="_blank"
+                rel="noopener noreferrer"
+                mat-menu-item
+                [href]="'https://www.genecards.org/Search/Keyword?queryString=' + value"
+
+            >
+                view in GeneCards</a>
+            <a
+                mat-menu-item
+                target="_blank"
+                rel="noopener noreferrer"
+                [href]="'https://hocomoco11.autosome.ru/search?arity=mono&species=human&query=' + value"
+            >
+                view in HOCOMOCO</a>
+            <a
+                mat-menu-item
+                target="_blank"
+                rel="noopener noreferrer"
+                [href]="'https://www.uniprot.org/uniprot/' + row.tfUniprotAc"
+            >
+                view in UNIPROT</a>
+        </ng-template>
+    </mat-menu>
 </ng-template>

@@ -9,7 +9,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {AsbTableColumnModel, AsbTableDisplayedColumns} from '../../../../models/table.model';
+import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from '../../../../models/table.model';
 import {
     AnnotationDataModel,
     AnnotationSnpModel,
@@ -17,17 +17,18 @@ import {
     CountModel,
     StatsDataModel
 } from 'src/app/models/annotation.model';
-import {TfOrCl} from '../../../../models/data.model';
+import {ExpSnpModel, TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {MatSort} from "@angular/material/sort";
 import {compareData} from "../../../../helpers/helper/check-functions.helper";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {Subscription} from "rxjs";
+import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {ReleaseModel} from "../../../../models/releases.model";
 import {ananastraRelease} from "../../../../helpers/constants/releases";
+import {DataService} from "../../../../services/data.service";
 
 
 @Component({
@@ -71,8 +72,17 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @ViewChild('tfBindPrefTemplate', {static: true})
     private tfBindPrefTemplate: TemplateRef<{ value: string }>;
 
+    @ViewChild('tfViewTemplate', {static: true})
+    private tfViewTemplate: TemplateRef<{value: string}>;
+
+    @ViewChild('clViewTemplate', {static: true})
+    private clViewTemplate: TemplateRef<{value: string}>;
+
     @Input()
-    public data: AnnotationSnpModel[] = [];
+    public data: Observable<AnnotationSnpModel[]>;
+
+    @Input()
+    public dataLoading: boolean;
 
     @Input()
     public ticketStatistics: AnnotationDataModel;
@@ -89,6 +99,12 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @Input()
     public isExpanded = false;
 
+    @Input()
+    public paginatorLength: number;
+
+    @Input()
+    public chartsLoaded: boolean;
+
     @Output()
     private groupValueEmitter = new EventEmitter<boolean>();
 
@@ -101,8 +117,12 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     @Output()
     private selectedNameChange = new EventEmitter<string>();
 
+    @Output()
+    private tableChangesEmitter = new EventEmitter<AsbServerSideModel>();
+
     public displayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
-    private subscriptions = new Subscription()
+    private subscriptions = new Subscription();
+    public rowsLimit = 500;
     public tableOpened: boolean;
     public release: ReleaseModel = ananastraRelease;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
@@ -111,10 +131,10 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
         if (field.active === 'chr') {
             const chrToNum = (chr: string) => Number(chr.slice(3))
             function compareAnnSnpModel(a: AnnotationSnpModel, b: AnnotationSnpModel) {
-                if (chrToNum(a.chr) > chrToNum(b.chr)) {
+                if (chrToNum(a.genomePosition) > chrToNum(b.genomePosition)) {
                     return 1
                 } else {
-                    if (chrToNum(a.chr) == chrToNum(b.chr)) {
+                    if (chrToNum(a.genomePosition) == chrToNum(b.genomePosition)) {
                         return a.pos > b.pos ? 1 : -1
                     }
                     return -1
@@ -129,7 +149,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
         }
     }
     public columnsControl: FormControl;
-    public tableData: AnnotationSnpModel[];
+    public tableData: Observable<AnnotationSnpModel[]>;
     public colors: { [base: string]: string } = {
         A: "#0074FF",
         T: "#7900C8",
@@ -139,17 +159,21 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     private initialDisplayedColumns: AsbTableDisplayedColumns<AnnotationSnpModel>;
     private dialog: MatDialogRef<{ value: string }>;
     public revcompState: boolean = false;
+    public innerTableLoading$ = new BehaviorSubject<boolean>(false);
+    public innerTableData: ExpSnpModel[];
+
 
     constructor(private formBuilder: FormBuilder,
+                private dataService: DataService,
                 private matDialog: MatDialog) {
     }
 
     ngOnInit(): void {
 
-        this.displayedColumns = ['rsId', 'chr', 'pos'];
+        this.displayedColumns = ['rsId', 'genomePosition', 'pos'];
         this.columnModel = {
             rsId: {view: 'rs ID', columnTemplate: this.dbSnpViewTemplate},
-            chr: {
+            genomePosition: {
                 view: "Genome position",
                 columnTemplate: this.isExpanded ? this.genomePositionViewTemplate : this.genomePositionViewSumTemplate,
             },
@@ -166,19 +190,31 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
         if (this.tfOrCl === 'tf') {
             this.displayedColumns.push('transcriptionFactor')
             if (this.isExpanded) {
-                this.columnModel.transcriptionFactor = {view: 'Transcription factor'};
+                this.columnModel.transcriptionFactor = {
+                    view: 'Transcription factor',
+                    columnTemplate: this.tfViewTemplate
+                };
             } else {
-                this.columnModel.transcriptionFactor = {view: 'Top transcription factor', helpMessage: 'By ASB significance'};
+                this.columnModel.transcriptionFactor = {
+                    view: 'Top transcription factor',
+                    helpMessage: 'By ASB significance',
+                    columnTemplate: this.tfViewTemplate
+                };
             }
         } else {
             this.displayedColumns.push('cellType')
             if (this.isExpanded) {
-                this.columnModel.cellType = {view: 'Cell type'};
+                this.columnModel.cellType = {
+                    view: 'Cell type',
+                    columnTemplate: this.clViewTemplate
+                };
 
             } else {
                 this.columnModel.cellType = {
                     view: 'Top cell type',
-                    helpMessage: 'By ASB significance'};
+                    helpMessage: 'By ASB significance',
+                    columnTemplate: this.clViewTemplate
+                };
             }
         }
 
@@ -188,53 +224,53 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
                 columnTemplate: this.prefAlleleColumnTemplate,
                 disabledSort: true
             }
-            this.columnModel.topEs = {
+            this.columnModel.topEffectSize = {
                 view: `Top ${this.tfOrCl === 'tf' ? 'TF' : 'cell type'} effect size`,
                 isDesc: true,
                 valueConverter: v => v !== null ? v.toFixed(2) : 'n/a'
             };
-            this.columnModel.topFdr = {
+            this.columnModel.log10TopFdr = {
                 view: `Top ${this.tfOrCl === 'tf' ? 'TF' : 'cell type'} FDR`,
                 columnTemplate: this.fdrViewTemplate
             };
-            this.columnModel.tfBindPref = {
+            this.columnModel.tfBindingPreferences = {
                 view: 'Preferably bound allele',
                 columnTemplate: this.tfBindPrefTemplate
             }
-            this.displayedColumns.push("topEs", "topFdr", 'tfBindPref');
+            this.displayedColumns.push("topEffectSize", "log10TopFdr", 'tfBindingPreferences');
 
         } else {
-            this.columnModel.esRef = {
+            this.columnModel.effectSizeRef = {
                 view: 'Effect size Ref',
                 isDesc: true,
                 valueConverter: v => v !== null ? v.toFixed(2) : 'n/a'
             };
-            this.columnModel.esAlt = {
+            this.columnModel.effectSizeAlt = {
                 view: 'Effect size Alt',
                 isDesc: true,
                 valueConverter: v => v !== null ? v.toFixed(2) : 'n/a'
             };
-            this.displayedColumns.push("esRef", "esAlt", 'fdrRef', 'fdrAlt');
-            this.columnModel.fdrRef = {
+            this.displayedColumns.push("effectSizeRef", "effectSizeAlt", 'log10FdrRef', 'log10FdrAlt');
+            this.columnModel.log10FdrRef = {
                 view: 'FDR Ref',
                 columnTemplate: this.fdrViewTemplate
             };
-            this.columnModel.fdrAlt = {
+            this.columnModel.log10FdrAlt = {
                 view: 'FDR Alt',
                 columnTemplate: this.fdrViewTemplate
             };
             if (this.tfOrCl === 'tf') {
-                this.columnModel.motifFc = {
+                this.columnModel.motifLog2Fc = {
                     view: "Motif fold change",
                         valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                         helpMessage: 'log₂(Alt/Ref motif p-value)',
                         isDesc: true
                 };
-                this.columnModel.motifPRef = {
+                this.columnModel.motifLogPRef = {
                     view: "Motif Ref p-value",
                         columnTemplate: this.fdrViewTemplate,
                 }
-                this.columnModel.motifPAlt = {
+                this.columnModel.motifLogPAlt = {
                     view: "Motif Alt p-value",
                         columnTemplate: this.fdrViewTemplate,
                 }
@@ -254,7 +290,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             view: 'GTEx eQTL',
             columnTemplate: this.gtexTemplate
         };
-        this.columnModel.targetGenes = {
+        this.columnModel.gtexEqtlTargetGenes = {
             view: 'GTEx eQTL target genes',
             valueConverter: v => v ? v : ''
         };
@@ -301,9 +337,6 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
         this.groupValueEmitter.emit(this.isExpanded);
     }
 
-    // chooseFormat(format: string): void {
-    // }
-
     downloadTable(): void {
         this.downloadTableEmitter.emit();
     }
@@ -321,24 +354,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
                 name = null;
             }
         }
-        if (name) {
-            this.tableData = this.data.filter(s => this.filterFunction(s, name)).slice(0, 200)
-        } else {
-            this.tableData = this.data.slice(0, 200)
-        }
     }
     getCountModel(): CountModel[] {
         return this.getChartData(this.ticketStatistics.metaInfo);
-    }
-    filterFunction(snp: AnnotationSnpModel, name: string): boolean {
-        const snpField: string = this.tfOrCl === 'tf' ? snp.transcriptionFactor : snp.cellType;
-        if (name === 'Other') {
-            const objList: CountModel[] = this.getCountModel()
-            return objList.every(s => snpField !== s.name)
-        } else {
-            return snpField === name
-        }
-
     }
 
     getSelectedNameIndex(selectedName: string): number {
@@ -409,5 +427,38 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     getTfOrClData(metaInfo: StatsDataModel): AsbStatsDataModel[] {
         return this.tfOrCl === 'tf' ? metaInfo.tfAsbData : metaInfo.clAsbData
+    }
+
+    rowClicked(row: AnnotationSnpModel) {
+        if (!this.innerTableLoading$.value) {
+            this.innerTableLoading$.next(true)
+            this.subscriptions.add(
+                this.dataService.getInnerTableInfo(
+                    row.genomePosition,
+                    row.pos,
+                    row.altBase,
+                    this.tfOrCl === 'tf' ? row.transcriptionFactor : row.cellType,
+                    this.tfOrCl
+                ).subscribe(
+                    s => {
+                        this.innerTableLoading$.next(false)
+                        this.innerTableData = s
+                    },
+                    () => {
+                        this.innerTableLoading$.next(false)
+                        this.innerTableData = []
+                    }
+                )
+            )
+        }
+    }
+    getRowTitle(): (row) => string {
+        return row => `${row.rsId} ${this.tfOrCl === 'tf' ?
+                'of ' + row.transcriptionFactor : 'in ' + row.cellType}`
+    }
+
+    emitTableChanges(event: AsbServerSideModel): void {
+        console.log(event)
+        this.tableChangesEmitter.emit(event)
     }
 }

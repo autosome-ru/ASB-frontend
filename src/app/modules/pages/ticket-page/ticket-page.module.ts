@@ -30,6 +30,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDividerModule} from "@angular/material/divider";
 import {AsbTourModule} from "../../shared/tour-template/tour-module";
 import {JoyrideModule} from "ngx-joyride";
+import {InnerTableModule} from "../../shared/inner-table/inner-table.module";
+import { OddsBarComponent } from './odds-bar/odds-bar.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
     declarations: [
@@ -37,7 +40,8 @@ import {JoyrideModule} from "ngx-joyride";
         TicketStatsComponent,
         TicketTablePreviewComponent,
         TicketBarplotComponent,
-        TicketTableTmpComponent
+        TicketTableTmpComponent,
+        OddsBarComponent
     ],
     imports: [
         CommonModule,
@@ -64,7 +68,10 @@ import {JoyrideModule} from "ngx-joyride";
         MatChipsModule,
         MatDividerModule,
         AsbTourModule,
-        JoyrideModule
+        JoyrideModule,
+        InnerTableModule,
+        ChartsModule,
+        MatListModule
     ],
     providers: [DownloadService]
 })

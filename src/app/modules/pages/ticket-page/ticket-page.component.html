@@ -88,6 +88,7 @@
                                               svgIcon="help"></mat-icon></span></h5>
                                 <astra-ticket-stats
                                     [chartData]="data"
+                                    [chartLoaded]="chartLoaded"
                                     [chrPanelOpened]="chrPanelOpened"
                                     (statsLastStep)="selectTabById(1)"
                                 ></astra-ticket-stats>
@@ -107,13 +108,17 @@
                             <div class="mx-1 pt-1">
                                 <ng-container *ngIf="isExpanded && (tfTableData$ | async) as tfTableData">
                                     <astra-ticket-table-preview
-                                        *ngIf="!tfTableData?.loading; else loadingTemplate"
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
-                                        [data]="tfTableData?.data"
+                                        [chartsLoaded]="chartLoaded"
+                                        [paginatorLength]="tfTableData.total"
+                                        [dataLoading]="tfTableData.loading"
+                                        [data]="getDataObservable(tfTableData$)"
+                                        (tableChangesEmitter)="tableChanged($event)"
                                         [(panelExpanded)]="panelExpanded"
                                         [tfOrCl]="'tf'"
-                                        [(selectedName)]="selectedName.tf"
+                                        [selectedName]="selectedName.tf"
+                                        (selectedNameChange)="changedName($event, 'tf')"
                                         (groupValueEmitter)="groupValueChanged($event)"
                                         (downloadTableEmitter)="downloadTable('tf')"
                                     >
@@ -121,12 +126,16 @@
                                 </ng-container>
                                 <ng-container *ngIf="!isExpanded && (tfTableDataSum$ | async) as tfTableData">
                                     <astra-ticket-table-preview
-                                        *ngIf="!tfTableData?.loading; else loadingTemplate"
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
-                                        [data]="tfTableData?.data"
+                                        [chartsLoaded]="chartLoaded"
+                                        [paginatorLength]="tfTableData.total"
+                                        [data]="getDataObservable(tfTableDataSum$)"
                                         [(panelExpanded)]="panelExpanded"
-                                        [(selectedName)]="selectedName.tfSum"
+                                        (tableChangesEmitter)="tableChanged($event)"
+                                        [dataLoading]="tfTableData.loading"
+                                        [selectedName]="selectedName.tfSum"
+                                        (selectedNameChange)="changedName($event, 'tfSum')"
                                         [tfOrCl]="'tf'"
                                         (groupValueEmitter)="groupValueChanged($event)"
                                         (downloadTableEmitter)="downloadTable('tf')"
@@ -145,15 +154,19 @@
                         >Cell types</span>
                         </ng-template>
                         <ng-template matTabContent>
-                            <div class="mx-1 pt-1">
+                            <div class="mx-1 pt-1" [ngStyle]="{'min-height': 50 * 8 + 'px' }">
                                 <ng-container *ngIf="isExpanded && (clTableData$ | async) as clTableData">
                                     <astra-ticket-table-preview
-                                        *ngIf="!clTableData?.loading; else loadingTemplate"
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
-                                        [data]="clTableData?.data"
+                                        [dataLoading]="clTableData.loading"
+                                        [chartsLoaded]="chartLoaded"
+                                        [paginatorLength]="clTableData.total"
+                                        [data]="getDataObservable(clTableData$)"
                                         [(panelExpanded)]="panelExpanded"
-                                        [(selectedName)]="selectedName.cl"
+                                        [selectedName]="selectedName.cl"
+                                        (selectedNameChange)="changedName($event, 'cl')"
+                                        (tableChangesEmitter)="tableChanged($event)"
                                         [tfOrCl]="'cl'"
                                         (groupValueEmitter)="groupValueChanged($event)"
                                         (downloadTableEmitter)="downloadTable('cl')"
@@ -162,12 +175,16 @@
                                 </ng-container>
                                 <ng-container *ngIf="!isExpanded && (clTableDataSum$ | async) as clTableData">
                                     <astra-ticket-table-preview
-                                        *ngIf="!clTableData?.loading; else loadingTemplate"
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
-                                        [data]="clTableData?.data"
+                                        [chartsLoaded]="chartLoaded"
+                                        [data]="getDataObservable(clTableDataSum$)"
                                         [(panelExpanded)]="panelExpanded"
-                                        [(selectedName)]="selectedName.clSum"
+                                        [paginatorLength]="clTableData.total"
+                                        [dataLoading]="clTableData.loading"
+                                        (tableChangesEmitter)="tableChanged($event)"
+                                        [selectedName]="selectedName.clSum"
+                                        (selectedNameChange)="changedName($event, 'clSum')"
                                         [tfOrCl]="'cl'"
                                         (groupValueEmitter)="groupValueChanged($event)"
                                         (downloadTableEmitter)="downloadTable('cl')"

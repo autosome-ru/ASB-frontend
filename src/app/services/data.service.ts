@@ -1,10 +1,21 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ClInfoBackendModel, SnpInfoBackendModel, TfInfoBackendModel, TfOrCl, TotalInfoBackendModel} from "src/app/models/data.model";
-import {AsbServerSideModel} from "../models/table.model";
-import {convertServerSideModelToServerSideBackendModel} from "../helpers/converters/snp-model.converter";
+import {
+    ClInfoBackendModel,
+    ClSnpBackendModel, ExpSnpModel,
+    SnpInfoBackendModel,
+    TfInfoBackendModel,
+    TfOrCl,
+    TotalInfoBackendModel
+} from "src/app/models/data.model";
+import {AsbServerSideFilterModel} from "../models/table.model";
+import {
+    convertBackendExpSnp,
+    convertServerSideModelToServerSideBackendModel
+} from "../helpers/converters/snp-model.converter";
 import {UrlService} from "./url.service";
+import {map} from "rxjs/operators";
 
 
 @Injectable()
@@ -36,18 +47,31 @@ export class DataService {
     }
 
 
-    public getTfInfo(params: AsbServerSideModel): Observable<{results:TfInfoBackendModel[], total: number}> {
+    public getTfInfo(params: AsbServerSideFilterModel): Observable<{results:TfInfoBackendModel[], total: number}> {
         return this.http.get<{results:TfInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/tf",
         {
             params: convertServerSideModelToServerSideBackendModel(params)
         });
     }
 
-    public getClInfo(params: AsbServerSideModel): Observable<{results: ClInfoBackendModel[], total: number}> {
+    public getClInfo(params: AsbServerSideFilterModel): Observable<{results: ClInfoBackendModel[], total: number}> {
         return this.http.get<{results:ClInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/cl",
             {
                 params: convertServerSideModelToServerSideBackendModel(params)
             });
+    }
+
+    public getInnerTableInfo(chromosome, position, alt, aggregation_name, tfOrCl: TfOrCl): Observable<ExpSnpModel[]> {
+        return this.http.get<ClSnpBackendModel>(
+            `${this.urlService.getUrlForQuery("snp")}/${tfOrCl}_aggregated`,
+            {
+                params: {
+                    chromosome,
+                    position,
+                    alt,
+                    aggregation_name
+                }
+            }).pipe(map(s => s.exp_snps.map(p => convertBackendExpSnp(p))));
     }
 
 }

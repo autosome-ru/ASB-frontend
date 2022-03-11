@@ -28,13 +28,21 @@
     </h4>
 
     <div
+        *ngIf="(browseTfInfoInitialized$ | async) || (browseClInfoInitialized$ | async)"
         style="margin-bottom: -16px"
     >
+        <mat-form-field >
+            <mat-label>Filter</mat-label>
+            <span matPrefix><mat-icon svgIcon="search"></mat-icon></span>
+            <input [formControl]="searchForm"
+                   matInput placeholder="e.g. CTCF_HUMAN">
+        </mat-form-field>
         <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
             <asb-table-server
                 #tableTfView
                 *ngIf="browseTfInfoInitialized$ | async"
                 [data]="tableTfData$"
+                [isSearched]="!!this.searchForm.value"
                 [dataLoading]="browseTfInfoLoading$ | async"
                 [displayedColumns]="tfDisplayedColumns"
                 [columnModel]="tfColumnModel"
@@ -46,6 +54,8 @@
                 (tableChangesEmitter)="_handleTableChange($event, 'tf')"
             >
             </asb-table-server>
+<!--            <span   *ngIf="browseTfInfoInitialized$ | async"></span>-->
+<!--            {{tableTfData$ | async | json}}-->
         </ng-container>
     </div>
 </div>
@@ -86,6 +96,7 @@
         #tableClView
         *ngIf="browseClInfoInitialized$ | async"
         [data]="tableClData$"
+        [isSearched]="!!this.searchForm.value"
         [dataLoading]="browseClInfoLoading$ | async"
         [displayedColumns]="clDisplayedColumns"
         [columnModel]="clColumnModel"

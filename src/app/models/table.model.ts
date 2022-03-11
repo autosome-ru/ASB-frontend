@@ -30,6 +30,10 @@ export interface AsbServerSideModel {
     active: string;
 }
 
+export interface AsbServerSideFilterModel extends AsbServerSideModel {
+    regexp?: string;
+}
+
 export interface AsbServerSideBackendModel {
     page: string;
     size: string;

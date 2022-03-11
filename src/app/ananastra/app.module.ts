@@ -8,7 +8,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {UploadService} from '../services/upload.service';
 import {EffectsModule} from '@ngrx/effects';
 import {ToastrModule} from 'ngx-toastr';
-import {StoreModule} from '@ngrx/store';
+import {ActionReducerMap, StoreModule} from '@ngrx/store';
 import {ProcessingService} from '../services/processing.service';
 import {ScriptService} from '../services/script.service';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material/dialog';
@@ -27,6 +27,19 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {ErrorsInterceptor} from "../interceptors/errors-interceptor";
 import {SeoService} from "../services/seo.servise";
 import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
+import {asbAppReducer} from "../store/reducer/adastra";
+import {asbAppEffects} from "../store/effect/adastra";
+import {SearchService} from "../services/search.service";
+
+export const reducers: ActionReducerMap<any> = {
+    ...asbAppReducer,
+    ...annotationStoreReducer
+};
+
+export const effects = [
+    ...asbAppEffects,
+    ...annotationStoreEffects
+]
 
 @NgModule({
     declarations: [
@@ -37,8 +50,8 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        StoreModule.forRoot(annotationStoreReducer),
-        EffectsModule.forRoot(annotationStoreEffects),
+        StoreModule.forRoot(reducers),
+        EffectsModule.forRoot(effects),
         ToastrModule.forRoot({
             preventDuplicates: true,
             includeTitleDuplicates: true
@@ -57,6 +70,7 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
         UploadService,
         ScriptService,
         ReleasesService,
+        SearchService,
         DataService,
         UrlService,
         SeoService,

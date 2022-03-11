@@ -16,9 +16,17 @@ export interface AnnotationDataModel {
     expirationDate: Date;
     metaInfo: StatsDataModel;
 }
+
+export interface CountBackendModel {
+    name: string;
+    count: number;
+    background_count?: number;
+}
+
 export interface CountModel {
     name: string;
-    count: number
+    count: number;
+    expCount?: number;
 }
 export type pValueString = number | 'infinity'
 export interface StatsDataModel {
@@ -77,8 +85,8 @@ export interface StatsDataBackendModel {
         odds_rs: string;
         expected_asbs_rs: number;
         expected_negatives_rs: number;
-        asb_counts: CountModel[];
-        asb_counts_top: CountModel[];
+        asb_counts: CountBackendModel[];
+        asb_counts_top: CountBackendModel[];
         asb_data: AsbStatsBackendDataModel[];
     },
     tf: {
@@ -88,8 +96,8 @@ export interface StatsDataBackendModel {
         odds_rs: string;
         expected_asbs_rs: number;
         expected_negatives_rs: number;
-        asb_counts: CountModel[];
-        asb_counts_top: CountModel[];
+        asb_counts: CountBackendModel[];
+        asb_counts_top: CountBackendModel[];
         asb_data: AsbStatsBackendDataModel[];
     },
     chr: {
@@ -156,7 +164,9 @@ export interface AnnotationSnpBackendModel {
     tf_binding_preferences: string;
     preferred_allele: string;
     transcription_factor?: string;
+    tf_uniprot_ac?: string;
     cell_type?: string;
+    cell_type_gtrd_id?: number;
     is_eqtl?: boolean;
     gtex_eqtl_target_genes?: string;
     motif_log_p_ref?: number;
@@ -174,17 +184,19 @@ export interface AnnotationSnpBackendModel {
 
 export interface AnnotationSnpModel extends SnpGenPosModel, MotifSnpModel {
     cellType?: string;
+    cellTypeId?: number;
     transcriptionFactor?: string;
-    tfBindPref?: string;
+    tfUniprotAc?: string;
+    tfBindingPreferences?: string;
     prefAllele?: string;
     isEqtl?: boolean;
-    targetGenes?: string;
-    fdrRef: number;
-    fdrAlt: number;
-    topFdr: number;
-    esRef: number;
-    esAlt: number;
-    topEs: number;
+    gtexEqtlTargetGenes?: string;
+    log10FdrRef: number;
+    log10FdrAlt: number;
+    log10TopFdr: number;
+    effectSizeRef: number;
+    effectSizeAlt: number;
+    topEffectSize: number;
     alleles?: string[];
     clinvar: string;
     ebi: string;

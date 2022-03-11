@@ -149,6 +149,7 @@ export class AsbTableComponent<T> implements AfterViewInit, OnChanges, OnInit {
                 templateContext: {row}
             }
         });
+        this.rowClickEmitter.emit(row)
     }
 
 

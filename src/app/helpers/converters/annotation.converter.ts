@@ -3,15 +3,25 @@ import {
     AnnotationDataModel,
     AnnotationSnpBackendModel,
     AnnotationSnpModel,
-    AsbStatsBackendDataModel, AsbStatsDataModel,
+    AsbStatsBackendDataModel, AsbStatsDataModel, CountBackendModel, CountModel,
     PingDataBackendModel,
     PingDataModel,
     StatsDataModel
 } from '../../models/annotation.model';
 import {stringToNum} from "../helper/check-functions.helper";
 
+
+function convertCountBackendModelToCountModel(model: CountBackendModel): CountModel {
+    return {
+        count: model.count,
+        expCount: model.background_count,
+        name: model.name
+    }
+}
+
 function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDataBackendModel): StatsDataModel {
     const stats = model.meta_info
+
     return {
         // Ticket info
         fdr: model.fdr,
@@ -50,10 +60,10 @@ function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDa
         chrTfPvalue: stringToNum(stats.chr.tf_log10_p_value_rs),
         chrClPvalue: stringToNum(stats.chr.cl_log10_p_value_rs),
         // Charts
-        tfAsbList: stats.tf.asb_counts ? stats.tf.asb_counts : [],
-        clAsbList: stats.cl.asb_counts ? stats.cl.asb_counts : [],
-        tfAsbListSum: stats.tf.asb_counts_top ? stats.tf.asb_counts_top : [],
-        clAsbListSum: stats.cl.asb_counts_top ? stats.cl.asb_counts_top : [],
+        tfAsbList: (stats.tf.asb_counts ?? []).map(convertCountBackendModelToCountModel),
+        clAsbList: (stats.cl.asb_counts ?? []).map(convertCountBackendModelToCountModel),
+        tfAsbListSum: (stats.tf.asb_counts_top ?? []).map(convertCountBackendModelToCountModel),
+        clAsbListSum: (stats.cl.asb_counts_top ?? []).map(convertCountBackendModelToCountModel),
         // Enrichment
         tfAsbData: stats.tf.asb_data ? stats.tf.asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
         clAsbData: stats.cl.asb_data ? stats.cl.asb_data.map(convertAsbStatsBackendToAsbStatsModel) : [],
@@ -69,7 +79,8 @@ function convertAsbStatsBackendToAsbStatsModel(model: AsbStatsBackendDataModel):
         expectedNegativesRs: model.expected_negatives_rs,
         expectedAsbsRs: model.expected_asbs_rs,
         pValue: stringToNum(model.log10_p_value, true),
-        fdr: stringToNum(model.log10_fdr, true),
+        fdr: stringToNum(model.log10_fdr === undefined ?
+            model.log10_p_value : model.log10_fdr , true),
         name: model.name
     }
 }
@@ -106,16 +117,18 @@ export function convertAnnotationSnpBackendToAnnotationSnpModel(
         ebi: model.ebi,
         finemapping: model.finemapping,
         altBase: model.alt,
-        chr: model.chromosome,
+        genomePosition: model.chromosome,
         rsId: typeof model.rs_id === 'string' ? model.rs_id : 'rs' + model.rs_id,
         context: model.sequence,
-        esAlt: model.effect_size_alt,
-        esRef: model.effect_size_ref,
-        fdrAlt: -model.log10_fdr_alt,
-        fdrRef: -model.log10_fdr_ref,
+        effectSizeAlt: model.effect_size_alt,
+        effectSizeRef: model.effect_size_ref,
+        log10FdrAlt: -model.log10_fdr_alt,
+        log10FdrRef: -model.log10_fdr_ref,
+        tfUniprotAc: model.tf_uniprot_ac,
+        cellTypeId: model.cell_type_gtrd_id,
         isEqtl: model.is_eqtl,
-        targetGenes: model.gtex_eqtl_target_genes,
-        tfBindPref: model.tf_binding_preferences,
+        gtexEqtlTargetGenes: model.gtex_eqtl_target_genes,
+        tfBindingPreferences: model.tf_binding_preferences,
         prefAllele: model.preferred_allele,
         refBase: model.ref,
         alleles: model.alleles ? model.alleles.split('/') : [],
@@ -123,12 +136,12 @@ export function convertAnnotationSnpBackendToAnnotationSnpModel(
         cellType: model.cell_type,
         transcriptionFactor: model.transcription_factor,
         motifConcordance: model.motif_concordance,
-        motifFc: model.motif_log2_fc,
+        motifLog2Fc: model.motif_log2_fc,
         motifOrientation: model.motif_orientation,
         motifPosition: model.motif_position,
-        motifPAlt: -model.motif_log_p_alt,
-        motifPRef: -model.motif_log_p_ref,
-        topEs: model.top_effect_size ? model.top_effect_size : 0,
-        topFdr: model.log10_top_fdr ? - model.log10_top_fdr : 0
+        motifLogPAlt: -model.motif_log_p_alt,
+        motifLogPRef: -model.motif_log_p_ref,
+        topEffectSize: model.top_effect_size ? model.top_effect_size : 0,
+        log10TopFdr: model.log10_top_fdr ? - model.log10_top_fdr : 0
     };
 }

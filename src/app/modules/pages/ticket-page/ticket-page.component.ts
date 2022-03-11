@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import * as fromActions from 'src/app/store/action/ananastra';
 import * as fromSelectors from 'src/app/store/selector/ananastra';
@@ -23,6 +31,12 @@ import {SeoService} from "../../../services/seo.servise";
 import {getTextByStepNameAnanas} from "../../../helpers/text-helpers/tour.ananas.helper";
 import {convertBackgroundChoicesHelper} from "../../../helpers/text-helpers/convert-background-choices.helper";
 import {TicketStatsComponent} from "./ticket-stats/ticket-stats.component";
+import {ScriptService} from "../../../services/script.service";
+import {ToastrService} from "ngx-toastr";
+import {map} from "rxjs/operators";
+import {AsbServerSideFilterModel, AsbServerSideModel} from "../../../models/table.model";
+import {initialServerParams} from "../../../helpers/constants/constants";
+import {SortDirection} from "@angular/material/sort";
 
 @Component({
     selector: 'astra-ticket-page',
@@ -39,16 +53,17 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public ticket: string;
     private subscriptions = new Subscription();
     public fileStatistics$: Observable<{ data?: AnnotationDataModel; loading: boolean }>;
-    public tfTableData$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
-    public clTableData$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
+    public tfTableData$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean; total?: number }>;
+    public clTableData$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean; total?: number }>;
 
-    public tfTableDataSum$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
-    public clTableDataSum$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean }>;
+    public tfTableDataSum$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean; total?: number }>;
+    public clTableDataSum$: Observable<{ data?: AnnotationSnpModel[]; loading: boolean; total?: number }>;
 
     public isExpanded = true;
     public recentRelease: ReleaseModel;
     public selectedTab: tabEnum;
     public timeoutId: number = null;
+    private paginationParams: AsbServerSideFilterModel = initialServerParams;
     public selectedName: {
         tfSum: string, tf: string, cl:  string, clSum: string,
     } = {tf: null, tfSum: null, cl: null, clSum: null};
@@ -73,6 +88,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public panelExpanded: boolean = false;
     private fdr: number;
     public chrPanelOpened: boolean = false;
+    public chartLoaded: boolean;
 
 
     constructor(private route: ActivatedRoute,
@@ -80,6 +96,9 @@ export class TicketPageComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private seoService: SeoService,
                 private clipboard: Clipboard,
+                private scriptService: ScriptService,
+                private toastrService: ToastrService,
+                private cd: ChangeDetectorRef,
                 private _snackBar: MatSnackBar,
                 private downloadService: DownloadService,
                 private fileSaverService: FileSaverService) {
@@ -87,6 +106,13 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.scriptService.load('charts').then(data => {
+            this.chartLoaded = data.filter(v =>
+                v.script === 'charts')[0].loaded;
+            this.cd.detectChanges();
+        }).catch(() => this.toastrService.error(
+            "Can't load Chart.js library, check your internet connection", 'Error'));
+
         this.recentRelease = ananastraRelease;
         this.subscriptions.add(
             this.route.paramMap.subscribe(
@@ -190,8 +216,14 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     initTableLoad(force:boolean=false): void {
         if (this.selectedTab !== tabEnum.sum || force) {
+            this.paginationParams = {
+                ...this.paginationParams,
+                active: '',
+                direction: ''
+            }
             this.store.dispatch(new fromActions.annotation.InitAnnotationTableAction(
                 {
+                    pagination: this.paginationParams,
                     ticket: this.ticket,
                     tfOrCl: this.selectedTab === tabEnum.cl ? 'cl' : 'tf',
                     isExpanded: this.isExpanded
@@ -252,6 +284,53 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     countTooltip(metaInfo: StatsDataModel): string {
         return `${metaInfo.totalUnqiueSNPs} unique IDs of ${metaInfo.totalSNPs} submitted, ${metaInfo.notFound} IDs not found in ADASTRA`
+    }
+
+    getDataObservable(tfTbData: Observable<{data?: AnnotationSnpModel[]; loading: boolean}>) {
+        return tfTbData.pipe(map(s => s.data))
+    }
+
+    revertDirection(direction: SortDirection): SortDirection {
+        switch (direction) {
+            case "asc":
+                return "desc"
+            case "desc":
+                return "asc"
+            default:
+                return ""
+        }
+    }
+
+    checkSortToRevert(direction: SortDirection, active: string): SortDirection {
+        if (active.startsWith('log10Fdr') || active.startsWith('motifLogP') || active === 'log10TopFdr') {
+            return this.revertDirection(direction)
+        } else {
+            return direction
+        }
+    }
+
+    tableChanged(event: AsbServerSideModel) {
+        this.paginationParams = {
+            ...this.paginationParams,
+            ...event,
+            direction: this.checkSortToRevert(event.direction, event.active)
+        };
+        this.store.dispatch(new fromActions.annotation.LoadAnnotationTableAction({
+                pagination: this.paginationParams,
+                isExpanded: this.isExpanded,
+                ticket: this.ticket,
+                tfOrCl: this.selectedTab === tabEnum.cl ? 'cl' : 'tf',
+            }
+        ))
+    }
+
+    changedName(name: string, field: string) {
+        this.selectedName[field] = name
+        this.paginationParams = {
+            ...this.paginationParams,
+            regexp: name
+        }
+        this.tableChanged(this.paginationParams)
     }
 }
 

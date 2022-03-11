@@ -14,15 +14,22 @@ import * as fromSelectors from "src/app/store/selector/adastra";
 import * as fromActions from "src/app/store/action/adastra";
 import {Observable, Subscription} from "rxjs";
 import {ClInfoModel, TfInfoModel, TfOrCl} from "../../../models/data.model";
-import {AsbServerSideModel, AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
+import {
+    AsbServerSideFilterModel,
+    AsbServerSideModel,
+    AsbTableColumnModel,
+    AsbTableDisplayedColumns
+} from "../../../models/table.model";
 import {MatButtonToggleChange} from "@angular/material/button-toggle";
 import {SeoModel} from "src/app/models/seo.model";
 import {SeoService} from "src/app/services/seo.servise";
 import {AsbServerTableComponent} from "../../shared/table-template/server-side/table-server.component";
 import {initialServerParams} from "src/app/helpers/constants/constants";
 import {getPaginatorOptions} from "src/app/helpers/helper/check-functions.helper";
-import {map} from "rxjs/operators";
+import {debounceTime, map} from "rxjs/operators";
 import {ReleasesService} from "../../../services/releases.service";
+import {FormBuilder, FormControl} from "@angular/forms";
+import {recentRelease} from "../../../helpers/constants/releases";
 
 
 @Component({
@@ -75,9 +82,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription = new Subscription();
     public tableTfData$: Observable<TfInfoModel[]>;
     public tableClData$: Observable<ClInfoModel[]>;
+    public searchForm: FormControl;
+    private isAnanas: boolean;
+    private tfOrCl: TfOrCl;
+    private queryParams: AsbServerSideFilterModel = initialServerParams;
     constructor(
         private router: Router,
         private store: Store<AppState>,
+        private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private releaseService: ReleasesService,
         private seoService: SeoService) {}
@@ -88,6 +100,8 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.isAnanas = this.route.snapshot.data.isAnanas;
+        this.searchForm = this.formBuilder.control('')
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
         this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
@@ -100,20 +114,22 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.queryParams.subscribe(
             params => {
+                this.queryParams = {
+                    ...this.queryParams,
+                    pageSize: 25
+                }
                 switch (params.by) {
                     case "cl":
                         this.initialGroupValue = "cl";
-                        this.store.dispatch(new fromActions.data.LoadClInfoAction({
-                            ...initialServerParams,
-                            pageSize: 25,
-                        }));
+                        this.store.dispatch(new fromActions.data.LoadClInfoAction(
+                            this.queryParams
+                        ));
                         return;
                     case "tf":
                         this.initialGroupValue = "tf";
-                        this.store.dispatch(new fromActions.data.LoadTfInfoAction({
-                            ...initialServerParams,
-                            pageSize: 25
-                        }));
+                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(
+                            this.queryParams,
+                        ));
                         return;
                     default:
                         this.router.navigate(["/404"]);
@@ -151,11 +167,19 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         if (releaseVersion <= 3) {
             this.tfDisplayedColumns = this.tfDisplayedColumns.filter(v => v !== 'geneName')
         }
-
+        this.subscriptions.add(
+            this.searchForm.valueChanges.pipe(debounceTime(400)).subscribe(
+                v => {
+                    this._handleFilterChange(v)
+                    console.log(v)
+                }
+            )
+        )
 
     }
 
     _groupToggled(event: MatButtonToggleChange) {
+        this.tfOrCl = event.value
         this.router.navigate([],
             {
                 relativeTo: this.route,
@@ -164,18 +188,33 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     }
 
     _handleTableRowClick(event: TfInfoModel | ClInfoModel, tfOrCl: TfOrCl) {
-        this.subscriptions.add(
-            this.store.select(fromSelectors.selectCurrentRelease).subscribe(
-                s => this.router.navigate([`/${s.url}/search/advanced`],
-                    {
-                        queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
-                    }).then()
-            )
-        );
+        if (!this.isAnanas) {
+            this.subscriptions.add(
+                this.store.select(fromSelectors.selectCurrentRelease).subscribe(
+                    s => this.router.navigate([`/${s.url}/search/advanced`],
+                        {
+                            queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
+                        }).then()
+                )
+            );
+        } else {
+            const url = this.router.serializeUrl(this.router.createUrlTree(
+                [`${recentRelease.url}/search/advanced`],
+                {
+                queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name},
+
+            }));
+            window.open('https://adastra.autosome.ru/' + url, '_blank');
+        }
+
 
     }
 
-    _handleTableChange(event: AsbServerSideModel, tfOrCl: TfOrCl) {
+    _handleTableChange(event: AsbServerSideModel, tfOrCl: TfOrCl): void {
+        this.queryParams = {
+            ...this.queryParams,
+            ...event
+        }
         tfOrCl === "cl" ?
             this.store.dispatch(new fromActions.data.LoadClInfoAction(event)) :
             this.store.dispatch(new fromActions.data.LoadTfInfoAction(event));
@@ -183,5 +222,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
     _getPaginatorOptions(length: number): number[] {
         return getPaginatorOptions(length);
+    }
+
+    _handleFilterChange(regexp: string): void {
+        this.queryParams = {
+            ...this.queryParams,
+            regexp
+        }
+        this.tfOrCl ? this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams)) :
+                    this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.queryParams));
     }
 }

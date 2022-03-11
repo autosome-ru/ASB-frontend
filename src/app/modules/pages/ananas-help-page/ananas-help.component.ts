@@ -12,6 +12,8 @@ import {Subscription} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
+import {recentRelease} from "../../../helpers/constants/releases";
+import {ReleaseModel} from "../../../models/releases.model";
 
 @Component({
     selector: 'asb-ananas-help',
@@ -30,6 +32,7 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
     public fragment: string;
     @Input()
     public isAdastra: boolean
+    public recentRelease: ReleaseModel;
 
     constructor(private router: Router,
                 public dialog: MatDialog,
@@ -38,9 +41,9 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
-        if (!this.isAdastra) {
-            this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-        }
+        this.recentRelease = recentRelease
+        this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
+
     }
 
     ngAfterViewInit(): void {

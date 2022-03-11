@@ -57,8 +57,8 @@ export function checkOneResult(searchData: SnpSearchModel[]): boolean {
     return !!(searchData &&
         searchData.length > 0 && searchData.length < 4
         && searchData.reduce((a, b) =>
-            a.pos === b.pos && a.chr === b.chr ?
-                b : {chr: "chr0", pos: 0}, searchData[0]).pos);
+            a.pos === b.pos && a.genomePosition === b.genomePosition ?
+                b : {genomePosition: "chr0", pos: 0}, searchData[0]).pos);
 }
 
 export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: boolean,
@@ -121,7 +121,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                     form.searchBy === 'id' &&
                     !isValidPosInterval(form.chromPos.pos.trim())) {
                     result.pos = "" + searchData[0].pos;
-                    result.chr = searchData[0].chr.slice(3);
+                    result.chr = searchData[0].genomePosition.slice(3);
                 } else {
                     result.pos = form.chromPos.pos.trim();
                     result.chr = form.chromPos.chr.trim();

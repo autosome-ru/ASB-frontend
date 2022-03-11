@@ -22,7 +22,7 @@ import {
     TotalInfoBackendModel,
     TotalInfoModel
 } from "../../models/data.model";
-import {AsbServerSideBackendModel, AsbServerSideModel} from "../../models/table.model";
+import {AsbServerSideBackendModel, AsbServerSideFilterModel, AsbServerSideModel} from "../../models/table.model";
 import {SortDirection} from "@angular/material/sort";
 
 
@@ -163,7 +163,7 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
 function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
     Partial<SnpGenPosModel> {
     const result: Partial<SnpGenPosModel> = {};
-    result.chr = model.chromosome;
+    result.genomePosition = model.chromosome;
     result.pos = model.position;
     result.hasConcordance = model.has_concordance;
     result.rsId = "rs" + model.rs_id;
@@ -204,10 +204,10 @@ function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel
         pValueAlt: checkAndInvert(s.log_p_value_alt),
         meanBad: s.mean_bad,
         motifConcordance: s.motif_concordance,
-        motifFc: s.motif_log_2_fc,
+        motifLog2Fc: s.motif_log_2_fc,
         motifOrientation: s.motif_orientation,
-        motifPAlt: checkAndInvert(s.motif_log_p_alt),
-        motifPRef: checkAndInvert(s.motif_log_p_ref),
+        motifLogPAlt: checkAndInvert(s.motif_log_p_alt),
+        motifLogPRef: checkAndInvert(s.motif_log_p_ref),
         motifPosition: s.motif_position,
         expSnps: s.exp_snps.map(convertBackendExpSnp)
     };
@@ -251,7 +251,7 @@ function addZeros(id: number) {
     return result;
 }
 
-function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
+export function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
     return {
         rawPValueAlt: Math.log10(s.p_value_alt),
         rawPValueRef: Math.log10(s.p_value_ref),
@@ -311,11 +311,17 @@ function camelCaseToSnakeCase(str: string): string {
     return str[0].toLowerCase() + str.slice(1, str.length).replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }
 
-export function convertServerSideModelToServerSideBackendModel(model: AsbServerSideModel): AsbServerSideBackendModel {
+export function convertServerSideModelToServerSideBackendModel(model: AsbServerSideFilterModel, filterField: string='regexp'): AsbServerSideBackendModel {
     const order_by: string = convertOrderByToBackend(model.active, model.direction);
     const pagination: AsbServerSideBackendModel = {
         page: "" + (model.pageIndex + 1),
         size: "" + model.pageSize
     };
+    if (model.regexp) {
+        if (filterField === 'regexp') {
+            pagination[filterField] = '%' + model.regexp + '%';
+        }
+        pagination[filterField] = model.regexp;
+    }
     return order_by ? {order_by, ...pagination} : pagination;
 }

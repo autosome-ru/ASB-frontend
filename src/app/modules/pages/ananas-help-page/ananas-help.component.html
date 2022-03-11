@@ -538,6 +538,28 @@
                 </section>
             </mat-expansion-panel>
             </ng-container>
+            <ng-container *ngIf="!isAdastra">
+            <mat-divider></mat-divider>
+            <mat-expansion-panel class="mat-elevation-z0">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <h4 style="margin-bottom: 0">
+                            API</h4>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div>
+                    For programmatic access,
+                    ANANASTRA API is available at
+                    <a
+                        [routerLink]="'/api/' + recentRelease.api"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {{'https://ananastra.autosome.ru/api/' + recentRelease.api}}
+                    </a>.
+                </div>
+            </mat-expansion-panel>
+            </ng-container>
             <mat-divider></mat-divider>
             <mat-expansion-panel class="mat-elevation-z0">
                 <mat-expansion-panel-header>

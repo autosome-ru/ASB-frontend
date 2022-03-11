@@ -139,11 +139,13 @@ export class AnnotationEffect {
         ofType(fromActions.ActionTypes.LoadAnnotationTable),
         mergeMap((action: fromActions.LoadAnnotationTableAction) =>
             this.processingService.getTableData(action.payload.ticket,
-                action.payload.tfOrCl, action.payload.isExpanded)
+                action.payload.tfOrCl, action.payload.isExpanded, action.payload.pagination)
                 .pipe(
                     map(snps => new fromActions.LoadAnnotationTableSuccessAction(
                         {
-                            snps,
+                            snps: snps.results,
+                            total: snps.total,
+                            pagination: action.payload.pagination,
                             tfOrCl: action.payload.tfOrCl,
                             ticket: action.payload.ticket,
                             isExpanded: action.payload.isExpanded
@@ -163,7 +165,7 @@ export class AnnotationEffect {
     initAnnotationTable$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.InitAnnotationTableLoad),
         mergeMap((action: fromActions.InitAnnotationTableAction) => {
-                let obs: Observable<{ data?: AnnotationSnpModel[], loading: boolean }>;
+                let obs: Observable<{data?: AnnotationSnpModel[], loading: boolean }>;
                 if (action.payload.tfOrCl === 'tf') {
                     obs = action.payload.isExpanded ?
                         this.store.select(fromSelectors.selectAnnotationTfTable(action.payload.ticket)) :

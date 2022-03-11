@@ -106,6 +106,12 @@
                     ></asb-sci-notation></b>)</span>
             </span>
             </div>
+            <div>
+            <asb-odds-bar
+                *ngIf="chartLoaded"
+                [chartData]="getChartData(stats.chrAsbData)"
+            ></asb-odds-bar>
+            </div>
             <div
                 joyrideStep="chrom-table"
                 [stepContent]="stepTemplate"

@@ -211,7 +211,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                         switch (s) {
                             case "pos":
                                patchValue = {
-                                   chromPos: new ChromPos(this.searchData[0].chr.slice(3), "" + this.searchData[0].pos)
+                                   chromPos: new ChromPos(this.searchData[0].genomePosition.slice(3), "" + this.searchData[0].pos)
                                };
                                break;
                             case "id":
@@ -544,7 +544,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 case 'id':
                     patchValue = {
                         searchBy: "pos",
-                        chromPos: new ChromPos(this.searchData[0].chr.slice(3),
+                        chromPos: new ChromPos(this.searchData[0].genomePosition.slice(3),
                             SearchComponent.convertPosToInterval(
                                 "" + this.searchData[0].pos))
                     };

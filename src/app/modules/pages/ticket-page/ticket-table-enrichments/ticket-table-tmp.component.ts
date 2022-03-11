@@ -10,6 +10,8 @@ import {
 import {AsbStatsDataModel} from "../../../../models/annotation.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
+import {getChartData} from "../../../../helpers/helper/apply-functions.helper";
+import {ChartDataModel} from "../../../../models/chart-data.model";
 
 @Component({
     selector: 'asb-ticket-table-tmp',
@@ -25,14 +27,18 @@ export class TicketTableTmpComponent implements OnInit {
     @Input()
     public data: AsbStatsDataModel[]
 
+    @Input()
+    public chartsLoaded: boolean;
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>
     public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
     public defaultDisplayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
+    public chartData: ChartDataModel;
 
     constructor() {
     }
 
     ngOnInit(): void {
+        this.chartData = getChartData(this.data)
         this.columnModel = {
             name: {
                 view: 'Name',
@@ -75,5 +81,4 @@ export class TicketTableTmpComponent implements OnInit {
         ]
 
     }
-
 }

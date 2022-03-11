@@ -1,22 +1,21 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component, EventEmitter,
     Input,
     OnInit, Output, TemplateRef,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {ScriptService} from 'src/app/services/script.service';
 import {
     AnnotationDataModel,
     AsbStatsDataModel, pValueString,
     StatsDataModel
 } from 'src/app/models/annotation.model';
-import {ToastrService} from "ngx-toastr";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
+import {ChartDataModel} from "../../../../models/chart-data.model";
+import {getChartData} from "../../../../helpers/helper/apply-functions.helper";
 
 
 @Component({
@@ -31,6 +30,10 @@ export class TicketStatsComponent implements OnInit {
     private fdrViewTemplate: TemplateRef<{ value: number }>;
     @Input()
     chrPanelOpened: boolean = false;
+
+    @Input()
+    public chartLoaded: boolean;
+
     @Output()
     private statsLastStep = new EventEmitter<void>()
 
@@ -82,21 +85,11 @@ export class TicketStatsComponent implements OnInit {
             position: 'bottom'
         }
     };
-    public chartLoaded: boolean;
 
-    constructor(private scriptService: ScriptService,
-                private toastrService: ToastrService,
-                private cd: ChangeDetectorRef) {
+    constructor() {
     }
 
     ngOnInit(): void {
-        this.scriptService.load('charts').then(data => {
-            this.chartLoaded = data.filter(v =>
-                v.script === 'charts')[0].loaded;
-            this.cd.detectChanges();
-        }).catch(() => this.toastrService.error(
-            "Can't load Chart.js library, check your internet connection", 'Error'));
-
         this.columnModel = {
             name: {
                 view: 'Chromosome',
@@ -166,4 +159,7 @@ export class TicketStatsComponent implements OnInit {
         this.statsLastStep.emit()
     }
 
+    getChartData(chrAsbData: AsbStatsDataModel[]): ChartDataModel {
+        return getChartData(chrAsbData);
+    }
 }

@@ -7,10 +7,10 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
+import {SortDirection} from "@angular/material/sort";
 import {ExpSnpModel} from "../../../../models/data.model";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
 import {checkIfNumberOrFrac, getPaginatorOptions} from "../../../../helpers/helper/check-functions.helper";
-import {SortDirection} from "@angular/material/sort";
 
 @Component({
     selector: "asb-inner-table",
@@ -70,6 +70,7 @@ export class InnerTableComponent implements OnInit {
     }
 
     _getPaginatorOptions(): number[] {
+        console.log(this.innerTableData)
         return getPaginatorOptions(this.innerTableData.length);
     }
 

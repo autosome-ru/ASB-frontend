@@ -76,7 +76,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public tfColumnModel: AsbTableColumnModel<Partial<TfSnpModel>>;
     public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
         ...commonInitialDisplayedColumns,
-        "motifFc",
+        "motifLog2Fc",
         "motifConcordance",
     ];
 
@@ -224,17 +224,17 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.tfColumnModel = {
             name: {view: "Uniprot ID", valueConverter: v => v, isSticky: true},
             ...this.commonColumnModel,
-            motifFc: {
+            motifLog2Fc: {
                 view: "Motif fold change",
                 valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
                 helpMessage: 'log2(Alt/Ref motif p-value)',
                 isDesc: true
             },
-            motifPRef: {
+            motifLogPRef: {
                 view: "Motif Ref p-value",
                 columnTemplate: this.fdrViewTemplate,
             },
-            motifPAlt: {
+            motifLogPAlt: {
                 view: "Motif Alt p-value",
                 columnTemplate: this.fdrViewTemplate,
             },

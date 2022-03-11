@@ -1,7 +1,7 @@
 export interface SnpGenPosModel {
     hasConcordance?: boolean;
     rsId: string;
-    chr: string;
+    genomePosition: string;
     pos: number;
     refBase: string;
     altBase: string;
@@ -125,9 +125,9 @@ export interface TfSnpModel extends AbstractSnpModel, MotifSnpModel {
 
 }
 export interface MotifSnpModel {
-    motifPRef: number;
-    motifPAlt: number;
-    motifFc: number;
+    motifLogPRef: number;
+    motifLogPAlt: number;
+    motifLog2Fc: number;
     motifOrientation: boolean;
     motifPosition: number;
     motifConcordance: string;
