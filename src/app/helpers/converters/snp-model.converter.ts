@@ -163,7 +163,7 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
 function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
     Partial<SnpGenPosModel> {
     const result: Partial<SnpGenPosModel> = {};
-    result.genomePosition = model.chromosome;
+    result.chr = model.chromosome;
     result.pos = model.position;
     result.hasConcordance = model.has_concordance;
     result.rsId = "rs" + model.rs_id;

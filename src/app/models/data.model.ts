@@ -1,7 +1,7 @@
 export interface SnpGenPosModel {
     hasConcordance?: boolean;
     rsId: string;
-    genomePosition: string;
+    chr: string;
     pos: number;
     refBase: string;
     altBase: string;

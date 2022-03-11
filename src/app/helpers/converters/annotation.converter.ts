@@ -117,7 +117,7 @@ export function convertAnnotationSnpBackendToAnnotationSnpModel(
         ebi: model.ebi,
         finemapping: model.finemapping,
         altBase: model.alt,
-        genomePosition: model.chromosome,
+        chr: model.chromosome,
         rsId: typeof model.rs_id === 'string' ? model.rs_id : 'rs' + model.rs_id,
         context: model.sequence,
         effectSizeAlt: model.effect_size_alt,

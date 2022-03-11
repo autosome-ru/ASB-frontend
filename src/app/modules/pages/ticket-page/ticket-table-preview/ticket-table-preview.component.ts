@@ -131,10 +131,10 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
         if (field.active === 'chr') {
             const chrToNum = (chr: string) => Number(chr.slice(3))
             function compareAnnSnpModel(a: AnnotationSnpModel, b: AnnotationSnpModel) {
-                if (chrToNum(a.genomePosition) > chrToNum(b.genomePosition)) {
+                if (chrToNum(a.chr) > chrToNum(b.chr)) {
                     return 1
                 } else {
-                    if (chrToNum(a.genomePosition) == chrToNum(b.genomePosition)) {
+                    if (chrToNum(a.chr) == chrToNum(b.chr)) {
                         return a.pos > b.pos ? 1 : -1
                     }
                     return -1
@@ -170,10 +170,10 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
 
-        this.displayedColumns = ['rsId', 'genomePosition', 'pos'];
+        this.displayedColumns = ['rsId', 'chr', 'pos'];
         this.columnModel = {
             rsId: {view: 'rs ID', columnTemplate: this.dbSnpViewTemplate},
-            genomePosition: {
+            chr: {
                 view: "Genome position",
                 columnTemplate: this.isExpanded ? this.genomePositionViewTemplate : this.genomePositionViewSumTemplate,
             },
@@ -434,7 +434,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             this.innerTableLoading$.next(true)
             this.subscriptions.add(
                 this.dataService.getInnerTableInfo(
-                    row.genomePosition,
+                    row.chr,
                     row.pos,
                     row.altBase,
                     this.tfOrCl === 'tf' ? row.transcriptionFactor : row.cellType,
