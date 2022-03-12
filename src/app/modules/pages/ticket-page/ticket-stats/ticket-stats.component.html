@@ -86,7 +86,13 @@
                              class="mat-elevation-z0"
         >
             <mat-expansion-panel-header [ngClass]="panel.expanded ? '' : 'header'">
-                <mat-panel-title style="justify-content: center"><span style="font-size: 1.25rem; text-align: center">ASB enrichment at individual chromosomes</span></mat-panel-title>
+                <mat-panel-title>
+                    <h6
+                    class="mb-0"
+                    style="font-weight: bold">ASB enrichment at individual chromosomes</h6></mat-panel-title>
+                <mat-panel-description style="justify-content: flex-end;">
+                    <span>Click to expand</span>
+                </mat-panel-description>
             </mat-expansion-panel-header>
             <div
                 style="padding-left: 24px"

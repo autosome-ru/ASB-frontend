@@ -40,7 +40,7 @@ Each tsv-file is a plain tab-separated text document containing one line per sin
 
   'fdrp_bh_ref', 'fdrp_bh_alt': allele-wise logit-aggregated and FDR-corrected P-values
 
-For TF-ASBs of transcription factors with motifs available in the HOCOMOCO v.11 (https://hocomoco.autosome.ru) core collection, the P-values of the best motif hits were calculated for the Reference and Alternative alleles using SPRY-SARUS (https://github.com/autosome-ru/sarus). The motif position was fixed according to the best hit considering both the Reference and the Alternative alleles on both DNA strands:
+For TF-ASBs of transcription factors with motifs available in the HOCOMOCO v.11 (https://hocomoco.autosome.org) core collection, the P-values of the best motif hits were calculated for the Reference and Alternative alleles using SPRY-SARUS (https://github.com/autosome-ru/sarus). The motif position was fixed according to the best hit considering both the Reference and the Alternative alleles on both DNA strands:
   'motif_log_pref': -log10(motif P-value) for the best motif occurrence of the PWM (position weight matrix) for the Ref allele
   'motif_log_palt':  -log10(motif P-value) for the Alt allele
   'motif_fc': motif Fold Change (FC), log2-ratio between motif P-values for the Reference and Alternative alleles. Positive values indicate Alt-ASBs (preferred binding to the Alternative allele). Negative values indicate Ref-ASBs. The value of ‘None’ is assigned in case the PWM was not available.

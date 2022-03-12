@@ -330,9 +330,10 @@
         style="line-height: 0.8rem"
         *ngIf="value && value !== 'No Hit'"
         (click)="openDialog(row); $event.stopPropagation()"
-        matTooltip="Click to open panel"
     >
-        {{value}}
+        <mat-icon
+            style="padding-bottom: 1px"
+            svgIcon="image"></mat-icon><span>{{value}}</span>
     </button>
     <span
         *ngIf="!value || value === 'No Hit'"
@@ -433,7 +434,7 @@
                 mat-menu-item
                 target="_blank"
                 rel="noopener noreferrer"
-                [href]="'https://hocomoco11.autosome.ru/search?arity=mono&species=human&query=' + value"
+                [href]="'https://hocomoco11.autosome.org/search?arity=mono&species=human&query=' + value"
             >
                 view in HOCOMOCO</a>
             <a
@@ -442,7 +443,7 @@
                 rel="noopener noreferrer"
                 [href]="'https://www.uniprot.org/uniprot/' + row.tfUniprotAc"
             >
-                view in UNIPROT</a>
+                view in UniProt</a>
         </ng-template>
     </mat-menu>
 </ng-template>

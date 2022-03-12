@@ -27,6 +27,7 @@ const ICONS = [
     "settings",
     "star",
     "stats",
+    "image",
     "trash",
 ];
 
