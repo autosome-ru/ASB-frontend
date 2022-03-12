@@ -1,30 +1,34 @@
-<div *ngIf="_defaultColumns"><mat-form-field
-                class="field-without-hint"
-                [ngStyle]="columnsSelectStyle">
-    <mat-label>Selected Columns</mat-label>
-    <mat-select
-        [formControl]="columnsControl"
-        multiple
-    >
-        <mat-select-trigger>
-            {{columnsControl.value ?
-            columnModel[columnsControl.value[0]]?.view : ''}}
-            <span *ngIf="columnsControl.value?.length > 1"
-                  class="asb-table__additional-selection"
-            >
-                                (+{{columnsControl.value?.length - 1}}
-                {{columnsControl.value?.length === 2 ? 'other' : 'others'}})
-                            </span>
-        </mat-select-trigger>
-        <mat-option
-            *ngFor="let column of displayedColumns"
-            [value]="column"
+<div *ngIf="_defaultColumns" style="display: flex; justify-content: space-between; align-items: center">
+    <div>
+        <mat-form-field
+                    class="field-without-hint"
+                    [ngStyle]="columnsSelectStyle">
+        <mat-label>Selected Columns</mat-label>
+        <mat-select
+            [formControl]="columnsControl"
+            multiple
         >
-            {{columnModel[column]?.view}}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+            <mat-select-trigger>
+                {{columnsControl.value ?
+                columnModel[columnsControl.value[0]]?.view : ''}}
+                <span *ngIf="columnsControl.value?.length > 1"
+                      class="asb-table__additional-selection"
+                >
+                                    (+{{columnsControl.value?.length - 1}}
+                    {{columnsControl.value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+            </mat-select-trigger>
+            <mat-option
+                *ngFor="let column of displayedColumns"
+                [value]="column"
+            >
+                {{columnModel[column]?.view}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <button mat-raised-button (click)="resetColumns()" style="margin-left: 5px; z-index: 5">Reset</button>
+    </div>
+        <ng-content></ng-content>
 </div>
 <div class="asb-table" *ngIf="!isEmpty; else emptyContentTemplate">
     <div class="asb-table__table" style="min-width: 100%"

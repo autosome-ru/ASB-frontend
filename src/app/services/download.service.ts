@@ -13,6 +13,12 @@ export class DownloadService {
 
   downloadTable(ticket: string, downloadType: DownloadTableType,
                 isExpanded: boolean): Observable<Blob> {
+    if (downloadType === 'target_genes') {
+      return this.http.get(`${this.urlService.getUrlForQuery("ananastra")}/target_genes/${ticket}`,
+          {
+              responseType: 'blob'
+          })
+    }
     return this.http.get(`${this.urlService.getUrlForQuery("ananastra")}/result/${ticket}`,
       {
         responseType: 'blob',

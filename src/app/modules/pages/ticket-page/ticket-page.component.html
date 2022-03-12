@@ -111,6 +111,7 @@
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
                                         [chartsLoaded]="chartLoaded"
+                                        [pageSize]="paginationParams.pageSize"
                                         [paginatorLength]="tfTableData.total"
                                         [dataLoading]="tfTableData.loading"
                                         [data]="getDataObservable(tfTableData$)"
@@ -129,6 +130,7 @@
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
                                         [chartsLoaded]="chartLoaded"
+                                        [pageSize]="paginationParams.pageSize"
                                         [paginatorLength]="tfTableData.total"
                                         [data]="getDataObservable(tfTableDataSum$)"
                                         [(panelExpanded)]="panelExpanded"
@@ -161,6 +163,7 @@
                                         [isExpanded]="isExpanded"
                                         [dataLoading]="clTableData.loading"
                                         [chartsLoaded]="chartLoaded"
+                                        [pageSize]="paginationParams.pageSize"
                                         [paginatorLength]="clTableData.total"
                                         [data]="getDataObservable(clTableData$)"
                                         [(panelExpanded)]="panelExpanded"
@@ -178,6 +181,7 @@
                                         [ticketStatistics]="data"
                                         [isExpanded]="isExpanded"
                                         [chartsLoaded]="chartLoaded"
+                                        [pageSize]="paginationParams.pageSize"
                                         [data]="getDataObservable(clTableDataSum$)"
                                         [(panelExpanded)]="panelExpanded"
                                         [paginatorLength]="clTableData.total"
@@ -252,6 +256,14 @@
                                         (click)="downloadTable('cl', true); $event.preventDefault()"
                                     >{{getFileName('cl', true)}}
                                     </a></td>
+                                </tr>
+                                <tr>
+                                    <td>List of ASB-supported eQTL target genes</td>
+                                    <td><a
+                                        href="#"
+                                        (click)="downloadTable('target_genes', true); $event.preventDefault()"
+                                    >
+                                        {{getFileName('target_genes', true)}}</a></td>
                                 </tr>
                                 </tbody>
                             </table>

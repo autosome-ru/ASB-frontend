@@ -63,7 +63,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public recentRelease: ReleaseModel;
     public selectedTab: tabEnum;
     public timeoutId: number = null;
-    private paginationParams: AsbServerSideFilterModel = initialServerParams;
+    public paginationParams: AsbServerSideFilterModel = initialServerParams;
     public selectedName: {
         tfSum: string, tf: string, cl:  string, clSum: string,
     } = {tf: null, tfSum: null, cl: null, clSum: null};
@@ -302,7 +302,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     checkSortToRevert(direction: SortDirection, active: string): SortDirection {
-        if (active.startsWith('log10Fdr') || active.startsWith('motifLogP') || active === 'log10TopFdr') {
+        if (active && (active.startsWith('log10Fdr') || active.startsWith('motifLogP') || active === 'log10TopFdr')) {
             return this.revertDirection(direction)
         } else {
             return direction
@@ -313,6 +313,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         this.paginationParams = {
             ...this.paginationParams,
             ...event,
+            active: event.active === 'chr' ? 'genomePosition' : event.active,
             direction: this.checkSortToRevert(event.direction, event.active)
         };
         this.store.dispatch(new fromActions.annotation.LoadAnnotationTableAction({

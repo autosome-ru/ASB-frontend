@@ -1,8 +1,8 @@
 import {
     ChangeDetectionStrategy,
-    Component,
+    Component, EventEmitter,
     Input,
-    OnInit,
+    OnInit, Output,
     TemplateRef,
     ViewChild,
     ViewEncapsulation
@@ -12,6 +12,7 @@ import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 import {getChartData} from "../../../../helpers/helper/apply-functions.helper";
 import {ChartDataModel} from "../../../../models/chart-data.model";
+import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 
 @Component({
     selector: 'asb-ticket-table-tmp',
@@ -29,16 +30,30 @@ export class TicketTableTmpComponent implements OnInit {
 
     @Input()
     public chartsLoaded: boolean;
+
+    @Input()
+    public stepId: string;
+
+    @Output()
+    private statsLastStep = new EventEmitter<void>()
+
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>
     public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
     public defaultDisplayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel>;
     public chartData: ChartDataModel;
-
+    public toggleValue: 'chart' | 'table' = 'chart'
+    public checked: boolean;
+    public checkedChartData: ChartDataModel;
     constructor() {
     }
 
     ngOnInit(): void {
-        this.chartData = getChartData(this.data)
+        this.checked = this.data.some(this.sortingAcc)
+        this.checkedChartData = this.setChartData(
+            this.data.filter(this.sortingAcc)
+        )
+        this.chartData = this.setChartData(this.data)
+        console.log(this.checkedChartData, this.chartData)
         this.columnModel = {
             name: {
                 view: 'Name',
@@ -80,5 +95,21 @@ export class TicketTableTmpComponent implements OnInit {
             "odds", "pValue", "fdr"
         ]
 
+    }
+
+    setChartData(data: AsbStatsDataModel[]): ChartDataModel {
+        return getChartData(data);
+    }
+
+    sortingAcc(s: AsbStatsDataModel): boolean {
+        return s.fdr === 'infinity' || s.fdr <= Math.log10(0.055)
+    }
+
+    statsNextStep() {
+        this.statsLastStep.emit()
+    }
+
+    getTextByStepName(text: string) {
+        return getTextByStepNameAnanas(text)
     }
 }

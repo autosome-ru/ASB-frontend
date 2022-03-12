@@ -14,8 +14,6 @@ import {
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
 import {stringOrNumberConverter} from "../../../../helpers/helper/check-functions.helper";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../../models/table.model";
-import {ChartDataModel} from "../../../../models/chart-data.model";
-import {getChartData} from "../../../../helpers/helper/apply-functions.helper";
 
 
 @Component({
@@ -40,12 +38,6 @@ export class TicketStatsComponent implements OnInit {
     public chartDatasets: Array<any> = [];
     public stats: StatsDataModel;
     public columnModel: AsbTableColumnModel<AsbStatsDataModel>;
-    public defaultDisplayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [
-        "name",
-        "asbsRs",
-        "negativesRs",
-        "odds",
-        "pValue"]
     public displayedColumns: AsbTableDisplayedColumns<AsbStatsDataModel> = [];
 
     @Input()
@@ -90,52 +82,6 @@ export class TicketStatsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.columnModel = {
-            name: {
-                view: 'Chromosome',
-                colorStyle: this.getRowColor,
-            },
-            odds: {
-                view: 'Odds ratio',
-                valueConverter: v => stringOrNumberConverter(v),
-                colorStyle: this.getRowColor,
-                isDesc: true
-            },
-            asbsRs: {
-                isDesc: true,
-                view: '# of ASB SNPs',
-                colorStyle: this.getRowColor,
-            },
-            negativesRs: {
-                isDesc: true,
-                view: '# of non-ASB SNPs',
-                colorStyle: this.getRowColor,
-            },
-            pValue: {
-                view: 'P-value',
-                columnTemplate: this.fdrViewTemplate,
-                colorStyle: this.getRowColor,
-            },
-            expectedNegativesRs: {
-                view: 'Expected # of non-ASB SNPs',
-                isDesc: true,
-                colorStyle: this.getRowColor,
-            },
-            expectedAsbsRs: {
-                view: 'Expected # of ASB SNPs',
-                isDesc: true,
-                colorStyle: this.getRowColor,
-            },
-        }
-        this.displayedColumns = [
-            "name",
-            "asbsRs",
-            "negativesRs",
-            "expectedAsbsRs",
-            "expectedNegativesRs",
-            "odds",
-            "pValue"
-        ]
     }
 
     public chartClicked(): void {
@@ -144,9 +90,6 @@ export class TicketStatsComponent implements OnInit {
     public chartHovered(): void {
     }
 
-    getTextByStepName(text: string) {
-        return getTextByStepNameAnanas(text)
-    }
     valueToView(value: pValueString, precision: number = 2): string {
         return stringOrNumberConverter(value, precision)
     }
@@ -159,7 +102,7 @@ export class TicketStatsComponent implements OnInit {
         this.statsLastStep.emit()
     }
 
-    getChartData(chrAsbData: AsbStatsDataModel[]): ChartDataModel {
-        return getChartData(chrAsbData);
+    getTextByStepName(text: string) {
+        return getTextByStepNameAnanas(text)
     }
 }

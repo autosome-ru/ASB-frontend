@@ -206,7 +206,7 @@
             [columnModel]="columnModel"
             [data]="data"
             [dataLoading]="dataLoading"
-            [paginatorPageSize]="10"
+            [paginatorPageSize]="pageSize"
             (rowClickEmitter)="rowClicked($event)"
             (tableChangesEmitter)="emitTableChanges($event)"
             [getTitle]="getRowTitle()"
@@ -214,7 +214,7 @@
             [clickableRow]="true"
             [initialSorting]="{active: 'chr', direction: 'asc'}"
             [paginatorLength]="paginatorLength"
-            [paginatorOptions]="[5, 10, 25, 100, 500, 1000]"
+            [paginatorOptions]="[5, 10, 25, 100]"
         ></asb-table-server>
     </div>
 
@@ -223,7 +223,7 @@
 
 <ng-template #genomePositionViewTemplate let-row="row">
   <div>
-          <span>{{row?.genomePosition}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
+          <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black"><strong
             [ngStyle]="{'color': colors[row.refBase]}"
           >{{row.refBase}}</strong>
                   <span>></span>
@@ -236,7 +236,7 @@
 </ng-template>
 <ng-template #genomePositionViewSumTemplate let-row="row">
     <div>
-          <span>{{row?.genomePosition}}:{{row?.pos}}&nbsp;<span style="color: black">
+          <span>{{row?.chr}}:{{row?.pos}}&nbsp;<span style="color: black">
                   <span *ngFor="let base of row.alleles; let last=last"><strong
                           [ngStyle]="{'color': colors[base]}"
                       >{{base}}</strong><span *ngIf="!last">/</span>

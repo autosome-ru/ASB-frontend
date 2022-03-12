@@ -5,4 +5,5 @@ export interface ChartDataModel {
     obsColors: string[];
     expColors: string[];
     pointLabels: string[];
+    FDRs: string;
 }

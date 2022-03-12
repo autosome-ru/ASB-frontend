@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {ChartDataModel} from "../../../../models/chart-data.model";
+import {ChartOptions} from "chart.js";
 
 @Component({
     selector: 'asb-odds-bar',
@@ -14,7 +15,7 @@ export class OddsBarComponent implements OnInit {
     public chartData: ChartDataModel
     public chartDatasets: { data: number[]; label: string }[];
     public chartLabels: string[];
-    public chartOptions: any;
+    public chartOptions: ChartOptions;
     public chartColors: Array<any>;
 
 
@@ -39,11 +40,15 @@ export class OddsBarComponent implements OnInit {
                 display: false,
                 position: 'bottom'
             },
+            layout: {
+                padding: {
+                    bottom: 20
+                }
+            },
             scales : {
                 xAxes: [{
                     ticks: {
                         min : 0,
-                        max: 1
                     }
                 }]
 
@@ -53,12 +58,18 @@ export class OddsBarComponent implements OnInit {
                     if (item.body) {
                         item.body = item.body.map((line, index) => {
                             if (line) {
-                                return {...line, lines:
-                                        [this.chartData.pointLabels[item.dataPoints[0].index][index]]}
+                                return {
+                                    ...line,
+                                    lines: [this.chartData.pointLabels[item.dataPoints[0].index][index]]
+                                }
                             }
                             return null
 
                         });
+                        if (this.chartData.FDRs) {
+                            item.footer = [this.chartData.FDRs[item.dataPoints[0].index]]
+                        }
+                        item.height = 75
                     }
                     return item
                 },

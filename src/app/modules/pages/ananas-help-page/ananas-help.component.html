@@ -85,7 +85,43 @@
                          width="100%" style="margin-top: 1rem">
                 </div>
             </mat-expansion-panel>
+            <ng-container *ngIf="!isAdastra">
+                <mat-divider></mat-divider>
+                <mat-expansion-panel class="mat-elevation-z0" >
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h4 style="margin-bottom: 0">
+                                Input format</h4>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div>
+                        ANANASTRA accepts SNPs in two formats:
+                        <ul style="margin-bottom: 0; list-style: decimal">
+                            <li>a plain list of newline-separated rs IDs such as
+                                <div style="position: relative">
+                                <pre class="table-sasha"><code class="sasha-color">{{rsIds}}</code></pre>
+                                </div>
+                            </li>
+                            <li>contents of a standard VCF file based upon hg38 human genome assembly</li>
+                            <div style="position: relative">
+                                <pre class="table-sasha"><code class="sasha-color">{{vcfLines}}</code></pre>
+                            </div>
+                        </ul>
+                        The latter can be uploaded as a file or directly pasted into the input form.
+                        Both gzip and plain text file formats are supported for uploads.<br><br>
+                        Lines starting with '#' are considered comments and ignored.<br>
+                        Files with ≥ <b>10000</b> lines (excluding comments) or with ≥ <b>5000</b> comments are not accepted.<br>
+                        If you require annotating a larger number of SNPs please contact us directly at
+                        <img
+                        style="width: 240px"
+                        [src]="'assets/images/serj_abramov.svg'"
+                        alt="email pic"
+                        >
+                    </div>
+                </mat-expansion-panel>
+            </ng-container>
             <mat-divider></mat-divider>
+
             <mat-expansion-panel class="mat-elevation-z0" #glossary>
                 <mat-expansion-panel-header>
                     <mat-panel-title>

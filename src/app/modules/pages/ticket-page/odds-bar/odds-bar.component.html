@@ -2,7 +2,7 @@
 >
     <div style="display: block; width: 100%; height: 100%">
         <canvas
-                [height]="50 * chartLabels.length"
+                [height]="57 + 60 * chartLabels.length"
                 mdbChart
                 chartType="horizontalBar"
                 [labels]="chartLabels"
@@ -12,5 +12,8 @@
                 [options]="chartOptions"
         >
         </canvas>
+    </div>
+    <div style="display: flex; justify-content: center">
+    <span>Fraction of ASB SNPs</span>
     </div>
 </div>

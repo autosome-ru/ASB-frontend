@@ -107,26 +107,16 @@
             </span>
             </div>
             <div>
-            <asb-odds-bar
-                *ngIf="chartLoaded"
-                [chartData]="getChartData(stats.chrAsbData)"
-            ></asb-odds-bar>
+                <asb-ticket-table-tmp
+                    [data]="stats.chrAsbData"
+                    [chartsLoaded]="chartLoaded"
+                    [stepId]="'chrom-table'"
+                    (statsLastStep)="statsNextStep()"
+                >
+
+                </asb-ticket-table-tmp>
             </div>
-            <div
-                joyrideStep="chrom-table"
-                [stepContent]="stepTemplate"
-                [stepContentParams]="getTextByStepName('chrom-table')"
-                (next)="statsNextStep()"
-            >
-            <asb-table
-                [columnModel]="columnModel"
-                [displayedColumns]="displayedColumns"
-                [defaultColumns]="defaultDisplayedColumns"
-                [columnsSelectStyle]="{'margin': '1rem 0 -0.5rem 30px'}"
-                [data]="stats.chrAsbData"
-                [initialSorting]="{active: 'pValue', direction: 'asc'}"
-            ></asb-table>
-            </div>
+
         </mat-expansion-panel>
     </div>
 </div>

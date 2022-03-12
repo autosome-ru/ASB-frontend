@@ -14,6 +14,7 @@ import {SeoModel} from "../../../models/seo.model";
 import {SeoService} from "../../../services/seo.servise";
 import {recentRelease} from "../../../helpers/constants/releases";
 import {ReleaseModel} from "../../../models/releases.model";
+import {demo1} from "../../../helpers/constants/demo.ananas";
 
 @Component({
     selector: 'asb-ananas-help',
@@ -33,6 +34,8 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input()
     public isAdastra: boolean
     public recentRelease: ReleaseModel;
+    public rsIds: string;
+    public vcfLines: string;
 
     constructor(private router: Router,
                 public dialog: MatDialog,
@@ -41,6 +44,8 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.rsIds = demo1.split('\n').slice(0, 6).join('\n')
+        this.vcfLines = vcfFileLines
         this.recentRelease = recentRelease
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
 
@@ -108,3 +113,10 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 }
+
+const vcfFileLines: string = '#CHROM POS     ID        REF ALT    QUAL FILTER INFO                              FORMAT      NA00001        NA00002        NA00003\n' +
+    'chr20     14370   rs6054257 G      A       29   PASS   NS=3;DP=14;AF=0.5;DB;H2           GT:GQ:DP:HQ 0|0:48:1:51,51 1|0:48:8:51,51 1/1:43:5:.,.\n' +
+    'chr20     17330   .         T      A       3    q10    NS=3;DP=11;AF=0.017               GT:GQ:DP:HQ 0|0:49:3:58,50 0|1:3:5:65,3   0/0:41:3\n' +
+    'chr20     1110696 rs6040355 A      G,T     67   PASS   NS=2;DP=10;AF=0.333,0.667;AA=T;DB GT:GQ:DP:HQ 1|2:21:6:23,27 2|1:2:0:18,2   2/2:35:4\n' +
+    'chr20     1230237 .         T      .       47   PASS   NS=3;DP=13;AA=T                   GT:GQ:DP:HQ 0|0:54:7:56,60 0|0:48:4:51,51 0/0:61:2\n' +
+    'chr20     1234567 microsat1 GTCT   G,GTACT 50   PASS   NS=3;DP=9;AA=G                    GT:GQ:DP    0/1:35:4       0/2:17:2       1/1:40:3'

@@ -33,6 +33,7 @@ import {JoyrideModule} from "ngx-joyride";
 import {InnerTableModule} from "../../shared/inner-table/inner-table.module";
 import { OddsBarComponent } from './odds-bar/odds-bar.component';
 import {MatListModule} from "@angular/material/list";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -71,7 +72,8 @@ import {MatListModule} from "@angular/material/list";
         JoyrideModule,
         InnerTableModule,
         ChartsModule,
-        MatListModule
+        MatListModule,
+        MatCheckboxModule
     ],
     providers: [DownloadService]
 })

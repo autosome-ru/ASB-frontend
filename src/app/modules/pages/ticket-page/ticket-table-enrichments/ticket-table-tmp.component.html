@@ -1,17 +1,73 @@
-<asb-odds-bar
-    *ngIf="chartsLoaded"
-    [chartData]="chartData"
-></asb-odds-bar>
+<div style="display: flex; justify-content: space-between; align-items: center"
+    *ngIf="toggleValue === 'chart'"
+>
+    <mat-checkbox
+        style="margin-left: 15px"
+        color="primary"
+        [checked]="checked"
+        (change)="checked = $event.checked"
+    >
+        Show only significant cases
+    </mat-checkbox>
 
-<asb-table
-    [data]="data"
-    [columnModel]="columnModel"
-    [initialSorting]="{active: 'fdr', direction: 'asc'}"
-    [displayedColumns]="displayedColumns"
-    [defaultColumns]="defaultDisplayedColumns"
-    [columnsSelectStyle]="{'margin': '0rem 10px -1rem'}"
-    [paginatorOptions]="[5, 10, 20, 50]"
-></asb-table>
+    <mat-button-toggle-group [(value)]="toggleValue" style="margin-bottom: 1rem; margin-left: auto">
+        <mat-button-toggle value="chart">Chart</mat-button-toggle>
+        <mat-button-toggle value="table">Table</mat-button-toggle>
+    </mat-button-toggle-group>
+</div>
+<div
+    [joyrideStep]="stepId"
+    [stepContent]="stepTemplate"
+    [stepContentParams]="getTextByStepName(stepId)"
+    (next)="statsNextStep()"
+>
+<ng-container *ngIf="toggleValue === 'chart'">
+    <div>
+
+        <ng-container *ngIf="checked">
+            <ng-container *ngIf="checkedChartData.expected.length > 0; else NoDataTemplate">
+            <asb-odds-bar
+                *ngIf="chartsLoaded"
+                [chartData]="checkedChartData"
+            ></asb-odds-bar>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="!checked">
+            <asb-odds-bar
+                *ngIf="chartsLoaded"
+                [chartData]="chartData"
+            ></asb-odds-bar>
+        </ng-container>
+    </div>
+</ng-container>
+<ng-container *ngIf="toggleValue === 'table'">
+
+        <asb-table
+            [data]="data"
+            [columnModel]="columnModel"
+            [initialSorting]="{active: 'fdr', direction: 'asc'}"
+            [displayedColumns]="displayedColumns"
+            [defaultColumns]="defaultDisplayedColumns"
+            [columnsSelectStyle]="{'margin': '0rem 10px -1rem'}"
+            [paginatorOptions]="[5, 10, 20, 50]"
+        >
+            <mat-button-toggle-group [(value)]="toggleValue" style="margin-bottom: 1rem; margin-left: auto">
+                <mat-button-toggle value="chart">Chart</mat-button-toggle>
+                <mat-button-toggle value="table">Table</mat-button-toggle>
+            </mat-button-toggle-group>
+        </asb-table>
+</ng-container>
+</div>
 <ng-template #fdrViewTemplate let-value="value">
     <asb-sci-notation [value]="value" [toInvert]="true"></asb-sci-notation>
+</ng-template>
+<ng-template #NoDataTemplate>
+    <div style="display: flex; justify-content: center">
+    <h5 style="padding: 16px">No data</h5>
+    </div>
+</ng-template>
+<ng-template #stepTemplate let-text="text">
+    <asb-step-template [text]="text">
+
+    </asb-step-template>
 </ng-template>

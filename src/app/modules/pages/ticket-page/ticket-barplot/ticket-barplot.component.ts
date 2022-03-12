@@ -38,6 +38,7 @@ export class TicketBarplotComponent implements OnInit {
 
     @Input()
     public tfOrCl: TfOrCl
+    private expectedTotalCount: number;
 
     @Input()
     set selectedIndex(value: number) {
@@ -89,7 +90,8 @@ export class TicketBarplotComponent implements OnInit {
     public chartOptions: ChartOptions;
 
     ngOnInit(): void {
-        this.chartLabels = ['Expected', 'Observed']
+        this.chartLabels = ['Expected fraction', 'Observed count'];
+        this.expectedTotalCount = this.data.reduce((a, b) => a + b.expCount, 0)
 
         this.chartOptions = {
             responsive: true,
@@ -147,9 +149,8 @@ export class TicketBarplotComponent implements OnInit {
                 titleFontSize: 0,
                 callbacks: {
                     label: (tooltipItem, data) => {
-
                         let label = (tooltipItem.index == 0 ?
-                            this.data[tooltipItem.datasetIndex].expCount :
+                            (this.data[tooltipItem.datasetIndex].expCount / this.expectedTotalCount).toFixed(2) :
                             this.data[tooltipItem.datasetIndex].count) || '' ;
                         label = getShortLabel(`${label}`)
                         if (label) {

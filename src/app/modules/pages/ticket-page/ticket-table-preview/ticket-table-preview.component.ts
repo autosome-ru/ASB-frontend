@@ -21,8 +21,6 @@ import {ExpSnpModel, TfOrCl} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
-import {MatSort} from "@angular/material/sort";
-import {compareData} from "../../../../helpers/helper/check-functions.helper";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {getTextByStepNameAnanas} from "../../../../helpers/text-helpers/tour.ananas.helper";
@@ -91,6 +89,9 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     public selectedName: string;
 
     @Input()
+    public pageSize: number;
+
+    @Input()
     public tfOrCl: TfOrCl;
 
     @Input()
@@ -126,28 +127,6 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     public tableOpened: boolean;
     public release: ReleaseModel = ananastraRelease;
     public columnModel: AsbTableColumnModel<AnnotationSnpModel>;
-    sortData: (data: AnnotationSnpModel[], field: MatSort) => AnnotationSnpModel[] =
-        (data, field) => {
-        if (field.active === 'chr') {
-            const chrToNum = (chr: string) => Number(chr.slice(3))
-            function compareAnnSnpModel(a: AnnotationSnpModel, b: AnnotationSnpModel) {
-                if (chrToNum(a.chr) > chrToNum(b.chr)) {
-                    return 1
-                } else {
-                    if (chrToNum(a.chr) == chrToNum(b.chr)) {
-                        return a.pos > b.pos ? 1 : -1
-                    }
-                    return -1
-                }
-
-            }
-            return data.sort((a, b) =>
-                compareAnnSnpModel(a, b) * (field.direction === 'asc' ? 1 : -1))
-        } else {
-            return data.sort((a,b) =>
-                compareData(a as any, b as any, field))
-        }
-    }
     public columnsControl: FormControl;
     public tableData: Observable<AnnotationSnpModel[]>;
     public colors: { [base: string]: string } = {
@@ -458,7 +437,6 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     }
 
     emitTableChanges(event: AsbServerSideModel): void {
-        console.log(event)
         this.tableChangesEmitter.emit(event)
     }
 }
