@@ -5,7 +5,8 @@
     <h4
         style="padding-top: 0.5rem; display: flex"
     >
-        <span style="padding-right: 0.5rem; align-self: center;">Browse</span>
+        <span style="padding-right: 0.5rem; align-self: center;" *ngIf="!isAnanas">Browse</span>
+        <span style="padding-right: 0.5rem; align-self: center;" *ngIf="isAnanas">Underlying data</span>
         <mat-button-toggle-group
             style="font-size: 1rem"
             #group="matButtonToggleGroup"

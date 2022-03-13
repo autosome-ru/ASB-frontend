@@ -77,15 +77,6 @@
         <a
             class="nav-item nav-link py-sm-0"
             mat-list-item
-            [routerLink]="'/browse'"
-            [routerLinkActive]="['active']"
-            [queryParams]="{by: 'tf'}"
-        >
-            Browse
-        </a>
-        <a
-            class="nav-item nav-link py-sm-0"
-            mat-list-item
             [routerLink]="'/help'"
             [routerLinkActive]="['active']"
         >
@@ -100,7 +91,15 @@
         >
             About
         </a>
-
+        <a
+            class="nav-item nav-link py-sm-0"
+            mat-list-item
+            [routerLink]="'/data'"
+            [routerLinkActive]="['active']"
+            [queryParams]="{by: 'tf'}"
+        >
+            Data
+        </a>
     </div>
 </ng-template>
 <ng-template #formTemplate let-type="type">

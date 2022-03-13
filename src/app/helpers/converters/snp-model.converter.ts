@@ -320,8 +320,9 @@ export function convertServerSideModelToServerSideBackendModel(model: AsbServerS
     if (model.regexp) {
         if (filterField === 'regexp') {
             pagination[filterField] = '%' + model.regexp + '%';
+        } else {
+            pagination[filterField] = model.regexp;
         }
-        pagination[filterField] = model.regexp;
     }
     return order_by ? {order_by, ...pagination} : pagination;
 }

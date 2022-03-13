@@ -51,7 +51,7 @@ const routes: Routes = [
         }
     },
     {
-        path: "browse",
+        path: "data",
         loadChildren: () => import(
             "src/app/modules/pages/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {

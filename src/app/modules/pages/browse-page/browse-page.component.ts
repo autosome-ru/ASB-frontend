@@ -83,7 +83,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public tableTfData$: Observable<TfInfoModel[]>;
     public tableClData$: Observable<ClInfoModel[]>;
     public searchForm: FormControl;
-    private isAnanas: boolean;
+    public isAnanas: boolean;
     private tfOrCl: TfOrCl;
     private queryParams: AsbServerSideFilterModel = initialServerParams;
     constructor(
