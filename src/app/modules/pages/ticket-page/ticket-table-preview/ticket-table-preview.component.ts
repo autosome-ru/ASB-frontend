@@ -376,7 +376,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     }
 
     constructAdastraLink(row: AnnotationSnpModel) {
-        let result = `https://adastra.autosome.ru/snps/${row.rsId}`
+        let result = `https://adastra.autosome.org/snps/${row.rsId}`
         if (this.isExpanded) {
             result += '/' + row.altBase
         } else {

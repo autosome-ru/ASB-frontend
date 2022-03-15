@@ -272,7 +272,7 @@
             + '-' + (row.pos + 100) +
             '&hgct_customText=track%20type=bigBed%20name=ADASTra_ASB_SNPs%20' +
              'description=%22ADASTra%20ASB%20SNPs%22%20visibility=full%20bigDataUrl=' +
-             'https://adastra.autosome.ru/assets/ucsc-files/' + release.ucscFileName +'&knownGene=full&' +
+             'https://adastra.autosome.org/assets/ucsc-files/' + release.ucscFileName +'&knownGene=full&' +
              'omimAvSnp=full&varsInPubs=full&snpedia=full&hgmd=full'"
     >
         <mat-icon svgIcon="new_open"></mat-icon>
@@ -354,7 +354,7 @@
     <img
         style="max-height: 65vh; max-width: 100%; width: 50vw"
         alt=""
-        [src]="'https://adastra.autosome.ru/svgs/' + release.api + '/' + data.transcriptionFactor + '_' + data.rsId.slice(2) + '_' + data.altBase +(revcompState ? '_revcomp' : '' ) + '.svg'"
+        [src]="'https://adastra.autosome.org/svgs/' + release.api + '/' + data.transcriptionFactor + '_' + data.rsId.slice(2) + '_' + data.altBase +(revcompState ? '_revcomp' : '' ) + '.svg'"
     >
     </mat-dialog-content>
     <mat-dialog-actions>

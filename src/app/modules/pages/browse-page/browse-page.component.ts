@@ -204,7 +204,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                 queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name},
 
             }));
-            window.open('https://adastra.autosome.ru/' + url, '_blank');
+            window.open('https://adastra.autosome.org/' + url, '_blank');
         }
 
 

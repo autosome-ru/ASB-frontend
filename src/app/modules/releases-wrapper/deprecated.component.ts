@@ -12,7 +12,7 @@ import {AppState} from "../../store/reducer/adastra";
     <ngb-alert style="margin-top: -1rem" type="danger" [dismissible]="false">
         <strong>Attention!</strong>
         You are using release <strong>{{(release$ | async)?.name}}</strong>. You can switch to the latest ADASTRA version:
-        <a href="https://adastra.autosome.ru">adastra.autosome.org</a>
+        <a href="https://adastra.autosome.org">adastra.autosome.org</a>
     </ngb-alert>
     <router-outlet></router-outlet>`,
     changeDetection: ChangeDetectionStrategy.OnPush,

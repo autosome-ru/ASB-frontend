@@ -18,7 +18,7 @@ export class UrlService {
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
         'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl, isEqtl?: boolean): string {
-        const currentApi: string = `https://adastra.autosome.ru/api/${this.currentRelease.api}`
+        const currentApi: string = `https://adastra.autosome.org/api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
                 return `${currentApi}/browse`
