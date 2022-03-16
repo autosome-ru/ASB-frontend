@@ -121,12 +121,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                 switch (params.by) {
                     case "cl":
                         this.initialGroupValue = "cl";
+                        this.tfOrCl = 'cl'
                         this.store.dispatch(new fromActions.data.LoadClInfoAction(
                             this.queryParams
                         ));
                         return;
                     case "tf":
                         this.initialGroupValue = "tf";
+                        this.tfOrCl = 'tf'
                         this.store.dispatch(new fromActions.data.LoadTfInfoAction(
                             this.queryParams,
                         ));
@@ -171,7 +173,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             this.searchForm.valueChanges.pipe(debounceTime(400)).subscribe(
                 v => {
                     this._handleFilterChange(v)
-                    console.log(v)
                 }
             )
         )
@@ -229,7 +230,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             ...this.queryParams,
             regexp
         }
-        this.tfOrCl ? this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams)) :
+        this.tfOrCl === 'cl' ? this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams)) :
                     this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.queryParams));
     }
 }

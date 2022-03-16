@@ -36,7 +36,9 @@
             <mat-label>Filter</mat-label>
             <span matPrefix><mat-icon svgIcon="search"></mat-icon></span>
             <input [formControl]="searchForm"
-                   matInput placeholder="e.g. CTCF_HUMAN">
+                   matInput
+                   placeholder="e.g. CTCF_HUMAN"
+            >
         </mat-form-field>
         <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
             <asb-table-server
