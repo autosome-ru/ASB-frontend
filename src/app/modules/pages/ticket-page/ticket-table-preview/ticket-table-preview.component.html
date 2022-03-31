@@ -306,6 +306,13 @@
             [href]="constructAdastraLink(row)"
         >
             view in ADASTRA</a>
+        <a
+            mat-menu-item
+            target="_blank"
+            rel="noopener noreferrer"
+            [href]="'http://www.mulinlab.org/vportal/apir.html?q='+ value + '&g=hg38'"
+        >
+            view in VannoPortal</a>
     </ng-template>
 </mat-menu>
 <ng-template #gtexTemplate let-row="row" let-value="value">
