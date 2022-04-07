@@ -20,6 +20,16 @@ const routes: Routes = [
         }
     },
     {
+        path: 'portal',
+        loadChildren: () => import('src/app/modules/pages/snp-annotation-main/snp-annotation-main.module').then(
+            mod => mod.SnpAnnotationMainModule
+        ),
+        data: {
+            title: "ANANASTRA",
+            description: ""
+        }
+    },
+    {
         path: 'ticket/:id',
         loadChildren: () => import('src/app/modules/pages/ticket-page/ticket-page.module').then(
             mod => mod.TicketPageModule
