@@ -16,6 +16,8 @@ import {recentRelease} from "../../../helpers/constants/releases";
 import {ReleaseModel} from "../../../models/releases.model";
 import {demo1} from "../../../helpers/constants/demo.ananas";
 
+
+type helpImages = 'enrichment' | 'summary' | 'table' | 'chromosomes' | 'concordance'
 @Component({
     selector: 'asb-ananas-help',
     templateUrl: './ananas-help.component.html',
@@ -98,7 +100,7 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
         this.dialog.open(this.preview, {data})
     }
 
-    getNameOfId(data: string): string {
+    getNameOfId(data: helpImages): string {
         switch (data) {
             case 'enrichment':
                 return 'ASB events related to particular TFs or cell types'
@@ -108,6 +110,8 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
                 return 'Complete table of ASBs found at user-submitted SNPs'
             case 'chromosomes':
                 return 'Analysis of ASB enrichment at individual chromosomes'
+            case 'concordance':
+                return 'Visualization of ASB effect against binding motif predictions'
             default:
                 return ''
         }

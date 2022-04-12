@@ -253,7 +253,7 @@
                         imbalance is consistent with the transcription factor
                         motif Fold Change (FC, predicted from sequence analysis).
                         The following notation is used:
-                            <ul style="list-style-type: circle;">
+                            <ul style="list-style-type: circle; margin-bottom: 5px">
                                 <li>
                                     <b>n/a:</b>
                                     Motif is not available;</li>
@@ -282,6 +282,26 @@
                                     2 but not consistent with allelic read imbalance.
                                 </li>
                             </ul>
+                            <span>
+    For motif-annotated SNPs overlapping significant (P ≤ 0.0005) hits of
+        <a
+            href="https://hocomoco11.autosome.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >HOCOMOCO</a> motifs of the respective TFs, we provide the 'motif concordance' plots.<br>
+                <img
+                    style="max-height: 280px; max-width: 100%"
+                    alt="Loading..."
+                    [src]="'/assets/images/' + 'concordance'+ '.help.png'"
+                ><br><br>
+        The alignment of the motif relative to the SNP is shown at the top.
+        Motif P-values indicate the predicted binding specificities for the alternative alleles.
+        The preferred allele according to ADASTRA data along with the ASB FDR and Effect Size is
+        shown at the bottom. The higher bell corresponds to the allele preferentially bound
+        by the TF in vivo according to the underlying ChIP-Seq data. The DNA strand/orientation
+        is marked in the bottom left corner.
+
+    </span>
                         </dd>
                     </dl>
                 </section>
@@ -415,8 +435,7 @@
                             class="preview d-none d-lg-inline"
                             (click)="openPreview('table')"
                         >
-                                preview</span><br><br>
-                            <b>[!] Note</b>, that the lists longer than 200 ASBs are not browsable online, but can be downloaded for offline exploration.
+                                preview</span>
                         </dd>
                     </dl>
                 </div>
@@ -672,8 +691,12 @@
     <mat-dialog-content>
         <img
             style="max-width: 100%"
-            alt=""
+            alt="Loading..."
             [src]="'/assets/images/' + data + '.help.png'"
         >
     </mat-dialog-content>
+</ng-template>
+
+<ng-template #concordanceExplanation>
+
 </ng-template>

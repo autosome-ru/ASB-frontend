@@ -15,7 +15,7 @@ const routes: Routes = [
             mod => mod.SnpAnnotationMainModule
         ),
         data: {
-            title: "ANANASTRA",
+            title: "ANANASTRA - Anotation and enrichment Analysis of Allele-Specific Transcription factor binding at SNPs",
             description: ""
         }
     },
@@ -25,7 +25,7 @@ const routes: Routes = [
             mod => mod.SnpAnnotationMainModule
         ),
         data: {
-            title: "ANANASTRA",
+            title: "ANANASTRA - Anotation and enrichment Analysis of Allele-Specific Transcription factor binding at SNPs",
             description: ""
         }
     },
@@ -65,7 +65,7 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {
-            title: "ANANASTRA -  browse",
+            title: "ANANASTRA - browse",
             isAnanas: true,
             description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
         }
@@ -77,7 +77,7 @@ const routes: Routes = [
             "src/app/modules/pages/404-page/page-not-found.module").then(
                 mod => mod.AsbPageNotFoundModule),
         data: {
-            title: "Page not found",
+            title: "ANANASTRA - Page not found",
             description: "Page not found"
         }
     },
