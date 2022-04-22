@@ -9,6 +9,8 @@ export class ArticleCiteComponent implements OnInit {
 
     @Input()
     public isAbout: boolean;
+    @Input()
+    public article: 'adastra' | 'ananas' = 'adastra'
     constructor() { }
 
     ngOnInit(): void {

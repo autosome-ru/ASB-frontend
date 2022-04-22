@@ -34,6 +34,7 @@ import {InnerTableModule} from "../../shared/inner-table/inner-table.module";
 import { OddsBarComponent } from './odds-bar/odds-bar.component';
 import {MatListModule} from "@angular/material/list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
 
 @NgModule({
     declarations: [
@@ -73,7 +74,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         InnerTableModule,
         ChartsModule,
         MatListModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        ArticleCiteModule
     ],
     providers: [DownloadService]
 })

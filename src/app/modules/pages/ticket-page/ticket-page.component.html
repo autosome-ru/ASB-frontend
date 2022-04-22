@@ -277,6 +277,16 @@
     </div>
 
 </div>
+    <ng-container *ngIf="(fileStatistics$ | async) as fileStatistics">
+    <div
+        *ngIf="!fileStatistics.loading && fileStatistics.data"
+        class="container mat-elevation-z2 py-2"
+        style="margin-top: 10px; background: #E7EBEC; margin-bottom: 20px">
+        <asb-article-cite article="ananas">
+            Please cite:
+        </asb-article-cite>
+    </div>
+    </ng-container>
 </div>
 <asb-tour-button
     *ngIf="(pingData$ | async)?.status == 'Processed'"

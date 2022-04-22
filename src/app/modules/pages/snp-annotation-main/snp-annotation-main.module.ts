@@ -15,6 +15,7 @@ import {AsbTourModule} from "../../shared/tour-template/tour-module";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {JoyrideModule} from "ngx-joyride";
 import {MatSelectModule} from "@angular/material/select";
+import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {MatSelectModule} from "@angular/material/select";
         AsbTourModule,
         MatTooltipModule,
         JoyrideModule,
-        MatSelectModule
+        MatSelectModule,
+        ArticleCiteModule
     ]
 })
 export class SnpAnnotationMainModule { }
