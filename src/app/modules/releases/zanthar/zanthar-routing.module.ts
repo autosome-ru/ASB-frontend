@@ -12,6 +12,15 @@ const routes: Routes = [
         }
     },
     {
+        path: "portal",
+        loadChildren: () => import(
+            "src/app/modules/pages/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
+        data: {
+            title: "ADASTRA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
+            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+        }
+    },
+    {
         path: "downloads",
         loadChildren: () => import(
             "src/app/modules/pages/downloads-page/downloads-page.module").then(mod => mod.AsbDownloadsPageModule),
