@@ -7,7 +7,7 @@ export const releasesList: ReleaseModel[] = [
         majorVersion: 4,
         date: "2021.09.01",
         recent: true,
-        version: "v4.0.2",
+        version: "v4.0.3",
         size: '775.3MB',
         api: "v4",
         defaultFdrThreshold: '0.05',
