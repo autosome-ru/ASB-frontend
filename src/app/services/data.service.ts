@@ -6,7 +6,7 @@ import {
     ClSnpBackendModel, ExpSnpModel,
     SnpInfoBackendModel,
     TfInfoBackendModel,
-    TfOrCl,
+    TfOrCl, TfSnpModel,
     TotalInfoBackendModel
 } from "src/app/models/data.model";
 import {AsbServerSideFilterModel} from "../models/table.model";
@@ -33,7 +33,7 @@ export class DataService {
     }
 
     public getSnpInfoByIdCsv(id: string, alt: string, tfOrCl: TfOrCl,
-                             columns: string[], filter?: string): Observable<Blob> {
+                             columns: Array<keyof TfSnpModel>, filter?: string): Observable<Blob> {
         return this.http.get(`${this.urlService.getUrlForQuery("snp")}/${id.slice(2)}/${alt}/${tfOrCl}/tsv`,
             {params: constructParams(columns, filter, tfOrCl)
                 , responseType: "blob"});
@@ -76,14 +76,14 @@ export class DataService {
 
 }
 
-function constructParams(columns: string[], filter: string, tfOrCl: TfOrCl):
+function constructParams(columns: Array<keyof TfSnpModel>, filter: string, tfOrCl: TfOrCl):
     {[id: string]: string} {
     const params: {[id: string]: string} = {};
     params.columns = columns.map(column => changeName(column, tfOrCl)).join(tfOrCl == 'tf' ? "," :  "@");
     return params;
 }
 
-function changeName(name: string, tfOrCl: TfOrCl): string {
+function changeName(name: keyof TfSnpModel, tfOrCl: TfOrCl): string {
     switch (name) {
         case "pValueRef": {
             return "log_p_value_ref";
@@ -103,10 +103,10 @@ function changeName(name: string, tfOrCl: TfOrCl): string {
         case "effectSizeAlt": {
             return "es_alt";
         }
-        case "motifPRef": {
+        case "motifLogPRef": {
             return "motif_log_p_ref";
         }
-        case "motifPAlt": {
+        case "motifLogPAlt": {
             return "motif_log_p_alt";
         }
         case "motifConcordance": {
@@ -115,7 +115,7 @@ function changeName(name: string, tfOrCl: TfOrCl): string {
         case "motifOrientation": {
             return "motif_orientation";
         }
-        case "motifFc": {
+        case "motifLog2Fc": {
             return "motif_log_2_fc";
         }
         case "motifPosition": {

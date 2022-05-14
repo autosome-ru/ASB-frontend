@@ -264,7 +264,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     _downloadFile(options: {
-        columns: string[],
+        columns: Array<keyof TfSnpModel>,
         filter: string,
     },            where: TfOrCl) {
         this.subscriptions.add(

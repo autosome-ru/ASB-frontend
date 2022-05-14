@@ -16,6 +16,7 @@ import {AsbTableComponent} from "../../../shared/table-template/mat-table/table.
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
+import {TfSnpModel} from "../../../../models/data.model";
 
 
 @Component({
@@ -54,7 +55,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
 
     @Output()
     private downloadSnpInfo = new EventEmitter<{
-        columns: string[],
+        columns: Array<keyof TfSnpModel>,
         filter: string,
     }>();
     @Output()
