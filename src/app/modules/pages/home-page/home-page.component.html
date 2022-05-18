@@ -51,7 +51,7 @@
                         [matTooltip]="constructTooltipText(totalInfo, mj)"
                           matTooltipClass="tooltip-bigger custom-ws"
                     >&nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount010}} ASBs passing 10% FDR at {{totalInfo.snpsCount010}} SNPs</span>
-                    <span *ngSwitchCase="4" style="white-space: nowrap"
+                    <span *ngSwitchDefault style="white-space: nowrap"
                           [matTooltip]="constructTooltipText(totalInfo, mj)"
                           matTooltipClass="tooltip-bigger custom-ws"
                     >&nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount005}} ASBs passing 5% FDR at {{totalInfo.snpsCount005}} SNPs</span>

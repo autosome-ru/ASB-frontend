@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FordRoutingModule} from "./ford-routing.module";
+import {BillCipherRoutingModule} from "./bill-cipher-routing.module";
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    FordRoutingModule
+    BillCipherRoutingModule
   ],
   declarations: []
 })
-export class FordModule { }
+export class BillCipherModule { }

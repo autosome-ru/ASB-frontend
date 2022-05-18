@@ -24,10 +24,10 @@ export class DownloadsPageComponent implements OnInit {
     }
 
     _getBadmapsName(release: ReleaseModel) {
-        return `BADmaps_${release.name}.zip`;
+        return `BADmaps_${release.name.replace(' ', '_')}.zip`;
     }
 
     _getGtrdExpsName(release: ReleaseModel) {
-        return `ADASTRA_${release.name}_GTRD_exps.tsv`;
+        return `ADASTRA_${release.name.replace(' ', '_')}_GTRD_exps.tsv`;
     }
 }

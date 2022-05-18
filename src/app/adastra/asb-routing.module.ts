@@ -28,12 +28,17 @@ const routes: Routes = [
     {
         path: "susan",
         component: RemovedComponent,
-        loadChildren: () => import("src/app/modules/releases/susan/susan.module").then(mod => mod.SusanModule)
+        loadChildren: () => import("src/app/modules/releases/removed/susan/susan.module").then(mod => mod.SusanModule)
     },
     {
         path: "zanthar",
+        component: RemovedComponent,
+        loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
+    },
+    {
+        path: "bill-cipher",
         component: RecentComponent,
-        loadChildren: () => import("src/app/modules/releases/zanthar/zanthar.module").then(mod => mod.ZantharModule)
+        loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
     // {
     //     path: "beta",
