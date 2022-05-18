@@ -1,0 +1,16 @@
+<ngb-alert style="margin-top: -1rem"
+           type="danger"
+           [dismissible]="false"
+           *ngIf="queryParams.releaseName as releaseName"
+>
+    <div style="display: flex; justify-content: space-between">
+        <div style="display: inline-block">
+            Release <strong>{{releaseName}}</strong> is no longer maintained nor browsable online.
+        You can download the respective data using the link below.</div>
+        <mat-icon
+            (click)="dismiss()"
+            style="cursor: pointer"
+            svgIcon="clear"></mat-icon>
+    </div>
+</ngb-alert>
+<router-outlet></router-outlet>

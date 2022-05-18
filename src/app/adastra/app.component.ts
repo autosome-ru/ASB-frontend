@@ -83,7 +83,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             this.router.events.subscribe(
                 (event: any) => {
                     if (event instanceof NavigationEnd) {
-                        console.log(event.url)
                         this.activeRoute$.next(event.url)
                     }
                 })

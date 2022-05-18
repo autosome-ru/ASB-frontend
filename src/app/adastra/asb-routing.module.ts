@@ -3,6 +3,7 @@ import {Routes, RouterModule, ExtraOptions} from "@angular/router";
 import {RecentComponent} from "../modules/releases-wrapper/recent.component";
 import {RedirectReleaseComponent} from "../modules/releases-wrapper/redirect-release.component";
 import {DeprecatedComponent} from "../modules/releases-wrapper/deprecated.component";
+import {RemovedComponent} from "../modules/releases-wrapper/removed.component";
 
 const routerOptions: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
@@ -26,7 +27,7 @@ const routes: Routes = [
     // },
     {
         path: "susan",
-        component: RecentComponent,
+        component: RemovedComponent,
         loadChildren: () => import("src/app/modules/releases/susan/susan.module").then(mod => mod.SusanModule)
     },
     {

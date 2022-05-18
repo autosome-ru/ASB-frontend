@@ -12,12 +12,13 @@ import {Location} from "@angular/common";
 export class RedirectReleaseComponent implements OnInit {
     constructor(private router: Router, private location: Location) { }
     ngOnInit() {
-        let path = this.location.path();
+        let path = this.location.path(true);
         if (!path.startsWith("/")) {
             path = "/" + path;
         }
-        this.router.navigate([`/${recentRelease.url}${path}`], {
-            queryParamsHandling: "preserve", preserveFragment: true
+        const t = this.router.parseUrl(`/${recentRelease.url}${path}`)
+        this.router.navigateByUrl(t, {
+
         }).then(() => null);
     }
 }

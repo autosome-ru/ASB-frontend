@@ -5,6 +5,8 @@ import {RecentComponent} from "./recent.component";
 import {RedirectReleaseComponent} from "./redirect-release.component";
 import {RouterModule} from "@angular/router";
 import {NgbAlertModule} from "@ng-bootstrap/ng-bootstrap";
+import {RemovedComponent} from "./removed.component";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -12,7 +14,12 @@ import {NgbAlertModule} from "@ng-bootstrap/ng-bootstrap";
         CommonModule,
         RouterModule,
         NgbAlertModule,
+        MatIconModule,
     ],
-    declarations: [DeprecatedComponent, RecentComponent, RedirectReleaseComponent]
+    declarations: [
+        DeprecatedComponent,
+        RecentComponent,
+        RemovedComponent,
+        RedirectReleaseComponent]
 })
 export class ReleasesWrapperModule { }
