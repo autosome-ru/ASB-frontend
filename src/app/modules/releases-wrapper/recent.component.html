@@ -1,7 +1,7 @@
 <ngb-alert style="margin-top: -1rem"
            type="danger"
            [dismissible]="false"
-           *ngIf="queryParams.releaseName as releaseName"
+           *ngIf="(queryParams$ | async)?.releaseName as releaseName"
 >
     <div style="display: flex; justify-content: space-between">
         <div style="display: inline-block">
