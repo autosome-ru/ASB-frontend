@@ -30,6 +30,7 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
 import {asbAppReducer} from "../store/reducer/adastra";
 import {asbAppEffects} from "../store/effect/adastra";
 import {SearchService} from "../services/search.service";
+import {MatDividerModule} from "@angular/material/divider";
 
 export const reducers: ActionReducerMap<any> = {
     ...asbAppReducer,
@@ -63,7 +64,8 @@ export const effects = [
         MatDialogModule,
         MatButtonModule,
         FormFieldsModule,
-        AnanastraHeaderModule
+        AnanastraHeaderModule,
+        MatDividerModule
     ],
     providers: [
         ProcessingService,
