@@ -24,7 +24,7 @@ import {DownloadService} from 'src/app/services/download.service';
 import {FileSaverService} from 'ngx-filesaver';
 import {AnnotationStoreState} from "../../../store/reducer/ananastra";
 import {ReleaseModel} from "../../../models/releases.model";
-import {ananastraRelease} from "../../../helpers/constants/releases";
+import {ananastraRelease, releasesList} from "../../../helpers/constants/releases";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Clipboard} from "@angular/cdk/clipboard";
 import {SeoService} from "../../../services/seo.servise";
@@ -332,6 +332,13 @@ export class TicketPageComponent implements OnInit, OnDestroy {
             regexp: name
         }
         this.tableChanged(this.paginationParams)
+    }
+
+    getReleaseByTicket(): ReleaseModel {
+        if (this.ticket.match(/^example[1,2]$/)) {
+            return releasesList.filter(s => s.name == 'Zanthar')[0]
+        }
+        return this.recentRelease
     }
 }
 

@@ -25,10 +25,11 @@
                   *ngIf="!(ticketProcessing$ | async)">
                  - based on release
                 <a
+                    *ngIf="getReleaseByTicket() as release"
                     target="_blank"
                     rel="noopener noreferrer"
-                    [href]="'https://adastra.autosome.org/' + recentRelease.url"
-                >{{recentRelease.name}}</a>
+                    [href]="'https://adastra.autosome.org/' + release.url"
+                >{{release.name}}</a>
             </span>
         </h4>
         <div class="centered-spinner container" *ngIf="ticketProcessing$ | async; else failedTemplate">
