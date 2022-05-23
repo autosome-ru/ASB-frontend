@@ -9,14 +9,14 @@ export const releasesList: ReleaseModel[] = [
         recent: true,
         version: "v5.0.0",
         size: '775.3MB',
-        api: "v4",
+        api: "v5",
         defaultFdrThreshold: '0.05',
         releaseLink: 'https://disk.yandex.ru/d/Uwc-uw-sLkfk9g',
-        gtrdExpsPath: "ADASTRA_GTRD_exps.zanthar.tsv",
-        badMapsPath: "BADmaps.zanthar.zip",
-        ucscFileName: 'ADASTRA_SNPs.zanthar.bb',
-        notes: "New 'permissive' strategy for BAD calling with simplified 'integer' set of allowed BADs resulting in nearly 2x better ASB calling sensitivity.",
-        notesPath: 'readme.zanthar.txt',
+        gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
+        badMapsPath: "BADmaps.bill_cipher.zip",
+        ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
+        notes: "",
+        notesPath: 'readme.bill_cipher.txt',
     },
     {
         name: "Zanthar",
@@ -73,4 +73,4 @@ export const releasesList: ReleaseModel[] = [
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0];
-export const ananastraRelease: ReleaseModel = releasesList.filter(s => s.name === 'Zanthar')[0]
+export const ananastraRelease: ReleaseModel = releasesList.filter(s => s.name === 'Bill Cipher')[0]

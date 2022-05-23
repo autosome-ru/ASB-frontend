@@ -20,11 +20,6 @@ const routes: Routes = [
         component: DeprecatedComponent,
         loadChildren: () => import("src/app/modules/releases/deprecated/soos/soos.module").then(mod => mod.SoosModule)
     },
-    // {
-    //     path: "ford",
-    //     component: DeprecatedComponent,
-    //     loadChildren: () => import("src/app/modules/releases/deprecated/ford/ford.module").then(mod => mod.FordModule)
-    // },
     {
         path: "susan",
         component: RemovedComponent,
@@ -40,18 +35,11 @@ const routes: Routes = [
         component: RecentComponent,
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
-    // {
-    //     path: "beta",
-    //     component: DeprecatedComponent,
-    //     loadChildren: () => import("src/app/modules/releases/deprecated/test/test.module").then(mod => mod.TestModule)
-    // },
-
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "zanthar",
+        redirectTo: "bill-cipher",
     },
-
     {
         path: "**",
         component: RedirectReleaseComponent,
