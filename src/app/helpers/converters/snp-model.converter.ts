@@ -22,7 +22,7 @@ import {
     TotalInfoBackendModel,
     TotalInfoModel
 } from "../../models/data.model";
-import {AsbServerSideBackendModel, AsbServerSideFilterModel, AsbServerSideModel} from "../../models/table.model";
+import {AsbServerSideBackendModel, AsbServerSideFilterModel} from "../../models/table.model";
 import {SortDirection} from "@angular/material/sort";
 
 
@@ -169,12 +169,23 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
     result.rsId = "rs" + model.rs_id;
     result.refBase = model.ref;
     result.altBase = model.alt;
-    if (!model.context || model.context.length !== 49) {
-        console.warn("Wrong context value", model.context);
-        result.context = ''
+    if (!!model.context) {
+        switch (model.context.length) {
+            case 51:
+            case 49: {
+                const middleIndex = Math.floor(model.context.length / 2)
+                result.context = model.context.slice(0, middleIndex).toLowerCase() +
+                    `[${model.ref}/${model.alt}]` + model.context.slice(middleIndex + 1).toLowerCase();
+                break;
+            }
+            default: {
+                console.warn(`Unexpected context value ${model.context}, length ${model.context.length} not in [49, 51]`);
+                result.context = ''
+                break;
+            }
+        }
     } else {
-        result.context = model.context.slice(0, 24) +
-            `[${model.ref}/${model.alt}]` + model.context.slice(25);
+        console.warn('No context provided')
     }
     return result;
 }

@@ -31,6 +31,7 @@ import {asbAppReducer} from "../store/reducer/adastra";
 import {asbAppEffects} from "../store/effect/adastra";
 import {SearchService} from "../services/search.service";
 import {MatDividerModule} from "@angular/material/divider";
+import {NoWarModule} from "../modules/shared/no-war/no-war.module";
 
 export const reducers: ActionReducerMap<any> = {
     ...asbAppReducer,
@@ -65,7 +66,8 @@ export const effects = [
         MatButtonModule,
         FormFieldsModule,
         AnanastraHeaderModule,
-        MatDividerModule
+        MatDividerModule,
+        NoWarModule
     ],
     providers: [
         ProcessingService,

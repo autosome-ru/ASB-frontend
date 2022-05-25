@@ -40,8 +40,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private cookiesDialogTemplate: TemplateRef<MatDialog>
     private readonly isBrowser: boolean;
     private subscriptions = new Subscription();
-
-    activeRoute$ = new BehaviorSubject<string>('')
     public recentRelease: ReleaseModel;
 
     constructor(private router: Router,
@@ -78,15 +76,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             })
         );
     }
-    ngAfterViewInit() {
-        this.subscriptions.add(
-            this.router.events.subscribe(
-                (event: any) => {
-                    if (event instanceof NavigationEnd) {
-                        this.activeRoute$.next(event.url)
-                    }
-                })
-        );
+    ngAfterViewInit(): void {
         // const cookiesConsent = localStorage.getItem('cookieConsent')
         // if (!cookiesConsent || cookiesConsent !== 'true') {
         //     this.dialog.open(CookiesConsentComponent, {

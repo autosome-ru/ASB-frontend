@@ -1,12 +1,9 @@
-<div
-    *ngIf="(activeRoute$ | async) !== '/portal'"
-    style="padding: 10px 16px; text-align: center; white-space: pre-wrap; font-size: 1.1rem; color: #A92323"
->We, Russian scientists of the autosome team, are depressed by the dire events caused by Russian military actions in Ukraine.<br>We express our condolences to all affected people and sincerely hope for a prompt transition to peace.
-</div>
-<mat-divider></mat-divider>
-<div
-    style="padding: 10px 16px; text-align: center; white-space: pre-wrap; font-size: 1.1rem; color: #A92323"
-><b>Sorry, the website is not accessible due to maintenance. The website will be back online on 2022/05/25 09AM CEST.</b></div>
+<asb-no-war></asb-no-war>
+<!--<mat-divider></mat-divider>-->
+<!--<div-->
+<!--    style="padding: 10px 16px; text-align: center; white-space: pre-wrap; font-size: 1.1rem; color: #A92323"-->
+<!--&gt;<b>Sorry, the website is not accessible due to maintenance. The website will be back online on 2022/05/25 09AM CEST.</b></div>-->
+
 <div class="ananas-layout">
     <asb-ananastra-header></asb-ananastra-header>
     <router-outlet></router-outlet>

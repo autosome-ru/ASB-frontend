@@ -169,16 +169,24 @@ export function compareData(a: TfSnpModel, b: TfSnpModel, sort: MatSort): number
     let result = 0;
     if (sort.active) {
         if (a[sort.active] && b[sort.active]) {
-            if (sort.active == "motifConcordance") {
-                if (a.motifConcordance != "No Hit" && b.motifConcordance != "No Hit") {
-                    result = compareConcordance(a.motifConcordance, b.motifConcordance);
-                } else {
-                    return applyFunction(a.motifConcordance, b.motifConcordance,
-                        x => x == "No Hit" );
+            switch (sort.active) {
+                case "motifConcordance": {
+                    if (a.motifConcordance != "No Hit" && b.motifConcordance != "No Hit") {
+                        result = compareConcordance(a.motifConcordance, b.motifConcordance);
+                    } else {
+                        return applyFunction(a.motifConcordance, b.motifConcordance,
+                            x => x == "No Hit" );
+                    }
+                    break;
                 }
-
-            } else {
-                result = a[sort.active] > b[sort.active] ? 1 : -1;
+                case "motifOrientation": {
+                    console.log(a[sort.active], b[sort.active])
+                    result = +a[sort.active] - +b[sort.active]
+                    break;
+                }
+                default:
+                    result = a[sort.active] > b[sort.active] ? 1 : -1;
+                    break;
             }
         } else {
             return applyFunction(a[sort.active], b[sort.active], x => !x);

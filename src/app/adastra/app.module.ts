@@ -33,6 +33,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import {UrlService} from "../services/url.service";
 import {CheckForUpdateService} from "../services/update.service";
 import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
+import {NoWarModule} from "../modules/shared/no-war/no-war.module";
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import {CloseDialogOnRouteService} from "../interceptors/popup-interceptor";
         MatDialogModule,
         MatButtonModule,
         MatIconModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        NoWarModule
     ],
     providers: [
         DataService,
