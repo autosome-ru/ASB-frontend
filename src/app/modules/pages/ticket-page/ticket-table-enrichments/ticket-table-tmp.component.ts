@@ -53,7 +53,6 @@ export class TicketTableTmpComponent implements OnInit {
             this.data.filter(this.sortingAcc)
         )
         this.chartData = this.setChartData(this.data)
-        console.log(this.checkedChartData, this.chartData)
         this.columnModel = {
             name: {
                 view: 'Name',

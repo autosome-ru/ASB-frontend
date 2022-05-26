@@ -158,7 +158,12 @@
             </div>
         </div>
         <div
-            style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px">
+            style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 5px"
+            joyrideStep="filter"
+            [stepContent]="stepTemplate"
+            [stepPosition]="'bottom'"
+            [stepContentParams]="getTextByStepName('filter')"
+        >
             <span>Filter:</span>
             <mat-chip-list>
                 <mat-chip
@@ -166,10 +171,6 @@
                     removable
                     [matMenuTriggerFor]="selectMenu"
                     (removed)="filterTable()"
-                    joyrideStep="filter"
-                    [stepContent]="stepTemplate"
-                    [stepPosition]="'bottom'"
-                    [stepContentParams]="getTextByStepName('filter')"
                 >
                     {{selectedName}}
                     <mat-icon
@@ -181,10 +182,6 @@
                 <mat-chip
                     *ngIf="!selectedName"
                     [matMenuTriggerFor]="selectMenu"
-                    joyrideStep="filter"
-                    [stepContent]="stepTemplate"
-                    [stepPosition]="'bottom'"
-                    [stepContentParams]="getTextByStepName('filter')"
                 >
                     No filter
                 </mat-chip>

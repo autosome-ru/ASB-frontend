@@ -82,7 +82,8 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         'odds-table',
         'col-button',
         'pie-chart',
-        'columns-select', 'download-table',
+        'columns-select',
+        'download-table',
         'filter'
     ];
     public panelExpanded: boolean = false;
@@ -218,6 +219,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
         if (this.selectedTab !== tabEnum.sum || force) {
             this.paginationParams = {
                 ...this.paginationParams,
+                regexp: this.selectedName[this.selectedTab],
                 active: '',
                 direction: ''
             }
