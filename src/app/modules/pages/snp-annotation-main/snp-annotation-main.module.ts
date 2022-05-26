@@ -16,6 +16,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {JoyrideModule} from "ngx-joyride";
 import {MatSelectModule} from "@angular/material/select";
 import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
+import {NewsSectionModuleModule} from "../../shared/news-section/news-section.module";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
         MatTooltipModule,
         JoyrideModule,
         MatSelectModule,
-        ArticleCiteModule
+        ArticleCiteModule,
+        NewsSectionModuleModule
     ]
 })
 export class SnpAnnotationMainModule { }
