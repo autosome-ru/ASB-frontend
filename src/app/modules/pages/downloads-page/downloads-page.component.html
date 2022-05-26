@@ -8,10 +8,12 @@
                     <a [href]="'/' + release.url">{{release.name}}</a>
                     {{release.version}}, {{release.date}}:
                     <a
+                        *ngIf="release.releaseLink; else noReleaseLinkTemplate"
                         [href]="release.releaseLink"
                         rel="noopener noreferrer"
-                        target="_blank">Complete data download</a> ({{release.size}}),
+                        target="_blank">Complete data download</a> <span *ngIf="release.size">({{release.size}})</span>,
                     <a
+                        *ngIf="release.notesPath"
                         [href]="'/assets/readme/' + release.notesPath"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -81,3 +83,6 @@
         </ul>
     </div>
 </div>
+<ng-template #noReleaseLinkTemplate>
+    <span>Release is uploading and will be available soon.</span>
+</ng-template>

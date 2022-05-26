@@ -27,7 +27,7 @@ const routes: Routes = [
     },
     {
         path: "zanthar",
-        component: RemovedComponent,
+        component: RecentComponent,
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
     {
@@ -38,7 +38,7 @@ const routes: Routes = [
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "bill-cipher",
+        redirectTo: "zanthar",
     },
     {
         path: "**",

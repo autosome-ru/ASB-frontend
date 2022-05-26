@@ -6,24 +6,24 @@ export const releasesList: ReleaseModel[] = [
         url: "bill-cipher",
         majorVersion: 5,
         date: "2022.05.19",
-        recent: true,
+        recent: false,
         version: "v5.0.0",
         size: '775.3MB',
         api: "v5",
         defaultFdrThreshold: '0.05',
-        releaseLink: 'https://disk.yandex.ru/d/Uwc-uw-sLkfk9g',
+        releaseLink: '',
         gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
         badMapsPath: "BADmaps.bill_cipher.zip",
         ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
         notes: "",
-        notesPath: 'readme.bill_cipher.txt',
+        notesPath: '',
     },
     {
         name: "Zanthar",
         url: "zanthar",
         majorVersion: 4,
         date: "2021.09.01",
-        recent: false,
+        recent: true,
         version: "v4.0.3",
         size: '775.3MB',
         api: "v4",
@@ -73,4 +73,4 @@ export const releasesList: ReleaseModel[] = [
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0];
-export const ananastraRelease: ReleaseModel = releasesList.filter(s => s.name === 'Bill Cipher')[0]
+export const ananastraRelease: ReleaseModel = recentRelease //releasesList.filter(s => s.name === 'Bill Cipher')[0]
