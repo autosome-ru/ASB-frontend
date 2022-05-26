@@ -10,10 +10,14 @@ export function writeScientificNum(numStr: pValueString, precision: number, toIn
   let num = (toInvert ? -1 : 1 ) * Number(numStr)
   let power = Math.ceil(num);
   const realNum = Math.pow(10, -num);
+
   if (num <= 2) {
     return `<span>${realNum.toFixed(precision)}</span>`;
   }
   let base = (realNum * Math.pow(10, power)).toFixed(precision - 1);
+  if (base == 'Infinity') {
+        return `<span>1.0·10<sup>-${power}</sup></span>`;
+  }
   if (base === '10.'.padEnd(precision + 2, '0')) {
       base = '1.'.padEnd(precision + 1, '0')
       power = power - 1
