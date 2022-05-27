@@ -11,7 +11,11 @@
                         *ngIf="release.releaseLink; else noReleaseLinkTemplate"
                         [href]="release.releaseLink"
                         rel="noopener noreferrer"
-                        target="_blank">Complete data download</a> <span *ngIf="release.size">({{release.size}})</span>,
+                        target="_blank">Complete data download</a>
+                    <span *ngIf="release.releaseLink"
+                    >
+                        ({{release.size}}),
+                    </span>
                     <a
                         *ngIf="release.notesPath"
                         [href]="'/assets/readme/' + release.notesPath"
@@ -58,7 +62,7 @@
                             </a>
                         </span>
                     </li>
-                    <li>
+                    <li *ngIf="release.releaseType !== 'deprecated'">
                         <strong>
                             Sitemaps:
                         </strong>
@@ -84,5 +88,5 @@
     </div>
 </div>
 <ng-template #noReleaseLinkTemplate>
-    <span>Release is uploading and will be available soon.</span>
+    <span>Release is uploading and will be available soon, </span>
 </ng-template>
