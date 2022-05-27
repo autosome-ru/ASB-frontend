@@ -1,7 +1,7 @@
 <nav
     class="navbar navbar-expand-md navbar-dark theme-accent-color mb-0 justify-content-start asb-header"
 >
-    <div style="display: flex; align-items: center">
+    <div style="display: flex; align-items: center; overflow: auto">
         <a
             style="padding-right: 0"
             class="navbar-brand mr-0"
@@ -41,7 +41,8 @@
                 [ngClass]="(currentRelease$ | async)?.url === release.url ? 'asb-header__active' : ''"
                 [href]="release.url"
             >
-                Release {{release.name}} | <small>{{release.version}}</small>
+                <span
+                >Release {{release.name}} <small>{{release.version}} | <span *ngIf="getReleaseType(release) as rt">{{rt}}</span></small> </span>
             </a>
         </mat-menu>
     </div>

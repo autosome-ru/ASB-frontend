@@ -4,6 +4,7 @@ import {RecentComponent} from "../modules/releases-wrapper/recent.component";
 import {RedirectReleaseComponent} from "../modules/releases-wrapper/redirect-release.component";
 import {DeprecatedComponent} from "../modules/releases-wrapper/deprecated.component";
 import {RemovedComponent} from "../modules/releases-wrapper/removed.component";
+import {recentRelease, releasesList} from "../helpers/constants/releases";
 
 const routerOptions: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
@@ -12,33 +13,41 @@ const routerOptions: ExtraOptions = {
     initialNavigation: 'enabled',
     relativeLinkResolution: 'legacy'
 }
-
-// Use RecentComponent for recent release and DeprecatedComponent for deprecated one
+const componentMap = {
+    'recent': RecentComponent,
+    'deprecated': RemovedComponent,
+    'legacy': DeprecatedComponent
+}
+const releaseMap = new Map(
+    releasesList.map(object => {
+        return [object.url, componentMap[object.releaseType]];
+    }),
+);
 const routes: Routes = [
     {
         path: "soos",
-        component: DeprecatedComponent,
+        component: releaseMap.get('soos'),
         loadChildren: () => import("src/app/modules/releases/deprecated/soos/soos.module").then(mod => mod.SoosModule)
     },
     {
         path: "susan",
-        component: RemovedComponent,
+        component: releaseMap.get('susan'),
         loadChildren: () => import("src/app/modules/releases/removed/susan/susan.module").then(mod => mod.SusanModule)
     },
     {
         path: "zanthar",
-        component: RecentComponent,
+        component: releaseMap.get('zanthar'),
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
     {
         path: "bill-cipher",
-        component: RecentComponent,
+        component: releaseMap.get('bill-cipher'),
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
     {
         path: "",
         pathMatch: "full",
-        redirectTo: "zanthar",
+        redirectTo: recentRelease.url,
     },
     {
         path: "**",

@@ -311,7 +311,7 @@
         </div>
         <ng-container *ngIf="(currentRelease$ | async).majorVersion as majorVersion">
             <div *ngIf="majorVersion >= 3"
-                 style="display: inline-flex"
+                 style="display: inline-flex; overflow: auto"
                  [ngClass]="isAdvanced ? 'ml-sm-auto': ''"
             >
                 <div

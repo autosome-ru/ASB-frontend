@@ -1,12 +1,12 @@
 import {ReleaseModel} from "../../models/releases.model";
-// All available releases. Don't forget to change app-routing module
+// All available releases. Don't forget to change adastra asb-routing module
 export const releasesList: ReleaseModel[] = [
     {
         name: "Bill Cipher",
         url: "bill-cipher",
         majorVersion: 5,
         date: "2022.05.19",
-        recent: false,
+        releaseType: 'recent',
         version: "v5.0.0",
         size: '775.3MB',
         api: "v5",
@@ -23,7 +23,7 @@ export const releasesList: ReleaseModel[] = [
         url: "zanthar",
         majorVersion: 4,
         date: "2021.09.01",
-        recent: true,
+        releaseType: 'recent',
         version: "v4.0.3",
         size: '775.3MB',
         api: "v4",
@@ -40,7 +40,7 @@ export const releasesList: ReleaseModel[] = [
         url: "susan",
         majorVersion: 3,
         date: "2021.04.11",
-        recent: false,
+        releaseType: 'deprecated',
         version: "v3.5.2",
         size: '727.5MB',
         api: "v3",
@@ -59,7 +59,7 @@ export const releasesList: ReleaseModel[] = [
         date: "2020.06.22",
         majorVersion: 1,
         defaultFdrThreshold: '0.05',
-        recent: false,
+        releaseType: 'legacy',
         releaseLink: 'https://disk.yandex.ru/d/8iaZCprOYNLQsQ',
         notes: 'Legacy release described in Abramov et al. doi: 10.1038/s41467-021-23007-0.',
         size: '453.7 МБ',
@@ -72,5 +72,5 @@ export const releasesList: ReleaseModel[] = [
     },
 ];
 
-export const recentRelease: ReleaseModel = releasesList.filter(s => s.recent)[0];
+export const recentRelease: ReleaseModel = releasesList.filter(s => s.releaseType === 'recent')[0];
 export const ananastraRelease: ReleaseModel = recentRelease //releasesList.filter(s => s.name === 'Bill Cipher')[0]

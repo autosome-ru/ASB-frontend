@@ -59,4 +59,14 @@ export class AsbHeaderComponent implements OnInit {
     getTextByStepName(step: string) {
         return getTextByStepNameAdastra(step);
     }
+
+    getReleaseType(release: ReleaseModel): string {
+        switch (release.releaseType) {
+            case "deprecated":
+            case "legacy":
+                return release.releaseType
+            case "recent":
+                return 'latest'
+        }
+    }
 }
