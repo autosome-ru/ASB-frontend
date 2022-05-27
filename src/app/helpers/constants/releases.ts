@@ -15,7 +15,7 @@ export const releasesList: ReleaseModel[] = [
         gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
         badMapsPath: "BADmaps.bill_cipher.zip",
         ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
-        notes: "BAD calling with prior",
+        notes: "Increased recall of diploid regions. Please find the details in readme.",
         notesPath: 'readme.bill_cipher.txt',
     },
     {
