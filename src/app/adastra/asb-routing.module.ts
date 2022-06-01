@@ -42,12 +42,12 @@ const routes: Routes = [
     {
         path: "bill-cipher",
         component: releaseMap.get('bill-cipher'),
-        loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
+        loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
     },
     {
         path: "",
         pathMatch: "full",
-        redirectTo: recentRelease.url,
+        redirectTo: `/${recentRelease.url}`,
     },
     {
         path: "**",
