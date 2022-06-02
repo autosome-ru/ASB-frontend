@@ -11,7 +11,7 @@ export const releasesList: ReleaseModel[] = [
         size: '746.4MB',
         api: "v5",
         defaultFdrThreshold: '0.05',
-        releaseLink: 'https://disk.yandex.ru/d/PKF7ccUXlZYWpg',
+        releaseLink: 'https://disk.yandex.ru/d/LQYSni42Lk0wtg',
         gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
         badMapsPath: "BADmaps.bill_cipher.zip",
         ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
