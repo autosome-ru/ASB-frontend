@@ -32,7 +32,7 @@ export class TicketTableTmpComponent implements OnInit {
     public chartsLoaded: boolean;
 
     @Input()
-    public stepId: string;
+    public stepId: string = 'tmp';
 
     @Output()
     private statsLastStep = new EventEmitter<void>()
