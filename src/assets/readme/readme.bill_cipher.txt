@@ -41,7 +41,7 @@ For TF-ASBs of transcription factors with motifs available in the HOCOMOCO v.11 
   'motif_pos': position of the SNV relative to the best PWM hit (taking into account the strand orientation of the motif hit), 0-based
   'motif_orient': '+' or '-', the DNA strand of the best motif PWM hit relative to the chromosome sequence in the genome assembly
   'motif_conc': Motif Concordance indicates whether the allelic read imbalance agrees with the motif Fold Change (FC, predicted from sequence analysis). Concordance is assessed for ASBs passing FDR of 25%. The following notation is used:
-'None': Motif is not available
+'None': Motif is not available or both fdrp_bh_ref and fdrp_bh_alt are > 0.25
 'No hit': The best hit P-value is higher than 0.0005
 'Weak concordant': The absolute value of FC is less than 2 but consistent with the allelic read imbalance
 'Weak discordant': The absolute value of FC is less than 2 and contrasts with the allelic read imbalance
