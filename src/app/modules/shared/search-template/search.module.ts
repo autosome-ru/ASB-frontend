@@ -15,6 +15,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSelectModule} from "@angular/material/select";
 import {RouterModule} from "@angular/router";
 import {FormFieldsModule} from "../form-fields/form-fields.module";
+import {AsbDirectivesModule} from "../../../directives/directives.module";
 
 
 
@@ -35,6 +36,7 @@ import {FormFieldsModule} from "../form-fields/form-fields.module";
         MatSelectModule,
         RouterModule,
         FormFieldsModule,
+        AsbDirectivesModule,
     ],
     declarations: [
         SearchComponent,

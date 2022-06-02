@@ -17,7 +17,7 @@ export class ErrorsInterceptor implements HttpInterceptor {
     ) { this.isBrowser = isPlatformBrowser(platformId); }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (releasesList.some(s => s.api === request.urlWithParams.split('/')[4])) {
+        if (releasesList.some(s => s.releaseType === 'deprecated' && s.api === request.urlWithParams.split('/')[4]) ) {
             return EMPTY
         }
         return next.handle(request).pipe(

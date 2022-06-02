@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { SnpAnnotationMainRoutingModule } from './snp-annotation-main-routing.module';
 import {SnpAnnotationMainComponent} from './snp-annotation-main.component';
 import {UploadFileComponent} from './upload-file/upload-file.component';
-import {DragDropDirective} from '../../../directives/drag-n-drop.directive';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -17,10 +16,11 @@ import {JoyrideModule} from "ngx-joyride";
 import {MatSelectModule} from "@angular/material/select";
 import {ArticleCiteModule} from "../../shared/article-cite/article-cite.module";
 import {NewsSectionModuleModule} from "../../shared/news-section/news-section.module";
+import {AsbDirectivesModule} from "../../../directives/directives.module";
 
 
 @NgModule({
-  declarations: [SnpAnnotationMainComponent, UploadFileComponent, DragDropDirective],
+    declarations: [SnpAnnotationMainComponent, UploadFileComponent],
     imports: [
         CommonModule,
         SnpAnnotationMainRoutingModule,
@@ -35,7 +35,8 @@ import {NewsSectionModuleModule} from "../../shared/news-section/news-section.mo
         JoyrideModule,
         MatSelectModule,
         ArticleCiteModule,
-        NewsSectionModuleModule
+        NewsSectionModuleModule,
+        AsbDirectivesModule
     ]
 })
 export class SnpAnnotationMainModule { }

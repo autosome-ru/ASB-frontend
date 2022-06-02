@@ -190,12 +190,15 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.subscriptions.add(
             this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(200)).subscribe(
-                s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                s => {this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
                             searchTf: s,
                         }, tfOrCl: "tf"}
                 ))
+                    console.log(s)
+                }
+
             )
         );
         this.subscriptions.add(

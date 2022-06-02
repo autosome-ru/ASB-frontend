@@ -26,8 +26,13 @@ export class SearchService {
         } else {
             params = makeParamsForSearchOptions(tfOrCl, filter.clList, filter.searchCl);
         }
-        return this.http.get<SearchHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptAdv', tfOrCl),
-            {params});
+        if (params?.search) {
+            return this.http.get<SearchHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptAdv', tfOrCl),
+                {params});
+        } else {
+            return of([])
+        }
+
     }
 
     public getSearchOptionsByGeneName(filter: string, isEqtl: boolean): Observable<SearchByGeneNameHintBackendModel[]> {
@@ -109,7 +114,9 @@ function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
     if (options && options.length > 0) {
         params.options = options.join(",");
     }
-    params.search = addPercents(search)
+    if (search) {
+        params.search = addPercents(search)
+    }
 
     return params;
 }
