@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
 import {BehaviorSubject, Subscription} from "rxjs";
 import {NavigationEnd, Router} from "@angular/router";
 import {ReleaseModel} from "../../../models/releases.model";
@@ -29,4 +29,14 @@ export class NoWarComponent implements AfterViewInit {
         );
     }
 
+    checkRoute(routeUrl: string | null) {
+        switch (routeUrl) {
+            case '/portal':
+            case '/'+ recentRelease.url + '/portal': {
+                return true
+            }
+            default:
+                return false
+        }
+    }
 }
