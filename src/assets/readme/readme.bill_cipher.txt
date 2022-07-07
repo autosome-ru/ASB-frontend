@@ -1,5 +1,7 @@
-  ADASTRA release BillCipher (May 2022): README
+  ADASTRA release BillCipher (July 2022): README
 -|=============================================|-
+
+July 2022, fixed rare scoring issues with high-covered SNPs.
 
 This release includes allele-specific binding sites (ASBs) for 1073 transcription factors and other DNA-binding proteins and 649 cell types obtained by meta-analysis of 15970 read alignments of GTRD ver. 20.06.
 
