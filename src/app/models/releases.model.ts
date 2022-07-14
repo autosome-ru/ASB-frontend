@@ -14,4 +14,5 @@ export interface ReleaseModel {
     notes?: string;
     notesPath: string;
     defaultFdrThreshold: string;
+    tfClArchive?: string;
 }

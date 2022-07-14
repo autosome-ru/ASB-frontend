@@ -17,6 +17,7 @@ export const releasesList: ReleaseModel[] = [
         ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
         notes: "Increased recall of diploid regions. Please find the details in readme.",
         notesPath: 'readme.bill_cipher.txt',
+        tfClArchive: 'adastra.cltf.bill_cipher.zip'
     },
     {
         name: "Zanthar",
