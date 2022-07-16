@@ -24,6 +24,16 @@
                     >readme</a>
                 </h5>
                 <ul style="padding: 0 0 0 40px; list-style-type: none">
+
+                    <li *ngIf="release.notes">
+                        <strong>
+                            Release Notes:
+                        </strong>
+                        <span>
+                            {{release.notes}}
+                        </span>
+
+                    </li>
                     <li *ngIf="release.tfClArchive as arch">
                         <strong>
                             ASB calls for individual &lt;cell type, transcription factor&gt; pairs:
@@ -33,15 +43,6 @@
                             target="_blank"
                             rel="noopener noreferrer"
                         >data download</a>
-
-                    </li>
-                    <li *ngIf="release.notes">
-                        <strong>
-                            Release Notes:
-                        </strong>
-                        <span>
-                            {{release.notes}}
-                        </span>
 
                     </li>
                     <li >
