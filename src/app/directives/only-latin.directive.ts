@@ -3,13 +3,13 @@ import { NgControl } from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 
 @Directive({
-    selector: 'input[onlyLatin]'
+    selector: 'input,textarea[onlyUTF8]'
 })
 export class OnlyLatinDirective {
     constructor(private control: NgControl,
                 private toastService: ToastrService) {}
 
-    public strRegExp = /[^a-zA-Z0-9]+/g
+    public strRegExp = /[^\x00-\x7F]+/g;
 
     @HostListener('input', ['$event'])
     public inputChange(evt: KeyboardEvent): void {
