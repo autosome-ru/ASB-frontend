@@ -16,7 +16,7 @@ export class OnlyLatinDirective {
         const input = evt.target as HTMLInputElement;
         const match = input.value.match(this.strRegExp)
         if (match && match[0]) {
-            this.toastService.warning('Non latin text has been ignored',
+            this.toastService.warning('Non utf-8 text has been ignored',
                 'Warning', {timeOut: 10000})
             input.value = this.replaceStr(input.value)
             this.control.control.patchValue(input.value)
