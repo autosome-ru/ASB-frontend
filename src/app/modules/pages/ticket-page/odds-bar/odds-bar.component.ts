@@ -12,9 +12,10 @@ import {ChartOptions} from "chart.js";
 export class OddsBarComponent implements OnInit {
 
     @Input()
-    public chartData: ChartDataModel
+    public chartData: ChartDataModel;
+
     public chartDatasets: { data: number[]; label: string }[];
-    public chartLabels: string[];
+    public chartLabels: string[] = [];
     public chartOptions: ChartOptions;
     public chartColors: Array<any>;
 
@@ -22,14 +23,14 @@ export class OddsBarComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
-        this.chartLabels = this.chartData.labels
+        this.chartLabels = this.chartData?.labels;
         this.chartColors = [
             {
-                backgroundColor: this.chartData.obsColors,
+                backgroundColor: this.chartData?.obsColors,
                 borderWidth: 2,
             },
             {
-                backgroundColor: this.chartData.expColors,
+                backgroundColor: this.chartData?.expColors,
                 borderWidth: 2,
             }
         ];
@@ -77,11 +78,11 @@ export class OddsBarComponent implements OnInit {
         }
         this.chartDatasets = [
             {
-                data: this.chartData.observed,
+                data: this.chartData?.observed,
                 label: 'Observed',
             },
             {
-                data: this.chartData.expected,
+                data: this.chartData?.expected,
                 label: 'Expected'
             }
         ]

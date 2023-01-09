@@ -36,8 +36,8 @@ export function getChartData(chrAsbData: AsbStatsDataModel[]): ChartDataModel {
         expColors: s => getColor(s.fdr, '#f1c232', '#B8B8B8'),
         observed: s => s.asbsRs / (s.asbsRs + s.negativesRs),
         expected: s => s.expectedAsbsRs / (s.expectedAsbsRs + s.expectedNegativesRs),
-        pointLabels: s => [`Observed: ${s.asbsRs} / ${s.asbsRs + s.negativesRs} (${(s.asbsRs / (s.asbsRs + s.negativesRs)).toFixed(2)})`,
-            `Expected: ${s.expectedAsbsRs} / ${s.expectedAsbsRs + s.expectedNegativesRs} (${(s.expectedAsbsRs / (s.expectedAsbsRs + s.expectedNegativesRs)).toFixed(2)})`],
+        pointLabels: s => [`Observed: ${s.asbsRs} / ${s.asbsRs + s.negativesRs} (${(s.asbsRs / (s.asbsRs + s.negativesRs))?.toFixed(2)})`,
+            `Expected: ${s.expectedAsbsRs} / ${s.expectedAsbsRs + s.expectedNegativesRs} (${(s.expectedAsbsRs / (s.expectedAsbsRs + s.expectedNegativesRs))?.toFixed(2)})`],
         FDRs: s => `FDR: ${roundPValString(s.fdr, true)}; OR: ${roundPValString(s.odds)}`
     }
     return applyFunc(funcs, chrAsbData.filter(p => p.asbsRs > 0)) as ChartDataModel;
@@ -47,7 +47,6 @@ function roundPValString(num: pValueString, toExp=false): string {
     if (num === 'infinity') {
         return num
     } else {
-
         if (toExp) {
             let pow = round(num, 0)
             if (Math.pow(10, num - pow) < 1) {
@@ -55,13 +54,13 @@ function roundPValString(num: pValueString, toExp=false): string {
             }
             if (pow < -2) {
 
-                return `${Math.pow(10, num - pow).toFixed(1)}*10^${pow}`
+                return `${Math.pow(10, num - pow)?.toFixed(1)}*10^${pow}`
             } else {
-                return Math.pow(10, num).toFixed(2)
+                return Math.pow(10, num)?.toFixed(2)
             }
 
         } else {
-            return num.toFixed(2)
+            return num?.toFixed(2);
         }
 
     }

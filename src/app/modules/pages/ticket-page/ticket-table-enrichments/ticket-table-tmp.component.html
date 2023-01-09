@@ -23,20 +23,19 @@
 >
 <ng-container *ngIf="toggleValue === 'chart'">
     <div>
-
-        <ng-container *ngIf="checked">
-            <ng-container *ngIf="checkedChartData.expected.length > 0; else NoDataTemplate">
-            <asb-odds-bar
-                *ngIf="chartsLoaded"
-                [chartData]="checkedChartData"
-            ></asb-odds-bar>
+        <ng-container *ngIf="chartsLoaded">
+            <ng-container *ngIf="checked">
+                <ng-container *ngIf="checkedChartData.expected.length > 0; else NoDataTemplate">
+                <asb-odds-bar
+                    [chartData]="checkedChartData"
+                ></asb-odds-bar>
+                </ng-container>
             </ng-container>
-        </ng-container>
-        <ng-container *ngIf="!checked">
-            <asb-odds-bar
-                *ngIf="chartsLoaded"
-                [chartData]="chartData"
-            ></asb-odds-bar>
+            <ng-container *ngIf="!checked">
+                <asb-odds-bar
+                    [chartData]="chartData"
+                ></asb-odds-bar>
+            </ng-container>
         </ng-container>
     </div>
 </ng-container>

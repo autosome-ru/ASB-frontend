@@ -101,7 +101,7 @@ export class TicketTableTmpComponent implements OnInit {
     }
 
     sortingAcc(s: AsbStatsDataModel): boolean {
-        return s.fdr === 'infinity' || s.fdr <= Math.log10(0.055)
+        return s.fdr === 'infinity' || s.fdr <= Math.log10(0.055);
     }
 
     statsNextStep() {
