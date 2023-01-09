@@ -6,7 +6,7 @@ import {SnpAnnotationMainComponent} from './snp-annotation-main.component';
 import {UploadFileComponent} from './upload-file/upload-file.component';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
@@ -23,7 +23,6 @@ import {AsbDirectivesModule} from "../../../directives/directives.module";
     declarations: [SnpAnnotationMainComponent, UploadFileComponent],
     imports: [
         CommonModule,
-        SnpAnnotationMainRoutingModule,
         MatButtonModule,
         MatFormFieldModule,
         ReactiveFormsModule,
@@ -31,12 +30,14 @@ import {AsbDirectivesModule} from "../../../directives/directives.module";
         MatProgressBarModule,
         MatIconModule,
         AsbTourModule,
+        FormsModule,
         MatTooltipModule,
         JoyrideModule,
         MatSelectModule,
         ArticleCiteModule,
         NewsSectionModuleModule,
-        AsbDirectivesModule
+        AsbDirectivesModule,
+        SnpAnnotationMainRoutingModule,
     ]
 })
 export class SnpAnnotationMainModule { }

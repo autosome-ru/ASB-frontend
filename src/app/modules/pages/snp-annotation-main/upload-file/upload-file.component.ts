@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {UploadService} from 'src/app/services/upload.service';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import * as fromActions from 'src/app/store/action/ananastra';
 import {AnnotationStoreState} from 'src/app/store/reducer/ananastra';
 import {Router} from '@angular/router';
@@ -21,8 +21,7 @@ import {convertBackgroundChoicesHelper} from "../../../../helpers/text-helpers/c
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UploadFileComponent implements OnInit, OnDestroy {
-  @ViewChild('fileDropRef')
-  private fileDropRef: HTMLInputElement;
+
   public fileProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   private subscriptions = new Subscription();
   private ticket: string;
@@ -30,9 +29,9 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   public file = null;
   public isHovered: boolean;
   public formGroup: FormGroup;
-  public fdrOptions: string[] = fdrOptions.filter(d => d != '0.25');
+  public fdrOptions: string[] = fdrOptions.filter(d => d !== '0.25');
   // public esOptions: string[] = esOptions;
-  public backgroundOptions: BackgroundSelect[] = ['LD-EUR', 'LD-AFR', 'LD-ASN', 'LOCAL', 'WG']
+  public backgroundOptions: BackgroundSelect[] = ['LD-EUR', 'LD-AFR', 'LD-ASN', 'LOCAL', 'WG'];
 
   constructor(private uploadService: UploadService,
               private store: Store<AnnotationStoreState>,
@@ -45,8 +44,9 @@ export class UploadFileComponent implements OnInit, OnDestroy {
         textArea: '',
         fdr: '0.05',
         background: 'LOCAL',
-        es: '0'
-    })
+        es: '0',
+        file: ''
+    });
   }
 
   ngOnDestroy(): void {
@@ -72,6 +72,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
           error => console.error(error)
         );
         this.ticket = null;
+        this.fileProgress$.next(null)
       }
       this.reinitSubscription();
     }
@@ -140,18 +141,18 @@ export class UploadFileComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-      const loc = () => {
-          const value = this.formGroup.get('textArea').value
-          if (!!value) {
-              this.firstSubmit = false;
-              const file = new File([value], 'my-list.txt');
-              this.uploadFile(file, true);
-          } else {
-              this.toastr.warning('No data provided', 'Warning')
-          }
+    const loc = () => {
+      const value = this.formGroup.get('textArea').value
+      if (!!value) {
+          this.firstSubmit = false;
+          const file = new File([value], 'my-list.txt');
+          this.uploadFile(file, true);
+      } else {
+          this.toastr.warning('No data provided', 'Warning')
       }
+    };
     if ((this.ticket && this.file) || this.firstSubmit) {
-        if (this.fileProgress$.value == 100 && this.ticket) {
+        if (this.fileProgress$.value === 100 && this.ticket) {
             this.firstSubmit = false;
             this.annotationStart();
         } else {
@@ -162,6 +163,7 @@ export class UploadFileComponent implements OnInit, OnDestroy {
                     loc()
                 }
             } else {
+                console.log(this.fileProgress$.value)
                 this.toastr.warning('The file is still loading', 'Warning')
             }
         }
