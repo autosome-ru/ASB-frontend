@@ -65,7 +65,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     public timeoutId: number = null;
     public paginationParams: AsbServerSideFilterModel = initialServerParams;
     public selectedName: {
-        tfSum: string, tf: string, cl:  string, clSum: string,
+        tfSum: string, tf: string, cl: string, clSum: string,
     } = {tf: null, tfSum: null, cl: null, clSum: null};
     public pingLoading$: Observable<boolean>;
     public pingData$: Observable<PingDataModel>;
@@ -217,9 +217,10 @@ export class TicketPageComponent implements OnInit, OnDestroy {
 
     initTableLoad(force:boolean=false): void {
         if (this.selectedTab !== tabEnum.sum || force) {
+            const key = (this.selectedTab === tabEnum.cl ? 'cl' : 'tf') + (this.isExpanded ? '' : 'Sum')
             this.paginationParams = {
                 ...this.paginationParams,
-                regexp: this.selectedName[this.selectedTab],
+                regexp: this.selectedName[key],
                 active: '',
                 direction: ''
             }
@@ -312,6 +313,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     }
 
     tableChanged(event: AsbServerSideModel) {
+        console.log(this.paginationParams)
         this.paginationParams = {
             ...this.paginationParams,
             ...event,

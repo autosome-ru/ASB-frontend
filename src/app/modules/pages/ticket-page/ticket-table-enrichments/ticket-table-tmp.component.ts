@@ -48,11 +48,11 @@ export class TicketTableTmpComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.checked = this.data.some(this.sortingAcc)
+        this.checked = this.data.some(this.sortingAcc);
         this.checkedChartData = this.setChartData(
             this.data.filter(this.sortingAcc)
-        )
-        this.chartData = this.setChartData(this.data)
+        );
+        this.chartData = this.setChartData(this.data);
         this.columnModel = {
             name: {
                 view: 'Name',
