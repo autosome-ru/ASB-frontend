@@ -98,7 +98,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     readonly phenToView: { [p: string]: string } = phenotypesToView;
     readonly phenotypes: string[] = Object.keys(phenotypesModelExample);
-    readonly concordances: string[] = Object.keys(concordanceModelExample);
 
     public searchForm: FormGroup;
     public searchOptions$: Observable<{atac: SearchHintModel[],
@@ -332,7 +331,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
     }
 
-    _getResultsInCsv() {
+    _getResultsInCsv(): void {
         this.toastr.info("Please wait, it may take a few seconds.", "Info");
         this.subscriptions.add(
             this.searchService.getSearchResultsCsv(this.searchForm.value as SearchQueryModel).subscribe(
@@ -440,7 +439,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (where === "atac") {
             this.atacInput.nativeElement.value = "";
             this.searchForm.patchValue({searchAtac: null, atacList: [
-                    ...this.searchForm.value.tfList,
+                    ...this.searchForm.value.atacList,
                     event.option.value
                 ]
             });
@@ -448,14 +447,14 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (where === "dnase") {
             this.dnaseInput.nativeElement.value = "";
             this.searchForm.patchValue({searchDnase: null, dnaseList: [
-                    ...this.searchForm.value.clList,
+                    ...this.searchForm.value.dnaseList,
                 event.option.value
             ]});
         }
         if (where === "faire") {
             this.faireInput.nativeElement.value = "";
             this.searchForm.patchValue({searchFaire: null, faireList: [
-                    ...this.searchForm.value.clList,
+                    ...this.searchForm.value.faireList,
                     event.option.value
                 ]});
         }

@@ -16,7 +16,7 @@ function convertCountBackendModelToCountModel(model: CountBackendModel): CountMo
         count: model.count,
         expCount: model.background_count,
         name: model.name
-    }
+    };
 }
 
 function convertAnnotationStatsBackendToAnnotationStatsModel(model: AnnotationDataBackendModel): StatsDataModel {

@@ -107,7 +107,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
     const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
     result.faireData = (model.faire_aggregated_snps.map(s => {
         return {
-            ...convertClAggregatedBackendSnp(s),
+            ...convertClAggregatedBackendSnp(s, 'faire'),
             ...convertSnpModel(model)
         };
     }) as ClSnpModel[]).filter(
@@ -116,7 +116,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 
     result.dnaseData = (model.dnase_aggregated_snps.map(s => {
         return {
-            ...convertClAggregatedBackendSnp(s),
+            ...convertClAggregatedBackendSnp(s, 'dnase'),
             ...convertSnpModel(model)
         };
     }) as ClSnpModel[]).filter(s =>
@@ -125,7 +125,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 
     result.atacData = (model.atac_aggregated_snps.map(s => {
         return {
-            ...convertClAggregatedBackendSnp(s),
+            ...convertClAggregatedBackendSnp(s, 'atac'),
             ...convertSnpModel(model)
         };
     }) as ClSnpModel[]).filter(s =>
@@ -204,7 +204,8 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
     return result;
 }
 
-function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpModel> {
+function convertClAggregatedBackendSnp(s: ClSnpBackendModel, aggType: AggType): Partial<ClSnpModel> {
+    const key: string = 'exp_snps_' + aggType;
     return {
         id: "" + s.cell_line.cl_id,
         name: s.cell_line.name,
@@ -213,7 +214,7 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpMod
         pValueRef: checkAndInvert(s.log_p_value_ref),
         pValueAlt: checkAndInvert(s.log_p_value_alt),
         meanBad: s.mean_bad,
-        expSnps: s.exp_snps ? s.exp_snps.map(convertBackendExpSnp) : [],
+        expSnps: s[key] ? s[key].map(convertBackendExpSnp) : [],
     };
 }
 function checkAndInvert(num: number): number {

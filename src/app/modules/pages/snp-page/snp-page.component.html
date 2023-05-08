@@ -67,7 +67,7 @@
                     style="margin-top: -20px"
                     mat-align-tabs="center"
                     animationDuration="0ms"
-                    [selectedIndex]="snpData.dnaseData.length > 0 ? 0 : 1"
+                    [selectedIndex]="getIndex(snpData)"
                 >
                     <mat-tab label="ATAC-seq cell-types">
                         <ng-template matTabContent>

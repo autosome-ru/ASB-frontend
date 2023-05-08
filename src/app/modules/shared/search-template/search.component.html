@@ -473,7 +473,7 @@
                         onlyUTF8
                         name="Search ATAC experiments"
                         aria-label="search"
-                        formControlName="searchTf"
+                        formControlName="searchAtac"
                         [matAutocomplete]="autoAtac"
                         [matChipInputFor]="atacList"
                         (matChipInputTokenEnd)="_addChip($event, 'atac')"
@@ -537,7 +537,7 @@
                         name="Search CTs"
                         aria-label="search"
                         onlyUTF8
-                        formControlName="searchCl"
+                        formControlName="searchDnase"
                         [matAutocomplete]="autoDnase"
                         [matChipInputFor]="chipListDnase"
                         (matChipInputTokenEnd)="_addChip($event, 'dnase')"

@@ -307,6 +307,16 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             tabGroup.selectedIndex = 0;
         }
     }
+
+    getIndex(snpData: SnpInfoModel): number {
+        if (snpData.atacData.length > 0) {
+            return 0;
+        }
+        if (snpData.dnaseData.length > 0) {
+            return 1;
+        }
+        return 2;
+    }
 }
 
 const commonInitialDisplayedColumns: AsbTableDisplayedColumns<Partial<TfSnpModel> | Partial<ClSnpModel>> = [

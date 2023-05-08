@@ -131,7 +131,7 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
             }
             for (const field of ['atacList', 'dnaseList', 'faireList']) {
                 if (form[field].length > 0) {
-                    result[field.slice(0, 4)] = form[field].join("@");
+                    result[field.slice(0, field.length - 4)] = form[field].join("@");
                 }
             }
 

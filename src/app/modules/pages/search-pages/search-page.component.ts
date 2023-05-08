@@ -73,6 +73,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private releaseService: ReleasesService,
                 private router: Router,
                 private seoService: SeoService) {}
+
     ngOnInit(): void {
         const chosenRelease = this.releaseService.getReleaseFromFullPath();
         this.seoService.updateSeoInfo({
@@ -136,6 +137,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                             this.tourSteps = this.tourSteps.filter(p => p !== 'cell-types-buttons');
                         }
                         if (s.results[0].faireData.length === 0) {
+                            this.tourSteps = this.tourSteps.filter(p => p !== 'transcription-factors-buttons');
+                        }
+                        if (s.results[0].atacData.length === 0) {
                             this.tourSteps = this.tourSteps.filter(p => p !== 'transcription-factors-buttons');
                         }
                     }

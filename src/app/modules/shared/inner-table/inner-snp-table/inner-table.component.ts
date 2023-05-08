@@ -57,20 +57,15 @@ export class InnerTableComponent implements OnInit {
             rawPValueAlt: {view: "P-value Alt", columnTemplate: this.fdrViewTemplate},
             rawPValueRef: {view: "P-value Ref", columnTemplate: this.fdrViewTemplate}
         };
-        if (this.isCl) {
-            this.displayedColumns = ["expId", "tfName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"];
 
-        } else {
-           this.displayedColumns = ["expId", "clName", "refReadCount",
-                "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"];
-        }
+        this.displayedColumns = ["expId", "refReadCount",
+            "altReadCount", "bad", "rawPValueRef", "rawPValueAlt"];
+
         this.initialSorting = {direction: "asc",
-            active: this.sortColumn == 'ref' ? "rawPValueRef" : "rawPValueAlt"};
+            active: this.sortColumn === 'ref' ? "rawPValueRef" : "rawPValueAlt"};
     }
 
     _getPaginatorOptions(): number[] {
-        console.log(this.innerTableData)
         return getPaginatorOptions(this.innerTableData.length);
     }
 
