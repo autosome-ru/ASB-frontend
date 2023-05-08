@@ -213,7 +213,7 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpMod
         pValueRef: checkAndInvert(s.log_p_value_ref),
         pValueAlt: checkAndInvert(s.log_p_value_alt),
         meanBad: s.mean_bad,
-        expSnps: s.exp_snps.map(convertBackendExpSnp)
+        expSnps: s.exp_snps ? s.exp_snps.map(convertBackendExpSnp) : [],
     };
 }
 function checkAndInvert(num: number): number {
