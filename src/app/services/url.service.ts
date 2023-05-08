@@ -10,7 +10,7 @@ import {isPlatformBrowser} from "@angular/common";
 export class UrlService {
 
     public readonly hostName: string = '';
-    public currentRelease: ReleaseModel = recentRelease
+    public currentRelease: ReleaseModel = recentRelease;
     private readonly isBrowser: boolean;
     constructor(@Inject(PLATFORM_ID) private platformId: object) {
         this.isBrowser = isPlatformBrowser(this.platformId);
@@ -19,23 +19,23 @@ export class UrlService {
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
         'searchOptAdv' | 'searchOptGene' | 'ananastra',
                    tfOrCl?: AggType, isEqtl?: boolean): string {
-        const currentApi = `https://adastra.autosome.org/api/${this.currentRelease.api}`
+        const currentApi = `https://udacha.autosome.org/api/${this.currentRelease.api}`;
         switch (queryType) {
             case "browse":
-                return `${currentApi}/browse`
+                return `${currentApi}/browse`;
             case "search":
-                return `${currentApi}/search/snps`
+                return `${currentApi}/search/snps`;
             case "snp":
-                return `${currentApi}/snps`
+                return `${currentApi}/snps`;
             case "searchOptAdv":
-                return `${currentApi}/search/${tfOrCl}/hint`
+                return `${currentApi}/search/${tfOrCl}/hint`;
             case "searchOptGene":
                 return `${currentApi}/search/${isEqtl ?
-                    'eqtl_gene_name' : 'gene_name'}/hint`
+                    'eqtl_gene_name' : 'gene_name'}/hint`;
             case "ananastra":
-                return `${currentApi}/ananastra`
+                return `${currentApi}/ananastra`;
             default:
-                return ""
+                return "";
         }
 
     }
