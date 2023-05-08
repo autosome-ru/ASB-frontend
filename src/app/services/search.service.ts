@@ -18,22 +18,22 @@ export class SearchService {
     constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
-    public getSearchOptions(filter: SearchQueryModel, tfOrCl: AggType):
+    public getSearchOptions(filter: SearchQueryModel, aggType: AggType):
         Observable<SearchHintBackendModel[]> {
         let params: {[id: string]: string};
-        switch (tfOrCl) {
+        switch (aggType) {
             case "faire":
-                params = makeParamsForSearchOptions(tfOrCl, filter.faireList, filter.searchFaire);
+                params = makeParamsForSearchOptions(aggType, filter.faireList, filter.searchFaire);
                 break;
             case "dnase":
-                params = makeParamsForSearchOptions(tfOrCl, filter.dnaseList, filter.searchDnase);
+                params = makeParamsForSearchOptions(aggType, filter.dnaseList, filter.searchDnase);
                 break;
             case "atac":
-                params = makeParamsForSearchOptions(tfOrCl, filter.atacList, filter.searchAtac);
+                params = makeParamsForSearchOptions(aggType, filter.atacList, filter.searchAtac);
                 break;
         }
         if (params?.search) {
-            return this.http.get<SearchHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptAdv', tfOrCl),
+            return this.http.get<SearchHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptAdv', aggType),
                 {params});
         } else {
             return of([]);
@@ -114,12 +114,12 @@ export class SearchService {
     }
 }
 
-function makeParamsForSearchOptions(tfOrCl: AggType,
+function makeParamsForSearchOptions(aggType: AggType,
                                     options: string[] | null,
                                     search: string | null): {[id: string]: string} {
     const params: { [id: string]: string } = {};
     if (options && options.length > 0) {
-        params.options = options.join(",");
+        params.options = options.join("@");
     }
     if (search) {
         params.search = addPercents(search);
@@ -149,13 +149,13 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
     const params: {[id: string]: string} = {};
     // FIXME
     if (filter.atacList && filter.atacList.length > 0) {
-        params.cell_types = filter.atacList.join("@");
+        params.atac = filter.atacList.join("@");
     }
     if (filter.dnaseList && filter.dnaseList.length > 0) {
-        params.transcription_factors = filter.dnaseList.join("@");
+        params.dnase = filter.dnaseList.join("@");
     }
     if (filter.faireList && filter.faireList.length > 0) {
-        params.transcription_factors = filter.faireList.join("@");
+        params.faire = filter.faireList.join("@");
     }
 
     if (filter.chromPos.chr) {

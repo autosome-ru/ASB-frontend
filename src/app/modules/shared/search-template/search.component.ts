@@ -350,8 +350,8 @@ export class SearchComponent implements OnInit, OnDestroy {
             search = {
                 chromPos: new ChromPos("1", "1-50000000"),
                 atacList: ["HEK293 (embryonic kidney)"],
-                dnaseList: ["ANDR_HUMAN", "CTCF_HUMAN"],
-                faireList: ["ANDR_HUMAN", "CTCF_HUMAN"],
+                dnaseList: [],
+                faireList: ["blood"],
                 ebi: false,
                 grasp: false,
                 phewas: false,
@@ -493,13 +493,10 @@ export class SearchComponent implements OnInit, OnDestroy {
             if (this.isAdvanced) {
                 result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
                 result.atacList = searchParams.atac ? searchParams.atac.split("@") : [];
-                result.dnaseList = searchParams.dnase ? searchParams.dnase.split(",") : [];
-                result.faireList = searchParams.faire ? searchParams.faire.split(",") : [];
+                result.dnaseList = searchParams.dnase ? searchParams.dnase.split("@") : [];
+                result.faireList = searchParams.faire ? searchParams.faire.split("@") : [];
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
-                }
-                if (searchParams.motif_conc) {
-                    searchParams.motif_conc.split(",").forEach(s => result[s] = true);
                 }
                 return result;
             } else {

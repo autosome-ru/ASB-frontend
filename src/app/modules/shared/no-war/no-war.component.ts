@@ -29,14 +29,14 @@ export class NoWarComponent implements AfterViewInit {
         );
     }
 
-    checkRoute(routeUrl: string | null) {
+    checkRoute(routeUrl: string | null): boolean {
         switch (routeUrl) {
             case '/portal':
             case '/' + recentRelease.url + '/portal': {
                 return false;
             }
             default:
-                return true;
+                return false;
         }
     }
 }
