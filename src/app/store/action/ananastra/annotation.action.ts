@@ -4,7 +4,7 @@ import {
     AnnotationSnpBackendModel, BackgroundSelect,
     PingDataBackendModel
 } from 'src/app/models/annotation.model';
-import {TfOrCl} from 'src/app/models/data.model';
+import {AggType} from 'src/app/models/data.model';
 import {AsbServerSideFilterModel, AsbServerSideModel} from "../../../models/table.model";
 
 export enum ActionTypes {
@@ -106,7 +106,7 @@ export class InitAnnotationTableAction implements Action {
   readonly type = ActionTypes.InitAnnotationTableLoad;
 
   constructor(public payload: {
-      tfOrCl: TfOrCl,
+      tfOrCl: AggType,
       pagination: AsbServerSideModel,
       ticket: string,
       isExpanded: boolean}) {}
@@ -116,7 +116,7 @@ export class LoadAnnotationTableAction implements Action {
   readonly type = ActionTypes.LoadAnnotationTable;
 
   constructor(public payload: {
-      tfOrCl: TfOrCl,
+      tfOrCl: AggType,
       ticket: string,
       pagination: AsbServerSideFilterModel,
       isExpanded: boolean}) {}
@@ -125,7 +125,7 @@ export class LoadAnnotationTableSuccessAction implements Action {
   readonly type = ActionTypes.LoadAnnotationTableSuccess;
 
   constructor(public payload: {
-    tfOrCl: TfOrCl,
+    tfOrCl: AggType,
     ticket: string,
     total: number,
     pagination: AsbServerSideFilterModel,
@@ -137,7 +137,7 @@ export class LoadAnnotationTableFailAction implements Action {
   readonly type = ActionTypes.LoadAnnotationTableFail;
 
   constructor(public payload: {
-      tfOrCl: TfOrCl,
+      tfOrCl: AggType,
       pagination: AsbServerSideFilterModel,
       ticket: string,
       isExpanded: boolean}) {}

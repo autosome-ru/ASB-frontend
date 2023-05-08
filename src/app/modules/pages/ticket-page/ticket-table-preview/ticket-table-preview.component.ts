@@ -17,7 +17,7 @@ import {
     CountModel,
     StatsDataModel
 } from 'src/app/models/annotation.model';
-import {ExpSnpModel, TfOrCl} from '../../../../models/data.model';
+import {ExpSnpModel, AggType} from '../../../../models/data.model';
 import {MatSelectChange} from '@angular/material/select';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
@@ -92,7 +92,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
     public pageSize: number;
 
     @Input()
-    public tfOrCl: TfOrCl;
+    public tfOrCl: AggType;
 
     @Input()
     public panelExpanded: boolean = false;

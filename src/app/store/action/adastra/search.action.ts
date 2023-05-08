@@ -5,6 +5,7 @@ import {
     SearchQueryModel, SearchResultsBackendModel,
 } from "src/app/models/search-query.model";
 import {AsbServerSideModel} from "src/app/models/table.model";
+import {AggType} from "../../../models/data.model";
 
 export enum ActionTypes {
     LoadSearchOptions = "[Search] loading search options",
@@ -42,20 +43,20 @@ export class LoadSearchByGeneNameOptionsFailAction implements Action {
 export class LoadSearchOptionsAction implements Action {
     readonly type = ActionTypes.LoadSearchOptions;
 
-    constructor(public payload: {search: SearchQueryModel, tfOrCl: "tf" | "cl"}) {}
+    constructor(public payload: {search: SearchQueryModel, aggType: AggType}) {}
 }
 export class LoadSearchOptionsSuccessAction implements Action {
     readonly type = ActionTypes.LoadSearchOptionsSuccess;
 
     constructor(public payload: {options:
             SearchHintBackendModel[],
-        tfOrCl: "tf" | "cl"
+        aggType: AggType
     }) {}
 }
 export class LoadSearchOptionsFailAction implements Action {
     readonly type = ActionTypes.LoadSearchOptionsFail;
 
-    constructor(public payload: {search: SearchQueryModel, tfOrCl: "tf" | "cl"}) {}
+    constructor(public payload: {search: SearchQueryModel, aggType: AggType}) {}
 }
 
 export class LoadSearchResultsAction implements Action {

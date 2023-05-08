@@ -49,7 +49,7 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
 
     public showMoreCellLines = false;
     public showMoreTfs = false;
-    private subscription = new Subscription()
+    private subscription = new Subscription();
     public release$: Observable<ReleaseModel>;
     public url: string;
     public thresholdsGroup: FormGroup;
@@ -62,11 +62,11 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private urlService: UrlService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.thresholdsGroup = this.formBuilder.group({
             fdr: this.fdr,
             es: this.es
-        })
+        });
         this.subscription.add(
             this.thresholdsGroup.get('fdr').valueChanges.subscribe(
                 s => this.router.navigate([],
@@ -76,29 +76,30 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
         this.subscription.add(
             this.thresholdsGroup.get('es').valueChanges.subscribe(
                 s => this.router.navigate([],
-                    {relativeTo: this.route, queryParams: {es: s}, queryParamsHandling: "merge"},)
+                    {relativeTo: this.route, queryParams: {es: s}, queryParamsHandling: "merge"},
+                    )
             )
         );
         this.url = this.urlService.hostName;
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
     }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe()
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 
-    _showMoreCellLines(value: boolean) {
+    _showMoreCellLines(value: boolean): void {
         this.showMoreCellLines = value;
     }
-    _showMoreTfs(value: boolean) {
+    _showMoreTfs(value: boolean): void {
         this.showMoreTfs = value;
     }
 
-    getTextByStepName(step: string, component?: string) {
+    getTextByStepName(step: string, component?: string): {text: string} {
         return getTextByStepNameAdastra(step, component);
     }
 
-    nextStep() {
+    nextStep(): void {
         this.emitNextStep.emit();
     }
 }

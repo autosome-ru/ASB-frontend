@@ -56,7 +56,6 @@
                         joyrideStep="transcription-factors-stats"
                         [stepContent]="stepTemplate"
                         [stepContentParams]="getTextByStepName('transcription-factors-stats')"
-                        (next)="openPanels(_getGoodTfs((snpData.transFactors))); phenPanel.open()"
                     >
                         <h4 class="col-auto pl-0 ml-0">Details</h4>
                     </mat-panel-title>
@@ -68,20 +67,28 @@
                     style="margin-top: -20px"
                     mat-align-tabs="center"
                     animationDuration="0ms"
-                    [selectedIndex]="snpData.transFactors.length > 0 ? 0 : 1"
+                    [selectedIndex]="snpData.dnaseData.length > 0 ? 0 : 1"
                 >
-                    <mat-tab label="Transcription factors">
+                    <mat-tab label="ATAC-seq cell-types">
                         <ng-template matTabContent>
                             <ng-container
-                                [ngTemplateOutlet]="TfStatisticsTemplate"
+                                [ngTemplateOutlet]="atacStatisticsTemplate"
                             >
                             </ng-container>
                         </ng-template>
                     </mat-tab>
-                    <mat-tab label="Cell types">
+                    <mat-tab label="DNase-seq cell types">
                         <ng-template matTabContent>
                             <ng-container
-                                [ngTemplateOutlet]="ClStatisticsTemplate"
+                                [ngTemplateOutlet]="dnaseStatisticsTemplate"
+                            >
+                            </ng-container>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Faire cell types">
+                        <ng-template matTabContent>
+                            <ng-container
+                                [ngTemplateOutlet]="faireStatisticsTemplate"
                             >
                             </ng-container>
                         </ng-template>
@@ -89,26 +96,26 @@
                 </mat-tab-group>
             </mat-expansion-panel>
             <mat-divider></mat-divider>
-            <mat-expansion-panel
-                expanded="true"
-                class="py-0 mat-elevation-z0"
-                #motifPanel
-            >
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h4 class="col-auto pl-0 ml-0">Motif analysis</h4>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <ng-container *ngIf="_getGoodTfs((snpData.transFactors)) && _getGoodTfs((snpData.transFactors)).length > 0; else noMotifAnalysisTemplate">
-                    <asb-motifs
-                        #asbMotifsComponent
-                        [transcriptionFactors]="_getGoodTfs((snpData.transFactors))"
-                        [release]="release$ | async"
-                    >
+<!--            <mat-expansion-panel-->
+<!--                expanded="true"-->
+<!--                class="py-0 mat-elevation-z0"-->
+<!--                #motifPanel-->
+<!--            >-->
+<!--                <mat-expansion-panel-header>-->
+<!--                    <mat-panel-title>-->
+<!--                        <h4 class="col-auto pl-0 ml-0">Motif analysis</h4>-->
+<!--                    </mat-panel-title>-->
+<!--                </mat-expansion-panel-header>-->
+<!--                <ng-container *ngIf="_getGoodTfs((snpData.dnaseData)) && _getGoodTfs((snpData.dnaseData)).length > 0; else noMotifAnalysisTemplate">-->
+<!--                    <asb-motifs-->
+<!--                        #asbMotifsComponent-->
+<!--                        [transcriptionFactors]="_getGoodTfs((snpData.dnaseData))"-->
+<!--                        [release]="release$ | async"-->
+<!--                    >-->
 
-                    </asb-motifs>
-                </ng-container>
-            </mat-expansion-panel>
+<!--                    </asb-motifs>-->
+<!--                </ng-container>-->
+<!--            </mat-expansion-panel>-->
             <mat-divider></mat-divider>
             <mat-expansion-panel
                 expanded="true"
@@ -159,33 +166,47 @@
     </div>
 </ng-container>
 
-<ng-template #TfStatisticsTemplate>
+<ng-template #atacStatisticsTemplate>
     <asb-statistics
+        #atacStatistics
         *ngIf="snpData$ | async as snpData"
-        #transcriptionFactors
-        [objectData]="snpData?.transFactors || []"
-        [tableColumnModel]="tfColumnModel"
+        [objectData]="snpData?.atacData || []"
+        [tableColumnModel]="clColumnModel"
         [sortData]="sortData"
-        [initialDisplayedColumns]="tfDisplayedColumns"
-        [actionFilter]="snpData?.transFactors.filter(filterCondition).length > 0 ? filterCondition : null"
-        [getSnpName]="_createSnpName(snpData ,'tf')"
+        [initialDisplayedColumns]="clDisplayedColumns"
+        [getSnpName]="_createSnpName(snpData)"
         [isCl]="false"
-        (actionClicked)="openMotifAnalysis($event, _getGoodTfs(snpData.transFactors))"
-        (downloadSnpInfo)="_downloadFile($event, 'tf')"
+        (downloadSnpInfo)="_downloadFile($event, 'atac')"
     >
     </asb-statistics>
 </ng-template>
 
-<ng-template #ClStatisticsTemplate>
+<ng-template #dnaseStatisticsTemplate>
     <asb-statistics
-
-        #cellLines
-        [objectData]="(snpData$ | async)?.cellLines || []"
+        *ngIf="snpData$ | async as snpData"
+        #dnaseStatistics
+        [objectData]="snpData?.dnaseData || []"
         [tableColumnModel]="clColumnModel"
-        [isCl]="true"
+        [sortData]="sortData"
         [initialDisplayedColumns]="clDisplayedColumns"
-        [getSnpName]="_createSnpName((snpData$ | async),'cl')"
-        (downloadSnpInfo)="_downloadFile($event, 'cl')"
+        [getSnpName]="_createSnpName(snpData)"
+        [isCl]="false"
+        (downloadSnpInfo)="_downloadFile($event, 'atac')"
+    >
+    </asb-statistics>
+</ng-template>
+
+<ng-template #faireStatisticsTemplate>
+    <asb-statistics
+        *ngIf="snpData$ | async as snpData"
+        #faireStatistics
+        [objectData]="snpData?.faireData || []"
+        [tableColumnModel]="clColumnModel"
+        [sortData]="sortData"
+        [initialDisplayedColumns]="clDisplayedColumns"
+        [getSnpName]="_createSnpName(snpData)"
+        [isCl]="false"
+        (downloadSnpInfo)="_downloadFile($event, 'faire')"
     >
     </asb-statistics>
 </ng-template>

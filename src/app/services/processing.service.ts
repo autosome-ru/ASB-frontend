@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {
     AnnotationDataBackendModel, AnnotationSnpBackendModel, BackgroundSelect, PingDataBackendModel
 } from '../models/annotation.model';
-import {TfOrCl} from '../models/data.model';
+import {AggType} from '../models/data.model';
 import {UrlService} from "./url.service";
 import {AsbServerSideFilterModel, AsbServerSideModel} from "../models/table.model";
 import {convertServerSideModelToServerSideBackendModel} from "../helpers/converters/snp-model.converter";
@@ -28,7 +28,7 @@ export class ProcessingService {
         return this.http.get<PingDataBackendModel>(`${this.urlService.getUrlForQuery("ananastra")}/ticket/ping/${ticket}`);
     }
 
-    getTableData(ticket: string, tfOrCl: TfOrCl, isExpanded: boolean, pagination: AsbServerSideFilterModel):
+    getTableData(ticket: string, tfOrCl: AggType, isExpanded: boolean, pagination: AsbServerSideFilterModel):
         Observable<{results: AnnotationSnpBackendModel[], total: number}> {
         return this.http.get<{results: AnnotationSnpBackendModel[], total: number}>(`${this.urlService.getUrlForQuery("ananastra")}/result/${ticket}`,
             {params: {

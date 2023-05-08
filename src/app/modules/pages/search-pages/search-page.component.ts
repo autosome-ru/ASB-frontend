@@ -28,6 +28,7 @@ import {SnpSearchModel} from "../../../models/data.model";
 import {ReleasesService} from "../../../services/releases.service";
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: "asb-search-page",
     templateUrl: "./search-page.component.html",
     styleUrls: ["./search-page.component.less"],
@@ -72,16 +73,16 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 private releaseService: ReleasesService,
                 private router: Router,
                 private seoService: SeoService) {}
-    ngOnInit() {
-        const chosenRelease = this.releaseService.getReleaseFromFullPath()
+    ngOnInit(): void {
+        const chosenRelease = this.releaseService.getReleaseFromFullPath();
         this.seoService.updateSeoInfo({
             title: this.route.snapshot.data.title(this.route.snapshot.queryParams.tf)
         });
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => {
-                    this.fdr = s['fdr'] ? s['fdr'] : chosenRelease.defaultFdrThreshold;
-                    this.es = s['es'] ? s['es'] : '0';
+                    this.fdr = s.fdr ? s.fdr : chosenRelease.defaultFdrThreshold;
+                    this.es = s.es ? s.es : '0';
                 }
             )
         );
@@ -97,12 +98,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         if (this.isAdvancedSearch) {
             this.tourSteps = [
                 'search-pos',
-                ]
-
-            if (chosenRelease.majorVersion >= 3) {
-                this.tourSteps.push('fdr-simple', 'effect-size')
-            }
-            this.tourSteps.push(
+                'fdr-simple',
+                'effect-size',
                 'search-tf-list',
                 'search-cl-list',
                 'search-concordance',
@@ -112,47 +109,42 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 'search-view',
                 'cell-types-buttons',
                 'transcription-factors-buttons',
-            );
+                ];
         } else {
             this.tourSteps = [
                 'search-by',
                 'search-rs',
                 'search-gene',
-                ]
-            if (chosenRelease.majorVersion >= 3) {
-                this.tourSteps.push('search-eqtl')
-            }
-            this.tourSteps.push('search-pos')
-            if (chosenRelease.majorVersion >= 3) {
-                this.tourSteps.push('fdr-simple', 'effect-size')
-            }
-            this.tourSteps.push(
+                'search-eqtl',
+                'search-pos',
+                'fdr-simple',
+                'effect-size',
                 'search-example',
                 'search-nearby',
                 'search-view',
                 'cell-types-buttons',
                 'transcription-factors-buttons',
                 'search-adv'
-            )
+                ];
         }
         this.subscriptions.add(
             this.store.select(fromSelectors.selectCurrentSearchResults).subscribe(
                 s => {
                     if (s && s.results && s.results.length > 0) {
                         this.results = s.results;
-                        if (s.results[0].cellLines.length == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons');
+                        if (s.results[0].dnaseData.length === 0) {
+                            this.tourSteps = this.tourSteps.filter(p => p !== 'cell-types-buttons');
                         }
-                        if (s.results[0].transFactors.length == 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != 'transcription-factors-buttons');
+                        if (s.results[0].faireData.length === 0) {
+                            this.tourSteps = this.tourSteps.filter(p => p !== 'transcription-factors-buttons');
                         }
                     }
                 }
             )
         );
-        this.firstTimeOpen = this.route.snapshot.queryParams.skip_check != '1';
+        this.firstTimeOpen = this.route.snapshot.queryParams.skip_check !== '1';
         this.pagination = initialServerParams;
-        this.selectedGene$ = this.store.select(fromSelectors.selectSelectedGene)
+        this.selectedGene$ = this.store.select(fromSelectors.selectSelectedGene);
         this.searchQuery$ = this.store.select(fromSelectors.selectCurrentSearchQuery);
         this.searchSnpResults$ = this.store.select(fromSelectors.selectCurrentSearchResults);
         this.searchSnpResultsLoading$ = this.store.select(fromSelectors.selectCurrentSearchResultsLoading);
@@ -174,7 +166,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 
@@ -200,7 +192,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         }
     }
 
-    _handlePaginationChange(event: AsbServerSideModel) {
+    _handlePaginationChange(event: AsbServerSideModel): void {
         this.pagination = event;
         this.store.dispatch(new fromActions.search.LoadSearchResultsWithPaginationAction(
             {
@@ -211,7 +203,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    _handleSearchTemplateChanges(event: SearchQueryModel) {
+    _handleSearchTemplateChanges(event: SearchQueryModel): void {
         if (!this.firstTimeOpen) {
             this.pagination = {
                 ...initialServerParams,
@@ -230,7 +222,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         }
     }
 
-    _groupToggled(event: MatButtonToggleChange) {
+    _groupToggled(event: MatButtonToggleChange): void {
         this.groupValue = event.value;
         if (this.paginator && this.paginator.pageIndex !== 0) {
             this.paginator.firstPage();
@@ -244,7 +236,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     _navigateToSnp(id: string, alt: string): void {
         this.subscriptions.add(
             this.release$.subscribe((s) =>
-                this.router.navigate([`${s.url}/snps/${id}/${alt}`], {queryParams: {fdr: this.fdr, es: this.es}}).then(() => window.scrollTo(0, 0))
+                this.router.navigate([`${s.url}/snps/${id}/${alt}`],
+                    {queryParams: {fdr: this.fdr, es: this.es}}).then(
+                        () => window.scrollTo(0, 0))
             )
         );
     }
@@ -257,12 +251,12 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         };
     }
 
-    getTextByStepName(step: string) {
+    getTextByStepName(step: string): {text: string} {
         return getTextByStepNameAdastra(step);
     }
 
-    checkResult() {
-        if (!this.results || this.results.length == 0) {
+    checkResult(): void {
+        if (!this.results || this.results.length === 0) {
             this.searchComponent._initDemo();
         }
     }

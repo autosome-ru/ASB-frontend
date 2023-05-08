@@ -8,27 +8,30 @@
         height: -webkit-calc((100vw / 1.61) - (172px + 28px));
         height: -moz-calc((100vw / 1.61) - (172px + 28px));
         height: calc((100vw / 1.61) - (172px + 28px));
-        max-height: 40vh;
-        min-height: 20vh;
+        max-height: calc(20vh + 30px);
+        min-height: calc(10vh + 30px);
         margin-top: -1rem
     }
 
     &__image {
         display: block;
+        padding-top: 30px;
         margin-left: auto;
+        margin-top: auto;
         margin-right: auto;
         height: -webkit-calc((100vw / 1.61) - (172px + 28px));
         height: -moz-calc((100vw / 1.61) - (172px + 28px));
         height: calc((100vw / 1.61) - (172px + 28px));
-        max-height: 40vh;
+        max-height: 20vh;
         pointer-events: none;
-        min-height: 20vh;
+        min-height: 10vh;
         font-family: 'Lato', sans-serif;
     }
 
     &__headline{
         height: 100%;
         width: 100%;
+        display: flex;
 
 
         &-wrapper{

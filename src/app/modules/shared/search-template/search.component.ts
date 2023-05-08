@@ -21,7 +21,7 @@ import {
     SearchParamsModel,
     SearchQueryModel
 } from "src/app/models/search-query.model";
-import {SnpSearchModel, TfOrCl} from "src/app/models/data.model";
+import {SnpSearchModel, AggType} from "src/app/models/data.model";
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatChipInputEvent} from "@angular/material/chips";
@@ -54,10 +54,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     @HostBinding("class.asb-search")
     private readonly cssClass = true;
 
-    @ViewChild("clInput") clInput: ElementRef<HTMLInputElement>;
-    @ViewChild("autoCl") autocompleteCl: MatAutocomplete;
-    @ViewChild("tfInput") tfInput: ElementRef<HTMLInputElement>;
-    @ViewChild("autoTf") autocompleteTf: MatAutocomplete;
+    @ViewChild("dnaseInput") dnaseInput: ElementRef<HTMLInputElement>;
+    @ViewChild("autoDnase") autocompleteDnase: MatAutocomplete;
+
+    @ViewChild("atacInput") atacInput: ElementRef<HTMLInputElement>;
+    @ViewChild("autoAtac") autocompleteAtac: MatAutocomplete;
+
+    @ViewChild("faireInput") faireInput: ElementRef<HTMLInputElement>;
+    @ViewChild("autoFaire") autocompleteFaire: MatAutocomplete;
 
     @Input()
     public width: "restricted" | "full";
@@ -97,8 +101,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     readonly concordances: string[] = Object.keys(concordanceModelExample);
 
     public searchForm: FormGroup;
-    public searchOptions$: Observable<{tf: SearchHintModel[], cl: SearchHintModel[]}>;
-    public searchOptionsLoading$: Observable<{ tf: boolean, cl: boolean }>;
+    public searchOptions$: Observable<{atac: SearchHintModel[],
+        dnase: SearchHintModel[], faire: SearchHintModel[]}>;
+    public searchOptionsLoading$: Observable<{ atac: boolean,
+        dnase: boolean, faire: boolean }>;
     public currentRelease$: Observable<ReleaseModel>;
     public searchGeneOptions$: Observable<GeneModel[]>;
     public searchGeneOptionsLoading$: Observable<boolean>;
@@ -127,7 +133,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         private releaseService: ReleasesService
     ) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.currentRelease$ = this.store.select(fromSelectors.selectCurrentRelease);
         const chosenRelease = this.releaseService.getReleaseFromFullPath();
         this.defaultParams = {fdr: chosenRelease.defaultFdrThreshold, es: '0'};
@@ -143,10 +149,12 @@ export class SearchComponent implements OnInit, OnDestroy {
             es: this.defaultParams.es,
             fdr: this.defaultParams.fdr,
             geneName: "",
-            searchTf: null,
-            searchCl: null,
-            tfList: [[]],
-            clList: [[]],
+            searchAtac: null,
+            searchFaire: null,
+            searchDnase: null,
+            atacList: [[]],
+            faireList: [[]],
+            dnaseList: [[]],
             ebi: false,
             phewas: false,
             grasp: false,
@@ -159,19 +167,43 @@ export class SearchComponent implements OnInit, OnDestroy {
 
         // Search options and patching form in simple search
         this.subscriptions.add(
-            this.searchForm.get("searchCl").valueChanges.pipe(debounceTime(200)).subscribe(
+            this.searchForm.get("searchAtac").valueChanges.pipe(debounceTime(200)).subscribe(
                 s => this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
                     {search: {
                             ...this.searchForm.value as SearchQueryModel,
-                            searchCl: s,
-                        }, tfOrCl: "cl"}
+                            searchAtac: s,
+                        }, aggType: "atac"}
                 ))
+            )
+        );
+        this.subscriptions.add(
+            this.searchForm.get("searchDnase").valueChanges.pipe(debounceTime(200)).subscribe(
+                s => {this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                    {search: {
+                            ...this.searchForm.value as SearchQueryModel,
+                            searchDnase: s,
+                        }, aggType: "dnase"}
+                ));
+                }
+
+            )
+        );
+        this.subscriptions.add(
+            this.searchForm.get("searchFaire").valueChanges.pipe(debounceTime(200)).subscribe(
+                s => {this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
+                    {search: {
+                            ...this.searchForm.value as SearchQueryModel,
+                            searchFaire: s,
+                        }, aggType: "faire"}
+                ));
+                }
+
             )
         );
         this.subscriptions.add(
             this.searchForm.get('geneName').valueChanges.pipe(debounceTime(200)).subscribe(
                 (s: string) => {
-                    if (this.searchForm.get('searchBy').value == 'geneName') {
+                    if (this.searchForm.get('searchBy').value === 'geneName') {
                         this.store.dispatch(
                             new fromActions.search.LoadSearchByGeneNameOptionsAction({name: s, isEqtl: false}))
                     }
@@ -181,24 +213,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.searchForm.get('eqtlGeneName').valueChanges.pipe(debounceTime(200)).subscribe(
                 (s: string) => {
-                    if (this.searchForm.get('searchBy').value == 'eqtlGeneName') {
+                    if (this.searchForm.get('searchBy').value === 'eqtlGeneName') {
                         this.store.dispatch(
                             new fromActions.search.LoadSearchByGeneNameOptionsAction({name: s, isEqtl: true}))
                     }
                 }
-            )
-        );
-        this.subscriptions.add(
-            this.searchForm.get("searchTf").valueChanges.pipe(debounceTime(200)).subscribe(
-                s => {this.store.dispatch(new fromActions.search.LoadSearchOptionsAction(
-                    {search: {
-                            ...this.searchForm.value as SearchQueryModel,
-                            searchTf: s,
-                        }, tfOrCl: "tf"}
-                ))
-                    console.log(s)
-                }
-
             )
         );
         this.subscriptions.add(
@@ -250,7 +269,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                             case "eqtlGeneName":
                                 patchValue = {
                                     eqtlGeneName: this.selectedGene.name
-                                }
+                                };
                                 this.store.dispatch(
                                     new fromActions.search.LoadSearchByGeneNameOptionsAction(
                                         {name: this.selectedGene.name, isEqtl: true}))
@@ -258,7 +277,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                             case "eqtlGeneId":
                                 patchValue = {
                                     eqtlGeneId: this.selectedGene.id
-                                }
+                                };
                                 break;
                         }
                     }
@@ -286,15 +305,15 @@ export class SearchComponent implements OnInit, OnDestroy {
         this.searchOptionsLoading$ = this.store.select(fromSelectors.selectCurrentSearchOptionsLoading);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 
-    _clearSearchField(name) {
+    _clearSearchField(name): void {
         this.searchForm.patchValue({[name]: this.nullValue[name]});
     }
 
-    _navigateToSearch() {
+    _navigateToSearch(): void {
         if (!this._isSearchDisabled()) {
             let params: {[a: string]: string} = {
                 ...this._convertFormToParams(this.isAdvanced)
@@ -326,13 +345,14 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
     }
 
-    _initDemo() {
+    _initDemo(): void {
         let search: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             search = {
                 chromPos: new ChromPos("1", "1-50000000"),
-                clList: ["HEK293 (embryonic kidney)"],
-                tfList: ["ANDR_HUMAN", "CTCF_HUMAN"],
+                atacList: ["HEK293 (embryonic kidney)"],
+                dnaseList: ["ANDR_HUMAN", "CTCF_HUMAN"],
+                faireList: ["ANDR_HUMAN", "CTCF_HUMAN"],
                 ebi: false,
                 grasp: false,
                 phewas: false,
@@ -369,7 +389,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                     case "id":
                         return !this.searchDataLoading && checkOneResult(this.searchData);
                     default:
-                        return !!this.selectedGene && !this._isSearchDisabled()
+                        return !!this.selectedGene && !this._isSearchDisabled();
                 }
             } else {
                 return searchForm.searchBy === id || id === '';
@@ -378,7 +398,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     }
 
-    _addChip(event: MatChipInputEvent, where: TfOrCl): void {
+    _addChip(event: MatChipInputEvent, where: AggType): void {
         const input = event.input;
         const value = event.value;
 
@@ -387,44 +407,77 @@ export class SearchComponent implements OnInit, OnDestroy {
             input.value = "";
         }
         if ((value || "").trim()) {
-            this.searchForm.patchValue(
-                where === "tf" ?
-                    {
-                        searchTf: null, tfList: [
-                            ...this.searchForm.value.tfList,
+            let val;
+            switch (where) {
+                case "atac":
+                    val = {
+                        searchAtac: null, atacList: [
+                            ...this.searchForm.value.atacList,
                             value.trim()]
-                    } :
-                    {
-                        searchCl: null, clList: [
-                            ...this.searchForm.value.clList,
+                    };
+                    break;
+                case 'dnase':
+                    val = {
+                        searchDnase: null, dnaseList: [
+                            ...this.searchForm.value.dnaseList,
                             value.trim()]
-                    }
-            );
+                    };
+                    break;
+                case "faire":
+                    val = {
+                        searchFaire: null,
+                        faireList: [
+                            ...this.searchForm.value.faireList,
+                            value.trim()]
+                    };
+                    break;
+            }
+            this.searchForm.patchValue(val);
         }
     }
 
-    _selectOption(event: MatAutocompleteSelectedEvent, where: TfOrCl): void {
-        if (where === "tf") {
-            this.tfInput.nativeElement.value = "";
-            this.searchForm.patchValue({searchTf: null, tfList: [
+    _selectOption(event: MatAutocompleteSelectedEvent, where: AggType): void {
+        if (where === "atac") {
+            this.atacInput.nativeElement.value = "";
+            this.searchForm.patchValue({searchAtac: null, atacList: [
                     ...this.searchForm.value.tfList,
                     event.option.value
                 ]
             });
         }
-        if (where === "cl") {
-            this.clInput.nativeElement.value = "";
-            this.searchForm.patchValue({searchCl: null, clList: [
+        if (where === "dnase") {
+            this.dnaseInput.nativeElement.value = "";
+            this.searchForm.patchValue({searchDnase: null, dnaseList: [
                     ...this.searchForm.value.clList,
                 event.option.value
             ]});
         }
+        if (where === "faire") {
+            this.faireInput.nativeElement.value = "";
+            this.searchForm.patchValue({searchFaire: null, faireList: [
+                    ...this.searchForm.value.clList,
+                    event.option.value
+                ]});
+        }
     }
 
-    _removeChip(chipName: string, where: TfOrCl): void {
-        this.searchForm.patchValue(where === "tf" ?
-            {tfList: this.searchForm.value.tfList.filter(s => s !== chipName)} :
-            {clList: this.searchForm.value.clList.filter(s => s !== chipName)});
+    _removeChip(chipName: string, where: AggType): void {
+        let patchValue;
+        switch (where) {
+            case "atac": {
+                patchValue = {atacList: this.searchForm.value.atacList.filter(s => s !== chipName)};
+                break;
+            }
+            case "dnase": {
+                patchValue = {dnaseList: this.searchForm.value.dnaseList.filter(s => s !== chipName)};
+                break;
+            }
+            case "faire": {
+                patchValue = {faireList: this.searchForm.value.faireList.filter(s => s !== chipName)};
+                break;
+            }
+        }
+        this.searchForm.patchValue(patchValue);
     }
 
     _convertFormToParams(isAdvanced: boolean): Partial<SearchParamsModel> {
@@ -440,8 +493,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (searchParams) {
             if (this.isAdvanced) {
                 result.chromPos = new ChromPos(searchParams.chr || "", searchParams.pos || "");
-                result.clList = searchParams.cl ? searchParams.cl.split("@") : [];
-                result.tfList = searchParams.tf ? searchParams.tf.split(",") : [];
+                result.atacList = searchParams.atac ? searchParams.atac.split("@") : [];
+                result.dnaseList = searchParams.dnase ? searchParams.dnase.split(",") : [];
+                result.faireList = searchParams.faire ? searchParams.faire.split(",") : [];
                 if (searchParams.phe_db) {
                     searchParams.phe_db.split(",").forEach(s => result[s] = true);
                 }
@@ -506,28 +560,29 @@ export class SearchComponent implements OnInit, OnDestroy {
     _isSearchDisabled(): boolean {
         const sF = this.searchForm.value as SearchQueryModel;
         if (!this.isAdvanced) {
-            if (sF.searchBy == "id") {
+            if (sF.searchBy === "id") {
                 return !sF.rsId;
             }
-            if (sF.searchBy == "geneId") {
+            if (sF.searchBy === "geneId") {
                 return !sF.geneId;
             }
-            if (sF.searchBy == "geneName") {
+            if (sF.searchBy === "geneName") {
                 return !sF.geneName;
             }
-            if (sF.searchBy == "eqtlGeneName") {
+            if (sF.searchBy === "eqtlGeneName") {
                 return !sF.eqtlGeneName;
             }
-            if (sF.searchBy == "eqtlGeneId") {
+            if (sF.searchBy === "eqtlGeneId") {
                 return !sF.eqtlGeneId;
             }
         }
         if (!this.searchForm.invalid) {
             if (this.isAdvanced) {
-                return !sF.chromPos.chr && sF.tfList.length === 0 &&
-                    sF.clList.length === 0 && !checkIfCheckpointSelected(sF);
+                return !sF.chromPos.chr
+                    && (sF.dnaseList.length + sF.faireList.length + sF.atacList.length) === 0
+                    && !checkIfCheckpointSelected(sF);
             } else {
-                if (sF.searchBy == "pos") {
+                if (sF.searchBy === "pos") {
                     return !sF.chromPos.chr;
                 }
             }
@@ -535,7 +590,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         return true;
     }
 
-    _nearbySearch() {
+    _nearbySearch(): void {
         let patchValue: Partial<SearchQueryModel>;
         if (this.isAdvanced) {
             patchValue = {
@@ -563,7 +618,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                         searchBy: "pos",
                         chromPos: new ChromPos(this.selectedGene.chr.slice(3), SearchComponent.convertPosToInterval(
                             `${this.selectedGene.startPos}-${this.selectedGene.endPos}`))
-                    }
+                    };
                     break;
             }
         }
@@ -575,11 +630,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         return getTextByStepNameAdastra(step, component);
     }
 
-    nextExampleStep() {
+    nextExampleStep(): void {
         this.nextStep.emit();
     }
 
-    setSearchBy(id: 'gene' | 'pos' | 'id' | 'eqtlGene') {
+    setSearchBy(id: 'gene' | 'pos' | 'id' | 'eqtlGene'): void {
         switch (id) {
             case "id":
                 if (!this.isAdvanced) {
@@ -615,7 +670,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
 }
 
-function checkIfCheckpointSelected(sF: SearchQueryModel) {
+function checkIfCheckpointSelected(sF: SearchQueryModel): boolean {
     let result = false;
     Object.keys(concordanceModelExample).forEach(s => sF[s] ? result = true : null);
     Object.keys(phenotypesModelExample).forEach(s => sF[s] ? result = true : null);

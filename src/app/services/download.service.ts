@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable} from 'rxjs';
-import {DownloadTableType, TfOrCl} from '../models/data.model';
+import {DownloadTableType, AggType} from '../models/data.model';
 import {UrlService} from "./url.service";
 
 

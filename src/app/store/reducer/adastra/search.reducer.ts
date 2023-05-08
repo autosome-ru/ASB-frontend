@@ -16,17 +16,19 @@ import {SnpSearchModel} from "../../../models/data.model";
 
 export interface SearchState {
     searchOptions: {
-        tf: SearchHintModel[],
-        cl: SearchHintModel[],
+        atac: SearchHintModel[],
+        dnase: SearchHintModel[],
+        faire: SearchHintModel[],
     };
     searchOptionsLoading: {
-        tf: boolean,
-        cl: boolean,
+        atac: boolean,
+        dnase: boolean,
+        faire: boolean,
     };
 
-    searchByGeneNameOptions: GeneModel[],
-    searchByGeneNameOptionsLoading: boolean,
-    searchGene: GeneModel,
+    searchByGeneNameOptions: GeneModel[];
+    searchByGeneNameOptionsLoading: boolean;
+    searchGene: GeneModel;
 
     searchQuery: SearchQueryModel;
 
@@ -50,8 +52,9 @@ export const selectResultsChange = (state: SearchState) => state.searchChangeLoa
 
 export const initialState: SearchState = {
     searchOptions: {
-        tf: [],
-        cl: []
+        atac: [],
+        dnase: [],
+        faire: []
     },
     searchByGeneNameOptions: [],
     searchByGeneNameOptionsLoading: false,
@@ -59,8 +62,9 @@ export const initialState: SearchState = {
 
     searchQuery: null,
     searchOptionsLoading: {
-        tf: false,
-        cl: false
+        atac: false,
+        dnase: false,
+        faire: false,
     },
     searchResults: {
         total: null,
@@ -75,14 +79,9 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
 
             return {
                 ...state,
-                searchOptionsLoading: action.payload.tfOrCl === "tf" ?
-                    {
-                        tf: true,
-                        cl: state.searchOptionsLoading.cl
-                    } :
-                    {
-                        tf: state.searchOptionsLoading.tf,
-                        cl: true
+                searchOptionsLoading: {
+                        [action.payload.aggType]: true,
+                        ...state.searchOptionsLoading
                     }
             };
         }
@@ -90,66 +89,47 @@ export function searchReducer(state: SearchState = initialState, action: fromAct
             return {
                 ...state,
                 searchByGeneNameOptionsLoading: true
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchByGeneNameOptionsSuccess: {
             return {
                 ...state,
                 searchByGeneNameOptions: action.payload.map(convertSearchByGeneNameHintBackendToSearchByGeneHintModel),
                 searchByGeneNameOptionsLoading: false
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchByGeneNameOptionsFail: {
             return {
                 ...state,
                 searchByGeneNameOptions: [],
                 searchByGeneNameOptionsLoading: false
-            }
+            };
         }
         case fromActions.ActionTypes.LoadSearchOptionsSuccess: {
             return {
                 ...state,
-                searchOptions: action.payload.tfOrCl === "tf" ?
-                    {
-                        tf: action.payload.options.map(convertSearchHintBackendModelToSearchHintModel) as SearchHintModel[],
-                        cl: state.searchOptions.cl
-                    } :
-                    {
-                        tf: state.searchOptions.tf,
-                        cl: action.payload.options.map(convertSearchHintBackendModelToSearchHintModel) as SearchHintModel[],
-                    },
-                searchOptionsLoading: action.payload.tfOrCl === "tf" ?
-                    {
-                        tf: false,
-                        cl: state.searchOptionsLoading.cl
-                    } :
-                    {
-                        tf: state.searchOptionsLoading.tf,
-                        cl: false
-                    }
+                searchOptions: {
+                    ...state.searchOptions,
+                    [action.payload.aggType]: action.payload.options.map(
+                        convertSearchHintBackendModelToSearchHintModel) as SearchHintModel[],
+                },
+                searchOptionsLoading: {
+                    [action.payload.aggType]: false,
+                    ...state.searchOptionsLoading
+                }
             };
         }
         case fromActions.ActionTypes.LoadSearchOptionsFail: {
             return {
                 ...state,
-                searchOptions: action.payload.tfOrCl === "tf" ?
-                    {
-                        tf: [],
-                        cl: state.searchOptions.cl
-                    } :
-                    {
-                        tf: state.searchOptions.tf,
-                        cl: []
-                    },
-                searchOptionsLoading: action.payload.tfOrCl === "tf" ?
-                    {
-                        tf: false,
-                        cl: state.searchOptionsLoading.cl
-                    } :
-                    {
-                        tf: state.searchOptionsLoading.tf,
-                        cl: false
-                    }
+                searchOptions: {
+                    ...state.searchOptions,
+                    [action.payload.aggType]: [],
+                },
+                searchOptionsLoading: {
+                    [action.payload.aggType]: false,
+                    ...state.searchOptionsLoading
+                }
             };
         }
         case fromActions.ActionTypes.LoadSearchResults: {

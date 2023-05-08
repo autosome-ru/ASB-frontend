@@ -279,7 +279,7 @@
                 [prevTemplate]="prevTemplate"
                 [nextTemplate]="nextTemplate"
                 [doneTemplate]="doneTemplate"
-                (prev)="setSearchBy(mj >=3 ? 'eqtlGene' : 'gene')"
+                (prev)="setSearchBy('eqtlGene')"
                 [stepContentParams]="getTextByStepName('search-pos',isAdvanced? 'advanced' : 'search')"
             >
                 <mat-form-field
@@ -447,7 +447,7 @@
                 Example
             </button>
         </div>
-        <ng-container *ngIf="_checkToDisplay('tf')">
+        <ng-container *ngIf="_checkToDisplay('atac')">
             <mat-form-field
                 joyrideStep="search-tf-list"
                 [stepContent]="stepTemplate"
@@ -455,36 +455,36 @@
                 [stepContentParams]="getTextByStepName('search-tf-list')"
                 style="overflow: auto; padding: 0; margin-top: -10px"
             >
-                <mat-chip-list #chipListTf aria-label="Transcription factor selection">
+                <mat-chip-list #atacList aria-label="ATAC selection">
                     <mat-chip
-                        *ngFor="let option of searchForm.get('tfList').value"
+                        *ngFor="let option of searchForm.get('atacList').value"
                         selectable
                         removable
                         style="margin: 0 2px 0 0"
-                        (removed)="_removeChip(option, 'tf')"
+                        (removed)="_removeChip(option, 'atac')"
                     >
                         {{option}}
                         <mat-icon matChipRemove svgIcon="clear"></mat-icon>
                     </mat-chip>
                     <input
-                        #tfInput
-                        placeholder="Transcription factors"
+                        #atacInput
+                        placeholder="ATAC-seq cell types"
                         matInput
                         onlyUTF8
-                        name="Search TFs"
+                        name="Search ATAC experiments"
                         aria-label="search"
                         formControlName="searchTf"
-                        [matAutocomplete]="autoTf"
-                        [matChipInputFor]="chipListTf"
-                        (matChipInputTokenEnd)="_addChip($event, 'tf')"
+                        [matAutocomplete]="autoAtac"
+                        [matChipInputFor]="atacList"
+                        (matChipInputTokenEnd)="_addChip($event, 'atac')"
                     >
                 </mat-chip-list>
-                <mat-autocomplete #autoTf="matAutocomplete"
-                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).tf"
-                                  (optionSelected)="_selectOption($event, 'tf')"
+                <mat-autocomplete #autoAtac="matAutocomplete"
+                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).atac"
+                                  (optionSelected)="_selectOption($event, 'atac')"
                 >
-                    <ng-container *ngIf="!(searchOptionsLoading$ | async).tf">
-                        <mat-option *ngFor="let option of (searchOptions$ | async).tf" [value]="option.name">
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async).atac">
+                        <mat-option *ngFor="let option of (searchOptions$ | async).atac" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
                             <small>&nbsp;Total ASBs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
@@ -499,7 +499,7 @@
                             </small>
                         </mat-option>
                     </ng-container>
-                    <mat-option *ngIf="(searchOptionsLoading$ | async).tf">
+                    <mat-option *ngIf="(searchOptionsLoading$ | async).atac">
                         <mat-spinner
                             matSuffix color="accent"
                             [diameter]="12"
@@ -510,45 +510,45 @@
             </mat-form-field>
         </ng-container>
 
-        <ng-container *ngIf="_checkToDisplay('cl')">
+        <ng-container *ngIf="_checkToDisplay('dnase')">
             <mat-form-field
                 class="col-12"
                 style="overflow: auto; padding: 0; margin: -10px 0"
                 joyrideStep="search-cl-list"
                 [stepContent]="stepTemplate"
-                [stepContentParams]="getTextByStepName('search-cl-list')"
+                [stepContentParams]="getTextByStepName('search-dnase-list')"
                 stepPosition="bottom"
             >
-                <mat-chip-list #chipListCl aria-label="Cell type selection">
+                <mat-chip-list #chipListDnase aria-label="Cell type selection">
                     <mat-chip
-                        *ngFor="let option of searchForm.get('clList').value"
+                        *ngFor="let option of searchForm.get('dnaseList').value"
                         selectable
                         style="margin: 0 2px 0 0"
                         removable
-                        (removed)="_removeChip(option, 'cl')"
+                        (removed)="_removeChip(option, 'dnase')"
                     >
                         {{option}}
                         <mat-icon matChipRemove svgIcon="clear"></mat-icon>
                     </mat-chip>
                     <input
-                        #clInput
-                        placeholder="Cell types"
+                        #dnaseInput
+                        placeholder="DNase cell types"
                         matInput
                         name="Search CTs"
                         aria-label="search"
                         onlyUTF8
                         formControlName="searchCl"
-                        [matAutocomplete]="autoCl"
-                        [matChipInputFor]="chipListCl"
-                        (matChipInputTokenEnd)="_addChip($event, 'cl')"
+                        [matAutocomplete]="autoDnase"
+                        [matChipInputFor]="chipListDnase"
+                        (matChipInputTokenEnd)="_addChip($event, 'dnase')"
                     >
                 </mat-chip-list>
-                <mat-autocomplete #autoCl="matAutocomplete"
-                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).cl"
-                                  (optionSelected)="_selectOption($event, 'cl')"
+                <mat-autocomplete #autoDnase="matAutocomplete"
+                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).dnase"
+                                  (optionSelected)="_selectOption($event, 'dnase')"
                 >
-                    <ng-container *ngIf="!(searchOptionsLoading$ | async).cl">
-                        <mat-option *ngFor="let option of (searchOptions$ | async).cl" [value]="option.name">
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async).dnase">
+                        <mat-option *ngFor="let option of (searchOptions$ | async).dnase" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
                             <small>&nbsp;Total ASBs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
@@ -563,7 +563,7 @@
                             </small>
                         </mat-option>
                     </ng-container>
-                    <mat-option *ngIf="(searchOptionsLoading$ | async).cl">
+                    <mat-option *ngIf="(searchOptionsLoading$ | async).dnase">
                         <mat-spinner
                             matSuffix color="accent"
                             [diameter]="12"
@@ -573,27 +573,92 @@
                 </mat-autocomplete>
             </mat-form-field>
         </ng-container>
-        <ng-container *ngIf="_checkToDisplay('concordance')">
-            <div
-                style="overflow: auto; padding-left: 5px; margin-left: -5px;"
-                joyrideStep="search-concordance"
-                [stepContent]="hocomocoTemplate"
+
+        <ng-container *ngIf="_checkToDisplay('faire')">
+            <mat-form-field
+                class="col-12"
+                style="overflow: auto; padding: 0; margin: 0 0"
+                joyrideStep="search-faire-list"
+                [stepContent]="stepTemplate"
+                [stepContentParams]="getTextByStepName('search-faire-list')"
+                stepPosition="bottom"
             >
-                <div>
-                <span >Show only entries with motif concordance for any of the selected TFs:</span>
-                </div>
-                <div class="asb-search__checkboxes">
-                    <mat-checkbox
-                        *ngFor="let concordance of concordances; let last=last"
-                        disableRipple
-                        [ngClass]="{'asb-search__checkboxes-checkbox': !last}"
-                        [formControlName]="concordance"
+                <mat-chip-list #chipListFaire aria-label="Cell type selection">
+                    <mat-chip
+                        *ngFor="let option of searchForm.get('faireList').value"
+                        selectable
+                        style="margin: 0 2px 0 0"
+                        removable
+                        (removed)="_removeChip(option, 'faire')"
                     >
-                        {{concordance}}
-                    </mat-checkbox>
-                </div>
-            </div>
+                        {{option}}
+                        <mat-icon matChipRemove svgIcon="clear"></mat-icon>
+                    </mat-chip>
+                    <input
+                        #faireInput
+                        placeholder="Faire cell types"
+                        matInput
+                        name="Search CTs"
+                        aria-label="search"
+                        onlyUTF8
+                        formControlName="searchFaire"
+                        [matAutocomplete]="autoFaire"
+                        [matChipInputFor]="chipListFaire"
+                        (matChipInputTokenEnd)="_addChip($event, 'faire')"
+                    >
+                </mat-chip-list>
+                <mat-autocomplete #autoFaire="matAutocomplete"
+                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).faire"
+                                  (optionSelected)="_selectOption($event, 'faire')"
+                >
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async).faire">
+                        <mat-option *ngFor="let option of (searchOptions$ | async).faire" [value]="option.name">
+                            <span>{{option.name + " | "}}</span>
+                            <small>&nbsp;Total ASBs:
+                                <span *ngIf="(currentRelease$ | async).majorVersion == 3">
+                                        {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
+                                    </span>
+                                <span *ngIf="(currentRelease$ | async).majorVersion >= 4">
+                                        {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
+                                    </span>
+                                <span *ngIf="(currentRelease$ | async).majorVersion < 3">
+                                        {{option.aggregatedSnpCount}}
+                                    </span>
+                            </small>
+                        </mat-option>
+                    </ng-container>
+                    <mat-option *ngIf="(searchOptionsLoading$ | async).faire">
+                        <mat-spinner
+                            matSuffix color="accent"
+                            [diameter]="12"
+                        ></mat-spinner>
+                        Loading...
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
         </ng-container>
+
+<!--        <ng-container *ngIf="_checkToDisplay('concordance')">-->
+<!--            <div-->
+<!--                style="overflow: auto; padding-left: 5px; margin-left: -5px;"-->
+<!--                joyrideStep="search-concordance"-->
+<!--                [stepContent]="hocomocoTemplate"-->
+<!--            >-->
+<!--                <div>-->
+<!--                <span >Show only entries with motif concordance for any of the selected TFs:</span>-->
+<!--                </div>-->
+<!--                <div class="asb-search__checkboxes">-->
+<!--                    <mat-checkbox-->
+<!--                        *ngFor="let concordance of concordances; let last=last"-->
+<!--                        disableRipple-->
+<!--                        [ngClass]="{'asb-search__checkboxes-checkbox': !last}"-->
+<!--                        [formControlName]="concordance"-->
+<!--                    >-->
+<!--                        {{concordance}}-->
+<!--                    </mat-checkbox>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </ng-container>-->
         <ng-container *ngIf="_checkToDisplay('phenotypes')">
             <div style="overflow: auto; padding-left: 5px; margin-left: -5px;"
                  joyrideStep="search-associations"
@@ -655,13 +720,12 @@
                         *ngIf="isAdvanced"
                         style="display: inline-flex; overflow: auto">
                         <button
-
                             mat-stroked-button
                             [color]="'accent'"
                             [disabled]="_isSearchDisabled()"
                             (click)="_getResultsInCsv()"
                         >
-                            <span class="d-none d-sm-inline-block">Get search results in TSV</span>
+                            <span class="d-none d-sm-inline-block" >Get search results in TSV</span>
                             <span class="d-sm-none d-inline-block">Get TSV</span>
                         </button>
                     </div>

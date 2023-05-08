@@ -18,22 +18,22 @@
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center d-none d-md-block"
     ><h6 style="margin-bottom: 0">{{snpData.context}}</h6></dd>
     <dt
-        *ngIf="snpData.cellLines.length != 0"
+        *ngIf="snpData.dnaseData.length != 0"
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
     >
-        ASB in cell types
+        ASB in DNase I
     </dt>
     <asb-snp-buttons
         [joyrideStep]="'cell-types-buttons'  + (index ? index : '')"
         [stepContent]="stepTemplate"
         style="overflow: auto"
         [stepContentParams]="getTextByStepName('cell-types-buttons', noButtons ? 'search' : 'snp')"
-        *ngIf="snpData.cellLines.length != 0"
+        *ngIf="snpData.dnaseData.length != 0"
         class="col-sm-7 col-md-8 col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
-        [data]="snpData.cellLines"
+        [data]="snpData.dnaseData"
         [maxObjects]="4"
-        [tfOrCl]="'cl'"
+        [aggType]="'dnase'"
         [noButtons]="noButtons"
         [showMoreObjects]="showMoreCellLines"
         (objectsQualChanged)="_showMoreCellLines($event)"
@@ -41,22 +41,46 @@
     >
     </asb-snp-buttons>
     <dt
-        *ngIf="snpData.transFactors.length != 0"
+        *ngIf="snpData.atacData.length != 0"
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
     >
-        ASB for transcription factors
+        ASB in ATAC-seq
     </dt>
     <asb-snp-buttons
         [joyrideStep]="'transcription-factors-buttons' + (index ? index : '')"
         [stepContent]="stepTemplate"
         style="overflow: auto"
         [stepContentParams]="getTextByStepName('transcription-factors-buttons', noButtons ? 'search' : 'snp')"
-        *ngIf="snpData.transFactors.length != 0"
+        *ngIf="snpData.atacData.length != 0"
         class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
-        [data]="snpData.transFactors"
+        [data]="snpData.atacData"
         [noButtons]="noButtons"
-        [tfOrCl]="'tf'"
+        [aggType]="'atac'"
+        [maxObjects]="4"
+        [showMoreObjects]="showMoreTfs"
+        (objectsQualChanged)="_showMoreTfs($event)"
+        [buttonsClass]="'btn btn-outline-secondary snp-card__buttons'"
+    >
+    </asb-snp-buttons>
+
+    <dt
+        *ngIf="snpData.faireData.length != 0"
+        class="col-auto snp-card__tag align-self-start"
+        style="vertical-align: center; margin-top: 5px"
+    >
+        ASB in Faire-seq
+    </dt>
+    <asb-snp-buttons
+        [joyrideStep]="'faire-buttons' + (index ? index : '')"
+        [stepContent]="stepTemplate"
+        style="overflow: auto"
+        [stepContentParams]="getTextByStepName('faire-buttons', noButtons ? 'search' : 'snp')"
+        *ngIf="snpData.faireData.length != 0"
+        class="col-sm-7 col-md-8  col-lg-9 col-xl-10 flex-wrap align-items-start align-content-around justify-content-center"
+        [data]="snpData.faireData"
+        [noButtons]="noButtons"
+        [aggType]="'faire'"
         [maxObjects]="4"
         [showMoreObjects]="showMoreTfs"
         (objectsQualChanged)="_showMoreTfs($event)"

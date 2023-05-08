@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
-import {ClSnpModel, SnpInfoModel, TfOrCl, TfSnpModel} from "src/app/models/data.model";
+import {ClSnpModel, SnpInfoModel, AggType, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/reducer/adastra";
 import * as fromSelectors from "src/app/store/selector/adastra";
@@ -71,14 +71,6 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     private commonColumnModel:
         AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>>;
-
-
-    public tfColumnModel: AsbTableColumnModel<Partial<TfSnpModel>>;
-    public tfDisplayedColumns: AsbTableDisplayedColumns<TfSnpModel> = [
-        ...commonInitialDisplayedColumns,
-        "motifLog2Fc",
-        "motifConcordance",
-    ];
 
     private subscriptions: Subscription = new Subscription();
     private release: ReleaseModel;
@@ -162,27 +154,15 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.snpData$.subscribe(
                 s => {
-                    if (s && s.cellLines) {
-                        if (s.cellLines.length > 0 && s.transFactors.length > 0) {
+                    if (s && s.faireData) {
+                        if (s.faireData.length > 0 && s.dnaseData.length > 0) {
                             this.tourSteps = this.tourSteps.filter(s => s != `table1`);
                         } else {
-                            if (s.cellLines.length == 0) {
+                            if (s.faireData.length == 0) {
                                 this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons' && s != 'table1');
                             } else {
                                 this.tourSteps = this.tourSteps.filter(s => s != 'table0' && s != 'transcription-factors-buttons');
                             }
-                        }
-                        if (this._getGoodTfs(s.transFactors).length > 0) {
-                            const ind: number = this._getGoodTfs(s.transFactors).findIndex(
-                                s => s.name == this.route.snapshot.fragment || '');
-                            if (ind != -1) {
-                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[ind].name);
-                            } else {
-                                this.tourSteps.push('motif-analysis-' + this._getGoodTfs(s.transFactors)[0].name);
-                            }
-                        } else {
-                            this.tourSteps.push('motif-analysis');
-
                         }
                         this.tourSteps.push('phen-stats');
 
@@ -221,52 +201,20 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             name: {view: "Cell type", valueConverter: v => v, isSticky: true},
             ...this.commonColumnModel,
         };
-        this.tfColumnModel = {
-            name: {view: "Uniprot ID", valueConverter: v => v, isSticky: true},
-            ...this.commonColumnModel,
-            motifLog2Fc: {
-                view: "Motif fold change",
-                valueConverter: v => v !== null ? v.toFixed(2) : "n/a",
-                helpMessage: 'log2(Alt/Ref motif p-value)',
-                isDesc: true
-            },
-            motifLogPRef: {
-                view: "Motif Ref p-value",
-                columnTemplate: this.fdrViewTemplate,
-            },
-            motifLogPAlt: {
-                view: "Motif Alt p-value",
-                columnTemplate: this.fdrViewTemplate,
-            },
-            motifOrientation: {
-                view: 'Motif orientation',
-                valueConverter: v => v !== null ? v ? '+' : '-' : "n/a",
-            },
-            motifConcordance: {
-                view: "Motif concordance",
-                valueConverter: v => v !== null ? v : "n/a",
-                isDesc: true
-            },
-            motifPosition: {
-                view: "Motif position",
-                valueConverter: v => v !== null ? '' + (v + 1) : "n/a",
-                helpMessage: 'SNP position relative to the TF motif (1-based)'
-            },
-        };
     }
 
-    getTextByStepName(step: string) {
+    getTextByStepName(step: string): {text: string} {
         return getTextByStepNameAdastra(step);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 
     _downloadFile(options: {
-        columns: Array<keyof TfSnpModel>,
+        columns: Array<keyof ClSnpModel>,
         filter: string,
-    },            where: TfOrCl) {
+    },            where: AggType): void {
         this.subscriptions.add(
             this.dataService.getSnpInfoByIdCsv(
                 this.id, this.alt, where, options.columns, options.filter).subscribe(
@@ -302,9 +250,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             calculateColorForOne(row.pValueAlt, row.altBase);
     }
 
-    _createSnpName(snpData: SnpInfoModel, where: TfOrCl) {
+    _createSnpName(snpData: SnpInfoModel) {
         return (row: ClSnpModel | TfSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase}` +
-            (where === "cl" ? " in " : " of ") + this._getName(row);
+            " of " + this._getName(row);
     }
 
     _getName(row: ClSnpModel | TfSnpModel) {
@@ -321,17 +269,17 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 Math.max(b.effectSizeAlt, b.effectSizeRef) - Math.max(a.effectSizeAlt, a.effectSizeRef));
     }
 
-    openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
-        const id: number = tfs.indexOf($event);
-        const chosenExpansionPanel = this.asbMotifsComponent.expansionPanels.filter(
-            (s, i) => i == id)[0];
-        chosenExpansionPanel.open();
-
-        if (this.motifPanel.closed) {
-            this.motifPanel.open();
-        }
-        document.getElementById(tfs[id].name).scrollIntoView({behavior: "smooth"});
-    }
+    // openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
+    //     const id: number = tfs.indexOf($event);
+    //     const chosenExpansionPanel = this.asbMotifsComponent.expansionPanels.filter(
+    //         (s, i) => i == id)[0];
+    //     chosenExpansionPanel.open();
+    //
+    //     if (this.motifPanel.closed) {
+    //         this.motifPanel.open();
+    //     }
+    //     document.getElementById(tfs[id].name).scrollIntoView({behavior: "smooth"});
+    // }
 
     sortData(data: TfSnpModel[], sort: MatSort): TfSnpModel[] {
         return data.sort(
@@ -339,31 +287,31 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    openPanels(tfs: TfSnpModel[]) {
-        const ind: number = this.tourSteps.findIndex(s => s.match(/motif-analysis-/));
-        if (ind != -1) {
-            if (this.motifPanel.closed) {
-                this.motifPanel.open();
-            }
-            const tf_name: string = this.tourSteps[ind].match(/motif-analysis-(.*)/)[1];
+    // openPanels(tfs: TfSnpModel[]) {
+    //     const ind: number = this.tourSteps.findIndex(s => s.match(/motif-analysis-/));
+    //     if (ind != -1) {
+    //         if (this.motifPanel.closed) {
+    //             this.motifPanel.open();
+    //         }
+    //         const tf_name: string = this.tourSteps[ind].match(/motif-analysis-(.*)/)[1];
+    //
+    //         const expPanel: MatExpansionPanel = this.asbMotifsComponent.expansionPanels.filter((s, i) =>
+    //             i == tfs.findIndex(s => s.name == tf_name))[0];
+    //         if (expPanel && expPanel.closed) {
+    //             expPanel.open();
+    //         }
+    //     }
+    // }
 
-            const expPanel: MatExpansionPanel = this.asbMotifsComponent.expansionPanels.filter((s, i) =>
-                i == tfs.findIndex(s => s.name == tf_name))[0];
-            if (expPanel && expPanel.closed) {
-                expPanel.open();
-            }
-        }
-    }
-
-    checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel) {
+    checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel): void {
         const index = tabGroup.selectedIndex;
-        if (snp.transFactors.length > 0 && snp.cellLines.length > 0) {
+        if (snp.dnaseData.length > 0 && snp.faireData.length > 0) {
             tabGroup.selectedIndex = 0;
         }
-        if (index == 0 && snp.transFactors.length == 0) {
+        if (index === 0 && snp.dnaseData.length === 0) {
             tabGroup.selectedIndex = 1;
         }
-        if (index == 1 && snp.cellLines.length == 0) {
+        if (index === 1 && snp.faireData.length === 0) {
             tabGroup.selectedIndex = 0;
         }
     }

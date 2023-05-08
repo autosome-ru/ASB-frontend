@@ -1,7 +1,7 @@
 import {Inject, Injectable, PLATFORM_ID} from "@angular/core";
 import {recentRelease} from "../helpers/constants/releases";
 import {ReleaseModel} from "../models/releases.model";
-import {TfOrCl} from "../models/data.model";
+import {AggType} from "../models/data.model";
 import {environment} from "../../environments/environment";
 import {isPlatformBrowser} from "@angular/common";
 
@@ -14,11 +14,12 @@ export class UrlService {
     private readonly isBrowser: boolean;
     constructor(@Inject(PLATFORM_ID) private platformId: object) {
         this.isBrowser = isPlatformBrowser(this.platformId);
-        this.hostName = this.isBrowser ? this.getHostName() : ""
+        this.hostName = this.isBrowser ? this.getHostName() : "";
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
-        'searchOptAdv' | 'searchOptGene' | 'ananastra', tfOrCl?: TfOrCl, isEqtl?: boolean): string {
-        const currentApi: string = `https://adastra.autosome.org/api/${this.currentRelease.api}`
+        'searchOptAdv' | 'searchOptGene' | 'ananastra',
+                   tfOrCl?: AggType, isEqtl?: boolean): string {
+        const currentApi = `https://adastra.autosome.org/api/${this.currentRelease.api}`
         switch (queryType) {
             case "browse":
                 return `${currentApi}/browse`

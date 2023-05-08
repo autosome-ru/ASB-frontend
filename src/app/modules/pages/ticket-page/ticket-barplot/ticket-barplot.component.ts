@@ -7,7 +7,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import {CountModel} from "../../../../models/annotation.model";
-import {TfOrCl} from "../../../../models/data.model";
+import {AggType} from "../../../../models/data.model";
 import {ChartOptions} from "chart.js";
 import {BaseChartDirective} from "angular-bootstrap-md";
 
@@ -37,7 +37,7 @@ export class TicketBarplotComponent implements OnInit {
     public isExpanded: boolean
 
     @Input()
-    public tfOrCl: TfOrCl
+    public tfOrCl: AggType
     private expectedTotalCount: number;
 
     @Input()

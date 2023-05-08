@@ -1,4 +1,4 @@
-import {MotifConcordanceModel, PhenotypesModel, SnpSearchBackendModel, SnpSearchModel} from "./data.model";
+import {MotifConcordanceModel, PhenotypesModel, SnpSearchBackendModel, SnpSearchModel, AggType} from "./data.model";
 import {AsbServerSideModel} from "./table.model";
 import {ChromPos} from "../modules/shared/form-fields/form-fields.component";
 
@@ -11,12 +11,19 @@ export interface SearchQueryModel extends PhenotypesModel, AsbServerSideModel, M
     eqtlGeneId: string;
     chromPos: ChromPos;
     searchBy: SearchByModel;
-    searchCl: string;
-    searchTf: string;
-    tfList: string[];
-    clList: string[];
+    searchAtac: string;
+    searchFaire: string;
+    searchDnase: string;
+    atacList: string[];
+    faireList: string[];
+    dnaseList: string[];
     fdr: string;
     es: string;
+}
+
+export interface SearchQueue {
+    searchQueue: string;
+    searchList: string[];
 }
 
 export type SearchByModel = "id" | "pos" | "geneId" | "geneName" | "eqtlGeneId" | "eqtlGeneName";
@@ -68,8 +75,9 @@ export interface SearchParamsModel {
     g_name: string;
     eqtl_g_name: string;
     eqtl_g_id: string;
-    cl: string;
-    tf: string;
+    atac: string;
+    dnase: string;
+    faire: string;
     motif_conc: string;
     phe_db: string;
     fdr?: string;

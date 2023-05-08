@@ -148,41 +148,31 @@ export class SearchPageTableComponent implements OnInit {
                 ...this.paramsToData(e)
             };
         })));
-        this.displayedColumns.push("hasConcordance")
+        this.displayedColumns.push("hasConcordance");
     }
 
-    _handleTableRowClick(row: SnpSearchModel) {
+    _handleTableRowClick(row: SnpSearchModel): void {
         this.snpClicked.emit({rsId: row.rsId, alt: row.altBase});
     }
 
     private paramsToColumnModel(): AsbTableColumnModel<any> {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
         const result = {};
-        if (params.tf) {
-            params.tf.split(",").forEach(
-                s => {
-                    result[convertTfNameToValue(s, "Ref")] = {
-                        view: convertNameToView(s, "Ref"),
-                        columnTemplate: this.fdrViewTemplate
-                    };
-                    result[convertTfNameToValue(s, "Alt")] = {
-                        view: convertNameToView(s, "Alt"),
-                        columnTemplate: this.fdrViewTemplate
-                    };
-                });
-        }
-        if (params.cl) {
-            params.cl.split("@").forEach(
-                s => {
-                    result[convertClNameToValue(s, "Ref")] = {
-                        view: convertNameToView(s, "Ref"),
-                        columnTemplate: this.fdrViewTemplate
-                    };
-                    result[convertClNameToValue(s, "Alt")] = {
-                        view: convertNameToView(s, "Alt"),
-                        columnTemplate: this.fdrViewTemplate
-                    };
-                });
+        const paramsArray = ['atac', 'dnase', 'faire'];
+        for (const param of paramsArray) {
+            if (params[param]) {
+                params[param].split(",").forEach(
+                    s => {
+                        result[convertTfNameToValue(s, "Ref")] = {
+                            view: convertNameToView(s, "Ref"),
+                            columnTemplate: this.fdrViewTemplate
+                        };
+                        result[convertTfNameToValue(s, "Alt")] = {
+                            view: convertNameToView(s, "Alt"),
+                            columnTemplate: this.fdrViewTemplate
+                        };
+                    });
+            }
         }
         return result;
     }
@@ -190,19 +180,15 @@ export class SearchPageTableComponent implements OnInit {
     private paramsToDisplayedColumns(): string[] {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
         const result: string[] = [];
-        if (params.tf) {
-            params.tf.split(",").forEach(
-                s => {
-                    result.push(convertTfNameToValue(s, "Ref"));
-                    result.push(convertTfNameToValue(s, "Alt"));
-                });
-        }
-        if (params.cl) {
-            params.cl.split("@").forEach(
-                s => {
-                    result.push(convertClNameToValue(s, "Ref"));
-                    result.push(convertClNameToValue(s, "Alt"));
-                });
+        const paramsArray = ['atac', 'dnase', 'faire'];
+        for (const param of paramsArray) {
+            if (params[param]) {
+                params[param].split("@").forEach(
+                    s => {
+                        result.push(convertTfNameToValue(s, "Ref"));
+                        result.push(convertTfNameToValue(s, "Alt"));
+                    });
+            }
         }
         return result;
     }
@@ -210,29 +196,23 @@ export class SearchPageTableComponent implements OnInit {
     private paramsToData(s: SnpSearchModel): any {
         const params = this.route.snapshot.queryParams as SearchParamsModel;
         const result = {};
-        if (params.tf) {
-            params.tf.split(",").forEach(
-                p => {
-                    result[convertTfNameToValue(p, "Alt")] =
-                        s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueAlt : "NaN";
-                    result[convertTfNameToValue(p, "Ref")] =
-                        s.transFactors ? s.transFactors.filter(f => f.name === p)[0].pValueRef : "NaN";
-                });
-        }
-        if (params.cl) {
-            params.cl.split("@").forEach(
-                p => {
-                    result[convertClNameToValue(p, "Alt")] =
-                        s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueAlt : "NaN";
-                    result[convertClNameToValue(p, "Ref")] =
-                        s.cellLines ? s.cellLines.filter(f => f.name === p)[0].pValueRef : "NaN";
-                });
+        const paramsArray = ['atac', 'dnase', 'faire'];
+        for (const param of paramsArray) {
+            if (params[param]) {
+                params[param].split("@").forEach(
+                    p => {
+                        result[convertTfNameToValue(p, "Alt")] =
+                            s[param + 'Data'] ? s[param + 'Data'].filter(f => f.name === p)[0].pValueAlt : "NaN";
+                        result[convertTfNameToValue(p, "Ref")] =
+                            s[param + 'Data'] ? s[param + 'Data'].filter(f => f.name === p)[0].pValueRef : "NaN";
+                    });
+            }
         }
         return result;
     }
 
 
-    _handleTableChanges(change: AsbServerSideModel) {
+    _handleTableChanges(change: AsbServerSideModel): void {
         this.tableChangeEmitter.emit(change);
     }
 }

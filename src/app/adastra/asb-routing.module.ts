@@ -25,23 +25,8 @@ const releaseMap = new Map(
 );
 const routes: Routes = [
     {
-        path: "soos",
-        component: releaseMap.get('soos'),
-        loadChildren: () => import("src/app/modules/releases/deprecated/soos/soos.module").then(mod => mod.SoosModule)
-    },
-    {
-        path: "susan",
-        component: releaseMap.get('susan'),
-        loadChildren: () => import("src/app/modules/releases/removed/susan/susan.module").then(mod => mod.SusanModule)
-    },
-    {
-        path: "zanthar",
-        component: releaseMap.get('zanthar'),
-        loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
-    },
-    {
-        path: "bill-cipher",
-        component: releaseMap.get('bill-cipher'),
+        path: "bmo",
+        component: releaseMap.get('bmo'),
         loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
     },
     {

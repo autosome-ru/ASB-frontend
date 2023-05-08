@@ -8,8 +8,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/about-page/about-page.module").then(mod => mod.AsbAboutPageModule),
         data: {
-            title: "ADASTRA - about",
-            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: "UDACHA - about",
+            description: "Uniform database of allele-specific chromatin accessibility based on alignments of the DNase I, ATAC-seq and FAIRE-seq data from GTRD"
         }
     },
     {
@@ -17,8 +17,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/downloads-page/downloads-page.module").then(mod => mod.AsbDownloadsPageModule),
         data: {
-            title: "ADASTRA - downloads",
-            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: "UDACHA - downloads",
+            description: "Uniform database of allele-specific chromatin accessibility based on alignments of the DNase I, ATAC-seq and FAIRE-seq data from GTRD"
         }
     },
     {
@@ -26,8 +26,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/browse-page/browse-page.module").then(mod => mod.AsbBrowsePageModule),
         data: {
-            title: "ADASTRA -  browse",
-            description: "Browse the database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: "UDACHA -  browse",
+            description: "Browse the uniform database of allele-specific chromatin accessibility based on alignments of the DNase I, ATAC-seq and FAIRE-seq data from GTRD"
         }
     },
     {
@@ -35,8 +35,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/adastra-help-page/help-page.module").then(mod => mod.AsbHelpPageModule),
         data: {
-            title: "ADASTRA - help",
-            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: "UDACHA - help",
+            description: "Uniform database of allele-specific chromatin accessibility based on alignments of the DNase I"
         }
     },
     {
@@ -44,10 +44,9 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/search-pages/search-page.module").then(mod => mod.AsbSearchPageModule),
         data: {
-            title: (tfs: string) => "ADASTRA - search" + (tfs ? ` for ${tfs}` : ''),
-            description: (tfs: string) => "ADASTRA search page for allele-specific binding sites" +
-                " recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD" +
-                (tfs ? `. Transcription factors: ${tfs}` : '')
+            title: (tfs: string) => "UDACHA - search" + (tfs ? ` for ${tfs}` : ''),
+            description: (tfs: string) => "UDACHA search page Uniform database of allele-specific " +
+                "chromatin accessibility based on alignments of the DNase I."
         }
     },
     {
@@ -55,8 +54,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/snp-page/snp-page.module").then(mod => mod.AsbSnpPageModule),
         data: {
-            title: (id: string, version: string) => `${id} - ADASTRA ${version}`,
-            description: (id: string) => `ADASTRA report for ${id} SNP`
+            title: (id: string, version: string) => `${id} - UDACHA ${version}`,
+            description: (id: string) => `UDACHA report for ${id} SNP`
         }
     },
     {
@@ -73,8 +72,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
         data: {
-            title: "ADASTRA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
-            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: "UDACHA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
+            description: "Uniform database of allele-specific chromatin accessibility based on alignments of the DNase I, ATAC-seq and FAIRE-seq data from GTRD"
         }
     },
     {
@@ -82,8 +81,8 @@ const routes: Routes = [
         loadChildren: () => import(
             "src/app/modules/pages/home-page/home-page.module").then(mod => mod.AsbHomePageModule),
         data: {
-            title: "ADASTRA - Allelic Dosage corrected Allele-Specific human Transcription factor binding sites",
-            description: "The database of allele-specific binding sites recognized by human transcription factors based on alignments of the ChIP-Seq data from GTRD"
+            title: "UDACHA - Uniform database of allele-specific chromatin accessibility",
+            description: "Uniform database of allele-specific chromatin accessibility based on alignments of the DNase I, ATAC-seq and FAIRE-seq data from GTRD"
         }
     },
     {

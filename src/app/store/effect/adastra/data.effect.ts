@@ -80,7 +80,7 @@ export class DataEffect {
     loadSnpStatsFail$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.ActionTypes.LoadSnpInfoFail),
         tap(() => {
-            this.router.navigate(["/404"],{replaceUrl: true});
+            this.router.navigate(["/404"], {replaceUrl: true});
         }
         )), {dispatch: false}
     );

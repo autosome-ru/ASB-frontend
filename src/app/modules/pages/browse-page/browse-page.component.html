@@ -15,21 +15,29 @@
             (change)="_groupToggled($event)"
         >
             <mat-button-toggle
-                value="tf"
+                value="atac"
             >
-                Transcription factors
+                ATAC-seq cell types
             </mat-button-toggle>
 
             <mat-button-toggle
-                value="cl"
+                value="dnase"
             >
-                Cell types
+                DNase cell types
+            </mat-button-toggle>
+
+            <mat-button-toggle
+                value="faire"
+            >
+                Faire cell types
             </mat-button-toggle>
         </mat-button-toggle-group>
     </h4>
 
     <div
-        *ngIf="(browseTfInfoInitialized$ | async) || (browseClInfoInitialized$ | async)"
+        *ngIf="(browseAtacInfoInitialized$ | async)
+            || (browseDnaseInfoInitialized$ | async)
+            || (browseFaireInfoInitialized$ | async)"
         style="margin-bottom: -16px"
     >
         <mat-form-field >
@@ -37,35 +45,74 @@
             <span matPrefix><mat-icon svgIcon="search"></mat-icon></span>
             <input [formControl]="searchForm"
                    matInput
-                   placeholder="e.g. CTCF_HUMAN"
+                   placeholder="e.g. MCF7"
             >
         </mat-form-field>
-        <ng-container *ngIf="group.value === 'tf'; else clTableTemplate">
-            <asb-table-server
-                #tableTfView
-                *ngIf="browseTfInfoInitialized$ | async"
-                [data]="tableTfData$"
-                [isSearched]="!!this.searchForm.value"
-                [dataLoading]="browseTfInfoLoading$ | async"
-                [displayedColumns]="tfDisplayedColumns"
-                [columnModel]="tfColumnModel"
-                [paginatorPageSize]="25"
-                [paginatorOptions]="_getPaginatorOptions(((browseTfInfo$ | async) && (browseTfInfo$ | async).total))"
-                [clickableRow]="true"
-                [paginatorLength]="(browseTfInfo$ | async) && (browseTfInfo$ | async).total"
-                (rowClickEmitter)="_handleTableRowClick($event, 'tf')"
-                (tableChangesEmitter)="_handleTableChange($event, 'tf')"
-            >
-            </asb-table-server>
-<!--            <span   *ngIf="browseTfInfoInitialized$ | async"></span>-->
-<!--            {{tableTfData$ | async | json}}-->
+
+        <ng-container [ngSwitch]="group.value">
+            <ng-container *ngSwitchCase="'atac'">
+                <asb-table-server
+                    #tableAtacView
+                    *ngIf="browseAtacInfoInitialized$ | async"
+                    [data]="tableAtacData$"
+                    [isSearched]="!!this.searchForm.value"
+                    [dataLoading]="browseAtacInfoLoading$ | async"
+                    [displayedColumns]="atacDisplayedColumns"
+                    [columnModel]="atacColumnModel"
+                    [paginatorPageSize]="25"
+                    [paginatorOptions]="_getPaginatorOptions(((browseAtacInfo$ | async) && (browseAtacInfo$ | async).total))"
+                    [clickableRow]="true"
+                    [paginatorLength]="(browseAtacInfo$ | async) && (browseAtacInfo$ | async).total"
+                    (rowClickEmitter)="_handleTableRowClick($event, 'atac')"
+                    (tableChangesEmitter)="_handleTableChange($event, 'atac')"
+                >
+                </asb-table-server>
+            </ng-container>
+            <ng-container *ngSwitchCase="'dnase'">
+                <asb-table-server
+                    #tableDnaseView
+                    *ngIf="browseDnaseInfoInitialized$ | async"
+                    [data]="tableDnaseData$"
+                    [isSearched]="!!this.searchForm.value"
+                    [dataLoading]="browseDnaseInfoLoading$ | async"
+                    [displayedColumns]="dnaseDisplayedColumns"
+                    [columnModel]="dnaseColumnModel"
+                    [paginatorPageSize]="25"
+                    [paginatorOptions]="_getPaginatorOptions(
+                        ((browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total))"
+                    [clickableRow]="true"
+                    [paginatorLength]="(browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total"
+                    (rowClickEmitter)="_handleTableRowClick($event, 'dnase')"
+                    (tableChangesEmitter)="_handleTableChange($event, 'dnase')"
+                >
+                </asb-table-server>
+            </ng-container>
+            <ng-container *ngSwitchCase="'faire'">
+                <asb-table-server
+                    #tableFaireView
+                    *ngIf="browseFaireInfoInitialized$ | async"
+                    [data]="tableFaireData$"
+                    [isSearched]="!!this.searchForm.value"
+                    [dataLoading]="browseFaireInfoLoading$ | async"
+                    [displayedColumns]="faireDisplayedColumns"
+                    [columnModel]="faireColumnModel"
+                    [paginatorPageSize]="25"
+                    [paginatorOptions]="_getPaginatorOptions(
+                        ((browseFaireInfo$ | async) && (browseFaireInfo$ | async).total))"
+                    [clickableRow]="true"
+                    [paginatorLength]="(browseFaireInfo$ | async) && (browseFaireInfo$ | async).total"
+                    (rowClickEmitter)="_handleTableRowClick($event, 'faire')"
+                    (tableChangesEmitter)="_handleTableChange($event, 'faire')"
+                >
+                </asb-table-server>
+            </ng-container>
         </ng-container>
     </div>
 </div>
 
-<ng-container *ngIf="((browseTfInfoLoading$ | async) &&
- !(browseTfInfoInitialized$ | async)) || ((browseClInfoLoading$ | async) &&
-   !(browseClInfoInitialized$ | async))">
+<ng-container *ngIf="((browseAtacInfoLoading$ | async) &&
+ !(browseAtacInfoInitialized$ | async)) || ((browseDnaseInfoLoading$ | async) &&
+   !(browseDnaseInfoInitialized$ | async))">
     <div class="asb-browse__spinner">
         <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
     </div>
@@ -94,21 +141,22 @@
     </a>
 </ng-template>
 
-<ng-template #clTableTemplate>
+<ng-template #dnaseTableTemplate>
+
     <asb-table-server
-        #tableClView
-        *ngIf="browseClInfoInitialized$ | async"
-        [data]="tableClData$"
+        #tableDnaseView
+        *ngIf="browseDnaseInfoInitialized$ | async"
+        [data]="tableDnaseData$"
         [isSearched]="!!this.searchForm.value"
-        [dataLoading]="browseClInfoLoading$ | async"
-        [displayedColumns]="clDisplayedColumns"
-        [columnModel]="clColumnModel"
+        [dataLoading]="browseDnaseInfoLoading$ | async"
+        [displayedColumns]="dnaseDisplayedColumns"
+        [columnModel]="dnaseColumnModel"
         [paginatorPageSize]="25"
-        [paginatorOptions]="_getPaginatorOptions((browseClInfo$ | async) && (browseClInfo$ | async).total)"
+        [paginatorOptions]="_getPaginatorOptions((browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total)"
         [clickableRow]="true"
-        [paginatorLength]="(browseClInfo$ | async) && (browseClInfo$ | async).total"
-        (rowClickEmitter)="_handleTableRowClick($event, 'cl')"
-        (tableChangesEmitter)="_handleTableChange($event, 'cl')"
+        [paginatorLength]="(browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total"
+        (rowClickEmitter)="_handleTableRowClick($event, 'dnase')"
+        (tableChangesEmitter)="_handleTableChange($event, 'dnase')"
     >
     </asb-table-server>
 </ng-template>

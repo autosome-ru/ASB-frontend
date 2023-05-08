@@ -13,10 +13,10 @@ import {recentRelease} from "../../../helpers/constants/releases";
 })
 export class NoWarComponent implements AfterViewInit {
 
-    activeRoute$ = new BehaviorSubject<string>('')
+    activeRoute$ = new BehaviorSubject<string>('');
     private subscriptions = new Subscription();
     public recentRelease: ReleaseModel = recentRelease;
-    constructor(private router: Router,) { }
+    constructor(private router: Router) { }
 
     ngAfterViewInit(): void {
         this.subscriptions.add(
@@ -32,11 +32,11 @@ export class NoWarComponent implements AfterViewInit {
     checkRoute(routeUrl: string | null) {
         switch (routeUrl) {
             case '/portal':
-            case '/'+ recentRelease.url + '/portal': {
-                return true
+            case '/' + recentRelease.url + '/portal': {
+                return false;
             }
             default:
-                return false
+                return true;
         }
     }
 }

@@ -10,6 +10,7 @@ import {formCheckboxesToList} from "../helpers/converters/search-model.converter
 import {AsbServerSideModel} from "../models/table.model";
 import {convertServerSideModelToServerSideBackendModel} from "../helpers/converters/snp-model.converter";
 import {UrlService} from "./url.service";
+import {AggType} from "../models/data.model";
 
 
 @Injectable()
@@ -17,26 +18,32 @@ export class SearchService {
     constructor(private http: HttpClient, private urlService: UrlService) {
     }
 
-    public getSearchOptions(filter: SearchQueryModel, tfOrCl: "tf" | "cl"):
+    public getSearchOptions(filter: SearchQueryModel, tfOrCl: AggType):
         Observable<SearchHintBackendModel[]> {
         let params: {[id: string]: string};
-
-        if (tfOrCl === "tf") {
-            params = makeParamsForSearchOptions(tfOrCl, filter.tfList, filter.searchTf);
-        } else {
-            params = makeParamsForSearchOptions(tfOrCl, filter.clList, filter.searchCl);
+        switch (tfOrCl) {
+            case "faire":
+                params = makeParamsForSearchOptions(tfOrCl, filter.faireList, filter.searchFaire);
+                break;
+            case "dnase":
+                params = makeParamsForSearchOptions(tfOrCl, filter.dnaseList, filter.searchDnase);
+                break;
+            case "atac":
+                params = makeParamsForSearchOptions(tfOrCl, filter.atacList, filter.searchAtac);
+                break;
         }
         if (params?.search) {
             return this.http.get<SearchHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptAdv', tfOrCl),
                 {params});
         } else {
-            return of([])
+            return of([]);
         }
 
     }
 
     public getSearchOptionsByGeneName(filter: string, isEqtl: boolean): Observable<SearchByGeneNameHintBackendModel[]> {
-        return this.http.get<SearchByGeneNameHintBackendModel[]>(this.urlService.getUrlForQuery('searchOptGene', 'tf', isEqtl),
+        return this.http.get<SearchByGeneNameHintBackendModel[]>(
+            this.urlService.getUrlForQuery('searchOptGene', 'atac', isEqtl),
             {params: {search: addPercents(filter)}});
     }
 
@@ -45,10 +52,10 @@ export class SearchService {
         if (!filter) {
             if (!filter.isAdvanced &&
                 (
-                    (filter.searchBy == "id" && !filter.rsId) ||
-                    (filter.searchBy == "pos" && !filter.chromPos.chr) ||
-                    (filter.searchBy == "geneId" && !filter.geneId) ||
-                    (filter.searchBy == "geneName" && !filter.geneName)
+                    (filter.searchBy === "id" && !filter.rsId) ||
+                    (filter.searchBy === "pos" && !filter.chromPos.chr) ||
+                    (filter.searchBy === "geneId" && !filter.geneId) ||
+                    (filter.searchBy === "geneName" && !filter.geneName)
                 )
             ) {
                 return of({results: [], total: null});
@@ -57,7 +64,7 @@ export class SearchService {
         const serverParams = {
             fdr: filter.fdr,
             es: filter.es,
-            ...convertServerSideModelToServerSideBackendModel(params)}
+            ...convertServerSideModelToServerSideBackendModel(params)};
         if (!filter.isAdvanced && filter.searchBy !== "pos") {
             switch (filter.searchBy) {
 
@@ -107,7 +114,7 @@ export class SearchService {
     }
 }
 
-function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
+function makeParamsForSearchOptions(tfOrCl: AggType,
                                     options: string[] | null,
                                     search: string | null): {[id: string]: string} {
     const params: { [id: string]: string } = {};
@@ -115,22 +122,22 @@ function makeParamsForSearchOptions(tfOrCl: "tf" | "cl",
         params.options = options.join(",");
     }
     if (search) {
-        params.search = addPercents(search)
+        params.search = addPercents(search);
     }
 
     return params;
 }
 
 function addPercents(search: string): string {
-    let search_opt: string = ''
+    let searchOpt = '';
     if (search !== null && search !== "") {
-        search_opt= search.endsWith("%") ? search : search + "%";
-        search_opt = search_opt.startsWith("*") ? "%" + search_opt.slice(1) : search_opt;
+        searchOpt = search.endsWith("%") ? search : search + "%";
+        searchOpt = searchOpt.startsWith("*") ? "%" + searchOpt.slice(1) : searchOpt;
     }
-    return search_opt;
+    return searchOpt;
 }
 
-function getStartEndPositions(searchInput: string) {
+function getStartEndPositions(searchInput: string): {start: string, end: string} {
     return searchInput.match(/^\d*$/) ?
         {start: searchInput, end: searchInput} :
         {start: searchInput.split("-")[0] === "0" ?
@@ -140,9 +147,15 @@ function getStartEndPositions(searchInput: string) {
 
 function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: string]: string} {
     const params: {[id: string]: string} = {};
-
-    if (filter.clList && filter.clList.length > 0) {
-        params.cell_types = filter.clList.join("@");
+    // FIXME
+    if (filter.atacList && filter.atacList.length > 0) {
+        params.cell_types = filter.atacList.join("@");
+    }
+    if (filter.dnaseList && filter.dnaseList.length > 0) {
+        params.transcription_factors = filter.dnaseList.join("@");
+    }
+    if (filter.faireList && filter.faireList.length > 0) {
+        params.transcription_factors = filter.faireList.join("@");
     }
 
     if (filter.chromPos.chr) {
@@ -153,11 +166,6 @@ function makeParamsForAdvancedSearchResults(filter: SearchQueryModel): {[id: str
             params.start = positions.start;
             params.end = positions.end;
         }
-    }
-
-    if (filter.tfList && filter.tfList.length > 0) {
-        params.transcription_factors =
-            filter.tfList.join(",");
     }
     const phenList: string = formCheckboxesToList(filter);
     if (phenList) {

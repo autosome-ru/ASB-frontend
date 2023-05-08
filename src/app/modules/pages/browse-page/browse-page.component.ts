@@ -13,7 +13,7 @@ import {AppState} from "src/app/store/reducer/adastra";
 import * as fromSelectors from "src/app/store/selector/adastra";
 import * as fromActions from "src/app/store/action/adastra";
 import {Observable, Subscription} from "rxjs";
-import {ClInfoModel, TfInfoModel, TfOrCl} from "../../../models/data.model";
+import {ClInfoModel, TfInfoModel, AggType, AbstractInfoModel} from "../../../models/data.model";
 import {
     AsbServerSideFilterModel,
     AsbServerSideModel,
@@ -33,6 +33,7 @@ import {recentRelease} from "../../../helpers/constants/releases";
 
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: "asb-browse-tf",
     templateUrl: "./browse-page.component.html",
     styleUrls: ["./browse-page.component.less"],
@@ -40,11 +41,14 @@ import {recentRelease} from "../../../helpers/constants/releases";
     encapsulation: ViewEncapsulation.None
 })
 export class BrowsePageComponent implements OnInit, OnDestroy {
-    @ViewChild("tableTfView", {static: true})
+    @ViewChild("tableAtacView", {static: true})
     public tfTableView: AsbServerTableComponent<TfInfoModel>;
 
-    @ViewChild("tableClView", {static: true})
+    @ViewChild("tableDnaseView", {static: true})
     public clTableView: AsbServerTableComponent<ClInfoModel>;
+
+    @ViewChild("tableFaireView", {static: true})
+    public faireTableView: AsbServerTableComponent<ClInfoModel>;
 
     @ViewChild("cellTypeViewTemplate", {static: true})
     public cellTypeViewTemplate: TemplateRef<{value: string}>;
@@ -52,39 +56,53 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     @ViewChild("uniprotViewTemplate", {static: true})
     public uniprotViewTemplate: TemplateRef<{value: string}>;
 
-    public browseTfInfo$: Observable<{results: TfInfoModel[], total: number}>;
-    public browseTfInfoLoading$: Observable<boolean>;
+    public browseAtacInfo$: Observable<{results: TfInfoModel[], total: number}>;
+    public browseAtacInfoLoading$: Observable<boolean>;
 
 
-    public browseClInfo$: Observable<{results: ClInfoModel[], total: number}>;
-    public browseClInfoLoading$: Observable<boolean>;
+    public browseDnaseInfo$: Observable<{results: ClInfoModel[], total: number}>;
+    public browseDnaseInfoLoading$: Observable<boolean>;
 
-    public clDisplayedColumns: AsbTableDisplayedColumns<ClInfoModel> = [
+    public browseFaireInfo$: Observable<{results: ClInfoModel[], total: number}>;
+    public browseFaireInfoLoading$: Observable<boolean>;
+
+    public dnaseDisplayedColumns: AsbTableDisplayedColumns<AbstractInfoModel> = [
         "name",
-        "clId",
         "experimentsCount",
         "aggregatedSnpsCount",
     ];
-    public clColumnModel: AsbTableColumnModel<ClInfoModel>;
-    public tfDisplayedColumns: AsbTableDisplayedColumns<TfInfoModel> = [
+    public dnaseColumnModel: AsbTableColumnModel<AbstractInfoModel>;
+
+    public atacDisplayedColumns: AsbTableDisplayedColumns<AbstractInfoModel> = [
         "name",
-        "geneName",
-        "uniprotAc",
         "experimentsCount",
         "aggregatedSnpsCount",
     ];
+    public atacColumnModel: AsbTableColumnModel<TfInfoModel>;
 
-    public tfColumnModel: AsbTableColumnModel<TfInfoModel>;
-    public initialGroupValue: TfOrCl;
-    public browseTfInfoInitialized$: Observable<boolean>;
-    public browseClInfoInitialized$: Observable<boolean>;
+    public faireDisplayedColumns: AsbTableDisplayedColumns<AbstractInfoModel> = [
+        "name",
+        "experimentsCount",
+        "aggregatedSnpsCount",
+    ];
+    public faireColumnModel: AsbTableColumnModel<AbstractInfoModel>;
 
-    private subscriptions: Subscription = new Subscription();
-    public tableTfData$: Observable<TfInfoModel[]>;
-    public tableClData$: Observable<ClInfoModel[]>;
+    public initialGroupValue: AggType;
+    private aggType: AggType;
+
+    public browseAtacInfoInitialized$: Observable<boolean>;
+    public browseDnaseInfoInitialized$: Observable<boolean>;
+    public browseFaireInfoInitialized$: Observable<boolean>;
+
+
+    public tableAtacData$: Observable<TfInfoModel[]>;
+    public tableFaireData$: Observable<ClInfoModel[]>;
+    public tableDnaseData$: Observable<ClInfoModel[]>;
+
     public searchForm: FormControl;
     public isAnanas: boolean;
-    private tfOrCl: TfOrCl;
+    private subscriptions: Subscription = new Subscription();
+
     private queryParams: AsbServerSideFilterModel = initialServerParams;
     constructor(
         private router: Router,
@@ -95,40 +113,47 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         private seoService: SeoService) {}
 
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.isAnanas = this.route.snapshot.data.isAnanas;
-        this.searchForm = this.formBuilder.control('')
+        this.searchForm = this.formBuilder.control('');
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-        this.browseTfInfo$ = this.store.select(fromSelectors.selectTfInfo);
-        this.browseTfInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
-        this.browseClInfo$ = this.store.select(fromSelectors.selectClInfo);
-        this.browseClInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
-        this.browseTfInfoInitialized$ = this.store.select(fromSelectors.selectTfInfoInitialized);
-        this.browseClInfoInitialized$ = this.store.select(fromSelectors.selectClInfoInitialized);
-        this.tableTfData$ = this.browseTfInfo$.pipe(map(s => s.results))
-        this.tableClData$ = this.browseClInfo$.pipe(map(s => s.results))
+        this.browseAtacInfo$ = this.store.select(fromSelectors.selectTfInfo);
+        this.browseAtacInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
+        this.browseDnaseInfo$ = this.store.select(fromSelectors.selectClInfo);
+        this.browseDnaseInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
+        this.browseAtacInfoInitialized$ = this.store.select(fromSelectors.selectTfInfoInitialized);
+        this.browseDnaseInfoInitialized$ = this.store.select(fromSelectors.selectClInfoInitialized);
+        this.tableAtacData$ = this.browseAtacInfo$.pipe(map(s => s.results));
+        this.tableDnaseData$ = this.browseDnaseInfo$.pipe(map(s => s.results));
         this.subscriptions.add(
             this.route.queryParams.subscribe(
             params => {
                 this.queryParams = {
                     ...this.queryParams,
                     pageSize: 25
-                }
+                };
                 switch (params.by) {
-                    case "cl":
-                        this.initialGroupValue = "cl";
-                        this.tfOrCl = 'cl'
+                    case "atac":
+                        this.initialGroupValue = "atac";
+                        this.aggType = 'atac';
                         this.store.dispatch(new fromActions.data.LoadClInfoAction(
                             this.queryParams
                         ));
                         return;
-                    case "tf":
-                        this.initialGroupValue = "tf";
-                        this.tfOrCl = 'tf'
+                    case "dnase":
+                        this.initialGroupValue = "dnase";
+                        this.aggType = 'dnase';
+                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(
+                            this.queryParams,
+                        ));
+                        return;
+                    case "faire":
+                        this.initialGroupValue = "faire";
+                        this.aggType = 'faire';
                         this.store.dispatch(new fromActions.data.LoadTfInfoAction(
                             this.queryParams,
                         ));
@@ -139,48 +164,35 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                  }
             })
         );
+        this.dnaseDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005');
+        this.atacDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005');
 
-        this.tfColumnModel = {
-            uniprotAc: {view: "UniProt AC", columnTemplate: this.uniprotViewTemplate},
+        this.atacColumnModel = {
             name: {view: "Name"},
-            aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
+            aggregatedSnpsCount: {view: "ASBs count at 25% FDR", isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true},
-            aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true}
-        };
-        this.clColumnModel = {
-            clId: {view: "GTRD ID", columnTemplate: this.cellTypeViewTemplate},
-            name: {view: "Cell type name"},
-            aggregatedSnpsCount: {view: "ASBs count", isDesc: true},
             aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
-            experimentsCount: {view: "Experiments count", isDesc: true}
+            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
         };
-        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
-        if (releaseVersion >= 3) {
-            this.clDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005')
-            this.tfDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005')
-            this.tfColumnModel.geneName = {view: 'Gene symbol'}
-            this.tfColumnModel.aggregatedSnpsCount005 = {view: 'ASBs at 5% FDR', isDesc: true}
-            this.tfColumnModel.aggregatedSnpsCount010 = {view: 'ASBs at 10% FDR', isDesc: true}
-            this.clColumnModel.aggregatedSnpsCount005 = {view: 'ASBs at 5% FDR', isDesc: true}
-            this.clColumnModel.aggregatedSnpsCount010 = {view: 'ASBs at 10% FDR', isDesc: true}
-            this.clColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
-            this.tfColumnModel.aggregatedSnpsCount.view = 'ASBs at 25% FDR'
-        }
-        if (releaseVersion <= 3) {
-            this.tfDisplayedColumns = this.tfDisplayedColumns.filter(v => v !== 'geneName')
-        }
+        this.dnaseColumnModel = {
+            name: {view: "Cell type name"},
+            aggregatedSnpsCount: {view: "ASBs count at 25% FDR", isDesc: true},
+            aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
+            experimentsCount: {view: "Experiments count", isDesc: true},
+            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
+        };
         this.subscriptions.add(
             this.searchForm.valueChanges.pipe(debounceTime(400)).subscribe(
                 v => {
-                    this._handleFilterChange(v)
+                    this._handleFilterChange(v);
                 }
             )
-        )
+        );
 
     }
 
-    _groupToggled(event: MatButtonToggleChange) {
-        this.tfOrCl = event.value
+    _groupToggled(event: MatButtonToggleChange): void {
+        this.aggType = event.value;
         this.router.navigate([],
             {
                 relativeTo: this.route,
@@ -188,13 +200,13 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             }).then();
     }
 
-    _handleTableRowClick(event: TfInfoModel | ClInfoModel, tfOrCl: TfOrCl) {
+    _handleTableRowClick(event: TfInfoModel | ClInfoModel, aggType: AggType): void {
         if (!this.isAnanas) {
             this.subscriptions.add(
                 this.store.select(fromSelectors.selectCurrentRelease).subscribe(
                     s => this.router.navigate([`/${s.url}/search/advanced`],
                         {
-                            queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name}
+                            queryParams: {[aggType]: event.name}
                         }).then()
                 )
             );
@@ -202,7 +214,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
             const url = this.router.serializeUrl(this.router.createUrlTree(
                 [`${recentRelease.url}/search/advanced`],
                 {
-                queryParams: tfOrCl === "tf" ? {tf: event.name} : {cl: event.name},
+                queryParams: {[aggType]: event.name},
 
             }));
             window.open('https://adastra.autosome.org/' + url, '_blank');
@@ -211,14 +223,22 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
     }
 
-    _handleTableChange(event: AsbServerSideModel, tfOrCl: TfOrCl): void {
+    _handleTableChange(event: AsbServerSideModel, aggType: AggType): void {
         this.queryParams = {
             ...this.queryParams,
             ...event
+        };
+        switch (aggType) {
+            case "faire":
+                this.store.dispatch(new fromActions.data.LoadClInfoAction(event));
+                break;
+            case "atac":
+                this.store.dispatch(new fromActions.data.LoadClInfoAction(event));
+                break;
+            case "dnase":
+                this.store.dispatch(new fromActions.data.LoadClInfoAction(event));
+                break;
         }
-        tfOrCl === "cl" ?
-            this.store.dispatch(new fromActions.data.LoadClInfoAction(event)) :
-            this.store.dispatch(new fromActions.data.LoadTfInfoAction(event));
     }
 
     _getPaginatorOptions(length: number): number[] {
@@ -229,8 +249,17 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.queryParams = {
             ...this.queryParams,
             regexp
+        };
+        switch (this.aggType) {
+            case "dnase":
+                this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams));
+                break;
+            case "atac":
+                this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams));
+                break;
+            case "faire":
+                this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams));
+                break;
         }
-        this.tfOrCl === 'cl' ? this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams)) :
-                    this.store.dispatch(new fromActions.data.LoadTfInfoAction(this.queryParams));
     }
 }

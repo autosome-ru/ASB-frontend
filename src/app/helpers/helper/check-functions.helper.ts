@@ -113,9 +113,6 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                 return form.rsId ? {pos: form.chromPos.pos, chr: form.chromPos.chr} : {};
             }
         } else {
-            if (form.clList.length > 0) {
-                result.cl = form.clList.join("@");
-            }
             if (form.chromPos.pos) {
                 if (checkOneResult(searchData) && !oldIsAdvanced &&
                     form.searchBy === 'id' &&
@@ -130,13 +127,15 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                 result.chr = form.chromPos.chr;
             }
             if (!oldIsAdvanced && selectedGene && selectedGene.chr && (form.geneName || form.geneId)) {
-                result.pos = `${selectedGene.startPos}-${selectedGene.endPos}`
-                result.chr = selectedGene.chr.slice(3)
+                result.pos = `${selectedGene.startPos}-${selectedGene.endPos}`;
+                result.chr = selectedGene.chr.slice(3);
+            }
+            for (const field of ['atacList', 'dnaseList', 'faireList']) {
+                if (form[field].length > 0) {
+                    result[field.slice(0, 4)] = form[field].join("@");
+                }
             }
 
-            if (form.tfList.length > 0) {
-                result.tf = form.tfList.join(",");
-            }
             const phenList: string = formCheckboxesToList(form);
             if (phenList) {
                 result.phe_db = phenList;

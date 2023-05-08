@@ -16,7 +16,7 @@ import {AsbTableComponent} from "../../../shared/table-template/mat-table/table.
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
-import {TfSnpModel} from "../../../../models/data.model";
+import {ClSnpModel, TfSnpModel} from "../../../../models/data.model";
 
 
 @Component({
@@ -55,7 +55,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
 
     @Output()
     private downloadSnpInfo = new EventEmitter<{
-        columns: Array<keyof TfSnpModel>,
+        columns: Array<keyof ClSnpModel>,
         filter: string,
     }>();
     @Output()
@@ -95,11 +95,11 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
 
     }
 
-    getTextByStepName(step: string) {
+    getTextByStepName(step: string): {text: string} {
         return getTextByStepNameAdastra(step);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 
@@ -108,7 +108,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
             let result = true;
             if (search) {
                 result = result && Object.keys(row).some(key => {
-                    if (!this.tableDisplayedColumns.some(s => s == key)) {
+                    if (!this.tableDisplayedColumns.some(s => s === key)) {
                         return false;
                     }
                     const converter = (this.tableColumnModel[key] && this.tableColumnModel[key].valueConverter)
@@ -123,20 +123,20 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
         });
     }
 
-    _changeColumns(event: MatSelectChange) {
+    _changeColumns(event: MatSelectChange): void {
         this.tableDisplayedColumns = [
             this.stickyColumn,
             ...event.value
         ];
     }
 
-    _applyFilter(s?: string) {
+    _applyFilter(s?: string): void {
         let search: string;
         search = s ? s : this.tableFormGroup.get("filter").value;
         this.filteredObjectData = this.filterData(this.objectData, search);
 
     }
-    _clearFilterField() {
+    _clearFilterField(): void {
         this.tableFormGroup.patchValue({filter: null});
     }
 

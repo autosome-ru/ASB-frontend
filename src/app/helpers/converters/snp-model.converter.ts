@@ -14,7 +14,7 @@ import {
     SnpSearchBackendModel,
     SnpSearchModel,
     TfInfoBackendModel,
-    TfInfoModel, TfOrCl,
+    TfInfoModel, AggType,
     TfSnpBackendCutModel,
     TfSnpBackendModel,
     TfSnpCutModel,
@@ -64,36 +64,36 @@ export function convertClInfoBackendModelToClInfoModel(model: ClInfoBackendModel
 
 function makeFdrTr(fdr: string): number {
     if (!fdr) {
-        fdr = '0.05'
+        fdr = '0.05';
     }
-    let tr: number = -Math.log10(Number(fdr))
+    let tr: number = -Math.log10(Number(fdr));
     if (!tr) {
-        tr = -Math.log10(0.05)
+        tr = -Math.log10(0.05);
     }
-    return tr
+    return tr;
 }
 
 function makeEsTr(es: string): number {
     if (!es) {
-        es = '0'
+        es = '0';
     }
-    let tr: number = Number(es)
+    let tr: number = Number(es);
     if (!tr) {
-        tr = 0
+        tr = 0;
     }
-    return tr
+    return tr;
 }
 
 
 function compareTr(value: number, tr: number): boolean {
     if (value === null) {
-        return false
+        return false;
     }
-    return value >= tr
+    return value >= tr;
 }
 
 function compareThresholds(value1: number, tr1: number, value2: number, tr2: number): boolean {
-    return compareTr(value1, tr1) && compareTr(value2, tr2)
+    return compareTr(value1, tr1) && compareTr(value2, tr2);
 }
 
 
@@ -106,10 +106,10 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
 export function convertSnpInfoBackendModelToSnpInfoModel(
     model: Partial<SnpInfoBackendModel>, fdr?: string, es?: string
 ): Partial<SnpInfoModel> {
-    const fdrTr = makeFdrTr(fdr)
-    const esTr = makeEsTr(es)
+    const fdrTr = makeFdrTr(fdr);
+    const esTr = makeEsTr(es);
     const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
-    result.cellLines = (model.cl_aggregated_snps.map(s => {
+    result.faireData = (model.cl_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendSnp(s),
             ...convertSnpModel(model)
@@ -118,7 +118,16 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
         s => compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
             compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
 
-    result.transFactors = (model.tf_aggregated_snps.map(s => {
+    result.dnaseData = (model.tf_aggregated_snps.map(s => {
+        return {
+            ...convertTfAggregatedBackendSnp(s),
+            ...convertSnpModel(model)
+        };
+    }) as TfSnpModel[]).filter(s =>
+        compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
+        compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
+
+    result.atacData = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendSnp(s),
             ...convertSnpModel(model)
@@ -138,10 +147,10 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
 export function convertSnpSearchBackendModelToSnpSearchModel(
     model: Partial<SnpSearchBackendModel>, fdr?: string, es?: string
 ): Partial<SnpSearchModel> {
-    const fdrTr = makeFdrTr(fdr)
-    const esTr = makeEsTr(es)
+    const fdrTr = makeFdrTr(fdr);
+    const esTr = makeEsTr(es);
     const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
-    result.cellLines = (model.cl_aggregated_snps.map(s => {
+    result.atacData = (model.cl_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
@@ -149,7 +158,16 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
     }) as ClSnpCutModel[]).filter(
         s => compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
             compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
-    result.transFactors = (model.tf_aggregated_snps.map(s => {
+    result.dnaseData = (model.tf_aggregated_snps.map(s => {
+        return {
+            ...convertTfAggregatedBackendCutSnp(s),
+            ...convertSnpModel(model)
+        };
+    }) as TfSnpCutModel[]).filter(s =>
+        compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
+        compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
+
+    result.faireData = (model.tf_aggregated_snps.map(s => {
         return {
             ...convertTfAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
@@ -173,19 +191,19 @@ function convertSnpModel(model: Partial<SnpGenPosBackendModel>):
         switch (model.context.length) {
             case 51:
             case 49: {
-                const middleIndex = Math.floor(model.context.length / 2)
+                const middleIndex = Math.floor(model.context.length / 2);
                 result.context = model.context.slice(0, middleIndex).toLowerCase() +
                     `[${model.ref}/${model.alt}]` + model.context.slice(middleIndex + 1).toLowerCase();
                 break;
             }
             default: {
                 console.warn(`Unexpected context value ${model.context}, length ${model.context.length} not in [49, 51]`);
-                result.context = ''
+                result.context = '';
                 break;
             }
         }
     } else {
-        console.warn('No context provided')
+        console.warn('No context provided');
     }
     return result;
 }
@@ -202,8 +220,8 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpMod
         expSnps: s.exp_snps.map(convertBackendExpSnp)
     };
 }
-function checkAndInvert(number: number): number {
-    return number ? -number : number
+function checkAndInvert(num: number): number {
+    return num ? -num : num;
 }
 function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel> {
     return {
@@ -246,13 +264,13 @@ function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSn
 }
 function convertExpId(id: number | string): string {
     if (typeof id === 'string') {
-        return id
+        return id;
     } else {
         return 'EXP' + addZeros(id);
     }
 }
 
-function addZeros(id: number) {
+function addZeros(id: number): string {
     let result: string = '' + id;
     let len: number = result.length;
     while (len < 6) {
@@ -278,10 +296,10 @@ export function convertBackendExpSnp(s: ExpSnpBackendModel): ExpSnpModel {
 
 const refSuffix = "PValRef";
 const altSuffix = "PValAlt";
-function parseFieldName(active: string): {name: string, allele: "ref" | "alt", tfOrCl: TfOrCl} {
+function parseFieldName(active: string): {name: string, allele: "ref" | "alt", tfOrCl: AggType} {
 
     let allele: "ref" | "alt";
-    let tfOrCl: TfOrCl;
+    let aggType: AggType;
     if (active.endsWith(refSuffix)) {
         allele = "ref";
         active = active.replace(refSuffix, "");
@@ -289,25 +307,28 @@ function parseFieldName(active: string): {name: string, allele: "ref" | "alt", t
         allele = "alt";
         active = active.replace(altSuffix, "");
     }
-    if (active.endsWith("TF")) {
-        tfOrCl = "tf";
+    if (active.endsWith("ATAC")) {
+        aggType = "atac";
     }
-    if (active.endsWith("CL")) {
-        tfOrCl = "cl";
+    if (active.endsWith("DNASE")) {
+        aggType = "dnase";
+    }
+    if (active.endsWith("FAIRE")) {
+        aggType = "faire";
     }
     return {
         name: active.slice(0, active.length - 2),
         allele,
-        tfOrCl,
+        tfOrCl: aggType,
     };
 }
 
-function convertOrderByToBackend(active: string, direction: SortDirection) {
+function convertOrderByToBackend(active: string, direction: SortDirection): string {
     if (!active || direction === "") {
         return null;
     } else {
         let fieldName: string;
-        const parsedName: {name: string, allele: "ref" | "alt", tfOrCl: TfOrCl} = parseFieldName(active);
+        const parsedName: {name: string, allele: "ref" | "alt", tfOrCl: AggType} = parseFieldName(active);
         if (active.endsWith(altSuffix) || active.endsWith(refSuffix)) {
             fieldName = `${parsedName.tfOrCl.toUpperCase()}@log_p_value_${parsedName.allele}@${parsedName.name}`;
             return (direction === "desc" ? "" : "-") + fieldName;
@@ -322,8 +343,9 @@ function camelCaseToSnakeCase(str: string): string {
     return str[0].toLowerCase() + str.slice(1, str.length).replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }
 
-export function convertServerSideModelToServerSideBackendModel(model: AsbServerSideFilterModel, filterField: string='regexp'): AsbServerSideBackendModel {
-    const order_by: string = convertOrderByToBackend(model.active, model.direction);
+export function convertServerSideModelToServerSideBackendModel(
+    model: AsbServerSideFilterModel, filterField: string = 'regexp'): AsbServerSideBackendModel {
+    const orderBy: string = convertOrderByToBackend(model.active, model.direction);
     const pagination: AsbServerSideBackendModel = {
         page: "" + (model.pageIndex + 1),
         size: "" + model.pageSize
@@ -335,5 +357,5 @@ export function convertServerSideModelToServerSideBackendModel(model: AsbServerS
             pagination[filterField] = model.regexp;
         }
     }
-    return order_by ? {order_by, ...pagination} : pagination;
+    return orderBy ? {order_by: orderBy, ...pagination} : pagination;
 }

@@ -1,5 +1,6 @@
 <nav
-    class="navbar navbar-expand-md navbar-dark theme-accent-color mb-0 justify-content-start asb-header"
+    class="navbar navbar-expand-md theme-accent-color mb-0 justify-content-start asb-header"
+    style="color: black"
 >
     <div style="display: flex; align-items: center; overflow: auto">
         <a
@@ -10,41 +11,41 @@
             [routerLinkActiveOptions]="{exact:true}"
         >
             <div style="display: flex; align-items: center">
-            <img src="/assets/images/ADASTRA_logo_small.svg" alt="" style="height:27px; margin-right: 0.7rem">
-                <div style="display: inline-block">
-                    ADASTRA {{(currentRelease$ | async)?.version}}
+            <img src="/assets/images/ADASTRA_logo_small.png" alt="" style="height:27px; margin-right: 0.7rem">
+                <div style="display: inline-block; color: black">
+                    UDACHA {{(currentRelease$ | async)?.version}}
                 </div>
             </div>
         </a>
-        <button
-            joyrideStep="switch-release"
-            [stepContent]="stepTemplate"
-            [stepContentParams]="getTextByStepName('switch-release')"
-            mat-icon-button
-            disableRipple
-            matTooltip="Switch release"
-            (click)="selectRelease()"
-            style="color: white; display: flex; align-items: center; vertical-align: middle"
-            [matMenuTriggerFor]="releasesMenu"
-            color="accent"
-        >
-            <mat-icon
-                [ngClass]="releaseOpened ? 'asb-header-trans' : 'asb-header-trans-back'"
-                svgIcon="chevron-down"
-            ></mat-icon>
-        </button>
-        <mat-menu #releasesMenu="matMenu"
-                  (closed)="releaseOpened = false">
-            <a
-                *ngFor="let release of releasesList"
-                mat-menu-item
-                [ngClass]="(currentRelease$ | async)?.url === release.url ? 'asb-header__active' : ''"
-                [href]="release.url"
-            >
-                <span
-                >Release {{release.name}} <small>{{release.version}} | <span *ngIf="getReleaseType(release) as rt">{{rt}}</span></small> </span>
-            </a>
-        </mat-menu>
+<!--        <button-->
+<!--            joyrideStep="switch-release"-->
+<!--            [stepContent]="stepTemplate"-->
+<!--            [stepContentParams]="getTextByStepName('switch-release')"-->
+<!--            mat-icon-button-->
+<!--            disableRipple-->
+<!--            matTooltip="Switch release"-->
+<!--            (click)="selectRelease()"-->
+<!--            style="color: white; display: flex; align-items: center; vertical-align: middle"-->
+<!--            [matMenuTriggerFor]="releasesMenu"-->
+<!--            color="accent"-->
+<!--        >-->
+<!--            <mat-icon-->
+<!--                [ngClass]="releaseOpened ? 'asb-header-trans' : 'asb-header-trans-back'"-->
+<!--                svgIcon="chevron-down"-->
+<!--            ></mat-icon>-->
+<!--        </button>-->
+<!--        <mat-menu #releasesMenu="matMenu"-->
+<!--                  (closed)="releaseOpened = false">-->
+<!--            <a-->
+<!--                *ngFor="let release of releasesList"-->
+<!--                mat-menu-item-->
+<!--                [ngClass]="(currentRelease$ | async)?.url === release.url ? 'asb-header__active' : ''"-->
+<!--                [href]="release.url"-->
+<!--            >-->
+<!--                <span-->
+<!--                >Release {{release.name}} <small>{{release.version}} | <span *ngIf="getReleaseType(release) as rt">{{rt}}</span></small> </span>-->
+<!--            </a>-->
+<!--        </mat-menu>-->
     </div>
     <div
         class="collapse navbar-collapse  ml-auto p-2 justify-content-end"
@@ -81,22 +82,22 @@
             class="nav-item nav-link py-sm-0"
             mat-list-item
             [routerLink]="'/' + (currentRelease$ | async)?.url + '/browse'"
-            [queryParams]="{by: 'tf'}"
+            [queryParams]="{by: 'atac'}"
             [routerLinkActive]="['active']"
         >
             Browse
         </a>
-        <a
-            class="nav-item nav-link py-sm-0 header-link"
-            mat-list-item
-            href="https://ananastra.autosome.org"
-            target="_blank"
-            matTooltip="SNP set annotation with ANANASTRA"
-            matTooltipClass="tooltip-bigger"
-            rel="noopener noreferrer"
-        >
-            Annotate
-        </a>
+<!--        <a-->
+<!--            class="nav-item nav-link py-sm-0 header-link"-->
+<!--            mat-list-item-->
+<!--            href="https://ananastra.autosome.org"-->
+<!--            target="_blank"-->
+<!--            matTooltip="SNP set annotation with ANANASTRA"-->
+<!--            matTooltipClass="tooltip-bigger"-->
+<!--            rel="noopener noreferrer"-->
+<!--        >-->
+<!--            Annotate-->
+<!--        </a>-->
         <a
             class="nav-item nav-link py-sm-0"
             mat-list-item

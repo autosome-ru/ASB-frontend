@@ -24,8 +24,9 @@ export interface SnpGenPosBackendModel {
 }
 
 export interface SnpInfoModel extends SnpGenPosModel {
-    transFactors: TfSnpModel[];
-    cellLines: ClSnpModel[];
+    dnaseData: ClSnpModel[];
+    faireData: ClSnpModel[];
+    atacData: ClSnpModel[];
     phenotypes: PhenotypesModel;
 
 }
@@ -44,8 +45,9 @@ export interface MotifConcordanceModel {
 
 }
 export interface SnpSearchModel extends SnpGenPosModel {
-    transFactors: TfSnpCutModel[];
-    cellLines: ClSnpCutModel[];
+    dnaseData: TfSnpCutModel[];
+    atacData: ClSnpCutModel[];
+    faireData: ClSnpCutModel[];
 }
 export interface SnpInfoBackendModel extends SnpGenPosBackendModel {
     tf_aggregated_snps: TfSnpBackendModel[];
@@ -162,9 +164,9 @@ export interface ExpSnpModel {
     clName: string;
 }
 
-export type TfOrCl = "tf" | "cl";
+export type AggType = "atac" | "faire" | "dnase";
 
-export type DownloadTableType = TfOrCl | 'all' | 'not_found' | 'target_genes'
+export type DownloadTableType = AggType | 'all' | 'not_found' | 'target_genes';
 export interface TotalInfoBackendModel {
     cell_types_count: number;
     transcription_factors_count: number;
@@ -188,41 +190,36 @@ export interface TotalInfoModel {
     asbsCount010: number;
 }
 
-export interface TfInfoBackendModel {
+export interface AbstractInfoBackendModel {
     name: string;
-    uniprot_ac: string;
     aggregated_snps_count: number;
     experiments_count: number;
     aggregated_snps_count010: number;
     aggregated_snps_count005: number;
+
+}
+export interface TfInfoBackendModel extends AbstractInfoBackendModel {
+    uniprot_ac: string;
     gene_name: string;
 }
 
-export interface ClInfoBackendModel {
+export interface ClInfoBackendModel extends AbstractInfoBackendModel {
     cl_id: number;
-    name: string;
-    aggregated_snps_count: number;
-    experiments_count: number;
-    aggregated_snps_count010: number;
-    aggregated_snps_count005: number;
 }
 
+export interface AbstractInfoModel {
+    name: string;
+    aggregatedSnpsCount010: number;
+    aggregatedSnpsCount: number;
+    experimentsCount: number;
+    aggregatedSnpsCount005: number;
+}
 
-export interface TfInfoModel {
+export interface TfInfoModel extends AbstractInfoModel {
     uniprotAc: string;
-    name: string;
     geneName: string;
-    aggregatedSnpsCount: number;
-    experimentsCount: number;
-    aggregatedSnpsCount010: number;
-    aggregatedSnpsCount005: number;
 }
 
-export interface ClInfoModel {
+export interface ClInfoModel extends AbstractInfoModel {
     clId: string;
-    name: string;
-    aggregatedSnpsCount010: number;
-    aggregatedSnpsCount: number;
-    experimentsCount: number;
-    aggregatedSnpsCount005: number;
 }

@@ -25,7 +25,7 @@ export function convertSearchHintBackendModelToSearchHintModel(
 
 export function convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
     model: SearchByGeneNameHintBackendModel): GeneModel {
-    if (!model) return null
+    if (!model) { return null; }
     return {
         chr: model.chromosome,
         startPos: model.locus_start,
@@ -36,15 +36,16 @@ export function convertSearchByGeneNameHintBackendToSearchByGeneHintModel(
         snpsCount010: model.snps_count010,
         eqtlCount: model.eqtl_snps_count,
         eqtlCount010: model.eqtl_snps_count010
-    }
+    };
 }
 
 export function formCheckboxesToList(form: Partial<SearchQueryModel>, type?: "phenotypes" | "concordance", forBackend?: boolean): string {
     let result = "";
-    Object.keys(type == "concordance" ? concordanceModelExample : phenotypesModelExample)
+    Object.keys(type === "concordance" ? concordanceModelExample : phenotypesModelExample)
         .forEach(s => {
         if (s && form[s]) {
-            result = (result ? result + "," : "") + (forBackend ? s != 'Other' ? s : 'No Hit,None' : s);
+            result = (result ? result + "," : "") + (
+                forBackend ? s !== 'Other' ? s : 'No Hit,None' : s);
         }
     });
     return result;

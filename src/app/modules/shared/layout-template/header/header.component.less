@@ -1,9 +1,15 @@
 @import "~src/styles/shared/colors.less";
+
+.navbar-nav >a{
+    color: rgba(0,0,0,.87);
+    &:hover {
+        text-decoration: underline;
+    }
+}
 .asb-header {
     position: relative;
     z-index: 1;
-
-
+    color: black;
 
     &-trans {
         -webkit-transform: rotate(180deg);
@@ -45,7 +51,7 @@
         &-text {
             flex: 0 1 auto;
             font-size: 16px;
-            color: @primary_theme_color_600;
+            color: @primary_theme_color_900;
         }
     }
 }
