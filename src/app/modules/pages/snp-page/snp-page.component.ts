@@ -30,6 +30,7 @@ import {MatTabGroup} from "@angular/material/tabs";
 import {ReleaseModel} from "../../../models/releases.model";
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: "asb-snp-page",
     templateUrl: "./snp-page.component.html",
     styleUrls: ["./snp-page.component.less"],
@@ -251,7 +252,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             calculateColorForOne(row.pValueAlt, row.altBase);
     }
 
-    _createSnpName(snpData: SnpInfoModel) {
+    _createSnpName(snpData: SnpInfoModel): (row: ClSnpModel) => string {
         return (row: ClSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase}` +
             " of " + this._getName(row);
     }

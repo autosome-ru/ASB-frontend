@@ -1,8 +1,7 @@
 import {GeneModel, SearchParamsModel, SearchQueryModel} from "../../models/search-query.model";
 import {formCheckboxesToList} from "../converters/search-model.converter";
-import {SnpSearchModel, TfSnpModel} from "../../models/data.model";
+import {ClSnpModel, SnpSearchModel} from "../../models/data.model";
 import {MatSort} from "@angular/material/sort";
-import {compareConcordance} from "../constants/constants";
 import {pValueString} from "../../models/annotation.model";
 
 export function getPaginatorOptions(len: number): number[] {
@@ -11,26 +10,26 @@ export function getPaginatorOptions(len: number): number[] {
         [5, 10, 25, 50];
 }
 
-export function stringOrNumberConverter(v: pValueString, fractionDigits: number = 2) {
+export function stringOrNumberConverter(v: pValueString, fractionDigits: number = 2): string {
     if (v === null) {
-        return 'n/a'
+        return 'n/a';
     }
-    if (typeof v == 'number') {
-        return v.toFixed(fractionDigits)
+    if (typeof v === 'number') {
+        return v.toFixed(fractionDigits);
     } else {
-        return v === 'infinity' ? 'ထ' : v
+        return v === 'infinity' ? 'ထ' : v;
     }
 }
 export function stringToNum(v: string, toInvert: boolean = false): pValueString {
     if (v === null) {
-        return null
+        return null;
     }
     if (v === 'infinity') {
-        return 'infinity'
+        return 'infinity';
     }
-    return Number(v) * (toInvert ? -1 : 1)
+    return Number(v) * (toInvert ? -1 : 1);
 }
-export function checkIfNumberOrFrac(data: string ) {
+export function checkIfNumberOrFrac(data: string): string | number {
     if (data.match(/^\d+$/)) {
         return Number(data);
     }
@@ -64,9 +63,9 @@ export function checkOneResult(searchData: SnpSearchModel[]): boolean {
 export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: boolean,
                                     searchData?: SnpSearchModel[], selectedGene?: GeneModel): Partial<SearchParamsModel> {
     if (form) {
-        let result: Partial<SearchParamsModel> = form.fdr ? {fdr: form.fdr} : {};
+        const result: Partial<SearchParamsModel> = form.fdr ? {fdr: form.fdr} : {};
         if (form.es) {
-            result.es = form.es
+            result.es = form.es;
         }
         if (!form.isAdvanced) {
             if (form.searchBy) {
@@ -76,39 +75,39 @@ export function convertFormToParams(form: SearchQueryModel, oldIsAdvanced?: bool
                 switch (form.searchBy) {
                     case "id":
                         if (form.rsId) {
-                            result.rs = form.rsId.trim()
+                            result.rs = form.rsId.trim();
                         }
                         break;
                     case "pos":
                         if (form.chromPos.pos) {
-                            result.pos = form.chromPos.pos.trim()
+                            result.pos = form.chromPos.pos.trim();
                         }
                         if (form.chromPos.chr) {
-                            result.chr = form.chromPos.chr.trim()
+                            result.chr = form.chromPos.chr.trim();
                         }
                         break;
                     case "geneId":
                         if (form.geneId) {
-                            result.g_id = form.geneId.trim()
+                            result.g_id = form.geneId.trim();
                         }
                         break;
                     case "geneName":
                         if (form.geneName) {
-                            result.g_name = form.geneName.trim()
+                            result.g_name = form.geneName.trim();
                         }
-                       break;
+                        break;
                     case "eqtlGeneId":
                         if (form.eqtlGeneId) {
-                            result.eqtl_g_id = form.eqtlGeneId.trim()
+                            result.eqtl_g_id = form.eqtlGeneId.trim();
                         }
                         break;
                     case "eqtlGeneName":
                         if (form.eqtlGeneName) {
-                            result.eqtl_g_name = form.eqtlGeneName.trim()
+                            result.eqtl_g_name = form.eqtlGeneName.trim();
                         }
                         break;
                 }
-                return result
+                return result;
             } else {
                 return form.rsId ? {pos: form.chromPos.pos, chr: form.chromPos.chr} : {};
             }
@@ -164,32 +163,14 @@ function applyFunction(a: string | number, b: string | number, isBadElem: ((x: s
     }
 }
 
-export function compareData(a: TfSnpModel, b: TfSnpModel, sort: MatSort): number {
+export function compareData(a: ClSnpModel, b: ClSnpModel, sort: MatSort): number {
     let result = 0;
     if (sort.active) {
         if (a[sort.active] && b[sort.active]) {
-            switch (sort.active) {
-                case "motifConcordance": {
-                    if (a.motifConcordance != "No Hit" && b.motifConcordance != "No Hit") {
-                        result = compareConcordance(a.motifConcordance, b.motifConcordance);
-                    } else {
-                        return applyFunction(a.motifConcordance, b.motifConcordance,
-                            x => x == "No Hit" );
-                    }
-                    break;
-                }
-                case "motifOrientation": {
-                    console.log(a[sort.active], b[sort.active])
-                    result = +a[sort.active] - +b[sort.active]
-                    break;
-                }
-                default:
-                    result = a[sort.active] > b[sort.active] ? 1 : -1;
-                    break;
-            }
+            result = a[sort.active] > b[sort.active] ? 1 : -1;
         } else {
             return applyFunction(a[sort.active], b[sort.active], x => !x);
         }
     }
-    return result * (sort.direction == "asc" ? 1 : -1);
+    return result * (sort.direction === "asc" ? 1 : -1);
 }
