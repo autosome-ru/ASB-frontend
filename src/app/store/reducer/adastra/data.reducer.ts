@@ -16,13 +16,17 @@ export interface DataState {
     totalInfo: TotalInfoModel;
     totalInfoLoading: boolean;
 
-    tfInfo: {results: TfInfoModel[], total: number};
-    tfInfoLoading: boolean;
-    tfInfoInitialized: boolean;
+    atacInfo: {results: ClInfoModel[], total: number};
+    atacInfoLoading: boolean;
+    atacInfoInitialized: boolean;
 
-    clInfo: {results: ClInfoModel[], total: number};
-    clInfoLoading: boolean;
-    clInfoInitialized: boolean;
+    dnaseInfo: {results: ClInfoModel[], total: number};
+    dnaseInfoLoading: boolean;
+    dnaseInfoInitialized: boolean;
+
+    faireInfo: {results: ClInfoModel[], total: number};
+    faireInfoLoading: boolean;
+    faireInfoInitialized: boolean;
 
     snps: {
         [snpId: string]: {
@@ -37,28 +41,35 @@ export interface DataState {
 export const selectTotalInfo = (state: DataState) => state.totalInfo;
 export const selectTotalInfoLoading = (state: DataState) => state.totalInfoLoading;
 
-export const selectTfInfo = (state: DataState) => state.tfInfo;
-export const selectTfInfoLoading = (state: DataState) => state.tfInfoLoading;
-export const selectTfInfoInitialized = (state: DataState) => state.tfInfoInitialized;
+export const selectAtacInfo = (state: DataState) => state.atacInfo;
+export const selectAtacInfoLoading = (state: DataState) => state.atacInfoLoading;
+export const selectAtacInfoInitialized = (state: DataState) => state.atacInfoInitialized;
 
-export const selectClInfo = (state: DataState) => state.clInfo;
-export const selectClInfoLoading = (state: DataState) => state.clInfoLoading;
-export const selectClInfoInitialized = (state: DataState) => state.clInfoInitialized;
+export const selectDnaseInfo = (state: DataState) => state.dnaseInfo;
+export const selectDnaseInfoLoading = (state: DataState) => state.dnaseInfoLoading;
+export const selectDnaseInfoInitialized = (state: DataState) => state.dnaseInfoInitialized;
+
+export const selectFaireInfo = (state: DataState) => state.faireInfo;
+export const selectFaireInfoLoading = (state: DataState) => state.faireInfoLoading;
+export const selectFaireInfoInitialized = (state: DataState) => state.faireInfoInitialized;
 
 export const selectSnps = (state: DataState) => state.snps;
 
 
 export const initialState: DataState = {
     totalInfo: null,
-    tfInfo: {results: [], total: 0},
-    clInfo: {results: [], total: 0},
+    atacInfo: {results: [], total: 0},
+    dnaseInfo: {results: [], total: 0},
+    faireInfo: {results: [], total: 0},
 
     totalInfoLoading: false,
-    tfInfoLoading: false,
-    clInfoLoading: false,
+    atacInfoLoading: false,
+    dnaseInfoLoading: false,
+    faireInfoLoading: false,
 
-    tfInfoInitialized: false,
-    clInfoInitialized: false,
+    atacInfoInitialized: false,
+    dnaseInfoInitialized: false,
+    faireInfoInitialized: false,
     snps: {},
 };
 
@@ -87,57 +98,81 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
         }
 
-
-
-        case fromActions.ActionTypes.LoadTfInfo: {
+        case fromActions.ActionTypes.LoadDnaseInfoSuccess: {
             return {
                 ...state,
-                tfInfoLoading: true
-            };
-        }
-
-        case fromActions.ActionTypes.LoadTfInfoSuccess: {
-            return {
-                ...state,
-                tfInfoLoading: false,
-                tfInfoInitialized: true,
-                tfInfo: {
-                    total: action.payload.total,
-                    results: action.payload.results.map(convertTfInfoBackendModelToTfInfoModel)
-                }
-            };
-        }
-
-        case fromActions.ActionTypes.LoadTfInfoFail: {
-            return {
-                ...state,
-                tfInfoLoading: false
-            };
-        }
-
-        case fromActions.ActionTypes.LoadClInfo: {
-            return {
-                ...state,
-                clInfoLoading: true
-            };
-        }
-
-        case fromActions.ActionTypes.LoadClInfoSuccess: {
-            return {
-                ...state,
-                clInfoLoading: false,
-                clInfoInitialized: true,
-                clInfo: {
+                dnaseInfoLoading: false,
+                dnaseInfoInitialized: true,
+                dnaseInfo: {
                     total: action.payload.total,
                     results: action.payload.results.map(convertClInfoBackendModelToClInfoModel)
                 }
             };
         }
 
-        case fromActions.ActionTypes.LoadClInfoFail: {
+        case fromActions.ActionTypes.LoadDnaseInfoFail: {
             return {
                 ...state,
-                clInfoLoading: false
+                dnaseInfoLoading: false
+            };
+        }
+
+        case fromActions.ActionTypes.LoadDnaseInfo: {
+            return {
+                ...state,
+                dnaseInfoLoading: true
+            };
+        }
+
+        case fromActions.ActionTypes.LoadFaireInfo: {
+            return {
+                ...state,
+                faireInfoLoading: true
+            };
+        }
+
+        case fromActions.ActionTypes.LoadFaireInfoSuccess: {
+            return {
+                ...state,
+                faireInfoLoading: false,
+                faireInfoInitialized: true,
+                faireInfo: {
+                    total: action.payload.total,
+                    results: action.payload.results.map(convertClInfoBackendModelToClInfoModel)
+                }
+            };
+        }
+
+        case fromActions.ActionTypes.LoadFaireInfoFail: {
+            return {
+                ...state,
+                faireInfoLoading: false
+            };
+        }
+
+        case fromActions.ActionTypes.LoadAtacInfo: {
+            return {
+                ...state,
+                atacInfoLoading: true
+            };
+        }
+
+        case fromActions.ActionTypes.LoadAtacInfoSuccess: {
+            return {
+                ...state,
+                atacInfoLoading: false,
+                atacInfoInitialized: true,
+                atacInfo: {
+                    total: action.payload.total,
+                    results: action.payload.results.map(convertClInfoBackendModelToClInfoModel)
+                }
+            };
+        }
+
+        case fromActions.ActionTypes.LoadAtacInfoFail: {
+            return {
+                ...state,
+                atacInfoLoading: false
             };
         }
 
@@ -169,7 +204,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
             };
             const snpId = `rs${action.payload.info.rs_id}${action.payload.info.alt}`;
             Object.keys(newPhenotypes).forEach(
-                s => s != "total" ?
+                s => s !== "total" ?
                     newPhenotypes[s] = reduceToDb(s, action.payload.info.phenotypes) :
                     newPhenotypes.total = action.payload.info.phenotypes.length
             );

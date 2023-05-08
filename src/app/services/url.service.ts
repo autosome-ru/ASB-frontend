@@ -18,7 +18,7 @@ export class UrlService {
     }
     getUrlForQuery(queryType: 'browse' | 'snp' | 'search' |
         'searchOptAdv' | 'searchOptGene' | 'ananastra',
-                   tfOrCl?: AggType, isEqtl?: boolean): string {
+                   aggType?: AggType, isEqtl?: boolean): string {
         const currentApi = `https://udacha.autosome.org/api/${this.currentRelease.api}`;
         switch (queryType) {
             case "browse":
@@ -28,7 +28,7 @@ export class UrlService {
             case "snp":
                 return `${currentApi}/snps`;
             case "searchOptAdv":
-                return `${currentApi}/search/${tfOrCl}/hint`;
+                return `${currentApi}/search/${aggType}/hint`;
             case "searchOptGene":
                 return `${currentApi}/search/${isEqtl ?
                     'eqtl_gene_name' : 'gene_name'}/hint`;
@@ -42,7 +42,7 @@ export class UrlService {
 
 
     getHostName(): string {
-        return `${window.location.protocol}//${window.location.hostname}${environment.production ? '': ':5000'}/`
+        return `${window.location.protocol}//${window.location.hostname}${environment.production ? '' : ':5000'}/`;
     }
 
 }

@@ -12,13 +12,17 @@ export enum ActionTypes {
     LoadTotalInfoFail = "[Data] total info loading failed",
     InitTotalInfo = "[Data] init total info",
 
-    LoadTfInfo = "[Data] load tf info",
-    LoadTfInfoSuccess = "[Data] tf info loaded successfully",
-    LoadTfInfoFail = "[Data] tf info loading failed",
+    LoadFaireInfo = "[Data] load faire info",
+    LoadFaireInfoSuccess = "[Data] faire info loaded successfully",
+    LoadFaireInfoFail = "[Data] faire info loading failed",
 
-    LoadClInfo = "[Data] load cl info",
-    LoadClInfoSuccess = "[Data] cl info loaded successfully",
-    LoadClInfoFail = "[Data] cl info loading failed",
+    LoadDnaseInfo = "[Data] load dnase info",
+    LoadDnaseInfoSuccess = "[Data] dnase info loaded successfully",
+    LoadDnaseInfoFail = "[Data] dnase info loading failed",
+
+    LoadAtacInfo = "[Data] load atac info",
+    LoadAtacInfoSuccess = "[Data] atac info loaded successfully",
+    LoadAtacInfoFail = "[Data] atac info loading failed",
 
     LoadSnpInfo = "[Data] load snp info ",
     LoadSnpInfoSuccess = "[Data] snp info loaded successfully",
@@ -42,33 +46,47 @@ export class InitTotalInfoAction implements Action {
 }
 
 
-export class LoadTfInfoAction implements Action {
-    readonly type = ActionTypes.LoadTfInfo;
+export class LoadFaireInfoAction implements Action {
+    readonly type = ActionTypes.LoadFaireInfo;
 
     constructor(public payload: AsbServerSideFilterModel) {}
 }
-export class LoadTfInfoSuccessAction implements Action {
-    readonly type = ActionTypes.LoadTfInfoSuccess;
+export class LoadFaireInfoSuccessAction implements Action {
+    readonly type = ActionTypes.LoadFaireInfoSuccess;
 
     constructor(public payload: {results: AbstractInfoBackendModel[], total: number}) {}
 }
-export class LoadTfInfoFailAction implements Action {
-    readonly type = ActionTypes.LoadTfInfoFail;
+export class LoadFaireInfoFailAction implements Action {
+    readonly type = ActionTypes.LoadFaireInfoFail;
 }
 
-
-export class LoadClInfoAction implements Action {
-    readonly type = ActionTypes.LoadClInfo;
+export class LoadDnaseInfoAction implements Action {
+    readonly type = ActionTypes.LoadDnaseInfo;
 
     constructor(public payload: AsbServerSideFilterModel) {}
 }
-export class LoadClInfoSuccessAction implements Action {
-    readonly type = ActionTypes.LoadClInfoSuccess;
+export class LoadDnaseInfoSuccessAction implements Action {
+    readonly type = ActionTypes.LoadDnaseInfoSuccess;
 
     constructor(public payload: {results: AbstractInfoBackendModel[], total: number}) {}
 }
-export class LoadClInfoFailAction implements Action {
-    readonly type = ActionTypes.LoadClInfoFail;
+export class LoadDnaseInfoFailAction implements Action {
+    readonly type = ActionTypes.LoadDnaseInfoFail;
+}
+
+
+export class LoadAtacInfoAction implements Action {
+    readonly type = ActionTypes.LoadAtacInfo;
+
+    constructor(public payload: AsbServerSideFilterModel) {}
+}
+export class LoadAtacInfoSuccessAction implements Action {
+    readonly type = ActionTypes.LoadAtacInfoSuccess;
+
+    constructor(public payload: {results: AbstractInfoBackendModel[], total: number}) {}
+}
+export class LoadAtacInfoFailAction implements Action {
+    readonly type = ActionTypes.LoadAtacInfoFail;
 }
 
 
@@ -107,11 +125,15 @@ export type ActionUnion =
     | LoadTotalInfoSuccessAction
     | InitTotalInfoAction
 
-    | LoadTfInfoAction
-    | LoadTfInfoFailAction
-    | LoadTfInfoSuccessAction
+    | LoadFaireInfoAction
+    | LoadFaireInfoFailAction
+    | LoadFaireInfoSuccessAction
 
-    | LoadClInfoAction
-    | LoadClInfoFailAction
-    | LoadClInfoSuccessAction
+    | LoadAtacInfoAction
+    | LoadAtacInfoFailAction
+    | LoadAtacInfoSuccessAction
+
+    | LoadDnaseInfoAction
+    | LoadDnaseInfoFailAction
+    | LoadDnaseInfoSuccessAction
     ;

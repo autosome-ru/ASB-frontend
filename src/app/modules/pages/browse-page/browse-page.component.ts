@@ -42,7 +42,7 @@ import {recentRelease} from "../../../helpers/constants/releases";
 })
 export class BrowsePageComponent implements OnInit, OnDestroy {
     @ViewChild("tableAtacView", {static: true})
-    public tfTableView: AsbServerTableComponent<TfInfoModel>;
+    public tfTableView: AsbServerTableComponent<ClInfoModel>;
 
     @ViewChild("tableDnaseView", {static: true})
     public clTableView: AsbServerTableComponent<ClInfoModel>;
@@ -56,7 +56,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     @ViewChild("uniprotViewTemplate", {static: true})
     public uniprotViewTemplate: TemplateRef<{value: string}>;
 
-    public browseAtacInfo$: Observable<{results: TfInfoModel[], total: number}>;
+    public browseAtacInfo$: Observable<{results: ClInfoModel[], total: number}>;
     public browseAtacInfoLoading$: Observable<boolean>;
 
 
@@ -71,14 +71,12 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         "experimentsCount",
         "aggregatedSnpsCount",
     ];
-    public dnaseColumnModel: AsbTableColumnModel<AbstractInfoModel>;
-
     public atacDisplayedColumns: AsbTableDisplayedColumns<AbstractInfoModel> = [
         "name",
         "experimentsCount",
         "aggregatedSnpsCount",
     ];
-    public atacColumnModel: AsbTableColumnModel<TfInfoModel>;
+    public columnModel: AsbTableColumnModel<ClInfoModel>;
 
     public faireDisplayedColumns: AsbTableDisplayedColumns<AbstractInfoModel> = [
         "name",
@@ -95,7 +93,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public browseFaireInfoInitialized$: Observable<boolean>;
 
 
-    public tableAtacData$: Observable<TfInfoModel[]>;
+    public tableAtacData$: Observable<ClInfoModel[]>;
     public tableFaireData$: Observable<ClInfoModel[]>;
     public tableDnaseData$: Observable<ClInfoModel[]>;
 
@@ -121,14 +119,23 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.isAnanas = this.route.snapshot.data.isAnanas;
         this.searchForm = this.formBuilder.control('');
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
-        this.browseAtacInfo$ = this.store.select(fromSelectors.selectTfInfo);
-        this.browseAtacInfoLoading$ = this.store.select(fromSelectors.selectTfInfoLoading);
-        this.browseDnaseInfo$ = this.store.select(fromSelectors.selectClInfo);
-        this.browseDnaseInfoLoading$ = this.store.select(fromSelectors.selectClInfoLoading);
-        this.browseAtacInfoInitialized$ = this.store.select(fromSelectors.selectTfInfoInitialized);
-        this.browseDnaseInfoInitialized$ = this.store.select(fromSelectors.selectClInfoInitialized);
+
+        this.browseAtacInfo$ = this.store.select(fromSelectors.selectAtacInfo);
+        this.browseAtacInfoLoading$ = this.store.select(fromSelectors.selectAtacInfoLoading);
+        this.browseAtacInfoInitialized$ = this.store.select(fromSelectors.selectAtacInfoInitialized);
+
+        this.browseDnaseInfo$ = this.store.select(fromSelectors.selectDnaseInfo);
+        this.browseDnaseInfoInitialized$ = this.store.select(fromSelectors.selectDnaseInfoInitialized);
+        this.browseDnaseInfoLoading$ = this.store.select(fromSelectors.selectDnaseInfoLoading);
+
+        this.browseFaireInfo$ = this.store.select(fromSelectors.selectFaireInfo);
+        this.browseFaireInfoInitialized$ = this.store.select(fromSelectors.selectFaireInfoInitialized);
+        this.browseFaireInfoLoading$ = this.store.select(fromSelectors.selectFaireInfoLoading);
+
         this.tableAtacData$ = this.browseAtacInfo$.pipe(map(s => s.results));
         this.tableDnaseData$ = this.browseDnaseInfo$.pipe(map(s => s.results));
+        this.tableFaireData$ = this.browseFaireInfo$.pipe(map(s => s.results));
+
         this.subscriptions.add(
             this.route.queryParams.subscribe(
             params => {
@@ -140,21 +147,21 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                     case "atac":
                         this.initialGroupValue = "atac";
                         this.aggType = 'atac';
-                        this.store.dispatch(new fromActions.data.LoadClInfoAction(
+                        this.store.dispatch(new fromActions.data.LoadAtacInfoAction(
                             this.queryParams
                         ));
                         return;
                     case "dnase":
                         this.initialGroupValue = "dnase";
                         this.aggType = 'dnase';
-                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(
+                        this.store.dispatch(new fromActions.data.LoadDnaseInfoAction(
                             this.queryParams,
                         ));
                         return;
                     case "faire":
                         this.initialGroupValue = "faire";
                         this.aggType = 'faire';
-                        this.store.dispatch(new fromActions.data.LoadTfInfoAction(
+                        this.store.dispatch(new fromActions.data.LoadFaireInfoAction(
                             this.queryParams,
                         ));
                         return;
@@ -167,18 +174,11 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         this.dnaseDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005');
         this.atacDisplayedColumns.push('aggregatedSnpsCount010', 'aggregatedSnpsCount005');
 
-        this.atacColumnModel = {
+        this.columnModel = {
             name: {view: "Name"},
             aggregatedSnpsCount: {view: "ASBs count at 25% FDR", isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true},
             aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
-            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
-        };
-        this.dnaseColumnModel = {
-            name: {view: "Cell type name"},
-            aggregatedSnpsCount: {view: "ASBs count at 25% FDR", isDesc: true},
-            aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
-            experimentsCount: {view: "Experiments count", isDesc: true},
             aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
         };
         this.subscriptions.add(
@@ -217,7 +217,7 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                 queryParams: {[aggType]: event.name},
 
             }));
-            window.open('https://adastra.autosome.org/' + url, '_blank');
+            window.open('https://udacha.autosome.org/' + url, '_blank');
         }
 
 
@@ -230,13 +230,13 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         };
         switch (aggType) {
             case "faire":
-                this.store.dispatch(new fromActions.data.LoadClInfoAction(event));
+                this.store.dispatch(new fromActions.data.LoadFaireInfoAction(event));
                 break;
             case "atac":
-                this.store.dispatch(new fromActions.data.LoadClInfoAction(event));
+                this.store.dispatch(new fromActions.data.LoadAtacInfoAction(event));
                 break;
             case "dnase":
-                this.store.dispatch(new fromActions.data.LoadClInfoAction(event));
+                this.store.dispatch(new fromActions.data.LoadDnaseInfoAction(event));
                 break;
         }
     }
@@ -252,13 +252,13 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
         };
         switch (this.aggType) {
             case "dnase":
-                this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams));
+                this.store.dispatch(new fromActions.data.LoadDnaseInfoAction(this.queryParams));
                 break;
             case "atac":
-                this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams));
+                this.store.dispatch(new fromActions.data.LoadAtacInfoAction(this.queryParams));
                 break;
             case "faire":
-                this.store.dispatch(new fromActions.data.LoadClInfoAction(this.queryParams));
+                this.store.dispatch(new fromActions.data.LoadFaireInfoAction(this.queryParams));
                 break;
         }
     }

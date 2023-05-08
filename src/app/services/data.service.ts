@@ -45,15 +45,22 @@ export class DataService {
     }
 
 
-    public getTfInfo(params: AsbServerSideFilterModel): Observable<{results: AbstractInfoBackendModel[], total: number}> {
-        return this.http.get<{results: AbstractInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/tf",
+    public getFaireInfo(params: AsbServerSideFilterModel): Observable<{results: AbstractInfoBackendModel[], total: number}> {
+        return this.http.get<{results: AbstractInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/faire",
         {
             params: convertServerSideModelToServerSideBackendModel(params)
         });
     }
 
-    public getClInfo(params: AsbServerSideFilterModel): Observable<{results: AbstractInfoBackendModel[], total: number}> {
-        return this.http.get<{results: AbstractInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/cl",
+    public getAtacInfo(params: AsbServerSideFilterModel): Observable<{results: AbstractInfoBackendModel[], total: number}> {
+        return this.http.get<{results: AbstractInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/atac",
+            {
+                params: convertServerSideModelToServerSideBackendModel(params)
+            });
+    }
+
+    public getDnaseInfo(params: AsbServerSideFilterModel): Observable<{results: AbstractInfoBackendModel[], total: number}> {
+        return this.http.get<{results: AbstractInfoBackendModel[], total: number}>(this.urlService.getUrlForQuery("browse") + "/dnase",
             {
                 params: convertServerSideModelToServerSideBackendModel(params)
             });

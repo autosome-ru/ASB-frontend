@@ -58,7 +58,7 @@
                     [isSearched]="!!this.searchForm.value"
                     [dataLoading]="browseAtacInfoLoading$ | async"
                     [displayedColumns]="atacDisplayedColumns"
-                    [columnModel]="atacColumnModel"
+                    [columnModel]="columnModel"
                     [paginatorPageSize]="25"
                     [paginatorOptions]="_getPaginatorOptions(((browseAtacInfo$ | async) && (browseAtacInfo$ | async).total))"
                     [clickableRow]="true"
@@ -76,7 +76,7 @@
                     [isSearched]="!!this.searchForm.value"
                     [dataLoading]="browseDnaseInfoLoading$ | async"
                     [displayedColumns]="dnaseDisplayedColumns"
-                    [columnModel]="dnaseColumnModel"
+                    [columnModel]="columnModel"
                     [paginatorPageSize]="25"
                     [paginatorOptions]="_getPaginatorOptions(
                         ((browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total))"
@@ -95,7 +95,7 @@
                     [isSearched]="!!this.searchForm.value"
                     [dataLoading]="browseFaireInfoLoading$ | async"
                     [displayedColumns]="faireDisplayedColumns"
-                    [columnModel]="faireColumnModel"
+                    [columnModel]="columnModel"
                     [paginatorPageSize]="25"
                     [paginatorOptions]="_getPaginatorOptions(
                         ((browseFaireInfo$ | async) && (browseFaireInfo$ | async).total))"
@@ -139,25 +139,5 @@
     >
         {{value}}
     </a>
-</ng-template>
-
-<ng-template #dnaseTableTemplate>
-
-    <asb-table-server
-        #tableDnaseView
-        *ngIf="browseDnaseInfoInitialized$ | async"
-        [data]="tableDnaseData$"
-        [isSearched]="!!this.searchForm.value"
-        [dataLoading]="browseDnaseInfoLoading$ | async"
-        [displayedColumns]="dnaseDisplayedColumns"
-        [columnModel]="dnaseColumnModel"
-        [paginatorPageSize]="25"
-        [paginatorOptions]="_getPaginatorOptions((browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total)"
-        [clickableRow]="true"
-        [paginatorLength]="(browseDnaseInfo$ | async) && (browseDnaseInfo$ | async).total"
-        (rowClickEmitter)="_handleTableRowClick($event, 'dnase')"
-        (tableChangesEmitter)="_handleTableChange($event, 'dnase')"
-    >
-    </asb-table-server>
 </ng-template>
 

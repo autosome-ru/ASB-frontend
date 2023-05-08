@@ -45,21 +45,31 @@ export class DataEffect {
         ),
     ));
 
-    loadTfStats$ = createEffect(() => this.actions$.pipe(
-        ofType(fromActions.ActionTypes.LoadTfInfo),
-        mergeMap((action: fromActions.LoadTfInfoAction) =>
-            this.dataService.getTfInfo(action.payload).pipe(
-                map(info => new fromActions.LoadTfInfoSuccessAction(info)),
-                catchError(() => of(new fromActions.LoadTfInfoFailAction())),
+    loadFaireStats$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadFaireInfo),
+        mergeMap((action: fromActions.LoadFaireInfoAction) =>
+            this.dataService.getFaireInfo(action.payload).pipe(
+                map(info => new fromActions.LoadFaireInfoSuccessAction(info)),
+                catchError(() => of(new fromActions.LoadFaireInfoFailAction())),
             )
         )
     ));
-    loadClStats$ = createEffect(() => this.actions$.pipe(
-        ofType(fromActions.ActionTypes.LoadClInfo),
-        mergeMap((action: fromActions.LoadClInfoAction) =>
-            this.dataService.getClInfo(action.payload).pipe(
-                map(info => new fromActions.LoadClInfoSuccessAction(info)),
-                catchError(() => of(new fromActions.LoadClInfoFailAction())),
+    loadAtacStats$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadAtacInfo),
+        mergeMap((action: fromActions.LoadAtacInfoAction) =>
+            this.dataService.getAtacInfo(action.payload).pipe(
+                map(info => new fromActions.LoadAtacInfoSuccessAction(info)),
+                catchError(() => of(new fromActions.LoadAtacInfoFailAction())),
+            )
+        )
+    ));
+
+    loadDnaseStats$ = createEffect(() => this.actions$.pipe(
+        ofType(fromActions.ActionTypes.LoadDnaseInfo),
+        mergeMap((action: fromActions.LoadDnaseInfoAction) =>
+            this.dataService.getDnaseInfo(action.payload).pipe(
+                map(info => new fromActions.LoadDnaseInfoSuccessAction(info)),
+                catchError(() => of(new fromActions.LoadDnaseInfoFailAction())),
             )
         )
     ));
