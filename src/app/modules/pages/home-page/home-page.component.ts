@@ -24,6 +24,7 @@ import {ReleaseModel} from "../../../models/releases.model";
 import {ReleasesService} from "../../../services/releases.service";
 
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: "home-page",
     templateUrl: "./home-page.component.html",
     styleUrls: [ "./home-page.component.less" ],
@@ -37,7 +38,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     public svgContainer: ElementRef<HTMLObjectElement>;
 
     @ViewChild('winnersLink', {static: true})
-    public winnersLink: ElementRef<HTMLObjectElement>
+    public winnersLink: ElementRef<HTMLObjectElement>;
     isBrowser: boolean;
     public totalInfo$: Observable<TotalInfoModel>;
     public release$: Observable<ReleaseModel>;
@@ -48,76 +49,46 @@ export class HomePageComponent implements OnInit, OnDestroy {
                 private store: Store<AppState>,
                 private seoService: SeoService,
                 private releaseService: ReleasesService,
-                @Inject(PLATFORM_ID) private platformId: Object) {
+                @Inject(PLATFORM_ID) private platformId: object) {
                         this.isBrowser = isPlatformBrowser(this.platformId);
     }
 
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.seoService.updateSeoInfo(this.route.snapshot.data as SeoModel);
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         this.totalInfo$ = this.store.select(fromSelectors.selectTotalInfo);
         this.totalInfoLoading$ = this.store.select(fromSelectors.selectTotalInfoLoading);
 
         this.store.dispatch(new fromActions.data.InitTotalInfoAction());
-        if (this.isBrowser) {
-            document.addEventListener("mousemove",
-                event => {
-                    const ded = this.svgContainer.nativeElement.contentDocument;
-                    const headerHeight = 56;
-                    if (ded) {
-                        const dedWidth: number = this.svgContainer.nativeElement.offsetWidth;
-                        const marginLeft: number = (document.documentElement.offsetWidth - dedWidth) / 2;
-                        const leftEye = ded.getElementById("path1538");
-                        function moveEye(eye: HTMLElement, centerX: number, centerY: number) {
-                            const angleLeft = Math.atan2((event.y - (eye.getBoundingClientRect().y + headerHeight)), (event.x - (eye.getBoundingClientRect().x + marginLeft)));
-                            eye.setAttribute("cx", "" + (centerX + Math.cos(angleLeft)));
-                            eye.setAttribute("cy", "" + (centerY + Math.sin(angleLeft) / 2));
-                        }
-                        if (leftEye) {
-                            const leftEyeCenterX = 87.507666;
-                            const leftEyeCenterY = 127.65275;
-                            moveEye(leftEye, leftEyeCenterX, leftEyeCenterY);
-                        }
-                        const rightEye = ded.getElementById("path1538-7");
-                        if (rightEye) {
-                            const rightEyeCenterX = 129.68616;
-                            const rightEyeCenterY = 100.84577;
-                            moveEye(rightEye, rightEyeCenterX, rightEyeCenterY);
-                        }
-
-                    }
-                });
-            // this.winnersLink.nativeElement.classList.add('fireworks')
-        }
         this.tourSteps = [
             "search-by",
             "search-rs",
             'search-gene'
         ];
-        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion
+        const releaseVersion = this.releaseService.getReleaseFromFullPath().majorVersion;
         if (releaseVersion >= 3) {
-            this.tourSteps.push('search-eqtl')
+            this.tourSteps.push('search-eqtl');
         }
-        this.tourSteps.push('search-pos')
+        this.tourSteps.push('search-pos');
         if (releaseVersion >= 3) {
-            this.tourSteps.push('fdr-simple', 'effect-size')
+            this.tourSteps.push('fdr-simple', 'effect-size');
         }
-        this.tourSteps.push("search-example", 'switch-release')
+        this.tourSteps.push("search-example", 'switch-release');
 
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
 
     }
 
-    constructTooltipText(info: TotalInfoModel, version: number) {
+    constructTooltipText(info: TotalInfoModel, version: number): string {
         if (version === 3) {
             return `${info.asbsCount005} ASBs passing 5% FDR at ${info.snpsCount005} SNPs
-        ${info.asbsCount} ASBs passing 25% FDR at ${info.snpsCount} SNPs`
+        ${info.asbsCount} ASBs passing 25% FDR at ${info.snpsCount} SNPs`;
         } else {
             return `${info.asbsCount010} ASBs passing 10% FDR at ${info.snpsCount010} SNPs
-        ${info.asbsCount} ASBs passing 25% FDR at ${info.snpsCount} SNPs`
+        ${info.asbsCount} ASBs passing 25% FDR at ${info.snpsCount} SNPs`;
         }
 
     }

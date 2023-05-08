@@ -1,12 +1,10 @@
 import {Action} from "@ngrx/store";
 import {
     AbstractInfoBackendModel,
-    ClInfoBackendModel,
     SnpInfoBackendModel,
-    TfInfoBackendModel,
     TotalInfoBackendModel
 } from "src/app/models/data.model";
-import {AsbServerSideFilterModel, AsbServerSideModel} from "src/app/models/table.model";
+import {AsbServerSideFilterModel} from "src/app/models/table.model";
 
 export enum ActionTypes {
     LoadTotalInfo = "[Data] load total info",

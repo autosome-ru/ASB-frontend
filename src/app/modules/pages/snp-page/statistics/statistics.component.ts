@@ -16,7 +16,7 @@ import {AsbTableComponent} from "../../../shared/table-template/mat-table/table.
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {getTextByStepNameAdastra} from "../../../../helpers/text-helpers/tour.adastra.helper";
-import {ClSnpModel, TfSnpModel} from "../../../../models/data.model";
+import {ClSnpModel} from "../../../../models/data.model";
 
 
 @Component({
@@ -140,7 +140,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
         this.tableFormGroup.patchValue({filter: null});
     }
 
-    _resetFilters() {
+    _resetFilters(): void {
         this.tableDisplayedColumns = this.initialDisplayedColumns;
         this.filteredObjectData = this.objectData;
         this.tableFormGroup.patchValue({
@@ -153,7 +153,7 @@ export class AsbStatisticsComponent<T> implements OnInit, OnDestroy {
     }
 
 
-    _getSnpInfoCsv() {
+    _getSnpInfoCsv(): void {
         this.downloadSnpInfo.emit({
             columns: [
                 this.stickyColumn,

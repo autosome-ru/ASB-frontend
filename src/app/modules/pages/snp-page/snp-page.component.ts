@@ -14,7 +14,6 @@ import {AppState} from "../../../store/reducer/adastra";
 import * as fromSelectors from "src/app/store/selector/adastra";
 import * as fromActions from "src/app/store/action/adastra";
 import {AsbTableColumnModel, AsbTableDisplayedColumns} from "../../../models/table.model";
-import {AsbStatisticsComponent} from "./statistics/statistics.component";
 import {FileSaverService} from "ngx-filesaver";
 import {DataService} from "../../../services/data.service";
 import {calculateColorForOne} from "../../../helpers/helper/colors.helper";
@@ -38,11 +37,11 @@ import {ReleaseModel} from "../../../models/releases.model";
     encapsulation: ViewEncapsulation.None
 })
 export class SnpPageComponent implements OnInit, OnDestroy {
-    @ViewChild("cellLines", {static: true})
-    public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
-
-    @ViewChild("transcriptionFactors", {static: true})
-    public tfStats: AsbStatisticsComponent<TfSnpModel>;
+    // @ViewChild("atacStatistics", {static: true})
+    // public cellLinesStats: AsbStatisticsComponent<ClSnpModel>;
+    //
+    // @ViewChild("transcriptionFactors", {static: true})
+    // public tfStats: AsbStatisticsComponent<ClSnpModel>;
 
     @ViewChild('fdrViewTemplate', {static: true})
     private fdrViewTemplate: TemplateRef<{value: number}>;
@@ -70,7 +69,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     ];
 
     private commonColumnModel:
-        AsbTableColumnModel<Partial<TfSnpModel> | Partial<ClSnpModel>>;
+        AsbTableColumnModel<Partial<ClSnpModel>>;
 
     private subscriptions: Subscription = new Subscription();
     private release: ReleaseModel;
@@ -90,9 +89,9 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private seoService: SeoService,
     ) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
-        const chosenRelease = this.releaseService.getReleaseFromFullPath()
+        const chosenRelease = this.releaseService.getReleaseFromFullPath();
         this.subscriptions.add(
             this.release$.subscribe(
                 s => this.release = s
@@ -101,8 +100,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => {
-                    this.fdr = s['fdr'] ? s['fdr'] : chosenRelease.defaultFdrThreshold;
-                    this.es = s['es'] ? s['es'] : '0'
+                    this.fdr = s.fdr ?? chosenRelease.defaultFdrThreshold;
+                    this.es = s.es ?? '0';
                     this.subscriptions.add(
                         this.route.paramMap.subscribe(
                             (p) => {
@@ -110,7 +109,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                                 this.alt = p.get("alt");
                                 if (!this.alt) {
                                     this.router.navigate([`/${this.release.url}/search/simple`],
-                                        {queryParams: {rs: this.id, fdr: this.fdr, es: this.es}}).then()
+                                        {queryParams: {rs: this.id, fdr: this.fdr, es: this.es}}).then();
                                 } else {
                                     this.store.dispatch(new fromActions.data.InitSnpInfoAction(
                                         {rsId: this.id, alt: this.alt, fdr: this.fdr, es: this.es}));
@@ -131,7 +130,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                     this.seoService.updateSeoInfo({
                         title: this.route.snapshot.data.title(this.id, this.release.version),
                         description: this.route.snapshot.data.description(this.id),
-                    })
+                    });
                 }
                 }
             )
@@ -156,12 +155,14 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 s => {
                     if (s && s.faireData) {
                         if (s.faireData.length > 0 && s.dnaseData.length > 0) {
-                            this.tourSteps = this.tourSteps.filter(s => s != `table1`);
+                            this.tourSteps = this.tourSteps.filter(p => p !== `table1`);
                         } else {
-                            if (s.faireData.length == 0) {
-                                this.tourSteps = this.tourSteps.filter(s => s != 'cell-types-buttons' && s != 'table1');
+                            if (s.faireData.length === 0) {
+                                this.tourSteps = this.tourSteps.filter(
+                                    p => p !== 'cell-types-buttons' && p !== 'table1');
                             } else {
-                                this.tourSteps = this.tourSteps.filter(s => s != 'table0' && s != 'transcription-factors-buttons');
+                                this.tourSteps = this.tourSteps.filter(
+                                    p => p !== 'table0' && p !== 'transcription-factors-buttons');
                             }
                         }
                         this.tourSteps.push('phen-stats');
@@ -220,7 +221,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                 this.id, this.alt, where, options.columns, options.filter).subscribe(
                 (res) => {
                     this.saverService.save(res,
-                        `ADASTRA_${this.id}_${this.alt}_SNP_details.tsv`);
+                        `UDACHA_${this.id}_${this.alt}_SNP_details.tsv`);
                 },
                 (err) => {
                     this.toastr.error(err.message, "Error");
@@ -229,13 +230,13 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    _downloadPage() {
+    _downloadPage(): void {
         this.subscriptions.add(
             this.dataService.getSnpInfoById({rsId: this.id, alt: this.alt, fdr: this.fdr}).subscribe(
                 (res) => {
                     const blob = new Blob([JSON.stringify(res)],
                         {type: "application/json"});
-                    this.saverService.save(blob, `AD_ASTRA_page_${this.id}_${this.alt}.json`);
+                    this.saverService.save(blob, `UDACHA_page_${this.id}_${this.alt}.json`);
                 },
                 (err) => {
                     console.log(err);
@@ -244,29 +245,19 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    _calculateColor(row: TfSnpModel | ClSnpModel, w: "ref" | "alt"): string {
+    _calculateColor(row: Partial<ClSnpModel>, w: "ref" | "alt"): string {
         return w === "ref" ?
             calculateColorForOne(row.pValueRef, row.refBase) :
             calculateColorForOne(row.pValueAlt, row.altBase);
     }
 
     _createSnpName(snpData: SnpInfoModel) {
-        return (row: ClSnpModel | TfSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase}` +
+        return (row: ClSnpModel) => `${snpData.rsId} ${snpData.refBase}>${snpData.altBase}` +
             " of " + this._getName(row);
     }
 
-    _getName(row: ClSnpModel | TfSnpModel) {
+    _getName(row: ClSnpModel): string {
         return row ? row.name : "fail";
-    }
-
-    filterCondition(tf: TfSnpModel): boolean {
-        return !!(tf.motifConcordance && tf.motifConcordance !== "No Hit");
-    }
-
-    _getGoodTfs(tfs: TfSnpModel[]): TfSnpModel[] {
-        return tfs.filter(s => this.filterCondition(s)).sort(
-            (a, b) =>
-                Math.max(b.effectSizeAlt, b.effectSizeRef) - Math.max(a.effectSizeAlt, a.effectSizeRef));
     }
 
     // openMotifAnalysis($event: TfSnpModel, tfs: TfSnpModel[]) {
@@ -281,7 +272,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     //     document.getElementById(tfs[id].name).scrollIntoView({behavior: "smooth"});
     // }
 
-    sortData(data: TfSnpModel[], sort: MatSort): TfSnpModel[] {
+    sortData(data: ClSnpModel[], sort: MatSort): ClSnpModel[] {
         return data.sort(
             (a, b) => compareData(a, b, sort)
         );
@@ -305,7 +296,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
 
     checkSelectedIndex(tabGroup: MatTabGroup, snp: SnpInfoModel): void {
         const index = tabGroup.selectedIndex;
-        if (snp.dnaseData.length > 0 && snp.faireData.length > 0) {
+        if (snp.dnaseData.length > 0 && snp.faireData.length > 0 && snp.atacData.length > 0) {
             tabGroup.selectedIndex = 0;
         }
         if (index === 0 && snp.dnaseData.length === 0) {
