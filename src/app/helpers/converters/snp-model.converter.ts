@@ -15,10 +15,6 @@ import {
     SnpSearchModel,
     TfInfoBackendModel,
     TfInfoModel, AggType,
-    TfSnpBackendCutModel,
-    TfSnpBackendModel,
-    TfSnpCutModel,
-    TfSnpModel,
     TotalInfoBackendModel,
     TotalInfoModel
 } from "../../models/data.model";
@@ -109,7 +105,7 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
     const fdrTr = makeFdrTr(fdr);
     const esTr = makeEsTr(es);
     const result: Partial<SnpInfoModel> = convertSnpModel(model) as SnpInfoModel;
-    result.faireData = (model.cl_aggregated_snps.map(s => {
+    result.faireData = (model.faire_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendSnp(s),
             ...convertSnpModel(model)
@@ -118,21 +114,21 @@ export function convertSnpInfoBackendModelToSnpInfoModel(
         s => compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
             compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
 
-    result.dnaseData = (model.tf_aggregated_snps.map(s => {
+    result.dnaseData = (model.dnase_aggregated_snps.map(s => {
         return {
-            ...convertTfAggregatedBackendSnp(s),
+            ...convertClAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpModel[]).filter(s =>
+    }) as ClSnpModel[]).filter(s =>
         compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
         compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
 
-    result.atacData = (model.tf_aggregated_snps.map(s => {
+    result.atacData = (model.atac_aggregated_snps.map(s => {
         return {
-            ...convertTfAggregatedBackendSnp(s),
+            ...convertClAggregatedBackendSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpModel[]).filter(s =>
+    }) as ClSnpModel[]).filter(s =>
         compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
         compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
     return result;
@@ -150,7 +146,7 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
     const fdrTr = makeFdrTr(fdr);
     const esTr = makeEsTr(es);
     const result: Partial<SnpSearchModel> = convertSnpModel(model) as SnpSearchModel;
-    result.atacData = (model.cl_aggregated_snps.map(s => {
+    result.atacData = (model.atac_aggregated_snps.map(s => {
         return {
             ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
@@ -158,21 +154,21 @@ export function convertSnpSearchBackendModelToSnpSearchModel(
     }) as ClSnpCutModel[]).filter(
         s => compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
             compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
-    result.dnaseData = (model.tf_aggregated_snps.map(s => {
+    result.dnaseData = (model.dnase_aggregated_snps.map(s => {
         return {
-            ...convertTfAggregatedBackendCutSnp(s),
+            ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpCutModel[]).filter(s =>
+    }) as ClSnpCutModel[]).filter(s =>
         compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
         compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
 
-    result.faireData = (model.tf_aggregated_snps.map(s => {
+    result.faireData = (model.faire_aggregated_snps.map(s => {
         return {
-            ...convertTfAggregatedBackendCutSnp(s),
+            ...convertClAggregatedBackendCutSnp(s),
             ...convertSnpModel(model)
         };
-    }) as TfSnpCutModel[]).filter(s =>
+    }) as ClSnpCutModel[]).filter(s =>
         compareThresholds(Math.abs(s.pValueRef), fdrTr, s.effectSizeRef, esTr) ||
         compareThresholds(Math.abs(s.pValueAlt), fdrTr, s.effectSizeAlt, esTr));
     return result;
@@ -223,24 +219,6 @@ function convertClAggregatedBackendSnp(s: ClSnpBackendModel, ): Partial<ClSnpMod
 function checkAndInvert(num: number): number {
     return num ? -num : num;
 }
-function convertTfAggregatedBackendSnp(s: TfSnpBackendModel): Partial<TfSnpModel> {
-    return {
-        id: s.transcription_factor.uniprot_ac,
-        name: s.transcription_factor.name,
-        effectSizeRef: s.es_ref,
-        effectSizeAlt: s.es_alt,
-        pValueRef: checkAndInvert(s.log_p_value_ref),
-        pValueAlt: checkAndInvert(s.log_p_value_alt),
-        meanBad: s.mean_bad,
-        motifConcordance: s.motif_concordance,
-        motifLog2Fc: s.motif_log_2_fc,
-        motifOrientation: s.motif_orientation,
-        motifLogPAlt: checkAndInvert(s.motif_log_p_alt),
-        motifLogPRef: checkAndInvert(s.motif_log_p_ref),
-        motifPosition: s.motif_position,
-        expSnps: s.exp_snps.map(convertBackendExpSnp)
-    };
-}
 
 function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSnpCutModel> {
     return {
@@ -252,16 +230,7 @@ function convertClAggregatedBackendCutSnp(s: ClSnpBackendCutModel): Partial<ClSn
         pValueAlt: checkAndInvert(s.log_p_value_alt),
     };
 }
-function convertTfAggregatedBackendCutSnp(s: TfSnpBackendCutModel): Partial<TfSnpCutModel> {
-    return {
-        id: s.transcription_factor.uniprot_ac,
-        name: s.transcription_factor.name,
-        effectSizeRef: s.es_ref,
-        effectSizeAlt: s.es_alt,
-        pValueRef: checkAndInvert(s.log_p_value_ref),
-        pValueAlt: checkAndInvert(s.log_p_value_alt),
-    };
-}
+
 function convertExpId(id: number | string): string {
     if (typeof id === 'string') {
         return id;

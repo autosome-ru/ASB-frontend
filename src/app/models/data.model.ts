@@ -45,13 +45,14 @@ export interface MotifConcordanceModel {
 
 }
 export interface SnpSearchModel extends SnpGenPosModel {
-    dnaseData: TfSnpCutModel[];
+    dnaseData: ClSnpCutModel[];
     atacData: ClSnpCutModel[];
     faireData: ClSnpCutModel[];
 }
 export interface SnpInfoBackendModel extends SnpGenPosBackendModel {
-    tf_aggregated_snps: TfSnpBackendModel[];
-    cl_aggregated_snps: ClSnpBackendModel[];
+    atac_aggregated_snps: ClSnpBackendModel[];
+    dnase_aggregated_snps: ClSnpBackendModel[];
+    faire_aggregated_snps: ClSnpBackendModel[];
     phenotypes: PhenotypesBackendModel[];
 }
 export interface PhenotypesBackendModel {
@@ -59,8 +60,9 @@ export interface PhenotypesBackendModel {
     phenotype_name: string;
 }
 export interface SnpSearchBackendModel extends SnpGenPosBackendModel {
-    tf_aggregated_snps: TfSnpBackendCutModel[];
-    cl_aggregated_snps: ClSnpBackendCutModel[];
+    atac_aggregated_snps: ClSnpBackendCutModel[];
+    dnase_aggregated_snps: ClSnpBackendCutModel[];
+    faire_aggregated_snps: ClSnpBackendCutModel[];
 }
 
 export interface ClSnpBackendCutModel {
