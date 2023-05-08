@@ -9,7 +9,7 @@ export const releasesList: ReleaseModel[] = [
         releaseType: 'recent',
         version: "v1.0",
         size: '0MB',
-        api: "v1",
+        api: "v5",
         defaultFdrThreshold: '0.05',
         releaseLink: 'https://disk.yandex.ru/d/LQYSni42Lk0wtg',
         gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
