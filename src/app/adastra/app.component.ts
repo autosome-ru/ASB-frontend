@@ -17,15 +17,11 @@ import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action/adastra";
 import {Subscription} from "rxjs";
 import {JoyrideService} from "ngx-joyride";
-import {SwUpdate, VersionReadyEvent} from "@angular/service-worker";
 import {ToastrService} from "ngx-toastr";
-
-import {updateCheckInterval} from "../helpers/constants/constants";
 import {MatDialog} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
 import {recentRelease} from "../helpers/constants/releases";
 import {ReleaseModel} from "../models/releases.model";
-import {filter} from "rxjs/operators";
 
 @Component({
     selector: "app-root",
@@ -37,7 +33,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     @HostBinding("class.asb-app")
     private cssClass = true;
     @ViewChild('cookiesDialogTemplate')
-    private cookiesDialogTemplate: TemplateRef<MatDialog>
+    private cookiesDialogTemplate: TemplateRef<MatDialog>;
     private readonly isBrowser: boolean;
     private subscriptions = new Subscription();
     public recentRelease: ReleaseModel;
@@ -46,7 +42,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
                 private route: ActivatedRoute,
                 private joyrideService: JoyrideService,
                 private store: Store<AppState>,
-                private updates: SwUpdate,
                 private dialog: MatDialog,
                 private overlay: Overlay,
                 private toastrService: ToastrService,
@@ -55,8 +50,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isBrowser = isPlatformBrowser(platformId);
     }
 
-    ngOnInit() {
-        this.recentRelease = recentRelease
+    ngOnInit(): void {
+        this.recentRelease = recentRelease;
 
         this.subscriptions.add(
             this.router.events.subscribe(() => {
@@ -81,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         // }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.unsubscribe();
     }
 }
