@@ -15,11 +15,11 @@ import {ReleasesService} from "../services/releases.service";
 import {AppState} from "../store/reducer/adastra";
 import {Store} from "@ngrx/store";
 import * as fromActions from "src/app/store/action/adastra";
-import {BehaviorSubject, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
 import {JoyrideService} from "ngx-joyride";
 import {SwUpdate, VersionReadyEvent} from "@angular/service-worker";
 import {ToastrService} from "ngx-toastr";
-import {CheckForUpdateService} from "../services/update.service";
+
 import {updateCheckInterval} from "../helpers/constants/constants";
 import {MatDialog} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
@@ -49,7 +49,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
                 private updates: SwUpdate,
                 private dialog: MatDialog,
                 private overlay: Overlay,
-                private checkForUpdatesService: CheckForUpdateService,
                 private toastrService: ToastrService,
                 private releasesService: ReleasesService,
                 @Inject(PLATFORM_ID) private platformId) {
@@ -58,18 +57,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnInit() {
         this.recentRelease = recentRelease
-        if (this.isBrowser) {
-            this.subscriptions.add(
-                this.updates.versionUpdates.pipe(
-                    filter((evt): evt is VersionReadyEvent =>
-                        evt.type === 'VERSION_READY')).subscribe(() =>
-                    this.toastrService.info(
-                        'ADASTRA has been updated to a new version.' +
-                        ' Please reload the page.', 'Info',
-                        {timeOut: updateCheckInterval})
-                ));
-            this.checkForUpdatesService.startSubscription();
-        }
+
         this.subscriptions.add(
             this.router.events.subscribe(() => {
                 this.store.dispatch(new fromActions.releases.GetCurrentReleaseAction());
@@ -95,6 +83,5 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     ngOnDestroy() {
         this.subscriptions.unsubscribe();
-        this.checkForUpdatesService.cancelSubscription();
     }
 }

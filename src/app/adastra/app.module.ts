@@ -68,7 +68,6 @@ import {NoWarModule} from "../modules/shared/no-war/no-war.module";
         SearchService,
         SeoService,
         ReleasesService,
-        CheckForUpdateService,
         CloseDialogOnRouteService,
         {provide: MAT_DIALOG_DEFAULT_OPTIONS,
             useValue: {
