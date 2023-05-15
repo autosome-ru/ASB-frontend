@@ -159,7 +159,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             grasp: false,
             finemapping: false,
             clinvar: false,
-            QTL: false,
+            qtl: false,
             ...concordanceModelExample
         }
         );
@@ -357,7 +357,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 phewas: false,
                 finemapping: false,
                 clinvar: false,
-                QTL: false,
+                qtl: false,
                 es: '0',
                 ...concordanceModelExample
             };

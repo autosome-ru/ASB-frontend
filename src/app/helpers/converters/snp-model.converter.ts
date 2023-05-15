@@ -24,8 +24,9 @@ import {SortDirection} from "@angular/material/sort";
 
 export function convertTotalInfoBackendModelToTotalInfoModel(model: TotalInfoBackendModel): TotalInfoModel {
     return {
-        cellTypesCount: model.cell_types_count,
-        transcriptionFactorsCount: model.transcription_factors_count,
+        faireCount: model.faire_count,
+        atacCount: model.atac_count,
+        dnaseCount: model.dnase_count,
         snpsCount: model.snps_count,
         asbsCount: model.asbs_count,
         snpsCount005: model.snps_count005,

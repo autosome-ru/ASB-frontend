@@ -32,7 +32,7 @@
                     [routerLink]="'/' + (release$ | async).url + '/browse'"
                     [queryParams]="{by: 'atac'}"
                 >
-                    {{totalInfo.transcriptionFactorsCount}}</a>
+                    {{totalInfo.atacCount}}</a>
                 </span>
                 <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;DNAse I:&nbsp;
                 <a
@@ -40,7 +40,7 @@
                     [routerLink]="'/' + (release$ | async).url + '/browse'"
                     [queryParams]="{by: 'dnase'}"
                 >
-                    {{totalInfo.cellTypesCount}}</a>
+                    {{totalInfo.dnaseCount}}</a>
                 </span>
                 <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Faire:&nbsp;
                 <a
@@ -48,7 +48,7 @@
                     [routerLink]="'/' + (release$ | async).url + '/browse'"
                     [queryParams]="{by: 'faire'}"
                 >
-                    {{totalInfo.cellTypesCount}}</a>
+                    {{totalInfo.faireCount}}</a>
                 </span>
                 <span *ngIf="(release$ | async).majorVersion as mj">
                     <span [ngSwitch]="mj">

@@ -199,7 +199,7 @@ export function dataReducer(state: DataState = initialState, action: fromActions
                 clinvar: [],
                 phewas: [],
                 finemapping: [],
-                QTL: [],
+                qtl: [],
                 total: 0
             };
             const snpId = `rs${action.payload.info.rs_id}${action.payload.info.alt}`;

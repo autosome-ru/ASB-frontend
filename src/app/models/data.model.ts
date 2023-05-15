@@ -38,7 +38,7 @@ export interface PhenotypesModel {
     clinvar: string[] | boolean;
     phewas: string[] | boolean;
     finemapping: string[] | boolean;
-    QTL: string[] | boolean;
+    qtl: string[] | boolean;
 }
 
 export interface MotifConcordanceModel {
@@ -170,8 +170,9 @@ export type AggType = "atac" | "faire" | "dnase";
 
 export type DownloadTableType = AggType | 'all' | 'not_found' | 'target_genes';
 export interface TotalInfoBackendModel {
-    cell_types_count: number;
-    transcription_factors_count: number;
+    dnase_count: number;
+    faire_count: number;
+    atac_count: number;
     snps_count: number;
     asbs_count: number;
     snps_count005: number;
@@ -181,8 +182,9 @@ export interface TotalInfoBackendModel {
 }
 
 export interface TotalInfoModel {
-    cellTypesCount: number;
-    transcriptionFactorsCount: number;
+    atacCount: number;
+    faireCount: number;
+    dnaseCount: number;
     snpsCount: number;
     snpsCount005: number;
     snpsCount010: number;

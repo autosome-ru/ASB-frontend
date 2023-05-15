@@ -20,8 +20,10 @@ export class PhenotypesComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        console.log(this.snpData.phenotypes)
         this.phenotypesDb = Object.keys(this.snpData.phenotypes).filter(
             s => this.snpData.phenotypes[s].length > 0);
+        console.log(this.phenotypesDb)
         this.phenToLink = phenotypesToLink;
     }
 

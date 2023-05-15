@@ -8,7 +8,7 @@ export const phenotypesToView: {[name: string]: string} = {
     clinvar: "ClinVar",
     phewas: "PheWAS",
     finemapping: "Finemapping",
-    QTL: "GTEx eQTL"
+    qtl: "GTEx eQTL"
 };
 
 export const phenotypesToLink: {[name: string]: (s: string) => string} = {
@@ -17,7 +17,7 @@ export const phenotypesToLink: {[name: string]: (s: string) => string} = {
     clinvar: s => "https://www.ncbi.nlm.nih.gov/clinvar/?term=" + s,
     phewas: () => "https://phewascatalog.org/ ",
     finemapping: () => "http://pubs.broadinstitute.org/pubs/finemapping/dataportal.php",
-    QTL: s => "https://www.gtexportal.org/home/snp/" + s
+    qtl: s => "https://www.gtexportal.org/home/snp/" + s
 };
 
 export const phenotypesModelExample: PhenotypesModel = {
@@ -26,7 +26,7 @@ export const phenotypesModelExample: PhenotypesModel = {
     clinvar: [],
     phewas: [],
     finemapping: [],
-    QTL: [],
+    qtl: [],
 };
 export const concordanceModelExample: MotifConcordanceModel = {
     Concordant: false,
