@@ -300,7 +300,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         if (snp.dnaseData.length > 0 && snp.faireData.length > 0 && snp.atacData.length > 0) {
             tabGroup.selectedIndex = 0;
         }
-        if (index === 0 && snp.dnaseData.length === 0) {
+        if (index === 0 && snp.atacData.length === 0) {
             tabGroup.selectedIndex = 1;
         }
         if (index === 1 && snp.faireData.length === 0) {
@@ -309,10 +309,10 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     }
 
     getIndex(snpData: SnpInfoModel): number {
-        if (snpData.atacData.length > 0) {
+        if (snpData.dnaseData.length > 0) {
             return 0;
         }
-        if (snpData.dnaseData.length > 0) {
+        if (snpData.atacData.length > 0) {
             return 1;
         }
         return 2;

@@ -69,15 +69,7 @@
                     animationDuration="0ms"
                     [selectedIndex]="getIndex(snpData)"
                 >
-                    <mat-tab label="ATAC-seq cell-types">
-                        <ng-template matTabContent>
-                            <ng-container
-                                [ngTemplateOutlet]="atacStatisticsTemplate"
-                            >
-                            </ng-container>
-                        </ng-template>
-                    </mat-tab>
-                    <mat-tab label="DNase-seq cell types">
+                    <mat-tab label="DNase-seq">
                         <ng-template matTabContent>
                             <ng-container
                                 [ngTemplateOutlet]="dnaseStatisticsTemplate"
@@ -85,7 +77,15 @@
                             </ng-container>
                         </ng-template>
                     </mat-tab>
-                    <mat-tab label="Faire cell types">
+                    <mat-tab label="ATAC-seq">
+                        <ng-template matTabContent>
+                            <ng-container
+                                [ngTemplateOutlet]="atacStatisticsTemplate"
+                            >
+                            </ng-container>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="FAIRE">
                         <ng-template matTabContent>
                             <ng-container
                                 [ngTemplateOutlet]="faireStatisticsTemplate"
