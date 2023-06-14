@@ -12,8 +12,7 @@
         </div>
         <h5
             style="text-align: center; margin-top:0.4rem"
-        >
-            <u class="font-weight-bold">U</u>niform
+        ><b>UDACHA:</b>&nbsp;<u class="font-weight-bold">U</u>niform
             <u class="font-weight-bold">D</u>atabase of
             <u class="font-weight-bold">A</u>llele-specific
             <u class="font-weight-bold">CH</u>romatin <u class="font-weight-bold">A</u>ccessibility
@@ -25,7 +24,15 @@
             <h6
                 style="text-align: center; display: flex; justify-content: center; flex-wrap: wrap"
             >
-                <span style="white-space: nowrap">ATAC-seq:&nbsp;
+                <span style="white-space: nowrap">DNase I cell types:&nbsp;
+                    <a
+                        style="text-decoration: underline"
+                        [routerLink]="'/' + (release$ | async).url + '/browse'"
+                        [queryParams]="{by: 'dnase'}"
+                    >
+                        {{totalInfo.dnaseCount}}</a>
+                </span>
+                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;ATAC-seq:&nbsp;
 
                 <a
                     style="text-decoration: underline"
@@ -34,15 +41,8 @@
                 >
                     {{totalInfo.atacCount}}</a>
                 </span>
-                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;DNAse I:&nbsp;
-                <a
-                    style="text-decoration: underline"
-                    [routerLink]="'/' + (release$ | async).url + '/browse'"
-                    [queryParams]="{by: 'dnase'}"
-                >
-                    {{totalInfo.dnaseCount}}</a>
-                </span>
-                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Faire:&nbsp;
+
+                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;FAIRE:&nbsp;
                 <a
                     style="text-decoration: underline"
                     [routerLink]="'/' + (release$ | async).url + '/browse'"

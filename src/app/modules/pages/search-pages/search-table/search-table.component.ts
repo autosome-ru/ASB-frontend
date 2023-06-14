@@ -116,21 +116,27 @@ export class SearchPageTableComponent implements OnInit {
             this.router.isActive("/search/simple", false)) {
             this.columnModel = {
                 ...this.columnModel,
-                transFactors: {
-                    view: "Top 5 TFs",
-                    columnTemplate: this.manyTransFactorsViewTemplate,
+                dnaseData: {
+                    view: "Top 3 DNase-seq cell types",
+                    columnTemplate: this.manyCellTypesViewTemplate,
                     disabledSort: true
                 },
-                cellLines: {
-                    view: "Top 3 cell types",
+                atacData: {
+                    view: "Top 3 ATAC-seq cell types",
+                    columnTemplate: this.manyCellTypesViewTemplate,
+                    disabledSort: true
+                },
+                faireData: {
+                    view: "Top 3 FAIRE cell types",
                     columnTemplate: this.manyCellTypesViewTemplate,
                     disabledSort: true
                 },
             };
             this.displayedColumns = [
                 ...this.displayedColumns,
-                "transFactors",
-                "cellLines",
+                "dnaseData",
+                "atacData",
+                "faireData"
             ];
         } else {
             this.displayedColumns = [
@@ -143,6 +149,7 @@ export class SearchPageTableComponent implements OnInit {
             };
         }
         this.dataToView = this.searchResults$.pipe(map(s => s.results.map(e => {
+
             return {
                 ...e,
                 ...this.paramsToData(e)

@@ -55,71 +55,32 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h4 style="margin-bottom: 0">
-                            What is ASB?
+                            What is ASA?
                         </h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="px-1">
-                    <b>ASB</b> stands for <b>A</b>llele-<b>S</b>pecific <b>B</b>inding.
-                    A <b>T</b>ranscription <b>F</b>actor (<b>TF</b>) might prefer to bind one of two alternative alleles of
-                    homologous chromosomes and thus exhibit allele-specific binding.
-                    ASB highlights regulatory SNPs with high potential to affect gene expression.
-                    Systematic dissection of ChIP-Seq data processed in the
-                    <a href="http://gtrd.biouml.org/"
-                       rel="noopener noreferrer"
-                       target="_blank"
+                    <b>ASA</b> stands for <b>A</b>llele-<b>S</b>pecific chromatin <b>A</b>ccessibility.
+                    One of two alternative alleles of homologous chromosomes may mark a different epigenomic or regulatory state of a genomic region and thus exhibit allele-specific chromatin accessibility.
+                    ASA highlights regulatory SNPs with a high potential to affect gene expression.
+                    Systematic dissection of ATAC-/DNase-/FAIRE-Seq data processed in the                     <a href="http://gtrd.biouml.org/"
+                                                                                                                 rel="noopener noreferrer"
+                                                                                                                 target="_blank"
+                >
+                    GTRD</a> database allowed us to identify hundreds of thousands of ASA events in a wide range of cell types.
+                    ASA is related to ASA, see also the Help page in
+                    <a href="https://adastra.autosome.org/"
+                        rel="noopener noreferrer"
+                        target="_blank"
                     >
-                        GTRD</a>
-                    database allowed us to identify hundreds of thousands ASB events
-                    for a wide range of transcription factors.
-                    <span *ngIf="!isAdastra">
-                    ANANASTRA annotates a set of user-submitted SNPs with ASBs
-                    from the
-                    <a href="https://adastra.autosome.org"
-                       rel="noopener noreferrer"
-                       target="_blank"
-                    >
-                        ADASTRA</a> database.</span>
-                    <img src="assets/images/what_is_asb.svg"
-                         alt=""
-                         width="100%" style="margin-top: 1rem">
+                        ADASTRA</a>.
+
+<!--                    <img src="assets/images/what_is_asA.svg"-->
+<!--                         alt=""-->
+<!--                         width="100%" style="margin-top: 1rem">-->
                 </div>
             </mat-expansion-panel>
-            <ng-container *ngIf="!isAdastra">
-                <mat-divider></mat-divider>
-                <mat-expansion-panel class="mat-elevation-z0" >
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <h4 style="margin-bottom: 0">
-                                Input format</h4>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <div>
-                        ANANASTRA accepts SNPs in two formats:
-                        <ul style="margin-bottom: 0; list-style: decimal">
-                            <li>a plain list of newline-separated rs IDs such as
-                                <div style="position: relative">
-                                <pre class="table-sasha"><code class="sasha-color">{{rsIds}}</code></pre>
-                                </div>
-                            </li>
-                            <li>contents of a standard VCF file based upon <b>hg38</b> human genome assembly</li>
-                            <div style="position: relative">
-                                <pre class="table-sasha"><code class="sasha-color">{{vcfLines}}</code></pre>
-                            </div>
-                        </ul>
-                        The latter can be uploaded as a file or directly pasted into the input form.
-                        Both gzip and plain text file formats are supported for uploads.<br><br>
-                        Lines starting with '#' are considered comments and ignored.<br>
-                        Files with ≥ <b>10000</b> lines (excluding comments) or with ≥ <b>5000</b> comments are not accepted.<br>
-                        If you require annotating a larger number of SNPs please contact us directly at
-                        <img
-                        style="width: 240px"
-                        [src]="'assets/images/serj_abramov.svg'"
-                        alt="email pic"
-                        >
-                    </div>
-                </mat-expansion-panel>
-            </ng-container>
+
             <mat-divider></mat-divider>
 
             <mat-expansion-panel class="mat-elevation-z0" #glossary>
@@ -131,8 +92,8 @@
                 <section id="Glossary">
                     <dl class="px-3">
                         <dt>Coordinate system</dt>
-                        <dd>Genome positions of ASBs and SNVs
-                            in the database are vcf/gtf-like (1-based), hg38 genome assembly.<br></dd>
+                        <dd>Genome positions of ASAs and SNVs in the online database are vcf/gtf-like (1-based), hg38 genome assembly.
+                            The downloads are provided in a bed-like format (0-based start, 1-based end).<br></dd>
                         <dt>BAD</dt>
                         <dd>Background Allelic Dosage (BAD) is the expected ratio
                             of major to minor allelic frequencies in a particular genomic region.
@@ -159,7 +120,7 @@
                         </dd>
                         <dt id="coverage_filter">ADASTRA coverage filters</dt>
                         <dd>
-                            ADASTRA pipeline utilizes several SNV filters before statistical evaluations of ASB:<br>
+                            ADASTRA pipeline utilizes several SNV filters before statistical evaluations of ASA:<br>
                             <ul style="list-style-type: circle;">
                                 <li>Heterozygous biallelic SNVs (according to GATK ‘GT’ annotation);</li>
                                 <li>Having ≥ 5 reads at each of the alleles;</li>
@@ -177,14 +138,14 @@
                     </dl>
                 </section>
                 <section
-                    id="ASB_properties"
+                    id="ASA_properties"
                 >
-                    <h5 class="px-1">ASB properties</h5>
+                    <h5 class="px-1">ASA properties</h5>
                     <dl class="px-3">
-                        <dt id="asb_significance">ASB significance</dt>
-                        <dd>ASB significance
-                            ASB calling is done separately for each ChIP-Seq experiment.
-                            For each candidate ASB site, the P-values for Reference and
+                        <dt id="asA_significance">ASA significance</dt>
+                        <dd>ASA significance
+                            ASA calling is done separately for each ChIP-Seq experiment.
+                            For each candidate ASA site, the P-values for Reference and
                             Alternative allele are calculated separately according to the
                             fitted Negative Binomial Mixture model accounting for different
                             assignment of the alleles to the higher or lower DNA copies in
@@ -200,9 +161,9 @@
 
                             <br>
                         </dd>
-                        <dt id="ASB_es"
-                        >ASB effect size</dt>
-                        <dd>The Effect Size of an ASB event is calculated separately for Reference
+                        <dt id="ASA_es"
+                        >ASA effect size</dt>
+                        <dd>The Effect Size of an ASA event is calculated separately for Reference
                             and Alternative alleles and is defined as the weighted mean of log-ratios
                             of observed and expected allelic read counts, with weights being -log<sub>10</sub>
                             of the respective P-values. The expected read counts are estimated from
@@ -213,233 +174,13 @@
                             <br>
                             The Effect Size is not assigned (n/a) if all of the raw individual
                             P-values of an SNV on a particular genome position are equal to 1,
-                            considering Ref- and Alt-ASBs separately.
+                            considering Ref- and Alt-ASAs separately.
                             <br>
                         </dd>
-                    </dl>
-                </section>
-                <section >
-                    <h5 id="motif_annotation">Motif annotation</h5>
-                    <dl class="px-3">
-                        <dt>Motif P-value</dt>
-                        <dd>For transcription factors with motifs available in
-                            the <a
-                                rel="noopener noreferrer" target="_blank"
-                                href="https://hocomoco11.autosome.org/"
-                            >
-                                HOCOMOCO v.11
-                            </a>
-                            core collection, the P-values of the best hits were
-                            calculated for Reference and Alternative allelic variants
-                            using <a
-                                rel="noopener noreferrer" target="_blank"
-                                href="https://github.com/autosome-ru/sarus"
-                            >SPRY-SARUS</a>.
-                            The motif position was fixed  according to the best hit considering
-                            both the Reference and the Alternative alleles on both DNA strands.
-                            <br>
-                        </dd>
-                        <dt>Motif Fold Change</dt>
-                        <dd>Motif Fold Change is the log2-ratio between Reference and Alternative Motif P-values.
-                            Positive values indicate Alt-ASBs
-                            (preferred binding to the Alternative allele).
-                            Negative values indicate Ref-ASBs. The value is not assigned
-                            (n/a) in case the sequence motif model was not available.
-                        </dd>
-                        <dt id="motif_concordance">
-                            Motif Concordance</dt>
-                        <dd>
-                        Motif Concordance indicates whether the allelic read
-                        imbalance is consistent with the transcription factor
-                        motif Fold Change (FC, predicted from sequence analysis).
-                        The following notation is used:
-                            <ul style="list-style-type: circle; margin-bottom: 5px">
-                                <li>
-                                    <b>n/a:</b>
-                                    Motif is not available;</li>
-                                <li>
-                                    <b>No hit:</b>
-                                    The best hit P-value is higher than 0.0005 threshold;
-                                </li>
-                                <li>
-                                    <b>Weak concordant:</b>
-                                    The absolute value of FC is less than 2 but
-                                    consistent with the allelic read imbalance;
-                                </li>
-                                <li>
-                                    <b>Weak discordant:</b>
-                                    The absolute value of FC is less than 2 and
-                                    not consistent with the allelic read imbalance;
-                                </li>
-                                <li>
-                                    <b>Concordant:</b>
-                                    The absolute value of FC is greater or equal
-                                    to 2 and consistent with allelic read imbalance;
-                                </li>
-                                <li>
-                                    <b>Discordant:</b>
-                                    The absolute value of  FC is greater or equal to
-                                    2 but not consistent with allelic read imbalance.
-                                </li>
-                            </ul>
-                            <span>
-    For motif-annotated SNPs overlapping significant (P ≤ 0.0005) hits of
-        <a
-            href="https://hocomoco11.autosome.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >HOCOMOCO</a> motifs of the respective TFs, we provide the 'motif concordance' plots.<br>
-                <img
-                    style="max-height: 280px; max-width: 100%"
-                    alt="Loading..."
-                    [src]="'/assets/images/' + 'concordance'+ '.help.png'"
-                ><br><br>
-        The alignment of the motif relative to the SNP is shown at the top.
-        Motif P-values indicate the predicted binding specificities for the alternative alleles.
-        The preferred allele according to ADASTRA data along with the ASB FDR and Effect Size is
-        shown at the bottom. The higher bell corresponds to the allele preferentially bound
-        by the TF in vivo according to the underlying ChIP-Seq data. The DNA strand/orientation
-        is marked in the bottom left corner.
-
-    </span>
-                        </dd>
-                    </dl>
-                </section>
-                <section  *ngIf="!isAdastra">
-                    <h5
-                        id="ASB_enrichment"
-                    >ASB enrichment estimation</h5>
-                    <dl class="px-3">
-                        <dt>Overall enrichment for TF- and cell type-specific ASBs</dt>
-                        <dd>
-                            <div>
-                            Right-tailed Fisher's exact test is performed to assess the
-                            ASB enrichment with the following contingency table:
-                            <table class="my-table">
-                                <tbody>
-                                <tr style="height:30px">
-                                    <td># of SNPs with ASBs in user-submitted list</td>
-                                    <td># of SNPs with ASBs in the database</td>
-                                </tr>
-                                <tr style="height:30px">
-                                    <td># of non-ASB SNPs* in user-submitted list</td>
-                                    <td># of non-ASB SNPs* in the database</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                                *Non-ASB SNPs are SNPs without any significant ASBs passing 25% FDR.<br><br>
-                                Similar tests are performed to assess enrichment at the
-                                level of individual chromosomes (with the individual chromosome P-values
-                                being aggregated using the
-                                <a href="https://link.springer.com/article/10.1007/BF02056895" rel="noopener noreferrer" target="_blank">‘logit’ method</a>), and for particular
-                                TFs or cell types.
-
-                                To have a proper background, non-ASB SNPs are selected
-                                to pass the same read coverage thresholds
-                                as the genuine significant ASB SNPs, i.e. most of those
-                                are located within ChIP-Seq peaks of the respective TFs.
-                            </div>
-                        </dd>
-                        <dt id="background"
-                        >
-                            Background SNP set
-                        </dt>
-                        <dd>
-                            The following types of background SNP sets are available to assess the overall ASB enrichment:
-                            <ul style="list-style-type: circle;">
-                                <li>
-                                    <b>Whole genome:</b> All ADASTRA 'candidate' SNPs eligible for ASB assessment (see <a (click)="openGlossary('coverage_filter'); $event.preventDefault()"
-                                                                                                                          routerLink="/help"
-                                                                                                                          fragment="coverage_filter">
-                                    here</a>);
-                                </li>
-                                <li>
-                                    <b>LD-islands:</b> ADASTRA 'candidate' SNPs located in the same LD-islands as the ‘test’ SNPs of the user-submitted list;
-                                </li>
-                                <li>
-                                    <b>Local:</b> ADASTRA 'candidate' SNPs located within the same 1 Mbp windows as the ‘test’ SNPs of the user-submitted list.
-                                </li>
-                            </ul>
-                            <b>[!] Note</b>, that chromosome-level and TF-/cell type-specific tests <b>always</b> use the respective subsets of the <b>'whole genome'</b> background set.</dd>
                     </dl>
                 </section>
             </mat-expansion-panel>
             <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0" *ngIf="!isAdastra">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h4 style="margin-bottom: 0" class="d-none d-md-block">
-                            Understanding ANANASTRA report pages</h4>
-                        <h4 style="margin-bottom: 0" class="d-block d-md-none">
-                            Report pages</h4>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="px-3">
-                    Each ANANASTRA report page contains 3 tabs:
-                    (1) Summary, (2) ASB events of particular TFs, and (3) ASB events found in particular
-                    cell types.<br><br>
-                    <dl>
-                        <dt>Summary</dt>
-                        <dd>
-                            This section is dedicated to general enrichment on ASB events in the submitted
-                            set of SNPs against the chosen background set. We report the observed fraction
-                            of ASBs (among ASB-carrying and ASB-less SNPs passing certain read coverage thresholds,
-                            see
-                            <a (click)="openGlossary('coverage_filter'); $event.preventDefault()"
-                                   routerLink="/help"
-                                   fragment="coverage_filter">
-                                here</a>). ASB enrichment significance is calculated with the right-tailed Fisher's exact
-                            test as
-                            <a
-                                (click)="openGlossary('ASB_enrichment'); $event.preventDefault()"
-                                routerLink="/help"
-                                fragment="ASB_enrichement"
-                            >
-                                here</a>.
-                            <span
-                            class="preview d-none d-lg-inline"
-                            (click)="openPreview('summary')"
-                        >
-                                preview
-                        </span><br><br>
-                            Below the overal statistics, there is a collapsible table of chromosome-wise ASB enrichment data.
-                            <span
-                                class="preview d-none d-lg-inline"
-                                (click)="openPreview('chromosomes')"
-                            >
-                                    preview
-                            </span>
-                        </dd>
-                        <dt>
-                            ASB events related to particular TFs or cell types
-                            </dt>
-                        <dd>The second and the third tabs contain information about ASB events of particular
-                            TFs or cell types. For each TF and cell type, we compute a separate P-value using
-                            the same strategy as for the global enrichment (except the respective background
-                            sets are always subsetted from the genome-wide set of 'candidate' SNPs). The results
-                            P-values are then corrected for the number of tested TFs / cell types (with at least
-                            1 observed ASB in the user's list) using Benjamini-Hogberg (FDR) procedure.
-                            The TFs / cell types with the lowest FDR are displayed on top by default.
-                            <span
-                                class="preview d-none d-lg-inline"
-                                (click)="openPreview('enrichment')"
-                            >
-                                preview</span><br><br>
-
-                            At the bottom of each tab there is a detailed table listing all ASB events
-                            (in the expanded view mode) or showing only the single top-significant
-                            TF-/cell type- ASB event per SNP (in the collapsed view mode). Each mode
-                            allows downloading a complete table (the list of columns visible in the
-                            online report can be easily adjusted).
-                            <span
-                            class="preview d-none d-lg-inline"
-                            (click)="openPreview('table')"
-                        >
-                                preview</span>
-                        </dd>
-                    </dl>
-                </div>
-            </mat-expansion-panel>
             <ng-container *ngIf="isAdastra">
             <mat-expansion-panel  class="mat-elevation-z0">
                 <mat-expansion-panel-header>
@@ -452,13 +193,13 @@
                         <dl>
                             <dt>API</dt>
                             <dd>For programmatic access,
-                                ADASTRA API is available at
+                                UDACHA API is available at
                                 <a
                                     href="/api/"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {{'https://adastra.autosome.org/api/'}}
+                                    {{'https://udacha.autosome.org/api/'}}
                                 </a>
                             </dd>
                             <dt>BABACHI</dt>
@@ -471,10 +212,10 @@
                                     GitHub
                                 </a>
                             </dd>
-                            <dt>ADASTRA pipeline</dt>
-                            <dd>ADASTRA pipeline is available on
+                            <dt>MIXALIME</dt>
+                            <dd>MIXALIME is available on
                                 <a
-                                    href="https://github.com/autosome-ru/ADASTRA-pipeline"
+                                    href="https://github.com/autosome-ru/MIXALIME"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -493,7 +234,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <section >
-                    <h5 id="used-software">Resources and databases used to annotate ADASTRA ASBs</h5>
+                    <h5 id="used-software">Resources and databases used to annotate ADASTRA ASAs</h5>
                     <div class="px-3">
                         <ul class="list-circle">
                             <li>
@@ -591,27 +332,6 @@
                         </ul>
                     </div>
                 </section>
-            </mat-expansion-panel>
-            </ng-container>
-            <ng-container *ngIf="!isAdastra">
-            <mat-divider></mat-divider>
-            <mat-expansion-panel class="mat-elevation-z0">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <h4 style="margin-bottom: 0">
-                            API</h4>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div>
-                    For programmatic access,
-                    ANANASTRA API is available at
-                    <a
-                        [routerLink]="'/api/' + recentRelease.api"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {{'https://ananastra.autosome.org/api/' + recentRelease.api}}</a>.
-                </div>
             </mat-expansion-panel>
             </ng-container>
             <mat-divider></mat-divider>

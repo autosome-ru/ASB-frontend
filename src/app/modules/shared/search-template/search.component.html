@@ -143,7 +143,7 @@
                                 [value]="option.name"
                     >
                         <span>{{option.name + " | "}}</span>
-                        <small>&nbsp;ASBs in locus:
+                        <small>&nbsp;ASAs in locus:
                             <span>
                                 {{option.snpsCount}}
                             </span>
@@ -237,7 +237,7 @@
                                         [value]="option.name"
                             >
                                 <span>{{option.name + " | "}}</span>
-                                <small>&nbsp;ASBs in locus: {{option.eqtlCount}}</small>
+                                <small>&nbsp;ASAs in locus: {{option.eqtlCount}}</small>
                             </mat-option>
                         </ng-container>
                         <mat-option *ngIf="searchGeneOptionsLoading$ | async">
@@ -447,73 +447,11 @@
                 Example
             </button>
         </div>
-        <ng-container *ngIf="_checkToDisplay('atac')">
-            <mat-form-field
-                joyrideStep="search-tf-list"
-                [stepContent]="stepTemplate"
-                class="col-12 field-without-hint"
-                [stepContentParams]="getTextByStepName('search-tf-list')"
-                style="overflow: auto; padding: 0; margin-top: -10px"
-            >
-                <mat-chip-list #atacList aria-label="ATAC selection">
-                    <mat-chip
-                        *ngFor="let option of searchForm.get('atacList').value"
-                        selectable
-                        removable
-                        style="margin: 0 2px 0 0"
-                        (removed)="_removeChip(option, 'atac')"
-                    >
-                        {{option}}
-                        <mat-icon matChipRemove svgIcon="clear"></mat-icon>
-                    </mat-chip>
-                    <input
-                        #atacInput
-                        placeholder="ATAC-seq cell types"
-                        matInput
-                        onlyUTF8
-                        name="Search ATAC experiments"
-                        aria-label="search"
-                        formControlName="searchAtac"
-                        [matAutocomplete]="autoAtac"
-                        [matChipInputFor]="atacList"
-                        (matChipInputTokenEnd)="_addChip($event, 'atac')"
-                    >
-                </mat-chip-list>
-                <mat-autocomplete #autoAtac="matAutocomplete"
-                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).atac"
-                                  (optionSelected)="_selectOption($event, 'atac')"
-                >
-                    <ng-container *ngIf="!(searchOptionsLoading$ | async).atac">
-                        <mat-option *ngFor="let option of (searchOptions$ | async).atac" [value]="option.name">
-                            <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs:
-                                <span *ngIf="(currentRelease$ | async).majorVersion == 3">
-                                    {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
-                                </span>
-                                <span *ngIf="(currentRelease$ | async).majorVersion >= 4">
-                                    {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
-                                </span>
-                                <span *ngIf="(currentRelease$ | async).majorVersion < 3">
-                                    {{option.aggregatedSnpCount}}
-                                </span>
-                            </small>
-                        </mat-option>
-                    </ng-container>
-                    <mat-option *ngIf="(searchOptionsLoading$ | async).atac">
-                        <mat-spinner
-                            matSuffix color="accent"
-                            [diameter]="12"
-                        ></mat-spinner>
-                        Loading...
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </ng-container>
 
         <ng-container *ngIf="_checkToDisplay('dnase')">
             <mat-form-field
-                class="col-12"
-                style="overflow: auto; padding: 0; margin: -10px 0"
+                class="col-12 field-without-hint"
+                style="overflow: auto; padding: 0; margin-top: -10px"
                 joyrideStep="search-cl-list"
                 [stepContent]="stepTemplate"
                 [stepContentParams]="getTextByStepName('search-dnase-list')"
@@ -550,7 +488,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).dnase">
                         <mat-option *ngFor="let option of (searchOptions$ | async).dnase" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs:
+                            <small>&nbsp;Total ASAs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
                                         {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                     </span>
@@ -564,6 +502,69 @@
                         </mat-option>
                     </ng-container>
                     <mat-option *ngIf="(searchOptionsLoading$ | async).dnase">
+                        <mat-spinner
+                            matSuffix color="accent"
+                            [diameter]="12"
+                        ></mat-spinner>
+                        Loading...
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="_checkToDisplay('atac')">
+            <mat-form-field
+                joyrideStep="search-tf-list"
+                [stepContent]="stepTemplate"
+                class="col-12"
+                style="overflow: auto; padding: 0; margin: 0 0"
+                [stepContentParams]="getTextByStepName('search-tf-list')"
+            >
+                <mat-chip-list #atacList aria-label="ATAC selection">
+                    <mat-chip
+                        *ngFor="let option of searchForm.get('atacList').value"
+                        selectable
+                        removable
+                        style="margin: 0 2px 0 0"
+                        (removed)="_removeChip(option, 'atac')"
+                    >
+                        {{option}}
+                        <mat-icon matChipRemove svgIcon="clear"></mat-icon>
+                    </mat-chip>
+                    <input
+                        #atacInput
+                        placeholder="ATAC-seq cell types"
+                        matInput
+                        onlyUTF8
+                        name="Search ATAC experiments"
+                        aria-label="search"
+                        formControlName="searchAtac"
+                        [matAutocomplete]="autoAtac"
+                        [matChipInputFor]="atacList"
+                        (matChipInputTokenEnd)="_addChip($event, 'atac')"
+                    >
+                </mat-chip-list>
+                <mat-autocomplete #autoAtac="matAutocomplete"
+                                  [autoActiveFirstOption]="!(searchOptionsLoading$ | async).atac"
+                                  (optionSelected)="_selectOption($event, 'atac')"
+                >
+                    <ng-container *ngIf="!(searchOptionsLoading$ | async).atac">
+                        <mat-option *ngFor="let option of (searchOptions$ | async).atac" [value]="option.name">
+                            <span>{{option.name + " | "}}</span>
+                            <small>&nbsp;Total ASAs:
+                                <span *ngIf="(currentRelease$ | async).majorVersion == 3">
+                                    {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
+                                </span>
+                                <span *ngIf="(currentRelease$ | async).majorVersion >= 4">
+                                    {{option.aggregatedSnpCount005}}&nbsp;@5% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
+                                </span>
+                                <span *ngIf="(currentRelease$ | async).majorVersion < 3">
+                                    {{option.aggregatedSnpCount}}
+                                </span>
+                            </small>
+                        </mat-option>
+                    </ng-container>
+                    <mat-option *ngIf="(searchOptionsLoading$ | async).atac">
                         <mat-spinner
                             matSuffix color="accent"
                             [diameter]="12"
@@ -596,9 +597,9 @@
                     </mat-chip>
                     <input
                         #faireInput
-                        placeholder="Faire cell types"
+                        placeholder="FAIRE cell types"
                         matInput
-                        name="Search CTs"
+                        name="Search FAIRE CTs"
                         aria-label="search"
                         onlyUTF8
                         formControlName="searchFaire"
@@ -614,7 +615,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).faire">
                         <mat-option *ngFor="let option of (searchOptions$ | async).faire" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASBs:
+                            <small>&nbsp;Total ASAs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
                                         {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                     </span>
@@ -752,23 +753,12 @@
     <button mat-raised-button color="accent">Exit</button>
 </ng-template>
 
-<ng-template #hocomocoTemplate>
-    <div
-        style="text-align: center; white-space: pre-line; padding: 10px 20px 10px 10px"
-    >
-        Look for ASBs which are concordant<br> with motif predictions of <a
-        rel="noopener noreferrer" target="_blank"
-        href="https://hocomoco11.autosome.org/"
-    >
-        HOCOMOCO
-    </a>
-    </div>
-</ng-template>
+
 <ng-template #esTemplate>
     <div
         style="text-align: center; white-space: pre-line; padding: 10px 20px 10px 10px"
     >
-        ASB effect size threshold, log2<br>
+        ASA effect size threshold, log2<br>
         see <a
         rel="noopener noreferrer" target="_blank"
         [routerLink]="'/help'"

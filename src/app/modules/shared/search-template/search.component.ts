@@ -349,9 +349,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         if (this.isAdvanced) {
             search = {
                 chromPos: new ChromPos("1", "1-50000000"),
-                atacList: ["HEK293 (embryonic kidney)"],
-                dnaseList: [],
-                faireList: ["blood"],
+                atacList: [],
+                dnaseList: ["K562 (myelogenous leukemia)"],
+                faireList: [],
                 ebi: false,
                 grasp: false,
                 phewas: false,

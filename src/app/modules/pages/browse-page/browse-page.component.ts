@@ -101,7 +101,11 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
     public isAnanas: boolean;
     private subscriptions: Subscription = new Subscription();
 
-    private queryParams: AsbServerSideFilterModel = initialServerParams;
+    private queryParams: AsbServerSideFilterModel = {
+        ...initialServerParams,
+        direction: 'asc',
+        active: 'name'
+    };
     constructor(
         private router: Router,
         private store: Store<AppState>,
@@ -144,13 +148,6 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                     pageSize: 25
                 };
                 switch (params.by) {
-                    case "atac":
-                        this.initialGroupValue = "atac";
-                        this.aggType = 'atac';
-                        this.store.dispatch(new fromActions.data.LoadAtacInfoAction(
-                            this.queryParams
-                        ));
-                        return;
                     case "dnase":
                         this.initialGroupValue = "dnase";
                         this.aggType = 'dnase';
@@ -158,6 +155,14 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
                             this.queryParams,
                         ));
                         return;
+                    case "atac":
+                        this.initialGroupValue = "atac";
+                        this.aggType = 'atac';
+                        this.store.dispatch(new fromActions.data.LoadAtacInfoAction(
+                            this.queryParams
+                        ));
+                        return;
+
                     case "faire":
                         this.initialGroupValue = "faire";
                         this.aggType = 'faire';
@@ -176,10 +181,10 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
         this.columnModel = {
             name: {view: "Name"},
-            aggregatedSnpsCount: {view: "ASBs count at 25% FDR", isDesc: true},
+            aggregatedSnpsCount: {view: "ASAs count at 25% FDR", isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true},
-            aggregatedSnpsCount010: {view: 'ASBs at 10% FDR', isDesc: true},
-            aggregatedSnpsCount005: {view: 'ASBs at 5% FDR', isDesc: true}
+            aggregatedSnpsCount010: {view: 'ASAs at 10% FDR', isDesc: true},
+            aggregatedSnpsCount005: {view: 'ASAs at 5% FDR', isDesc: true}
         };
         this.subscriptions.add(
             this.searchForm.valueChanges.pipe(debounceTime(400)).subscribe(

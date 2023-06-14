@@ -7,14 +7,14 @@ function getText(step: string, component?: string): string {
         case "sequence":
             return  "Sequence surrounding SNV, ± 25 nts.";
         case "cell-types-buttons":
-            return "Cell types from the GTRD database\n exhibiting ASB at the SNV."
+            return "Cell types from the GTRD database\n exhibiting ASA at the SNV."
                 + (component == "snp" ? "\nClick the links to visit the\n respective GTRD page." : "");
         case "transcription-factors-buttons":
-            return  "Transcription factors exhibiting\nASB at this SNV." +
+            return  "Transcription factors exhibiting\nASA at this SNV." +
                 (component == "snp" ? "\nClick to visit the UniProt page\n" +
                     " of the respective protein." : "");
         case "search-nearby":
-            return  `Search ASBs nearby (±100bp${component == "snp" ? ")" : ", " +
+            return  `Search ASAs nearby (±100bp${component == "snp" ? ")" : ", " +
                 "either\nrelative to dbSNP ID, if found, or\nrelative to a given genomic interval)."}`;
         case "genome-browser":
             return "Open the surrounding region\n in the UCSC Genome Browser.";
@@ -22,10 +22,10 @@ function getText(step: string, component?: string): string {
             return 'Explore phenotype associations\nwith PheLiGe'
         case "color-scales":
             return "Color scales used for visual representation\n" +
-                " of the ASB significance thoughout\n the whole SNV report page";
+                " of the ASA significance thoughout\n the whole SNV report page";
         case "transcription-factors-stats":
             return "Detailed information on read counts,\nallelic imbalance," +
-                "and motif annotation\n for the ASBs in regard to \ntranscription " +
+                "and motif annotation\n for the ASAs in regard to \ntranscription " +
                 "factors and cell types.";
         case "phen-stats":
             return "Information on phenotype\n associations and eQTLs";
@@ -41,23 +41,23 @@ function getText(step: string, component?: string): string {
         case "search-adv":
             return "Additional filters are\navailable in \"Advanced search\".";
         case "search-by":
-            return "Search ASBs by dbSNP ID\n or by genome position.";
+            return "Search ASAs by dbSNP ID\n or by genome position.";
         case "search-rs":
             return "Type a dbSNP ID\n(with or without rs prefix).";
         case "search-pos":
             return "Use dash \"-\" to search in a\ngenomic interval e.g. 1-500000" +
                  ",\nposition ignored if empty.";
         case "search-example":
-            return "Or click the \"Example\" button\nto see ADASTRA in action.";
+            return "Or click the \"Example\" button\nto see UDACHA in action.";
         case "search-tf-list":
-            return "Look for SNVs with ASBs for the\n" +
+            return "Look for SNVs with ASAs for the\n" +
                 "selected transcription factors only\n" +
                 "(start typing and use autocomplete).\n" +
                 "TFs are listed according to UniProt IDs.\n" +
                 "The complete list of TFs can be found\n" +
                 "at the \"Browse\" page.";
         case "search-cl-list":
-            return "Look for SNVs with ASBs at the\n" +
+            return "Look for SNVs with ASAs at the\n" +
                 "selected cell types only\n" +
                 "(start typing and use autocomplete).\n" +
                 "Cell types are named according to the\n " +
@@ -72,16 +72,16 @@ function getText(step: string, component?: string): string {
         case "search-associations":
             return "Search for SNVs with known\n associations with phenotypes or eQTLs";
         case "search-concordance":
-            return "Look for ASBs which are\nconcordant with motif predictions of HOCOMOCO";
+            return "Look for ASAs which are\nconcordant with motif predictions of HOCOMOCO";
         case "search-gene":
-            return "Search for ASB sites within a particular\ngene locus (within the gene body and\n 5000bp upstream of the TSS).\n" +
+            return "Search for ASA sites within a particular\ngene locus (within the gene body and\n 5000bp upstream of the TSS).\n" +
                 "GENCODE gene symbols are used as gene\nnames, start typing and use autocomplete."
         case "fdr-simple":
-            return 'Here you can set desired ASB FDR threshold.\n' +
-                'Our test suggest ASBs at 10% FDR are very reliable\n' +
-                'in terms of motif annotation.'
+            return 'Here you can set desired ASA FDR threshold.\n' +
+                'Our test suggest ASAs at 10% FDR are very reliable\n' +
+                'in terms of motif annotation.';
         case "search-eqtl":
-            return 'It is possible to specifically look for ASBs\n' +
+            return 'It is possible to specifically look for ASAs\n' +
                 'which act as eQTLs for a particular gene'
         default:
             return "";

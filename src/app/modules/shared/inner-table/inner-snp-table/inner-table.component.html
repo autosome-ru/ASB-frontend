@@ -16,7 +16,7 @@
         *ngIf="value"
         target="_blank"
         rel="noopener noreferrer"
-        [href]="'http://gtrd.biouml.org/#!table/gtrd_current.experiments/Details/ID='+ value"
+        [href]="'http://gtrd.biouml.org/#!table/gtrd_current.experiments/Details/ID='+ value.split('_')[0]"
     >
         {{value}}
     </a>
