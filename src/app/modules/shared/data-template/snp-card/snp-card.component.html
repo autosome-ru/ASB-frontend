@@ -22,7 +22,7 @@
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
     >
-        DNase I
+        DNase-Seq
     </dt>
     <asb-snp-buttons
         [joyrideStep]="'cell-types-buttons'  + (index ? index : '')"
@@ -45,7 +45,7 @@
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
     >
-        ATAC-seq
+        ATAC-Seq
     </dt>
     <asb-snp-buttons
         [joyrideStep]="'transcription-factors-buttons' + (index ? index : '')"
@@ -69,7 +69,7 @@
         class="col-auto snp-card__tag align-self-start"
         style="vertical-align: center; margin-top: 5px"
     >
-        FAIRE
+        FAIRE-Seq
     </dt>
     <asb-snp-buttons
         [joyrideStep]="'faire-buttons' + (index ? index : '')"
@@ -126,21 +126,21 @@
             [stepContentParams]="getTextByStepName('genome-browser')"
             style="margin: -10px; padding: 10px; display: inline-flex; overflow: auto"
         >
-        <a
-            style="overflow: auto"
-            mat-raised-button
-            target="_blank"
-            rel="noopener noreferrer"
-            [href]="'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position='
-            + snpData.chr + ':' + (snpData.pos > 100 ? snpData.pos - 100 : '1')
-            + '-' + (snpData.pos + 100) +
-            '&hgct_customText=track%20type=bigBed%20name=ADASTra_ASB_SNPs%20' +
-             'description=%22ADASTra%20ASB%20SNPs%22%20visibility=full%20bigDataUrl=' +
-             url + 'assets/ucsc-files/' + (release$ | async).ucscFileName +'&knownGene=full&' +
-             'omimAvSnp=full&varsInPubs=full&snpedia=full&hgmd=full'"
-        >
-            View in UCSC Genome Browser
-        </a>
+<!--        <a-->
+<!--            style="overflow: auto"-->
+<!--            mat-raised-button-->
+<!--            target="_blank"-->
+<!--            rel="noopener noreferrer"-->
+<!--            [href]="'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position='-->
+<!--            + snpData.chr + ':' + (snpData.pos > 100 ? snpData.pos - 100 : '1')-->
+<!--            + '-' + (snpData.pos + 100) +-->
+<!--            '&hgct_customText=track%20type=bigBed%20name=ADASTra_ASB_SNPs%20' +-->
+<!--             'description=%22ADASTra%20ASB%20SNPs%22%20visibility=full%20bigDataUrl=' +-->
+<!--             url + 'assets/ucsc-files/' + (release$ | async).ucscFileName +'&knownGene=full&' +-->
+<!--             'omimAvSnp=full&varsInPubs=full&snpedia=full&hgmd=full'"-->
+<!--        >-->
+<!--            View in UCSC Genome Browser-->
+<!--        </a>-->
         </div>
         <div
             class="mt-1 mt-md-0"

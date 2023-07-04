@@ -28,6 +28,6 @@ export class DownloadsPageComponent implements OnInit {
     }
 
     _getGtrdExpsName(release: ReleaseModel) {
-        return `ADASTRA_${release.name.replace(' ', '_')}_GTRD_exps.tsv`;
+        return `UDACHA_${release.name.replace(' ', '_')}_GTRD_exps.tsv`;
     }
 }

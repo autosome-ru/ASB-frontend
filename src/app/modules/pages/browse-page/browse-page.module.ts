@@ -9,6 +9,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
+import {AsbDirectivesModule} from "../../../directives/directives.module";
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import {MatIconModule} from "@angular/material/icon";
         MatButtonToggleModule,
         MatProgressSpinnerModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        AsbDirectivesModule
     ],
     declarations: [BrowsePageComponent],
 })

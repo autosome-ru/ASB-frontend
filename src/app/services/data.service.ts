@@ -5,7 +5,7 @@ import {
     ClSnpBackendModel, ExpSnpModel,
     SnpInfoBackendModel,
     AggType, TfSnpModel,
-    TotalInfoBackendModel, AbstractInfoBackendModel
+    TotalInfoBackendModel, AbstractInfoBackendModel, ClSnpModel
 } from "src/app/models/data.model";
 import {AsbServerSideFilterModel} from "../models/table.model";
 import {
@@ -31,7 +31,7 @@ export class DataService {
     }
 
     public getSnpInfoByIdCsv(id: string, alt: string, tfOrCl: AggType,
-                             columns: Array<keyof TfSnpModel>, filter?: string): Observable<Blob> {
+                             columns: Array<keyof ClSnpModel>, filter?: string): Observable<Blob> {
         return this.http.get(`${this.urlService.getUrlForQuery("snp")}/${id.slice(2)}/${alt}/${tfOrCl}/tsv`,
             {params: constructParams(columns, filter, tfOrCl)
                 , responseType: "blob"});
@@ -81,14 +81,14 @@ export class DataService {
 
 }
 
-function constructParams(columns: Array<keyof TfSnpModel>, filter: string, aggType: AggType):
+function constructParams(columns: Array<keyof ClSnpModel>, filter: string, aggType: AggType):
     {[id: string]: string} {
     const params: {[id: string]: string} = {};
     params.columns = columns.map(column => changeName(column, aggType)).join("@");
     return params;
 }
 
-function changeName(name: keyof TfSnpModel, aggType: AggType): string {
+function changeName(name: keyof ClSnpModel, aggType: AggType): string {
     switch (name) {
         case "pValueRef": {
             return "log_p_value_ref";
@@ -100,40 +100,13 @@ function changeName(name: keyof TfSnpModel, aggType: AggType): string {
             return "mean_bad";
         }
         case "name": {
-            switch (aggType) {
-                case "faire":
-                    return "transcription_factor.name";
-                case "atac":
-                    return "transcription_factor.name";
-                case "dnase":
-                    return "transcription_factor.name";
-                default:
-                    return "";
-            }
+            return "cell_type.name";
         }
         case "effectSizeRef": {
             return "es_ref";
         }
         case "effectSizeAlt": {
             return "es_alt";
-        }
-        case "motifLogPRef": {
-            return "motif_log_p_ref";
-        }
-        case "motifLogPAlt": {
-            return "motif_log_p_alt";
-        }
-        case "motifConcordance": {
-            return "motif_concordance";
-        }
-        case "motifOrientation": {
-            return "motif_orientation";
-        }
-        case "motifLog2Fc": {
-            return "motif_log_2_fc";
-        }
-        case "motifPosition": {
-            return "motif_position";
         }
     }
 }

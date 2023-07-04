@@ -25,8 +25,8 @@ const releaseMap = new Map(
 );
 const routes: Routes = [
     {
-        path: "bmo",
-        component: releaseMap.get('bmo'),
+        path: "IceKing",
+        component: releaseMap.get('IceKing'),
         loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
     },
     {

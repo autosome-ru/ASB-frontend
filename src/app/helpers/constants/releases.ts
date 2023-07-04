@@ -3,12 +3,12 @@ import {ReleaseModel} from "../../models/releases.model";
 export const releasesList: ReleaseModel[] = [
     {
         name: "IceKing",
-        url: "bmo",
+        url: "IceKing",
         majorVersion: 5,
         date: "2023.06.13",
         releaseType: 'recent',
         version: "v1.0",
-        size: '0MB',
+        size: '800MB',
         api: "v5",
         defaultFdrThreshold: '0.05',
         releaseLink: 'https://disk.yandex.ru/d/8Shsn1-OgDuwzQ',
@@ -16,10 +16,10 @@ export const releasesList: ReleaseModel[] = [
         badMapsPath: "https://disk.yandex.ru/d/DmTPsMQ_bA9eKQ",
         ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
         // notes: "Increased recall of diploid regions. Please find the details in readme.",
-        notesPath: 'readme.bill_cipher.txt',
-        tfClArchive: 'adastra.cltf.bill_cipher.zip'
+        notesPath: 'readme.iceking.txt',
+        // tfClArchive: 'adastra.cltf.bill_cipher.zip'
     },
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.releaseType === 'recent')[0];
-export const ananastraRelease: ReleaseModel = recentRelease //releasesList.filter(s => s.name === 'Bill Cipher')[0]
+export const ananastraRelease: ReleaseModel = recentRelease;  // releasesList.filter(s => s.name === 'Bill Cipher')[0]

@@ -50,7 +50,7 @@
                             List of <a href="http://gtrd.biouml.org/" target="_blank" rel="noopener noreferrer">GTRD</a> data used:
                         </strong>
                         <span>
-                            <a [href]="'/assets/exps/' + release.gtrdExpsPath"
+                            <a [href]="release.gtrdExpsPath"
                                [download]="_getGtrdExpsName(release)"
                             >
                                 {{_getGtrdExpsName(release)}}
@@ -67,8 +67,7 @@
                                 BABACHI</a>:
                         </strong>
                         <span>
-                            <a [href]="'/assets/badmaps/' + release.badMapsPath"
-                               [download]="_getBadmapsName(release)"
+                            <a [href]="release.badMapsPath"
                             >
                                 {{_getBadmapsName(release)}}
                             </a>
