@@ -100,7 +100,7 @@ function changeName(name: keyof ClSnpModel, aggType: AggType): string {
             return "mean_bad";
         }
         case "name": {
-            return "cell_type.name";
+            return "cell_line.name";
         }
         case "effectSizeRef": {
             return "es_ref";
