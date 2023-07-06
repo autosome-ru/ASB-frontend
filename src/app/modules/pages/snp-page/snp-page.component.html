@@ -1,4 +1,4 @@
-<ng-container *ngIf="!(snpDataLoading$ | async) && (snpData$ | async) as snpData">
+<ng-container *ngIf="!(this.adastraLoading$ | async) && !(snpDataLoading$ | async) && (snpData$ | async) as snpData">
     <div >
     <div class="container snp-page px-0">
 
@@ -14,6 +14,7 @@
                 [snpData]="snpData"
                 [fdr]="fdr"
                 [es]="es"
+                [adastraUrl]="adastraUrl$ | async"
                 (emitNextStep)="colorScalesPanel.open()"
             >
             </asb-snp-card>
@@ -160,7 +161,7 @@
 </ng-container>
 
 
-<ng-container *ngIf="(snpDataLoading$ | async)">
+<ng-container *ngIf="(snpDataLoading$ | async) || (this.adastraLoading$ | async) ">
     <div class="snp-page__spinner">
         <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
     </div>

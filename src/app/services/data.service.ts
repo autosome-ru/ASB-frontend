@@ -1,11 +1,11 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {
     ClSnpBackendModel, ExpSnpModel,
     SnpInfoBackendModel,
-    AggType, TfSnpModel,
-    TotalInfoBackendModel, AbstractInfoBackendModel, ClSnpModel
+    AggType, TotalInfoBackendModel,
+    AbstractInfoBackendModel, ClSnpModel
 } from "src/app/models/data.model";
 import {AsbServerSideFilterModel} from "../models/table.model";
 import {
@@ -13,13 +13,30 @@ import {
     convertServerSideModelToServerSideBackendModel
 } from "../helpers/converters/snp-model.converter";
 import {UrlService} from "./url.service";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 
 
 @Injectable()
 export class DataService {
 
     constructor(private http: HttpClient, private urlService: UrlService) {
+    }
+
+    public checkSnpInAdastra(url: string): Observable<boolean> {
+        return this.http.get(url, {observe: 'response'})
+            .pipe(
+                catchError( error => {
+                    if ( !(error.error instanceof ErrorEvent)) {
+                        // The backend returned an unsuccessful response code.
+                        // The response body may contain clues as to what went wrong,
+                        if (error.status === 404) {
+                            return of(false);
+                        }
+                    }
+                    return of(false);
+                }),
+                map(rule => !!rule)
+            );
     }
 
     public getSnpInfoById({rsId, alt, fdr}:

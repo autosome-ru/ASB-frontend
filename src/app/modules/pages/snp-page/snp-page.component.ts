@@ -7,7 +7,7 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Observable, Subscription} from "rxjs";
+import {BehaviorSubject, Observable, of, Subscription} from "rxjs";
 import {ClSnpModel, SnpInfoModel, AggType, TfSnpModel} from "src/app/models/data.model";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../../store/reducer/adastra";
@@ -28,6 +28,7 @@ import {AsbPopoverComponent} from "../../shared/popover-template/popover.compone
 import {getTextByStepNameAdastra} from "../../../helpers/text-helpers/tour.adastra.helper";
 import {MatTabGroup} from "@angular/material/tabs";
 import {ReleaseModel} from "../../../models/releases.model";
+import {map, tap} from "rxjs/operators";
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -63,6 +64,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
     public alt: string;
     public snpData$: Observable<SnpInfoModel>;
     public snpDataLoading$: Observable<boolean>;
+    public adastraUrl$: Observable<string>;
+    public adastraLoading$ = new BehaviorSubject<boolean>(false);
 
     public clColumnModel: AsbTableColumnModel<Partial<ClSnpModel>>;
     public clDisplayedColumns: AsbTableDisplayedColumns<ClSnpModel> = [
@@ -108,6 +111,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
                             (p) => {
                                 this.id = p.get("rsId");
                                 this.alt = p.get("alt");
+                                this.checkAdastra();
                                 if (!this.alt) {
                                     this.router.navigate([`/${this.release.url}/search/simple`],
                                         {queryParams: {rs: this.id, fdr: this.fdr, es: this.es}}).then();
@@ -316,6 +320,17 @@ export class SnpPageComponent implements OnInit, OnDestroy {
             return 1;
         }
         return 2;
+    }
+
+    checkAdastra(): void {
+        this.adastraLoading$.next(true);
+        const adastraUrl = `https://adastra.autosome.org/api/v5/snps/${this.id.slice(2)}/${this.alt}?fdr=${this.fdr}`;
+        this.adastraUrl$ = this.dataService.checkSnpInAdastra(adastraUrl).pipe(
+            map(t => t ? `https://adastra.autosome.org/snps/${this.id}/${this.alt}?fdr=${this.fdr}` : '')
+        );
+        this.adastraUrl$.subscribe(
+            t => this.adastraLoading$.next(false)
+        );
     }
 }
 

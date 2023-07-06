@@ -39,6 +39,9 @@ export class AsbSnpCardComponent implements OnInit, OnDestroy {
     public index = 0;
 
     @Input()
+    public adastraUrl: string;
+
+    @Input()
     public fdr: string;
 
     @Input()
