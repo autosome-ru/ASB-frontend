@@ -24,7 +24,7 @@
             <h6
                 style="text-align: center; display: flex; justify-content: center; flex-wrap: wrap"
             >
-                <span style="white-space: nowrap">DNase I cell types:&nbsp;
+                <span style="white-space: nowrap">DNase-Seq cell types:&nbsp;
                     <a
                         style="text-decoration: underline"
                         [routerLink]="'/' + (release$ | async).url + '/browse'"
@@ -32,7 +32,7 @@
                     >
                         {{totalInfo.dnaseCount}}</a>
                 </span>
-                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;ATAC-seq:&nbsp;
+                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;ATAC-Seq:&nbsp;
 
                 <a
                     style="text-decoration: underline"
@@ -42,7 +42,7 @@
                     {{totalInfo.atacCount}}</a>
                 </span>
 
-                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;FAIRE:&nbsp;
+                <span style="white-space: nowrap">&nbsp;&nbsp;&nbsp;FAIRE-Seq:&nbsp;
                 <a
                     style="text-decoration: underline"
                     [routerLink]="'/' + (release$ | async).url + '/browse'"
