@@ -17,35 +17,46 @@
                 </div>
             </div>
         </a>
-<!--        <button-->
-<!--            joyrideStep="switch-release"-->
-<!--            [stepContent]="stepTemplate"-->
-<!--            [stepContentParams]="getTextByStepName('switch-release')"-->
-<!--            mat-icon-button-->
-<!--            disableRipple-->
-<!--            matTooltip="Switch release"-->
-<!--            (click)="selectRelease()"-->
-<!--            style="color: white; display: flex; align-items: center; vertical-align: middle"-->
-<!--            [matMenuTriggerFor]="releasesMenu"-->
-<!--            color="accent"-->
-<!--        >-->
-<!--            <mat-icon-->
-<!--                [ngClass]="releaseOpened ? 'asb-header-trans' : 'asb-header-trans-back'"-->
-<!--                svgIcon="chevron-down"-->
-<!--            ></mat-icon>-->
-<!--        </button>-->
-<!--        <mat-menu #releasesMenu="matMenu"-->
-<!--                  (closed)="releaseOpened = false">-->
-<!--            <a-->
-<!--                *ngFor="let release of releasesList"-->
-<!--                mat-menu-item-->
-<!--                [ngClass]="(currentRelease$ | async)?.url === release.url ? 'asb-header__active' : ''"-->
-<!--                [href]="release.url"-->
-<!--            >-->
-<!--                <span-->
-<!--                >Release {{release.name}} <small>{{release.version}} | <span *ngIf="getReleaseType(release) as rt">{{rt}}</span></small> </span>-->
-<!--            </a>-->
-<!--        </mat-menu>-->
+        <button
+            joyrideStep="switch-release"
+            [stepContent]="stepTemplate"
+            [stepContentParams]="getTextByStepName('switch-release')"
+            mat-icon-button
+            disableRipple
+            matTooltip="Switch release"
+            (click)="selectRelease()"
+            style="color: #212529; display: flex; align-items: center; vertical-align: middle"
+            [matMenuTriggerFor]="releasesMenu"
+            color="accent"
+        >
+            <mat-icon
+                [ngClass]="releaseOpened ? 'asb-header-trans' : 'asb-header-trans-back'"
+                svgIcon="chevron-down"
+            ></mat-icon>
+        </button>
+        <mat-menu #releasesMenu="matMenu"
+                  (closed)="releaseOpened = false">
+            <a
+                *ngFor="let release of releasesList"
+                mat-menu-item
+                [ngClass]="(currentRelease$ | async)?.url === release.url ? 'asb-header__active' : ''"
+                [href]="release.url"
+            >
+                <span
+                >Release {{release.name}} <small>{{release.version}} | <span *ngIf="getReleaseType(release) as rt">{{rt}}</span></small> </span>
+            </a>
+            <mat-divider></mat-divider>
+            <a
+                mat-menu-item
+                href="https://adastra.autosome.org"
+            >
+                <img
+                    style="height: 25px; margin-right: 1em"
+                    src="https://adastra.autosome.org/assets/images/ADASTRA_logo_small.svg"
+                >
+                Switch to ADASTRA
+            </a>
+        </mat-menu>
     </div>
     <div
         class="collapse navbar-collapse  ml-auto p-2 justify-content-end"
