@@ -44,6 +44,17 @@
                 <span
                 >Release {{release.name}} <small>{{release.version}} | <span *ngIf="getReleaseType(release) as rt">{{rt}}</span></small> </span>
             </a>
+            <mat-divider></mat-divider>
+            <a
+                mat-menu-item
+                href="https://udacha.autosome.org"
+            >
+                <img
+                    style="height: 25px; margin-right: 1em"
+                    src="https://udacha.autosome.org/assets/images/ADASTRA_logo_small.png"
+                >
+                Switch to UDACHA
+            </a>
         </mat-menu>
     </div>
     <div
