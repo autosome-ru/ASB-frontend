@@ -88,7 +88,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
     ];
     public panelExpanded: boolean = false;
     private fdr: number;
-    public chrPanelOpened: boolean = false;
+    public chrPanelOpened = false;
     public chartLoaded: boolean;
 
 

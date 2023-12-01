@@ -28,7 +28,8 @@ export interface CountModel {
     count: number;
     expCount?: number;
 }
-export type pValueString = number | 'infinity'
+export type pValueString = number | 'infinity';
+
 export interface StatsDataModel {
     asbCount: number;
     undefinedCount: number;
@@ -77,7 +78,7 @@ export interface StatsDataBackendModel {
         odds_rs: string;
         expected_asbs_rs: number;
         expected_negatives_rs: number;
-    },
+    };
     cl: {
         asbs_rs: number;
         negatives_rs: number;
@@ -88,7 +89,7 @@ export interface StatsDataBackendModel {
         asb_counts: CountBackendModel[];
         asb_counts_top: CountBackendModel[];
         asb_data: AsbStatsBackendDataModel[];
-    },
+    };
     tf: {
         asbs_rs: number;
         negatives_rs: number;
@@ -99,13 +100,13 @@ export interface StatsDataBackendModel {
         asb_counts: CountBackendModel[];
         asb_counts_top: CountBackendModel[];
         asb_data: AsbStatsBackendDataModel[];
-    },
+    };
     chr: {
         asb_data: AsbStatsBackendDataModel[];
         log10_p_value_rs: string;
         tf_log10_p_value_rs: string;
         cl_log10_p_value_rs: string;
-    }
+    };
 }
 export interface AsbStatsBackendDataModel {
     name: string;
