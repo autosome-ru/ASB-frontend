@@ -550,7 +550,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 }
             }
         }
-        return result
+        return result;
     }
 
     _isSearchDisabled(): boolean {
