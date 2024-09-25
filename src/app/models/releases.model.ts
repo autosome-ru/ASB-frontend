@@ -4,7 +4,7 @@ export interface ReleaseModel {
     url: string;
     version: string;
     majorVersion: number;
-    releaseType: 'recent' | 'deprecated' | 'legacy';
+    releaseType: 'recent' | 'deprecated' | 'legacy' | 'future';
     api: string;
     size: string;
     releaseLink: string;

@@ -64,7 +64,9 @@ export class AsbHeaderComponent implements OnInit {
         switch (release.releaseType) {
             case "deprecated":
             case "legacy":
-                return release.releaseType
+                return release.releaseType;
+            case "future":
+                return "pre-release"
             case "recent":
                 return 'latest'
         }

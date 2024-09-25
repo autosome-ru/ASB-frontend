@@ -82,6 +82,7 @@ export class AsbMotifsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     makeImagePath(tf: TfSnpModel): string {
+        // https://adastra.autosome.org/
         return `svgs/${this.release.api}/${tf.name}_${tf.rsId.slice(2)}_${tf.altBase}${this.revCompStateArray[tf.id] ? '_revcomp' : '' }.svg`;
     }
 

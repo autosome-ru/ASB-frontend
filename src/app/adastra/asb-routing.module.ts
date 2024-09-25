@@ -5,6 +5,7 @@ import {RedirectReleaseComponent} from "../modules/releases-wrapper/redirect-rel
 import {DeprecatedComponent} from "../modules/releases-wrapper/deprecated.component";
 import {RemovedComponent} from "../modules/releases-wrapper/removed.component";
 import {recentRelease, releasesList} from "../helpers/constants/releases";
+import {FutureComponent} from "../modules/releases-wrapper/future.component";
 
 const routerOptions: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
@@ -12,12 +13,15 @@ const routerOptions: ExtraOptions = {
     scrollOffset: [0, 20],
     initialNavigation: 'enabled',
     relativeLinkResolution: 'legacy'
-}
+};
+
 const componentMap = {
-    'recent': RecentComponent,
-    'deprecated': RemovedComponent,
-    'legacy': DeprecatedComponent
-}
+    recent: RecentComponent,
+    deprecated: RemovedComponent,
+    legacy: DeprecatedComponent,
+    future: FutureComponent,
+};
+
 const releaseMap = new Map(
     releasesList.map(object => {
         return [object.url, componentMap[object.releaseType]];
@@ -38,6 +42,11 @@ const routes: Routes = [
         path: "zanthar",
         component: releaseMap.get('zanthar'),
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
+    },
+    {
+        path: "bill-cipher-fixed",
+        component: releaseMap.get('bill-cipher-fixed'),
+        loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
     },
     {
         path: "bill-cipher",
