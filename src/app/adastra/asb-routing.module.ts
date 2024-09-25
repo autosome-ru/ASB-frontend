@@ -43,11 +43,11 @@ const routes: Routes = [
         component: releaseMap.get('zanthar'),
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
-    {
-        path: "bill-cipher-fixed",
-        component: releaseMap.get('bill-cipher-fixed'),
-        loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
-    },
+    // {
+    //     path: "bill-cipher-fixed",
+    //     component: releaseMap.get('bill-cipher-fixed'),
+    //     loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
+    // },
     {
         path: "bill-cipher",
         component: releaseMap.get('bill-cipher'),
