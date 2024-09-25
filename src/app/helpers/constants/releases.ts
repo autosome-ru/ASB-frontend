@@ -1,24 +1,24 @@
 import {ReleaseModel} from "../../models/releases.model";
 // All available releases. Don't forget to change adastra asb-routing module
 export const releasesList: ReleaseModel[] = [
-    {
-        name: "BillCipher_fix",
-        url: "bill-cipher-fixed",
-        majorVersion: 6,
-        date: "2024.09.24",
-        releaseType: 'future',
-        version: "v6.1.0",
-        size: '746.4MB',
-        api: "v6",
-        defaultFdrThreshold: '0.05',
-        releaseLink: 'https://disk.yandex.ru/d/LQYSni42Lk0wtg',
-        gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
-        badMapsPath: "BADmaps.bill_cipher.zip",
-        ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
-        notes: "Concordance annotations are updated for TF SNPs with PWM from HOCOMOCO v12.",
-        notesPath: 'readme.bill_cipher.txt',
-        tfClArchive: 'adastra.cltf.bill_cipher.zip'
-    },
+    // {
+    //     name: "BillCipher_fix",
+    //     url: "bill-cipher-fixed",
+    //     majorVersion: 6,
+    //     date: "2024.09.24",
+    //     releaseType: 'future',
+    //     version: "v6.1.0",
+    //     size: '746.4MB',
+    //     api: "v6",
+    //     defaultFdrThreshold: '0.05',
+    //     releaseLink: 'https://disk.yandex.ru/d/LQYSni42Lk0wtg',
+    //     gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
+    //     badMapsPath: "BADmaps.bill_cipher.zip",
+    //     ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
+    //     notes: "Concordance annotations are updated for TF SNPs with PWM from HOCOMOCO v12.",
+    //     notesPath: 'readme.bill_cipher.txt',
+    //     tfClArchive: 'adastra.cltf.bill_cipher.zip'
+    // },
     {
         name: "Bill Cipher",
         url: "bill-cipher",
