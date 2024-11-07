@@ -7,6 +7,7 @@ import {RemovedComponent} from "../modules/releases-wrapper/removed.component";
 import {recentRelease, releasesList} from "../helpers/constants/releases";
 import {FutureComponent} from "../modules/releases-wrapper/future.component";
 
+
 const routerOptions: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
     anchorScrolling: 'enabled',
@@ -43,11 +44,11 @@ const routes: Routes = [
         component: releaseMap.get('zanthar'),
         loadChildren: () => import("src/app/modules/releases/removed/zanthar/zanthar.module").then(mod => mod.ZantharModule)
     },
-    // {
-    //     path: "bill-cipher-fixed",
-    //     component: releaseMap.get('bill-cipher-fixed'),
-    //     loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
-    // },
+    {
+        path: "mabel",
+        component: releaseMap.get('mabel'),
+        loadChildren: () => import("src/app/modules/releases/bill-cipher/bill-cipher.module").then(mod => mod.BillCipherModule)
+    },
     {
         path: "bill-cipher",
         component: releaseMap.get('bill-cipher'),

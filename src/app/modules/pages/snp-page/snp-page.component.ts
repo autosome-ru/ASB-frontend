@@ -98,7 +98,7 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         private seoService: SeoService,
     ) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.release$ = this.store.select(fromSelectors.selectCurrentRelease);
         const chosenRelease = this.releaseService.getReleaseFromFullPath()
         this.subscriptions.add(
@@ -109,8 +109,8 @@ export class SnpPageComponent implements OnInit, OnDestroy {
         this.subscriptions.add(
             this.route.queryParams.subscribe(
                 s => {
-                    this.fdr = s['fdr'] ? s['fdr'] : chosenRelease.defaultFdrThreshold;
-                    this.es = s['es'] ? s['es'] : '0'
+                    this.fdr = s.fdr ? s.fdr : chosenRelease.defaultFdrThreshold;
+                    this.es = s.es ? s.es : '0';
                     this.subscriptions.add(
                         this.route.paramMap.subscribe(
                             (p) => {
