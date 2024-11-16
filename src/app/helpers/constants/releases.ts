@@ -5,13 +5,13 @@ export const releasesList: ReleaseModel[] = [
         name: "Mabel",
         url: "mabel",
         majorVersion: 6,
-        date: "2024.09.24",
+        date: "2024.11.16",
         releaseType: 'recent',
         version: "v6.1.0",
-        size: '746.4MB',
+        size: '920MB',
         api: "v6",
         defaultFdrThreshold: '0.05',
-        releaseLink: 'https://disk.yandex.ru/d/LQYSni42Lk0wtg',
+        releaseLink: 'https://zenodo.org/records/14174114',
         gtrdExpsPath: "ADASTRA_GTRD_exps.bill_cipher.tsv",
         badMapsPath: "BADmaps.bill_cipher.zip",
         ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
@@ -92,4 +92,4 @@ export const releasesList: ReleaseModel[] = [
 ];
 
 export const recentRelease: ReleaseModel = releasesList.filter(s => s.releaseType === 'recent')[0];
-export const ananastraRelease: ReleaseModel = recentRelease //releasesList.filter(s => s.name === 'Bill Cipher')[0]
+export const ananastraRelease: ReleaseModel = recentRelease;
