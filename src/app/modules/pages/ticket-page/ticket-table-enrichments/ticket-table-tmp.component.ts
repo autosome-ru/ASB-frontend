@@ -64,7 +64,7 @@ export class TicketTableTmpComponent implements OnInit {
             },
             asbsRs: {
                 isDesc: true,
-                view: '# of ASCA SNPs'
+                view: '# of ASV SNPs'
             },
             pValue: {
                 view: 'P-value',
@@ -75,15 +75,15 @@ export class TicketTableTmpComponent implements OnInit {
                 columnTemplate: this.fdrViewTemplate
             },
             expectedNegativesRs: {
-                view: 'Expected # of non-ASCA SNPs',
+                view: 'Expected # of non-ASV SNPs',
                 isDesc: true
             },
             expectedAsbsRs: {
-                view: 'Expected # of ASB SNPs',
+                view: 'Expected # of ASV SNPs',
                 isDesc: true
             },
             negativesRs: {
-                view: '# of non-ASB SNPs',
+                view: '# of non-ASV SNPs',
                 isDesc: true
             }
         }

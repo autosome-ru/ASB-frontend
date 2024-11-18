@@ -17,25 +17,25 @@ function getText(step: string): string {
         case 'ticket':
             return 'This is your unique job ticket id.\nYou may save it to access this report\nlater (reports are accessible for 3 days\nsince completion).'
         case 'sum-head':
-            return "The first tab (Summary) contains an overview\nof the ASBs and their relative enrichment\nin the user-submitted list against\nnon-ASB 'candidate' sites."
+            return "The first tab (Summary) contains an overview\nof the ASVs and their relative enrichment\nin the user-submitted list against\nnon-ASV 'candidate' sites."
         case 'chrom-agg':
-            return "Logit-aggregated P-value considering\neach ASB-carrying chromosome\nas an independent 'experiment'."
+            return "Logit-aggregated P-value considering\neach ASV-carrying chromosome\nas an independent 'experiment'."
         case 'chrom-table':
-            return "Chromosome-level ASB enrichment estimates."
+            return "Chromosome-level ASV enrichment estimates."
         case 'tf-head':
-            return 'Detailed information on ASBs of particular transcription factors.'
+            return 'Detailed information on ASVs of particular transcription factors.'
         case 'cl-head':
-            return 'Detailed information on ASBs in particular cell types.'
+            return 'Detailed information on ASVs in particular cell types.'
         case 'stats':
             return 'General statistics and enrichment of allele-specific\nbinding events detected in the submitted SNP list.'
         case 'col-button':
-            return 'Each report is available in the expanded form (all ASB events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
+            return 'Each report is available in the expanded form (all ASV events at submmited SNPs) and collapsed form (showing only the single most significant event for each SNP).'
         case 'odds-table-open':
             return 'Click to show results of enrichment\nanalysis for particular TFs or cell types.'
         case 'odds-table':
-            return 'TF- and cell type-level enrichment is always performed against\ngenome-wide background restricted to a particular TF or cell type.\nThe Fisher\'s exact test P-values are FDR-corrected for the\nnumber of TFs/cell types that have at least one ASB event at user-submitted SNPs.'
+            return 'TF- and cell type-level enrichment is always performed against\ngenome-wide background restricted to a particular TF or cell type.\nThe Fisher\'s exact test P-values are FDR-corrected for the\nnumber of TFs/cell types that have at least one ASV event at user-submitted SNPs.'
         case 'pie-chart':
-            return 'Click on individual segments\nof the chart to filter ASBs\nrelated to a particular TF\nor a cell type.'
+            return 'Click on individual segments\nof the chart to filter ASVs\nrelated to a particular TF\nor a cell type.'
         case 'columns-select':
             return 'Additional columns\n(e.g. related to motif annotation)\ncan be selected and displayed.'
         case 'download-table':
@@ -43,8 +43,8 @@ function getText(step: string): string {
         case 'filter':
             return 'It is possible to apply the\nTF/cell type-wise filtering.'
         case "fdr-simple":
-            return 'Here you can set desired ASB FDR threshold.\n' +
-                'Our test suggest ASBs at 5% FDR are very reliable\n' +
+            return 'Here you can set desired ASV FDR threshold.\n' +
+                'Our test suggest ASVs at 5% FDR are very reliable\n' +
                 'in terms of motif annotation.'
         default:
             return "No step with name " + step + " found";

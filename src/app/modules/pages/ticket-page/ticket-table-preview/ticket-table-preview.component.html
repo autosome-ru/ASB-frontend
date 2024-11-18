@@ -63,14 +63,14 @@
           <mat-button-toggle
             [value]="false"
             [matTooltipClass]="'big-font'"
-            matTooltip="Show only the single most significant ASB per SNP"
+            matTooltip="Show only the single most significant ASV per SNP"
           >
             Collapsed
           </mat-button-toggle>
           <mat-button-toggle
             [value]="true"
             [matTooltipClass]="'big-font'"
-            matTooltip="Show all individual ASB records per SNP"
+            matTooltip="Show all individual ASV records per SNP"
           >
             Expanded
           </mat-button-toggle>
@@ -267,9 +267,9 @@
         [href]="'http://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&position='
             + row.chr + ':' + (row.pos > 100 ? row.pos - 100 : '1')
             + '-' + (row.pos + 100) +
-            '&hgct_customText=track%20type=bigBed%20name=ADASTra_ASB_SNPs%20' +
-             'description=%22ADASTra%20ASB%20SNPs%22%20visibility=full%20bigDataUrl=' +
-             'https://adastra.autosome.org/assets/ucsc-files/' + release.ucscFileName +'&knownGene=full&' +
+            '&hgct_customText=track%20type=bigBed%20name=UDACHA_ASV_SNPs%20' +
+             'description=%22UDACHA%20ASV%20SNPs%22%20visibility=full%20bigDataUrl=' +
+             'https://udacha.autosome.org/assets/ucsc-files/' + release.ucscFileName +'&knownGene=full&' +
              'omimAvSnp=full&varsInPubs=full&snpedia=full&hgmd=full'"
     >
         <mat-icon svgIcon="new_open"></mat-icon>

@@ -176,7 +176,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             } else {
                 this.columnModel.transcriptionFactor = {
                     view: 'Top transcription factor',
-                    helpMessage: 'By ASB significance',
+                    helpMessage: 'By ASV significance',
                     columnTemplate: this.tfViewTemplate
                 };
             }
@@ -191,7 +191,7 @@ export class TicketTablePreviewComponent implements OnInit, OnDestroy {
             } else {
                 this.columnModel.cellType = {
                     view: 'Top cell type',
-                    helpMessage: 'By ASB significance',
+                    helpMessage: 'By ASV significance',
                     columnTemplate: this.clViewTemplate
                 };
             }

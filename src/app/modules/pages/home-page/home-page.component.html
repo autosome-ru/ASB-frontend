@@ -54,15 +54,15 @@
                     <span [ngSwitch]="mj">
                     <span
                         *ngSwitchCase="1"
-                        style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASB:&nbsp;{{totalInfo.snpsCount}}</span>
+                        style="white-space: nowrap">&nbsp;&nbsp;&nbsp;Unique SNPs with ASV:&nbsp;{{totalInfo.snpsCount}}</span>
                     <span *ngSwitchCase="3" style="white-space: nowrap"
                         [matTooltip]="constructTooltipText(totalInfo, mj)"
                           matTooltipClass="tooltip-bigger custom-ws"
-                    >&nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount010}} ASBs passing 10% FDR at {{totalInfo.snpsCount010}} SNPs</span>
+                    >&nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount010}} ASVs passing 10% FDR at {{totalInfo.snpsCount010}} SNPs</span>
                     <span *ngSwitchDefault style="white-space: nowrap"
                           [matTooltip]="constructTooltipText(totalInfo, mj)"
                           matTooltipClass="tooltip-bigger custom-ws"
-                    >&nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount005}} ASBs passing 5% FDR at {{totalInfo.snpsCount005}} SNPs</span>
+                    >&nbsp;&nbsp;&nbsp;{{totalInfo.asbsCount005}} ASVs passing 5% FDR at {{totalInfo.snpsCount005}} SNPs</span>
                     </span>
                 </span>
             </h6>

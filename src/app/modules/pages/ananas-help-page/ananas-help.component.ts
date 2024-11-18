@@ -103,15 +103,15 @@ export class AnanasHelpComponent implements OnInit, AfterViewInit, OnDestroy {
     getNameOfId(data: helpImages): string {
         switch (data) {
             case 'enrichment':
-                return 'ASCA events related to particular TFs or cell types'
+                return 'ASV events related to particular TFs or cell types'
             case 'summary':
                 return 'Summary'
             case 'table':
-                return 'Complete table of ASCAs found at user-submitted SNPs'
+                return 'Complete table of ASVs found at user-submitted SNPs'
             case 'chromosomes':
-                return 'Analysis of ASCA enrichment at individual chromosomes'
+                return 'Analysis of ASV enrichment at individual chromosomes'
             case 'concordance':
-                return 'Visualization of ASCA effect against binding motif predictions'
+                return 'Visualization of ASV effect against binding motif predictions'
             default:
                 return ''
         }

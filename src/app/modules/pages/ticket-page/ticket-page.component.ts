@@ -279,7 +279,7 @@ export class TicketPageComponent implements OnInit, OnDestroy {
             case "LOCAL":
                 return 'ADASTRA \'candidate\' SNPs located within the same 1 Mbp windows as the ‘test’ SNPs of the user-submitted list.'
             case "WG":
-                return 'All ADASTRA \'candidate\' SNPs eligible for ASB assessment.'
+                return 'All ADASTRA \'candidate\' SNPs eligible for ASV assessment.'
             default:
                 return 'ADASTRA \'candidate\' SNPs located in the same LD-islands as the ‘test’ SNPs of the user-submitted list.'
         }

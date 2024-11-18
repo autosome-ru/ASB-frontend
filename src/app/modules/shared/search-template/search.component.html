@@ -143,7 +143,7 @@
                                 [value]="option.name"
                     >
                         <span>{{option.name + " | "}}</span>
-                        <small>&nbsp;ASAs in locus:
+                        <small>&nbsp;ASVs in locus:
                             <span>
                                 {{option.snpsCount}}
                             </span>
@@ -237,7 +237,7 @@
                                         [value]="option.name"
                             >
                                 <span>{{option.name + " | "}}</span>
-                                <small>&nbsp;ASAs in locus: {{option.eqtlCount}}</small>
+                                <small>&nbsp;ASVs in locus: {{option.eqtlCount}}</small>
                             </mat-option>
                         </ng-container>
                         <mat-option *ngIf="searchGeneOptionsLoading$ | async">
@@ -488,7 +488,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).dnase">
                         <mat-option *ngFor="let option of (searchOptions$ | async).dnase" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASAs:
+                            <small>&nbsp;Total ASVs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
                                         {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                     </span>
@@ -551,7 +551,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).atac">
                         <mat-option *ngFor="let option of (searchOptions$ | async).atac" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASAs:
+                            <small>&nbsp;Total ASVs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
                                     {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                 </span>
@@ -615,7 +615,7 @@
                     <ng-container *ngIf="!(searchOptionsLoading$ | async).faire">
                         <mat-option *ngFor="let option of (searchOptions$ | async).faire" [value]="option.name">
                             <span>{{option.name + " | "}}</span>
-                            <small>&nbsp;Total ASAs:
+                            <small>&nbsp;Total ASVs:
                                 <span *ngIf="(currentRelease$ | async).majorVersion == 3">
                                         {{option.aggregatedSnpCount010}}&nbsp;@10% FDR, {{option.aggregatedSnpCount}}&nbsp;@25% FDR
                                     </span>
@@ -758,7 +758,7 @@
     <div
         style="text-align: center; white-space: pre-line; padding: 10px 20px 10px 10px"
     >
-        ASA effect size threshold, log2<br>
+        ASV effect size threshold, log2<br>
         see <a
         rel="noopener noreferrer" target="_blank"
         [routerLink]="'/help'"

@@ -53,13 +53,13 @@ export class TicketStatsComponent implements OnInit {
                             value.metaInfo.undefinedCount,
                             value.metaInfo.notFound
                         ],
-                    label: 'All ASB'
+                    label: 'All ASV'
                 }
             ];
         }
     }
 
-    public chartLabels: string[] = ['ASB SNPs', 'Non-ASB SNPs', 'Undefined ASBs', 'N/A'];
+    public chartLabels: string[] = ['ASV SNPs', 'Non-ASV SNPs', 'Undefined ASVs', 'N/A'];
 
     public chartColors: Array<any> = [
         {

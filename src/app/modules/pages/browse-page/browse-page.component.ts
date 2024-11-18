@@ -181,10 +181,10 @@ export class BrowsePageComponent implements OnInit, OnDestroy {
 
         this.columnModel = {
             name: {view: "Name"},
-            aggregatedSnpsCount: {view: "ASAs count at 25% FDR", isDesc: true},
+            aggregatedSnpsCount: {view: "ASVs count at 25% FDR", isDesc: true},
             experimentsCount: {view: "Experiments count", isDesc: true},
-            aggregatedSnpsCount010: {view: 'ASAs at 10% FDR', isDesc: true},
-            aggregatedSnpsCount005: {view: 'ASAs at 5% FDR', isDesc: true}
+            aggregatedSnpsCount010: {view: 'ASVs at 10% FDR', isDesc: true},
+            aggregatedSnpsCount005: {view: 'ASVs at 5% FDR', isDesc: true}
         };
         this.subscriptions.add(
             this.searchForm.valueChanges.pipe(debounceTime(400)).subscribe(

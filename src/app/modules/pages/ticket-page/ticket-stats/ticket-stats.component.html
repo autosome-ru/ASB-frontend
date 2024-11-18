@@ -31,19 +31,19 @@
     <ul style="list-style-type: none; padding-inline-start: 0">
       <li>
         <span
-        ><b [ngStyle]="{'color': chartColors[0].backgroundColor[0]}">SNPs with significant ASBs ({{stats.fdr}} FDR)</b>: {{stats.asbCount}}</span>
-        <span class="additional-selection">&nbsp;(incl. {{stats.tfAsbs}} SNPs with TF-ASBs and {{stats.clAsbs}} SNPs with cell type-ASBs)</span>
+        ><b [ngStyle]="{'color': chartColors[0].backgroundColor[0]}">SNPs with significant ASVs ({{stats.fdr}} FDR)</b>: {{stats.asbCount}}</span>
+        <span class="additional-selection">&nbsp;(incl. {{stats.tfAsbs}} SNPs with TF-ASVs and {{stats.clAsbs}} SNPs with cell type-ASVs)</span>
       </li>
         <li>
             <span
             ><b
                 [ngStyle]="{'color': chartColors[0].backgroundColor[1]}"
-            >SNPs without any significant ASBs</b>: {{stats.negativesCount}}</span>
+            >SNPs without any significant ASVs</b>: {{stats.negativesCount}}</span>
 
         </li>
       <li>
                 <span
-                ><b [ngStyle]="{'color': chartColors[0].backgroundColor[2]}">SNPs with undefined ASB status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>
+                ><b [ngStyle]="{'color': chartColors[0].backgroundColor[2]}">SNPs with undefined ASV status ({{stats.fdr}} to 0.25 FDR, ignored in assessment)</b>: {{stats.undefinedCount}}</span>
       </li>
         <li>
             <span>
@@ -53,25 +53,25 @@
             </span>
         </li>
       <li>
-          <b>Observed ASB fraction</b>: {{stats.ratio.toFixed(1)}}% <span class="additional-selection">(Expected: {{stats.expRatio.toFixed(1)}}%)</span>
+          <b>Observed ASV fraction</b>: {{stats.ratio.toFixed(1)}}% <span class="additional-selection">(Expected: {{stats.expRatio.toFixed(1)}}%)</span>
       </li>
       <li>
-          <b>ASB enrichment odds-ratio</b>:
+          <b>ASV enrichment odds-ratio</b>:
           <b>{{valueToView(stats.oddsRatio)}}</b>
         <span class="additional-selection">
-            (SNPs with TF-ASBs: <b>{{valueToView(stats.tfOdds)}}</b>,
-          SNPs with cell type-ASBs: <b>{{valueToView(stats.clOdds)}}</b>)</span>
+            (SNPs with TF-ASVs: <b>{{valueToView(stats.tfOdds)}}</b>,
+          SNPs with cell type-ASVs: <b>{{valueToView(stats.clOdds)}}</b>)</span>
       </li>
       <li>
         <b>Fisher's exact test P-value</b>:
         <b><asb-sci-notation
           [value]="stats.pValue"
         ></asb-sci-notation></b>
-        <span class="additional-selection"> (SNPs with TF-ASBs:
+        <span class="additional-selection"> (SNPs with TF-ASVs:
           <b><asb-sci-notation
               [value]="stats.tfPvalue"
           ></asb-sci-notation></b>,
-          SNPs with cell type-ASBs:
+          SNPs with cell type-ASVs:
           <b><asb-sci-notation
               [value]="stats.clPvalue"
           ></asb-sci-notation></b>)</span>
@@ -89,7 +89,7 @@
                 <mat-panel-title>
                     <h6
                     class="mb-0"
-                    style="font-weight: bold">ASB enrichment at individual chromosomes</h6></mat-panel-title>
+                    style="font-weight: bold">ASV enrichment at individual chromosomes</h6></mat-panel-title>
                 <mat-panel-description style="justify-content: flex-end;">
                     <span>Click to expand</span>
                 </mat-panel-description>
@@ -104,10 +104,10 @@
                 <b>Logit-aggregated P-value:&nbsp;<asb-sci-notation
                     [value]="stats.chrPvalue"
                 ></asb-sci-notation></b>&nbsp;
-                <span class="additional-selection">(SNPs with TF-ASBs: <b><asb-sci-notation
+                <span class="additional-selection">(SNPs with TF-ASVs: <b><asb-sci-notation
                     [value]="stats.chrTfPvalue"
                 ></asb-sci-notation></b>,
-                    SNPs with cell type-ASBs: <b><asb-sci-notation
+                    SNPs with cell type-ASVs: <b><asb-sci-notation
                         [value]="stats.chrClPvalue"
                     ></asb-sci-notation></b>)</span>
             </span>

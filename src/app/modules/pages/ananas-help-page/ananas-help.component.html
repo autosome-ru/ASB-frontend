@@ -55,20 +55,20 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <h4 style="margin-bottom: 0">
-                            What is ASA?
+                            What is ASV?
                         </h4>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="px-1">
-                    <b>ASA</b> stands for <b>A</b>llele-<b>S</b>pecific chromatin <b>A</b>ccessibility.
+                    <b>ASV</b> stands for <b>A</b>llele-<b>S</b>pecific <b>V</b>ariant.
                     One of two alternative alleles of homologous chromosomes may mark a different epigenomic or regulatory state of a genomic region and thus exhibit allele-specific chromatin accessibility.
-                    ASA highlights regulatory SNPs with a high potential to affect gene expression.
+                    ASV highlights regulatory SNPs with a high potential to affect gene expression.
                     Systematic dissection of ATAC-/DNase-/FAIRE-Seq data processed in the                     <a href="http://gtrd.biouml.org/"
                                                                                                                  rel="noopener noreferrer"
                                                                                                                  target="_blank"
                 >
-                    GTRD</a> database allowed us to identify hundreds of thousands of ASA events in a wide range of cell types.
-                    ASA is related to ASA, see also the Help page in
+                    GTRD</a> database allowed us to identify hundreds of thousands of ASV events in a wide range of cell types.
+                    ASBs are related to ASVs, see also the Help page in
                     <a href="https://adastra.autosome.org/"
                         rel="noopener noreferrer"
                         target="_blank"
@@ -92,7 +92,7 @@
                 <section id="Glossary">
                     <dl class="px-3">
                         <dt>Coordinate system</dt>
-                        <dd>Genome positions of ASAs and SNVs in the online database are vcf/gtf-like (1-based), hg38 genome assembly.
+                        <dd>Genome positions of ASVs and SNVs in the online database are vcf/gtf-like (1-based), hg38 genome assembly.
                             The downloads are provided in a bed-like format (0-based start, 1-based end).<br></dd>
                         <dt>BAD</dt>
                         <dd>Background Allelic Dosage (BAD) is the expected ratio
@@ -120,7 +120,7 @@
                         </dd>
                         <dt id="coverage_filter">ADASTRA coverage filters</dt>
                         <dd>
-                            ADASTRA pipeline utilizes several SNV filters before statistical evaluations of ASA:<br>
+                            ADASTRA pipeline utilizes several SNV filters before statistical evaluations of ASV:<br>
                             <ul style="list-style-type: circle;">
                                 <li>Heterozygous biallelic SNVs (according to GATK ‘GT’ annotation);</li>
                                 <li>Having ≥ 5 reads at each of the alleles;</li>
@@ -138,14 +138,14 @@
                     </dl>
                 </section>
                 <section
-                    id="ASA_properties"
+                    id="ASV_properties"
                 >
-                    <h5 class="px-1">ASA properties</h5>
+                    <h5 class="px-1">ASV properties</h5>
                     <dl class="px-3">
-                        <dt id="asA_significance">ASA significance</dt>
-                        <dd>ASA significance
-                            ASA calling is done separately for each ChIP-Seq experiment.
-                            For each candidate ASA site, the P-values for Reference and
+                        <dt id="asv_significance">ASV significance</dt>
+                        <dd>ASV significance
+                            ASV calling is done separately for each ChIP-Seq experiment.
+                            For each candidate ASV site, the P-values for Reference and
                             Alternative allele are calculated separately according to the
                             fitted Negative Binomial Mixture model accounting for different
                             assignment of the alleles to the higher or lower DNA copies in
@@ -161,9 +161,9 @@
 
                             <br>
                         </dd>
-                        <dt id="ASA_es"
-                        >ASA effect size</dt>
-                        <dd>The Effect Size of an ASA event is calculated separately for Reference
+                        <dt id="ASV_es"
+                        >ASV effect size</dt>
+                        <dd>The Effect Size of an ASV event is calculated separately for Reference
                             and Alternative alleles and is defined as the weighted mean of log-ratios
                             of observed and expected allelic read counts, with weights being -log<sub>10</sub>
                             of the respective P-values. The expected read counts are estimated from
@@ -174,7 +174,7 @@
                             <br>
                             The Effect Size is not assigned (n/a) if all of the raw individual
                             P-values of an SNV on a particular genome position are equal to 1,
-                            considering Ref- and Alt-ASAs separately.
+                            considering Ref- and Alt-ASVs separately.
                             <br>
                         </dd>
                     </dl>
@@ -234,7 +234,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <section >
-                    <h5 id="used-software">Resources and databases used to annotate ADASTRA ASAs</h5>
+                    <h5 id="used-software">Resources and databases used to annotate UDACHA ASVs</h5>
                     <div class="px-3">
                         <ul class="list-circle">
                             <li>
