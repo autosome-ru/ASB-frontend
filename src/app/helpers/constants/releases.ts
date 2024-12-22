@@ -14,7 +14,7 @@ export const releasesList: ReleaseModel[] = [
         releaseLink: 'https://disk.yandex.ru/d/8Shsn1-OgDuwzQ',
         gtrdExpsPath: "https://disk.yandex.ru/d/FUZENtbaGaxcrQ",
         badMapsPath: "https://disk.yandex.ru/d/DmTPsMQ_bA9eKQ",
-        ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
+        // ucscFileName: 'ADASTRA_SNPs.bill_cipher.bb',
         // notes: "Increased recall of diploid regions. Please find the details in readme.",
         notesPath: 'readme.iceking.txt',
         // tfClArchive: 'adastra.cltf.bill_cipher.zip'

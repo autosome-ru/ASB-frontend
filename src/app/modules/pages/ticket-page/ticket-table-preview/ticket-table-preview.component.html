@@ -258,6 +258,7 @@
 </ng-template>
 <ng-template #uscsColumnTemplate let-row="row">
     <a
+        *ngIf="release.ucscFileName"
         joyrideStep="genome-browser"
         style="overflow: auto"
         mat-icon-button

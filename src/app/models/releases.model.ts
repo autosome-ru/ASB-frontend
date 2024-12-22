@@ -10,7 +10,7 @@ export interface ReleaseModel {
     releaseLink: string;
     gtrdExpsPath: string;
     badMapsPath: string;
-    ucscFileName: string;
+    ucscFileName?: string;
     notes?: string;
     notesPath: string;
     defaultFdrThreshold: string;
