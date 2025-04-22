@@ -5,7 +5,7 @@ export const releasesList: ReleaseModel[] = [
         name: "Mabel",
         url: "mabel",
         majorVersion: 6,
-        date: "2024.11.16",
+        date: "2025.04.22",
         releaseType: 'recent',
         version: "v6.1.1",
         size: '920MB',
