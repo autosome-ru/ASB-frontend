@@ -26,7 +26,7 @@ const template = fs.readFileSync(path.join(distFolder, 'index.html')).toString()
 const win = domino.createWindow(template);
 // mock
 global['window'] = win;
-(global as any).navigator = win.navigator;
+Object.defineProperty(global, 'navigator', { value: win.navigator, configurable: true });
 // not implemented property and functions
 Object.defineProperty(win.document.body.style, 'transform', {
     value: () => {
