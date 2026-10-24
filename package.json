@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:ananas": "node --max_old_space_size=1000 ./node_modules/@angular/cli/bin/ng build ananas --configuration production --output-hashing=all",
+    "build:ananas": "node --max_old_space_size=800 ./node_modules/@angular/cli/bin/ng build ananas --configuration production --output-hashing=all",
     "dev:ananas": "ng serve ananas",
     "dev:ssr": "ng run ad-astra:serve-ssr",
     "serve:ssr": "node dist/adastra/server/main.js",
