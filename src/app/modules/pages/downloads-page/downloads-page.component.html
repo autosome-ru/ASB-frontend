@@ -12,6 +12,9 @@
                         [href]="release.releaseLink"
                         rel="noopener noreferrer"
                         target="_blank">Complete data download</a>
+                    <ng-template #noReleaseLinkTemplate>
+                        <span *ngIf="release.releaseType !== 'deprecated'">Release is uploading and will be available soon, </span>
+                    </ng-template>
                     <span *ngIf="release.releaseLink"
                     >
                         ({{release.size}}),
@@ -99,6 +102,3 @@
         </ul>
     </div>
 </div>
-<ng-template #noReleaseLinkTemplate>
-    <span>Release is uploading and will be available soon, </span>
-</ng-template>

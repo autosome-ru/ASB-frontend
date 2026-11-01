@@ -7,7 +7,7 @@ export interface ReleaseModel {
     releaseType: 'recent' | 'deprecated' | 'legacy' | 'future';
     api: string;
     size: string;
-    releaseLink: string;
+    releaseLink?: string;
     gtrdExpsPath: string;
     badMapsPath: string;
     ucscFileName: string;
