@@ -24,10 +24,10 @@ export class DownloadsPageComponent implements OnInit {
     }
 
     _getBadmapsName(release: ReleaseModel) {
-        return `BADmaps_${release.name.replace(' ', '_')}.zip`;
+        return 'UDACHA_IceKing_May2023_badmaps.zip';
     }
 
     _getGtrdExpsName(release: ReleaseModel) {
-        return `UDACHA_${release.name.replace(' ', '_')}_GTRD_exps.tsv`;
+        return 'UDACHA_IceKing_May2023_metadata.zip';
     }
 }
